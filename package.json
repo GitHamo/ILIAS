@@ -2,10 +2,9 @@
   "name": "ilias",
   "version": "9.0.0",
   "description": "ILIAS open source e-Learning",
-  "browser": "js/index.js",
+  "type": "module",
   "directories": {
-    "doc": "docs",
-    "test": "tests"
+    "doc": "docs"
   },
   "dependencies": {
     "@yaireo/tagify": "^4.17.9",
@@ -31,7 +30,7 @@
     "sass": "^1.77.5"
   },
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "node --test \"./components/ILIAS/**/tests/**/*.js\""
   },
   "repository": {
     "type": "git",
