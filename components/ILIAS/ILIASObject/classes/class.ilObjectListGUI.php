@@ -3130,6 +3130,7 @@ class ilObjectListGUI
     ): ?RepositoryObject {
         $ui = $this->ui;
 
+        $title = $this->refinery->encode()->htmlSpecialCharsAsEntities()->transform($title);
         // even b tag produced bugs, see #32304
         $description = $this->refinery->encode()->htmlSpecialCharsAsEntities()->transform(
             $description
