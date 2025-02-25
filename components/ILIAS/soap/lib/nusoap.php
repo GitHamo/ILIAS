@@ -5379,7 +5379,7 @@ class wsdl extends nusoap_base
             $this->setError("Neither _SERVER nor HTTP_SERVER_VARS is available");
         }
         // begin-patch: https://mantis.ilias.de/view.php?id=28866
-        $PHP_SELF = filter_var($PHP_SELF, FILTER_SANITIZE_STRING);
+        $PHP_SELF = htmlspecialchars($PHP_SELF, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         // end-patch
 
         $b = '
@@ -5467,7 +5467,7 @@ class wsdl extends nusoap_base
         foreach ($this->getOperations() as $op => $data) {
             // begin-patch: https://mantis.ilias.de/view.php?id=28866
             if (isset($data['endpoint'])) {
-                $data['endpoint'] = filter_var($data['endpoint'], FILTER_SANITIZE_STRING);
+                $data['endpoint'] = htmlspecialchars($data['endpoint'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
             }
             // end-patch
             $b .= "<li><a href='#' onclick=\"popout();popup('$op')\">$op</a></li>";
