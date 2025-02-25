@@ -114,7 +114,8 @@ class ilErrorHandling
      */
     public function getHandler(): HandlerInterface
     {
-        if (ilContext::getType() === ilContext::CONTEXT_SOAP) {
+        if (ilContext::getType() === ilContext::CONTEXT_SOAP &&
+            strcasecmp($_SERVER['REQUEST_METHOD'] ?? '', 'post') === 0) {
             return new ilSoapExceptionHandler();
         }
 
