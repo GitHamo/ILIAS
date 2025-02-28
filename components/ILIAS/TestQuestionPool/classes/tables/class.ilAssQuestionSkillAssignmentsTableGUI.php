@@ -77,15 +77,6 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
     public function init(): void
     {
         $this->initColumns();
-
-        if ($this->areManipulationsEnabled()) {
-            $this->setFormAction($this->ctrl->getFormAction($this->parent_obj));
-
-            $this->addCommandButton(
-                ilAssQuestionSkillAssignmentsGUI::CMD_SAVE_SKILL_POINTS,
-                $this->lng->txt('tst_save_comp_points')
-            );
-        }
     }
 
     public function loadSkillPointsFromRequest(bool $loadSkillPointsFromRequest): void
@@ -128,12 +119,7 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
             $this->tpl->setVariable('COMPETENCE', $assignment->getSkillTitle());
             $this->tpl->setVariable('COMPETENCE_PATH', $assignment->getSkillPath());
             $this->tpl->setVariable('EVAL_MODE', $this->getEvalModeLabel($assignment));
-
-            if ($this->isSkillPointInputRequired($assignment)) {
-                $this->tpl->setVariable('SKILL_POINTS', $this->buildSkillPointsInput($assignment));
-            } else {
-                $this->tpl->setVariable('SKILL_POINTS', $assignment->getMaxSkillPoints());
-            }
+            $this->tpl->setVariable('SKILL_POINTS', $assignment->getMaxSkillPoints());
 
             if (($key + 1) < $num_assigns || $this->areManipulationsEnabled()) {
                 $this->tpl->parseCurrentBlock();
@@ -207,38 +193,6 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
         return "<a href=\"{$href}\" title=\"{$label}\">{$label}</a>";
     }
 
-    private function buildActionColumnHTML($assignments): string
-    {
-        $actions = [];
-
-        /* PHP8: This appears to be an incomplete feature: Removal of skill assignment is nowhere found other than
-        here, ilAssQuestionSkillAssignmentsGUI::CMD_REMOVE_SKILL_QUEST_ASSIGN is undefined. Defusing for now.
-
-        foreach ($assignments as $assignment) {
-            $this->ctrl->setParameter($this->parent_obj, 'skill_base_id', $assignment->getSkillBaseId());
-            $this->ctrl->setParameter($this->parent_obj, 'skill_tref_id', $assignment->getSkillTrefId());
-
-            $href = $this->ctrl->getLinkTarget(
-                $this->parent_obj,
-                ilAssQuestionSkillAssignmentsGUI::CMD_REMOVE_SKILL_QUEST_ASSIGN
-            );
-
-            $label = $this->lng->txt('tst_remove_competence');
-
-            $actions[] = $this->buildActionLink($href, $label);
-        }
-        */
-
-        $href = $this->ctrl->getLinkTarget(
-            $this->parent_obj,
-            ilAssQuestionSkillAssignmentsGUI::CMD_SHOW_SKILL_SELECT
-        );
-
-        $actions[] = $this->buildActionLink($href, $this->lng->txt('tst_assign_competence'));
-
-        return implode('<br />', $actions);
-    }
-
     private function getEvalModeLabel(ilAssQuestionSkillAssignment $assignment): string
     {
         return $this->lng->txt(
@@ -246,36 +200,5 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
                 ? 'qpl_skill_point_eval_mode_solution_compare'
                 : 'qpl_skill_point_eval_mode_quest_result'
         );
-    }
-
-    private function buildSkillPointsInput(ilAssQuestionSkillAssignment $assignment): string
-    {
-        $assignmentKey = implode(':', [
-            $assignment->getSkillBaseId(),
-            $assignment->getSkillTrefId(),
-            $assignment->getQuestionId()
-        ]);
-
-        if ($this->loadSkillPointsFromRequest) {
-            $skill_points = $this->request_data_collector->strArray('skill_points');
-            $points = ilUtil::stripSlashes($skill_points[$assignmentKey] ?? '');
-        } else {
-            $points = $assignment->getSkillPoints();
-        }
-
-        return "<input type\"text\" size=\"2\" name=\"skill_points[{$assignmentKey}]\" value=\"{$points}\" />";
-    }
-
-    private function isSkillPointInputRequired(ilAssQuestionSkillAssignment $assignment): bool
-    {
-        if (!$this->areManipulationsEnabled()) {
-            return false;
-        }
-
-        if ($assignment->hasEvalModeBySolution()) {
-            return false;
-        }
-
-        return true;
     }
 }
