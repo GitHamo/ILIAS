@@ -27,25 +27,25 @@ use ILIAS\TestQuestionPool\RequestDataCollector;
  */
 class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
 {
-    private ilAssQuestionSkillAssignmentList $skillQuestionAssignmentList;
+    private ilAssQuestionSkillAssignmentList $skill_question_assignment_list;
     private RequestDataCollector $request_data_collector;
 
-    private bool $loadSkillPointsFromRequest = false;
-    private bool $manipulationsEnabled;
+    private bool $load_skill_points_from_request = false;
+    private bool $manipulations_enabled;
 
     public function setSkillQuestionAssignmentList(ilAssQuestionSkillAssignmentList $assignmentList): void
     {
-        $this->skillQuestionAssignmentList = $assignmentList;
+        $this->skill_question_assignment_list = $assignmentList;
     }
 
     public function areManipulationsEnabled(): bool
     {
-        return $this->manipulationsEnabled;
+        return $this->manipulations_enabled;
     }
 
     public function setManipulationsEnabled(bool $manipulationsEnabled): void
     {
-        $this->manipulationsEnabled = $manipulationsEnabled;
+        $this->manipulations_enabled = $manipulationsEnabled;
     }
 
     public function __construct(
@@ -81,7 +81,7 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
 
     public function loadSkillPointsFromRequest(bool $loadSkillPointsFromRequest): void
     {
-        $this->loadSkillPointsFromRequest = $loadSkillPointsFromRequest;
+        $this->load_skill_points_from_request = $loadSkillPointsFromRequest;
     }
 
     private function initColumns(): void
@@ -95,7 +95,7 @@ class ilAssQuestionSkillAssignmentsTableGUI extends ilTable2GUI
 
     public function fillRow(array $a_set): void
     {
-        $assignments = $this->skillQuestionAssignmentList->getAssignmentsByQuestionId($a_set['question_id']);
+        $assignments = $this->skill_question_assignment_list->getAssignmentsByQuestionId($a_set['question_id']);
 
         $this->ctrl->setParameter($this->parent_obj, 'q_id', $a_set['question_id']);
 
