@@ -324,7 +324,6 @@ class ilMediaObjectDataSet extends ilDataSet
                 }
                 $newObj->create();
                 $newObj->createDirectory();
-                ilObjMediaObject::_createThumbnailDirectory($newObj->getId());
                 $this->current_mob = $newObj;
 
                 $dir = str_replace("..", "", $a_rec["Dir"]);

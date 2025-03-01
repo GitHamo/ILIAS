@@ -133,6 +133,11 @@ class MediaObjectRepository
         return $this->irss->getContainerUri($this->getRidForMobId($mob_id), $location);
     }
 
+    public function hasLocalFile(int $mob_id, string $location) : bool
+    {
+        return $this->irss->hasContainerEntry($this->getRidForMobId($mob_id), $location);
+    }
+
     public function getLocationStream(
         int $mob_id,
         string $location

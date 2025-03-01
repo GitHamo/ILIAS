@@ -27,6 +27,8 @@ use ILIAS\Filesystem\Stream\Stream;
 use _PHPStan_9815bbba4\Nette\Neon\Exception;
 use ILIAS\ResourceStorage\Resource\StorableResource;
 use ILIAS\ResourceStorage\Identification\ResourceIdentification;
+use ILIAS\Filesystem\Stream\ZIPStream;
+use ILIAS\Filesystem\Stream\FileStream;
 
 class MediaObjectManager
 {
@@ -82,6 +84,21 @@ class MediaObjectManager
         $this->repo->removeLocation($mob_id, $location);
     }
 
+    public function getLocationStream(
+        int $mob_id,
+        string $location
+    ): ZIPStream {
+        return $this->repo->getLocationStream($mob_id, $location);
+    }
+
+    public function addStream(
+        int $mob_id,
+        string $location,
+        FileStream $stream
+    ) : void {
+        $this->repo->addStream($mob_id, $location, $stream);
+    }
+
     public function getLocalSrc(int $mob_id, string $location): string
     {
         $src = $this->repo->getLocalSrc(
@@ -96,6 +113,11 @@ class MediaObjectManager
             }
         }
         return $src;
+    }
+
+    public function hasLocalFile(int $mob_id, string $location) : bool
+    {
+        return $this->repo->hasLocalFile($mob_id, $location);
     }
 
     public function getContainerResource(
