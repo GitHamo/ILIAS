@@ -90,12 +90,6 @@ class ilObjMediaObject extends ilObject
         $mob_logger->debug("ilObjMediaObject: ... Found " . count($usages) . " usages.");
 
         if (count($usages) == 0) {
-            // remove directory
-            ilFileUtils::delDir(ilObjMediaObject::_getDirectory($this->getId()));
-
-            // remove thumbnail directory
-            ilFileUtils::delDir(ilObjMediaObject::_getThumbnailDirectory($this->getId()));
-
             // delete meta data of mob
             $this->deleteMetaData();
 
@@ -398,16 +392,6 @@ class ilObjMediaObject extends ilObject
     }
 
     /**
-     * get directory for files of media object
-     */
-    public static function _getThumbnailDirectory(
-        int $a_mob_id,
-        string $a_mode = "filesystem"
-    ): string {
-        return ilFileUtils::getWebspaceDir($a_mode) . "/thumbs/mm_" . $a_mob_id;
-    }
-
-    /**
      * Get path for item with specific purpose.
      */
     public static function _lookupItemPath(
@@ -446,16 +430,6 @@ class ilObjMediaObject extends ilObject
         if (!is_dir($path)) {
             throw new ilMediaObjectsException("Failed to create directory $path.");
         }
-    }
-
-    /**
-     * Create thumbnail directory
-     */
-    public static function _createThumbnailDirectory(
-        int $a_obj_id
-    ): void {
-        ilFileUtils::createDirectory(ilFileUtils::getWebspaceDir() . "/thumbs");
-        ilFileUtils::createDirectory(ilFileUtils::getWebspaceDir() . "/thumbs/mm_" . $a_obj_id);
     }
 
     public function getFilesOfDirectory(
@@ -606,6 +580,9 @@ class ilObjMediaObject extends ilObject
 
                     // Parameter
                     $parameters = $item->getParameters();
+                    if ($item->getFormat() === "video/vimeo") {
+                        $parameters = ilExternalMediaAnalyzer::extractVimeoParameters($item->getLocation());
+                    }
                     foreach ($parameters as $name => $value) {
                         $xml .= "<Parameter Name=\"$name\" Value=\"" . $this->escapeProperty($value) . "\"/>";
                     }

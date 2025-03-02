@@ -409,6 +409,27 @@ class IRSSWrapper
         );
     }
 
+    /**
+     * Is there a better way to check this?
+     */
+    public function hasContainerEntry(
+        string $rid,
+        string $entry
+    ): bool {
+        $zip_path = $this->stream($rid)?->getMetadata("uri");
+        try {
+            $stream = Streams::ofFileInsideZIP(
+                $zip_path,
+                $entry
+            );
+            $stream->close();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
     // this currently does not work due to issues in the irss
     /*
     public function importContainerFromZipUploadResult(
