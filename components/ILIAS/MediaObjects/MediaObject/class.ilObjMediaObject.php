@@ -278,7 +278,11 @@ class ilObjMediaObject extends ilObject
         return $this->origin_id;
     }
 
-    public function create(bool $a_create_meta_data = false, bool $a_save_media_items = true): int
+    public function create(
+        bool $a_create_meta_data = false,
+        bool $a_save_media_items = true,
+        int $from_mob_id = 0
+    ): int
     {
         $id = parent::create();
 
@@ -287,7 +291,8 @@ class ilObjMediaObject extends ilObject
         }
         $this->manager->create(
             $id,
-            $this->getTitle()
+            $this->getTitle(),
+            $from_mob_id
         );
 
         if ($a_save_media_items) {
@@ -1666,10 +1671,12 @@ class ilObjMediaObject extends ilObject
             $new_obj->addMediaItem($val);
         }
 
-        $new_obj->create(false, true);
+        $new_obj->create(
+            false,
+            true,
+            $this->getId()              // "from" id
+        );
 
-        // files
-        $new_obj->createDirectory();
 
         // meta data
         $this->domain->metadata()->learningObjectMetadata()

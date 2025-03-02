@@ -39,11 +39,17 @@ class MediaObjectRepository
     public function create(
         int $id,
         string $title,
-        \ilMobStakeholder $stakeholder
+        \ilMobStakeholder $stakeholder,
+        int $from_mob_id = 0
     ) : void {
-        $rid = $this->irss->createContainer(
-            $stakeholder
-        );
+        if ($from_mob_id > 0) {
+            $from_rid = $this->getRidForMobId($from_mob_id);
+            $rid = $this->irss->cloneContainer($from_rid);
+        } else {
+            $rid = $this->irss->createContainer(
+                $stakeholder
+            );
+        }
         $this->db->insert('mob_data', [
             'id' => ['integer', $id],
             'rid' => ['text', $rid]

@@ -49,12 +49,14 @@ class MediaObjectManager
 
     public function create(
         int $id,
-        string $title
+        string $title,
+        int $from_mob_id = 0
     ): void {
         $this->repo->create(
             $id,
             $title,
-            $this->stakeholder
+            $this->stakeholder,
+            $from_mob_id
         );
     }
 
