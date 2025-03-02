@@ -16047,6 +16047,7 @@ style#:#sty_images#:#Bilder
 style#:#sty_import_page_layout#:#Seitenlayout importieren
 style#:#sty_import_stylesheet#:#Stylesheet importieren
 style#:#sty_import_system_style#:#System-Style importieren
+style#:#sty_imported_layout#:#Seitenlayout wurde importiert.
 style#:#sty_individual_styles#:#Lokale Stylesheets
 style#:#sty_keep_existing#:#Bestehende Klasse erhalten
 style#:#sty_left#:#Links
