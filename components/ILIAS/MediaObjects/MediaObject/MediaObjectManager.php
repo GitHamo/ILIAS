@@ -60,6 +60,11 @@ class MediaObjectManager
         );
     }
 
+    public function addLocalDirectory(int $mob_id, string $dir): void
+    {
+        $this->repo->addLocalDirectory($mob_id, $dir);
+    }
+
     public function addFileFromLegacyUpload(int $mob_id, string $tmp_name): void
     {
         $this->repo->addFileFromLegacyUpload($mob_id, $tmp_name);
