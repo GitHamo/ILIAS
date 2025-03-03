@@ -720,7 +720,7 @@ class ilObjectGUI implements ImplementsCreationCallback
         if (!$this->obj_definition->isPlugin($this->requested_new_type)) {
             return 'obj_' . $this->requested_new_type;
         }
-        return ilObjectPlugin::lookupTxtById($this->requested_new_type, 'obj_' . $this->requested_new_type);
+        return ilObjectPlugin::lookupTxtById($this->requested_new_type, "obj_{$this->requested_new_type}");
     }
 
     protected function getCreationFormTitle(): string
@@ -746,9 +746,12 @@ class ilObjectGUI implements ImplementsCreationCallback
             $this->ctrl->getFormAction($this, 'save'),
             $form_fields
         )->withSubmitLabel(
-            $this->lng->exists($new_type . '_add')
+            !$this->obj_definition->isPlugin($new_type)
                 ? $this->lng->txt($new_type . '_add')
-                : $this->lng->txt('add')
+                : ilObjectPlugin::lookupTxtById(
+                    $this->requested_new_type,
+                    "{$this->requested_new_type}_add"
+                )
         );
     }
 
