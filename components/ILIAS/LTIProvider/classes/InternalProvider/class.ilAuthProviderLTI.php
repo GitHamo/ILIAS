@@ -706,7 +706,7 @@ class ilAuthProviderLTI extends \ilAuthProvider implements \ilAuthProviderInterf
 
         if (isset($role_map[$lti_role])) {
             return $role_map[$lti_role];
-        } elseif(isset($simple_name_map[$lti_role])) {
+        } elseif (isset($simple_name_map[$lti_role])) {
             // Check for simple names
             return $simple_name_map[$lti_role];
         }
