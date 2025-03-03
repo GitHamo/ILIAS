@@ -849,20 +849,7 @@ EOT;
         $med = $mob->getMediaItem("Standard");
         $comp = null;
         if ($med) {
-            if ($med->getLocationType() === "Reference") {
-                $file = $med->getLocation();
-                if (in_array($med->getFormat(), ["video/vimeo", "video/youtube"])) {
-                    if (!is_int(strpos($file, "?"))) {
-                        $file .= "?controls=0";
-                    } else {
-                        $file .= "&controls=0";
-                    }
-                }
-            } else {
-                $file = ilWACSignedPath::signFile(
-                    ilObjMediaObject::_getURL($mob->getId()) . "/" . $med->getLocation()
-                );
-            }
+            $file = $mob->getStandardSrc();
             if ($this->media_type->isAudio($med->getFormat())) {
                 $comp = $f->player()->audio($file, "");
             } elseif ($this->media_type->isVideo($med->getFormat())) {

@@ -1033,9 +1033,7 @@ class ilMediaItem
                 $this->setDuration((int) $meta["duration"]);
             }
         } else {
-            $file = ($this->getLocationType() == "Reference")
-                ? $this->getLocation()
-                : ilObjMediaObject::_getDirectory($this->getMobId()) . "/" . $this->getLocation();
+            $file = $this->getLocationSrc();
 
             $remote = false;
 
@@ -1066,6 +1064,27 @@ class ilMediaItem
             } catch (Exception $e) {
             }
         }
+    }
+
+    public function getLocationSrc(): string
+    {
+        if (strcasecmp("Reference", $this->getLocationType()) === 0) {
+            $src = $this->getLocation();
+            if ($this->getFormat() === "video/vimeo") {
+                $par = ilExternalMediaAnalyzer::extractVimeoParameters($src);
+                $src = "//player.vimeo.com/video/" . $par["id"];
+            }
+            if ($this->getFormat() === "video/youtube") {
+                $par = ilExternalMediaAnalyzer::extractYouTubeParameters($src);
+                $src = "//www.youtube.com/embed/" . $par["v"];
+            }
+        } else {
+            $src = $this->mob_manager->getLocalSrc(
+                $this->getMobId(),
+                $this->getLocation()
+            );
+        }
+        return $src;
     }
 
     /**
