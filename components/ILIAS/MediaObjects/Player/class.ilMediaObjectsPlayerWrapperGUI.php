@@ -74,14 +74,7 @@ class ilMediaObjectsPlayerWrapperGUI
         if (is_null($med) || !$this->media_type->isAudio($med->getFormat())) {
             return null;
         }
-
-        if ($med->getLocationType() === "Reference") {
-            $resource = $med->getLocation();
-        } else {
-            $path_to_file = \ilObjMediaObject::_getURL($mob->getId()) . "/" . $med->getLocation();
-            $resource = $path_to_file;
-        }
-
+        $resource = $mob->getStandardSrc();
         $audio = $this->gui->ui()->factory()->player()->audio(
             $resource,
             ""

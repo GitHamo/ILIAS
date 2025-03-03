@@ -139,6 +139,14 @@ class ThumbsManager
      */
     public function getPreviewSrc(int $mob_id) : string
     {
+        $ppics = array("mob_vpreview.jpg",
+                       "mob_vpreview.jpeg",
+                       "mob_vpreview.png");
+        foreach ($ppics as $pic) {
+            if ($this->media_manager->hasLocalFile($mob_id, $pic)) {
+                return $this->media_manager->getLocalSrc($mob_id, $pic);
+            }
+        }
         return "";
     }
 }

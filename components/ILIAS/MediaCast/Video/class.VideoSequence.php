@@ -55,20 +55,8 @@ class VideoSequence
             $resource = '';
 
             if (is_object($med)) {
-                if (strcasecmp("Reference", $med->getLocationType()) == 0) {
-                    $resource = $med->getLocation();
-                } else {
-                    $path_to_file = \ilObjMediaObject::_getURL($mob->getId()) . "/" . $med->getLocation();
-                    $resource = $path_to_file;
-                }
+                $resource = $mob->getStandardSrc();
                 $mime = $med->getFormat();
-            }
-            if (in_array($mime, ["video/vimeo", "video/youtube"])) {
-                if (!is_int(strpos($resource, "?"))) {
-                    $resource .= "?controls=0";
-                } else {
-                    $resource .= "&controls=0";
-                }
             }
             if (in_array($mime, iterator_to_array($this->media_types->getAllowedVideoMimeTypes()), true)) {
                 $videos[] = new VideoItem(

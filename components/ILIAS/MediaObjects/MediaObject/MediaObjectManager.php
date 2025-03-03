@@ -206,4 +206,22 @@ class MediaObjectManager
         }
     }
 
+    public function addPreviewFromUrl(
+        int $mob_id,
+        string $url,
+        string $target_location
+    ) : void
+    {
+        $str = file_get_contents($url);
+        $res = fopen('php://memory', 'r+');
+        fwrite($res, $str);
+        rewind($res);
+        $stream = new Stream($res);
+        $this->repo->addStream(
+            $mob_id,
+            $target_location,
+            $stream
+        );
+    }
+
 }
