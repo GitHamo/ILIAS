@@ -134,6 +134,16 @@ class MediaObjectRepository
         }
     }
 
+    public function addLocalDirectory(int $mob_id, string $dir) : void
+    {
+        if ($rid = $this->getRidForMobId($mob_id)) {
+            $this->irss->addDirectoryToContainer(
+                $rid,
+                $dir
+            );
+        }
+    }
+
     public function getLocalSrc(int $mob_id, string $location) : string
     {
         return $this->irss->getContainerUri($this->getRidForMobId($mob_id), $location);
