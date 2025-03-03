@@ -97,6 +97,10 @@ class ilLTIConsumerResultService
     public function handleRequest(): void
     {
         try {
+
+            global $DIC;
+            $logger = $DIC->logger()->root();
+            $logger->info('LTI Consumer Result Service: Incoming request');
             // get the request as xml
             $xml = simplexml_load_file('php://input');
             $this->message_ref_id = (string) $xml->imsx_POXHeader->imsx_POXRequestHeaderInfo->imsx_messageIdentifier;
@@ -127,6 +131,8 @@ class ilLTIConsumerResultService
                 $this->respondUnauthorized($result->getMessage());
                 return;
             }
+
+            $logger->info('LTI Consumer Result Service: Request signature verified, this->operation:' . $this->operation);
 
             // Dispatch the operation
             switch ($this->operation) {
@@ -173,6 +179,10 @@ class ilLTIConsumerResultService
      */
     protected function replaceResult(\SimpleXMLElement $request): void
     {
+        global $DIC;
+        $logger = $DIC->logger()->root();
+
+        $logger->info('LTI Consumer Result Service: Replace result');
         $result = (string) $request->resultRecord->result->resultScore->textString;
         if (!is_numeric($result)) {
             $code = "failure";
