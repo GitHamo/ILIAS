@@ -685,7 +685,7 @@ class ilObjectGUI implements ImplementsCreationCallback
         $this->ctrl->setParameter($this, 'new_type', $new_type);
 
         $this->tpl->setTitleIcon(ilObject::getIconForType($this->requested_new_type));
-        $this->tpl->setTitle($this->lng->txt('obj_' . $this->requested_new_type));
+        $this->tpl->setTitle($this->getTitleForCreationFormPage());
         $create_form = $this->initCreateForm($new_type);
         $this->tabs_gui->setBackTarget($this->lng->txt('cancel'), $this->ctrl->getLinkTargetByClass(static::class, 'cancel'));
         $this->tpl->setContent($this->getCreationFormsHTML($create_form));
@@ -715,6 +715,14 @@ class ilObjectGUI implements ImplementsCreationCallback
         );
     }
 
+    protected function getTitleForCreationFormPage(): string
+    {
+        if (!$this->obj_definition->isPlugin($this->requested_new_type)) {
+            return 'obj_' . $this->requested_new_type;
+        }
+        return ilObjectPlugin::lookupTxtById($this->requested_new_type, "obj_{$this->requested_new_type}");
+    }
+
     protected function getCreationFormTitle(): string
     {
         return $this->lng->txt($this->requested_new_type . '_new');
@@ -737,7 +745,14 @@ class ilObjectGUI implements ImplementsCreationCallback
         return $this->ui_factory->input()->container()->form()->standard(
             $this->ctrl->getFormAction($this, 'save'),
             $form_fields
-        )->withSubmitLabel($this->lng->txt($new_type . '_add'));
+        )->withSubmitLabel(
+            !$this->obj_definition->isPlugin($new_type)
+                ? $this->lng->txt($new_type . '_add')
+                : ilObjectPlugin::lookupTxtById(
+                    $this->requested_new_type,
+                    "{$this->requested_new_type}_add"
+                )
+        );
     }
 
     protected function didacticTemplatesToForm(): ?Radio
@@ -2098,8 +2113,13 @@ class ilObjectGUI implements ImplementsCreationCallback
                 AddNewItemElementTypes::Object,
                 empty($subitem['plugin'])
                     ? $this->lng->txt('obj_' . $type)
-                    : ilObjectPlugin::lookupTxtById($type, "obj_" . $type),
-                $this->ui_factory->symbol()->icon()->standard($type, ''),
+                    : ilObjectPlugin::lookupTxtById($type, 'obj_' . $type),
+                empty($subitem['plugin'])
+                    ? $this->ui_factory->symbol()->icon()->standard($type, '')
+                    : $this->ui_factory->symbol()->icon()->custom(
+                        ilObject::getIconForType($type),
+                        ''
+                    ),
                 new URI(
                     ILIAS_HTTP_PATH . '/' . $this->ctrl->getLinkTargetByClass($create_target_class, 'create')
                 )
