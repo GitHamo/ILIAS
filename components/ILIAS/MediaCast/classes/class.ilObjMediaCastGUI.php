@@ -254,7 +254,7 @@ class ilObjMediaCastGUI extends ilObjectGUI
         $ilAccess = $this->access;
         $ilToolbar = $this->toolbar;
 
-        $this->checkPermission("read");
+        $this->checkPermission("write");
 
         if ($a_presentation_mode) {
             $this->tpl->setOnScreenMessage('info', $this->lng->txt("mcst_view_abandoned"));
@@ -1167,7 +1167,7 @@ EOT;
         $ilLocator = $this->locator;
 
         if (is_object($this->object)) {
-            $ilLocator->addItem($this->object->getTitle(), $this->ctrl->getLinkTarget($this, "listItems"), "", $this->requested_ref_id);
+            $ilLocator->addItem($this->object->getTitle(), $this->ctrl->getLinkTarget($this, "showContent"), "", $this->requested_ref_id);
         }
     }
 
@@ -1466,7 +1466,7 @@ EOT;
         exit;
     }
 
-    protected function renderVideoObject() : void
+    protected function renderVideoObject(): void
     {
         $mob_id = $this->mc_request->getMobId();
         $html = $this->mob_player_gui->wrapper()->renderComponent(new ilObjMediaObject($mob_id));
