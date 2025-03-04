@@ -146,6 +146,17 @@ class MediaObjectManager
         return $this->repo->getFilesOfPath($mob_id, $dir_path);
     }
 
+    public function getInfoOfEntry(
+        int $mob_id,
+        string $path
+    ) : array
+    {
+        return $this->repo->getInfoOfEntry(
+            $mob_id,
+            $path
+        );
+    }
+
     public function generatePreview(
         int $mob_id,
         string $location,
