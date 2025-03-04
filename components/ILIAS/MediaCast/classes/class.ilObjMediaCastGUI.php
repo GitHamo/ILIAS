@@ -35,6 +35,7 @@ use ILIAS\MediaCast\Settings\SettingsGUI;
  */
 class ilObjMediaCastGUI extends ilObjectGUI
 {
+    protected \ILIAS\MediaObjects\Player\GUIService $mob_player_gui;
     protected \ILIAS\MediaObjects\MediaType\MediaTypeManager $media_type;
     protected \ILIAS\MediaCast\InternalGUIService $gui;
     protected $video_gui;
@@ -94,6 +95,7 @@ class ilObjMediaCastGUI extends ilObjectGUI
         $this->gui = $DIC->mediaCast()->internal()->gui();
         $this->media_type = $DIC->mediaObjects()->internal()->domain()->mediaType();
         $this->video_gui = $DIC->mediaObjects()->internal()->gui()->video();
+        $this->mob_player_gui = $DIC->mediaObjects()->internal()->gui()->player();
     }
 
     public function executeCommand(): void
@@ -1180,6 +1182,7 @@ EOT;
 
         if ($ilAccess->checkAccess("read", "", $a_target)) {
             $ctrl->setParameterByClass("ilobjmediacastgui", "ref_id", $a_target);
+            //exit;
             $ctrl->redirectByClass(["ilmediacasthandlergui", "ilobjmediacastgui"], "showContent");
         } elseif ($ilAccess->checkAccess("visible", "", $a_target)) {
             ilObjectGUI::_gotoRepositoryNode($a_target, "infoScreen");
@@ -1461,5 +1464,12 @@ EOT;
     {
         echo $this->getCommentGUI()->getListHTML() . "<script>ilNotes.init(null);</script>";
         exit;
+    }
+
+    protected function renderVideoObject() : void
+    {
+        $mob_id = $this->mc_request->getMobId();
+        $html = $this->mob_player_gui->wrapper()->renderComponent(new ilObjMediaObject($mob_id));
+        $this->gui->httpUtil()->sendString($html);
     }
 }

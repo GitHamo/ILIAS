@@ -67,7 +67,7 @@ class ilPlayerUtil
      */
     public static function getCssFilePaths(): array
     {
-        return array(self::getLocalMediaElementCssPath());
+        return [];
     }
 
     /**
