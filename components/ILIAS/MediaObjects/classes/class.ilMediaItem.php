@@ -1066,17 +1066,25 @@ class ilMediaItem
         }
     }
 
-    public function getLocationSrc(): string
+    public function getLocationSrc(bool $autoplay = false): string
     {
         if (strcasecmp("Reference", $this->getLocationType()) === 0) {
             $src = $this->getLocation();
             if ($this->getFormat() === "video/vimeo") {
+                $params = "";
+                if ($autoplay) {
+                    $params = "&autoplay=1&muted=1";
+                }
                 $par = ilExternalMediaAnalyzer::extractVimeoParameters($src);
-                $src = "//player.vimeo.com/video/" . $par["id"];
+                $src = "//player.vimeo.com/video/" . $par["id"] . "?api=1" . $params;
             }
             if ($this->getFormat() === "video/youtube") {
+                $params = "";
+                if ($autoplay) {
+                    $params = "&autoplay=1&muted=1";
+                }
                 $par = ilExternalMediaAnalyzer::extractYouTubeParameters($src);
-                $src = "//www.youtube.com/embed/" . $par["v"];
+                $src = "//www.youtube.com/embed/" . $par["v"] . "?enablejsapi=1" . $params;
             }
         } else {
             $src = $this->mob_manager->getLocalSrc(

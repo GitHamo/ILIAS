@@ -26,18 +26,98 @@ il.VideoWidget = il.VideoWidget || {};
     };
     _boot();
 
+    let iframeOrigin = '*';
+
+    function postMessageToIframe(iframe, command, value) {
+      iframe.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: command,
+        args: [value],
+      }), iframeOrigin);
+    }
+
+    const initYoutubeProgress = (iframe) => {
+      console.log("----------2--------");
+      iframe.contentWindow.postMessage({ event: 'listening' }, "*");
+      iframe.addEventListener('load', () => {
+        iframe.contentWindow.postMessage('{"event": "listening"}', "*");
+        iframe.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "playProgress" }), "*");
+      });
+
+      let videoDuration;
+
+      window.addEventListener("message", (event) => {
+        console.log(event);
+        if (event.origin.includes("youtube.com")) {
+
+          const data = JSON.parse(event.data);
+
+          // Get video duration once
+          if (data.event === "infoDelivery" && data.info && data.info.duration) {
+            videoDuration = data.info.duration;
+          }
+
+          // Track playback progress
+          if (data.event === "infoDelivery" && data.info && data.info.currentTime && videoDuration > 0) {
+            const currentTime = data.info.currentTime;
+            const percentagePlayed = (currentTime / videoDuration) * 100;
+
+            console.log(percentagePlayed);
+
+            if (percentagePlayed >= 90 && !hasReached90Percent) {
+              hasReached90Percent = true;
+              console.log("Video has reached 90%");
+            }
+          }
+        }
+        if (event.origin.includes("vimeo.com")) {
+
+          const data = JSON.parse(event.data);
+          // Check if the message is a playProgress event
+          if (data && data.event === "playProgress") {
+            const currentTime = data.data.seconds; // Current playback time in seconds
+            const duration = data.data.duration;   // Total duration of the video
+            const percentagePlayed = (currentTime / duration) * 100;
+
+            console.log(`Current Time: ${currentTime} seconds`);
+            console.log(`Percentage Played: ${percentagePlayed.toFixed(2)}%`);
+
+            if (percentagePlayed >= 90) {
+              console.log("Video has reached 90%");
+            }
+          }        }
+      });
+    };
+
     const progress = () => {
+
       // console.log("monitoring progress");
       // for all wrappers
       t.wrapper_ids.forEach((wrapper_id, i, a) => {
+
+        const cb = t.widget[wrapper_id].progress_cb;
+        if (!cb) {
+          return;
+        }
+        console.log('--- callback given');
+        // get video element
+        const vid = document.getElementById(wrapper_id).querySelector('video');
+        if (vid) {
+          console.log(`---> ${vid.currentTime}`);
+          console.log(`---> ${vid.duration}`);
+          cb(wrapper_id, vid.currentTime, vid.duration, vid.currentTime === vid.duration && !vid.paused);
+        }
+
+        /*
         // get player
         const p = t.widget[wrapper_id].player;
         // if the wrapper defines a progress callback, call it
         if (t.widget[wrapper_id].progress_cb) {
           // console.log(p);
           // get current time, duration and ended information to callback
-          t.widget[wrapper_id].progress_cb(wrapper_id, p.getCurrentTime(), p.node.duration, p.node.ended);
-        }
+          t.widget[wrapper_id].progress_cb(wrapper_id,
+          p.getCurrentTime(), p.node.duration, p.node.ended);
+        } */
       });
       setTimeout(progress, 1000);
     };
@@ -70,45 +150,29 @@ il.VideoWidget = il.VideoWidget || {};
 
     // load file into player and show it
     const loadFile = (wrapper_id, video_data, play, progress_cb) => {
-      console.log('-----loadFile');
-      console.log(wrapper_id);
-      const content = t.widget[wrapper_id].tpl;
-      const $wrap = $(`#${wrapper_id}`);
-      $wrap.html(
-        content,
+      if (!video_data.renderUrl) {
+        //console.trace();
+        return;
+      }
+
+      //const content = t.widget[wrapper_id].tpl;
+      const wrapperEl = document.getElementById(wrapper_id);
+
+      il.repository.core.fetchReplaceInner(
+        wrapperEl,
+        video_data.renderUrl,
+        {},
+        () => {
+          const iframe = wrapperEl.querySelector('iframe');
+          console.log(wrapperEl);
+          console.log(iframe);
+          initYoutubeProgress(iframe);
+        },
       );
-      const video_el = $(`#${wrapper_id} video`);
-      console.log(video_el);
-      // https://github.com/vimeo/player.js/issues/197
-      // add ?controls=0 for vimeo
-      video_el.attr('src', video_data.resource);
-      video_el.attr('type', video_data.mime);
-      video_el.attr('poster', video_data.poster);
 
       setMeta(wrapper_id, video_data.title, video_data.description);
 
-      video_el.mediaelementplayer({
-        videoWidth: '100%',
-        videoHeight: '100%',
-        alwaysShowControls: true,
-        success(mediaElement, originalNode, player) {
-          if (play) {
-            promise = player.play();
-            if (promise !== undefined) {
-              promise.then((_) => {
-                // Autoplay started!
-              }).catch((error) => {
-                console.log('Autostart was prevented by browser.');
-              });
-            }
-          }
-          t.widget[wrapper_id].player = player;
-          t.widget[wrapper_id].progress_cb = progress_cb;
-          player.node.addEventListener('ended', () => {
-            progress_cb(wrapper_id, player.node.duration, player.node.duration, true);
-          });
-        },
-      });
+      t.widget[wrapper_id].progress_cb = progress_cb;
     };
 
     const setPreviousCallback = (wrapper_id, pcb) => {
@@ -133,7 +197,7 @@ il.VideoWidget = il.VideoWidget || {};
       }
     };
 
-    const player = (wrapper_id) => t.widget[wrapper_id].player;
+    //const player = (wrapper_id) => t.widget[wrapper_id].player;
 
     return {
       init,
@@ -143,7 +207,6 @@ il.VideoWidget = il.VideoWidget || {};
       setNextCallback,
       previous,
       next,
-      player,
     };
   }($));
 }($, il));
@@ -441,16 +504,16 @@ il.VideoPlaylist = il.VideoPlaylist || {};
     const toggleItem = (list_wrapper, id) => {
       const current = t.current_item[t.playlist[list_wrapper].player_wrapper];
 
-      const player = il.VideoWidget.player(t.playlist[list_wrapper].player_wrapper);
+      //const player = il.VideoWidget.player(t.playlist[list_wrapper].player_wrapper);
 
       // const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);
-      if (current !== id) {
+      /*if (current !== id) {
         loadItem(list_wrapper, id, true);
-      } else if (player.domNode.paused) {
+      }*/ /*else if (player.domNode.paused) {
         player.play();
       } else {
         player.pause();
-      }
+      }*/
     };
 
     /**
@@ -468,10 +531,10 @@ il.VideoPlaylist = il.VideoPlaylist || {};
           }
           il.VideoWidget.loadFile(t.playlist[list_wrapper].player_wrapper, v, play, progress_cb);
           t.current_item[t.playlist[list_wrapper].player_wrapper] = id;
-          loadComments(id);
+          //loadComments(id);
         }
       });
-      refreshNavigation(list_wrapper);
+      //refreshNavigation(list_wrapper);
     };
 
     /**
@@ -560,6 +623,7 @@ il.VideoPlaylist = il.VideoPlaylist || {};
     };
 
     const loadComments = (id) => {
+      return;
       const el = document.querySelector('[data-mcst-comments]');
       if (el) {
         const url = `${el.dataset.mcstComments}&item_id=${id}`;

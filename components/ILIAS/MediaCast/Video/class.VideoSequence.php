@@ -40,6 +40,11 @@ class VideoSequence
 
     protected function init(): void
     {
+        global $DIC;
+
+        $f = $DIC->ui()->factory();
+        $r = $DIC->ui()->renderer();
+
         $videos = [];
         foreach ($this->media_cast->getSortedItemsArray() as $item) {
             $mob = new \ilObjMediaObject($item["mob_id"]);
