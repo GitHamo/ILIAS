@@ -409,6 +409,16 @@ class IRSSWrapper
         );
     }
 
+    public function getContainerEntryInfo(
+        string $container_id,
+        string $path
+    ): array {
+        $reader = new ZipReader(
+            $this->irss->consume()->stream($this->getResourceIdForIdString($container_id))->getStream()
+        );
+        return $reader->getItem($path)[1];
+    }
+
     /**
      * Is there a better way to check this?
      */
