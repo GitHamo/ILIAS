@@ -34,9 +34,11 @@ use ILIAS\Filesystem\Util\Archive\Unzip;
 use ILIAS\Filesystem\Stream\ZIPStream;
 use ILIAS\ResourceStorage\Resource\StorableResource;
 use ILIAS\components\ResourceStorage\Container\Wrapper\ZipReader;
+use ILIAS\FileDelivery\Delivery\Disposition;
 
 class IRSSWrapper
 {
+    protected \ILIAS\FileDelivery\Services $file_delivery;
     protected \ILIAS\FileUpload\FileUpload $upload;
     protected \ILIAS\ResourceStorage\Services $irss;
     protected Archives $archives;
@@ -53,6 +55,7 @@ class IRSSWrapper
         $this->archives = $DIC->archives();
         $this->upload = $DIC->upload();
         $this->archives = $DIC->archives();
+        $this->file_delivery = $DIC->fileDelivery();
     }
 
     protected function getNewCollectionId(): ResourceCollectionIdentification
@@ -417,6 +420,23 @@ class IRSSWrapper
             $this->irss->consume()->stream($this->getResourceIdForIdString($container_id))->getStream()
         );
         return $reader->getItem($path)[1];
+    }
+
+    public function deliverContainerEntry(
+        string $container_id,
+        string $path
+    ): void {
+        $reader = new ZipReader(
+            $this->irss->consume()->stream($this->getResourceIdForIdString($container_id))->getStream()
+        );
+        [$stream, $info] = $reader->getItem($path);
+
+        $this->file_delivery->delivery()->deliver(
+            $stream,
+            $info['basename'],
+            $info['mime_type'],
+            Disposition::ATTACHMENT
+        );
     }
 
     /**
