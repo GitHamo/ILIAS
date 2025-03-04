@@ -157,6 +157,15 @@ class MediaObjectManager
         );
     }
 
+    public function deliverEntry(
+        int $mob_id,
+        string $path
+    ) : void
+    {
+        $this->repo->deliverEntry($mob_id, $path);
+    }
+
+
     public function generatePreview(
         int $mob_id,
         string $location,

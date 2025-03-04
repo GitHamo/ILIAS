@@ -175,8 +175,18 @@ class MediaObjectRepository
         );
     }
 
+    public function deliverEntry(
+        int $mob_id,
+        string $path
+    ) : void
+    {
+        $this->irss->deliverContainerEntry(
+            $this->getRidForMobId($mob_id),
+            $path
+        );
+    }
 
-        public function getContainerPath(
+    public function getContainerPath(
         int $mob_id
     ) : string {
         return $this->irss->getResourcePath($this->getRidForMobId($mob_id));

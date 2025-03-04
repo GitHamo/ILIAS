@@ -965,7 +965,7 @@ EOT;
             "Standard",
             $this->mc_request->getPresentation()
         )) {
-            $ilCtrl->redirect($this, "listItems");
+            $ilCtrl->redirect($this, "showContent");
         }
         exit;
     }
