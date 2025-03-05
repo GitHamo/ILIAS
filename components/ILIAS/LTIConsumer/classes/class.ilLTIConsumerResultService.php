@@ -138,7 +138,7 @@ class ilLTIConsumerResultService
                 return;
             }
 
-            $logger->info("LTI Consumer Result Service: Request signature verified, this->operation: $this->operation" );
+            $logger->info("LTI Consumer Result Service: Request signature verified, this->operation: $this->operation");
 
             // Dispatch the operation
             switch ($this->operation) {
