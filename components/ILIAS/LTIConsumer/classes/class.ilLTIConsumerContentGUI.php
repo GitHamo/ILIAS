@@ -83,6 +83,16 @@ class ilLTIConsumerContentGUI
                 $this->dic->toolbar()->addText($this->getStartButtonTxt11());
             }
         } else {
+
+            setcookie('PHPSESSID', session_id(), [
+                'expires' => 0,
+                'path' => rtrim(IL_COOKIE_PATH, '/') . '/ltiauth.php',
+                'domain' => IL_COOKIE_DOMAIN,
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'None'
+            ]);
+
             if ($this->object->isLaunchMethodEmbedded() && (ilSession::get('lti13_login_data') == null)) {
                 $tpl = new ilTemplate('tpl.lti_content.html', true, true, 'components/ILIAS/LTIConsumer');
                 $tpl->setVariable("EMBEDDED_IFRAME_SRC", $this->dic->ctrl()->getLinkTarget(
