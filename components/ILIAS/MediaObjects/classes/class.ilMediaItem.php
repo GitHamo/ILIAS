@@ -16,6 +16,8 @@
  *
  *********************************************************************/
 
+use ILIAS\Filesystem\Stream\ZIPStream;
+
 /**
  * Class ilMediaItem
  * Media Item, component of a media object (file or reference)
@@ -1093,6 +1095,14 @@ class ilMediaItem
             );
         }
         return $src;
+    }
+
+    public function getLocationStream() : ZIPStream
+    {
+        return $this->mob_manager->getLocationStream(
+            $this->getMobId(),
+            $this->getLocation()
+        );
     }
 
     /**
