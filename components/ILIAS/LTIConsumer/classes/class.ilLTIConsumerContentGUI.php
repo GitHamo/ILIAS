@@ -104,7 +104,7 @@ class ilLTIConsumerContentGUI
                         $this->dic->http()->close();
                     }
                 } elseif (!$this->object->isLaunchMethodEmbedded()) {
-                    setcookie('PHPSESSID', session_id(), [
+                    setcookie(session_name(), session_id(), [
                         'expires' => 0,
                         'path' => rtrim(IL_COOKIE_PATH, '/') . '/ltiauth.php',
                         'domain' => IL_COOKIE_DOMAIN,
