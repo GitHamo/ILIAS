@@ -795,6 +795,7 @@ class ilObjLTIConsumer extends ilObject2
 
     public function buildLaunchParametersLTI13(
         ilCmiXapiUser $cmixUser,
+        string $token,
         string $endpoint,
         string $clientId,
         int $deploymentId,
@@ -895,8 +896,7 @@ class ilObjLTIConsumer extends ilObject2
             "launch_presentation_css_url" => "",
             "tool_consumer_info_product_family_code" => "ilias",
             "tool_consumer_info_version" => ILIAS_VERSION,
-            "lis_result_sourcedid" => "",
-            //$token,
+            "lis_result_sourcedid" => $token,
             "lis_outcome_service_url" => self::getIliasHttpPath(
             ) . "/ltiresult.php?client_id=" . CLIENT_ID,
             "role_scope_mentor" => ""
