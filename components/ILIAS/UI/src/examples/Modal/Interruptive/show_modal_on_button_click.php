@@ -29,7 +29,6 @@ namespace ILIAS\UI\examples\Modal\Interruptive;
  *   Clicking "Show Modal" opens up a modal with some content.
  *   A click onto "Delete" will reload the page and displays a confirmation below the example.
  *   A click onto "Cancel" or Close Glyph will hide the modal.
- *   Clicking onto the greyed out ILIAS in the background outside of the modal has no effect, Modal remains open.
  * ---
  */
 function show_modal_on_button_click()
