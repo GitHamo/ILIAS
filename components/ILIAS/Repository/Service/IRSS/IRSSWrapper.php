@@ -35,9 +35,12 @@ use ILIAS\Filesystem\Stream\ZIPStream;
 use ILIAS\ResourceStorage\Resource\StorableResource;
 use ILIAS\components\ResourceStorage\Container\Wrapper\ZipReader;
 use ILIAS\FileDelivery\Delivery\Disposition;
+use ILIAS\Filesystem\Util\Archive\ZipOptions;
+use ILIAS\Filesystem\Filesystems;
 
 class IRSSWrapper
 {
+    protected $filesystems;
     protected \ILIAS\FileDelivery\Services $file_delivery;
     protected \ILIAS\FileUpload\FileUpload $upload;
     protected \ILIAS\ResourceStorage\Services $irss;
@@ -56,6 +59,7 @@ class IRSSWrapper
         $this->upload = $DIC->upload();
         $this->archives = $DIC->archives();
         $this->file_delivery = $DIC->fileDelivery();
+        $this->filesystems = $DIC->filesystem();
     }
 
     protected function getNewCollectionId(): ResourceCollectionIdentification
@@ -272,7 +276,8 @@ class IRSSWrapper
     {
         $id = $this->getResourceIdForIdString($rid);
         if ($id) {
-            $this->irss->consume()->download($id)->run();
+            $revision = $this->irss->manage()->getCurrentRevision($id);
+            $this->irss->consume()->download($id)->overrideFileName($revision->getTitle())->run();
         }
     }
 
@@ -555,22 +560,28 @@ class IRSSWrapper
 
     public function createContainer(
         ResourceStakeholder $stakeholder,
-        string $title = ""
+        string $title = "container.zip"
     ): string {
-        // create empty container resource. empty zips are not allowed, we need at least one file which is hidden
-        $empty_zip = $this->archives->zip(
-            []
-        );
-
         if ($title === "") {
-            $title = null;
+            throw new \ilException("Container title missing.");
         }
-
+        // create empty container resource. empty zips are not allowed, we need at least one file which is hidden
+        $tmp_dir_info = new \SplFileInfo(\ilFileUtils::ilTempnam());
+        $this->filesystems->temp()->createDir($tmp_dir_info->getFilename());
+        $tmp_dir = $tmp_dir_info->getRealPath();
+        $options = (new ZipOptions())
+            ->withZipOutputName($title)
+            ->withZipOutputPath($tmp_dir);
+        $empty_zip = $this->archives->zip(
+            [],
+            $options
+        );
         $rid = $this->irss->manageContainer()->containerFromStream(
             $empty_zip->get(),
             $stakeholder,
             $title
         );
+        \ilFileUtils::delDir($tmp_dir);
         return $rid->serialize();
     }
 
@@ -592,10 +603,11 @@ class IRSSWrapper
         string $local_dir_path,
         ResourceStakeholder $stakeholder,
         string $container_path = "",
-        bool $recursive = true
+        bool $recursive = true,
+        string $title = "container.zip"
     ): string {
         $real_dir_path = realpath($local_dir_path);
-        $rid = $this->createContainer($stakeholder);
+        $rid = $this->createContainer($stakeholder, $title);
         if ($recursive) {
             $iterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($local_dir_path, \RecursiveDirectoryIterator::SKIP_DOTS),

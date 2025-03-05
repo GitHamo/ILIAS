@@ -38,8 +38,8 @@ class ExportFileDBRepository
 
     public function create(
         int $object_id,
-        string $type = "",
-        string $title = ""
+        string $type,
+        string $title
     ): string
     {
         $rid = $this->irss->createContainer(
