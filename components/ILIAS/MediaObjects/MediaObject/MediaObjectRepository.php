@@ -47,7 +47,8 @@ class MediaObjectRepository
             $rid = $this->irss->cloneContainer($from_rid);
         } else {
             $rid = $this->irss->createContainer(
-                $stakeholder
+                $stakeholder,
+                "mob.zip"
             );
         }
         $this->db->insert('mob_data', [
