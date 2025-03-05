@@ -183,6 +183,7 @@ class ExportFileDBRepository
         $this->irss->deliverFile($rid);
     }
 
+    // currently broken, see https://mantis.ilias.de/view.php?id=44135
     public function rename(
         string $rid,
         string $title

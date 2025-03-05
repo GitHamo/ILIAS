@@ -813,6 +813,7 @@ class IRSSWrapper
         }
     }
 
+    // currently broken, see https://mantis.ilias.de/view.php?id=44135
     public function renameContainer(
         string $rid,
         string $title
