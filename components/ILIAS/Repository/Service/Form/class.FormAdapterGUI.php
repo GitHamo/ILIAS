@@ -22,6 +22,7 @@ namespace ILIAS\Repository\Form;
 
 use ILIAS\UI\Component\Input\Container\Form;
 use ILIAS\UI\Component\Input\Container\Form\FormInput;
+use ILIAS\Data\Factory;
 
 /**
  * @author Alexander Killing <killing@leifos.de>
@@ -213,8 +214,20 @@ class FormAdapterGUI
 
     public function required($required = true): self
     {
+<<<<<<< HEAD:components/ILIAS/Repository/Service/Form/class.FormAdapterGUI.php
         if ($required && ($field = $this->getLastField())) {
             $field = $field->withRequired(true);
+=======
+        if ($field = $this->getLastField()) {
+            if ($field instanceof \ILIAS\UI\Component\Input\Field\Text) {
+                $field = $field->withRequired(true, new NotEmpty(
+                    new Factory(),
+                    $this->lng
+                ));
+            } else {
+                $field = $field->withRequired(true);
+            }
+>>>>>>> a64de3ee19b (fixed required message):Services/Repository/Service/Form/class.FormAdapterGUI.php
             $this->replaceLastField($field);
         }
         return $this;
