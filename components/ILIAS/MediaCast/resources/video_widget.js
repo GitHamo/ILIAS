@@ -36,18 +36,14 @@ il.VideoWidget = il.VideoWidget || {};
       }), iframeOrigin);
     }
 
-    const initYoutubeProgress = (iframe) => {
-      console.log("----------2--------");
+    const initExternalProgress = (iframe, wrapper_id) => {
       iframe.contentWindow.postMessage({ event: 'listening' }, "*");
-      iframe.addEventListener('load', () => {
-        iframe.contentWindow.postMessage('{"event": "listening"}', "*");
-        iframe.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "playProgress" }), "*");
-      });
+      iframe.contentWindow.postMessage('{"event": "listening"}', "*");
+      iframe.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "playProgress" }), "*");
 
       let videoDuration;
 
       window.addEventListener("message", (event) => {
-        console.log(event);
         if (event.origin.includes("youtube.com")) {
 
           const data = JSON.parse(event.data);
@@ -60,32 +56,24 @@ il.VideoWidget = il.VideoWidget || {};
           // Track playback progress
           if (data.event === "infoDelivery" && data.info && data.info.currentTime && videoDuration > 0) {
             const currentTime = data.info.currentTime;
-            const percentagePlayed = (currentTime / videoDuration) * 100;
-
-            console.log(percentagePlayed);
-
-            if (percentagePlayed >= 90 && !hasReached90Percent) {
-              hasReached90Percent = true;
-              console.log("Video has reached 90%");
+            const cb = t.widget[wrapper_id].progress_cb;
+            if (cb) {
+              cb(wrapper_id, currentTime, videoDuration, currentTime === videoDuration);
             }
           }
         }
         if (event.origin.includes("vimeo.com")) {
-
           const data = JSON.parse(event.data);
           // Check if the message is a playProgress event
           if (data && data.event === "playProgress") {
             const currentTime = data.data.seconds; // Current playback time in seconds
             const duration = data.data.duration;   // Total duration of the video
-            const percentagePlayed = (currentTime / duration) * 100;
-
-            console.log(`Current Time: ${currentTime} seconds`);
-            console.log(`Percentage Played: ${percentagePlayed.toFixed(2)}%`);
-
-            if (percentagePlayed >= 90) {
-              console.log("Video has reached 90%");
+            const cb = t.widget[wrapper_id].progress_cb;
+            if (cb) {
+              cb(wrapper_id, currentTime, duration, currentTime === duration);
             }
-          }        }
+          }
+        }
       });
     };
 
@@ -99,13 +87,10 @@ il.VideoWidget = il.VideoWidget || {};
         if (!cb) {
           return;
         }
-        console.log('--- callback given');
         // get video element
         const vid = document.getElementById(wrapper_id).querySelector('video');
         if (vid) {
-          console.log(`---> ${vid.currentTime}`);
-          console.log(`---> ${vid.duration}`);
-          cb(wrapper_id, vid.currentTime, vid.duration, vid.currentTime === vid.duration && !vid.paused);
+          cb(wrapper_id, vid.currentTime, vid.duration, vid.currentTime === vid.duration);
         }
 
         /*
@@ -164,9 +149,26 @@ il.VideoWidget = il.VideoWidget || {};
         {},
         () => {
           const iframe = wrapperEl.querySelector('iframe');
-          console.log(wrapperEl);
-          console.log(iframe);
-          initYoutubeProgress(iframe);
+          const vid = wrapperEl.querySelector('video');
+          if (vid) {
+            if (play) {
+              vid.play();
+            }
+          } else {
+            iframe.addEventListener("load", () => {
+              setTimeout(() => {
+                initExternalProgress(iframe, wrapper_id);
+                // currently does not work
+                if (play) {
+                  /*iframe.contentWindow.postMessage({ event: 'play' }, "*");
+                  iframe.contentWindow.postMessage({ event: 'playVideo' }, "*");
+                  iframe.contentWindow.postMessage('{"event": "play"}', "*");
+                  iframe.contentWindow.postMessage('{"event": "playVideo"}', "*");*/
+                  iframe.contentWindow.postMessage(JSON.stringify({ method: "play"}), "*");
+                }
+              }, 500);    /* this seems to be needed for vimeo */
+            });
+          }
         },
       );
 
@@ -191,13 +193,9 @@ il.VideoWidget = il.VideoWidget || {};
 
     const next = (wrapper_id) => {
       if (t.widget[wrapper_id].next) {
-        console.log('calling next callback');
-        console.log(t.widget[wrapper_id].next);
         t.widget[wrapper_id].next();
       }
     };
-
-    //const player = (wrapper_id) => t.widget[wrapper_id].player;
 
     return {
       init,
@@ -252,8 +250,6 @@ il.VideoPlaylist = il.VideoPlaylist || {};
           }
         });
       } */
-      console.log('---item---');
-      console.log(item);
       // preview_pic
       // $tpl.find("[data-elementtype='title']").html(item.linked_title);
       // $tpl.find("[data-elementtype='description']").html(item.description);
@@ -382,23 +378,18 @@ il.VideoPlaylist = il.VideoPlaylist || {};
 
     const progress_cb = (player_wrapper, current_time, duration, ended) => {
       let perc = 0;
-
       if (current_time > 0 && duration && duration > 0) {
         perc = 100 / duration * current_time;
         // console.log(perc);
       }
-
       for (const list_wrapper in t.playlist) {
         if (t.playlist.hasOwnProperty(list_wrapper) && t.playlist[list_wrapper].player_wrapper === player_wrapper) {
           const current = t.current_item[t.playlist[list_wrapper].player_wrapper];
           t.playlist[list_wrapper].items.forEach((v, i, a) => {
             if (v.id === current) {
-              if (['video/vimeo', 'video/youtube'].includes(v.mime)) {
-                duration = v.duration;
-              }
-
               if (current_time > 0 && duration && duration > 0) {
                 perc = 100 / duration * current_time;
+
                 if (t.playlist[list_wrapper].completed_cb !== '') {
                   if (perc >= t.playlist[list_wrapper].percentage) {
                     if (!t.playlist[list_wrapper].items[i].completed) {
@@ -498,7 +489,6 @@ il.VideoPlaylist = il.VideoPlaylist || {};
       if (nextItem > 0) {
         loadItem(list_wrapper, nextItem, true);
       }
-      console.log(`auto play next${list_wrapper}`);
     };
 
     const toggleItem = (list_wrapper, id) => {
@@ -604,12 +594,9 @@ il.VideoPlaylist = il.VideoPlaylist || {};
       });
 
       il.VideoWidget.setNextCallback(player_wrapper, () => {
-        console.log(`in next callback ${list_wrapper}`);
         next(list_wrapper);
       });
 
-      // console.log(items);
-      // console.log(autoplay);
       render(list_wrapper);
       loadFirst(list_wrapper, false);
     };
