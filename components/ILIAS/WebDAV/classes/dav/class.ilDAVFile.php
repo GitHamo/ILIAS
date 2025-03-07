@@ -108,8 +108,8 @@ class ilDAVFile implements IFile
         }
         $stream = Streams::ofResource($resource);
 
-        if ($this->versioning_enabled) {
-            $version = $this->obj->getVersion(true);
+        $version = $this->obj->getVersion(true);
+        if ($this->versioning_enabled || $version === 0) {
             // stream may be a temp-file (due to chunked upload). we must impoort it directly
             $uri = $stream->getMetadata('uri');
             if ($uri === 'php://temp') {
