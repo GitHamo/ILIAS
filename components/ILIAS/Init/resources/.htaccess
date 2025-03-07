@@ -24,7 +24,9 @@
 </IfModule>
 
 <IfModule mod_setenvif.c>
-  SetEnvIfNoCase Transfer-Encoding "chunked" proxy-sendcl=1
+	# WebDAV specific
+	SetEnvIfNoCase Transfer-Encoding "chunked" proxy-sendcl=1
+	SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </IfModule>
 
 AddType video/ogg .ogv
