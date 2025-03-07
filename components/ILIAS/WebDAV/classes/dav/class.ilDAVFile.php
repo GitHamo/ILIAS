@@ -90,7 +90,7 @@ class ilDAVFile implements IFile
         }
 
         if ($size > ilFileUtils::getPhpUploadSizeLimitInBytes()) {
-            // remove already created file?
+             $this->delete();
             throw new Forbidden('File is too big');
         }
 
@@ -110,7 +110,11 @@ class ilDAVFile implements IFile
 
         if ($this->versioning_enabled) {
             $version = $this->obj->getVersion(true);
-            if (($stream_content = (string) $stream) !== '') {
+            // stream may be a temp-file (due to chunked upload). we must impoort it directly
+            $uri = $stream->getMetadata('uri');
+            if ($uri === 'php://temp') {
+                $version = $this->obj->appendStream($stream, $name);
+            } elseif (($stream_content = (string) $stream) !== '') { // this may be a problem with large files
                 $version = $this->obj->appendStream(
                     Streams::ofString($stream_content),
                     $name
@@ -141,7 +145,7 @@ class ilDAVFile implements IFile
 
         if (($r_id = $this->obj->getResourceId()) &&
             ($identification = $this->resource_manager->find($r_id))) {
-            return $this->resource_consumer->stream($identification)->getStream()->getContents();
+            return $this->resource_consumer->stream($identification)->getStream()->detach();
         }
         return '';
     }

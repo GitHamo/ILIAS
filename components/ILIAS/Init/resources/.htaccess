@@ -23,6 +23,10 @@
 	XSendFile On
 </IfModule>
 
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase Transfer-Encoding "chunked" proxy-sendcl=1
+</IfModule>
+
 AddType video/ogg .ogv
 AddType video/mp4 .mp4
 AddType video/webm .webm
