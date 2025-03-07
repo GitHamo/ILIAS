@@ -98,6 +98,8 @@ class ilLTITool extends Tool
             $_SERVER['REQUEST_URI'] = rtrim(preg_replace('/([?&])client_id=[^&]+(&|$)/', '$1', $_SERVER['REQUEST_URI']), '?&');
         }
 
+        self::$authenticateUsingGet = true;
+
         parent::handleRequest($strictMode, $disableCookieCheck, $generateWarnings);
     }
 }
