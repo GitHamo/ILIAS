@@ -86,13 +86,13 @@ class FormAdapterGUI
         $this->http = $DIC->http();
         $this->lng = $DIC->language();
         $this->refinery = $DIC->refinery();
-        $this->lng = $DIC->language();
         $this->main_tpl = $DIC->ui()->mainTemplate();
         $this->user = $DIC->user();
         $this->data = new \ILIAS\Data\Factory();
         $this->submit_caption = $submit_caption;
         self::initJavascript();
         $this->initStdObjProperties($DIC);
+        $this->lng->loadLanguageModule("rep");
     }
 
     public static function getOnLoadCode(): string
