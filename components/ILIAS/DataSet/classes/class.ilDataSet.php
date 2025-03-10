@@ -306,7 +306,7 @@ abstract class ilDataSet
             foreach ($rec as $f => $c) {
                 if (isset($this->export) and ($types[$f] ?? "") === "directory") {
                     $sdir = realpath($c);
-                    $path_in_container = $this->export->getExportDirInContainer() . "/dsDir_" . $this->dircnt;
+                    $path_in_container = $this->export->getPathToComponentExpDirInContainer() . "/dsDir_" . $this->dircnt;
                     $this->export->getExportWriter()->writeDirectory(
                         $sdir,
                         $path_in_container
@@ -315,7 +315,7 @@ abstract class ilDataSet
                     $this->dircnt++;
                 }
                 if (isset($this->export) and ($types[$f] ?? "") === "rscollection") {
-                    $path_in_container = $this->export->getExportDirInContainer() . "/dsDir_" . $this->dircnt;
+                    $path_in_container = $this->export->getPathToComponentExpDirInContainer() . "/dsDir_" . $this->dircnt;
                     $collection = $this->getCollection($rec, $a_entity, $a_schema_version, $f, $c);
                     if (!is_null($collection)) {
                         $this->export->getExportWriter()->writeFilesByResourceCollection(
@@ -328,7 +328,7 @@ abstract class ilDataSet
                     $this->dircnt++;
                 }
                 if (isset($this->export) and ($types[$f] ?? "") === "rscontainer") {
-                    $path_in_container = $this->export->getExportDirInContainer() . "/dsDir_" . $this->dircnt;
+                    $path_in_container = $this->export->getPathToComponentExpDirInContainer() . "/dsDir_" . $this->dircnt;
                     if ($config = $this->getContainerExportConfig($rec, $a_entity, $a_schema_version, $f, $c)) {
                         $this->export->getExportWriter()->writeFilesByResourceContainer(
                             $this->getIRSSContainerExportConfig(
