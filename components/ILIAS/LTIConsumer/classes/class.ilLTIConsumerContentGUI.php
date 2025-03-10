@@ -104,15 +104,6 @@ class ilLTIConsumerContentGUI
                         $this->dic->http()->close();
                     }
                 } elseif (!$this->object->isLaunchMethodEmbedded()) {
-                    setcookie(session_name(), session_id(), [
-                        'expires' => 0,
-                        'path' => rtrim(IL_COOKIE_PATH, '/') . '/ltiauth.php',
-                        'domain' => IL_COOKIE_DOMAIN,
-                        'secure' => true,
-                        'httponly' => true,
-                        'samesite' => 'None'
-                    ]);
-
                     $this->dic->toolbar()->addText($this->getStartButtonTxt13());
                 }
             }
