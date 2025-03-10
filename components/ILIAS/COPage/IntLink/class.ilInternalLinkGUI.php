@@ -24,6 +24,7 @@ use ILIAS\COPage\IntLink\StandardGUIRequest;
  */
 class ilInternalLinkGUI
 {
+    protected \ILIAS\MediaObjects\Thumbs\ThumbsGUI $thumbs_gui;
     protected ?ilObjFile $uploaded_file = null;
     protected int $parent_fold_id;
     protected string $default_parent_obj_type;
@@ -65,6 +66,7 @@ class ilInternalLinkGUI
             $DIC->http(),
             $DIC->refinery()
         );
+        $this->thumbs_gui = $DIC->mediaObjects()->internal()->gui()->thumbs();
 
         $this->lng->loadLanguageModule("link");
         $this->lng->loadLanguageModule("content");
@@ -744,10 +746,6 @@ class ilInternalLinkGUI
         string $a_mode = ""
     ): void {
         // output thumbnail
-        $mob = new ilObjMediaObject($a_id);
-        $med = $mob->getMediaItem("Standard");
-        $target = $med->getThumbnailTarget("small");
-        $suff = "";
         if ($this->getSetLinkTargetScript() !== "") {
             $tpl->setCurrentBlock("thumbnail_link");
             $suff = "_link";
@@ -756,13 +754,12 @@ class ilInternalLinkGUI
             $suff = "_js";
         }
 
-        if ($target !== "") {
-            $tpl->setCurrentBlock("thumb" . $suff);
-            $tpl->setVariable("SRC_THUMB", $target);
-            $tpl->parseCurrentBlock();
-        } else {
-            $tpl->setVariable("NO_THUMB", "&nbsp;");
-        }
+        $tpl->setCurrentBlock("thumb" . $suff);
+        $tpl->setVariable(
+            "THUMB",
+            $this->thumbs_gui->getThumbHtml($a_id)
+        );
+        $tpl->parseCurrentBlock();
 
         if ($this->getSetLinkTargetScript() !== "") {
             $tpl->setCurrentBlock("thumbnail_link");

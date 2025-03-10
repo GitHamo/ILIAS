@@ -18,16 +18,16 @@
 
 declare(strict_types=1);
 
-use ILIAS\Setup\Agent\NullAgent;
-use ILIAS\Setup;
-use ILIAS\Refinery\Transformation;
+namespace ILIAS\Data\Text;
 
-class ilWorkflowEngineSetupAgent extends NullAgent
+use ILIAS\Data\Text\Shape\WordOnlyMarkdown as WordOnlyMarkdownShape;
+
+class WordOnlyMarkdown extends SimpleDocumentMarkdown
 {
-    use Setup\Agent\HasNoNamedObjective;
-
-    public function getArrayToConfigTransformation(): Transformation
-    {
-        throw new \LogicException("Agent has no config.");
+    public function __construct(
+        WordOnlyMarkdownShape $word_only_markdown_shape,
+        string $raw
+    ) {
+        parent::__construct($word_only_markdown_shape, $raw);
     }
 }

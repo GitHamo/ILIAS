@@ -27,6 +27,8 @@ use ILIAS\Filesystem\Stream\Stream;
 use _PHPStan_9815bbba4\Nette\Neon\Exception;
 use ILIAS\ResourceStorage\Resource\StorableResource;
 use ILIAS\ResourceStorage\Identification\ResourceIdentification;
+use ILIAS\Filesystem\Stream\ZIPStream;
+use ILIAS\Filesystem\Stream\FileStream;
 
 class MediaObjectManager
 {
@@ -47,13 +49,20 @@ class MediaObjectManager
 
     public function create(
         int $id,
-        string $title
+        string $title,
+        int $from_mob_id = 0
     ): void {
         $this->repo->create(
             $id,
             $title,
-            $this->stakeholder
+            $this->stakeholder,
+            $from_mob_id
         );
+    }
+
+    public function addLocalDirectory(int $mob_id, string $dir): void
+    {
+        $this->repo->addLocalDirectory($mob_id, $dir);
     }
 
     public function addFileFromLegacyUpload(int $mob_id, string $tmp_name): void
@@ -81,6 +90,21 @@ class MediaObjectManager
         $this->repo->removeLocation($mob_id, $location);
     }
 
+    public function getLocationStream(
+        int $mob_id,
+        string $location
+    ): ZIPStream {
+        return $this->repo->getLocationStream($mob_id, $location);
+    }
+
+    public function addStream(
+        int $mob_id,
+        string $location,
+        FileStream $stream
+    ): void {
+        $this->repo->addStream($mob_id, $location, $stream);
+    }
+
     public function getLocalSrc(int $mob_id, string $location): string
     {
         $src = $this->repo->getLocalSrc(
@@ -95,6 +119,11 @@ class MediaObjectManager
             }
         }
         return $src;
+    }
+
+    public function hasLocalFile(int $mob_id, string $location): bool
+    {
+        return $this->repo->hasLocalFile($mob_id, $location);
     }
 
     public function getContainerResource(
@@ -115,6 +144,24 @@ class MediaObjectManager
     ): array {
         return $this->repo->getFilesOfPath($mob_id, $dir_path);
     }
+
+    public function getInfoOfEntry(
+        int $mob_id,
+        string $path
+    ): array {
+        return $this->repo->getInfoOfEntry(
+            $mob_id,
+            $path
+        );
+    }
+
+    public function deliverEntry(
+        int $mob_id,
+        string $path
+    ): void {
+        $this->repo->deliverEntry($mob_id, $path);
+    }
+
 
     public function generatePreview(
         int $mob_id,
@@ -174,6 +221,23 @@ class MediaObjectManager
                 );
             }
         }
+    }
+
+    public function addPreviewFromUrl(
+        int $mob_id,
+        string $url,
+        string $target_location
+    ): void {
+        $str = file_get_contents($url);
+        $res = fopen('php://memory', 'r+');
+        fwrite($res, $str);
+        rewind($res);
+        $stream = new Stream($res);
+        $this->repo->addStream(
+            $mob_id,
+            $target_location,
+            $stream
+        );
     }
 
 }
