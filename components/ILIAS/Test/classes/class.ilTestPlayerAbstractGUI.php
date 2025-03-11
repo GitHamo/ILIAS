@@ -1122,12 +1122,13 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
             $this->object->getTitle() . ' - ' . $this->lng->txt('final_statement')
         );
 
+        $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
         $this->ctrl->setParameterByClass(static::class, 'skipfinalstatement', 1);
         $this->tpl->setVariable(
             $this->getContentBlockName(),
             $this->ui_renderer->render([
                 $this->ui_factory->legacy(
-                    $this->object->prepareTextareaOutput($this->object->getFinalStatement(), true)
+                    $this->object->getFinalStatement()
                 ),
                 $this->ui_factory->button()->standard(
                     $this->lng->txt('btn_next'),
