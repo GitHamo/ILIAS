@@ -105,9 +105,16 @@ class ilLTIConsumerResultService
             $xml = simplexml_load_file('php://input');
             $logger->info('LTI Consumer Result Service: xml loaded');
             $this->message_ref_id = (string) $xml->imsx_POXHeader->imsx_POXRequestHeaderInfo->imsx_messageIdentifier;
-            $request = current($xml->imsx_POXBody->children());
+            $children = (array) $xml->imsx_POXBody->children();
+            $request = current($children);
+
+            $ns = $xml->getNamespaces(true);
+            $body = $xml->children($ns[''])->imsx_POXBody;
+
             $logger->info('LTI Consumer Result Service: request loaded');
             $this->operation = str_replace('Request', '', $request->getName());
+
+            $request = $body->replaceResultRequest;
             $logger->info("LTI Consumer Result Service: operation loaded ($this->operation)");
 
             $token = ilCmiXapiAuthToken::getInstanceByToken((string) $request->resultRecord->sourcedGUID->sourcedId);
@@ -263,7 +270,7 @@ class ilLTIConsumerResultService
      */
     protected function loadResponse($a_name): string
     {
-        return file_get_contents('./components/ILIAS/LTIConsumer/responses/' . $a_name);
+        return file_get_contents(__DIR__ . '/../responses/' . $a_name);
     }
 
 
