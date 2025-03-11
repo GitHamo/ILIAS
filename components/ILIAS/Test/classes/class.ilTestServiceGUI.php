@@ -33,6 +33,7 @@ use ILIAS\GlobalScreen\Services as GlobalScreenServices;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\HTTP\Wrapper\ArrayBasedRequestWrapper;
 use ILIAS\Skill\Service\SkillService;
+use ILIAS\Style\Content\Service as ContentStyle;
 
 /**
 * Service GUI class for tests. This class is the parent class for all
@@ -66,6 +67,7 @@ class ilTestServiceGUI
      * `ilTestPlayerAbstractGUI::populateIntantResponseModal()`.
      */
     protected ilGlobalTemplateInterface|ilTemplate $tpl;
+    protected readonly ContentStyle $content_style;
     protected readonly ilErrorHandling $error;
     protected ilAccess $access;
     protected readonly HTTPServices $http;
@@ -125,6 +127,7 @@ class ilTestServiceGUI
         global $DIC;
         $this->lng = $DIC['lng'];
         $this->tpl = $DIC['tpl'];
+        $this->content_style = $DIC->contentStyle();
         $this->error = $DIC['ilErr'];
         $this->access = $DIC['ilAccess'];
         $this->http = $DIC['http'];

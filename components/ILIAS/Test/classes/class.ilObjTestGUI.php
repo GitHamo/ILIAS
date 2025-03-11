@@ -1304,6 +1304,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->ctrl->saveParameterByClass(ilTestPageGUI::class, 'page_type');
 
         $gui = new ilTestPageGUI('tst', $page_id);
+        $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
         $this->tpl->setContent($this->ctrl->forwardCommand($gui));
 
         $this->tabs_manager->activateTab(TabsManager::TAB_ID_SETTINGS);
@@ -2700,6 +2701,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
             $this->refinery,
             $this->ctrl,
             $this->tpl,
+            $this->content_style,
             $this->http,
             $this->tabs_manager,
             $this->access,

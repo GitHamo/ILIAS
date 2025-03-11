@@ -35,8 +35,7 @@ use ILIAS\UI\Renderer as UIRenderer;
 use ILIAS\HTTP\Services as HTTPServices;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\Test\Logging\TestParticipantInteractionTypes;
-use ilInfoScreenGUI;
-use ilObjTestGUI;
+use ILIAS\Style\Content\Service as ContentStyle;
 
 /**
  * Class TestScreenGUI
@@ -63,6 +62,7 @@ class TestScreenGUI
         private readonly Refinery $refinery,
         private readonly \ilCtrlInterface $ctrl,
         private readonly \ilGlobalTemplateInterface $tpl,
+        private readonly ContentStyle $content_style,
         private readonly HTTPServices $http,
         private readonly TabsManager $tabs_manager,
         private readonly \ilAccessHandler $access,
@@ -186,6 +186,7 @@ class TestScreenGUI
             $this->main_settings->getIntroductionSettings()->getIntroductionEnabled() &&
             !empty($introduction)
         ) {
+            $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
             $elements[] = $this->ui_factory->panel()->standard(
                 $this->lng->txt('tst_introduction'),
                 $this->ui_factory->legacy()->content($introduction),
