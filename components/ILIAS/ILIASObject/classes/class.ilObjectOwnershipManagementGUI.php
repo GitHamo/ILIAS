@@ -124,7 +124,8 @@ class ilObjectOwnershipManagementGUI
     private function getLabelForObjectType(string $type): string
     {
         if ($this->obj_definition->isPlugin($type)) {
-            return $this->lng->txt($type, 'obj_' . $type);
+            return ilObjectPlugin::getPluginObjectByType($type)
+                ->txt('obj_' . $type);
         }
 
         return $this->lng->txt('objs_' . $type);
@@ -149,10 +150,10 @@ class ilObjectOwnershipManagementGUI
     protected function redirectParentCmd(int $ref_id, string $cmd): void
     {
         $parent = $this->tree->getParentId($ref_id);
-        $this->ctrl->setParameterByClass('ilRepositoryGUI', 'ref_id', $parent);
-        $this->ctrl->setParameterByClass('ilRepositoryGUI', 'item_ref_id', $ref_id);
-        $this->ctrl->setParameterByClass('ilRepositoryGUI', 'cmd', $cmd);
-        $this->ctrl->redirectByClass('ilRepositoryGUI');
+        $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'ref_id', $parent);
+        $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'item_ref_id', $ref_id);
+        $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'cmd', $cmd);
+        $this->ctrl->redirectByClass(ilRepositoryGUI::class);
     }
 
     protected function redirectCmd(int $ref_id, string $class, string $cmd = null): void
