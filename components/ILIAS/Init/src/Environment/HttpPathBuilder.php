@@ -61,7 +61,7 @@ final class HttpPathBuilder
             $uri = \dirname($uri, \count($dirs));
         } else {
             $path = pathinfo($request_uri);
-            if (($path['extension'] ?? null) !== '') {
+            if (($path['extension'] ?? '') !== '') {
                 $uri = \dirname($request_uri);
             } else {
                 $uri = $request_uri;
