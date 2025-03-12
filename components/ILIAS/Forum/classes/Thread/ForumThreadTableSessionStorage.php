@@ -40,10 +40,10 @@ class ForumThreadTableSessionStorage
     private Factory $refinery;
 
     public function __construct(
-        private readonly int  $forum_ref_id,
+        private readonly int $forum_ref_id,
         private readonly bool $is_moderator,
-        ?WrapperFactory       $http_wrapper = null,
-        ?Factory              $refinery = null
+        ?WrapperFactory $http_wrapper = null,
+        ?Factory $refinery = null
     ) {
         global $DIC;
         $this->http_wrapper = $http_wrapper ?? $DIC->http()->wrapper();
