@@ -854,7 +854,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 $question_gui->setObject($question);
                 $question_gui->setQuestionTabs();
 
-                $this->addQuestionTitleToObjectTitle($question->getTitle());
+                $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
 
                 $gui = new ilAssQuestionHintsGUI($question_gui);
 
@@ -879,7 +879,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 $question_gui->setObject($question);
                 $question_gui->setQuestionTabs();
 
-                $this->addQuestionTitleToObjectTitle($question->getTitle());
+                $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
 
                 if ($this->getTestObject()->evalTotalPersons() !== 0) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('question_is_part_of_running_test'), true);
@@ -1040,7 +1040,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
         $question_gui ??= assQuestion::instantiateQuestionGUI($this->fetchAuthoringQuestionIdParameter());
 
-        $this->addQuestionTitleToObjectTitle($question_gui->getObject()->getTitle());
+        $this->addQuestionTitleToObjectTitle($question_gui->getObject()->getTitleForHTMLOutput());
 
         if (!$this->getTestObject()->isRandomTest() && $nr_of_participants_with_results === 0) {
             $gui->setPrimaryCmd(
@@ -1105,7 +1105,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
             $question_gui->setContextAllowsSyncToPool(true);
             $question_gui->setQuestionTabs();
 
-            $this->addQuestionTitleToObjectTitle($question->getTitle());
+            $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
 
             $target = strpos($cmd, 'Return') === false ? 'stay' : 'return';
 
@@ -2805,6 +2805,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     {
         return new QuestionsTable(
             $this->ui_factory,
+            $this->refinery,
             $this->http->request(),
             $this->getQuestionsTableActions(),
             $this->lng,

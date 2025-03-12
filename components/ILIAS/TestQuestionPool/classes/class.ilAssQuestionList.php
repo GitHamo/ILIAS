@@ -600,7 +600,7 @@ class ilAssQuestionList implements ilTaxAssignedItemInfo
     {
         $this->checkFilters();
 
-        $tags_trafo = $this->refinery->string()->stripTags();
+        $tags_trafo = $this->refinery->encode()->htmlSpecialCharsAsEntities();
 
         $query = $this->buildQuery();
         $res = $this->db->query($query);

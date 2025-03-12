@@ -249,7 +249,7 @@ class TestScoring
         foreach ($this->test->getAllQuestions() as $question) {
             /** @var AssQuestionGUI $question_gui */
             $question_gui = $this->test->createQuestionGUI("", $question['question_id']);
-            $solution .= '<h1>' . $question_gui->getObject()->getTitle() . '</h1>';
+            $solution .= '<h1>' . $question_gui->getObject()->getTitleForHTMLOutput() . '</h1>';
             $solution .= $question_gui->getSolutionOutput(0, null, true, true, false, false, true, false);
         }
 
