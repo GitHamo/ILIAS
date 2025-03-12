@@ -129,7 +129,7 @@ class ilTestCorrectionsGUI
         $confirmation = sprintf(
             $this->language->txt('tst_corrections_manscore_reset_warning'),
             $scoring->getNumManualScorings(),
-            $this->question_gui->getObject()->getTitle(),
+            $this->question_gui->getObject()->getTitleForHTMLOutput(),
             $this->question_gui->getObject()->getId()
         );
 
@@ -208,7 +208,7 @@ class ilTestCorrectionsGUI
         );
 
         $page_gui->setQuestionHTML([$question_gui->getObject()->getId() => $solution_html]);
-        $page_gui->setPresentationTitle($question_gui->getObject()->getTitle());
+        $page_gui->setPresentationTitle($question_gui->getObject()->getTitleForHTMLOutput());
 
         $tpl = new ilTemplate('tpl.tst_corrections_solution_presentation.html', true, true, 'components/ILIAS/Test');
         $tpl->setVariable('SOLUTION_PRESENTATION', $page_gui->preview());
@@ -374,7 +374,7 @@ class ilTestCorrectionsGUI
 
     protected function populatePageTitleAndDescription(assQuestionGUI $question_gui): void
     {
-        $this->main_tpl->setTitle($question_gui->getObject()->getTitle());
+        $this->main_tpl->setTitle($question_gui->getObject()->getTitleForHTMLOutput());
         $this->main_tpl->setDescription($question_gui->outQuestionType());
     }
 

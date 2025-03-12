@@ -367,7 +367,7 @@ abstract class assQuestion implements Question
 
     public function getTitleForHTMLOutput(): string
     {
-        return $this->refinery->string()->stripTags()->transform($this->title);
+        return $this->refinery->encode()->htmlSpecialCharsAsEntities()->transform($this->title);
     }
 
     public function getTitleFilenameCompliant(): string
