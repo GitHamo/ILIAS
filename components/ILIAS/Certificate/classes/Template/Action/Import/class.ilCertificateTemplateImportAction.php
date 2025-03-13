@@ -141,14 +141,13 @@ class ilCertificateTemplateImportAction
 
             if (str_contains($file->getPath(), '.xml')) {
                 $xsl = $this->filesystem->read($file->getPath());
-                // TODO: wth??
             } elseif (str_contains($file->getPath(), '.jpg')) {
                 $background_rid = $this->irss->manage()->stream(
                     $this->filesystem->readStream($file->getPath()),
                     $this->stakeholder
                 );
             } elseif (str_contains($file->getPath(), '.svg')) {
-                $card_thumbnail_rid = $this->irss->manage()->stream(
+                $tile_image_rid = $this->irss->manage()->stream(
                     $this->filesystem->readStream($file->getPath()),
                     $this->stakeholder
                 );
@@ -168,8 +167,8 @@ class ilCertificateTemplateImportAction
                     $background_rid
                 )->getStorageID() : '',
                 $jsonEncodedTemplateValues,
-                isset($card_thumbnail_rid) ? $this->irss->manage()->getResource(
-                    $card_thumbnail_rid
+                isset($tile_image_rid) ? $this->irss->manage()->getResource(
+                    $tile_image_rid
                 )->getStorageID() : ''
             ])
         );
@@ -187,7 +186,7 @@ class ilCertificateTemplateImportAction
             '',
             '',
             isset($background_rid) ? $background_rid->serialize() : '',
-            isset($card_thumbnail_rid) ? $card_thumbnail_rid->serialize() : ''
+            isset($tile_image_rid) ? $tile_image_rid->serialize() : ''
         );
 
         $this->templateRepository->save($template);
