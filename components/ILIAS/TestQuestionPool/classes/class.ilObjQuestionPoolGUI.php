@@ -751,6 +751,11 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
 
     public function importVerifiedFileObject(): void
     {
+        if (!$this->checkPermissionBool('create', '', $this->qplrequest->string('new_type'))) {
+            $this->redirectAfterMissingWrite();
+            return;
+        }
+
         $file_to_import = ilSession::get('path_to_import_file');
         list($subdir, $importdir, $xmlfile, $qtifile) = $this->buildImportDirectoriesFromImportFile($file_to_import);
 
