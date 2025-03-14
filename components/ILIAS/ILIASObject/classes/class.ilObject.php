@@ -625,6 +625,8 @@ class ilObject
     {
         $this->getObjectProperties()->storeCoreProperties();
 
+        ilLoggerFactory::getLogger('root')->warning("Raised");
+
         $this->app_event_handler->raise(
             'components/ILIAS/ILIASObject',
             'update',
