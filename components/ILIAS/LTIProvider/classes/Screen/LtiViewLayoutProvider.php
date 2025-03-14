@@ -43,6 +43,8 @@ class LtiViewLayoutProvider extends AbstractModificationProvider implements Modi
 {
     public const GS_EXIT_LTI = 'lti_exit_mode';
 
+    private const LTI_PRIORITY = 63;
+
     public function isInterestedInContexts(): ContextCollection
     {
         return $this->context_collection->lti();
@@ -107,8 +109,7 @@ class LtiViewLayoutProvider extends AbstractModificationProvider implements Modi
                             //$mainbar = $mainbar->withAdditionalEntry('lti_home', $lti_home);
                             return $mainbar;
                         }
-                    )
-                    ->withHighPriority();
+                    )->withPriority(self::LTI_PRIORITY);
     }
 
     /**
@@ -132,8 +133,7 @@ class LtiViewLayoutProvider extends AbstractModificationProvider implements Modi
                             $metabar = $metabar->withAdditionalEntry('exit', $exit);
                             return $metabar;
                         }
-                    )
-                    ->withHighPriority();
+                    )->withPriority(self::LTI_PRIORITY);
     }
 
     /**
@@ -152,7 +152,6 @@ class LtiViewLayoutProvider extends AbstractModificationProvider implements Modi
                             }
                             return $this->dic["lti"]->getTitle();
                         }
-                    )
-                    ->withHighPriority();
+                    )->withPriority(self::LTI_PRIORITY);
     }
 }
