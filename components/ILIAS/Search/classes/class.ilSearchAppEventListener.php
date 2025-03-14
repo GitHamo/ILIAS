@@ -43,7 +43,6 @@ class ilSearchAppEventListener implements ilAppEventListener
             return;
         }
 
-        ilLoggerFactory::getLogger('root')->warning($a_component);
 
         // only for files in the moment
         if (!isset($a_parameter['obj_type'])) {
