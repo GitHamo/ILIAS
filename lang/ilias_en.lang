@@ -9777,8 +9777,10 @@ exp#:#exp_format_dropdown-xls#:#as XLS
 exp#:#exp_format_dropdown-xml#:#as XML
 exp#:#exp_html#:#HTML
 exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for version %s exists.
+exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
 exp#:#exp_print_pdf_info#:#To create a PDF please use the "Print to PDF" target as soon as the print view is presented.
+exp#:#exp_public_access_status#:#Available on ‘Info’-tab
 exp#:#exp_really_delete#:#Do you really want to delete these export files?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML

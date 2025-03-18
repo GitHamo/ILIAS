@@ -116,7 +116,7 @@ class Handler implements ilExportHandlerTableInterface
                 $this->lng->txt(self::TABLE_COL_LNG_TIMESTAMP),
                 $format
             ),
-            self::TABLE_COL_PUBLIC_ACCESS => $this->ui_services->factory()->table()->column()->statusIcon(
+            self::TABLE_COL_PUBLIC_ACCESS => $this->ui_services->factory()->table()->column()->status(
                 $this->lng->txt(self::TABLE_COL_LNG_PUBLIC_ACCESS),
             )
         ];
