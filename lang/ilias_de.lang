@@ -12010,8 +12010,8 @@ meta#:#md_copyright_alt_text#:#Alternativtext
 meta#:#md_copyright_alt_text_info#:#Wird für das ‘alt’ Attribut des Bildes verwendet
 meta#:#md_copyright_default#:#Standard
 meta#:#md_copyright_edit#:#Copyright-Vorgabe bearbeiten
-meta#:#md_copyright_enable_info#:#Aktivieren Sie diese Einstellung, um vordefinierte Nutzungslizenzen anzubieten.
-meta#:#md_copyright_enabled#:#Copyright-Auswahl aktivieren
+meta#:#md_copyright_enable_info#:#Im Unterreiter „Lizenzen“ hinterlegte Auswahl wird in Objekten angeboten.
+meta#:#md_copyright_enabled#:#Lizenzen in Objekten
 meta#:#md_copyright_full_name#:#Vollständiger Name
 meta#:#md_copyright_image#:#Bild
 meta#:#md_copyright_image_file#:#Datei
@@ -12022,7 +12022,6 @@ meta#:#md_copyright_link#:#URL
 meta#:#md_copyright_link_info#:#Link zu der Lizenz
 meta#:#md_copyright_preview#:#Copyright (Vorschau)
 meta#:#md_copyright_selection#:#Copyright-Vorgaben
-meta#:#md_copyright_settings#:#Einstellungen
 meta#:#md_copyright_value#:#Copyright
 meta#:#md_copyrights_deleted#:#Die ausgewählten Vorgaben wurden entfernt.
 meta#:#md_days#:#Tage:
@@ -12041,13 +12040,17 @@ meta#:#md_oai_contact_mail#:#E-Mail-Kontaktadresse
 meta#:#md_oai_identifier_prefix#:#OAI Präfix
 meta#:#md_oai_identifier_prefix_info#:#Dieser Präfix wird als Namespace in den Bezeichnern von abgefragten OER Datensätzen benutzt.
 meta#:#md_oai_pmh_enabled#:#Abfragen über OAI-PMH Schnittstelle erlauben
-meta#:#md_oai_pmh_enabled_info#:#Wenn aktiviert, können vom OER Harvester gefundene Resourcen von externen Parteien wie OER Referatorien abgefragt werden.
+meta#:#md_oai_pmh_enabled_info#:#Wenn aktiviert, können vom OER Harvester gefundene Resourcen von externen Parteien wie OER Repositorien abgefragt werden.
 meta#:#md_oai_repository_name#:#Name des Repositoriums
 meta#:#md_oai_repository_name_info#:#Bei Anfragen über die Schnittstelle wird dies als Name dieser ILIAS Installation angegeben.
 meta#:#md_obj_types#:#Zugeordnete Objekte
 meta#:#md_record_export_table#:#Exportdateien
 meta#:#md_record_list_table#:#Benutzerdefinierte Metadatensätze
 meta#:#md_separated_by#:#Getrennt mit %s
+meta#:#md_settings#:#Einstellungen
+meta#:#md_settings_harvester#:#OER Harvester
+meta#:#md_settings_licence#:#Nutzungsregeln
+meta#:#md_settings_publishing#:#Abfrage durch Repositorien
 meta#:#md_time#:#Zeit:
 meta#:#md_unknown_vocabulary_flag#:#(unbekanntes Vokabular)
 meta#:#md_used#:#Verwendung (Anzahl)
