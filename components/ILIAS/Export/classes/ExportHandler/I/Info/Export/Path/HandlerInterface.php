@@ -18,16 +18,19 @@
 
 declare(strict_types=1);
 
-use ILIAS\Setup\Agent\NullAgent;
-use ILIAS\Setup;
-use ILIAS\Refinery\Transformation;
+namespace ILIAS\Export\ExportHandler\I\Info\Export\Path;
 
-class ilWorkflowEngineSetupAgent extends NullAgent
+interface HandlerInterface
 {
-    use Setup\Agent\HasNoNamedObjective;
+    public function withPathToComponentExpDirInContainer(
+        string $path_to_component_exp_dir
+    ): HandlerInterface;
 
-    public function getArrayToConfigTransformation(): Transformation
-    {
-        throw new \LogicException("Agent has no config.");
-    }
+    public function withPathToComponentDirInContainer(
+        string $path_to_component_dir
+    ): HandlerInterface;
+
+    public function getPathToComponentExpDirInContainer(): string;
+
+    public function getPathToComponentDirInContainer(): string;
 }

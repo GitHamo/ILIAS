@@ -83,6 +83,7 @@ class ilLTIConsumerContentGUI
                 $this->dic->toolbar()->addText($this->getStartButtonTxt11());
             }
         } else {
+
             if ($this->object->isLaunchMethodEmbedded() && (ilSession::get('lti13_login_data') == null)) {
                 $tpl = new ilTemplate('tpl.lti_content.html', true, true, 'components/ILIAS/LTIConsumer');
                 $tpl->setVariable("EMBEDDED_IFRAME_SRC", $this->dic->ctrl()->getLinkTarget(
@@ -102,7 +103,7 @@ class ilLTIConsumerContentGUI
                         $this->dic->http()->sendResponse();
                         $this->dic->http()->close();
                     }
-                } else {
+                } elseif (!$this->object->isLaunchMethodEmbedded()) {
                     $this->dic->toolbar()->addText($this->getStartButtonTxt13());
                 }
             }
@@ -239,6 +240,7 @@ class ilLTIConsumerContentGUI
         $ltiMessageHint = (string) $this->object->getRefId() . ":" . CLIENT_ID;
         ilSession::set('lti_message_hint', $ltiMessageHint);
         $output = '<form id="lti_launch_form" name="lti_launch_form" action="' . $this->object->getProvider()->getInitiateLogin() . '" method="post" target="' . $target . '" encType="application/x-www-form-urlencoded">';
+
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'iss', ilObjLTIConsumer::getIliasHttpPath()) . "\n";
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'target_link_uri', $this->object->getProvider()->getProviderUrl()) . "\n";
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'login_hint', $user_ident) . "\n";
@@ -246,6 +248,7 @@ class ilLTIConsumerContentGUI
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'client_id', $this->object->getProvider()->getClientId()) . "\n";
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'lti_deployment_id', $this->object->getProvider()->getId()) . "\n";
         $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'launch_presentation_return_url', $returnUrl) . "\n";
+        $output .= sprintf('<input type="hidden" name="%s" value="%s" />', 'lis_result_sourcedid', $token) . "\n";
         $output .= $button;
         $output .= '</form>';
         $output .= '<span id ="lti_launched" style="display:none">' . $this->lng->txt("launched") . '</span>';
@@ -361,9 +364,16 @@ class ilLTIConsumerContentGUI
         $launchContextId = (string) $launchContext["id"];
         $launchContextTitle = $launchContext["title"];
 
+        $token = ilCmiXapiAuthToken::fillToken(
+            $this->dic->user()->getId(),
+            $this->object->getRefId(),
+            $this->object->getId()
+        );
+
         $cmixUser = $this->cmixUser;
         return $this->object->buildLaunchParametersLTI13(
             $cmixUser,
+            $token,
             $endpoint,
             $clientId,
             $deploymentId,

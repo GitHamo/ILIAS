@@ -18,18 +18,11 @@
 
 declare(strict_types=1);
 
-chdir("../../../");
+namespace ILIAS\Like;
 
-if (!isset($_GET['client_id']) || !strlen($_GET['client_id'])) {
-    header('HTTP/1.1 401 Authorization Required');
-    exit;
+class InternalDataService
+{
+    public function __construct()
+    {
+    }
 }
-
-\ilContext::init(\ilContext::CONTEXT_SCORM);
-\ilInitialisation::initILIAS();
-
-$dic = $GLOBALS['DIC'];
-$log = ilLoggerFactory::getLogger('lti');
-$log->debug("LTI result init successful");
-$service = new ilLTIConsumerResultService();
-$service->handleRequest();

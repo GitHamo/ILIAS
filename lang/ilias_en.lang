@@ -9777,8 +9777,10 @@ exp#:#exp_format_dropdown-xls#:#as XLS
 exp#:#exp_format_dropdown-xml#:#as XML
 exp#:#exp_html#:#HTML
 exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for version %s exists.
+exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
 exp#:#exp_print_pdf_info#:#To create a PDF please use the "Print to PDF" target as soon as the print view is presented.
+exp#:#exp_public_access_status#:#Available on ‘Info’-tab
 exp#:#exp_really_delete#:#Do you really want to delete these export files?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML
@@ -10868,7 +10870,7 @@ ldap#:#ldap_user_sync_cron#:#LDAP User Synchronization
 ldap#:#ldap_user_sync_cron_info#:#If activated, user accounts will be imported from the LDAP directory and synchronised continuously as an option.
 ldap#:#ldap_user_sync_info#:#Defines whether new users are automatically created on login or regularly per cron job.
 ldap#:#ldap_username_filter#:#Username Filter
-ldap#:#ldap_username_filter_info#:#Use * as wildcard.
+ldap#:#ldap_username_filter_info#:#The username filter can be optionally used for the automatic determination of this LDAP server configuration by the entered username on the login page. The "*" character can be used as a wildcard. For example, "*example\.com" matches all users whose entered username ends with "example.com". If the configured filter matches the entered username, this LDAP server configuration is preferred if a fixed authentication sequence is configured.
 ldoc#:#deleteDocument#:#Delete
 ldoc#:#detachCriterionAssignment#:#Delete
 ldoc#:#ldoc_acceptance_history#:#Acceptance History
@@ -12022,7 +12024,6 @@ meta#:#md_copyright_link#:#URL
 meta#:#md_copyright_link_info#:#Link to the licence
 meta#:#md_copyright_preview#:#Copyright (Preview)
 meta#:#md_copyright_selection#:#Available Copyrights
-meta#:#md_copyright_settings#:#Settings
 meta#:#md_copyright_value#:#Copyright
 meta#:#md_copyrights_deleted#:#Copyright deleted.
 meta#:#md_days#:#Days:
@@ -12041,13 +12042,17 @@ meta#:#md_oai_contact_mail#:#Contact E-Mail
 meta#:#md_oai_identifier_prefix#:#OAI Prefix
 meta#:#md_oai_identifier_prefix_info#:#This prefix is used as a namespace in the identifiers of returned OER records.
 meta#:#md_oai_pmh_enabled#:#Allow Querying via OAI-PMH Interface
-meta#:#md_oai_pmh_enabled_info#:#If enabled, harvested OER can be queried by external interested parties, e.g. OER referatories.
+meta#:#md_oai_pmh_enabled_info#:#If enabled, harvested OER can be queried by external interested parties, e.g. OER repositories.
 meta#:#md_oai_repository_name#:#Repository Name
 meta#:#md_oai_repository_name_info#:#This is returned as the name of this ILIAS installation when queried.
 meta#:#md_obj_types#:#Assigned Objects
 meta#:#md_record_export_table#:#Export Files
 meta#:#md_record_list_table#:#Custom Metadata Sets
 meta#:#md_separated_by#:#Separated by %s
+meta#:#md_settings#:#Settings
+meta#:#md_settings_harvester#:#OER Harvester
+meta#:#md_settings_licence#:#Terms of Usage
+meta#:#md_settings_publishing#:#Querying by Repositories
 meta#:#md_time#:#Time:
 meta#:#md_unknown_vocabulary_flag#:#(unknown vocabulary)
 meta#:#md_used#:#Current Number of Usages
@@ -12633,9 +12638,12 @@ meta#:#meta_obj_type_mandatory#:#Data set always offered
 meta#:#meta_obj_type_optional#:#Data set needs activation
 meta#:#meta_oer_blocked#:#Ignored by OER Harvester
 meta#:#meta_oer_blocked_info#:#Will not be listed automatically as Open Educational Ressource (OER)
+meta#:#meta_oer_categories#:#Categories for Objects Gathered
 meta#:#meta_oer_copyright_selection#:#Copyright Selection
 meta#:#meta_oer_copyright_selection_info#:#Only objects that have been published with one of the selected copyrights will be linked to the OER Category.
 meta#:#meta_oer_exposed_source#:#Category for Published OER Content
+meta#:#meta_oer_harvested_licences#:#Licences for Harvesting
+meta#:#meta_oer_harvested_types#:#Types of Objects to be Harvested
 meta#:#meta_oer_harvester#:#OER Harvester
 meta#:#meta_oer_harvester_desc#:#The OER Harvester collects all resources under selected CC licenses, adds them to a category defined in the cronjob settings, and if necessary generates export files for them. For harvested resource marked for publishing, records are compiled that can then (if enabled) be queried via an OAI-PMH interface. To get results from this cronjob it is necessary to activate and configure the copyright selection in the administration of 'Metadata'. The object types eligible to be harvested are Files, Glossaries, Content Pages, Learning Modules (ILIAS, SCORM, and HTML), Question Pools (both Survey and Test), and Mediapools.
 meta#:#meta_oer_object_type_selection#:#Harvested Object Types
@@ -13025,18 +13033,12 @@ noti#:#noti_notification_deactivated#:#Notification Deactivated
 notifications_adm#:#enable_osd#:#Enable Toasts
 notifications_adm#:#enable_osd_desc#:#If enabled, users are notified by a pop-up about new notifications.
 notifications_adm#:#notification_settings#:#Notification Settings
-notifications_adm#:#osd_delay#:#Presentation Delay
-notifications_adm#:#osd_delay_desc#:#Delay of the visible presentation in milliseconds.
-notifications_adm#:#osd_error_presentation_time_too_small#:#The Presentation Time has to be at least than 1000 miliseconds.
-notifications_adm#:#osd_error_refresh_interval_smaller_than_delay_and_vanish_combined#:#The Refresh Interval has to be greater than the Presentation Time and the Presentation Delay combined.
 notifications_adm#:#osd_error_refresh_interval_too_small#:#The Refresh Interval has to be at least than 3000 miliseconds.
 notifications_adm#:#osd_interval#:#Refresh interval
 notifications_adm#:#osd_interval_desc#:#Polling interval for checking of new notifications in miliseconds. A lower number will notify the user more quickly but increases the number of requests the web server must handle.
 notifications_adm#:#osd_play_sound#:#Play a Sound
 notifications_adm#:#osd_play_sound_desc#:#Play a sound when receiving a new notficiation.
 notifications_adm#:#osd_settings#:#Toasts
-notifications_adm#:#osd_vanish#:#Presentation Time
-notifications_adm#:#osd_vanish_desc#:#Visible time of a notification on the screen in miliseconds.
 obj#:#activation_visible_when_disabled#:#Visibility
 obj#:#activation_visible_when_disabled_info#:#The item is visible outside of the selected availability period, but it cannot be opened.
 obj#:#availability_period_changed#:#The availability period for the selected objects has been changed successfully.
@@ -13112,6 +13114,7 @@ obj#:#obj_tool_setting_use_news_open_settings#:#Open Settings of News Block and 
 obj#:#obj_user_decides_notification#:#Members have to manually activate notifications
 obj#:#obj_user_not_disable_not#:#Member are not allowed to deactivate notifications
 obj#:#online_input_byline#:#The object has been published and can be accessed by anyone with read access. Other access prerequisites or time-based access restrictions may still apply. This settings applies to the object wherever it is used in the repository.
+obj#:#select_import_type_info#:#The type of the object in the file to be imported cannot be determined automatically. The file was probably renamed. Please select the type of object in the file.
 obj#:#select_object_type#:#Select Object Type
 obj#:#svy_results#:#Results
 obj#:#unequal_items_for_availability_period_message#:#You have selected items with different availability periods. Overwrite existing settings below or cancel action to keep current availability periods.
@@ -15031,6 +15034,7 @@ rep#:#rep_fav_intro2#:#Click on '%s' and select a learning object from the avail
 rep#:#rep_fav_intro3#:#When you have found something that interests you, you can easily add it to your favourites. Select the desired item in the <i>Actions</i> menu and choose "<i>Add to favourites</i>".
 rep#:#rep_favourites#:#Favourites
 rep#:#rep_favourites_info#:#Users can mark single repository items as favourites. Favourites lists can be activated and configured in the dashboard and menu settings.
+rep#:#rep_input_not_empty#:#This field must not be empty, please provide a value.
 rep#:#rep_intro#:#Welcome to the Repository!
 rep#:#rep_intro1#:#In this area you can create learning and working resources for all users. All resources are organised in categories. Categories can reflect the structure of your organisation (e.g. departments), a hierarchy of disciplines, or classes of a school.
 rep#:#rep_intro2#:#Three steps are needed to build an initial structure:
@@ -16047,6 +16051,7 @@ style#:#sty_images#:#Images
 style#:#sty_import_page_layout#:#Import Page Layout
 style#:#sty_import_stylesheet#:#Import Style
 style#:#sty_import_system_style#:#Import System Style
+style#:#sty_imported_layout#:#Imported Page Layout
 style#:#sty_individual_styles#:#Individual Styles
 style#:#sty_keep_existing#:#Keep Existing
 style#:#sty_left#:#Left

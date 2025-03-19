@@ -114,7 +114,8 @@ class ilErrorHandling
      */
     public function getHandler(): HandlerInterface
     {
-        if (ilContext::getType() === ilContext::CONTEXT_SOAP) {
+        if (ilContext::getType() === ilContext::CONTEXT_SOAP &&
+            strcasecmp($_SERVER['REQUEST_METHOD'] ?? '', 'post') === 0) {
             return new ilSoapExceptionHandler();
         }
 
@@ -271,8 +272,8 @@ class ilErrorHandling
             global $DIC;
 
             $session_id = substr(session_id(), 0, 5);
-            $r = new \Random\Randomizer();
-            $err_num = $r->getInt(1, 9999);
+            $random = new ilRandom();
+            $err_num = $random->int(1, 9999);
             $file_name = $session_id . '_' . $err_num;
 
             $logger = ilLoggingErrorSettings::getInstance();
@@ -392,6 +393,9 @@ class ilErrorHandling
 
     protected function loggingHandler(): HandlerInterface
     {
+        /**
+         * @var
+         */
         return new CallbackHandler(function ($exception, Inspector $inspector, Run $run) {
             /**
              * Don't move this out of this callable

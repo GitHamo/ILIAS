@@ -2579,16 +2579,18 @@
 		<xsl:when test = "substring-after($data,'youtube.com') != '' or substring-after($data,'youtu.be') != ''">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video style="max-width: 100%;" class="ilPageVideo" preload="auto">
+			<div class="il-video-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
 				<xsl:if test="$height != ''">
 					<xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
 				</xsl:if>
-				<!-- see #bug22632 -->
-				<xsl:attribute name="src"><xsl:value-of select="$httpprefix"/>//www.youtube.com/watch?v=<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='v']/@Value" />&amp;controls=0</xsl:attribute>
-			</video>
+				<iframe allow="fullscreen; autoplay; picture-in-picture;" referrerpolicy="strict-origin-when-cross-origin">
+					<!-- see #bug22632 -->
+					<xsl:attribute name="src"><xsl:value-of select="$httpprefix"/>//www.youtube.com/embed/<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='v']/@Value" /></xsl:attribute>
+				</iframe>
+			</div>
 		</xsl:when>
 		<!--
 		<xsl:when test = "substring-after($data,'youtube.com') != '' or substring-after($data,'youtu.be') != ''">
@@ -2640,8 +2642,7 @@
 
 		<!-- mp3 (mediaelement.js) -->
 		<xsl:when test = "$type='audio/mpeg' and (substring-before($data,'.mp3') != '' or substring-before($data,'.MP3') != '')">
-			<audio class="ilPageAudio" preload="metadata">
-				<xsl:attribute name="src"><xsl:value-of select="$data"/></xsl:attribute>
+			<div class="il-audio-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 					<xsl:attribute name="height">40</xsl:attribute>
@@ -2649,6 +2650,8 @@
 				<xsl:if test="$width = '' and $height = ''">
 					<xsl:attribute name="style">max-width: 100%; width: 100%; max-height: 100%;</xsl:attribute>
 				</xsl:if>
+			<audio controls="controls" class="il-audio-player" id="" preload="metadata">
+				<xsl:attribute name="src"><xsl:value-of select="$data"/></xsl:attribute>
 				<xsl:if test="$mode != 'edit' and
 					(../MediaAliasItem[@Purpose = $curPurpose]/Parameter[@Name = 'autostart']/@Value = 'true' or
 					( not(../MediaAliasItem[@Purpose = $curPurpose]/Parameter) and
@@ -2656,13 +2659,16 @@
 					<!-- <xsl:attribute name="autoplay">true</xsl:attribute> -->
 				</xsl:if>
 			</audio>
+			</div>
 		</xsl:when>
 
 		<!-- flv, mp4 (mediaelement.js) -->
 		<xsl:when test = "$type = 'video/mp4' or $type = 'video/webm'">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video class="ilPageVideo" controls="controls" preload="metadata">
+
+			<div class="il-video-container">
+			<video class="il-video-player ilPageVideo" controls="controls" preload="metadata">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
@@ -2710,6 +2716,7 @@
 					</track>
 				</xsl:for-each>
 			</video>
+			</div>
 			<!-- subtitle workaround -->
 			<xsl:if test="$mode = 'offline'" >
 				<xsl:for-each select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Subtitle">
@@ -2723,16 +2730,18 @@
 		<xsl:when test = "$type = 'video/vimeo'">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video style="max-width: 100%;" class="ilPageVideo" preload="auto">
+			<div class="il-video-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
 				<xsl:if test="$height != ''">
 					<xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
 				</xsl:if>
+			<iframe allow="fullscreen; autoplay; picture-in-picture;" referrerpolicy="strict-origin-when-cross-origin">
 				<!-- see #bug22632 -->
-				<xsl:attribute name="src"><xsl:value-of select="$data"/>?controls=0</xsl:attribute>
-			</video>
+				<xsl:attribute name="src">//player.vimeo.com/video/<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='id']/@Value" /></xsl:attribute>
+			</iframe>
+			</div>
 		</xsl:when>
 
 		<!-- svg -->
