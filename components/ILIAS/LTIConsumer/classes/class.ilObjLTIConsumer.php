@@ -1429,4 +1429,38 @@ class ilObjLTIConsumer extends ilObject2
     {
         return ilLoggerFactory::getLogger('lti');
     }
+
+    protected function doCloneObject(ilObject2 $new_obj, int $a_target_id, ?int $a_copy_id = null): void
+    {
+        // LTI specific properties
+        $new_obj->setProviderId($this->getProviderId());
+        $new_obj->setLaunchMethod($this->getLaunchMethod());
+        $new_obj->setCustomLaunchKey($this->getCustomLaunchKey());
+        $new_obj->setCustomLaunchSecret($this->getCustomLaunchSecret());
+        $new_obj->setCustomParams($this->getCustomParams());
+        $new_obj->setUseXapi($this->getUseXapi());
+        $new_obj->setCustomActivityId($this->getCustomActivityId());
+        $new_obj->setStatementsReportEnabled($this->isStatementsReportEnabled());
+        $new_obj->setMasteryScore($this->getMasteryScore());
+
+        // Highscore configuration
+        $new_obj->setHighscoreEnabled($this->getHighscoreEnabled());
+        $new_obj->setHighscoreAchievedTS($this->getHighscoreAchievedTS());
+        $new_obj->setHighscorePercentage($this->getHighscorePercentage());
+        $new_obj->setHighscoreWTime($this->getHighscoreWTime());
+        $new_obj->setHighscoreOwnTable($this->getHighscoreOwnTable());
+        $new_obj->setHighscoreTopTable($this->getHighscoreTopTable());
+        $new_obj->setHighscoreTopNum($this->getHighscoreTopNum());
+
+        // Activation settings
+        $new_obj->setActivationLimited($this->isActivationLimited());
+        $new_obj->setActivationStartingTime($this->getActivationStartingTime());
+        $new_obj->setActivationEndingTime($this->getActivationEndingTime());
+
+        if ($this->isActivationLimited() && $this->getActivationVisibility() !== null) {
+            $new_obj->setActivationVisibility($this->getActivationVisibility());
+        }
+
+        $new_obj->save();
+    }
 }
