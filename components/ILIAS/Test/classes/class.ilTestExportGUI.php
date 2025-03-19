@@ -112,6 +112,7 @@ class ilTestExportGUI extends ilExportGUI
                 $this->request,
                 $this->obj_cache,
                 $this->participant_access_filter_factory,
+                $this->parent_gui->getTestObject()->getTestLogViewer(),
                 $test_id,
                 $test_ref
             );
@@ -165,6 +166,7 @@ class ilTestExportGUI extends ilExportGUI
             $this->request,
             $this->obj_cache,
             $this->participant_access_filter_factory,
+            $this->parent_gui->getTestObject()->getTestLogViewer(),
             $this->getParentGUI()->getTestObject()->getId()
         );
         $archive_dir = $archiver->getZipExportDirectory();
@@ -254,6 +256,7 @@ class ilTestExportGUI extends ilExportGUI
             $this->request,
             $this->obj_cache,
             $this->participant_access_filter_factory,
+            $this->parent_gui->getTestObject()->getTestLogViewer(),
             $this->getParentGUI()->getTestObject()->getId()
         );
         $filename = basename($this->selected_files[0]);
@@ -283,6 +286,7 @@ class ilTestExportGUI extends ilExportGUI
             $this->request,
             $this->obj_cache,
             $this->participant_access_filter_factory,
+            $this->parent_gui->getTestObject()->getTestLogViewer(),
             $this->getParentGUI()->getTestObject()->getId()
         );
         $archiveDir = $archiver->getZipExportDirectory();
