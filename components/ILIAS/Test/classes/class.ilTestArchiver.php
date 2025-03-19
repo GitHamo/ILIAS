@@ -50,7 +50,7 @@ class ilTestArchiver
     private const LOG_DTSGROUP_FORMAT = 'D M j G:i:s T Y';
     private const LOG_ADDITION_STRING = ' Adding ';
 
-    private const TEST_LOG_FILENAME = 'test.xlsx';
+    private const TEST_LOG_FILENAME = 'test_log.xlsx';
     private const DATA_INDEX_FILENAME = 'data_index.csv';
     private const ARCHIVE_LOG = 'archive.log';
 
