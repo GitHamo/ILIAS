@@ -410,10 +410,9 @@ class ilTestArchiver
         if ($this->getParticipantData()) {
             $usrData = $this->getParticipantData()->getUserDataByActiveId($active_fi);
             $user = new ilObjUser();
-            $user->setFirstname($usrData['firstname']);
-            $user->setLastname($usrData['lastname']);
-            $user->setMatriculation($usrData['matriculation']);
-            $user->setFirstname($usrData['firstname']);
+            $user->setFirstname($usrData['firstname'] ?? $this->lng->txt('deleted_user'));
+            $user->setLastname($usrData['lastname'] ?? '');
+            $user->setMatriculation($usrData['matriculation'] ?? '');
         }
 
         $this->appendToArchiveDataIndex(
