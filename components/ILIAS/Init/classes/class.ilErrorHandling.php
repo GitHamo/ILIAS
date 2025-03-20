@@ -392,9 +392,6 @@ class ilErrorHandling
 
     protected function loggingHandler(): HandlerInterface
     {
-        /**
-         * @var
-         */
         return new CallbackHandler(function ($exception, Inspector $inspector, Run $run) {
             /**
              * Don't move this out of this callable
