@@ -61,7 +61,7 @@ class ilAdvancedMDFieldDefinitionSelectMulti extends ilAdvancedMDFieldDefinition
     public function importValueFromXML(string $a_cdata): void
     {
         $values = [];
-        foreach (explode(self::XML_SEPARATOR, $a_cdata) as $value) {
+        foreach (explode(self::XML_SEPARATOR, trim($a_cdata, self::XML_SEPARATOR)) as $value) {
             $value = $this->translateLegacyImportValueFromXML($value);
             $values[] = $value;
         }

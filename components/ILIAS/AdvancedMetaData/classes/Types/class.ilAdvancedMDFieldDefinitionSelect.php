@@ -866,7 +866,7 @@ class ilAdvancedMDFieldDefinitionSelect extends ilAdvancedMDFieldDefinition
 
         $default_language = ilAdvancedMDRecord::_getInstanceByRecordId($this->getRecordId())->getDefaultLanguage();
         foreach ($this->options()->getOptions() as $option) {
-            if ($value = $option->getTranslationInLanguage($default_language)) {
+            if ($value === $option->getTranslationInLanguage($default_language)) {
                 return (string) $option->optionID();
             }
         }
