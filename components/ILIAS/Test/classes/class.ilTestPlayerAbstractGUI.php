@@ -1123,6 +1123,7 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
         );
 
         $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
+        $this->ctrl->setParameterByClass(ilTestPageGUI::class, 'page_type', 'concludingremarkspage');
         $this->ctrl->setParameterByClass(static::class, 'skipfinalstatement', 1);
         $this->tpl->setVariable(
             $this->getContentBlockName(),
@@ -2986,7 +2987,7 @@ JS;
         $state = $question_gui->getObject()->lookupForExistingSolutions($this->test_session->getActiveId(), $this->test_session->getPass());
         $config['isAnswered'] = $state['authorized'];
         $config['isAnswerChanged'] = $state['intermediate'] || $this->getAnswerChangedParameter();
-        $config['isAnswerFixed'] = $this->isParticipantsAnswerFixed($question_gui->object->getId());
+        $config['isAnswerFixed'] = $this->isParticipantsAnswerFixed($question_gui->getObject()->getId());
         $config['saveOnTimeReachedUrl'] = str_replace('&amp;', '&', $this->ctrl->getFormAction($this, ilTestPlayerCommands::AUTO_SAVE_ON_TIME_LIMIT));
 
         $config['autosaveUrl'] = '';

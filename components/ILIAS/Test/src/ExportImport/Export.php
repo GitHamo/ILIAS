@@ -228,16 +228,6 @@ abstract class Export implements Exporter
     {
         $mobs = \ilObjMediaObject::_getMobsOfObject('tst:html', $this->test_obj->getId());
 
-        $intro_page_id = $this->test_obj->getMainSettings()->getIntroductionSettings()->getIntroductionPageId();
-        if ($intro_page_id !== null) {
-            $mobs += \ilObjMediaObject::_getMobsOfObject('tst:pg', $intro_page_id);
-        }
-
-        $concluding_remarks_page_id = $this->test_obj->getMainSettings()->getFinishingSettings()->getConcludingRemarksPageId();
-        if ($concluding_remarks_page_id !== null) {
-            $mobs += \ilObjMediaObject::_getMobsOfObject('tst:pg', $concluding_remarks_page_id);
-        }
-
         foreach ($mobs as $mob) {
             if (\ilObjMediaObject::_exists($mob)) {
                 $mob_obj = new \ilObjMediaObject($mob);
