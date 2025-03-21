@@ -2891,7 +2891,7 @@ class ilObjTest extends ilObject
      * Receives parameters from a QTI parser and creates a valid ILIAS test object
      * @param ilQTIAssessment $assessment
      */
-    public function fromXML(ilQTIAssessment $assessment)
+    public function fromXML(ilQTIAssessment $assessment, array $mappings): void
     {
         if (($importdir = ilSession::get('path_to_container_import_file')) === null) {
             $importdir = $this->buildImportDirectoryFromImportFile(ilSession::get('path_to_import_file'));
@@ -2917,7 +2917,8 @@ class ilObjTest extends ilObject
                 $introduction_settings = $this->addIntroductionToSettingsFromImport(
                     $introduction_settings,
                     $this->qtiMaterialToArray($material),
-                    $importdir
+                    $importdir,
+                    $mappings
                 );
             }
         }
@@ -2930,7 +2931,8 @@ class ilObjTest extends ilObject
                 $this->qtiMaterialToArray(
                     $assessment->getPresentationMaterial()->getFlowMat(0)->getMaterial(0)
                 ),
-                $importdir
+                $importdir,
+                $mappings
             );
         }
 
@@ -3239,13 +3241,20 @@ class ilObjTest extends ilObject
     private function addIntroductionToSettingsFromImport(
         SettingsIntroduction $settings,
         array $material,
-        string $importdir
+        string $importdir,
+        array $mappings
     ): SettingsIntroduction {
         $text = $material['text'];
         $mobs = $material['mobs'];
         if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->retrieveMobsFromPageImports($text, $mobs, $importdir);
-            $text = $this->retrieveFilesFromPageImports($text, $importdir);
+            $text = $this->replaceMobsInPageImports(
+                $text,
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            );
+            $text = $this->replaceFilesInPageImports(
+                $text,
+                $mappings['components/ILIAS/File']['file'] ?? []
+            );
             $page_object = new ilTestPage();
             $page_object->setParentId($this->getId());
             $page_object->setXMLContent($text);
@@ -3265,14 +3274,21 @@ class ilObjTest extends ilObject
     private function addConcludingRemarksToSettingsFromImport(
         SettingsFinishing $settings,
         array $material,
-        string $importdir
+        string $importdir,
+        array $mappings
     ): SettingsFinishing {
         $file_to_import = ilSession::get('path_to_import_file');
         $text = $material['text'];
         $mobs = $material['mobs'];
         if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->retrieveMobsFromPageImports($text, $mobs, $importdir);
-            $text = $this->retrieveFilesFromPageImports($text, $importdir);
+            $text = $this->replaceMobsInPageImports(
+                $text,
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            );
+            $text = $this->replaceFilesInPageImports(
+                $text,
+                $mappings['components/ILIAS/File']['file'] ?? []
+            );
             $page_object = new ilTestPage();
             $page_object->setParentId($this->getId());
             $page_object->setXMLContent($text);
@@ -3295,33 +3311,27 @@ class ilObjTest extends ilObject
         );
     }
 
-    private function retrieveMobsFromPageImports(string $text, array $mobs, string $importdir): string
+    private function replaceMobsInPageImports(string $text, array $mappings): string
     {
-        foreach ($mobs as $mob) {
-            $importfile = $importdir . DIRECTORY_SEPARATOR . $mob['uri'];
-            if (file_exists($importfile)) {
-                $media_object = ilObjMediaObject::_saveTempFileAsMediaObject(basename($importfile), $importfile, false);
-                ilObjMediaObject::_saveUsage($media_object->getId(), 'tst:gp', $this->getId());
-                $text = str_replace($mob['mob'], 'il__mob_' . (string) $media_object->getId(), $text);
+        preg_match_all('/il_(\d+)_mob_(\d+)/', $text, $matches);
+        foreach ($matches[0] as $index => $match) {
+            if (empty($mappings[$matches[2][$index]])) {
+                continue;
             }
+            $text = str_replace($match, "il__mob_{$mappings[$matches[2][$index]]}", $text);
+            ilObjMediaObject::_saveUsage((int) $mappings[$matches[2][$index]], 'tst', $this->getId());
         }
         return $text;
     }
 
-    private function retrieveFilesFromPageImports(string $text, string $importdir): string
+    private function replaceFilesInPageImports(string $text, array $mappings): string
     {
         preg_match_all('/il_(\d+)_file_(\d+)/', $text, $matches);
-        foreach ($matches[0] as $match) {
-            $source_dir = $importdir . DIRECTORY_SEPARATOR . 'objects' . DIRECTORY_SEPARATOR . $match;
-            $files = scandir($source_dir, SCANDIR_SORT_DESCENDING);
-            if ($files !== false && $files !== [] && is_file($source_dir . '/' . $files[0])) {
-                $file = fopen($source_dir . '/' . $files[0], 'rb');
-                $file_stream = Streams::ofResource($file);
-                $file_obj = new ilObjFile();
-                $file_id = $file_obj->create();
-                $file_obj->appendStream($file_stream, $files[0]);
-                $text = str_replace($match, "il__file_{$file_id}", $text);
+        foreach ($matches[0] as $index => $match) {
+            if (empty($mappings[$matches[2][$index]])) {
+                continue;
             }
+            $text = str_replace($match, "il__file_{$mappings[$matches[2][$index]]}", $text);
         }
         return $text;
     }
