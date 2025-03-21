@@ -130,9 +130,7 @@ class ilBuddySystemRelationCollectionTestCase extends ilBuddySystemBaseTestCase
         $collection->add(3);
         $collection->add(4);
 
-        $this->assertCount(2, $collection->filter(function ($elm): bool {
-            return $elm % 2 === 0;
-        })->toArray());
+        $this->assertCount(2, $collection->filter(fn(int $elm): bool => $elm % 2 === 0)->toArray());
     }
 
     public function testElementsCanBeFiltered(): void

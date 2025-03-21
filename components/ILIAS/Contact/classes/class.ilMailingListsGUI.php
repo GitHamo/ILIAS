@@ -486,15 +486,11 @@ class ilMailingListsGUI
 
         $availale_usr_ids = array_diff(
             array_map(
-                static function (ilBuddySystemRelation $relation): int {
-                    return $relation->getBuddyUsrId();
-                },
+                static fn(ilBuddySystemRelation $relation): int => $relation->getBuddyUsrId(),
                 ilBuddyList::getInstanceByGlobalUser()->getLinkedRelations()->toArray()
             ),
             array_map(
-                static function (array $entry): int {
-                    return $entry['usr_id'];
-                },
+                static fn(array $entry): int => $entry['usr_id'],
                 $this->mlists->getCurrentMailingList()->getAssignedEntries()
             ),
         );
