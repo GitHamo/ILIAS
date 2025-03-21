@@ -260,17 +260,6 @@ class TermListTable
                 "term_ids"
             );
 
-        $uri_edit_term = $this->df->uri(
-            ILIAS_HTTP_PATH . "/" . $this->ctrl->getLinkTargetByClass("ilglossarytermgui", "editTerm")
-        );
-        $url_builder_edit_term = new UI\URLBuilder($uri_edit_term);
-        list($url_builder_edit_term, $action_parameter_token_edit_term, $row_id_token_edit_term) =
-            $url_builder_edit_term->acquireParameters(
-                $query_params_namespace,
-                "action",
-                "term_ids"
-            );
-
         $uri_edit_definition = $this->df->uri(
             ILIAS_HTTP_PATH . "/" . $this->ctrl->getLinkTargetByClass(["ilglossarytermgui",
                                                                             "iltermdefinitioneditorgui",
@@ -279,6 +268,17 @@ class TermListTable
         $url_builder_edit_definition = new UI\URLBuilder($uri_edit_definition);
         list($url_builder_edit_definition, $action_parameter_token_edit_definition, $row_id_token_edit_definition) =
             $url_builder_edit_definition->acquireParameters(
+                $query_params_namespace,
+                "action",
+                "term_ids"
+            );
+
+        $uri_edit_term = $this->df->uri(
+            ILIAS_HTTP_PATH . "/" . $this->ctrl->getLinkTargetByClass("ilglossarytermgui", "editTerm")
+        );
+        $url_builder_edit_term = new UI\URLBuilder($uri_edit_term);
+        list($url_builder_edit_term, $action_parameter_token_edit_term, $row_id_token_edit_term) =
+            $url_builder_edit_term->acquireParameters(
                 $query_params_namespace,
                 "action",
                 "term_ids"
@@ -303,16 +303,16 @@ class TermListTable
                 ->withAsync()
         ];
 
-        $actions["edit_term"] = $this->ui_fac->table()->action()->single(
-            $this->lng->txt("cont_edit_term"),
-            $url_builder_edit_term->withParameter($action_parameter_token_edit_term, "editTerm"),
-            $row_id_token_edit_term
-        );
-
         $actions["edit_definition"] = $this->ui_fac->table()->action()->single(
             $this->lng->txt("cont_edit_definition"),
             $url_builder_edit_definition->withParameter($action_parameter_token_edit_definition, "editDefinition"),
             $row_id_token_edit_definition
+        );
+
+        $actions["edit_term"] = $this->ui_fac->table()->action()->single(
+            $this->lng->txt("cont_edit_term"),
+            $url_builder_edit_term->withParameter($action_parameter_token_edit_term, "editTerm"),
+            $row_id_token_edit_term
         );
 
         return $actions;
@@ -366,8 +366,8 @@ class TermListTable
                         || $this->term_perm->checkPermission("edit_content", $row_id))) {
                         if (!(\ilGlossaryTerm::_lookGlossaryID($row_id) == $this->glossary->getId()
                             || \ilGlossaryTermReferences::isReferenced([$this->glossary->getId()], $row_id))) {
-                            $data_row = $data_row->withDisabledAction("edit_term");
                             $data_row = $data_row->withDisabledAction("edit_definition");
+                            $data_row = $data_row->withDisabledAction("edit_term");
                         }
                     }
                     yield $data_row;
