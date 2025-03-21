@@ -10234,6 +10234,7 @@ glo#:#glo_flashcards_from_today_only_info#:#The box contains only flashcards alr
 glo#:#glo_flashcards_intro#:#Your goal is to correctly remember each flashcard four times in a row.<br />To begin with, all of the flashcards are in box 1.<br />Flagging a flashcard as "I got it right" will advance it to the next box.<br />Flagging a flashcard as "I was wrong" will return the card to the first box.<br />To start, select a box. This will reveal the flashcards.
 glo#:#glo_introduction#:#Introduction
 glo#:#glo_link_glo_in_glo#:#Should all glossary terms of the target glossary be linked in the current glossary now?
+glo#:#glo_md_advanced#:#Further Details
 glo#:#glo_page_type_gdf#:#Term Definition
 glo#:#glo_please_select_other_glo#:#Please select another glossary.
 glo#:#glo_quit_box#:#Quit Box
