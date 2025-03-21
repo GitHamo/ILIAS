@@ -20,9 +20,6 @@ declare(strict_types=1);
 
 use ILIAS\Filesystem\Exception\IOException;
 
-/**
- * Class ilSamlAuthFactory
- */
 final class ilSamlAuthFactory
 {
     private const METADATA_PATH = 'auth/saml/config';

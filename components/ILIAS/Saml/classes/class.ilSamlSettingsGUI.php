@@ -24,10 +24,6 @@ use ILIAS\HTTP\GlobalHttpState;
 use ILIAS\Data\Factory;
 use ILIAS\UI\Component\Input\Container\Form\Standard as StandardForm;
 
-/**
- * Class ilSamlSettingsGUI
- * @author Michael Jansen <mjansen@databay.de>
- */
 final class ilSamlSettingsGUI
 {
     private const VIEW_MODE_GLOBAL = 1;

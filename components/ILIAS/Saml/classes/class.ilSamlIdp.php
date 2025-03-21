@@ -18,10 +18,6 @@
 
 declare(strict_types=1);
 
-/**
- * Class ilSamlIdp
- * @author Michael Jansen <mjansen@databay.de>
- */
 final class ilSamlIdp
 {
     private const PROP_IDP_ID = 'idp_id';
