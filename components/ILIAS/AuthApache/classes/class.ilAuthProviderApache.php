@@ -18,11 +18,6 @@
 
 declare(strict_types=1);
 
-/**
- * Apache auth provider
- * @author Stefan Meyer <smeyer.ilias@gmx.de>
- * @author Michael Jansen <mjansen@databay.de>
- */
 final class ilAuthProviderApache extends ilAuthProvider implements ilAuthProviderAccountMigrationInterface
 {
     public const APACHE_AUTH_TYPE_DIRECT_MAPPING = 1;
