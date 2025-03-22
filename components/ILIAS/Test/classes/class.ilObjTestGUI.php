@@ -44,6 +44,7 @@ use ILIAS\Test\Results\Data\Factory as ResultsDataFactory;
 use ILIAS\Test\Results\Presentation\Factory as ResultsPresentationFactory;
 use ILIAS\Test\Results\Toplist\TestTopListRepository;
 use ILIAS\Test\ExportImport\Factory as ExportImportFactory;
+use ILIAS\Test\ExportImport\DBRepository as ExportRepository;
 use ILIAS\TestQuestionPool\Questions\GeneralQuestionPropertiesRepository;
 use ILIAS\TestQuestionPool\RequestDataCollector as QPLRequestDataCollector;
 use ILIAS\TestQuestionPool\Import\TestQuestionsImportTrait;
@@ -124,6 +125,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     private ilTestPlayerFactory $test_player_factory;
     private ilTestSessionFactory $test_session_factory;
     private ExportImportFactory $export_factory;
+    private ExportRepository $export_repository;
     private TestQuestionsRepository $test_questions_repository;
     private GeneralQuestionPropertiesRepository $questionrepository;
     private TestTopListRepository $toplist_repository;
@@ -203,6 +205,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->results_data_factory = $local_dic['results.data.factory'];
         $this->results_presentation_factory = $local_dic['results.presentation.factory'];
         $this->export_factory = $local_dic['exportimport.factory'];
+        $this->export_repository = $local_dic['exportimport.repository'];
         $this->participant_access_filter_factory = $local_dic['participant.access_filter.factory'];
         $this->test_pass_result_repository = $local_dic['results.data.test_result_repository'];
         $this->toplist_repository = $local_dic['results.toplist.repository'];
@@ -317,13 +320,14 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 $export_gui = new ilTestExportGUI(
                     $this,
                     $this->db,
-                    $this->export_factory,
                     $this->obj_data_cache,
                     $this->user,
                     $this->ui_factory,
                     $this->ui_renderer,
                     $this->irss,
                     $this->request,
+                    $this->export_repository,
+                    $this->temp_file_system,
                     $this->participant_access_filter_factory,
                     new ilTestHTMLGenerator(),
                     $selected_files,
@@ -1534,7 +1538,11 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $map = $imp->getMapping();
         $map->addMapping('components/ILIAS/Test', 'tst', 'new_id', (string) $new_obj->getId());
 
-        if (is_file($importdir . DIRECTORY_SEPARATOR . "/manifest.xml")) {
+        /**
+         * 2025-03-22, sk: This is now only needed for legacy exports as
+         * now also exports with results do contain a manifest.xml.
+         */
+        if (is_file($importdir . DIRECTORY_SEPARATOR . '/manifest.xml')) {
             $imp->importObject($new_obj, $file_to_import, basename($file_to_import), 'tst', 'components/ILIAS/Test', true);
         } else {
             $test_importer = new ilTestImporter();

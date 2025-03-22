@@ -63,13 +63,21 @@ class ilTestExporter extends ilXmlExporter
 
     public function getXmlRepresentation(string $a_entity, string $a_schema_version, string $id): string
     {
+        /** @var ILIAS\DI\Container $DIC */
+        global $DIC;
+        $parameters = $DIC->ctrl()->getParameterArrayByClass(ilTestExportGUI::class);
+        $export_type = ExportImportTypes::XML;
+        if (!empty($parameters['export_results'])) {
+            $export_type = ExportImportTypes::XML_WITH_RESULTS;
+        }
         $tst = new ilObjTest((int) $id, false);
         $tst->read();
-        $zip = $this->export_factory->getExporter($tst, ExportImportTypes::XML)
+        $zip = $this->export_factory->getExporter($tst, $export_type)
+            ->withExportDirInfo($this->getAbsoluteExportDirectory())
             ->write();
 
         $this->logger->info(__METHOD__ . ': Created zip file ' . $zip);
-        return ''; // Sagt mjansen
+        return '';
     }
 
     public function getXmlExportHeadDependencies(string $entity, string $target_release, array $ids): array
