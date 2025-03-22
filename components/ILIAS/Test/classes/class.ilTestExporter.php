@@ -37,6 +37,7 @@ class ilTestExporter extends ilXmlExporter
     private readonly ExportImportFactory $export_factory;
     private readonly TestLogger $logger;
     private readonly ilTree $tree;
+    private readonly ilCtrl $ctrl;
     private readonly ilComponentRepository $component_repository;
     private readonly GeneralQuestionPropertiesRepository $questionrepository;
 
@@ -49,6 +50,7 @@ class ilTestExporter extends ilXmlExporter
         $this->logger = $local_dic['logging.logger'];
         $this->questionrepository = $local_dic['question.general_properties.repository'];
         $this->tree = $DIC['tree'];
+        $this->ctrl = $DIC['ilCtrl'];
         $this->component_repository = $DIC['component.repository'];
 
         parent::__construct();
@@ -63,9 +65,7 @@ class ilTestExporter extends ilXmlExporter
 
     public function getXmlRepresentation(string $a_entity, string $a_schema_version, string $id): string
     {
-        /** @var ILIAS\DI\Container $DIC */
-        global $DIC;
-        $parameters = $DIC->ctrl()->getParameterArrayByClass(ilTestExportGUI::class);
+        $parameters = $this->ctrl->getParameterArrayByClass(ilTestExportGUI::class);
         $export_type = ExportImportTypes::XML;
         if (!empty($parameters['export_results'])) {
             $export_type = ExportImportTypes::XML_WITH_RESULTS;
