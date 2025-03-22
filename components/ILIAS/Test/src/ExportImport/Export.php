@@ -64,6 +64,7 @@ abstract class Export implements Exporter
         protected readonly \ilObjTest $test_obj
     ) {
         $this->inst_id = (string) IL_INST_ID;
+        $this->export_dir = $test_obj->getExportDirectory();
 
         $date = time();
         $this->export_dir = $test_obj->getExportDirectory();
@@ -71,7 +72,6 @@ abstract class Export implements Exporter
         $this->filename = $this->subdir . '.xml';
         $this->resultsfile = "{$date}__{$this->inst_id}__results_{$this->test_obj->getId()}.xml";
         $this->qti_filename = "{$date}__{$this->inst_id}__qti_{$this->test_obj->getId()}.xml";
-        $this->filename = $this->subdir . '.xml';
     }
 
     abstract protected function initXmlExport();
@@ -88,6 +88,17 @@ abstract class Export implements Exporter
     {
         $clone = clone $this;
         $clone->result_exporting_enabled = $enable;
+        return $clone;
+    }
+
+    public function withExportDirInfo(string $export_dir): self
+    {
+        $clone = clone $this;
+        $clone->subdir = basename($export_dir);
+        $clone->filename = $clone->subdir . '.xml';
+        $path_array = explode('__', $clone->subdir);
+        $clone->resultsfile = "{$path_array[0]}__{$path_array[1]}__results_{$this->test_obj->getId()}.xml";
+        $clone->qti_filename = "{$path_array[0]}__{$path_array[1]}__qti_{$this->test_obj->getId()}.xml";
         return $clone;
     }
 
@@ -178,9 +189,7 @@ abstract class Export implements Exporter
         $exp_log->write(date('[y-m-d H:i:s] ') . 'Finished Export');
         $this->bench->stop('TestExport', 'write');
 
-        if (!$this->isResultExportingEnabled()) {
-            unlink($this->export_dir . '/' . $this->subdir . '.zip');
-        }
+        unlink($this->export_dir . '/' . $this->subdir . '.zip');
 
         return $this->export_dir . '/' . $this->subdir . '.zip';
     }

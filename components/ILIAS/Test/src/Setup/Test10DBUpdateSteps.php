@@ -22,6 +22,7 @@ namespace ILIAS\Test\Setup;
 
 use ILIAS\Test\Logging\TestLoggingDatabaseRepository;
 use ILIAS\Test\Certificate\TestPlaceholderValues;
+use ILIAS\Test\ExportImport\DBRepository;
 
 class Test10DBUpdateSteps implements \ilDatabaseUpdateSteps
 {
@@ -423,6 +424,30 @@ class Test10DBUpdateSteps implements \ilDatabaseUpdateSteps
                     'default' => 0
                 ]
             );
+        }
+    }
+
+    public function step_12(): void
+    {
+        if (!$this->db->tableExists(DBRepository::TST_EXPORT_TABLE)) {
+            $this->db->createTable(DBRepository::TST_EXPORT_TABLE, [
+                'object_id' => [
+                    'type' => \ilDBConstants::T_INTEGER,
+                    'length' => 8,
+                    'notnull' => true
+                ],
+                'type' => [
+                    'type' => \ilDBConstants::T_TEXT,
+                    'length' => 32,
+                    'notnull' => true
+                ],
+                'rid' => [
+                    'type' => \ilDBConstants::T_TEXT,
+                    'length' => 64
+                ]
+            ]);
+            $this->db->addPrimaryKey(DBRepository::TST_EXPORT_TABLE, ['rid']);
+            $this->db->addIndex(DBRepository::TST_EXPORT_TABLE, ['object_id'], 'oid');
         }
     }
 }
