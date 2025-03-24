@@ -840,7 +840,23 @@ class ilAdvancedMDFieldDefinitionSelect extends ilAdvancedMDFieldDefinition
 
     public function getValueForXML(ilADT $element): string
     {
-        return $element->getSelection();
+        $record = ilAdvancedMDRecord::_getInstanceByRecordId($this->getRecordID());
+        if (!$record->getParentObject()) {
+            return $element->getSelection();
+        }
+        /**
+         * Options of imported local fields don't keep their ID,
+         * but get assigned a new ID based on order. To conserve
+         * assigments, the same logic has to be applied here.
+         */
+        $index = 1;
+        foreach ($this->options()->getOptions() as $option) {
+            if ($option->optionID() === (int) $element->getSelection()) {
+                return (string) $index;
+            }
+            $index++;
+        }
+        return '';
     }
 
     public function importValueFromXML(string $a_cdata): void
