@@ -69,6 +69,7 @@ class ilTestExporter extends ilXmlExporter
         $export_type = ExportImportTypes::XML;
         if (!empty($parameters['export_results'])) {
             $export_type = ExportImportTypes::XML_WITH_RESULTS;
+            $this->ctrl->clearParameterByClass(ilTestExportGUI::class, 'export_results');
         }
         $tst = new ilObjTest((int) $id, false);
         $tst->read();
