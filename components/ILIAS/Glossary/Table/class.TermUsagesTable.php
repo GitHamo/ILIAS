@@ -278,13 +278,13 @@ class TermUsagesTable
                         $records[$i]["version"] = $ver;
                     }
 
-                    if ($item["obj_type_txt"] != "") {
+                    if (($item["obj_type_txt"] ?? "") != "") {
                         $records[$i]["type"] = $item["obj_type_txt"];
                     }
 
-                    if ($usage["type"] != "clip") {
+                    if (($usage["type"] ?? "") != "clip") {
                         $records[$i]["object"] = $item["obj_title"];
-                        if ($item["obj_link"]) {
+                        if ($item["obj_link"] ?? "") {
                             $link = $this->ui_fac->link()->standard($this->lng->txt("cont_link"), $item["obj_link"]);
                             $records[$i]["link"] = $link;
                         }

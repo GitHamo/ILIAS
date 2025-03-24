@@ -210,7 +210,7 @@ class TermListTable
         $columns["usage"] = $this->ui_fac->table()->column()->number($this->lng->txt("cont_usage"))
                                          ->withIsSortable(false)
                                          ->withIsOptional(true, true);
-        $columns["usage_link"] = $this->ui_fac->table()->column()->link($this->lng->txt("usage_link"))
+        $columns["usage_link"] = $this->ui_fac->table()->column()->link($this->lng->txt("glo_usage_link"))
                                               ->withIsSortable(false)
                                               ->withIsOptional(true, true);
         $columns["definitions"] = $this->ui_fac->table()->column()->text($this->lng->txt("cont_definitions"))
@@ -465,7 +465,7 @@ class TermListTable
                         $this->ctrl->setParameterByClass("ilglossarytermgui", "term_id", $term_id);
                         $records[$i]["usage"] = \ilGlossaryTerm::getNumberOfUsages($term_id);
                         $records[$i]["usage_link"] = $this->ui_fac->link()->standard(
-                            $this->lng->txt("link_to_usages"),
+                            $this->lng->txt("glo_link_to_usages"),
                             $this->ctrl->getLinkTargetByClass("ilglossarytermgui", "listUsages")
                         );
                         $this->ctrl->setParameterByClass("ilglossarytermgui", "term_id", "");
