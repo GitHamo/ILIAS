@@ -162,12 +162,12 @@ class ilGlossaryFlashcardBoxGUI
 
         if ($this->glossary->getFlashcardsMode() === "term") {
             $flashcard = $this->ui_fac->panel()->standard(
-                $this->lng->txt("term") . ": " . $this->getTermText(),
+                sprintf($this->lng->txt("glo_what_means_term"), $this->getTermText()),
                 $this->ui_fac->legacy()->content("???")
             );
         } else {
             $flashcard = $this->ui_fac->panel()->standard(
-                $this->lng->txt("term") . ": ???",
+                $this->lng->txt("glo_what_means_definition"),
                 $this->ui_fac->legacy($this->getDefinitionPage())
             );
         }
@@ -199,7 +199,7 @@ class ilGlossaryFlashcardBoxGUI
         $progress_bar->setCurrent($progress);
 
         $flashcard = $this->ui_fac->panel()->standard(
-            $this->lng->txt("term") . ": " . $this->getTermText(),
+            $this->getTermText(),
             $this->ui_fac->legacy($this->getDefinitionPage())
         );
 
