@@ -172,17 +172,10 @@ class ilGlossaryFlashcardBoxGUI
             );
         }
 
-        if ($this->glossary->getFlashcardsMode() === "term") {
-            $btn_show = $this->ui_fac->button()->standard(
-                $this->lng->txt("glo_show_definition"),
-                $this->ctrl->getLinkTarget($this, "showRevealed")
-            );
-        } else {
-            $btn_show = $this->ui_fac->button()->standard(
-                $this->lng->txt("glo_show_term"),
-                $this->ctrl->getLinkTarget($this, "showRevealed")
-            );
-        }
+        $btn_show = $this->ui_fac->button()->standard(
+            $this->lng->txt("glo_check"),
+            $this->ctrl->getLinkTarget($this, "showRevealed")
+        );
 
         $btn_quit = $this->ui_fac->button()->standard(
             $this->lng->txt("glo_quit_box"),
