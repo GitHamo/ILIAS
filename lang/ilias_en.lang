@@ -10223,7 +10223,7 @@ glo#:#glo_boxes#:#Boxes
 glo#:#glo_boxes_really_reset#:#Do you really want to reset all boxes? All flashcards will be moved to the first box.
 glo#:#glo_boxes_reset#:#The boxes have been reset successfully.
 glo#:#glo_bulk_confirmation#:#Please check if all terms and definitions are listed correctly.
-glo#:#glo_bulk_creation#:#Bulk Creation
+glo#:#glo_bulk_creation#:#Paste From Excel
 glo#:#glo_change_to_collection_unavailable_info#:#To change the type of content assembly to "Collection Glossary", you first have to delete all existing terms within this glossary in tab "Content".
 glo#:#glo_change_to_standard_unavailable_info#:#To change the type of content assembly to "Standard Glossary", you first have to remove the selected glossaries in tab "Content".
 glo#:#glo_col_ordering_info#:#Order the titles of the metadata fields. They are presented as column headers in the table presentation of the glossary.
@@ -10233,7 +10233,7 @@ glo#:#glo_collection_info#:#The glossary automatically collects all terms from t
 glo#:#glo_content_assembly#:#Content Assembly
 glo#:#glo_copy#:#Copy Glossary
 glo#:#glo_copy_terms#:#Copy Terms
-glo#:#glo_create_term_definition_pairs#:#Create Term/Definition Pairs
+glo#:#glo_create_term_definition_pairs#:#Create finally
 glo#:#glo_days_ago#:#%s days ago
 glo#:#glo_def_vs_term#:#Definition vs. Term
 glo#:#glo_def_vs_term_info#:#Show a definition first, the learner has to guess the term.
@@ -10255,6 +10255,7 @@ glo#:#glo_reference_terms#:#Reference Terms
 glo#:#glo_referenced_term#:#Referenced Term
 glo#:#glo_removed_from_collection_info#:#The glossary has been removed from the collection glossary.
 glo#:#glo_reset_all_boxes#:#Reset All Boxes
+glo#:#glo_save_and_continue#:#Save and Continue
 glo#:#glo_select_source_glo#:#Please select a source glossary.
 glo#:#glo_select_terms#:#Select Terms
 glo#:#glo_selected_glossaries#:#Selected Glossaries
@@ -10268,8 +10269,8 @@ glo#:#glo_show_in_presentation_on#:#Show in Presentation View
 glo#:#glo_show_term#:#Show Term
 glo#:#glo_tax_info#:#A taxonomy in a Glossary classifies and filters the terms. It always is available in the editing view. For the presentation view, the taxonomy must first be activated. In glossaries, only one taxonomy can be used.
 glo#:#glo_term#:#Glossary Term
-glo#:#glo_term_definition_pairs#:#Term/Definition Pairs
-glo#:#glo_term_definition_pairs_info#:#Please enter a term and a definition pair in each line. Term and definition must be separated by a semicolon or a TAB character (usually provided by clipboard actions from spreadsheet applications).
+glo#:#glo_term_definition_pairs#:#Data Copied From Excel
+glo#:#glo_term_definition_pairs_info#:#Copy and paste data from your Excel spreadsheet to this input field. Typically your spreadsheet clipboard will work just fine.<br />Otherwise please separate term and definition manually using a semicolon (;) or a TAB (↹ - key).
 glo#:#glo_term_letter#:#Letter
 glo#:#glo_term_reference#:#Term Reference
 glo#:#glo_term_vs_def#:#Term vs. Definition
