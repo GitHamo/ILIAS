@@ -842,7 +842,7 @@ class ilAdvancedMDFieldDefinitionSelect extends ilAdvancedMDFieldDefinition
     {
         $record = ilAdvancedMDRecord::_getInstanceByRecordId($this->getRecordID());
         if (!$record->getParentObject()) {
-            return $element->getSelection();
+            return (string) $element->getSelection();
         }
         /**
          * Options of imported local fields don't keep their ID,
