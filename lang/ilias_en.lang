@@ -10277,6 +10277,8 @@ glo#:#glo_terms_per_page#:#Terms per Page
 glo#:#glo_usage_link#:#Usage Link
 glo#:#glo_use_all_flashcards#:#Use All Flashcards (%s)
 glo#:#glo_use_remaining_flashcards#:#Use Remaining Flashcards (%s)
+glo#:#glo_what_means_definition#:#What does the following mean?
+glo#:#glo_what_means_term#:#What does %s mean?
 grp#:#crs_add_grouping#:#Add Membership Limitation
 grp#:#crs_grouping_delete_sure#:#Are you sure you want to delete this membership limitation ?
 grp#:#crs_grouping_deleted#:#Deleted membership limitation.

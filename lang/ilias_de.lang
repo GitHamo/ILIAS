@@ -10275,6 +10275,8 @@ glo#:#glo_terms_per_page#:#Begriffe pro Seite
 glo#:#glo_usage_link#:#Link zur Verwendung
 glo#:#glo_use_all_flashcards#:#Alle Lernkarten nutzen (%s)
 glo#:#glo_use_remaining_flashcards#:#Verbleibende Lernkarten nutzen (%s)
+glo#:#glo_what_means_definition#:#Was bedeutet Folgendes?
+glo#:#glo_what_means_term#:#Was bedeutet %s?
 grp#:#crs_add_grouping#:#Neue Mitgliedschaftsbeschränkung
 grp#:#crs_grouping_delete_sure#:#Sind Sie sicher, dass diese Mitgliedschaftsbeschränkung entfernt werden soll ?
 grp#:#crs_grouping_deleted#:#Die Mitgliedschaftsbeschränkung wurde gelöscht.
