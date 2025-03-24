@@ -10222,6 +10222,7 @@ glo#:#glo_bulk_confirmation#:#Bitte überprüfen Sie, ob alle Begriffe und Defin
 glo#:#glo_bulk_creation#:#Aus Excel kopieren
 glo#:#glo_change_to_collection_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Sammelglossar" zu ändern, müssen Sie zuerst alle bestehenden Begriffe innerhalb dieses Glossars im Reiter "Inhalt" löschen.
 glo#:#glo_change_to_standard_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Normales Glossar" zu ändern, müssen Sie zuerst die ausgewählten Glossare im Reiter "Inhalt" entfernen.
+glo#:#glo_check#:#Prüfen
 glo#:#glo_col_ordering_info#:#Sortieren Sie die Titel der Metadatenfelder, die in der Präsentationsansicht des Glossars als Spaltenüberschriften angezeigt werden.
 glo#:#glo_collection#:#Sammelglossar
 glo#:#glo_collection_empty_info#:#Dieses Sammelglossar ist aktuell leer. Bitte fügen mindestens ein Glossar hinzu.
@@ -10258,11 +10259,9 @@ glo#:#glo_selected_glossaries#:#Ausgewählte Glossare
 glo#:#glo_selected_glossaries_info#:#Die Begriffe stammen aus den folgenden Glossaren:
 glo#:#glo_selected_glossary_is_current_info#:#Das ausgewählte Glossar entspricht dem aktuellen Glossar. Bitte wählen Sie ein anderes Glossar.
 glo#:#glo_selected_terms_have_been_copied#:#Die ausgewählten Begriffe wurden in die Zwischenablage kopiert. Bitte öffnen Sie das Zielglossar und klicken dann auf "Einfügen".
-glo#:#glo_show_definition#:#Definition zeigen
 glo#:#glo_show_in_presentation#:#Anzeige in Präsentationsansicht
 glo#:#glo_show_in_presentation_off#:#Nicht in Präsentationsansicht anzeigen
 glo#:#glo_show_in_presentation_on#:#In Präsentationsansicht anzeigen
-glo#:#glo_show_term#:#Begriff zeigen
 glo#:#glo_tax_info#:#Eine Taxonomie im Glossar klassifiziert und filtert die Begriffe. In der Bearbeitungsansicht steht sie immer zur Verfügung. Für die Präsentationsansicht muss die Darstellung der Taxonomie zunächst aktiviert werden. In einem Glossar kann genau eine einzige Taxonomie genutzt werden.
 glo#:#glo_term#:#Glossarbegriff
 glo#:#glo_term_definition_pairs#:#Kopierte Daten aus Excel
