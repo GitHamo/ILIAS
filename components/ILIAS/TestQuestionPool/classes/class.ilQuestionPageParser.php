@@ -263,36 +263,10 @@ class ilQuestionPageParser extends ilMDSaxParser
         }
     }
 
-
-    /**
-     * copy multimedia object files from import zip file to mob directory
-     */
-    public function copyMobFiles(): void
-    {
-        foreach ($this->mob_mapping as $origin_id => $mob_id) {
-            if (empty($origin_id)) {
-                continue;
-            }
-
-            $obj_dir = $origin_id;
-            $source_dir = $this->importdir . DIRECTORY_SEPARATOR . 'objects' . DIRECTORY_SEPARATOR . $obj_dir;
-            $target_dir = ilFileUtils::getWebspaceDir() . DIRECTORY_SEPARATOR . 'mobs/mm_' . $mob_id;
-
-            if (is_dir($source_dir)) {
-                ilFileUtils::makeDir($target_dir);
-
-                if (is_dir($target_dir)) {
-                    ilLoggerFactory::getLogger('mob')->debug('s:-$source_dir-,t:-$target_dir-');
-                    ilFileUtils::rCopy(realpath($source_dir), realpath($target_dir));
-                }
-            }
-        }
-    }
-
     /**
      * copy files of file items
      */
-    public function copyFileItems(): void
+    private function copyFileItems(): void
     {
         foreach ($this->file_item_mapping as $origin_id => $file_id) {
             if (empty($origin_id)) {
@@ -426,11 +400,13 @@ class ilQuestionPageParser extends ilMDSaxParser
                 $this->media_meta_start = true;
                 $this->media_meta_cache = [];
                 $this->media_object = new ilObjMediaObject();
+                $this->media_object->create(true, false);
                 break;
 
             case 'MediaAlias':
                 $this->media_object->setAlias(true);
                 $this->media_object->setImportId($a_attribs['OriginId']);
+                $this->mob_mapping[$this->media_object->getImportId()] = $this->media_object->getId();
                 if (is_object($this->page_object)) {
                     $this->page_object->needsImportParsing(true);
                 }
@@ -1020,7 +996,28 @@ class ilQuestionPageParser extends ilMDSaxParser
             case 'MediaItem':
             case 'MediaAliasItem':
                 $this->in_media_item = false;
-                $this->media_object->addMediaItem($this->media_item);
+                $import_dir = $this->importdir . DIRECTORY_SEPARATOR . 'objects' . DIRECTORY_SEPARATOR . $this->media_object->getImportId();
+                if (!file_exists($import_dir)
+                    || !is_dir($import_dir)) {
+                    $this->media_object->addMediaItem($this->media_item);
+                    break;
+                }
+
+                $dir_handle = opendir($import_dir);
+                while (($file = readdir($dir_handle)) !== false) {
+                    if ($file === '.'
+                        || $file === '..'
+                        || str_contains($file, 'preview')) {
+                        continue;
+                    }
+                    $this->media_object->addMediaItemFromLocalFile(
+                        $this->media_item->getPurpose(),
+                        $import_dir . DIRECTORY_SEPARATOR . $file,
+                        $file
+                    );
+                    break;
+                }
+                closedir($dir_handle);
                 break;
 
             case 'MapArea':
