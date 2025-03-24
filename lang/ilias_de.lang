@@ -10256,7 +10256,7 @@ glo#:#glo_show_term#:#Begriff zeigen
 glo#:#glo_tax_info#:#Eine Taxonomie im Glossar klassifiziert und filtert die Begriffe. In der Bearbeitungsansicht steht sie immer zur Verfügung. Für die Präsentationsansicht muss die Darstellung der Taxonomie zunächst aktiviert werden. In einem Glossar kann genau eine einzige Taxonomie genutzt werden.
 glo#:#glo_term#:#Glossarbegriff
 glo#:#glo_term_definition_pairs#:#Kopierte Daten aus Excel
-glo#:#glo_term_definition_pairs_info#:#Kopieren Sie die Inhalte aus der Excel-Tabelle in dieses Eingabefeld. Üblicherweise macht die Zwischenablage des Tabellenkalkulationsprogramms automatisch alles richtig.<br />Ansonsten müssen Begriff und Definition durch ein Semikolon (;) oder einen TAB (↹ - Taste) getrennt werden.
+glo#:#glo_term_definition_pairs_info#:#Kopieren Sie die Inhalte aus der Excel-Tabelle in dieses Eingabefeld. Üblicherweise macht die Zwischenablage des Tabellenkalkulationsprogramms automatisch alles richtig.<br />Ansonsten müssen Begriff und Definition durch ein Semikolon (;) oder den TAB (↹ - Taste) getrennt werden.
 glo#:#glo_term_letter#:#Buchstabe
 glo#:#glo_term_reference#:#Begriffslink
 glo#:#glo_term_vs_def#:#Begriff vs. Definition
