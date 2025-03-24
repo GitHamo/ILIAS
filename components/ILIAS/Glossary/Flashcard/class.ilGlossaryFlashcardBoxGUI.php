@@ -168,7 +168,7 @@ class ilGlossaryFlashcardBoxGUI
         } else {
             $flashcard = $this->ui_fac->panel()->standard(
                 $this->lng->txt("glo_what_means_definition"),
-                $this->ui_fac->legacy($this->getDefinitionPage())
+                $this->ui_fac->legacy()->content($this->getDefinitionPage())
             );
         }
 
@@ -200,7 +200,7 @@ class ilGlossaryFlashcardBoxGUI
 
         $flashcard = $this->ui_fac->panel()->standard(
             $this->getTermText(),
-            $this->ui_fac->legacy($this->getDefinitionPage())
+            $this->ui_fac->legacy()->content($this->getDefinitionPage())
         );
 
         $btn_correct = $this->ui_fac->button()->standard(
