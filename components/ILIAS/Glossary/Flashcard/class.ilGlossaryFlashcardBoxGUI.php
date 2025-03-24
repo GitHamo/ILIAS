@@ -103,7 +103,7 @@ class ilGlossaryFlashcardBoxGUI
                 sprintf($this->lng->txt("glo_use_all_flashcards"), $cnt_all),
                 $this->ctrl->getLinkTarget($this, "showAllItems")
             );
-            $cbox = $this->ui_fac->messageBox()->confirmation(
+            $cbox = $this->ui_fac->messageBox()->info(
                 sprintf($this->lng->txt("glo_flashcards_from_today_only_info"), $cnt_all)
             )->withButtons([$all_button]);
             $this->tpl->setContent($this->ui_ren->render($cbox));
@@ -116,7 +116,7 @@ class ilGlossaryFlashcardBoxGUI
                 sprintf($this->lng->txt("glo_use_all_flashcards"), $cnt_all),
                 $this->ctrl->getLinkTarget($this, "showAllItems")
             );
-            $cbox = $this->ui_fac->messageBox()->confirmation(
+            $cbox = $this->ui_fac->messageBox()->info(
                 sprintf($this->lng->txt("glo_flashcards_from_today_confirmation"), $cnt_today, $cnt_remaining, $cnt_all)
             )->withButtons([$remaining_button, $all_button]);
             $this->tpl->setContent($this->ui_ren->render($cbox));

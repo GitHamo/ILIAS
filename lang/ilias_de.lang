@@ -10231,7 +10231,7 @@ glo#:#glo_collection_info#:#Das Glossar sammelt automatisch alle Begriffe aus de
 glo#:#glo_content_assembly#:#Zusammenstellung der Inhalte
 glo#:#glo_copy#:#Glossar kopieren
 glo#:#glo_copy_terms#:#Begriffe kopieren
-glo#:#glo_create_term_definition_pairs#:#Begriffs/Definitions-Paare erstellen
+glo#:#glo_create_term_definition_pairs#:#Endgültig erstellen
 glo#:#glo_days_ago#:#vor %s Tagen
 glo#:#glo_def_vs_term#:#Definition vs. Begriff
 glo#:#glo_def_vs_term_info#:#Zeige zuerst eine Definition, der Lernende muss den Begriff erraten.

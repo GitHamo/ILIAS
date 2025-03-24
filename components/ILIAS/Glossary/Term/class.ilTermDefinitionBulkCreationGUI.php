@@ -167,7 +167,7 @@ class ilTermDefinitionBulkCreationGUI
 EOT;
         });
 
-        $mbox = $f->messageBox()->confirmation(
+        $mbox = $f->messageBox()->info(
             $lng->txt("glo_bulk_confirmation")
         )->withButtons([$button]);
 
