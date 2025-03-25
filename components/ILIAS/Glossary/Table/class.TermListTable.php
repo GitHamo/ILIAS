@@ -213,7 +213,7 @@ class TermListTable
         $columns["usage_link"] = $this->ui_fac->table()->column()->link($this->lng->txt("glo_usage_link"))
                                               ->withIsSortable(false)
                                               ->withIsOptional(true, true);
-        $columns["definitions"] = $this->ui_fac->table()->column()->text($this->lng->txt("cont_definitions"))
+        $columns["definition"] = $this->ui_fac->table()->column()->text($this->lng->txt("cont_definition"))
                                                ->withIsSortable(false);
 
         if ($this->glossary->getVirtualMode() === "coll"
@@ -454,7 +454,7 @@ class TermListTable
                         !$page->getPageConfig()->getPreventHTMLUnmasking()
                     );
 
-                    $records[$i]["definitions"] = $short_str;
+                    $records[$i]["definition"] = $short_str;
 
                     $this->ctrl->setParameterByClass("ilobjglossarygui", "term_id", $term_id);
 

@@ -6200,7 +6200,6 @@ content#:#cont_active_from#:#Activation Start
 content#:#cont_active_to#:#Activation End
 content#:#cont_add_area#:#Add Area
 content#:#cont_add_cell#:#Add Column
-content#:#cont_add_definition#:#Add Definition
 content#:#cont_add_elements#:#<b>Click</b> on a plus symbol to <b>add</b> a new element.
 content#:#cont_add_file#:#Add File
 content#:#cont_add_images#:#Add Images
@@ -6374,7 +6373,6 @@ content#:#cont_def_map_areas#:#Default Link Areas
 content#:#cont_def_organization#:#default
 content#:#cont_default#:#Default
 content#:#cont_definition#:#Definition
-content#:#cont_definitions#:#Definitions
 content#:#cont_delete_content#:#Delete Content
 content#:#cont_delete_selected#:#Delete
 content#:#cont_delete_style#:#Delete Style
@@ -7281,7 +7279,6 @@ content#:#copied_to_clipboard#:#Copied object(s) to clipboard.
 content#:#dgl_pagebreak#:#Pagebreak
 content#:#glo_add_new_term#:#Add New Term
 content#:#glo_content_settings#:#Content
-content#:#glo_definition_abbr#:#Def.
 content#:#glo_editing_view#:#Editing View
 content#:#glo_full_definitions#:#Full Definitions
 content#:#glo_full_definitions_info#:#Terms and definitions are fully displayed in the main view.
