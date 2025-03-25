@@ -4237,8 +4237,8 @@ common#:#from#:#Von
 common#:#fullname#:#Voller Name
 common#:#functions#:#Funktionen
 common#:#further_informations#:#Weitere Informationen
-common#:#gdf_add#:#Definition hinzufügen
-common#:#gdf_new#:#Neue Definition
+common#:#gdf_add#:#Erklärung hinzufügen
+common#:#gdf_new#:#Neue Erklärung
 common#:#gender#:#Anrede
 common#:#gender_f#:#Frau
 common#:#gender_m#:#Herr
@@ -4252,7 +4252,7 @@ common#:#glo_add#:#Glossar anlegen
 common#:#glo_added#:#Glossar angelegt
 common#:#glo_import#:#Glossar importieren
 common#:#glo_mode#:#Modus
-common#:#glo_mode_desc#:#Ein Sammelglossar funktioniert wie ein normales Glossar. Zusätzlich umfasst es aber auch alle Begriffsdefinitionen von allen Glossaren, die sich auf der gleichen Ebene im Magazin befinden (nur diese Ebene) bzw. auch alle Begriffsdefinitionen aus Glossaren, die sich auch in nachfolgenden Ebenen befinden (ganzer Teilbaum).
+common#:#glo_mode_desc#:#Ein Sammelglossar funktioniert wie ein normales Glossar. Zusätzlich umfasst es aber auch alle Begriffserklärungen von allen Glossaren, die sich auf der gleichen Ebene im Magazin befinden (nur diese Ebene) bzw. auch alle Begriffserklärungen aus Glossaren, die sich auch in nachfolgenden Ebenen befinden (ganzer Teilbaum).
 common#:#glo_mode_normal#:#Normales Glossar
 common#:#glo_new#:#Neues Glossar anlegen
 common#:#global#:#Global
@@ -6201,7 +6201,6 @@ content#:#cont_active_from#:#Aktiv ab
 content#:#cont_active_to#:#Aktiv bis
 content#:#cont_add_area#:#Bereich hinzufügen
 content#:#cont_add_cell#:#Spalte hinzufügen
-content#:#cont_add_definition#:#Definition hinzufügen
 content#:#cont_add_elements#:#<b>Klicken</b> Sie auf ein <b>Plus-Symbol</b>, um ein neues Element <b>hinzuzufügen</b>.
 content#:#cont_add_file#:#Datei hinzufügen
 content#:#cont_add_images#:#Bild hinzufügen
@@ -6374,8 +6373,7 @@ content#:#cont_def_lesson_mode#:#Nutzungsdaten aufzeichnen
 content#:#cont_def_map_areas#:#Verlinkte Bereiche (Standard)
 content#:#cont_def_organization#:#Standard
 content#:#cont_default#:#Standard
-content#:#cont_definition#:#Definition
-content#:#cont_definitions#:#Definitionen
+content#:#cont_definition#:#Erklärung
 content#:#cont_delete_content#:#Inhalte löschen
 content#:#cont_delete_selected#:#Löschen
 content#:#cont_delete_style#:#Style Löschen
@@ -6489,7 +6487,7 @@ content#:#cont_ed_textitem#:#Testelement
 content#:#cont_ed_width#:#Breite
 content#:#cont_edit_base_image#:#Ausgangsbild bearbeiten
 content#:#cont_edit_comp#:#Bearbeitungsmodus
-content#:#cont_edit_definition#:#Definition bearbeiten
+content#:#cont_edit_definition#:#Erklärung bearbeiten
 content#:#cont_edit_file_list_properties#:#Eigenschaften der Dateilisten bearbeiten
 content#:#cont_edit_language_version#:#Version bearbeiten
 content#:#cont_edit_lrs_settings#:#Einstellungen
@@ -7282,10 +7280,9 @@ content#:#copied_to_clipboard#:#Objekt(e) ins Medien-Clipboard kopiert.
 content#:#dgl_pagebreak#:#Seitenumbruch
 content#:#glo_add_new_term#:#Neuen Begriff hinzufügen
 content#:#glo_content_settings#:#Zusammenstellung des Inhalts
-content#:#glo_definition_abbr#:#Def.
 content#:#glo_editing_view#:#Bearbeitungsansicht
 content#:#glo_full_definitions#:#Liste
-content#:#glo_full_definitions_info#:#Alle Begriffe und Definitionen werden vollständig untereinander angezeigt.
+content#:#glo_full_definitions_info#:#Alle Begriffe und Erklärungen werden vollständig untereinander angezeigt.
 content#:#glo_hide_taxonomy#:#Taxonomie ausblenden
 content#:#glo_list_usages#:#Nutzung
 content#:#glo_mode_normal_info#:#Das Glossar beinhaltet alle Begriffe, die im Glossar angelegt wurden.
@@ -7295,12 +7292,12 @@ content#:#glo_presentation_view#:#Präsentationsansicht
 content#:#glo_quick_navigation#:#Schnellzugriff
 content#:#glo_style#:#Glossar-Style
 content#:#glo_table_form#:#Tabelle
-content#:#glo_table_form_info#:#Begriffe und gekürzte Definitionen werden in einer Übersichtstabelle dargestellt. Beim Anklicken eines Begriffes wird dieser mit der vollständigen Definition angezeigt.
+content#:#glo_table_form_info#:#Begriffe und gekürzte Erklärungen werden in einer Übersichtstabelle dargestellt. Beim Anklicken eines Begriffes wird dieser mit der vollständigen Erklärung angezeigt.
 content#:#glo_term_is_used_n_times#:#Der Begriff wird %s Mal verwendet.
 content#:#glo_term_must_belong_to_glo#:#Die Aktion kann nur für Begriffe ausgeführt werden, welche innerhalb dieses Glossares definiert wurden.
 content#:#glo_term_used_in#:#Folgende Ressourcen verweisen auf diesen Begriff
 content#:#glo_text_snippet_length#:#Kürzen nach
-content#:#glo_text_snippet_length_info#:#Anzahl der Zeichen, nach der Definitionen in der Übersichtstabelle abgeschnitten werden.
+content#:#glo_text_snippet_length_info#:#Anzahl der Zeichen, nach der Erklärungen in der Übersichtstabelle abgeschnitten werden.
 content#:#glo_usages#:#Glossar wird verwendet in...
 content#:#glo_used_in_scorm#:#Das Glossar wird vom SCORM-Modul verwendet. Wenn das Glossar gelöscht wird, können Verlinkungen zum Glossar nicht mehr aufgelöst werden.
 content#:#help_assign_help_ids#:#Zuordnung Screen-IDs zu Kapiteln
@@ -10218,7 +10215,7 @@ glo#:#glo_box_last_presented#:#Fach zuletzt angezeigt
 glo#:#glo_boxes#:#Fächer
 glo#:#glo_boxes_really_reset#:#Möchten Sie wirklich alle Fächer zurücksetzen? Alle Lernkarten werden in das erste Fach verschoben.
 glo#:#glo_boxes_reset#:#Die Fächer wurden erfolgreich zurückgesetzt.
-glo#:#glo_bulk_confirmation#:#Bitte überprüfen Sie, ob alle Begriffe und Definitionen korrekt gelistet sind.
+glo#:#glo_bulk_confirmation#:#Bitte überprüfen Sie, ob alle Begriffe und Erklärungen korrekt gelistet sind.
 glo#:#glo_bulk_creation#:#Aus Excel kopieren
 glo#:#glo_change_to_collection_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Sammelglossar" zu ändern, müssen Sie zuerst alle bestehenden Begriffe innerhalb dieses Glossars im Reiter "Inhalt" löschen.
 glo#:#glo_change_to_standard_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Normales Glossar" zu ändern, müssen Sie zuerst die ausgewählten Glossare im Reiter "Inhalt" entfernen.
@@ -10232,10 +10229,10 @@ glo#:#glo_copy#:#Glossar kopieren
 glo#:#glo_copy_terms#:#Begriffe kopieren
 glo#:#glo_create_term_definition_pairs#:#Endgültig erstellen
 glo#:#glo_days_ago#:#vor %s Tagen
-glo#:#glo_def_vs_term#:#Definition vs. Begriff
-glo#:#glo_def_vs_term_info#:#Zeige zuerst eine Definition, der Lernende muss den Begriff erraten.
+glo#:#glo_def_vs_term#:#Erklärung vs. Begriff
+glo#:#glo_def_vs_term_info#:#Zeige zuerst eine Erklärung, der Lernende muss den Begriff erraten.
 glo#:#glo_flashcard_training#:#Lernkarten Training
-glo#:#glo_flashcard_training_info#:#Bietet eine Präsentation in Form von Lernkarten, die es dem Benutzer ermöglicht, die Begriffe/Definitionen einzeln zu trainieren.
+glo#:#glo_flashcard_training_info#:#Bietet eine Präsentation in Form von Lernkarten, die es dem Benutzer ermöglicht, die Begriffe/Erklärungen einzeln zu trainieren.
 glo#:#glo_flashcards#:#Lernkarten
 glo#:#glo_flashcards_from_today_confirmation#:#Das Fach beinhaltet %s Lernkarten, die Ihnen heute bereits angezeigt wurden. Möchten Sie nur die verbleibenden %s Lernkarten einbeziehen oder alle %s Lernkarten?
 glo#:#glo_flashcards_from_today_only_info#:#Das Fach beinhaltet ausschließlich Lernkarten, die Ihnen heute bereits angezeigt wurden. Bitte bestätigen Sie, dass Ihnen diese %s Lernkarten nochmal angezeigt werden.
@@ -10244,7 +10241,7 @@ glo#:#glo_introduction#:#Einleitung
 glo#:#glo_link_glo_in_glo#:#Sollen jetzt alle Glossarbegriffe aus dem Zielglossar in das bestehende Glossar verlinkt werden?
 glo#:#glo_link_to_usages#:#Link
 glo#:#glo_md_advanced#:#Weitere Angaben
-glo#:#glo_page_type_gdf#:#Begriffsdefinition
+glo#:#glo_page_type_gdf#:#Begriffserklärung
 glo#:#glo_please_select_other_glo#:#Bitte wählen Sie ein anderes Glossar aus.
 glo#:#glo_quit_box#:#Fach verlassen
 glo#:#glo_really_remove_from_collection#:#Sind Sie sich sicher, dass Sie das folgende Glossar aus dem Sammelglossar entfernen wollen?
@@ -10266,11 +10263,11 @@ glo#:#glo_show_in_presentation_on#:#In Präsentationsansicht anzeigen
 glo#:#glo_tax_info#:#Eine Taxonomie im Glossar klassifiziert und filtert die Begriffe. In der Bearbeitungsansicht steht sie immer zur Verfügung. Für die Präsentationsansicht muss die Darstellung der Taxonomie zunächst aktiviert werden. In einem Glossar kann genau eine einzige Taxonomie genutzt werden.
 glo#:#glo_term#:#Glossarbegriff
 glo#:#glo_term_definition_pairs#:#Kopierte Daten aus Excel
-glo#:#glo_term_definition_pairs_info#:#Kopieren Sie die Inhalte aus der Excel-Tabelle in dieses Eingabefeld. Üblicherweise macht die Zwischenablage des Tabellenkalkulationsprogramms automatisch alles richtig.<br />Ansonsten müssen Begriff und Definition durch ein Semikolon (;) oder den TAB (↹ - Taste) getrennt werden.
+glo#:#glo_term_definition_pairs_info#:#Kopieren Sie die Inhalte aus der Excel-Tabelle in dieses Eingabefeld. Üblicherweise macht die Zwischenablage des Tabellenkalkulationsprogramms automatisch alles richtig.<br />Ansonsten müssen Begriff und Erklärung durch ein Semikolon (;) oder den TAB (↹ - Taste) getrennt werden.
 glo#:#glo_term_letter#:#Buchstabe
 glo#:#glo_term_reference#:#Begriffslink
-glo#:#glo_term_vs_def#:#Begriff vs. Definition
-glo#:#glo_term_vs_def_info#:#Zeige zuerst einen Begriff, der Lernende muss die Definition erraten.
+glo#:#glo_term_vs_def#:#Begriff vs. Erklärung
+glo#:#glo_term_vs_def_info#:#Zeige zuerst einen Begriff, der Lernende muss die Erklärung erraten.
 glo#:#glo_terms_per_page#:#Begriffe pro Seite
 glo#:#glo_usage_link#:#Link zur Verwendung
 glo#:#glo_use_all_flashcards#:#Alle Lernkarten nutzen (%s)
