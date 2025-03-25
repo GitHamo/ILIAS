@@ -107,11 +107,11 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
 
         $this->lng->loadLanguageModule('forum');
         $this->lng->loadLanguageModule('content');
+        
+        $ref_id = $this->retrieveIntOrZeroFrom($this->http->wrapper()->query(), 'ref_id');
 
-        $this->objProperties = ilForumProperties::getInstance(
-            $this->ilObjDataCache->lookupObjId($this->object->getRefId())
-        );
-        $this->is_moderator = $this->access->checkAccess('moderate_frm', '', $this->object->getRefId());
+        $this->objProperties = ilForumProperties::getInstance($this->ilObjDataCache->lookupObjId($ref_id));
+        $this->is_moderator = $this->access->checkAccess('moderate_frm', '', $ref_id);
 
         $this->objCurrentTopic = new ilForumTopic($this->retrieveThrPk(), $this->is_moderator);
         $this->requestAction = (string) ($this->httpRequest->getQueryParams()['action'] ?? '');
