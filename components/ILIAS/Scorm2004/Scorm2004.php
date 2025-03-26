@@ -49,5 +49,15 @@ class Scorm2004 implements Component\Component
             }
         };
 
+        $contribute[Component\Resource\PublicAsset::class] = static fn() => new class () implements Component\Resource\PublicAsset {
+            public function getSource(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/player.css";
+            }
+            public function getTarget(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/player.css";
+            }
+        };
     }
 }
