@@ -459,9 +459,16 @@ class ilObjQuestionPool extends ilObject
         foreach ($this->mob_ids as $mob_id) {
             $expLog->write(date('[y-m-d H:i:s] ') . 'Media Object ' . $mob_id);
             if (ilObjMediaObject::_exists($mob_id)) {
+                $target_dir = $a_target_dir . DIRECTORY_SEPARATOR . 'objects'
+                    . DIRECTORY_SEPARATOR . 'il_' . IL_INST_ID . '_mob_' . $mob_id;
+                ilFileUtils::createDirectory($target_dir);
                 $media_obj = new ilObjMediaObject($mob_id);
                 $media_obj->exportXML($a_xml_writer, $a_inst);
-                $media_obj->exportFiles($a_target_dir);
+                foreach ($media_obj->getMediaItems() as $item) {
+                    $stream = $item->getLocationStream();
+                    file_put_contents($target_dir . DIRECTORY_SEPARATOR . $item->getLocation(), $stream);
+                    $stream->close();
+                }
                 unset($media_obj);
             }
         }

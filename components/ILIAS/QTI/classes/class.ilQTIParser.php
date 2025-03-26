@@ -196,7 +196,8 @@ class ilQTIParser extends ilSaxParser
         ?string $a_xml_file,
         int $a_mode = self::IL_MO_PARSE_QTI,
         int $a_qpl_id = 0,
-        array $import_idents = []
+        array $import_idents = [],
+        private array $mappings = []
     ) {
         /** @var ILIAS\DI\Container $DIC */
         global $DIC;
@@ -578,7 +579,7 @@ class ilQTIParser extends ilSaxParser
         switch (strtolower($a_name)) {
             case "assessment":
                 if (is_object($this->tst_object)) {
-                    $this->tst_object->fromXML($this->assessment);
+                    $this->tst_object->fromXML($this->assessment, $this->mappings);
                 }
                 $this->in_assessment = false;
                 break;

@@ -99,7 +99,7 @@ class ilTermDefinitionBulkCreationGUI
         $user = $this->domain->user();
         $form = $this
             ->gui
-            ->form(self::class, "showConfirmationScreen")
+            ->form(self::class, "showConfirmationScreen", $lng->txt("glo_save_and_continue"))
             ->asyncModal()
             //->section("creation", $lng->txt("glo_bulk_data"))
             ->textarea(
@@ -167,7 +167,7 @@ class ilTermDefinitionBulkCreationGUI
 EOT;
         });
 
-        $mbox = $f->messageBox()->confirmation(
+        $mbox = $f->messageBox()->info(
             $lng->txt("glo_bulk_confirmation")
         )->withButtons([$button]);
 

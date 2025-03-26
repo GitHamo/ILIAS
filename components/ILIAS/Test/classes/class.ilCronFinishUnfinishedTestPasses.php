@@ -174,7 +174,6 @@ class ilCronFinishUnfinishedTestPasses extends ilCronJob
             if (!array_key_exists($test_id, $this->test_ending_times)) {
                 continue;
             }
-
             if (!$this->finishPassOnEndingTime($test_id, $data['active_id'])
                 && !$this->finishPassOnProcessingTime(
                     $test_id,
@@ -265,8 +264,11 @@ class ilCronFinishUnfinishedTestPasses extends ilCronJob
                 $obj_id
             );
 
-            $pass_finisher = new ilTestPassFinishTasks($test_session, $obj_id, $this->test_pass_result_repository);
-            $pass_finisher->performFinishTasks($processLocker, StatusOfAttempt::FINISHED_BY_CRONJOB);
+            (new ilTestPassFinishTasks(
+                $test_session,
+                $test,
+                $this->test_pass_result_repository
+            ))->performFinishTasks($processLocker, StatusOfAttempt::FINISHED_BY_CRONJOB);
             $this->logger->info('Test session with active id (' . $active_id . ') and obj_id (' . $obj_id . ') is now finished.');
         } else {
             $this->logger->info('Test object with id (' . $obj_id . ') does not exist.');
