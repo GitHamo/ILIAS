@@ -37,7 +37,6 @@ class ilObjQuestionPool extends ilObject
 
     private array $mob_ids;
     private array $file_ids;
-    private ?bool $show_taxonomies = null;
     private bool $skill_service_enabled;
     private GeneralQuestionPropertiesRepository $questionrepository;
 
@@ -171,7 +170,6 @@ class ilObjQuestionPool extends ilObject
         );
         if ($result->numRows() == 1) {
             $row = $this->db->fetchAssoc($result);
-            $this->setShowTaxonomies((bool) $row['show_taxonomies']);
             $this->setSkillServiceEnabled((bool) $row['skill_service']);
         }
     }
@@ -188,7 +186,6 @@ class ilObjQuestionPool extends ilObject
             $result = $this->db->update(
                 'qpl_questionpool',
                 [
-                    'show_taxonomies' => ['integer', (int) $this->getShowTaxonomies()],
                     'skill_service' => ['integer', (int) $this->isSkillServiceEnabled()],
                     'tstamp' => ['integer', time()]
                 ],
@@ -201,7 +198,6 @@ class ilObjQuestionPool extends ilObject
 
             $result = $this->db->insert('qpl_questionpool', [
                 'id_questionpool' => ['integer', $next_id],
-                'show_taxonomies' => ['integer', (int) $this->getShowTaxonomies()],
                 'skill_service' => ['integer', (int) $this->isSkillServiceEnabled()],
                 'tstamp' => ['integer', time()],
                 'obj_fi' => ['integer', $this->getId()]
@@ -320,10 +316,7 @@ class ilObjQuestionPool extends ilObject
     private function exportXMLSettings($xmlWriter): void
     {
         $xmlWriter->xmlStartTag('Settings');
-
-        $xmlWriter->xmlElement('ShowTaxonomies', null, (int) $this->getShowTaxonomies());
         $xmlWriter->xmlElement('SkillService', null, (int) $this->isSkillServiceEnabled());
-
         $xmlWriter->xmlEndTag('Settings');
     }
 
@@ -466,9 +459,16 @@ class ilObjQuestionPool extends ilObject
         foreach ($this->mob_ids as $mob_id) {
             $expLog->write(date('[y-m-d H:i:s] ') . 'Media Object ' . $mob_id);
             if (ilObjMediaObject::_exists($mob_id)) {
+                $target_dir = $a_target_dir . DIRECTORY_SEPARATOR . 'objects'
+                    . DIRECTORY_SEPARATOR . 'il_' . IL_INST_ID . '_mob_' . $mob_id;
+                ilFileUtils::createDirectory($target_dir);
                 $media_obj = new ilObjMediaObject($mob_id);
                 $media_obj->exportXML($a_xml_writer, $a_inst);
-                $media_obj->exportFiles($a_target_dir);
+                foreach ($media_obj->getMediaItems() as $item) {
+                    $stream = $item->getLocationStream();
+                    file_put_contents($target_dir . DIRECTORY_SEPARATOR . $item->getLocation(), $stream);
+                    $stream->close();
+                }
                 unset($media_obj);
             }
         }
@@ -652,16 +652,6 @@ class ilObjQuestionPool extends ilObject
         );
         $row = $ilDB->fetchAssoc($result);
         return $row['question_count'];
-    }
-
-    public function setShowTaxonomies(bool $show_taxonomies): void
-    {
-        $this->show_taxonomies = $show_taxonomies;
-    }
-
-    public function getShowTaxonomies(): ?bool
-    {
-        return $this->show_taxonomies;
     }
 
     /**
@@ -1032,7 +1022,6 @@ class ilObjQuestionPool extends ilObject
         $new_obj->update();
 
         $new_obj->setSkillServiceEnabled($this->isSkillServiceEnabled());
-        $new_obj->setShowTaxonomies($this->getShowTaxonomies());
         $new_obj->saveToDb();
 
         // clone the questions in the question pool

@@ -33,9 +33,12 @@ class ilObjPortfolio extends ilObjPortfolioBase implements ilAdvancedMetaDataSub
         // delete pages
         $pages = ilPortfolioPage::getAllPortfolioPages($this->id);
         foreach ($pages as $page) {
-            $page_obj = new ilPortfolioPage($page["id"]);
-            $page_obj->setPortfolioId($this->id);
-            $page_obj->delete();
+            try {
+                $page_obj = new ilPortfolioPage($page["id"]);
+                $page_obj->setPortfolioId($this->id);
+                $page_obj->delete();
+            } catch (Exception $e) {
+            }
         }
     }
 
@@ -93,27 +96,6 @@ class ilObjPortfolio extends ilObjPortfolioBase implements ilAdvancedMetaDataSub
                 $portfolio->delete();
             }
         }
-    }
-
-    public function deleteImage(): void
-    {
-        if ($this->id) {
-            parent::deleteImage();
-            $this->handleQuotaUpdate();
-        }
-    }
-
-    public function uploadImage(array $a_upload): bool
-    {
-        if (parent::uploadImage($a_upload)) {
-            $this->handleQuotaUpdate();
-            return true;
-        }
-        return false;
-    }
-
-    protected function handleQuotaUpdate(): void
-    {
     }
 
     public static function getAvailablePortfolioLinksForUserIds(

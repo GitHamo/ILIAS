@@ -331,10 +331,9 @@ class ilInfoScreenGUI
         $md_reader = $this->metadata->read($a_rep_obj_id, $a_obj_id, $a_type);
         $md_paths = $this->metadata->paths();
         $md_data_helper = $this->metadata->dataHelper();
+        $md_copyright_helper = $this->metadata->copyrightHelper();
 
         // general
-        $description = $md_reader->firstData($md_paths->descriptions())->value();
-
         $lang_data = $md_reader->allData($md_paths->languages());
         $langs = $md_data_helper->makePresentableAsList(', ', ...$lang_data);
 
@@ -350,11 +349,13 @@ class ilInfoScreenGUI
         $learning_time = $md_data_helper->makePresentable($learning_time_data);
 
         // copyright
-        $copyright_description = $md_reader->firstData($md_paths->copyright())->value();
-        if ($copyright_description) {
-            $copyright = ilMDUtils::_parseCopyright($copyright_description);
+        $copyright = '';
+        if ($md_copyright_helper->hasPresetCopyright($md_reader)) {
+            $copyright = $this->ui->renderer()->render(
+                $md_copyright_helper->readPresetCopyright($md_reader)->presentAsUIComponents()
+            );
         } else {
-            $copyright = ilMDUtils::_getDefaultCopyright();
+            $copyright = $md_copyright_helper->readCustomCopyright($md_reader);
         }
 
         // public access export
@@ -362,36 +363,30 @@ class ilInfoScreenGUI
 
         // output
 
-        // description
-        if ($description != "") {
-            $this->addSection($lng->txt("description"));
-            $this->addProperty("", nl2br($description));
-        }
-
         // general section
         $this->addSection($lng->txt("meta_general"));
         if ($langs != "") {	// language
             $this->addProperty(
                 $lng->txt("language"),
-                $langs
+                $this->html->escape($langs)
             );
         }
         if ($keywords != "") {	// keywords
             $this->addProperty(
                 $lng->txt("keywords"),
-                $keywords
+                $this->html->escape($keywords)
             );
         }
         if ($author != "") {		// author
             $this->addProperty(
                 $lng->txt("author"),
-                $author
+                $this->html->escape($author)
             );
         }
         if ($learning_time != "") {		// typical learning time
             $this->addProperty(
                 $lng->txt("meta_typical_learning_time"),
-                $learning_time
+                $this->html->escape($learning_time)
             );
         }
 

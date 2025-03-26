@@ -22,6 +22,7 @@ use ceLTIc\LTI\Context;
 use ceLTIc\LTI\ResourceLink;
 use ceLTIc\LTI\Tool;
 use ceLTIc\LTI\User;
+use ILIAS\HTTP\Wrapper\ArrayBasedRequestWrapper;
 
 /**
  * LTI provider for LTI launch
@@ -76,12 +77,29 @@ class ilLTITool extends Tool
         }
     }
 
+    public function parsePostBody(ArrayBasedRequestWrapper $postData): array
+    {
+        global $DIC;
+        $res = [];
+        foreach ($postData->keys() as $key) {
+            $res[$key] = $postData->retrieve($key, $DIC->refinery()->kindlyTo()->string());
+        }
+        return $res;
+    }
+
     public function handleRequest(bool $strictMode = null, bool $disableCookieCheck = false, bool $generateWarnings = false): void
     {
         global $DIC;
 
-        $_POST = $DIC->http()->request()->getParsedBody();
+        $_POST = $this->parsePostBody($DIC->http()->wrapper()->post());
         $_GET = $DIC->http()->request()->getQueryParams();
+
+        if (isset($_POST['lti_version']) && $_POST['lti_version'] === 'LTI-1p0') {
+            $_SERVER['REQUEST_URI'] = rtrim(preg_replace('/([?&])client_id=[^&]+(&|$)/', '$1', $_SERVER['REQUEST_URI']), '?&');
+        }
+
+        self::$authenticateUsingGet = true;
+
         parent::handleRequest($strictMode, $disableCookieCheck, $generateWarnings);
     }
 }

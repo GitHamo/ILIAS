@@ -38,11 +38,13 @@ class ExportFileDBRepository
 
     public function create(
         int $object_id,
-        string $type = ""
+        string $type,
+        string $title
     ): string
     {
         $rid = $this->irss->createContainer(
-            $this->stakeholder
+            $this->stakeholder,
+            $title
         );
         $this->db->insert('export_files_html', [
             'object_id' => ['integer', $object_id],
@@ -131,6 +133,13 @@ class ExportFileDBRepository
         );
     }
 
+    public function getFilePath(
+        string $rid
+    ): string
+    {
+        return $this->irss->getResourcePath($rid);
+    }
+
     public function getById(int $object_id, string $rid): ?ExportFile
     {
         $set = $this->db->queryF(
@@ -178,6 +187,7 @@ class ExportFileDBRepository
         $this->irss->deliverFile($rid);
     }
 
+    // currently broken, see https://mantis.ilias.de/view.php?id=44135
     public function rename(
         string $rid,
         string $title
