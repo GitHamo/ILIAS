@@ -462,7 +462,6 @@ class ilObjTest extends ilObject
                 [
                     'test_id' => ['integer', $next_id],
                     'obj_fi' => ['integer', $this->getId()],
-                    'author' => ['text', $this->getAuthor()],
                     'created' => ['integer', time()],
                     'tstamp' => ['integer', time()],
                     'template_id' => ['integer', $this->getTemplate()]
@@ -471,16 +470,6 @@ class ilObjTest extends ilObject
 
             $this->test_id = $next_id;
         } else {
-            $this->db->update(
-                'tst_tests',
-                [
-                    'author' => ['text', $this->getAuthor()],
-                ],
-                [
-                    'test_id' => ['integer', $this->getTestId()]
-                ]
-            );
-
             if ($this->evalTotalPersons() > 0) {
                 // reset the finished status of participants if the nr of test passes did change
                 if ($this->getNrOfTries() > 0) {
@@ -529,12 +518,12 @@ class ilObjTest extends ilObject
             }
         }
 
-        $this->storeActivationSettings([
-            'is_activation_limited' => $this->isActivationLimited(),
-            'activation_starting_time' => $this->getActivationStartingTime(),
-            'activation_ending_time' => $this->getActivationEndingTime(),
-            'activation_visibility' => $this->getActivationVisibility()
-        ]);
+        $this->storeActivationSettings(
+            $this->isActivationLimited(),
+            $this->getActivationStartingTime(),
+            $this->getActivationEndingTime(),
+            $this->getActivationVisibility(),
+        );
 
         if ($properties_only) {
             return;
@@ -1824,7 +1813,7 @@ class ilObjTest extends ilObject
             $sequence = $test_sequence->getUserSequenceQuestions();
         }
 
-        $arrResults = [];
+        $arr_results = [];
 
         $query = "
             SELECT
@@ -1856,10 +1845,10 @@ class ilObjTest extends ilObject
         );
 
         while ($row = $this->db->fetchAssoc($solutionresult)) {
-            $arrResults[ $row['question_fi'] ] = $row;
+            $arr_results[ $row['question_fi'] ] = $row;
         }
 
-        $numWorkedThrough = count($arrResults);
+        $num_worked_through = count($arr_results);
 
         $IN_question_ids = $this->db->in('qpl_questions.question_id', $sequence, false, 'integer');
 
@@ -1882,11 +1871,11 @@ class ilObjTest extends ilObject
         $unordered = [];
         $key = 1;
         while ($row = $this->db->fetchAssoc($result)) {
-            if (!isset($arrResults[ $row['question_id'] ])) {
+            if (!isset($arr_results[ $row['question_id'] ])) {
                 $percentvalue = 0.0;
             } else {
                 $percentvalue = (
-                    $row['points'] ? $arrResults[$row['question_id']]['reached'] / $row['points'] : 0
+                    $row['points'] ? $arr_results[$row['question_id']]['reached'] / $row['points'] : 0
                 );
             }
             if ($percentvalue < 0) {
@@ -1897,17 +1886,17 @@ class ilObjTest extends ilObject
                 "nr" => "$key",
                 "title" => ilLegacyFormElementsUtil::prepareFormOutput($row['title']),
                 "max" => round($row['points'], 2),
-                "reached" => round($arrResults[$row['question_id']]['reached'] ?? 0, 2),
-                'requested_hints' => $arrResults[$row['question_id']]['requested_hints'] ?? 0,
-                'hint_points' => $arrResults[$row['question_id']]['hint_points'] ?? 0,
+                "reached" => round($arr_results[$row['question_id']]['reached'] ?? 0, 2),
+                'requested_hints' => $arr_results[$row['question_id']]['requested_hints'] ?? 0,
+                'hint_points' => $arr_results[$row['question_id']]['hint_points'] ?? 0,
                 "percent" => sprintf("%2.2f ", ($percentvalue) * 100) . "%",
                 "solution" => ($row['has_sug_sol']) ? assQuestion::_getSuggestedSolutionOutput($row['question_id']) : '',
                 "type" => $row["type_tag"],
                 "qid" => $row['question_id'],
                 "original_id" => $row["original_id"],
-                "workedthrough" => isset($arrResults[$row['question_id']]) ? 1 : 0,
-                'answered' => $arrResults[$row['question_id']]['answered'] ?? 0,
-                'finalized_evaluation' => $arrResults[$row['question_id']]['finalized_evaluation'] ?? 0,
+                "workedthrough" => isset($arr_results[$row['question_id']]) ? 1 : 0,
+                'answered' => $arr_results[$row['question_id']]['answered'] ?? 0,
+                'finalized_evaluation' => $arr_results[$row['question_id']]['finalized_evaluation'] ?? 0,
             ];
 
             $unordered[ $row['question_id'] ] = $data;
@@ -1950,7 +1939,7 @@ class ilObjTest extends ilObject
         $found['pass']['total_requested_hints'] = $pass_requested_hints;
         $found['pass']['total_hint_points'] = $pass_hint_points;
         $found['pass']['percent'] = ($pass_max > 0) ? $pass_reached / $pass_max : 0;
-        $found['pass']['num_workedthrough'] = $numWorkedThrough;
+        $found['pass']['num_workedthrough'] = $num_worked_through;
         $found['pass']['num_questions_total'] = $numQuestionsTotal;
 
         $found["test"]["total_max_points"] = $results['max_points'];
@@ -2902,7 +2891,7 @@ class ilObjTest extends ilObject
      * Receives parameters from a QTI parser and creates a valid ILIAS test object
      * @param ilQTIAssessment $assessment
      */
-    public function fromXML(ilQTIAssessment $assessment)
+    public function fromXML(ilQTIAssessment $assessment, array $mappings): void
     {
         if (($importdir = ilSession::get('path_to_container_import_file')) === null) {
             $importdir = $this->buildImportDirectoryFromImportFile(ilSession::get('path_to_import_file'));
@@ -2928,7 +2917,8 @@ class ilObjTest extends ilObject
                 $introduction_settings = $this->addIntroductionToSettingsFromImport(
                     $introduction_settings,
                     $this->qtiMaterialToArray($material),
-                    $importdir
+                    $importdir,
+                    $mappings
                 );
             }
         }
@@ -2941,7 +2931,8 @@ class ilObjTest extends ilObject
                 $this->qtiMaterialToArray(
                     $assessment->getPresentationMaterial()->getFlowMat(0)->getMaterial(0)
                 ),
-                $importdir
+                $importdir,
+                $mappings
             );
         }
 
@@ -3250,13 +3241,20 @@ class ilObjTest extends ilObject
     private function addIntroductionToSettingsFromImport(
         SettingsIntroduction $settings,
         array $material,
-        string $importdir
+        string $importdir,
+        array $mappings
     ): SettingsIntroduction {
         $text = $material['text'];
         $mobs = $material['mobs'];
         if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->retrieveMobsFromPageImports($text, $mobs, $importdir);
-            $text = $this->retrieveFilesFromPageImports($text, $importdir);
+            $text = $this->replaceMobsInPageImports(
+                $text,
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            );
+            $text = $this->replaceFilesInPageImports(
+                $text,
+                $mappings['components/ILIAS/File']['file'] ?? []
+            );
             $page_object = new ilTestPage();
             $page_object->setParentId($this->getId());
             $page_object->setXMLContent($text);
@@ -3276,14 +3274,21 @@ class ilObjTest extends ilObject
     private function addConcludingRemarksToSettingsFromImport(
         SettingsFinishing $settings,
         array $material,
-        string $importdir
+        string $importdir,
+        array $mappings
     ): SettingsFinishing {
         $file_to_import = ilSession::get('path_to_import_file');
         $text = $material['text'];
         $mobs = $material['mobs'];
         if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->retrieveMobsFromPageImports($text, $mobs, $importdir);
-            $text = $this->retrieveFilesFromPageImports($text, $importdir);
+            $text = $this->replaceMobsInPageImports(
+                $text,
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            );
+            $text = $this->replaceFilesInPageImports(
+                $text,
+                $mappings['components/ILIAS/File']['file'] ?? []
+            );
             $page_object = new ilTestPage();
             $page_object->setParentId($this->getId());
             $page_object->setXMLContent($text);
@@ -3306,33 +3311,27 @@ class ilObjTest extends ilObject
         );
     }
 
-    private function retrieveMobsFromPageImports(string $text, array $mobs, string $importdir): string
+    private function replaceMobsInPageImports(string $text, array $mappings): string
     {
-        foreach ($mobs as $mob) {
-            $importfile = $importdir . DIRECTORY_SEPARATOR . $mob['uri'];
-            if (file_exists($importfile)) {
-                $media_object = ilObjMediaObject::_saveTempFileAsMediaObject(basename($importfile), $importfile, false);
-                ilObjMediaObject::_saveUsage($media_object->getId(), 'tst:gp', $this->getId());
-                $text = str_replace($mob['mob'], 'il__mob_' . (string) $media_object->getId(), $text);
+        preg_match_all('/il_(\d+)_mob_(\d+)/', $text, $matches);
+        foreach ($matches[0] as $index => $match) {
+            if (empty($mappings[$matches[2][$index]])) {
+                continue;
             }
+            $text = str_replace($match, "il__mob_{$mappings[$matches[2][$index]]}", $text);
+            ilObjMediaObject::_saveUsage((int) $mappings[$matches[2][$index]], 'tst', $this->getId());
         }
         return $text;
     }
 
-    private function retrieveFilesFromPageImports(string $text, string $importdir): string
+    private function replaceFilesInPageImports(string $text, array $mappings): string
     {
         preg_match_all('/il_(\d+)_file_(\d+)/', $text, $matches);
-        foreach ($matches[0] as $match) {
-            $source_dir = $importdir . DIRECTORY_SEPARATOR . 'objects' . DIRECTORY_SEPARATOR . $match;
-            $files = scandir($source_dir, SCANDIR_SORT_DESCENDING);
-            if ($files !== false && $files !== [] && is_file($source_dir . '/' . $files[0])) {
-                $file = fopen($source_dir . '/' . $files[0], 'rb');
-                $file_stream = Streams::ofResource($file);
-                $file_obj = new ilObjFile();
-                $file_id = $file_obj->create();
-                $file_obj->appendStream($file_stream, $files[0]);
-                $text = str_replace($match, "il__file_{$file_id}", $text);
+        foreach ($matches[0] as $index => $match) {
+            if (empty($mappings[$matches[2][$index]])) {
+                continue;
             }
+            $text = str_replace($match, "il__file_{$mappings[$matches[2][$index]]}", $text);
         }
         return $text;
     }
@@ -3455,10 +3454,13 @@ class ilObjTest extends ilObject
         if ($this->getScoreSettings()->getResultSummarySettings()->getReportingDate() !== null) {
             $a_xml_writer->xmlStartTag("qtimetadatafield");
             $a_xml_writer->xmlElement("fieldlabel", null, "reporting_date");
-            $reporting_date = $this->buildPeriodFromFormatedDateString(
-                $this->getScoreSettings()->getResultSummarySettings()->getReportingDate()->format('Y-m-d H:i:s')
+            $a_xml_writer->xmlElement(
+                "fieldentry",
+                null,
+                $this->buildIso8601PeriodForExportCompatibility(
+                    $this->getScoreSettings()->getResultSummarySettings()->getReportingDate(),
+                ),
             );
-            $a_xml_writer->xmlElement("fieldentry", null, $reporting_date);
             $a_xml_writer->xmlEndTag("qtimetadatafield");
         }
 
@@ -3665,19 +3667,29 @@ class ilObjTest extends ilObject
         $a_xml_writer->xmlElement("fieldentry", null, (int) $this->isShowGradingMarkEnabled());
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
-        if ($this->getStartingTime()) {
+        if ($this->getStartingTime() > 0) {
             $a_xml_writer->xmlStartTag("qtimetadatafield");
             $a_xml_writer->xmlElement("fieldlabel", null, "starting_time");
-            $backward_compatibility_format = $this->buildIso8601PeriodFromUnixtimeForExportCompatibility($this->getStartingTime());
-            $a_xml_writer->xmlElement("fieldentry", null, $backward_compatibility_format);
+            $a_xml_writer->xmlElement(
+                "fieldentry",
+                null,
+                $this->buildIso8601PeriodForExportCompatibility(
+                    (new DateTimeImmutable())->setTimestamp($this->getStartingTime()),
+                ),
+            );
             $a_xml_writer->xmlEndTag("qtimetadatafield");
         }
 
-        if ($this->getEndingTime()) {
+        if ($this->getEndingTime() > 0) {
             $a_xml_writer->xmlStartTag("qtimetadatafield");
             $a_xml_writer->xmlElement("fieldlabel", null, "ending_time");
-            $backward_compatibility_format = $this->buildIso8601PeriodFromUnixtimeForExportCompatibility($this->getEndingTime());
-            $a_xml_writer->xmlElement("fieldentry", null, $backward_compatibility_format);
+            $a_xml_writer->xmlElement(
+                "fieldentry",
+                null,
+                $this->buildIso8601PeriodForExportCompatibility(
+                    (new DateTimeImmutable())->setTimestamp($this->getEndingTime()),
+                ),
+            );
             $a_xml_writer->xmlEndTag("qtimetadatafield");
         }
 
@@ -3787,17 +3799,9 @@ class ilObjTest extends ilObject
         return $xml;
     }
 
-    protected function buildIso8601PeriodFromUnixtimeForExportCompatibility(int $unix_timestamp): string
+    protected function buildIso8601PeriodForExportCompatibility(DateTimeImmutable $date_time): string
     {
-        $date_time_unix = new ilDateTime($unix_timestamp, IL_CAL_UNIX);
-        $date_time = $date_time_unix->get(IL_CAL_DATETIME);
-        return $this->buildPeriodFromFormatedDateString($date_time);
-    }
-
-    protected function buildPeriodFromFormatedDateString(string $date_time): string
-    {
-        preg_match("/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/", $date_time, $matches);
-        return sprintf("P%dY%dM%dDT%dH%dM%dS", $matches[1], $matches[2], $matches[3], $matches[4], $matches[5], $matches[6]);
+        return $date_time->setTimezone(new DateTimeZone('UTC'))->format('\PY\Yn\Mj\D\TG\Hi\Ms\S');
     }
 
     protected function buildDateTimeImmutableFromPeriod(?string $period): ?DateTimeImmutable
@@ -3931,9 +3935,16 @@ class ilObjTest extends ilObject
         foreach ($this->mob_ids as $mob_id) {
             $expLog->write(date("[y-m-d H:i:s] ") . "Media Object " . $mob_id);
             if (ilObjMediaObject::_exists((int) $mob_id)) {
+                $target_dir = $a_target_dir . DIRECTORY_SEPARATOR . 'objects'
+                    . DIRECTORY_SEPARATOR . 'il_' . IL_INST_ID . '_mob_' . $mob_id;
+                ilFileUtils::createDirectory($target_dir);
                 $media_obj = new ilObjMediaObject((int) $mob_id);
                 $media_obj->exportXML($a_xml_writer, (int) $a_inst);
-                $media_obj->exportFiles($a_target_dir);
+                foreach ($media_obj->getMediaItems() as $item) {
+                    $stream = $item->getLocationStream();
+                    file_put_contents($target_dir . DIRECTORY_SEPARATOR . $item->getLocation(), $stream);
+                    $stream->close();
+                }
                 unset($media_obj);
             }
         }
@@ -4049,7 +4060,7 @@ class ilObjTest extends ilObject
         $author_data = $this->lo_metadata->read($this->getId(), 0, $this->getType(), $path_to_authors)
                                          ->allData($path_to_authors);
 
-        return $this->lo_metadata->dataHelper()->makePresentableAsList(',', ...$author_data);
+        return $this->lo_metadata->dataHelper()->makePresentableAsList(', ', ...$author_data);
     }
 
     /**
@@ -4168,6 +4179,17 @@ class ilObjTest extends ilObject
 
         $obj_settings = new ilLPObjSettings($this->getId());
         $obj_settings->cloneSettings($new_obj->getId());
+
+        if ($new_obj->getTestLogger()->isLoggingEnabled()) {
+            $new_obj->getTestLogger()->logTestAdministrationInteraction(
+                $new_obj->getTestLogger()->getInteractionFactory()->buildTestAdministrationInteraction(
+                    $new_obj->getRefId(),
+                    $this->user->getId(),
+                    TestAdministrationInteractionTypes::NEW_TEST_CREATED,
+                    []
+                )
+            );
+        }
 
         return $new_obj;
     }
@@ -4416,7 +4438,7 @@ class ilObjTest extends ilObject
         return $result_array;
     }
 
-    public function &getTestParticipants(): array
+    public function getTestParticipants(): array
     {
         if ($this->getMainSettings()->getGeneralSettings()->getAnonymity()) {
             $query = "
@@ -4485,33 +4507,10 @@ class ilObjTest extends ilObject
             return [];
         }
 
-        $participants = &$this->getTestParticipants();
         $filtered_participants = [];
-        foreach ($participants as $active_id => $participant) {
-            $queryString = '
-				SELECT		tst_test_result.manual
-
-				FROM		tst_test_result
-
-				INNER JOIN	qpl_questions
-				ON			tst_test_result.question_fi = qpl_questions.question_id
-
-				WHERE		tst_test_result.active_fi = %s
-			';
-
-            $result = $this->db->queryF(
-                $queryString,
-                ['integer'],
-                [$active_id]
-            );
-
-            $count = $result->numRows();
-
-            if ($count > 0) {
+        foreach ($this->getTestParticipants() as $active_id => $participant) {
+            if ($participant['tries'] > 0) {
                 switch ($filter) {
-                    case 3: // all users
-                        $filtered_participants[$active_id] = $participant;
-                        break;
                     case 4:
                         if ($this->test_man_scoring_done_helper->isDone((int) $active_id)) {
                             $filtered_participants[$active_id] = $participant;
@@ -4522,21 +4521,8 @@ class ilObjTest extends ilObject
                             $filtered_participants[$active_id] = $participant;
                         }
                         break;
-                    case 6:
-                        // partially scored participants
-                        $found = 0;
-                        while ($row = $this->db->fetchAssoc($result)) {
-                            if ($row['manual']) {
-                                $found++;
-                            }
-                        }
-                        if (($found > 0) && ($found < $count)) {
-                            $filtered_participants[$active_id] = $participant;
-                        }
-                        break;
                     default:
                         $filtered_participants[$active_id] = $participant;
-                        break;
                 }
             }
         }
@@ -4989,6 +4975,12 @@ class ilObjTest extends ilObject
             "errormessage" => ""
         ];
 
+        if (!$this->getObjectProperties()->getPropertyIsOnline()->getIsOnline()) {
+            $result["executable"] = false;
+            $result["errormessage"] = $this->lng->txt('autosave_failed') . ': ' . $this->lng->txt('offline');
+            return $result;
+        }
+
         if (!$this->startingTimeReached()) {
             $result["executable"] = false;
             $result["errormessage"] = sprintf($this->lng->txt("detail_starting_time_not_reached"), ilDatePresentation::formatDate(new ilDateTime($this->getStartingTime(), IL_CAL_UNIX)));
@@ -5006,22 +4998,8 @@ class ilObjTest extends ilObject
             && $active_id > 0
             && ($starting_time = $this->getStartingTimeOfUser($active_id)) !== false
             && $this->isMaxProcessingTimeReached($starting_time, $active_id)) {
-            if ($allow_pass_increase
-                    && $this->getResetProcessingTime()
-                    && (($this->getNrOfTries() === 0)
-                || ($this->getNrOfTries() > (self::_getPass($active_id) + 1)))) {
-                // a test pass was quitted because the maximum processing time was reached, but the time
-                // will be resetted for future passes, so if there are more passes allowed, the participant may
-                // start the test again.
-                // This code block is only called when $allowPassIncrease is TRUE which only happens when
-                // the test info page is opened. Otherwise this will lead to unexpected results!
-                $test_session->increasePass();
-                $test_session->setLastSequence(0);
-                $test_session->saveToDb();
-            } else {
-                $result["executable"] = false;
-                $result["errormessage"] = $this->lng->txt("detail_max_processing_time_reached");
-            }
+            $result["executable"] = false;
+            $result["errormessage"] = $this->lng->txt("detail_max_processing_time_reached");
             return $result;
         }
 
@@ -5809,6 +5787,12 @@ class ilObjTest extends ilObject
     public function applyDefaults(array $test_defaults): string
     {
         $testsettings = unserialize($test_defaults['defaults'], ['allowed_classes' => [DateTimeImmutable::class]]);
+        $activation_starting_time = is_numeric($testsettings['activation_starting_time'] ?? false)
+            ? (int) $testsettings['activation_starting_time']
+            : null;
+        $activation_ending_time = is_numeric($testsettings['activation_ending_time'] ?? false)
+            ? (int) $testsettings['activation_ending_time']
+            : null;
         $unserialized_marks = json_decode($test_defaults['marks'], true);
 
         $info = '';
@@ -5829,12 +5813,13 @@ class ilObjTest extends ilObject
             $info = 'old_mark_default_not_applied';
         }
 
-        $this->storeActivationSettings([
-            'is_activation_limited' => $testsettings['activation_limited'],
-            'activation_starting_time' => $testsettings['activation_start_time'],
-            'activation_ending_time' => $testsettings['activation_end_time'],
-            'activation_visibility' => $testsettings['activation_visibility']
-        ]);
+
+        $this->storeActivationSettings(
+            (bool) ($testsettings['is_activation_limited'] ?? false),
+            $activation_starting_time,
+            $activation_ending_time,
+            (bool) ($testsettings['activation_visibility'] ?? false),
+        );
 
         $main_settings = $this->getMainSettings();
         $main_settings = $main_settings
@@ -6726,28 +6711,34 @@ class ilObjTest extends ilObject
         $this->activation_limited = (bool) $a_value;
     }
 
-    public function storeActivationSettings(array $settings): void
-    {
+    public function storeActivationSettings(
+        ?bool $is_activation_limited = false,
+        ?int $activation_starting_time = null,
+        ?int $activation_ending_time = null,
+        bool $activation_visibility = false,
+    ): void {
         if (!$this->ref_id) {
             return;
         }
 
         $item = new ilObjectActivation();
-        if (!$settings['is_activation_limited']) {
+        $is_activation_limited ??= false;
+
+        if (!$is_activation_limited) {
             $item->setTimingType(ilObjectActivation::TIMINGS_DEACTIVATED);
         } else {
             $item->setTimingType(ilObjectActivation::TIMINGS_ACTIVATION);
-            $item->setTimingStart($settings['activation_starting_time']);
-            $item->setTimingEnd($settings['activation_ending_time']);
-            $item->toggleVisible($settings['activation_visibility']);
+            $item->setTimingStart($activation_starting_time);
+            $item->setTimingEnd($activation_ending_time);
+            $item->toggleVisible($activation_visibility);
         }
 
         $item->update($this->ref_id);
 
-        $this->setActivationLimited($settings['is_activation_limited']);
-        $this->setActivationStartingTime($settings['activation_starting_time']);
-        $this->setActivationStartingTime($settings['activation_ending_time']);
-        $this->setActivationVisibility($settings['activation_visibility']);
+        $this->setActivationLimited($is_activation_limited);
+        $this->setActivationStartingTime($activation_starting_time);
+        $this->setActivationStartingTime($activation_ending_time);
+        $this->setActivationVisibility($activation_visibility);
     }
 
     public function getIntroductionPageId(): int
@@ -7354,8 +7345,11 @@ class ilObjTest extends ilObject
 
         if ($pass !== null) {
             $query = '
-                SELECT		tst_pass_result.*
+                SELECT		tst_pass_result.*,
+                            tst_active.last_finished_pass
                 FROM		tst_pass_result
+                INNER JOIN  tst_active
+                on          tst_pass_result.active_fi = tst_active.active_id
                 WHERE		active_fi = %s
                 AND			pass = %s
             ';
@@ -7376,7 +7370,7 @@ class ilObjTest extends ilObject
             $percentage = ($max <= 0.0 || $reached <= 0.0) ? 0 : ($reached / $max) * 100.0;
 
             $mark = $this->getMarkSchema()->getMatchingMark($percentage);
-            $is_passed = (bool) $mark->getPassed();
+            $is_passed = $pass <= $test_pass_result_row['last_finished_pass'] && $mark->getPassed();
 
             $hint_count = $test_pass_result_row['hint_count'] ?? 0;
             $hint_points = $test_pass_result_row['hint_points'] ?? 0.0;

@@ -733,6 +733,7 @@ class ilObjLTIConsumer extends ilObject2
             $toolConsumerInstanceGuid .= implode(".", array_reverse(explode("/", $parseIliasUrl["path"])));
         }
         $toolConsumerInstanceGuid .= $parseIliasUrl["host"];
+
         $launch_vars = [
             "lti_message_type" => "basic-lti-launch-request",
             "lti_version" => "LTI-1p0",
@@ -752,9 +753,9 @@ class ilObjLTIConsumer extends ilObject2
             "context_label" => $contextType . " " . $contextId,
             "launch_presentation_locale" => $this->lng->getLangKey(),
             "launch_presentation_document_target" => $documentTarget,
-            "launch_presentation_width" => "",
+            //"launch_presentation_width" => "",
             //recommended
-            "launch_presentation_height" => "",
+            //"launch_presentation_height" => "",
             //recommended
             "launch_presentation_return_url" => $returnUrl,
             "tool_consumer_instance_guid" => $toolConsumerInstanceGuid,
@@ -770,7 +771,7 @@ class ilObjLTIConsumer extends ilObject2
             "tool_consumer_info_version" => ILIAS_VERSION,
             "lis_result_sourcedid" => $token,
             "lis_outcome_service_url" => self::getIliasHttpPath(
-            ) . "/components/ILIAS/LTIConsumer/result.php?client_id=" . CLIENT_ID,
+            ) . "/ltiresult.php?client_id=" . CLIENT_ID,
             "role_scope_mentor" => ""
         ];
 
@@ -794,6 +795,7 @@ class ilObjLTIConsumer extends ilObject2
 
     public function buildLaunchParametersLTI13(
         ilCmiXapiUser $cmixUser,
+        string $token,
         string $endpoint,
         string $clientId,
         int $deploymentId,
@@ -878,9 +880,9 @@ class ilObjLTIConsumer extends ilObject2
             "context_label" => $contextType . " " . $contextId,
             "launch_presentation_locale" => $this->lng->getLangKey(),
             "launch_presentation_document_target" => $documentTarget,
-            "launch_presentation_width" => "",
+            //"launch_presentation_width" => "",
             //recommended
-            "launch_presentation_height" => "",
+            //"launch_presentation_height" => "",
             //recommended
             "launch_presentation_return_url" => $returnUrl,
             "tool_consumer_instance_guid" => $toolConsumerInstanceGuid,
@@ -894,10 +896,9 @@ class ilObjLTIConsumer extends ilObject2
             "launch_presentation_css_url" => "",
             "tool_consumer_info_product_family_code" => "ilias",
             "tool_consumer_info_version" => ILIAS_VERSION,
-            "lis_result_sourcedid" => "",
-            //$token,
+            "lis_result_sourcedid" => $token,
             "lis_outcome_service_url" => self::getIliasHttpPath(
-            ) . "/components/ILIAS/LTIConsumer/result.php?client_id=" . CLIENT_ID,
+            ) . "/ltiresult.php?client_id=" . CLIENT_ID,
             "role_scope_mentor" => ""
         ];
 
@@ -911,12 +912,12 @@ class ilObjLTIConsumer extends ilObject2
         if ($this->getProvider()->isGradeSynchronization()) {
             $gradeservice = new ilLTIConsumerGradeService();
             $launch_vars['custom_lineitem_url'] = self::getIliasHttpPath(
-            ) . "/components/ILIAS/LTIConsumer/ltiservices.php/gradeservice/" . $contextId . "/lineitems/" . $this->id . "/lineitem";
+            ) . "/ltiservices.php/gradeservice/" . $contextId . "/lineitems/" . $this->id . "/lineitem";
 
             // ! Moodle as tool provider requires a custom_lineitems_url even though this should be optional in launch request, especially if only posting score scope is permitted by platform
             // http://www.imsglobal.org/spec/lti-ags/v2p0#example-link-has-a-single-line-item-tool-can-only-post-score
             $launch_vars['custom_lineitems_url'] = self::getIliasHttpPath(
-            ) . "/components/ILIAS/LTIConsumer/ltiservices.php/gradeservice/" . $contextId . "/linetitems/";
+            ) . "/ltiservices.php/gradeservice/" . $contextId . "/linetitems/";
 
             $launch_vars['custom_ags_scopes'] = implode(",", $gradeservice->getPermittedScopes());
         }
@@ -1200,6 +1201,8 @@ class ilObjLTIConsumer extends ilObject2
     {
         global $DIC;
 
+        $logger = $DIC->logger()->root();
+
         if ($DIC['https']->isDetected()) {
             $protocol = 'https://';
         } else {
@@ -1221,7 +1224,9 @@ class ilObjLTIConsumer extends ilObject2
         } else {
             $uri = $rq_uri;
         }
+        $logger->info("URI --- 1: " . $uri);
         $uri = str_replace("components/ILIAS/LTIConsumer", "", $uri);
+        $logger->info("URI --- 2: " . $uri);
         $iliasHttpPath = ilContext::modifyHttpPath(implode('', [$protocol, $host, $uri]));
         $f = new \ILIAS\Data\Factory();
         $uri = $f->uri(rtrim($iliasHttpPath, "/"));
@@ -1423,5 +1428,39 @@ class ilObjLTIConsumer extends ilObject2
     public static function getLogger(): ilLogger
     {
         return ilLoggerFactory::getLogger('lti');
+    }
+
+    protected function doCloneObject(ilObject2 $new_obj, int $a_target_id, ?int $a_copy_id = null): void
+    {
+        // LTI specific properties
+        $new_obj->setProviderId($this->getProviderId());
+        $new_obj->setLaunchMethod($this->getLaunchMethod());
+        $new_obj->setCustomLaunchKey($this->getCustomLaunchKey());
+        $new_obj->setCustomLaunchSecret($this->getCustomLaunchSecret());
+        $new_obj->setCustomParams($this->getCustomParams());
+        $new_obj->setUseXapi($this->getUseXapi());
+        $new_obj->setCustomActivityId($this->getCustomActivityId());
+        $new_obj->setStatementsReportEnabled($this->isStatementsReportEnabled());
+        $new_obj->setMasteryScore($this->getMasteryScore());
+
+        // Highscore configuration
+        $new_obj->setHighscoreEnabled($this->getHighscoreEnabled());
+        $new_obj->setHighscoreAchievedTS($this->getHighscoreAchievedTS());
+        $new_obj->setHighscorePercentage($this->getHighscorePercentage());
+        $new_obj->setHighscoreWTime($this->getHighscoreWTime());
+        $new_obj->setHighscoreOwnTable($this->getHighscoreOwnTable());
+        $new_obj->setHighscoreTopTable($this->getHighscoreTopTable());
+        $new_obj->setHighscoreTopNum($this->getHighscoreTopNum());
+
+        // Activation settings
+        $new_obj->setActivationLimited($this->isActivationLimited());
+        $new_obj->setActivationStartingTime($this->getActivationStartingTime());
+        $new_obj->setActivationEndingTime($this->getActivationEndingTime());
+
+        if ($this->isActivationLimited() && $this->getActivationVisibility() !== null) {
+            $new_obj->setActivationVisibility($this->getActivationVisibility());
+        }
+
+        $new_obj->save();
     }
 }

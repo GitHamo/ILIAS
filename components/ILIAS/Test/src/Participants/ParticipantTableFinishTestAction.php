@@ -119,6 +119,19 @@ class ParticipantTableFinishTestAction implements TableAction
             return null;
         }
 
+        if (!$this->test_obj->getResetProcessingTime() && count($selected_participants) > 1) {
+            foreach ($selected_participants as $participant) {
+                if ($participant->hasUnfinishedAttempts()) {
+                    $this->tpl->setOnScreenMessage(
+                        \ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
+                        $this->lng->txt('finish_test_more_than_one_selected'),
+                        true
+                    );
+                    return null;
+                }
+            }
+        }
+
         // This is required here because of late test object binding
         $test_session_factory = new \ilTestSessionFactory(
             $this->test_obj,
@@ -128,13 +141,11 @@ class ParticipantTableFinishTestAction implements TableAction
 
         foreach ($selected_participants as $participant) {
             $process_locker = $this->process_locker_factory->withContextId($participant->getActiveId())->getLocker();
-
-            $test_pass_finisher = new \ilTestPassFinishTasks(
+            (new \ilTestPassFinishTasks(
                 $test_session_factory->getSession($participant->getActiveId()),
-                $this->test_obj->getId(),
+                $this->test_obj,
                 $this->test_pass_result_repository
-            );
-            $test_pass_finisher->performFinishTasks($process_locker, StatusOfAttempt::FINISHED_BY_ADMINISTRATOR);
+            ))->performFinishTasks($process_locker, StatusOfAttempt::FINISHED_BY_ADMINISTRATOR);
         }
 
         $logger = $this->test_obj->getTestLogger();

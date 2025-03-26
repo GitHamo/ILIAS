@@ -267,8 +267,8 @@ class ilExportGUI
     final protected function createXMLExport()
     {
         $manager = $this->export_handler->manager()->handler();
-        $export_info = $manager->getExportInfo(
-            $this->data_factory->objId($this->obj->getId()),
+        $export_info = $manager->getExportInfoWithObject(
+            $this->obj,
             time()
         );
         $element = $manager->createExport(
@@ -291,6 +291,7 @@ class ilExportGUI
             $tree_nodes,
             $post_export_options
         );
+        $eo->read();
         $ref_ids_export = [$this->parent_gui->getObject()->getRefId()];
         $ref_ids_all = [$this->parent_gui->getObject()->getRefId()];
         $tree_ref_ids = array_map(function ($node) { return (int) $node['ref_id']; }, $tree_nodes);
@@ -318,8 +319,8 @@ class ilExportGUI
         }
         $manager = $this->export_handler->manager()->handler();
         if (count($ref_ids_all) === 1) {
-            $export_info = $manager->getExportInfo(
-                $this->data_factory->objId($this->obj->getId()),
+            $export_info = $manager->getExportInfoWithObject(
+                $this->obj,
                 time()
             );
             $element = $manager->createExport(

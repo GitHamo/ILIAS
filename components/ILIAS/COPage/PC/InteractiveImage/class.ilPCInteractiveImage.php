@@ -25,6 +25,7 @@ class ilPCInteractiveImage extends ilPageContent
 {
     public const AREA = "Area";
     public const MARKER = "Marker";
+    protected \ILIAS\MediaObjects\Thumbs\ThumbsManager $thumbs;
     protected \ILIAS\COPage\Xsl\XslManager $xsl;
     protected DOMNode $mal_node;
     protected DOMNode $med_alias_node;
@@ -47,6 +48,7 @@ class ilPCInteractiveImage extends ilPageContent
         $this->htmlTransform = $DIC->copage()->internal()->domain()->htmlTransformUtil();
         $this->ui = $DIC->copage()->internal()->gui()->ui();
         $this->xsl = $DIC->copage()->internal()->domain()->xsl();
+        $this->thumbs = $DIC->mediaObjects()->internal()->domain()->thumbs();
     }
 
     public function readMediaObject(int $a_mob_id = 0): void
@@ -112,7 +114,7 @@ class ilPCInteractiveImage extends ilPageContent
 
     public function getBaseThumbnailTarget(): string
     {
-        return $this->getMediaObject()->getMediaItem("Standard")->getThumbnailTarget();
+        return $this->thumbs->getThumbSrc($this->getMediaObject()->getId());
     }
 
     public function createAlias(

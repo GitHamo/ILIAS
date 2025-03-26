@@ -259,6 +259,7 @@ administration#:#language_scope_unchanged#:#Unchanged entries only
 administration#:#language_scope_unchanged_info#:#Export all default language entries that are not changed in the database. This is the opposite to ‘Local changes only’. Both together are a complete backup of the current language in the database.
 administration#:#language_settings#:#Language Settings
 administration#:#language_statistics#:#Statistics
+administration#:#language_translation#:#Page translation
 administration#:#language_translation_enabled#:#Page translation enabled
 administration#:#language_variables_saved#:#The changes to the language variables were saved successfully.
 administration#:#log_scan#:#Log scan results
@@ -745,6 +746,7 @@ assessment#:#finish_pass_for_user_confirmation#:#Are you sure you want to finish
 assessment#:#finish_pass_for_user_in_processing_time#:#WARNING: the processing time for this user is not over yet! You should only end the test run if there is a compelling reason (e.g. exclusion from the test).
 assessment#:#finish_test#:#Finish Test
 assessment#:#finish_test_all#:#Are you sure you want to finish the test attempts for all users?
+assessment#:#finish_test_more_than_one_selected#:#Only a single participant may be selected to finish the pass if the test allows only one pass.
 assessment#:#finish_test_multiple#:#Are you sure you want to finish the test attempts for the following participants?
 assessment#:#finish_test_no_valid_participants_selected#:#There are no active test runs for the selected participants, so they cannot be completed.
 assessment#:#finish_test_single#:#Are you sure you want to finish the test attempt for the participant "%s"?
@@ -768,6 +770,7 @@ assessment#:#fq_precision_info#:#Enter the number of desired decimal places.
 assessment#:#fq_question_desc#:#You can define variables by inserting $v1, $v2 ... $vn, results by inserting $r1, $r2 .... $rn at the desired position in the question text. Click on the button ‘Parse Question’ to create editing forms for variables and results.
 assessment#:#gap#:#Gap
 assessment#:#gap_combination#:#Gap Combination
+assessment#:#gaps#:#Gaps
 assessment#:#glossary_term#:#Glossary Term
 assessment#:#grading_mark_msg#:#Your mark is: &quot;[mark]&quot;
 assessment#:#grading_status_failed_msg#:#Sorry, you have <b>failed</b> the test.
@@ -1679,7 +1682,6 @@ assessment#:#tst_objective_oriented_test_pass_without_questions#:#The started pa
 assessment#:#tst_objective_progress_header#:#Learning Objective Progress
 assessment#:#tst_objectives_progress_header#:#Learning Objectives Progress
 assessment#:#tst_old_style_rnd_quest_set_broken#:#This random test is in a irreparable state, because one or more connected question pools have been deleted. Therefor participants cannot take the test any longer.
-assessment#:#tst_optional_questions_confirmation_fixed_test#:#<b>Question related to already passed learning objectives were answered in previous passes.</b><br /><br />You want to navigate to a question, that relates to an already passed learning objective.<br />You can choose:<br /><br />I you proceed, you can work on or simply review these questions. If you change your answers that were adopted from previous passes, you can also degrade your learning objective result.<br /><br />If you decide to not work on or review these questions, you can go back. The questions will be considered in the evaluation in every case.
 assessment#:#tst_optional_questions_confirmation_non_fixed_test#:#<b>Question related to already passed learning objectives are optional.</b><br /><br />You want to navigate to a question, that relates to an already passed learning objective.<br />You can choose:<br /><br />I you proceed, you can work on these questions. Your answers from previous attempts were not adopted, since new random questions were selected for this attempt. With working on this questions you can also degrade your learning objective result.<br /><br />If you decide to not work on these questions, you can go back. In this case these questions won't be considered in the evaluation.
 assessment#:#tst_out_of_time_message#:#You have reached the maximum allowed processing time of the test!
 assessment#:#tst_participant#:#Participant
@@ -1734,7 +1736,7 @@ assessment#:#tst_previous_access_code_not_available#:#No previous code available
 assessment#:#tst_print#:#Test and Assessment - Print View
 assessment#:#tst_proceed#:#Proceed
 assessment#:#tst_processing_time#:#Limit Duration of Test
-assessment#:#tst_processing_time_desc#:#Participants can work through the test only for a specified period of time. Time is clocking away from the moment a user starts a test for the first time. Suspending the test does not stop the clock. If the number of possible test attempts is limited an additional feature for granting extra time to participants appears in the tab 'Dashboard'.
+assessment#:#tst_processing_time_desc#:#Participants can work through the test only for a specified period of time. Time is clocking away from the moment a user starts a test for the first time. Suspending the test does not stop the clock. If the number of possible test attempts is limited an additional feature for granting extra time to participants appears in the tab 'Participants'.
 assessment#:#tst_processing_time_duration#:#Maximum Duration of the Test im Minutes
 assessment#:#tst_processing_time_duration_desc#:#Maximum of time granted to take the test.
 assessment#:#tst_qbt_filter_question_title#:#Title of Question
@@ -1836,6 +1838,7 @@ assessment#:#tst_res_jump_to_participant_hint_opt#:#Jump to Participant
 assessment#:#tst_res_lo_objectives_header#:#Relevant Learning Objectives
 assessment#:#tst_res_lo_try_header#:#Attempt
 assessment#:#tst_res_lo_try_n#:#Attempt %s
+assessment#:#tst_res_tab_msg_no_lp_access#:#You are currently not allowed to access your Learning Progress, as you are not allowed to see your test results.
 assessment#:#tst_res_tab_msg_res_after_date#:#Your test results will be shown here after: %s
 assessment#:#tst_res_tab_msg_res_after_date_no_res#:#Once you have taken the test your results will be shown here after: %s
 assessment#:#tst_res_tab_msg_res_after_finish_test#:#After finishing the test your results will be shown here.
@@ -2089,7 +2092,6 @@ auth#:#auth_cron_destroy_expired_sessions_desc#:#This job deletes expires sessio
 auth#:#auth_err_expired#:#Your session has been deactivated due to inactivity.
 auth#:#auth_err_invalid_user_account#:#Authentication failed due to an internal failure.
 auth#:#auth_err_ldap_exception#:#Authentication failed due to an internal authentication failure (LDAP).
-auth#:#auth_err_login_attempts_deactivation#:#This user account has been deactivated due to too many incorrect login attempts.
 auth#:#auth_info_add#:#Choose this option if you have never registered to ILIAS. A new account will be created.
 auth#:#auth_info_migrate#:#If you have already an ILIAS account, enter username and password to migrate your personal data (mail, test results...).
 auth#:#auth_ldap_server_ds#:#LDAP-Server
@@ -2574,7 +2576,7 @@ book#:#book_assign#:#Book
 book#:#book_assign_object#:#Book Items for Participant
 book#:#book_assign_participant#:#Book for Other Participant(s)
 book#:#book_back_to_list#:#Back to List
-book#:#book_bobj#:#Booked Items
+book#:#book_bobj#:#Bookable Item
 book#:#book_book#:#Book
 book#:#book_book_available#:#Book Available Dates
 book#:#book_book_recurrence#:#Book multiple dates
@@ -2970,8 +2972,6 @@ chatroom#:#chat_osc_accepts_messages_yes#:#Receives Chat Messages
 chatroom#:#chat_osc_add_user#:#Add Further Users
 chatroom#:#chat_osc_conversations#:#Conversations
 chatroom#:#chat_osc_doesnt_accept_msg#:#Conversations not possible
-chatroom#:#chat_osc_dont_accept_msg#:#You currently cannot be invited to conversations. If desired you can change this in your %s.
-chatroom#:#chat_osc_dont_accept_msg_link_txt#:#'Personal Settings'
 chatroom#:#chat_osc_head_grp_x_persons#:#%s Users
 chatroom#:#chat_osc_invite_to_conversation#:#Add to Conversation
 chatroom#:#chat_osc_leave_grp_conv#:#Leave Conversation
@@ -3322,6 +3322,7 @@ cmix#:#launch_url#:#URL of the resource
 cmix#:#launch_url_info#:#Insert here the Internet address by adding http:// or https:// . Options for data security are also relevant for remote resources.
 cmix#:#log_options#:#Options for the display of transmitted data
 cmix#:#lrs_authentication#:#Authentication
+cmix#:#lrs_type_not_avail_msg#:#This LRS Type is not available.
 cmix#:#no_substatements_info#:#With this option - which is only available for the ILIAS LRS proxy - the storage of subordinate statements can be suppressed. This can for example affect the answering of single tasks in a test. The content is informed that the statements would have been saved.
 cmix#:#no_substatements_label#:#Do not store substatements
 cmix#:#online_info#:#This makes the object visible and usable for the users.
@@ -3991,6 +3992,7 @@ common#:#dpro_withdraw_consent_info_external#:#Please contact the administrator 
 common#:#drafts#:#Drafts
 common#:#drag_file_here#:#Drag-and-drop your file here
 common#:#drag_files_here#:#Drag-and-drop your files here
+common#:#drag_handle#:#Draggable element
 common#:#drop_files_on_repo_obj_info#:#Drop the files here to upload them into this object.
 common#:#edit#:#Edit
 common#:#edit_assignments#:#Edit Assignments
@@ -4771,6 +4773,7 @@ common#:#msg_input_char_limit_max#:#You have entered more characters than allowe
 common#:#msg_input_char_limit_min#:#You have to enter the minimum of characters specified.
 common#:#msg_input_does_not_match_regexp#:#Please provide a valid value.
 common#:#msg_input_is_required#:#This input is required. Please enter a value.
+common#:#msg_invalid_value_css_rect_input#:#The entered value is incorrect, do not use any plus or minus symbols in combination with the entered integer. Please check your input.
 common#:#msg_is_last_role#:#You removed the last global role from the following users
 common#:#msg_last_role_for_registration#:#At least one role must be available in the registration form for new users. This role is currently the only one available.
 common#:#msg_link_clipboard_p#:#Now, please select the desired location, where the selected objects should be linked to and click the button Paste.
@@ -5168,6 +5171,7 @@ common#:#object_copy_in_progress#:#Started Copying.
 common#:#object_duplicated#:#Object copied
 common#:#object_id#:#Object-ID
 common#:#object_imported#:#Object imported
+common#:#object_list#:#List of Objects
 common#:#objects#:#Objects
 common#:#objf#:#Object definitions
 common#:#objs_bibl#:#Bibliographies
@@ -5676,7 +5680,6 @@ common#:#show_users_online#:#Show active users
 common#:#show_who_is_online#:#Show who is online
 common#:#side_frame#:#Side Frame
 common#:#signature#:#Signature
-common#:#simultaneous_login_detected#:#Your access is denied because of a simultaneous login with the same account.
 common#:#size#:#Size
 common#:#skills#:#Competences
 common#:#skin_style#:#Default Skin / Style
@@ -6054,7 +6057,6 @@ common#:#withdrawal_sure_account_no_consent_yet#:#Are you sure that you do not w
 common#:#wizard_search_list#:#Your search produced the following hits. Please select one of them.
 common#:#wizard_title_info#:#Search for the object you want to duplicate. Please enter the object's title or a part of it and click on 'Continue' to get matching search results.
 common#:#write#:#Write
-common#:#wrong_ip_detected#:#Your access is denied because of a wrong client ip.<br>You are currently using this IP address: %s<br>Please contact the system administrator.
 common#:#year#:#Year
 common#:#yearly#:#yearly
 common#:#years#:#Years
@@ -6202,7 +6204,6 @@ content#:#cont_active_from#:#Activation Start
 content#:#cont_active_to#:#Activation End
 content#:#cont_add_area#:#Add Area
 content#:#cont_add_cell#:#Add Column
-content#:#cont_add_definition#:#Add Definition
 content#:#cont_add_elements#:#<b>Click</b> on a plus symbol to <b>add</b> a new element.
 content#:#cont_add_file#:#Add File
 content#:#cont_add_images#:#Add Images
@@ -6376,7 +6377,6 @@ content#:#cont_def_map_areas#:#Default Link Areas
 content#:#cont_def_organization#:#default
 content#:#cont_default#:#Default
 content#:#cont_definition#:#Definition
-content#:#cont_definitions#:#Definitions
 content#:#cont_delete_content#:#Delete Content
 content#:#cont_delete_selected#:#Delete
 content#:#cont_delete_style#:#Delete Style
@@ -7085,8 +7085,8 @@ content#:#cont_select_media_pool#:#Select Media Pool
 content#:#cont_select_none#:#Clear Selection
 content#:#cont_select_other_qpool#:#Select Other Pool
 content#:#cont_select_par_or_section#:#Please select at least one paragraph or section.
-content#:#cont_selected_items_have_been_copied#:#Selected items have been copied to the clipboard. Click target placeholders to paste them into the learning module.
-content#:#cont_selected_items_have_been_cut#:#Selected items have been cut to the clipboard. Click target placeholders to paste them into the learning module.
+content#:#cont_selected_items_have_been_copied#:#Selected items have been copied to the clipboard. You can now add them before or after other elements by using their action menus.
+content#:#cont_selected_items_have_been_cut#:#Selected items have been cut to the clipboard. You can now add them before or after other elements by using their action menus.
 content#:#cont_selected_pg_chap#:#Selected Pages/Chapters
 content#:#cont_selected_terms#:#Selected Terms
 content#:#cont_selected_topic#:#Selected Topic
@@ -7244,7 +7244,6 @@ content#:#cont_update_section#:#Update Section
 content#:#cont_update_skills#:#Edit Competence
 content#:#cont_update_verification#:#Edit Certificate
 content#:#cont_upload_dir#:#Upload directory
-content#:#cont_upload_dir_info#:#Server directory from which large SCORM and HTML packages can be copied instead of being uploaded. Only ILIAS administrators will see a selection of files from this directory. Please enter a full server path without trailing slash.
 content#:#cont_upload_file#:#Upload File
 content#:#cont_upload_multi_srt_howto#:#This feature allows you to upload multiple subtitle (srt) files in a zip file for all media objects. Your .zip file should contain all .srt files on the top level (no subdirectories). The file names should end with '_&lt;lang code&gt;.srt' where lang code is e.g. 'en', 'it', 'de'. The rest of the filename should correspond to the name of the video file, e.g. 'my_video.mp4' ➜ 'my_video_en.srt'.
 content#:#cont_uploaded_file#:#Existing File
@@ -7284,7 +7283,6 @@ content#:#copied_to_clipboard#:#Copied object(s) to clipboard.
 content#:#dgl_pagebreak#:#Pagebreak
 content#:#glo_add_new_term#:#Add New Term
 content#:#glo_content_settings#:#Content
-content#:#glo_definition_abbr#:#Def.
 content#:#glo_editing_view#:#Editing View
 content#:#glo_full_definitions#:#Full Definitions
 content#:#glo_full_definitions_info#:#Terms and definitions are fully displayed in the main view.
@@ -7295,8 +7293,6 @@ content#:#glo_online_info#:#Only if the glossary is online, users are able to us
 content#:#glo_presentation_mode#:#Presentation Mode
 content#:#glo_presentation_view#:#Presentation View
 content#:#glo_quick_navigation#:#Quick Navigation
-content#:#glo_show_taxonomy#:#Show Taxonomy
-content#:#glo_show_taxonomy_info#:#The taxonomy will be visible in the presentation view of the glossary and can be used to select referenced terms.
 content#:#glo_style#:#Glossary Style
 content#:#glo_table_form#:#In Table Form
 content#:#glo_table_form_info#:#Terms and definition are first shown in a two-column overview. Clicking the term opens the full content of a term on a separate screen.
@@ -7325,8 +7321,6 @@ content#:#lm_only_one_download_per_type#:#Only one file per type (XML, HTML) can
 content#:#lm_rate_page#:#Rate page
 content#:#lm_rating#:#Rate Learning Module
 content#:#mep_folder_created#:#Added new folder.
-content#:#mob_upload_dir#:#Upload Directory
-content#:#mob_upload_dir_info#:#Server directory from which multiple files can be used to create media objects in media pools. Only ILIAS administrators will see a selection of files from this directory. Please enter a full server path without trailing slash.
 content#:#msg_entry_added#:#Menu entry added
 content#:#msg_entry_removed#:#Menu entry removed
 content#:#msg_entry_updated#:#Menu entry updated
@@ -9288,6 +9282,7 @@ exc#:#exc_assignments_deleted#:#The assignments have been deleted.
 exc#:#exc_blog_created#:#Blog successfully created.
 exc#:#exc_blog_returned#:#Assignment Blog
 exc#:#exc_blog_selected#:#The blog has been assigned.
+exc#:#exc_cannot_submit_any_files#:#You cannot submit any files anymore.
 exc#:#exc_chars_remaining#:#Characters remaining:
 exc#:#exc_comment_for_learner_edit#:#Enter in Text Field as Comment
 exc#:#exc_comment_for_learner_info#:#A notification is sent to the user and the feedback will be listed in the user's assignment view.
@@ -9716,6 +9711,7 @@ exc#:#exc_template#:#Template
 exc#:#exc_text_assignment_edit#:#Edit Text
 exc#:#exc_text_assignment_show#:#Show Text
 exc#:#exc_text_saved#:#Text has been saved.
+exc#:#exc_too_many_files#:#The upload contains too many files.
 exc#:#exc_total_exc#:#Total Exercise
 exc#:#exc_total_members#:#Total Exercise Participants
 exc#:#exc_type#:#Type
@@ -9776,8 +9772,10 @@ exp#:#exp_format_dropdown-xls#:#as XLS
 exp#:#exp_format_dropdown-xml#:#as XML
 exp#:#exp_html#:#HTML
 exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for version %s exists.
+exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
 exp#:#exp_print_pdf_info#:#To create a PDF please use the "Print to PDF" target as soon as the print view is presented.
+exp#:#exp_public_access_status#:#Available on ‘Info’-tab
 exp#:#exp_really_delete#:#Do you really want to delete these export files?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML
@@ -10213,7 +10211,7 @@ glo#:#glo_add_glossary#:#Add Glossary
 glo#:#glo_add_to_collection#:#Add Glossary to Collection Glossary
 glo#:#glo_added_to_collection_info#:#The selected glossary has been added to the collection glossary.
 glo#:#glo_answered_correctly#:#I got it right
-glo#:#glo_answered_not_correctly#:#I was wrong
+glo#:#glo_answered_not_correctly#:#I didn't know
 glo#:#glo_box#:#Box
 glo#:#glo_box_completed#:#You have completed the box.
 glo#:#glo_box_last_presented#:#Box Last Presented
@@ -10221,9 +10219,10 @@ glo#:#glo_boxes#:#Boxes
 glo#:#glo_boxes_really_reset#:#Do you really want to reset all boxes? All flashcards will be moved to the first box.
 glo#:#glo_boxes_reset#:#The boxes have been reset successfully.
 glo#:#glo_bulk_confirmation#:#Please check if all terms and definitions are listed correctly.
-glo#:#glo_bulk_creation#:#Bulk Creation
+glo#:#glo_bulk_creation#:#Paste From Excel
 glo#:#glo_change_to_collection_unavailable_info#:#To change the type of content assembly to "Collection Glossary", you first have to delete all existing terms within this glossary in tab "Content".
 glo#:#glo_change_to_standard_unavailable_info#:#To change the type of content assembly to "Standard Glossary", you first have to remove the selected glossaries in tab "Content".
+glo#:#glo_check#:#Check
 glo#:#glo_col_ordering_info#:#Order the titles of the metadata fields. They are presented as column headers in the table presentation of the glossary.
 glo#:#glo_collection#:#Collection Glossary
 glo#:#glo_collection_empty_info#:#This collection glossary is currently empty. Please add at least one glossary to it.
@@ -10231,7 +10230,7 @@ glo#:#glo_collection_info#:#The glossary automatically collects all terms from t
 glo#:#glo_content_assembly#:#Content Assembly
 glo#:#glo_copy#:#Copy Glossary
 glo#:#glo_copy_terms#:#Copy Terms
-glo#:#glo_create_term_definition_pairs#:#Create Term/Definition Pairs
+glo#:#glo_create_term_definition_pairs#:#Create finally
 glo#:#glo_days_ago#:#%s days ago
 glo#:#glo_def_vs_term#:#Definition vs. Term
 glo#:#glo_def_vs_term_info#:#Show a definition first, the learner has to guess the term.
@@ -10241,8 +10240,11 @@ glo#:#glo_flashcards#:#Flashcards
 glo#:#glo_flashcards_from_today_confirmation#:#The box contains %s flashcards already presented today. Do you want to include only the remaining %s flashcards or all %s flashcards?
 glo#:#glo_flashcards_from_today_only_info#:#The box contains only flashcards already presented today. Please confirm that these %s flashcards will be shown to you again.
 glo#:#glo_flashcards_intro#:#Your goal is to correctly remember each flashcard four times in a row.<br />To begin with, all of the flashcards are in box 1.<br />Flagging a flashcard as "I got it right" will advance it to the next box.<br />Flagging a flashcard as "I was wrong" will return the card to the first box.<br />To start, select a box. This will reveal the flashcards.
+glo#:#glo_flashcards_progress#:#%s of %s
 glo#:#glo_introduction#:#Introduction
 glo#:#glo_link_glo_in_glo#:#Should all glossary terms of the target glossary be linked in the current glossary now?
+glo#:#glo_link_to_usages#:#Link
+glo#:#glo_md_advanced#:#Further Details
 glo#:#glo_page_type_gdf#:#Term Definition
 glo#:#glo_please_select_other_glo#:#Please select another glossary.
 glo#:#glo_quit_box#:#Quit Box
@@ -10252,28 +10254,30 @@ glo#:#glo_reference_terms#:#Reference Terms
 glo#:#glo_referenced_term#:#Referenced Term
 glo#:#glo_removed_from_collection_info#:#The glossary has been removed from the collection glossary.
 glo#:#glo_reset_all_boxes#:#Reset All Boxes
+glo#:#glo_save_and_continue#:#Save and Continue
 glo#:#glo_select_source_glo#:#Please select a source glossary.
 glo#:#glo_select_terms#:#Select Terms
 glo#:#glo_selected_glossaries#:#Selected Glossaries
 glo#:#glo_selected_glossaries_info#:#Terms are collected from the following glossaries:
 glo#:#glo_selected_glossary_is_current_info#:#The selected glossary corresponds to the current glossary. Please select another glossary.
 glo#:#glo_selected_terms_have_been_copied#:#The selected terms have been copied to the clipboard. Please open the target glossary and click "Paste".
-glo#:#glo_show_definition#:#Show Definition
 glo#:#glo_show_in_presentation#:#Shown in Presentation View
 glo#:#glo_show_in_presentation_off#:#Hide in Presentation View
 glo#:#glo_show_in_presentation_on#:#Show in Presentation View
-glo#:#glo_show_term#:#Show Term
 glo#:#glo_tax_info#:#A taxonomy in a Glossary classifies and filters the terms. It always is available in the editing view. For the presentation view, the taxonomy must first be activated. In glossaries, only one taxonomy can be used.
 glo#:#glo_term#:#Glossary Term
-glo#:#glo_term_definition_pairs#:#Term/Definition Pairs
-glo#:#glo_term_definition_pairs_info#:#Please enter a term and a definition pair in each line. Term and definition must be separated by a semicolon or a TAB character (usually provided by clipboard actions from spreadsheet applications).
+glo#:#glo_term_definition_pairs#:#Data Copied From Excel
+glo#:#glo_term_definition_pairs_info#:#Copy and paste data from your Excel spreadsheet to this input field. Generally speaking, you should be able to use your spreadsheet clipboard for this.<br />Otherwise please separate term and definition manually using a semicolon (;) or the TAB (↹ - key).
 glo#:#glo_term_letter#:#Letter
 glo#:#glo_term_reference#:#Term Reference
 glo#:#glo_term_vs_def#:#Term vs. Definition
 glo#:#glo_term_vs_def_info#:#Show a term first, the learner has to guess the definition.
 glo#:#glo_terms_per_page#:#Terms per Page
+glo#:#glo_usage_link#:#Usage Link
 glo#:#glo_use_all_flashcards#:#Use All Flashcards (%s)
 glo#:#glo_use_remaining_flashcards#:#Use Remaining Flashcards (%s)
+glo#:#glo_what_means_definition#:#What does the following mean?
+glo#:#glo_what_means_term#:#What does "%s" mean?
 grp#:#crs_add_grouping#:#Add Membership Limitation
 grp#:#crs_grouping_delete_sure#:#Are you sure you want to delete this membership limitation ?
 grp#:#crs_grouping_deleted#:#Deleted membership limitation.
@@ -10650,6 +10654,7 @@ irss#:#revision_status_20#:#Draft
 irss#:#revisions#:#Available Revisions
 irss#:#rid_deleted#:#File removed
 irss#:#rids_appended#:#Resource(s) added
+irss#:#rids_appended_failed#:#No Resource(s) added
 irss#:#rids_deleted#:#Resource(s) deleted
 irss#:#rids_updated#:#Ressource(n) updated
 irss#:#sorting#:#Default Ordering
@@ -10866,7 +10871,7 @@ ldap#:#ldap_user_sync_cron#:#LDAP User Synchronization
 ldap#:#ldap_user_sync_cron_info#:#If activated, user accounts will be imported from the LDAP directory and synchronised continuously as an option.
 ldap#:#ldap_user_sync_info#:#Defines whether new users are automatically created on login or regularly per cron job.
 ldap#:#ldap_username_filter#:#Username Filter
-ldap#:#ldap_username_filter_info#:#Use * as wildcard.
+ldap#:#ldap_username_filter_info#:#The username filter can be optionally used for the automatic determination of this LDAP server configuration by the entered username on the login page. The "*" character can be used as a wildcard. For example, "*example\.com" matches all users whose entered username ends with "example.com". If the configured filter matches the entered username, this LDAP server configuration is preferred if a fixed authentication sequence is configured.
 ldoc#:#deleteDocument#:#Delete
 ldoc#:#detachCriterionAssignment#:#Delete
 ldoc#:#ldoc_acceptance_history#:#Acceptance History
@@ -10967,6 +10972,9 @@ lm#:#lm_est_reading_time_info#:#In Learning Modules in the repository the estima
 lm#:#lm_insert_chapter#:#Insert chapter
 lm#:#lm_insert_chapter_after#:#Insert chapter after
 lm#:#lm_insert_chapter_before#:#Insert chapter before
+lm#:#lm_insert_chapter_clip#:#Insert chapter from clipboard
+lm#:#lm_insert_chapter_clip_after#:#Insert chapter from clipboard after
+lm#:#lm_insert_chapter_clip_before#:#Insert chapter from clipboard before
 lm#:#lm_insert_layout_after#:#Insert template after
 lm#:#lm_insert_layout_before#:#Insert template before
 lm#:#lm_insert_page#:#Insert page
@@ -12017,7 +12025,6 @@ meta#:#md_copyright_link#:#URL
 meta#:#md_copyright_link_info#:#Link to the licence
 meta#:#md_copyright_preview#:#Copyright (Preview)
 meta#:#md_copyright_selection#:#Available Copyrights
-meta#:#md_copyright_settings#:#Settings
 meta#:#md_copyright_value#:#Copyright
 meta#:#md_copyrights_deleted#:#Copyright deleted.
 meta#:#md_days#:#Days:
@@ -12036,13 +12043,17 @@ meta#:#md_oai_contact_mail#:#Contact E-Mail
 meta#:#md_oai_identifier_prefix#:#OAI Prefix
 meta#:#md_oai_identifier_prefix_info#:#This prefix is used as a namespace in the identifiers of returned OER records.
 meta#:#md_oai_pmh_enabled#:#Allow Querying via OAI-PMH Interface
-meta#:#md_oai_pmh_enabled_info#:#If enabled, harvested OER can be queried by external interested parties, e.g. OER referatories.
+meta#:#md_oai_pmh_enabled_info#:#If enabled, harvested OER can be queried by external interested parties, e.g. OER repositories.
 meta#:#md_oai_repository_name#:#Repository Name
 meta#:#md_oai_repository_name_info#:#This is returned as the name of this ILIAS installation when queried.
 meta#:#md_obj_types#:#Assigned Objects
 meta#:#md_record_export_table#:#Export Files
 meta#:#md_record_list_table#:#Custom Metadata Sets
 meta#:#md_separated_by#:#Separated by %s
+meta#:#md_settings#:#Settings
+meta#:#md_settings_harvester#:#OER Harvester
+meta#:#md_settings_licence#:#Terms of Usage
+meta#:#md_settings_publishing#:#Querying by Repositories
 meta#:#md_time#:#Time:
 meta#:#md_unknown_vocabulary_flag#:#(unknown vocabulary)
 meta#:#md_used#:#Current Number of Usages
@@ -12090,7 +12101,7 @@ meta#:#meta_advmd_select_option_position#:#Position
 meta#:#meta_advmd_select_option_value#:#Value
 meta#:#meta_advmd_select_options#:#Entries
 meta#:#meta_advmd_select_options_edit#:#Edit Entries
-meta#:#meta_advmd_select_position_identifier#:#After %s
+meta#:#meta_advmd_select_position_identifier#:#After ‘%s’
 meta#:#meta_aggregation_level#:#Aggregation Level
 meta#:#meta_amaya#:#Amaya
 meta#:#meta_annotation#:#Annotation
@@ -12628,9 +12639,12 @@ meta#:#meta_obj_type_mandatory#:#Data set always offered
 meta#:#meta_obj_type_optional#:#Data set needs activation
 meta#:#meta_oer_blocked#:#Ignored by OER Harvester
 meta#:#meta_oer_blocked_info#:#Will not be listed automatically as Open Educational Ressource (OER)
+meta#:#meta_oer_categories#:#Categories for Objects Gathered
 meta#:#meta_oer_copyright_selection#:#Copyright Selection
 meta#:#meta_oer_copyright_selection_info#:#Only objects that have been published with one of the selected copyrights will be linked to the OER Category.
 meta#:#meta_oer_exposed_source#:#Category for Published OER Content
+meta#:#meta_oer_harvested_licences#:#Licences for Harvesting
+meta#:#meta_oer_harvested_types#:#Types of Objects to be Harvested
 meta#:#meta_oer_harvester#:#OER Harvester
 meta#:#meta_oer_harvester_desc#:#The OER Harvester collects all resources under selected CC licenses, adds them to a category defined in the cronjob settings, and if necessary generates export files for them. For harvested resource marked for publishing, records are compiled that can then (if enabled) be queried via an OAI-PMH interface. To get results from this cronjob it is necessary to activate and configure the copyright selection in the administration of 'Metadata'. The object types eligible to be harvested are Files, Glossaries, Content Pages, Learning Modules (ILIAS, SCORM, and HTML), Question Pools (both Survey and Test), and Mediapools.
 meta#:#meta_oer_object_type_selection#:#Harvested Object Types
@@ -12863,7 +12877,7 @@ news#:#lso_news_online_txt#:#A new object for your learning sequence was just pu
 news#:#new_test_online#:#The test was set online.
 news#:#news_1_file_created#:#One file has been added.
 news#:#news_1_file_updated#:#One file has been updated.
-news#:#news_1_posts#:#One post has been added.
+news#:#news_1_postings#:#One post has been added.
 news#:#news_add_news#:#Add News
 news#:#news_all_items#:#News for all favourite items
 news#:#news_allow_longer_periods#:#Allow Longer Periods
@@ -13020,18 +13034,12 @@ noti#:#noti_notification_deactivated#:#Notification Deactivated
 notifications_adm#:#enable_osd#:#Enable Toasts
 notifications_adm#:#enable_osd_desc#:#If enabled, users are notified by a pop-up about new notifications.
 notifications_adm#:#notification_settings#:#Notification Settings
-notifications_adm#:#osd_delay#:#Presentation Delay
-notifications_adm#:#osd_delay_desc#:#Delay of the visible presentation in milliseconds.
-notifications_adm#:#osd_error_presentation_time_too_small#:#The Presentation Time has to be at least than 1000 miliseconds.
-notifications_adm#:#osd_error_refresh_interval_smaller_than_delay_and_vanish_combined#:#The Refresh Interval has to be greater than the Presentation Time and the Presentation Delay combined.
 notifications_adm#:#osd_error_refresh_interval_too_small#:#The Refresh Interval has to be at least than 3000 miliseconds.
 notifications_adm#:#osd_interval#:#Refresh interval
 notifications_adm#:#osd_interval_desc#:#Polling interval for checking of new notifications in miliseconds. A lower number will notify the user more quickly but increases the number of requests the web server must handle.
 notifications_adm#:#osd_play_sound#:#Play a Sound
 notifications_adm#:#osd_play_sound_desc#:#Play a sound when receiving a new notficiation.
 notifications_adm#:#osd_settings#:#Toasts
-notifications_adm#:#osd_vanish#:#Presentation Time
-notifications_adm#:#osd_vanish_desc#:#Visible time of a notification on the screen in miliseconds.
 obj#:#activation_visible_when_disabled#:#Visibility
 obj#:#activation_visible_when_disabled_info#:#The item is visible outside of the selected availability period, but it cannot be opened.
 obj#:#availability_period_changed#:#The availability period for the selected objects has been changed successfully.
@@ -13107,6 +13115,7 @@ obj#:#obj_tool_setting_use_news_open_settings#:#Open Settings of News Block and 
 obj#:#obj_user_decides_notification#:#Members have to manually activate notifications
 obj#:#obj_user_not_disable_not#:#Member are not allowed to deactivate notifications
 obj#:#online_input_byline#:#The object has been published and can be accessed by anyone with read access. Other access prerequisites or time-based access restrictions may still apply. This settings applies to the object wherever it is used in the repository.
+obj#:#select_import_type_info#:#The type of the object in the file to be imported cannot be determined automatically. The file was probably renamed. Please select the type of object in the file.
 obj#:#select_object_type#:#Select Object Type
 obj#:#svy_results#:#Results
 obj#:#unequal_items_for_availability_period_message#:#You have selected items with different availability periods. Overwrite existing settings below or cancel action to keep current availability periods.
@@ -13257,8 +13266,6 @@ pd#:#pd_enable_user_publish_info#:#If enabled, users can publish their profiles,
 pd#:#pd_ended#:#Ended
 pd#:#pd_export_profile#:#Export Personal Data
 pd#:#pd_import_personal_data#:#Import Personal Data
-pd#:#pd_my_memberships_intro#:#Welcome to Your Memberships
-pd#:#pd_my_memberships_intro2#:#This is your personal space for all courses and groups you participate in. Currently, there aren't any memberships assigned to you. To become a member of a course or group, there are two ways:<br /><ol><li>You can join courses or groups provided that joining them has been allowed by their administrators.</li><li>An administratrator of a course or group can assign a membership to you.</li></ol><br />In any case, the respective objects will appear automatically in this place.
 pd#:#pd_my_memberships_sort_default#:#Default of Sort Option
 pd#:#pd_no_items_to_manage#:#No items available for removal.
 pd#:#pd_not_dated#:#Not Dated
@@ -14070,7 +14077,7 @@ rbac#:#chtr_moderate#:#User can moderate discussion in chat room
 rbac#:#chtr_read#:#User can join and participate at chat room
 rbac#:#chtr_visible#:#Chat Room is visible
 rbac#:#chtr_write#:#User can edit settings of chat room and ban users
-rbac#:#cmis_edit_permissions#:#User can change permission settings of xAPI/cmi5 administration.
+rbac#:#cmis_edit_permission#:#User can change permission settings of xAPI/cmi5 administration.
 rbac#:#cmis_read#:#User has read access to xAPI/cmi5 administration.
 rbac#:#cmis_visible#:#Administration of xAPI/cmi5 is visible.
 rbac#:#cmis_write#:#User can edit settings of xAPI/cmi5 administration.
@@ -14143,6 +14150,10 @@ rbac#:#dcl_write#:#User can edit settings and content of data collection
 rbac#:#delete_files#:#Delete Files
 rbac#:#delete_folders#:#Delete Folders
 rbac#:#delete_wiki_pages#:#Delete Pages
+rbac#:#dpro_edit_permission#:#User can change permission settings in the Declaration of Data Protected administration
+rbac#:#dpro_read#:#User has read access to the Declaration of Data Protection administration
+rbac#:#dpro_visible#:#Declaration of Data Protection administration is visible
+rbac#:#dpro_write#:#Edit settings in the Declaration of Data Protection
 rbac#:#dshs_change_presentation#:#Change presentation of dashboard view
 rbac#:#dshs_edit_permission#:#User can change permission settings of Dashboard administration
 rbac#:#dshs_read#:#User has read access to Dashboard administration
@@ -14292,6 +14303,10 @@ rbac#:#il_lti_global_role#:#LTI User
 rbac#:#il_sess_participant#:#Session Participant
 rbac#:#il_sess_status_closed#:#Non-Participant Closed Session
 rbac#:#ilias_id#:#ILIAS-ID
+rbac#:#impr_edit_permission#:#User can change permission settings of Legal Notice administration
+rbac#:#impr_read#:#User can read in Legal Notice administration
+rbac#:#impr_visible#:#Administration of Legal Notice is visible
+rbac#:#impr_write#:#User can edit content and settings of Legal Notice
 rbac#:#info_user_view_changed#:#User view changed
 rbac#:#internal_mail#:#Internal Mail
 rbac#:#invite#:#Inviting to survey
@@ -14339,7 +14354,7 @@ rbac#:#lso_read_learning_progress#:#User can view learning progress of other use
 rbac#:#lso_unparticipate#:#User can unsubscribe from a Learning Sequence
 rbac#:#lso_visible#:#Learning Sequence is visible
 rbac#:#lso_write#:#User can edit settings of Learning Sequence
-rbac#:#lsos_edit_permissions#:#User can change permission settings of Learning Sequences administration.
+rbac#:#lsos_edit_permission#:#User can change permission settings of Learning Sequences administration.
 rbac#:#lsos_read#:#User has read access to Learning Sequences administration.
 rbac#:#lsos_visible#:#Administration of Learning Sequences is visible.
 rbac#:#lsos_write#:#User can edit settings of Learning Sequences administration.
@@ -14407,7 +14422,7 @@ rbac#:#msg_anonymous_cannot_be_assigned#:#Anonymous cannot be assigned to a role
 rbac#:#msg_no_roles_of_type#:#No Roles available with selected filter setting
 rbac#:#news_add_news#:#Add News
 rbac#:#no_corresponding_roles#:#No corresponding roles could be found.
-rbac#:#nots_edit_permissions#:#User can change permission settings of Notes administration.
+rbac#:#nots_edit_permission#:#User can change permission settings of Notes administration.
 rbac#:#nots_read#:#User has read access to Notes administration.
 rbac#:#nots_visible#:#Administration of Notes is visible.
 rbac#:#nots_write#:#User can edit settings of Notes administration.
@@ -14487,7 +14502,7 @@ rbac#:#prgs_edit_permission#:#Change permission settings in Study Programme admi
 rbac#:#prgs_read#:#User has read access to Study Programme administration
 rbac#:#prgs_visible#:#Study Programme administration is visible
 rbac#:#prgs_write#:#Edit settings in Study Programme administration
-rbac#:#prss_edit_permissions#:#User can change permission settings of Personal Resources administration.
+rbac#:#prss_edit_permission#:#User can change permission settings of Personal Resources administration.
 rbac#:#prss_read#:#User has read access to Personal Resources administration.
 rbac#:#prss_visible#:#Administration of Personal Resources is visible.
 rbac#:#prss_write#:#User can edit settings of Personal Resources administration.
@@ -14836,7 +14851,7 @@ rbac#:#usrf_read#:#User has read access to User administration
 rbac#:#usrf_read_users#:#User has read access to local user accounts (local administrators)
 rbac#:#usrf_visible#:#User administration is visible
 rbac#:#usrf_write#:#Edit settings in User administration
-rbac#:#wbdv_edit_permissions#:#User can change permission settings of WebDAV administration.
+rbac#:#wbdv_edit_permission#:#User can change permission settings of WebDAV administration.
 rbac#:#wbdv_read#:#User has read access to WebDAV administration.
 rbac#:#wbdv_visible#:#Administration of WebDAV is visible.
 rbac#:#wbdv_write#:#User can edit settings of WebDAV administration.
@@ -15020,6 +15035,7 @@ rep#:#rep_fav_intro2#:#Click on '%s' and select a learning object from the avail
 rep#:#rep_fav_intro3#:#When you have found something that interests you, you can easily add it to your favourites. Select the desired item in the <i>Actions</i> menu and choose "<i>Add to favourites</i>".
 rep#:#rep_favourites#:#Favourites
 rep#:#rep_favourites_info#:#Users can mark single repository items as favourites. Favourites lists can be activated and configured in the dashboard and menu settings.
+rep#:#rep_input_not_empty#:#This field must not be empty, please provide a value.
 rep#:#rep_intro#:#Welcome to the Repository!
 rep#:#rep_intro1#:#In this area you can create learning and working resources for all users. All resources are organised in categories. Categories can reflect the structure of your organisation (e.g. departments), a hierarchy of disciplines, or classes of a school.
 rep#:#rep_intro2#:#Three steps are needed to build an initial structure:
@@ -15481,7 +15497,7 @@ search#:#search_show_inactive_user#:#Show Inactive Users
 search#:#search_show_inactive_user_info#:#If enabled, the user search will show inactive users, too.
 search#:#search_show_limited_user#:#Show Users with Limited Access
 search#:#search_show_limited_user_info#:#If enabled, the user search will also show users with limited access outside their allowed time period.
-search#:#search_sort_by#:#Sortation: %s
+search#:#search_sort_by#:#Sortation:
 search#:#search_sort_creation_date_asc#:#Oldest
 search#:#search_sort_creation_date_desc#:#Latest
 search#:#search_sort_generic_asc#:#%s, asc.
@@ -15965,6 +15981,7 @@ style#:#sty_caption#:#Caption
 style#:#sty_caption_class#:#Caption
 style#:#sty_carousel_templates#:#Carousel Templates
 style#:#sty_cat_assignments#:#Style/Category Assignments
+style#:#sty_change_user_assignment#:#Change User Assignment
 style#:#sty_characteristic_already_exists#:#A style class with this title already exists within this style.
 style#:#sty_class#:#Style Class
 style#:#sty_class_name#:#Class Name
@@ -16035,6 +16052,7 @@ style#:#sty_images#:#Images
 style#:#sty_import_page_layout#:#Import Page Layout
 style#:#sty_import_stylesheet#:#Import Style
 style#:#sty_import_system_style#:#Import System Style
+style#:#sty_imported_layout#:#Imported Page Layout
 style#:#sty_individual_styles#:#Individual Styles
 style#:#sty_keep_existing#:#Keep Existing
 style#:#sty_left#:#Left
@@ -16063,6 +16081,7 @@ style#:#sty_min_height#:#Minimum Height
 style#:#sty_move_lm_styles#:#Change Style of Learning Modules
 style#:#sty_move_style#:#Change Style
 style#:#sty_move_user_styles#:#Change Style of Users
+style#:#sty_move_user_styles_saved#:#The assignment of the users assigned to skind-id %s has been changed to skin-id %s.
 style#:#sty_msg_characteristic_must_only_include#:#The title of style classes must start with a letter, does not use spaces and only include the following characters:
 style#:#sty_msg_color_must_only_include#:#The color name may only include the following characters:
 style#:#sty_msg_input_must_be_numeric#:#Input must be numeric.
@@ -17367,6 +17386,7 @@ ui#:#ui_md_input_view#:#View
 ui#:#ui_pagination_unlimited#:#Unlimited
 ui#:#ui_select_dropdown_label#:#Please select
 ui#:#ui_table_no_records#:#No records
+ui#:#ui_table_order#:#Order
 ui#:#ui_transcription#:#Transcript
 ui#:#vc_sort#:#Sort by:
 user#:#all_roles_has_starting_point#:#All the roles have starting points
@@ -17388,7 +17408,7 @@ user#:#confirm_logout_for_email_change#:#You changed your email. To finalize thi
 user#:#confirm_logout_for_email_change_with_confirmation#:#Additionally, a confirmation that you control the new email address will be required. After you have logged in again, an email will be sent to you. Please click on the link in the email to confirm that you contoll the address. The change of the email address will only take effect once this second step is also finalized.
 user#:#create_starting_point#:#Create Rule
 user#:#criteria#:#Criteria
-user#:#del_mail_body#:#Hello %1$s, %2$s You have not logged in to %3$s for a long time. Therefore, your ILIAS account is expected to be deleted on %4$s. In order to keep your ILIAS account, you must log in again before the aforementioned date.
+user#:#del_mail_body#:#Hello %1$s, %2$s You have not logged in to %3$s for a long time. Therefore, your ILIAS account %5$s is expected to be deleted on %4$s. In order to keep your ILIAS account, you must log in again before the aforementioned date.
 user#:#del_mail_subject#:#Your ILIAS account will be deleted soon
 user#:#delete_inactive_user_accounts_frequency#:#Frequency
 user#:#delete_inactive_user_accounts_frequency_desc#:#Frequency, in which the deletion and e-mail distribution will be tested.

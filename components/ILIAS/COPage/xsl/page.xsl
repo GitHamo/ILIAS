@@ -1283,7 +1283,7 @@
 			<!-- determine location -->
 			<xsl:variable name="data">
 				<xsl:if test="$curType = 'LocalFile'">
-					<xsl:value-of select="$webspace_path"/>mobs/mm_<xsl:value-of select="substring-after($cmobid,'mob_')"/>/<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose = 'Standard']/Location"/>
+					<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose = 'Standard']/Location"/>
 				</xsl:if>
 				<xsl:if test="$curType = 'Reference'">
 					<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose = 'Standard']/Location"/>
@@ -2579,16 +2579,18 @@
 		<xsl:when test = "substring-after($data,'youtube.com') != '' or substring-after($data,'youtu.be') != ''">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video style="max-width: 100%;" class="ilPageVideo" preload="auto">
+			<div class="il-video-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
 				<xsl:if test="$height != ''">
 					<xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
 				</xsl:if>
-				<!-- see #bug22632 -->
-				<xsl:attribute name="src"><xsl:value-of select="$httpprefix"/>//www.youtube.com/watch?v=<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='v']/@Value" />&amp;controls=0</xsl:attribute>
-			</video>
+				<iframe allow="fullscreen; autoplay; picture-in-picture;" referrerpolicy="strict-origin-when-cross-origin">
+					<!-- see #bug22632 -->
+					<xsl:attribute name="src"><xsl:value-of select="$httpprefix"/>//www.youtube.com/embed/<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='v']/@Value" /></xsl:attribute>
+				</iframe>
+			</div>
 		</xsl:when>
 		<!--
 		<xsl:when test = "substring-after($data,'youtube.com') != '' or substring-after($data,'youtu.be') != ''">
@@ -2640,8 +2642,7 @@
 
 		<!-- mp3 (mediaelement.js) -->
 		<xsl:when test = "$type='audio/mpeg' and (substring-before($data,'.mp3') != '' or substring-before($data,'.MP3') != '')">
-			<audio class="ilPageAudio" preload="metadata">
-				<xsl:attribute name="src"><xsl:value-of select="$data"/></xsl:attribute>
+			<div class="il-audio-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 					<xsl:attribute name="height">40</xsl:attribute>
@@ -2649,6 +2650,8 @@
 				<xsl:if test="$width = '' and $height = ''">
 					<xsl:attribute name="style">max-width: 100%; width: 100%; max-height: 100%;</xsl:attribute>
 				</xsl:if>
+			<audio controls="controls" class="il-audio-player" id="" preload="metadata">
+				<xsl:attribute name="src"><xsl:value-of select="$data"/></xsl:attribute>
 				<xsl:if test="$mode != 'edit' and
 					(../MediaAliasItem[@Purpose = $curPurpose]/Parameter[@Name = 'autostart']/@Value = 'true' or
 					( not(../MediaAliasItem[@Purpose = $curPurpose]/Parameter) and
@@ -2656,13 +2659,16 @@
 					<!-- <xsl:attribute name="autoplay">true</xsl:attribute> -->
 				</xsl:if>
 			</audio>
+			</div>
 		</xsl:when>
 
 		<!-- flv, mp4 (mediaelement.js) -->
 		<xsl:when test = "$type = 'video/mp4' or $type = 'video/webm'">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video class="ilPageVideo" controls="controls" preload="metadata">
+
+			<div class="il-video-container">
+			<video class="il-video-player ilPageVideo" controls="controls" preload="metadata">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
@@ -2710,6 +2716,7 @@
 					</track>
 				</xsl:for-each>
 			</video>
+			</div>
 			<!-- subtitle workaround -->
 			<xsl:if test="$mode = 'offline'" >
 				<xsl:for-each select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Subtitle">
@@ -2723,16 +2730,18 @@
 		<xsl:when test = "$type = 'video/vimeo'">
 			<!-- info on video preload attribute: http://www.stevesouders.com/blog/2013/04/12/html5-video-preload/ -->
 			<!-- see #bug12622 -->
-			<video style="max-width: 100%;" class="ilPageVideo" preload="auto">
+			<div class="il-video-container">
 				<xsl:if test="$width != ''">
 					<xsl:attribute name="width"><xsl:value-of select="$width"/></xsl:attribute>
 				</xsl:if>
 				<xsl:if test="$height != ''">
 					<xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
 				</xsl:if>
+			<iframe allow="fullscreen; autoplay; picture-in-picture;" referrerpolicy="strict-origin-when-cross-origin">
 				<!-- see #bug22632 -->
-				<xsl:attribute name="src"><xsl:value-of select="$data"/>?controls=0</xsl:attribute>
-			</video>
+				<xsl:attribute name="src">//player.vimeo.com/video/<xsl:value-of select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Parameter[@Name='id']/@Value" /></xsl:attribute>
+			</iframe>
+			</div>
 		</xsl:when>
 
 		<!-- svg -->
@@ -2935,8 +2944,9 @@
 <xsl:template match="Trigger">
 	<xsl:if test="@Overlay != ''">
 		<xsl:variable name="cur_nr" select="@Nr" />
+		<xsl:variable name="mobid" select="../MediaAlias/@OriginId" />
 		<img style="display:none;">
-		<xsl:attribute name="src"><xsl:value-of select="$webspace_path"/>mobs/mm_<xsl:value-of select="substring-after(../MediaAlias[1]/@OriginId,'mob_')"/>/overlays/<xsl:value-of select="@Overlay"/></xsl:attribute>
+		<xsl:attribute name="src"><xsl:value-of select="//MediaObject[@Id=$mobid]/MediaItem[@Purpose = 'Standard']/Url/@Base"/>/overlays/<xsl:value-of select="@Overlay"/></xsl:attribute>
 		<xsl:attribute name="id">iim_ov_<xsl:value-of select = "$pg_id"/>_<xsl:number count="Trigger" level="any" /></xsl:attribute>
 		<xsl:if test="$mode != 'edit'">
 			<xsl:attribute name="usemap">#iim_ov_map_<xsl:value-of select = "$pg_id"/>_<xsl:number count="Trigger" level="any" /></xsl:attribute>
@@ -3576,11 +3586,11 @@
 	<xsl:variable name="container_edit_class"><xsl:if test="$mode = 'edit'"> copg-edit-container</xsl:if></xsl:variable>
 	<div>
 		<xsl:attribute name="class">
-			<xsl:if test="@WIDTH_S != ''"> col-xs-<xsl:value-of select="@WIDTH_S"/></xsl:if>
-			<xsl:if test="@WIDTH_M != ''"> col-sm-<xsl:value-of select="@WIDTH_M"/></xsl:if>
-			<xsl:if test="@WIDTH_L != ''"> col-md-<xsl:value-of select="@WIDTH_L"/></xsl:if>
-			<xsl:if test="@WIDTH_XL != ''"> col-lg-<xsl:value-of select="@WIDTH_XL"/></xsl:if>
-			<xsl:if test="@WIDTH_S = '' and @WIDTH_M = '' and @WIDTH_L = '' and @WIDTH_XL = ''">col-xs-12</xsl:if>
+			<xsl:if test="@WIDTH_S != ''"> col-sm-<xsl:value-of select="@WIDTH_S"/></xsl:if>
+			<xsl:if test="@WIDTH_M != ''"> col-md-<xsl:value-of select="@WIDTH_M"/></xsl:if>
+			<xsl:if test="@WIDTH_L != ''"> col-lg-<xsl:value-of select="@WIDTH_L"/></xsl:if>
+			<xsl:if test="@WIDTH_XL != ''"> col-xl-<xsl:value-of select="@WIDTH_XL"/></xsl:if>
+			<xsl:if test="@WIDTH_S = '' and @WIDTH_M = '' and @WIDTH_L = '' and @WIDTH_XL = ''">col-sm-12</xsl:if>
 			<xsl:value-of select="$container_edit_class"/>
 		</xsl:attribute>
 		<div style="height:100%">	<!-- this div enforces margin collapsing, see bug 31536, for height see 32067 -->

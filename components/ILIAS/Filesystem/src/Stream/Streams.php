@@ -71,6 +71,16 @@ final class Streams
         return new Stream($resource);
     }
 
+    public static function ofReattachableResource($resource): \ILIAS\Filesystem\Stream\ReattachableStream
+    {
+        if (!is_resource($resource)) {
+            throw new \InvalidArgumentException(
+                'The argument $resource must be of type resource but was "' . gettype($resource) . '"'
+            );
+        }
+        return new ReattachableStream($resource);
+    }
+
     public static function ofFileInsideZIP(string $path_to_zip, string $path_inside_zip): \ILIAS\Filesystem\Stream\ZIPStream
     {
         // we try to open the zip file with the path inside the zip file, once with a leading slash and once without

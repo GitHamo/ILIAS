@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 namespace ILIAS\Export\ExportHandler\Part\Component;
 
 use ilExport;
@@ -57,10 +75,15 @@ class Handler implements ilExportHandlerPartComponentInterface
         $xml_writer = new ilXmlWriter();
         $xml_writer->xmlHeader();
         $xml_writer->xmlStartTag('exp:Export', $attribs);
+        $exp_dir_count = 1;
         foreach ($this->component_info->getTarget()->getObjectIds() as $id) {
             $xml_writer->xmlStartTag('exp:ExportItem', array("Id" => $id));
             $writer = $this->export_handler->consumer()->handler()->exportWriter($this->export_info->getCurrentElement());
+            $path_info = $this->export_handler->info()->export()->path()->handler()
+                ->withPathToComponentDirInContainer($this->component_info->getComponentExportDirPathInContainer())
+                ->withPathToComponentExpDirInContainer($this->component_info->getComponentExportDirPathInContainer() . "/expDir_" . $exp_dir_count++);
             $export = new ilExport();
+            $export->setPathInfo($path_info);
             $export->setExportDirInContainer($this->component_info->getComponentExportDirPathInContainer());
             $export->setExportWriter($writer);
             $export->export_run_dir = $this->export_info->getLegacyExportRunDir();

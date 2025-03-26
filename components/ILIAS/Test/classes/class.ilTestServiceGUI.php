@@ -33,6 +33,7 @@ use ILIAS\GlobalScreen\Services as GlobalScreenServices;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\HTTP\Wrapper\ArrayBasedRequestWrapper;
 use ILIAS\Skill\Service\SkillService;
+use ILIAS\Style\Content\Service as ContentStyle;
 
 /**
 * Service GUI class for tests. This class is the parent class for all
@@ -66,6 +67,7 @@ class ilTestServiceGUI
      * `ilTestPlayerAbstractGUI::populateIntantResponseModal()`.
      */
     protected ilGlobalTemplateInterface|ilTemplate $tpl;
+    protected readonly ContentStyle $content_style;
     protected readonly ilErrorHandling $error;
     protected ilAccess $access;
     protected readonly HTTPServices $http;
@@ -125,6 +127,7 @@ class ilTestServiceGUI
         global $DIC;
         $this->lng = $DIC['lng'];
         $this->tpl = $DIC['tpl'];
+        $this->content_style = $DIC->contentStyle();
         $this->error = $DIC['ilErr'];
         $this->access = $DIC['ilAccess'];
         $this->http = $DIC['http'];
@@ -652,15 +655,15 @@ class ilTestServiceGUI
 
     protected function isGradingMessageRequired(): bool
     {
-        if ($this->getObjectiveOrientedContainer()->isObjectiveOrientedPresentationRequired()) {
+        $session = $this->test_session_factory->getSession();
+        if ($this->getObjectiveOrientedContainer()->isObjectiveOrientedPresentationRequired()
+            || $this->object->getScoreSettings()->getScoringSettings()->getPassScoring() === ilObjTest::SCORE_LAST_PASS
+                && $session->getLastFinishedPass() < $session->getLastStartedPass()) {
             return false;
         }
 
-        if ($this->object->isShowGradingStatusEnabled()) {
-            return true;
-        }
-
-        if ($this->object->isShowGradingMarkEnabled()) {
+        if ($this->object->isShowGradingStatusEnabled()
+            || $this->object->isShowGradingMarkEnabled()) {
             return true;
         }
 

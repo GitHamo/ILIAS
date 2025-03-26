@@ -21,9 +21,8 @@ declare(strict_types=1);
 namespace ILIAS\Test\Logging;
 
 use ILIAS\Test\Utilities\TitleColumnsBuilder;
-
 use ILIAS\TestQuestionPool\Questions\GeneralQuestionPropertiesRepository;
-
+use ILIAS\Data\DateFormat\DateFormat;
 use ILIAS\HTTP\Wrapper\RequestWrapper;
 use ILIAS\UI\Factory as UIFactory;
 use ILIAS\UI\Renderer as UIRenderer;
@@ -66,11 +65,12 @@ class TestLogViewer
         $log_table = new LogTable(
             $this->logging_repository,
             $this->logger,
+            $this,
             $this->title_builder,
             $this->question_repository,
+            $this->ui_service,
             $this->ui_factory,
             $this->ui_renderer,
-            $this->data_factory,
             $this->lng,
             $this->tpl,
             $url_builder,
@@ -82,7 +82,7 @@ class TestLogViewer
         );
 
         return [
-            $log_table->getFilter($this->ui_service),
+            $log_table->getFilter(),
             $log_table->getTable()->withRequest($this->request)
         ];
     }
@@ -96,11 +96,12 @@ class TestLogViewer
         $log_table = new LogTable(
             $this->logging_repository,
             $this->logger,
+            $this,
             $this->title_builder,
             $this->question_repository,
+            $this->ui_service,
             $this->ui_factory,
             $this->ui_renderer,
-            $this->data_factory,
             $this->lng,
             $this->tpl,
             $url_builder,
@@ -138,6 +139,86 @@ class TestLogViewer
         $log_table->executeAction($action, $affected_items);
     }
 
+    public function getLogExportForRefjId(int $ref_id): \ilExcel
+    {
+        return $this->buildExcelWorkbookForLogs(
+            $this->logging_repository->getLogs(
+                $this->logger->getInteractionTypes(),
+                [$ref_id]
+            )
+        );
+    }
+
+    public function buildExcelWorkbookForLogs(\Generator $logs): \ilExcel
+    {
+        $workbook = new \ilExcel();
+        $workbook->addSheet($this->lng->txt('history'));
+
+        $column = 0;
+        foreach ($this->getColumHeadingsForExport() as $header_cell) {
+            $workbook->setCell(1, $column++, $header_cell);
+        }
+        $workbook->setBold('A' . 1 . ':' . $workbook->getColumnCoord($column - 1) . 1);
+        $workbook->setColors('A' . 1 . ':' . $workbook->getColumnCoord($column - 1) . 1, 'C0C0C0');
+
+        return $this->addRowsFromLogs($logs, $workbook);
+    }
+
+    private function addRowsFromLogs(
+        \Generator $logs,
+        \ilExcel $workbook
+    ): \ilExcel {
+        $row = 1;
+        foreach ($logs as $log) {
+            $row++;
+            $column = 0;
+            foreach ($log->getLogEntryAsExportRow(
+                $this->lng,
+                $this->title_builder,
+                $this->logger->getAdditionalInformationGenerator(),
+                [
+                    'timezone' => new \DateTimeZone($this->current_user->getTimeZone()),
+                    'date_format' => $this->buildUserDateTimeFormat()->toString()
+                ]
+            ) as $cell_content) {
+                $workbook->setCell(
+                    $row,
+                    $column++,
+                    $cell_content
+                );
+            }
+        }
+        return $workbook;
+    }
+
+    private function getColumHeadingsForExport(): array
+    {
+        return [
+            $this->lng->txt('date_time'),
+            $this->lng->txt('test'),
+            $this->lng->txt('author'),
+            $this->lng->txt('tst_participant'),
+            $this->lng->txt('client_ip'),
+            $this->lng->txt('question'),
+            $this->lng->txt('log_entry_type'),
+            $this->lng->txt('interaction_type'),
+            $this->lng->txt('additional_info')
+        ];
+    }
+
+    public function buildUserDateTimeFormat(): DateFormat
+    {
+        $user_format = $this->current_user->getDateFormat();
+        if ($this->current_user->getTimeFormat() == \ilCalendarSettings::TIME_FORMAT_24) {
+            return $this->data_factory->dateFormat()->amend(
+                $this->data_factory->dateFormat()->withTime24($user_format)
+            )->colon()->seconds()->get();
+        }
+        return $this->data_factory->dateFormat()->amend(
+            $user_format
+        )->space()->hours12()->colon()->minutes()->colon()->seconds()->meridiem()->get();
+    }
+
     /* The following functions will be removed with ILIAS 11 */
 
     public function getLegacyLogExportForObjId(?int $obj_id = null): string
@@ -159,16 +240,6 @@ class TestLogViewer
             if (!array_key_exists($log['user_fi'], $users)) {
                 $users[$log['user_fi']] = \ilObjUser::_lookupName((int) $log['user_fi']);
             }
-            $title = '';
-            if ($log['question_fi']) {
-                $title = $this->lng->txt('question') . ': '
-                    . $this->question_repository->getForQuestionId((int) $log['question_fi'])->getTitle();
-            }
-
-            if ($title === '' && $log['original_fi']) {
-                $title = $this->lng->txt('question') . ': '
-                    . $this->question_repository->getForQuestionId((int) $log['original_fi'])->getTitle();
-            }
 
             $content_row = [];
             $date = new \ilDateTime((int) $log['tstamp'], IL_CAL_UNIX);
@@ -176,7 +247,7 @@ class TestLogViewer
             $content_row[] = trim($users[$log['user_fi']]['title'] . ' '
                 . $users[$log['user_fi']]['firstname'] . ' ' . $users[$log['user_fi']]['lastname']);
             $content_row[] = trim($log['logtext']);
-            $content_row[] = $title;
+            $content_row[] = $this->buildQuestionTitleForLegacyLog($log);
             $csv[] = $this->processCSVRow($content_row);
         }
         $csvoutput = '';
@@ -184,6 +255,27 @@ class TestLogViewer
             $csvoutput .= implode($separator, $row) . "\n";
         }
         return $csvoutput;
+    }
+
+    public function buildQuestionTitleForLegacyLog(array $log): string
+    {
+        if (!$log['question_fi'] && !$log['original_fi']) {
+            return '';
+        }
+        $title = '';
+        if ($log['question_fi']) {
+            $title = $this->question_repository->getForQuestionId((int) $log['question_fi'])?->getTitle();
+        }
+
+        if ($title === null && $log['original_fi']) {
+            $title = $this->question_repository->getForQuestionId((int) $log['original_fi'])?->getTitle();
+        }
+
+        if ($title === null) {
+            return '';
+        }
+
+        return $this->lng->txt('question') . ': ' . $title;
     }
 
     private function processCSVRow(

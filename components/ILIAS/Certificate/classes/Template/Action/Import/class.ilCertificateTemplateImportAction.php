@@ -39,7 +39,7 @@ class ilCertificateTemplateImportAction
         private readonly int $objectId,
         private readonly string $certificatePath,
         private readonly ilCertificatePlaceholderDescription $placeholderDescriptionObject,
-        ilLogger $logger,
+        private readonly ilLogger $logger,
         private readonly Filesystem $filesystem,
         private readonly IRSS $irss,
         ?ilCertificateTemplateRepository $templateRepository = null,
@@ -86,8 +86,13 @@ class ilCertificateTemplateImportAction
         $importPath = $this->createArchiveDirectory($installationID);
 
         $clean_up_import_dir = function () use (&$importPath) {
-            if ($this->filesystem->hasDir($importPath)) {
-                $this->filesystem->deleteDir($importPath);
+            try {
+                if ($this->filesystem->hasDir($importPath)) {
+                    $this->filesystem->deleteDir($importPath);
+                }
+            } catch (Throwable $e) {
+                $this->logger->error(sprintf("Can't clean up import directory: %s", $e->getMessage()));
+                $this->logger->error($e->getTraceAsString());
             }
         };
 
@@ -106,6 +111,10 @@ class ilCertificateTemplateImportAction
         );
 
         $unzipped = $unzip->extract();
+
+        // Cleanup memory, otherwise there will be issues with NFS-based file systems after `listContents` has been called
+        unset($unzip);
+
         if (!$unzipped) {
             $clean_up_import_dir();
 

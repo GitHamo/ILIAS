@@ -35,8 +35,7 @@ use ILIAS\UI\Renderer as UIRenderer;
 use ILIAS\HTTP\Services as HTTPServices;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\Test\Logging\TestParticipantInteractionTypes;
-use ilInfoScreenGUI;
-use ilObjTestGUI;
+use ILIAS\Style\Content\Service as ContentStyle;
 
 /**
  * Class TestScreenGUI
@@ -63,6 +62,7 @@ class TestScreenGUI
         private readonly Refinery $refinery,
         private readonly \ilCtrlInterface $ctrl,
         private readonly \ilGlobalTemplateInterface $tpl,
+        private readonly ContentStyle $content_style,
         private readonly HTTPServices $http,
         private readonly TabsManager $tabs_manager,
         private readonly \ilAccessHandler $access,
@@ -186,6 +186,7 @@ class TestScreenGUI
             $this->main_settings->getIntroductionSettings()->getIntroductionEnabled() &&
             !empty($introduction)
         ) {
+            $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
             $elements[] = $this->ui_factory->panel()->standard(
                 $this->lng->txt('tst_introduction'),
                 $this->ui_factory->legacy($introduction),
@@ -260,7 +261,7 @@ class TestScreenGUI
             ;
         }
 
-        if (!$this->hasUserPassedAlreadyAndCanRetake()) {
+        if ($this->blockUserAfterHavingPassed()) {
             return $launcher
                 ->inline($this->data_factory->link('', $this->data_factory->uri($this->http->request()->getUri()->__toString())))
                 ->withButtonLabel($this->lng->txt('tst_already_passed_cannot_retake'), false)
@@ -525,13 +526,13 @@ class TestScreenGUI
             );
     }
 
-    private function hasUserPassedAlreadyAndCanRetake(): bool
+    private function blockUserAfterHavingPassed(): bool
     {
         if ($this->main_settings->getTestBehaviourSettings()->getBlockAfterPassedEnabled()) {
-            return !$this->test_passes_selector->hasTestPassedOnce($this->test_session->getActiveId());
+            return $this->test_passes_selector->hasTestPassedOnce($this->test_session->getActiveId());
         }
 
-        return true;
+        return false;
     }
 
     private function hasAvailablePasses(): bool
