@@ -442,7 +442,10 @@ class ilSCORM13PlayerGUI
         //template variables
         //$this->tpl = new ilTemplate("tpl.scorm2004.player.html", false, false, "components/ILIAS/Scorm2004");
         $this->tpl = new ilGlobalTemplate("tpl.scorm2004.player.html", true, true, "components/ILIAS/Scorm2004");
-        $this->tpl->setVariable("JS_FILE", iljQueryUtil::getLocaljQueryPath());
+
+        // TODO should work with jquery.min.js
+        $jQueryPath = str_replace('.min', '', iljQueryUtil::getLocaljQueryPath());
+        $this->tpl->setVariable("JS_FILE", $jQueryPath);
 
         // include ilias rte css, if given
         $rte_css = $this->slm->getDataDirectory() . "/ilias_css_4_2/css/style.css";
@@ -457,7 +460,7 @@ class ilSCORM13PlayerGUI
         // include_once("../components/ILIAS/YUI/classes/class.ilYuiUtil.php");
         // $this->tpl->setVariable('YUI_PATH', ilYuiUtil::getLocalPath());
         // $this->tpl->setVariable('TREE_JS', "../components/ILIAS/UIComponent/NestedList/js/ilNestedList.js");
-        $this->tpl->setVariable('TREE_JS', "../components/ILIAS/Scorm2004/scripts/ilNestedList.js");
+        $this->tpl->setVariable('TREE_JS', "components/ILIAS/Scorm2004/scripts/ilNestedList.js");
         foreach ($langstrings as $key => $value) {
             $this->tpl->setVariable($key, $value);
         }
@@ -487,7 +490,7 @@ class ilSCORM13PlayerGUI
         if ($this->slm->getCacheDeactivated()) {
             $this->tpl->setVariable('JS_SCRIPTS', 'ilias.php?baseClass=ilSAHSPresentationGUI' . '&cmd=getRTEjs&ref_id=' . $this->ref_id);
         } else {
-            $this->tpl->setVariable('JS_SCRIPTS', '../components/ILIAS/Scorm2004/scripts/buildrte/rte-min.js');
+            $this->tpl->setVariable('JS_SCRIPTS', 'components/ILIAS/Scorm2004/scripts/buildrte/rte-min.js');
         }
 
         //disable top menu
