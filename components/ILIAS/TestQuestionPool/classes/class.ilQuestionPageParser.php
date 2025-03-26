@@ -992,8 +992,11 @@ class ilQuestionPageParser extends ilMDSaxParser
 
                 break;
 
-            case 'MediaItem':
             case 'MediaAliasItem':
+                $this->in_media_item = false;
+                $this->media_object->addMediaItem($this->media_item);
+                break;
+            case 'MediaItem':
                 $this->in_media_item = false;
                 $import_dir = $this->importdir . DIRECTORY_SEPARATOR . 'objects' . DIRECTORY_SEPARATOR . $this->media_object->getImportId();
                 if (!file_exists($import_dir)
@@ -1004,11 +1007,10 @@ class ilQuestionPageParser extends ilMDSaxParser
 
                 $dir_handle = opendir($import_dir);
                 while (($file = readdir($dir_handle)) !== false) {
-                    if ($file === '.'
-                        || $file === '..'
-                        || str_contains($file, 'preview')) {
+                    if ($file !== $this->media_item->getLocation()) {
                         continue;
                     }
+
                     $this->media_object->addMediaItemFromLocalFile(
                         $this->media_item->getPurpose(),
                         $import_dir . DIRECTORY_SEPARATOR . $file,
