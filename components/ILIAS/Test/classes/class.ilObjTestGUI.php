@@ -765,10 +765,12 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 if (!$this->access->checkAccess('write', '', $this->getTestObject()->getRefId())) {
                     $this->redirectAfterMissingWrite();
                 }
+                $this->prepareOutput();
                 $this->forwardCommandToQuestionPreview($cmd);
                 break;
             case 'ilassquestionpagegui':
                 if ($cmd === 'finishEditing') {
+                    $this->prepareOutput();
                     $this->forwardCommandToQuestionPreview(ilAssQuestionPreviewGUI::CMD_SHOW);
                     break;
                 }
@@ -840,6 +842,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
                 if ($this->getTestObject()->evalTotalPersons() !== 0) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('question_is_part_of_running_test'), true);
+                    $this->prepareOutput();
                     $this->forwardCommandToQuestionPreview(ilAssQuestionPreviewGUI::CMD_SHOW);
                     return;
                 }
@@ -880,6 +883,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
                 if ($this->getTestObject()->evalTotalPersons() !== 0) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('question_is_part_of_running_test'), true);
+                    $this->prepareOutput();
                     $this->forwardCommandToQuestionPreview(ilAssQuestionPreviewGUI::CMD_SHOW);
                 }
                 $gui = new ilAssQuestionFeedbackEditingGUI(
@@ -969,6 +973,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 if (in_array($cmd, ['editQuestion', 'save', 'saveReturn', 'suggestedsolution'])
                     && $this->getTestObject()->evalTotalPersons() !== 0) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('question_is_part_of_running_test'), true);
+                    $this->prepareOutput();
                     $this->forwardCommandToQuestionPreview(ilAssQuestionPreviewGUI::CMD_SHOW);
                     return;
                 }
@@ -1003,8 +1008,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         string $cmd,
         assQuestionGUI $question_gui = null
     ): void {
-        $this->prepareOutput();
-
         $nr_of_participants_with_results = $this->getTestObject()->evalTotalPersons();
 
         $this->ctrl->saveParameterByClass(self::class, 'q_id');
