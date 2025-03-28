@@ -62,10 +62,4 @@ class TableManager
     ): TermListTable {
         return new TermListTable($glossary, $tax_node);
     }
-
-    public function getDownloadListTable(
-        \ilObjGlossary $glossary
-    ): DownloadListTable {
-        return new DownloadListTable($glossary);
-    }
 }
