@@ -6310,7 +6310,6 @@ content#:#cont_click_starting_point#:#Bitte klicken Sie auf den Startpunkt des P
 content#:#cont_click_tl_corner#:#Bitte klicken Sie in die obere linke Ecke des gewünschten Bereichs
 content#:#cont_code_import_file#:#Import
 content#:#cont_code_manual_editing#:#Manual Editing
-content#:#cont_col_ordering#:#Spaltenanordnung
 content#:#cont_colspan#:#Verbund Spalte
 content#:#cont_commented_by#:#Kommentiert von
 content#:#cont_comments#:#Kommentare erlauben
@@ -7278,7 +7277,6 @@ content#:#glo_full_definitions_info#:#Alle Begriffe und Erklärungen werden voll
 content#:#glo_hide_taxonomy#:#Taxonomie ausblenden
 content#:#glo_list_usages#:#Nutzung
 content#:#glo_mode_normal_info#:#Das Glossar beinhaltet alle Begriffe, die im Glossar angelegt wurden.
-content#:#glo_online_info#:#Nur wenn das Glossar online geschaltet ist, können Benutzer das Glossar sehen und benutzen.
 content#:#glo_presentation_mode#:#Ansicht
 content#:#glo_presentation_view#:#Präsentationsansicht
 content#:#glo_quick_navigation#:#Schnellzugriff
@@ -10204,7 +10202,6 @@ glo#:#glo_bulk_creation#:#Aus Excel kopieren
 glo#:#glo_change_to_collection_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Sammelglossar" zu ändern, müssen Sie zuerst alle bestehenden Begriffe innerhalb dieses Glossars im Reiter "Inhalt" löschen.
 glo#:#glo_change_to_standard_unavailable_info#:#Um die Zusammenstellung der Inhalte auf "Normales Glossar" zu ändern, müssen Sie zuerst die ausgewählten Glossare im Reiter "Inhalt" entfernen.
 glo#:#glo_check#:#Prüfen
-glo#:#glo_col_ordering_info#:#Sortieren Sie die Titel der Metadatenfelder, die in der Präsentationsansicht des Glossars als Spaltenüberschriften angezeigt werden.
 glo#:#glo_collection#:#Sammelglossar
 glo#:#glo_collection_empty_info#:#Dieses Sammelglossar ist aktuell leer. Bitte fügen mindestens ein Glossar hinzu.
 glo#:#glo_collection_info#:#Das Glossar sammelt automatisch alle Begriffe aus den ausgewählten Glossaren.
