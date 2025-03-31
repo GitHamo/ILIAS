@@ -55,7 +55,7 @@ class ilAdvancedMDFieldDefinitionSelectMulti extends ilAdvancedMDFieldDefinition
     {
         $record = ilAdvancedMDRecord::_getInstanceByRecordId($this->getRecordID());
         if (!$record->getParentObject()) {
-            return $this->implodeValuesForXML($element->getSelections());
+            return $this->implodeValuesForXML((array) $element->getSelections());
         }
         /**
          * Options of imported local fields don't keep their ID,
