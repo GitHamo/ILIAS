@@ -2189,7 +2189,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     private function forwardToInfoScreen(): void
     {
         if (!$this->access->checkAccess('visible', '', $this->ref_id)
-            && !$this->access->checkAccess('read', '', $this->testrequest->getRefId())) {
+            && !$this->access->checkAccess('read', '', $this->ref_id)) {
             $this->redirectAfterMissingRead();
         }
 
@@ -2199,7 +2199,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
         $this->tabs_manager->activateTab(TabsManager::TAB_ID_INFOSCREEN);
 
-        if ($this->access->checkAccess('read', '', $this->testrequest->getRefId())) {
+        if ($this->access->checkAccess('read', '', $this->ref_id)) {
             $this->trackTestObjectReadEvent();
         }
         $info = new ilInfoScreenGUI($this);
