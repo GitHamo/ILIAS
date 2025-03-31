@@ -625,7 +625,6 @@ class ilObject
     {
         $this->getObjectProperties()->storeCoreProperties();
 
-
         $this->app_event_handler->raise(
             'components/ILIAS/ILIASObject',
             'update',
