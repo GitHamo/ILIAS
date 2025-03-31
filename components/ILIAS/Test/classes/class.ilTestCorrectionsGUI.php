@@ -81,9 +81,7 @@ class ilTestCorrectionsGUI
     {
         $this->setCorrectionTabsContext($this->question_gui, 'question');
 
-        if ($form === null) {
-            $form = $this->buildQuestionCorrectionForm($this->question_gui);
-        }
+        $form ??= $this->buildQuestionCorrectionForm($this->question_gui);
 
         $this->populatePageTitleAndDescription($this->question_gui);
         $this->main_tpl->setContent($form->getHTML());
