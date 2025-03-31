@@ -235,7 +235,7 @@ class assClozeTest extends assQuestion implements ilObjQuestionScoringAdjustable
                 }
             }
         }
-        $check_for_gap_combinations = (new assClozeGapCombination())->loadFromDb($question_id);
+        $check_for_gap_combinations = (new assClozeGapCombination($this->db))->loadFromDb($question_id);
         if (count($check_for_gap_combinations) != 0) {
             $this->setGapCombinationsExists(true);
             $this->setGapCombinations($check_for_gap_combinations);
@@ -741,7 +741,7 @@ class assClozeTest extends assQuestion implements ilObjQuestionScoringAdjustable
     */
     public function getMaximumPoints(): float
     {
-        $assClozeGapCombinationObj = new assClozeGapCombination();
+        $assClozeGapCombinationObj = new assClozeGapCombination($this->db);
         $points = 0;
         $gaps_used_in_combination = [];
         if ($assClozeGapCombinationObj->combinationExistsForQid($this->getId())) {
@@ -785,9 +785,11 @@ class assClozeTest extends assQuestion implements ilObjQuestionScoringAdjustable
         \assQuestion $target
     ): \assQuestion {
         if ($this->gap_combinations_exist) {
-            (new assClozeGapCombination())->importGapCombinationToDb(
+            $gap_combination = new assClozeGapCombination($this->db);
+            $gap_combination->clearGapCombinationsFromDb($target->getId());
+            $gap_combination->importGapCombinationToDb(
                 $target->getId(),
-                $this->gap_combinations
+                $this->gap_combinations,
             );
         }
         return $target;
@@ -1398,7 +1400,7 @@ class assClozeTest extends assQuestion implements ilObjQuestionScoringAdjustable
     {
         $points = 0;
 
-        $assClozeGapCombinationObj = new assClozeGapCombination();
+        $assClozeGapCombinationObj = new assClozeGapCombination($this->db);
         $gap_used_in_combination = [];
         if ($assClozeGapCombinationObj->combinationExistsForQid($this->getId())) {
             $combinations_for_question = $assClozeGapCombinationObj->getCleanCombinationArray($this->getId());
@@ -1470,7 +1472,7 @@ class assClozeTest extends assQuestion implements ilObjQuestionScoringAdjustable
     {
         $points = 0.0;
 
-        $assClozeGapCombinationObj = new assClozeGapCombination();
+        $assClozeGapCombinationObj = new assClozeGapCombination($this->db);
         $combinations[1] = [];
         if ($assClozeGapCombinationObj->combinationExistsForQid($this->getId())) {
             $combinations = $this->calculateCombinationResult($user_result);
