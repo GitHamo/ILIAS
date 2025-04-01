@@ -2030,7 +2030,7 @@ abstract class assQuestionGUI
         )->withAffectedItems([
             $this->ui->factory()->modal()->interruptiveItem()->standard(
                 (string) $this->object->getOriginalId(),
-                $this->object->getTitle()
+                $this->object->getTitleForHTMLOutput()
             )
         ])->withActionButtonLabel($this->lng->txt('sync_question_to_pool'));
         return $this->ui->renderer()->render(
