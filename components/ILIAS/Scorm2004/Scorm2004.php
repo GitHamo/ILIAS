@@ -37,5 +37,38 @@ class Scorm2004 implements Component\Component
 
         $contribute[Component\Resource\PublicAsset::class] = fn() =>
             new Component\Resource\Endpoint($this, "storeScorm.php");
+
+        $contribute[Component\Resource\PublicAsset::class] = static fn() => new class () implements Component\Resource\PublicAsset {
+            public function getSource(): string
+            {
+                return "components/ILIAS/Scorm2004/scripts";
+            }
+            public function getTarget(): string
+            {
+                return "components/ILIAS/Scorm2004/scripts";
+            }
+        };
+
+        $contribute[Component\Resource\PublicAsset::class] = static fn() => new class () implements Component\Resource\PublicAsset {
+            public function getSource(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/images";
+            }
+            public function getTarget(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/images";
+            }
+        };
+
+        $contribute[Component\Resource\PublicAsset::class] = static fn() => new class () implements Component\Resource\PublicAsset {
+            public function getSource(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/player.css";
+            }
+            public function getTarget(): string
+            {
+                return "components/ILIAS/Scorm2004/templates/default/player.css";
+            }
+        };
     }
 }

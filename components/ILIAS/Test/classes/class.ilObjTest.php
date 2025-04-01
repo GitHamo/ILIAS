@@ -1719,7 +1719,7 @@ class ilObjTest extends ilObject
                 [$user_id, $this->test_id, $anonymous_id]
             );
         } else {
-            if ($this->user->getId() === ANONYMOUS_USER_ID) {
+            if ((int) $user_id === ANONYMOUS_USER_ID) {
                 return null;
             }
             $result = $this->db->queryF(
@@ -3935,9 +3935,16 @@ class ilObjTest extends ilObject
         foreach ($this->mob_ids as $mob_id) {
             $expLog->write(date("[y-m-d H:i:s] ") . "Media Object " . $mob_id);
             if (ilObjMediaObject::_exists((int) $mob_id)) {
+                $target_dir = $a_target_dir . DIRECTORY_SEPARATOR . 'objects'
+                    . DIRECTORY_SEPARATOR . 'il_' . IL_INST_ID . '_mob_' . $mob_id;
+                ilFileUtils::createDirectory($target_dir);
                 $media_obj = new ilObjMediaObject((int) $mob_id);
                 $media_obj->exportXML($a_xml_writer, (int) $a_inst);
-                $media_obj->exportFiles($a_target_dir);
+                foreach ($media_obj->getMediaItems() as $item) {
+                    $stream = $item->getLocationStream();
+                    file_put_contents($target_dir . DIRECTORY_SEPARATOR . $item->getLocation(), $stream);
+                    $stream->close();
+                }
                 unset($media_obj);
             }
         }
@@ -4991,22 +4998,8 @@ class ilObjTest extends ilObject
             && $active_id > 0
             && ($starting_time = $this->getStartingTimeOfUser($active_id)) !== false
             && $this->isMaxProcessingTimeReached($starting_time, $active_id)) {
-            if ($allow_pass_increase
-                    && $this->getResetProcessingTime()
-                    && (($this->getNrOfTries() === 0)
-                || ($this->getNrOfTries() > (self::_getPass($active_id) + 1)))) {
-                // a test pass was quitted because the maximum processing time was reached, but the time
-                // will be resetted for future passes, so if there are more passes allowed, the participant may
-                // start the test again.
-                // This code block is only called when $allowPassIncrease is TRUE which only happens when
-                // the test info page is opened. Otherwise this will lead to unexpected results!
-                $test_session->increasePass();
-                $test_session->setLastSequence(0);
-                $test_session->saveToDb();
-            } else {
-                $result["executable"] = false;
-                $result["errormessage"] = $this->lng->txt("detail_max_processing_time_reached");
-            }
+            $result["executable"] = false;
+            $result["errormessage"] = $this->lng->txt("detail_max_processing_time_reached");
             return $result;
         }
 

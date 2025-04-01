@@ -665,12 +665,11 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
 
                 $this->help->setScreenIdComponent('qpl');
 
-                $question_gui->setQuestionTabs();
-
                 if ($qid === 0 && $question_gui->cmdNeedsExistingQuestion($cmd)) {
                     $question_gui->getObject()->createNewQuestion();
-                    $question_gui->setQuestionTabs();
                 }
+
+                $question_gui->setQuestionTabs();
 
                 if (!in_array($cmd, ['save', 'saveReturn'])) {
                     $question_gui->$cmd();
