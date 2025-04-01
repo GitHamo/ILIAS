@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 use ILIAS\GlobalScreen\Scope\Layout\Provider\PagePart\PagePartProvider;
 use ILIAS\Refinery\Factory as RefineryFactory;
 
@@ -32,7 +50,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
         if ($breadcrumbs === null) {
             return null;
         }
-        if(!isset($_SESSION["ref_id"])){
+        if (!isset($_SESSION["ref_id"])) {
             return $breadcrumbs;
         }
 
@@ -42,7 +60,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 
         foreach ($breadcrumbs->getItems() as $crumb) {
             if (method_exists($crumb, 'getAction') && str_contains($crumb->getAction(), 'goto.php')) {
-                if(str_contains($crumb->getAction(), $ref_id) && !str_contains($crumb->getAction(), 'root')) {
+                if (str_contains($crumb->getAction(), $ref_id) && !str_contains($crumb->getAction(), 'root')) {
                     $goto_crumbs[] = $crumb;
                 }
             } else {
