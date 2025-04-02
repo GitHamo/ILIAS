@@ -25,7 +25,6 @@ use ILIAS\Data;
  */
 class ilArtifactComponentRepository implements ilComponentRepositoryWrite
 {
-
     protected Data\Factory $data_factory;
     protected ilPluginStateDB $plugin_state_db;
     protected Data\Version $ilias_version;
