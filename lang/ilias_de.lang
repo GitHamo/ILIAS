@@ -4336,14 +4336,6 @@ common#:#hide_filter#:#Filter ausblenden
 common#:#hide_own_online_status#:#Eigenen Online-Status nicht anzeigen
 common#:#hide_visible_sections#:#Weitere Informationen verbergen &raquo;
 common#:#hint#:#Hinweis
-common#:#hist_lm_delete_pg#:#Seite "%1" [%2] wurde gelöscht.
-common#:#hist_lm_delete_st#:#Kapitel "%1" [%2] wurde gelöscht.
-common#:#hist_lm_pg_create#:#Seite erstellt.
-common#:#hist_lm_pg_update#:#Seite geändert.
-common#:#hist_lm_st_create#:#Kapitel erstellt.
-common#:#hist_webr_add#:#Neuer Weblink angelegt mit Titel: "%1"
-common#:#hist_webr_delete#:#Weblink wurde gelöscht. Titel: "%1"
-common#:#hist_webr_update#:#Weblink wurde aktualisiert. Titel: "%1"
 common#:#history#:#Verlauf
 common#:#hobby#:#Interessen/Hobbies
 common#:#home#:#Zum öffentlichen Bereich

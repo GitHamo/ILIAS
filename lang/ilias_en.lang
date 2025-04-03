@@ -4337,14 +4337,6 @@ common#:#hide_filter#:#Hide Filter
 common#:#hide_own_online_status#:#Hide My Online Status
 common#:#hide_visible_sections#:#Hide More Information &raquo;
 common#:#hint#:#Hint
-common#:#hist_lm_delete_pg#:#Page "%1" [%2] has been deleted.
-common#:#hist_lm_delete_st#:#Chapter "%1" [%2] has been deleted.
-common#:#hist_lm_pg_create#:#Page created.
-common#:#hist_lm_pg_update#:#Page changed.
-common#:#hist_lm_st_create#:#Chapter created.
-common#:#hist_webr_add#:#Added new Weblink with title: "%1"
-common#:#hist_webr_delete#:#Deleted Weblink with title: "%1"
-common#:#hist_webr_update#:#Modified Weblink with title: "%1"
 common#:#history#:#History
 common#:#hobby#:#Interests/Hobbies
 common#:#home#:#Public Area

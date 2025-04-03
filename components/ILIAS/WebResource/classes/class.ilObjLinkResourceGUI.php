@@ -31,18 +31,17 @@ use ILIAS\UI\Component\Input\Container\Form\Standard as StandardForm;
  */
 class ilObjLinkResourceGUI extends ilObject2GUI
 {
-    protected const VIEW_MODE_VIEW = 1;
-    protected const VIEW_MODE_MANAGE = 2;
-    protected const VIEW_MODE_SORT = 3;
+    protected const int VIEW_MODE_VIEW = 1;
+    protected const int VIEW_MODE_MANAGE = 2;
+    protected const int VIEW_MODE_SORT = 3;
 
-    protected const LINK_MOD_CREATE = 1;
-    protected const LINK_MOD_EDIT = 2;
-    protected const LINK_MOD_ADD = 3;
-    protected const LINK_MOD_SET_LIST = 4;
-    protected const LINK_MOD_ASYNC = 6;
+    protected const int LINK_MOD_CREATE = 1;
+    protected const int LINK_MOD_EDIT = 2;
+    protected const int LINK_MOD_ADD = 3;
+    protected const int LINK_MOD_SET_LIST = 4;
+    protected const int LINK_MOD_ASYNC = 6;
 
     protected HTTPService $http;
-    protected ilNavigationHistory $navigationHistory;
 
     private int $view_mode = self::VIEW_MODE_VIEW;
 
@@ -62,7 +61,6 @@ class ilObjLinkResourceGUI extends ilObject2GUI
 
         $this->lng->loadLanguageModule("webr");
         $this->http = $DIC->http();
-        $this->navigationHistory = $DIC['ilNavigationHistory'];
         $this->settings = $DIC->settings();
     }
 
@@ -1472,21 +1470,6 @@ class ilObjLinkResourceGUI extends ilObject2GUI
         $this->ctrl->forwardCommand($info);
     }
 
-    public function history(): void
-    {
-        $this->checkPermission('write');
-        $this->tabs_gui->activateTab('id_history');
-
-        $hist_gui = new ilHistoryTableGUI(
-            $this,
-            "history",
-            $this->object->getId(),
-            $this->object->getType()
-        );
-        $hist_gui->initTable();
-        $this->tpl->setContent($hist_gui->getHTML());
-    }
-
     /**
      * Activate tab and subtabs
      */
@@ -1574,14 +1557,6 @@ class ilObjLinkResourceGUI extends ilObject2GUI
                 "id_settings",
                 $this->lng->txt("settings"),
                 $this->ctrl->getLinkTarget($this, "settings")
-            );
-        }
-
-        if ($this->checkPermissionBool('write')) {
-            $this->tabs_gui->addTab(
-                "id_history",
-                $this->lng->txt("history"),
-                $this->ctrl->getLinkTarget($this, "history")
             );
         }
 
