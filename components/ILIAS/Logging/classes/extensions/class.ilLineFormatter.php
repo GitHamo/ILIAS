@@ -35,9 +35,11 @@ class ilLineFormatter extends LineFormatter
     public function format(LogRecord $record): string
     {
         if (isset($record["extra"]["trace"])) {
+            $trace = $record["extra"]["trace"];
+            unset($record["extra"]["trace"]);
             $record = $record->with(
-                message: $record["extra"]["trace"] . " " . $record["message"],
-                extra: []
+                message: $trace . " " . $record["message"],
+                extra: $record["extra"]
             );
         }
 
