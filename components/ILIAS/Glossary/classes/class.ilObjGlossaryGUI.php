@@ -1033,8 +1033,7 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                     $refs->deleteTerm($id);
                     $refs->update();
                 } else {
-                    $term = new ilGlossaryTerm($id);
-                    $term->delete();
+                    $this->term_manager->deleteTerm($id);
                 }
             }
         }
