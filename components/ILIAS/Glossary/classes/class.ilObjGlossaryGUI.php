@@ -1023,6 +1023,7 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
         $this->ctrl->redirectByClass("ilexportgui", "");
     }
 
+<<<<<<< HEAD:components/ILIAS/Glossary/classes/class.ilObjGlossaryGUI.php
     public function deleteTerms(): void
     {
         if (!empty($this->edit_request->getTermIdsInModal())
@@ -1036,6 +1037,82 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                     $term = new ilGlossaryTerm($id);
                     $term->delete();
                 }
+=======
+    public function confirmTermDeletion(): void
+    {
+        $ids = $this->edit_request->getIds();
+        if (count($ids) == 0) {
+            $this->tpl->setOnScreenMessage('failure', $this->lng->txt("no_checkbox"), true);
+            $this->ctrl->redirect($this, "listTerms");
+        }
+
+        // check ids
+        foreach ($ids as $term_id) {
+            $term_glo_id = ilGlossaryTerm::_lookGlossaryID($term_id);
+            if ($term_glo_id != $this->object->getId() && !ilGlossaryTermReferences::isReferenced([$this->object->getId()], $term_id)) {
+                $this->tpl->setOnScreenMessage('failure', $this->lng->txt("glo_term_must_belong_to_glo"), true);
+                $this->ctrl->redirect($this, "listTerms");
+            }
+        }
+
+        // display confirmation message
+        $cgui = new ilConfirmationGUI();
+        $cgui->setFormAction($this->ctrl->getFormAction($this));
+        $cgui->setHeaderText($this->lng->txt("info_delete_sure"));
+        $cgui->setCancel($this->lng->txt("cancel"), "cancelTermDeletion");
+        $cgui->setConfirm($this->lng->txt("confirm"), "deleteTerms");
+
+        foreach ($ids as $id) {
+            try {
+                $term = new ilGlossaryTerm($id);
+            } catch (Exception $e) {
+                $cgui->addItem("id[]", $id, "Error: Page is missing.");
+                continue;
+            }
+
+
+            $add = "";
+            $nr = ilGlossaryTerm::getNumberOfUsages($id);
+            if ($nr > 0) {
+                $this->ctrl->setParameterByClass(
+                    "ilglossarytermgui",
+                    "term_id",
+                    $id
+                );
+
+                if (ilGlossaryTermReferences::isReferenced([$this->object->getId()], $id)) {
+                    $add = " (" . $this->lng->txt("glo_term_reference") . ")";
+                } else {
+                    $link = "[<a href='" .
+                        $this->ctrl->getLinkTargetByClass("ilglossarytermgui", "listUsages") .
+                        "'>" . $this->lng->txt("glo_list_usages") . "</a>]";
+                    $add = "<div class='small'>" .
+                        sprintf($this->lng->txt("glo_term_is_used_n_times"), $nr) . " " . $link . "</div>";
+                }
+            }
+
+            $cgui->addItem("id[]", $id, $term->getTerm() . $add);
+        }
+
+        $this->tpl->setContent($cgui->getHTML());
+    }
+
+    public function cancelTermDeletion(): void
+    {
+        $this->ctrl->redirect($this, "listTerms");
+    }
+
+    public function deleteTerms(): void
+    {
+        $ids = $this->edit_request->getIds();
+        foreach ($ids as $id) {
+            if (ilGlossaryTermReferences::isReferenced([$this->object->getId()], $id)) {
+                $refs = new ilGlossaryTermReferences($this->object->getId());
+                $refs->deleteTerm($id);
+                $refs->update();
+            } else {
+                $this->term_manager->deleteTerm($id);
+>>>>>>> 0bed7a8218d (fixed lCOPageNotFoundException issue, if page is missing):Modules/Glossary/classes/class.ilObjGlossaryGUI.php
             }
         }
         $this->tpl->setOnScreenMessage('success', $this->lng->txt("msg_obj_modified"), true);
