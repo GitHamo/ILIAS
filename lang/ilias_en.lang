@@ -13791,6 +13791,7 @@ prtf#:#prtf_sure_delete_portfolio_pages#:#Are you sure you want to delete the fo
 prtf#:#prtf_sure_delete_portfolios#:#Are you sure you want to delete the following portfolio?
 prtf#:#prtf_tab_other_users#:#Portfolios of Other Users
 prtf#:#prtf_tab_portfolios#:#My Portfolios
+prtf#:#prtf_table_of_contents#:#Table of Contents
 prtf#:#prtf_template_editor_placeholder_info#:#This placeholder will be replaced in the portfolio.
 prtf#:#prtf_template_import_blog_create#:#Create New Blog
 prtf#:#prtf_template_import_blog_ignore#:#Remove Blog Page
