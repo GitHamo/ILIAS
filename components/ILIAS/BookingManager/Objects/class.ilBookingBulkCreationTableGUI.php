@@ -34,7 +34,12 @@ class ilBookingBulkCreationTableGUI extends ilTable2GUI
         $objects_manager = $DIC->bookingManager()
                                ->internal()
                                ->domain()
+<<<<<<< HEAD:components/ILIAS/BookingManager/Objects/class.ilBookingBulkCreationTableGUI.php
                                ->objects($pool_id);
+=======
+                               ->term($glossary);
+        $html_util = $DIC->glossary()->internal()->gui()->html();
+>>>>>>> e67adbb7519 (44041: Bulk Creation does not handle quotation marks):Modules/Glossary/Term/class.ilTermDefinitionBulkCreationTableGUI.php
 
         $ctrl = $DIC->ctrl();
         $lng = $DIC->language();
@@ -52,7 +57,14 @@ class ilBookingBulkCreationTableGUI extends ilTable2GUI
             "tpl.bulk_creation_row.html",
             "components/ILIAS/BookingManager/Objects"
         );
+<<<<<<< HEAD:components/ILIAS/BookingManager/Objects/class.ilBookingBulkCreationTableGUI.php
         $this->addHiddenInput("data", $raw_data);
+=======
+        $this->addHiddenInput(
+            "bulk_data",
+            $html_util->escape($raw_data)
+        );
+>>>>>>> e67adbb7519 (44041: Bulk Creation does not handle quotation marks):Modules/Glossary/Term/class.ilTermDefinitionBulkCreationTableGUI.php
     }
 
     protected function fillRow(array $a_set): void
