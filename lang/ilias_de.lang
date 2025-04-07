@@ -3877,7 +3877,7 @@ common#:#crs_list_reg_period#:#Anmeldungszeitraum
 common#:#crs_list_reg_start#:#Anmeldungsbeginn
 common#:#crs_member_not_passed#:#Nicht bestanden
 common#:#crs_member_passed#:#Bestanden
-common#:#crs_members_gallery#:#Mitgliedergalerie
+common#:#crs_members_gallery#:#Galerie
 common#:#crs_new#:#Neuen Kurs anlegen
 common#:#crs_removed_from_waiting_list#:#Sie wurden aus der Warteliste des Kurses „%s“ ausgetragen.
 common#:#crs_status_blocked#:#[Zugang gesperrt]
@@ -4305,7 +4305,7 @@ common#:#grp_list_reg_start#:#Anmeldungsbeginn
 common#:#grp_list_users#:#Benutzer auflisten
 common#:#grp_mem_change_status#:#Mitgliedsstatus ändern
 common#:#grp_mem_send_mail#:#Mitglied eine Mail senden
-common#:#grp_members_gallery#:#Mitgliedergalerie
+common#:#grp_members_gallery#:#Galerie
 common#:#grp_msg_applicants_assigned#:#Der/die Teilnehmende wurde in die Gruppe aufgenommen.
 common#:#grp_msg_member_assigned#:#Der/die Teilnehmende wurde in die Gruppe aufgenommen.
 common#:#grp_msg_membership_annulled#:#Die Mitgliedschaft wurde aufgehoben.
@@ -7516,8 +7516,8 @@ crs#:#crs_breadcrumb_crs_only#:#Brotkrumenpfad beginnt mit Kurs
 crs#:#crs_breadcrumb_full_path#:#Gesamten Pfad anzeigen
 crs#:#crs_cancel_subscr_request#:#Aufnahmeantrag zurückziehen
 crs#:#crs_cancel_subscription#:#Austritt aus Kurs „%s“
-crs#:#crs_cancel_subscription_body#:#die Teilnehmerin/der Teilnehmer %s ist aus dem Kurs „%s“ ausgetreten.
-crs#:#crs_cancel_subscription_body2#:#Eventuell sind Teilnehmende in die Warteliste dieses Kurses eingetragen. Um die Liste der Teilnehmenden anzuzeigen, rufen Sie bitte folgenden Link auf:
+crs#:#crs_cancel_subscription_body#:#%s ist aus dem Kurs „%s“ ausgetreten.
+crs#:#crs_cancel_subscription_body2#:#Eventuell stehen Personen auf der Warteliste dieses Kurses. Um die Liste anzuzeigen, rufen Sie bitte folgenden Link auf:
 crs#:#crs_cancellation_end#:#Spätester Kursaustritt
 crs#:#crs_cancellation_end_info#:#Mitglieder können nur bis zum gesetzten Datum selbstständig die Kursmitgliedschaft beenden.
 crs#:#crs_cancellation_end_rbac_info#:#Das Stornierungsende wurde am %s erreicht. Ein Austritt aus dem Kurs ist jetzt nicht mehr möglich.
@@ -7636,7 +7636,7 @@ crs#:#crs_loc_objectives_passed_confirmation#:#Sie haben bereits alle Lernziel b
 crs#:#crs_loc_passes_info#:#Maximalanzahl Testdurchläufe:
 crs#:#crs_loc_passes_left#:#Verbleibende Anzahl von Testdurchläufen
 crs#:#crs_loc_passes_reached#:#Keine weiteren Testdurchläufe möglich
-crs#:#crs_loc_perc#:#Benötigte Prozentzahl der Punkte
+crs#:#crs_loc_perc#:#Benötigte Prozentzahl an Punkten
 crs#:#crs_loc_progress_do_qualifying#:#Bitte führen Sie den Abschlusstest durch, um das Lernziel abzuschließen.
 crs#:#crs_loc_progress_do_qualifying_again#:#Bitte bearbeiten Sie das Lernziel erneut.
 crs#:#crs_loc_progress_no_result_do_initial#:#Bearbeiten Sie den Einstiegstest
@@ -7709,7 +7709,7 @@ crs#:#crs_mail_all#:#Für alle Mitglieder
 crs#:#crs_mail_all_info#:#Alle, die am Kurs teilnehmen, können die Funktion „Mail an Mitglieder” im Reiter „Mitglieder” nutzen.
 crs#:#crs_mail_context_member_info#:#Für die Kontakt-E-Mails auf dem Reiter „Info“ eines Kurses
 crs#:#crs_mail_context_member_title#:#Kurs: Reiter „Info“
-crs#:#crs_mail_context_tutor_info#:#Für die Teilnehmer-E-Mails auf den Mitglieds- und Lernfortschrittsansichten eines Kurses
+crs#:#crs_mail_context_tutor_info#:#Mails, die im Reiter „Mitglieder“ und „Lernfortschritt“ eines Kurses versendet werden
 crs#:#crs_mail_context_tutor_title#:#Kurs: Mail an Mitglieder
 crs#:#crs_mail_permanent_link#:#Wählen Sie den folgenden Link, um auf den Kursinhalt zuzugreifen:
 crs#:#crs_mail_tutors_only#:#Nur für Kursadminstration und Kursbetreuung
@@ -7725,9 +7725,9 @@ crs#:#crs_max_members_reached#:#Die maximale Mitgliederanzahl wurde überschritt
 crs#:#crs_mem_contact#:#Kontaktperson
 crs#:#crs_mem_contacts#:#Kontaktpersonen
 crs#:#crs_mem_send_mail#:#Mail verschicken
-crs#:#crs_mem_tbl_header#:#Kursteilnehmer
+crs#:#crs_mem_tbl_header#:#Mitglieder
 crs#:#crs_member#:#Mitglied
-crs#:#crs_member_administration#:#Teilnehmerverwaltung
+crs#:#crs_member_administration#:#Verwalten
 crs#:#crs_member_passed_status_changed#:#Update-Status
 crs#:#crs_members#:#Mitglieder
 crs#:#crs_members_deleted#:#Die ausgewählten Mitglieder sind aus dem Kurs ausgetragen worden.
@@ -7760,12 +7760,12 @@ crs#:#crs_notification_activated#:#Benachrichtigung aktiviert
 crs#:#crs_notification_deactivated#:#Benachrichtigung deaktiviert
 crs#:#crs_notification_explanation_admin#:#Sie erhalten diese Mail, da für Sie als Kursbetreuung die Benachrichtigungen aktiviert sind.
 crs#:#crs_notification_list_title#:#Benachrichtigung
-crs#:#crs_notification_salutation#:#Liebe Kursteilnehmerin, lieber Kursteilnehmer,
+crs#:#crs_notification_salutation#:#Hallo,
 crs#:#crs_notify#:#Benachrichtigung bei Beitritten
 crs#:#crs_nr#:#Nr.
 crs#:#crs_number_users_added#:#Die folgende Anzahl von Benutzern wurden dem Kurs hinzugefügt:
 crs#:#crs_obj_final_req_info#:#Bitte geben Sie die Prozentzahl der Punkte ein, ab der das Lernziel erfüllt ist.
-crs#:#crs_obj_initial_req_info#:#Kursteilnehmern, die diese Prozentzahl der Punkte erreicht haben, werden keine Kursmaterialien zur weiteren Bearbeitung empfohlen.
+crs#:#crs_obj_initial_req_info#:#Wer diese Prozentzahl erreicht hat, braucht keine weiteren Kursmaterialien mehr zu bearbeiten.
 crs#:#crs_obj_required_points#:#Benötigte Punktzahl
 crs#:#crs_objective_accomplished#:#Erledigt
 crs#:#crs_objective_action_itest#:#Fragen des Einstiegstests festlegen
@@ -7871,11 +7871,11 @@ crs#:#crs_settings#:#Kurseinstellungen
 crs#:#crs_settings_saved#:#Die Einstellungen wurden gespeichert.
 crs#:#crs_shorten_breadcrumb#:#Brotkrumennavigation
 crs#:#crs_show_all_obj#:#Alle zeigen
-crs#:#crs_show_member_export#:#Teilnehmerliste
-crs#:#crs_show_member_export_info#:#Mitglieder haben die Möglichkeit eine Teilnehmerliste zu generieren.
-crs#:#crs_show_member_export_settings#:#Teilnehmerliste
-crs#:#crs_show_members#:#Mitgliedergalerie
-crs#:#crs_show_members_info#:#Alle Mitglieder können in diesem Reiter die Mitgliedergalerie einsehen.
+crs#:#crs_show_member_export#:#Teilnahmeliste
+crs#:#crs_show_member_export_info#:#Mitglieder können eine Liste mit personenbezogenen Daten generieren und drucken. Im neu eingeblendeten Unterreiter „Teilnahmeliste“ kann der Inhalt konfiguriert werden.
+crs#:#crs_show_member_export_settings#:#Teilnahmeliste
+crs#:#crs_show_members#:#Galerie
+crs#:#crs_show_members_info#:#Alle Mitglieder können in diesem Reiter die Galerie einsehen.
 crs#:#crs_size#:#Dateigröße
 crs#:#crs_sort_activation#:#Nach Zeitvorgaben
 crs#:#crs_sort_manual#:#Manuelle Sortierung
@@ -10426,8 +10426,8 @@ grp#:#grp_set_on_waiting_list#:#Wenn Sie einen Aufnahmeantrag stellen, werden Si
 grp#:#grp_setting_header_presentation#:#Darstellung
 grp#:#grp_setting_header_registration#:#Selbstständiger Beitritt durch Benutzer
 grp#:#grp_settings#:#Gruppeneinstellungen
-grp#:#grp_show_members#:#Mitgliedergalerie
-grp#:#grp_show_members_info#:#Alle Mitglieder können im Reiter "Mitglieder" die Mitgliedergalerie einsehen.
+grp#:#grp_show_members#:#Galerie
+grp#:#grp_show_members_info#:#Alle Mitglieder können im Reiter "Mitglieder" die Galerie einsehen.
 grp#:#grp_subscription_min_members_info#:#Wird die geforderte Mindestanzahl an Mitgliedern nicht erreicht, kann die Gruppe nicht stattfinden. Wird die Mindestanzahl bis zum Ende des Beitrittszeitraums bzw. dem spätesten Gruppenaustritt nicht erreicht, versendet ILIAS eine Mail an jene Personen der Gruppenadministration, für die im Reiter „Mitglieder“ die Option „Benachrichtigung“ aktiviert ist.
 grp#:#grp_sure_add_user_to_group#:#Wollen Sie den Benutzer wirklich der Gruppe hinzufügen?
 grp#:#grp_sure_create_group_add_user#:#Wollen Sie die Gruppen wirklich erstellen und den Benutzer hinzufügen?
@@ -11083,7 +11083,7 @@ lso#:#lso_mainbar_button_label_toc#:#Inhalte
 lso#:#lso_mem_tbl_header#:#Lernsequenz Teilnehmer
 lso#:#lso_member_administration#:#Teilnehmerverwaltung
 lso#:#lso_members_deleted#:#Die ausgewählten Mitglieder sind aus der Lernsequenz ausgetragen worden.
-lso#:#lso_members_gallery#:#Mitgliedergalerie
+lso#:#lso_members_gallery#:#Galerie
 lso#:#lso_members_print_title#:#Lernsequenzmitglieder
 lso#:#lso_min_one_admin#:#Dieser Lernsequenz muss mindestens ein Konto mit der Rolle „Lernsequenzadministration“ zugeordnet sein.
 lso#:#lso_msg_member_assigned#:#Benutzer wurde(n) in die Lernsequenz aufgenommen
@@ -11112,7 +11112,7 @@ lso#:#lso_settings_extro#:#Abschlussseite bearbeiten
 lso#:#lso_settings_intro#:#Einleitungsseite bearbeiten
 lso#:#lso_settings_old_extro#:#Alte Abschlussseite ansehen
 lso#:#lso_settings_old_intro#:#Alte Einleitungsseite ansehen
-lso#:#lso_show_members_info#:#Mitgliedergalerie für Benutzer sichtbar
+lso#:#lso_show_members_info#:#Galerie für Benutzer sichtbar
 lso#:#lso_start_item#:#%s öffnen
 lso#:#lso_toast_completed_desc#:#Sie haben diese Lernsequenz abgeschlossen. Natürlich können Sie den Inhalt noch weiter durchsehen.
 lso#:#lso_toast_completed_title#:#Herzlichen Glückwunsch
@@ -11120,7 +11120,7 @@ lso#:#lso_users_already_assigned#:#Ein Benutzer ist bereits Mitglied dieser Lern
 lso#:#mail_lso_roles#:#alle Personen mit folgenden lokalen Rollen. Label is now generalised for all components that support ‘mail to members‘
 lso#:#manage#:#Verwalten
 lso#:#manage_content_maintab#:#Inhalt
-lso#:#members_gallery#:#Mitgliedergalerie
+lso#:#members_gallery#:#Galerie
 lso#:#no_entries_selected_for_delete#:#Es muss mindestens ein Listeneintrag ausgewählt werden.
 lso#:#not_finished#:#Nicht Abgeschlossen
 lso#:#notification_lso_completed_title#:#Sie haben die Lernsequenz %s abgeschlossen.
@@ -11884,7 +11884,7 @@ mem#:#mem_period_without_time#:#ohne Uhrzeitangabe
 mem#:#mem_print_view_form#:#Standardeinstellungen für Druckansicht
 mem#:#mem_settings_tab_print_view#:#Einstellungen Druckansicht
 mem#:#mem_settings_tab_settings#:#Allgemeine Einstellungen
-mem#:#mmbr_gallery_user_actions#:#Aktionen in Mitgliedergalerie
+mem#:#mmbr_gallery_user_actions#:#Aktionen in Galerie
 membership#:#mem_error_preconditions#:#Die Aufnahme konnte nicht erfolgen, da mindestens eine Einstellung dies verhindert.
 membership#:#mem_force_notification#:#Benachrichtigung per Mail
 membership#:#mem_force_notification_mode_all#:#Aktiviert für alle Mitglieder (frei änderbar)
@@ -13872,7 +13872,7 @@ ps#:#ps_grp_user_fields#:#Persönliche Angaben zu dieser Gruppe
 ps#:#ps_login_max_attempts#:#Maximale Anzahl von Anmeldeversuchen
 ps#:#ps_login_max_attempts_info#:# Bestimmt wie viele Anmeldeversuche eines Benutzer höchstens fehlschlagen dürfen. Schlagen mehr Anmeldeversuche fehl, wird dieser Benutzer auf 'inaktiv' gesetzt und muss im 'Benutzer Management' wieder aktiviert werden, bevor er die Plattform benutzen kann. Wird kein Wert eingetragen, ist die Funktion deaktiviert und ILIAS zählt die fehlgeschlagenen Anmeldeversuche nicht.
 ps#:#ps_not_accepted#:#Nicht zugestimmt
-ps#:#ps_participants_list_courses#:#Aktivierung von Teilnehmerlisten in der Mitgliedergalerie der Kurse erlauben
+ps#:#ps_participants_list_courses#:#Aktivierung von Teilnehmerlisten in der Galerie der Kurse erlauben
 ps#:#ps_passwd_policy_change_force_user_reset_succ#:#Die Aktion wurde erfolgreich durchgeführt.
 ps#:#ps_passwd_policy_changed_force_user_reset#:#Die Änderungen wurden erfolgreich übernommen. Sie haben mindestens eine Änderung bzgl. der Passwortrichtlinie vorgenommen. Möchten Sie, dass lokale Anmeldekonten nach der nächsten erfolgreichen Anmeldung ein neues Passwort vergeben müssen?
 ps#:#ps_password_change_on_first_login_enabled#:#Passwort ändern bei Erstanmeldung
