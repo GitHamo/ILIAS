@@ -7433,9 +7433,9 @@ cron#:#cron_action_reset#:#Zurücksetzen
 cron#:#cron_action_reset_success#:#Cron-Job zurückgesetzt.
 cron#:#cron_action_reset_sure#:#Wollen Sie wirklich den Cron-Job „%s“ zurücksetzen?
 cron#:#cron_action_reset_sure_multi#:#Wollen Sie wirklich die folgenden Cron-Jobs zurücksetzen?
-cron#:#cron_action_run#:#Cron-Job Ausführen
-cron#:#cron_action_run_fail#:#Ausführung gescheitert.
-cron#:#cron_action_run_success#:#Cron-Job erfolgreich ausgeführt.
+cron#:#cron_action_run#:#Cron-Job ausführen
+cron#:#cron_action_run_fail#:#Ausführung gescheitert
+cron#:#cron_action_run_success#:#Cron-Job erfolgreich ausgeführt
 cron#:#cron_action_run_sure#:#Wollen Sie wirklich den Cron-Job „%s“ ausführen?
 cron#:#cron_changed_by_crontab#:#SYSTEM
 cron#:#cron_component#:#Komponente
@@ -7443,11 +7443,11 @@ cron#:#cron_job_id#:#ID
 cron#:#cron_last_run#:#Letzter Durchlauf
 cron#:#cron_no_executable_job_selected#:#Bitte wählen Sie mindestens einen ausführbaren Cron-Job.
 cron#:#cron_result#:#Ergebnis
-cron#:#cron_result_info#:#Ergebnis-Info
+cron#:#cron_result_info#:#Ergebnisdetails
 cron#:#cron_result_status_crashed#:#Abbruch
 cron#:#cron_result_status_fail#:#Fehler
 cron#:#cron_result_status_invalid_configuration#:#Ungültige Konfiguration
-cron#:#cron_result_status_no_action#:#Ok, keine Bearbeitung
+cron#:#cron_result_status_no_action#:#Ausgeführt. Keine Änderungen
 cron#:#cron_result_status_ok#:#Ok
 cron#:#cron_result_status_reset#:#Zurücksetzen
 cron#:#cron_running_since#:#Läuft seit
@@ -7465,8 +7465,8 @@ cron#:#cron_schedule_yearly#:#Jährlich
 cron#:#cron_status#:#Status
 cron#:#cron_status_active#:#Aktiv
 cron#:#cron_status_inactive#:#Inaktiv
-cron#:#cron_status_info#:#Status-Info
-crs#:#activation_times_not_valid#:#Die Zeitdauer für 'Verfügbarkeit' ist nicht gültig.
+cron#:#cron_status_info#:#Statusänderung
+crs#:#activation_times_not_valid#:#Die Zeitdauer für „Verfügbarkeit“ ist nicht gültig.
 crs#:#assigned#:#Zugeordnet
 crs#:#contact_email_not_valid#:#Die E-Mail-Adresse ist nicht gültig.
 crs#:#crs_accept_subscriber#:#Aufnahme in Kurs „%s“
