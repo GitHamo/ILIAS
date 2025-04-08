@@ -11829,10 +11829,10 @@ mcst#:#mcst_show_description#:#Beschreibung anzeigen
 mcst#:#mcst_standard_settings_info#:#Kommagetrennte Liste von Dateiendungen
 mcst#:#mcst_standard_settings_title#:#Dateiendungen für das Standard Format
 mcst#:#mcst_standard_title#:#Standard-Mediendatei
-mcst#:#mcst_unable_to_determin_playtime#:#Leider konnte die Laufzeit nicht automatisch bestimmt werden. Unter "Bearbeiten" können Sie die Laufzeit manuell einstellen.
+mcst#:#mcst_unable_to_determin_playtime#:#Leider konnte die Laufzeit nicht automatisch bestimmt werden. Unter „Bearbeiten“ können Sie die Laufzeit manuell einstellen.
 mcst#:#mcst_video_cast#:#Videoliste
 mcst#:#mcst_video_completion_threshold#:#"Bearbeitet"-Schwellenwert
-mcst#:#mcst_video_completion_threshold_info#:#Ab diesem Fortschritt wird ein Video als "angesehen" gespeichert. Bitte beachten Sie, dass ILIAS nicht prüft, ob der gesamte Zeitraum auch wirklich angezeigt wurde oder der Benutzer Teile übersprungen hat.
+mcst#:#mcst_video_completion_threshold_info#:#Ab diesem Fortschritt wird ein Video als „angesehen“ gespeichert. Bitte beachten Sie, dass ILIAS nicht prüft, ob der gesamte Zeitraum auch wirklich angezeigt wurde oder der Benutzer Teile übersprungen hat.
 mcst#:#mcst_videoalternative_title#:#Alternatives Videoformat zur Nutzung im Browser
 mcst#:#mcst_videoportable_settings_info#:#Kommagetrennte Liste von Dateiendungen
 mcst#:#mcst_videoportable_settings_title#:#Dateiendungen für das Video-Format
@@ -11885,7 +11885,7 @@ mep#:#mep_master_language_only_no_media#:#Basissprache für Übersetzung - ohne 
 mep#:#mep_media_files#:#Mediendateien
 mep#:#mep_media_subtitles#:#Untertitel
 mep#:#mep_mob#:#Medienobjekt
-mep#:#mep_move_select_insert#:#Navigieren Sie zum Zielordner und wählen Sie "Einfügen".
+mep#:#mep_move_select_insert#:#Navigieren Sie zum Zielordner und wählen Sie „Einfügen“.
 mep#:#mep_mpg#:#Inhaltsbaustein
 mep#:#mep_new_content_snippet#:#Neuer Inhaltsbaustein
 mep#:#mep_new_folder#:#Neuer Ordner
@@ -11905,7 +11905,7 @@ mep#:#mobs_always_show_file_manager_info#:#Wenn deaktiviert, wird die Dateistruk
 mep#:#mobs_black_list_file_types#:#Verbotene Dateitypen
 mep#:#mobs_black_list_file_types_and_allowed_info#:#Diese Liste schränkt die Menge der erlaubten Dateitypen ein. Tragen Sie dazu die jeweilige MIME-Typen mit Komma getrennt ein (z.B. text/html, application/pdf). Aktuell erlaubte MIME-Typen:
 mep#:#mobs_restrict_file_types#:#Erlaubte Dateitypen
-mep#:#mobs_restrict_file_types_info#:#Bestimmen Sie alle Dateitypen, die in Medienobjekten hochgeladen werden dürfen. Tragen Sie dazu die jeweilige Dateiendungen mit Komma getrennt ein (z.B. jpg,gif). Wird kein Eintrag vorgenommen, sind alle Typen erlaubt.
+mep#:#mobs_restrict_file_types_info#:#Bestimmen Sie alle Dateitypen, die in Medienobjekten hochgeladen werden dürfen. Tragen Sie dazu die jeweilige Dateiendungen mit Komma getrennt ein (z.B. jpg, gif). Wird kein Eintrag vorgenommen, sind alle Typen erlaubt.
 meta#:#adt_error_max_length#:#Der eingegebene Text ist zu lang. Bitte geben Sie einen kürzeren Text ein.
 meta#:#md_adn_int_error_no_default#:#Bitte wählen Sie eine aktivierte Sprache als "Default-Sprache" aus.
 meta#:#md_adv_active#:#Aktiv
@@ -11975,7 +11975,7 @@ meta#:#md_copyright#:#Copyright
 meta#:#md_copyright_add#:#Neue Vorgabe
 meta#:#md_copyright_admin_tab#:#Copyright & OER
 meta#:#md_copyright_alt_text#:#Alternativtext
-meta#:#md_copyright_alt_text_info#:#Wird für das ‘alt’ Attribut des Bildes verwendet
+meta#:#md_copyright_alt_text_info#:#Wird für das „Alt“-Attribut des Bildes verwendet
 meta#:#md_copyright_default#:#Standard
 meta#:#md_copyright_edit#:#Copyright-Vorgabe bearbeiten
 meta#:#md_copyright_enable_info#:#Im Unterreiter „Lizenzen“ hinterlegte Auswahl wird in Objekten angeboten.
@@ -11995,28 +11995,28 @@ meta#:#md_copyrights_deleted#:#Die ausgewählten Vorgaben wurden entfernt.
 meta#:#md_days#:#Tage:
 meta#:#md_delete_cp_sure#:#Möchten Sie wirklich die ausgewählten Vorgaben entfernen?
 meta#:#md_delimiter#:#Trennzeichen
-meta#:#md_delimiter_info#:#Das Trennzeichen wird in der Schnellbearbeitung der Metadaten verwendet, um mehrere Angaben zu trennen. Standardzeichen ist ','.
+meta#:#md_delimiter_info#:#Das Trennzeichen wird in der Schnellbearbeitung der Metadaten verwendet, um mehrere Angaben zu trennen. Standardzeichen ist „'“.
 meta#:#md_editor_custom_input#:#Eigene Angabe
 meta#:#md_editor_from_vocab_input#:#Aus Vokabular
 meta#:#md_editor_value#:#Begriff
 meta#:#md_fields#:#Felder
 meta#:#md_import_file_vocab#:#Importdatei
-meta#:#md_import_vocab#:#Import
+meta#:#md_import_vocab#:#Vokabular importieren
 meta#:#md_import_vocab_modal#:#Aus Datei importieren
 meta#:#md_months#:#Monate:
 meta#:#md_oai_contact_mail#:#E-Mail-Kontaktadresse
 meta#:#md_oai_identifier_prefix#:#OAI Präfix
-meta#:#md_oai_identifier_prefix_info#:#Dieser Präfix wird als Namespace in den Bezeichnern von abgefragten OER Datensätzen benutzt.
+meta#:#md_oai_identifier_prefix_info#:#Dieser Präfix wird als Namespace in den Bezeichnern von abgefragten OER-Datensätzen benutzt.
 meta#:#md_oai_pmh_enabled#:#Abfragen über OAI-PMH Schnittstelle erlauben
-meta#:#md_oai_pmh_enabled_info#:#Wenn aktiviert, können vom OER Harvester gefundene Resourcen von externen Parteien wie OER Repositorien abgefragt werden.
+meta#:#md_oai_pmh_enabled_info#:#Wenn aktiviert, können vom OER-Harvester gefundene Resourcen von externen Parteien wie OER Repositorien abgefragt werden.
 meta#:#md_oai_repository_name#:#Name des Repositoriums
-meta#:#md_oai_repository_name_info#:#Bei Anfragen über die Schnittstelle wird dies als Name dieser ILIAS Installation angegeben.
+meta#:#md_oai_repository_name_info#:#Bei Anfragen über die Schnittstelle wird dies als Name dieser ILIAS-Installation angegeben.
 meta#:#md_obj_types#:#Zugeordnete Objekte
 meta#:#md_record_export_table#:#Exportdateien
 meta#:#md_record_list_table#:#Benutzerdefinierte Metadatensätze
 meta#:#md_separated_by#:#Getrennt mit %s
 meta#:#md_settings#:#Einstellungen
-meta#:#md_settings_harvester#:#OER Harvester
+meta#:#md_settings_harvester#:#OER-Harvester
 meta#:#md_settings_licence#:#Nutzungsregeln
 meta#:#md_settings_publishing#:#Abfrage durch Repositorien
 meta#:#md_time#:#Zeit:
@@ -12031,24 +12031,24 @@ meta#:#md_vocab_deactivate_action#:#Deaktivieren
 meta#:#md_vocab_delete_action#:#Löschen
 meta#:#md_vocab_delete_confirmation_text#:#Sind Sie sicher, dass sie dass Vokabular %s (%s) mit den folgenden Begriffen löschen wollen?
 meta#:#md_vocab_delete_confirmation_title#:#Vokabular löschen
-meta#:#md_vocab_deletion_successful#:#Vokabular erfolgreich gelöscht.
+meta#:#md_vocab_deletion_successful#:#Vokabular erfolgreich gelöscht
 meta#:#md_vocab_disallow_custom_input_action#:#Keine eigenen Angaben erlauben
 meta#:#md_vocab_element_column#:#Element
 meta#:#md_vocab_element_with_condition#:#%s mit %s %s
 meta#:#md_vocab_import_invalid#:#Die Importdatei ist ungültig:<br/>%s
-meta#:#md_vocab_import_successful#:#Vokabular erfolgreich imported.
+meta#:#md_vocab_import_successful#:#Vokabular erfolgreich importiert
 meta#:#md_vocab_import_upload_failed#:#Das Hochladen der Importdatei ist fehlgeschlagen.
-meta#:#md_vocab_preview_column#:#Vorschau
-meta#:#md_vocab_show_all_action#:#Alle Begriffe anzeigen
+meta#:#md_vocab_preview_column#:#Werte
+meta#:#md_vocab_show_all_action#:#Alle Werte anzeigen
 meta#:#md_vocab_source_column#:#Quelle
-meta#:#md_vocab_table_title#:#Vokabulare
+meta#:#md_vocab_table_title#:#Metadaten-Elemente mit vordefinierten Werten
 meta#:#md_vocab_type_column#:#Typ
 meta#:#md_vocab_type_controlled_string#:#Kontrollierter Text
 meta#:#md_vocab_type_controlled_vocab_value#:#Kontrollierte Auswahl
 meta#:#md_vocab_type_copyright#:#Copyright
 meta#:#md_vocab_type_standard#:#Standard
-meta#:#md_vocab_update_successful#:#Vokabular erfolgreich aktualisiert.
-meta#:#md_vocabularies_config#:#LOM Vokabulare
+meta#:#md_vocab_update_successful#:#Vokabular erfolgreich aktualisiert
+meta#:#md_vocabularies_config#:#LOM-Vokabulare
 meta#:#meta_1#:#1
 meta#:#meta_2#:#2
 meta#:#meta_3#:#3
@@ -12610,7 +12610,7 @@ meta#:#meta_oer_copyright_selection_info#:#Nur Objekte, die unter einer der ausg
 meta#:#meta_oer_exposed_source#:#Veröffentlichung in
 meta#:#meta_oer_harvested_licences#:#Lizenzauswahl
 meta#:#meta_oer_harvested_types#:#Auswahl Objekttypen
-meta#:#meta_oer_harvester#:#OER Harvester
+meta#:#meta_oer_harvester#:#OER-Harvester
 meta#:#meta_oer_harvester_desc#:#Der OER-Harvester sammelt alle Ressourcen unter ausgewählten CC-Lizenzen, fügt sie einer in den Cron-Job-Einstellungen definierten Kategorie hinzu, und generiert wenn nötig Exportdateien für sie. Für die für Veröffentlichung bereite Ressourcen werden Einträge angelegt, die (wenn aktiviert) über eine OAI-PMH Schnittstelle ausgelesen werden können. Damit dieser Cron-Job Ergebnisse liefern kann, muss die Copyright-Auswahl in der Metadaten-Administration aktiviert und konfiguriert sein. Nur Dateiobjekte, Glossare, Inhaltsseiten, Lernmodule (ILIAS, SCORM, und HTML), Fragenpools (für Umfragen und Tests), und Medienpools werden unterstützt.
 meta#:#meta_oer_object_type_selection#:#Sammlung folgender Objekttypen
 meta#:#meta_oer_target#:#Sammlung in
