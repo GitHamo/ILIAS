@@ -31,7 +31,7 @@ class assFormulaQuestionResult
     public const RESULT_FRAC = 2;
     public const RESULT_CO_FRAC = 3;
 
-    private \ilGlobalTemplateInterface $main_tpl;
+    private ilGlobalTemplateInterface $main_tpl;
     private Refinery $refinery;
 
     private $available_units = [];
@@ -415,120 +415,91 @@ class assFormulaQuestionResult
     public function getReachedPoints(
         array $variables,
         array $results,
-        string $value,
-        ?assFormulaQuestionUnit $unit,
+        string $answer_value,
+        ?assFormulaQuestionUnit $answer_unit,
         array $units
     ): float {
         if ($this->getRatingSimple()) {
-            return $this->isCorrect($variables, $results, $value, $unit) ? $this->getPoints() : 0;
+            return $this->isCorrect($variables, $results, $answer_value, $answer_unit)
+            ? $this->getPoints()
+            : 0.0;
         }
 
-        $result = $this->calculateResult($variables, $results);
+        $result = $this->calculateCorrectResult($variables, $results);
+        $float_value = $this->transformAnswerValueAccordingToType($answer_value, $answer_unit);
 
-        if ($unit instanceof assFormulaQuestionUnit) {
-            $value = $this->transformResultAccordingToType($value, $unit);
-        }
-
-        /** @var ?float $value */
-        $float_value = $this->refinery->byTrying([
-            $this->refinery->kindlyTo()->float(),
-            $this->refinery->always(null),
-        ])->transform($value);
         $points = 0.0;
-
-        if ($float_value !== null && $this->checkSign($result, $float_value)) {
-            $points += ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingSign(), 100));
-        }
-
-        if ($float_value !== null && $this->isInTolerance(abs($float_value), abs($result), $this->getTolerance())) {
-            $points += ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingValue(), 100));
-        }
-
-        if ($unit instanceof assFormulaQuestionUnit && $result_unit instanceof assFormulaQuestionUnit) {
-            $base1 = $units[$unit->getBaseUnit()] ?? null;
-            $base2 = $units[$result_unit->getBaseUnit()] ?? null;
+        if ($answer_unit instanceof assFormulaQuestionUnit && $answer_unit instanceof assFormulaQuestionUnit) {
+            $base1 = $units[$answer_unit->getBaseUnit()] ?? null;
+            $base2 = $units[$answer_unit->getBaseUnit()] ?? null;
             if (
                 $base1 instanceof assFormulaQuestionUnit
                 && $base2 instanceof assFormulaQuestionUnit
                 && $base1->getId() === $base2->getId()
             ) {
-                return $points + ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingUnit(), 100));
+                $points += ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingUnit(), 100));
             }
+        }
+
+        if ($float_value === null) {
+            return $points;
+        }
+
+        if ($this->checkSign($result, $float_value)) {
+            $points += ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingSign(), 100));
+        }
+
+        if ($this->isInTolerance(abs($float_value), abs($result), $this->getTolerance())) {
+            $points += ilMath::_mul($this->getPoints(), ilMath::_div($this->getRatingValue(), 100));
         }
 
         return $points;
     }
 
-    private function calculateResult(array $variables, array $results): float
+    private function calculateCorrectResult(array $variables, array $results): float
     {
-        $formula = $this->substituteFormula($variables, $results);
-
-        if (preg_match_all("/(\\\$v\\d+)/im", $formula, $matches)) {
-            foreach ($matches[1] as $variable) {
-                $varObj = $variables[$variable];
-                if (!is_object($varObj)) {
-                    continue;
-                }
-
-                //convert unit and value to baseunit
-                $has_base_unit = $varObj->getUnit() !== null && $varObj->getUnit()->getBaseUnit() !== -1;
-                $tmp_value = $varObj->getValue() * ($has_base_unit ? $varObj->getUnit()->getFactor() : 1);
-                $formula = preg_replace("/\\\$" . substr($variable, 1) . "(?![0-9]+)/", "(" . $tmp_value . ")" . "\\1", $formula);
-            }
-        }
-
-        $eval_math = new EvalMath();
-        $eval_math->suppress_errors = true;
-        $result = $eval_math->evaluate($formula);
-
-        $result_unit = $this->getUnit();
-        if ($result_unit instanceof assFormulaQuestionUnit) {
-            /** @var float $result */
-            $result = $result_unit->getBaseUnit() !== -1
-                ? ilMath::_div($result, $result_unit->getFactor(), $this->getPrecision())
-                : ilMath::_mul($result, $result_unit->getFactor(), $this->getPrecision());
-        }
-
-        return $result;
+        return round(
+            $this->calculateFormula($variables, $results),
+            $this->precision
+        );
     }
 
-    private function transformResultAccordingToType(string $value, assFormulaQuestionUnit $unit): ?float
-    {
-        $frac_value = null;
+    private function transformAnswerValueAccordingToType(
+        string $value,
+        ?assFormulaQuestionUnit $unit
+    ): ?float {
         switch ($this->getResultType()) {
             case self::RESULT_DEC:
-                if (substr_count($value, '.') === 1 || substr_count($value, ',') === 1) {
-                    $exp_val = $value;
-                    $frac_value = str_replace(',', '.', $exp_val);
-                } else {
-                    $frac_value = $value;
-                }
                 break;
             case self::RESULT_FRAC:
+            case self::RESULT_CO_FRAC:
                 $exp_val = explode('/', $value);
-                $frac_value = ilMath::_div(
+                $value = ilMath::_div(
                     $exp_val[0],
                     count($exp_val) === 1 ? 1 : $exp_val[1],
                     $this->getPrecision()
                 );
                 break;
-            case self::RESULT_CO_FRAC:
-                $exp_val = explode('/', $value);
-                if (count($exp_val) > 1) {
-                    $frac_value = ilMath::_div($exp_val[0], $exp_val[1], $this->getPrecision());
-                }
-                break;
             case self::RESULT_NO_SELECTION:
             default:
-                break;
+                $exp_val = explode('/', $value);
+
+                if (count($exp_val) === 2
+                    && (float) $exp_val[1] === 0.0) {
+                    return null;
+                }
+
+                $value = ilMath::_div(
+                    $exp_val[0],
+                    count($exp_val) === 1 ? 1 : $exp_val[1],
+                    100
+                );
         }
 
-        /** @var ?float $float_value */
-        $float_value = $this->refinery->byTrying([
+        return $this->refinery->byTrying([
             $this->refinery->kindlyTo()->float(),
             $this->refinery->always(null),
-        ])->transform($frac_value !== null ? ilMath::_mul($frac_value, $unit->getFactor(), 100) : $value);
-        return $float_value;
+        ])->transform(round($value, $this->precision));
     }
 
     public function getResultInfo($variables, $results, $value, $unit, $units): array
