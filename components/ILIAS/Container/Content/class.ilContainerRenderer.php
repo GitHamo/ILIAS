@@ -851,7 +851,7 @@ class ilContainerRenderer
         $block_tpl = $this->initBlockTemplate();
 
         $preloader = new ilObjectListGUIPreloader(ilObjectListGUI::CONTEXT_REPOSITORY);
-        foreach($this->item_presentation->getAllRefIds() as $ref_id) {
+        foreach ($this->item_presentation->getAllRefIds() as $ref_id) {
             $rd = $this->item_presentation->getRawDataByRefId($ref_id);
             $preloader->addItem($rd["obj_id"], $rd["type"], $ref_id);
             if ($rd["type"] === "sess") {
@@ -923,6 +923,8 @@ class ilContainerRenderer
                 $checkbox = \ILIAS\Containter\Content\ItemRenderer::CHECKBOX_NONE;
                 if ($this->container_gui->isActiveAdministrationPanel()) {
                     $checkbox = \ILIAS\Containter\Content\ItemRenderer::CHECKBOX_ADMIN;
+                } elseif ($this->container_gui->isMultiDownloadEnabled()) {
+                    $checkbox = \ILIAS\Containter\Content\ItemRenderer::CHECKBOX_DOWNLOAD;
                 }
                 $item_group_list_presentation = "";
                 if ($block->getBlock() instanceof \ILIAS\Container\Content\ItemGroupBlock) {

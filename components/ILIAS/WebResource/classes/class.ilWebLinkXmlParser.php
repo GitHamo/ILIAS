@@ -26,9 +26,9 @@ declare(strict_types=1);
  */
 class ilWebLinkXmlParser extends ilMDSaxParser
 {
-    protected const MODE_UNDEFINED = 0;
-    public const MODE_UPDATE = 1;
-    public const MODE_CREATE = 2;
+    protected const int MODE_UNDEFINED = 0;
+    public const int MODE_UPDATE = 1;
+    public const int MODE_CREATE = 2;
 
     private ilObjLinkResource $webl;
     private ilWebLinkRepository $web_link_repo;
