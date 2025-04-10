@@ -114,7 +114,7 @@ class ilECSCourseMemberAssignment
         $ilDB = $DIC['ilDB'];
 
         if (is_null($a_cms_sub_id)) {
-            $cms_sub_id_query = 'AND cms_sub_id IS NULL ';
+            $cms_sub_id_query = 'AND (cms_sub_id IS NULL OR cms_sub_id = 0) ';
         } else {
             $cms_sub_id_query = 'AND cms_sub_id = ' . $ilDB->quote($a_cms_sub_id, 'integer') . ' ';
         }
@@ -142,7 +142,7 @@ class ilECSCourseMemberAssignment
         $ilDB = $DIC['ilDB'];
 
         if (is_null($a_cms_sub_id)) {
-            $cms_sub_id_query = 'AND cms_sub_id IS NULL ';
+            $cms_sub_id_query = 'AND (cms_sub_id IS NULL OR cms_sub_id = 0) ';
         } else {
             $cms_sub_id_query = 'AND cms_sub_id = ' . $ilDB->quote($a_cms_sub_id, 'integer') . ' ';
         }
