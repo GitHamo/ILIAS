@@ -3113,6 +3113,7 @@ cmix#:#btn_change_registration#:#Absenden
 cmix#:#btn_create_lrs_type#:#LRS-Typ hinzufügen
 cmix#:#btn_create_registration#:#Absenden
 cmix#:#change_registration#:#E-Mail-Adresse für die Registrierung
+cmix#:#cmiexit#:#Sie können nun das Fenster schließen.
 cmix#:#cmix_add#:#xAPI/cmi5-Objekt anlegen
 cmix#:#cmix_add_cmi5_lm#:#cmi5 Lernmodul
 cmix#:#cmix_add_cmi5_lm_info#:#Diese Option sollte verwendet werden, wenn es sich bei den Inhalten um ein cmi5 konformes Lernmodul handelt. Verwandte Funktionen wie geeignete Berichte sind ohne weitere Konfigurationen verfügbar.

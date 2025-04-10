@@ -3114,6 +3114,7 @@ cmix#:#btn_change_registration#:#Submit
 cmix#:#btn_create_lrs_type#:#Add LRS-Type
 cmix#:#btn_create_registration#:#Submit
 cmix#:#change_registration#:#E-Mail address for Registration
+cmix#:#cmiexit#:#Vous pouvez maintenant fermer la fenêtre de navigation
 cmix#:#cmix_add#:#Add xAPI/cmi5 Object
 cmix#:#cmix_add_cmi5_lm#:#cmi5 Learning Module
 cmix#:#cmix_add_cmi5_lm_info#:#This option should be used when the content is a cmi5 compliant learning module. Related features like suitable reportings are available without further configurations.
