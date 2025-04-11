@@ -1391,7 +1391,7 @@ class ilObjCmiXapi extends ilObject2
      * LMS.LaunchData
      * @return array<string, mixed>
      */
-    public function getLaunchData(?ilCmiXapiUser $cmixUser = null, string $exitText): array
+    public function getLaunchData(string $exitText, ?ilCmiXapiUser $cmixUser = null): array
     {
         if (null === $cmixUser) {
             $cmixUser = $this->getCurrentCmixUser();

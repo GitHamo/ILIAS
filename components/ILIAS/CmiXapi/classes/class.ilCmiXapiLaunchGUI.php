@@ -309,7 +309,7 @@ class ilCmiXapiLaunchGUI
         $defaultStatementsUrl = $defaultLrs . "/statements";
 
         // launchedStatement
-        $launchData = json_encode($this->object->getLaunchData($this->cmixUser, $DIC->language()->txt('cmiexit')));
+        $launchData = json_encode($this->object->getLaunchData($DIC->language()->txt('cmiexit'), $this->cmixUser));
         $launchedStatement = $this->object->getLaunchedStatement($this->cmixUser);
         $launchedStatementParams = [];
         $launchedStatementParams['statementId'] = $launchedStatement['id'];
