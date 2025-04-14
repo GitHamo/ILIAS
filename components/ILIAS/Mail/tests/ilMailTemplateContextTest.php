@@ -86,7 +86,7 @@ class ilMailTemplateContextTest extends ilMailBaseTestCase
     }
 
     /**
-     * @return array<string, array{0: callable, 1: callable}>
+     * @return array<string, array{0: Closure(Closure(): MockBuilder<ilObjUser>): ilObjUser, 1: Closure(Closure(): MockBuilder<ilOrgUnitUser>): array{0: ilOrgUnitUser, 1: list<ilOrgUnitUser>}}>
      */
     public static function userProvider(): array
     {
@@ -155,8 +155,8 @@ class ilMailTemplateContextTest extends ilMailBaseTestCase
     }
 
     /**
-     * @param callable(Closure(): MockBuilder<ilObjUser>): ilObjUser                                           $user_callable
-     * @param callable(Closure(): MockBuilder<ilOrgUnitUser>): array{0: ilOrgUnitUser, 1: list<ilOrgUnitUser>} $ou_user_callable
+     * @param Closure(Closure(): MockBuilder<ilObjUser>): ilObjUser                                           $user_callable
+     * @param Closure(Closure(): MockBuilder<ilOrgUnitUser>): array{0: ilOrgUnitUser, 1: list<ilOrgUnitUser>} $ou_user_callable
      */
     #[DataProvider('userProvider')]
     public function testGlobalPlaceholdersCanBeResolvedWithCorrespondingValues(
@@ -170,8 +170,11 @@ class ilMailTemplateContextTest extends ilMailBaseTestCase
             return $this->getMockBuilder(ilOrgUnitUser::class);
         };
 
-        $user = $user_callable->call($this, $mock_builder_user_callable);
-        [$ou_user, $ou_superiors] = $ou_user_callable->call($this, $mock_builder_ou_user_callable);
+        $user_callable = Closure::bind($user_callable, $this, self::class);
+        $ou_user_callable = Closure::bind($ou_user_callable, $this, self::class);
+
+        $user = $user_callable($mock_builder_user_callable);
+        [$ou_user, $ou_superiors] = $ou_user_callable($mock_builder_ou_user_callable);
 
         $ou_service = $this->getMockBuilder(OrgUnitUserService::class)
                            ->disableOriginalConstructor()
