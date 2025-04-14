@@ -1150,7 +1150,7 @@ of ILIAS. The file contains the following fields:
         , [tschmitz](https://docu.ilias.de/go/usr/92591)
     * Authority to Curate Test Cases: [daniela.weber](https://docu.ilias.de/go/usr/40672)
     * Authority to (De-)Assign Authorities: [smeyer](https://docu.ilias.de/go/usr/191)
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
+	* Tester: [ChrisPotter](https://docu.ilias.de/go/usr/90855)
     * Assignee for Security Reports: [smeyer](https://docu.ilias.de/go/usr/191)
     * Assignee for Security Issues: [smeyer](https://docu.ilias.de/go/usr/191)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
