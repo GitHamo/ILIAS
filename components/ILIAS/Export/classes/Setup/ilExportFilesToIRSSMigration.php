@@ -60,7 +60,6 @@ class ilExportFilesToIRSSMigration implements Migration
         );
         $row_export_file_info = $res_export_file_info->fetchAssoc();
         if (is_null($row_export_file_info)) {
-            dump("return");
             return;
         }
         $obj_id = (int) $row_export_file_info['obj_id'];
