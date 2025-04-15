@@ -15345,13 +15345,9 @@ scov#:#crsv_create_info#:#Select a completed learning module to generate a certi
 scov#:#scov_create#:#Create SCORM Certificate
 scov#:#scov_create_info#:#Select a completed SCORM module to generate a certificate for it
 search#:#add_members_header#:#Add Members
-search#:#adv_md_search_title#:#Search in Custom Metadata
 search#:#append_results#:#Append results
 search#:#btn_search#:#Search
 search#:#last_search_result#:#Last Search Result
-search#:#lucene_activate_field#:#Activate Search
-search#:#lucene_advanced_settings#:#Advanced Search
-search#:#lucene_advanced_settings_table#:#Search Settings
 search#:#lucene_all_occurrences#:#... %s other occurrence(s)
 search#:#lucene_and#:#AND
 search#:#lucene_cpu#:#Maximum Number of Threads
@@ -15400,11 +15396,7 @@ search#:#lucene_size_fragments#:#Size of Text Fragments
 search#:#lucene_tbl_create_ini#:#Create Java-Server Ini-File
 search#:#search_add_members_from_container_crs#:#Add Users From Current Course
 search#:#search_add_members_from_container_grp#:#Add Users From Current Group
-search#:#search_adv_md#:#Custom Metadata
-search#:#search_advanced#:#Advanced Search
-search#:#search_all_words#:#All words <small>(<i>AND</i>)</small>
 search#:#search_any#:#-- Any --
-search#:#search_any_word#:#Any word <small>(<i>OR</i>)</small>
 search#:#search_area#:#Search Area
 search#:#search_area_info#:#Please select an area where the search should start.
 search#:#search_auto_complete_length#:#Number of Auto Complete List Entries
@@ -15431,12 +15423,10 @@ search#:#search_for_orgu_members_recursive#:#Include Subunits?
 search#:#search_for_role_members#:#Search for Roles
 search#:#search_for_users#:#Search for Users
 search#:#search_grp_title#:#Group Name
-search#:#search_hide_adv_search#:#Hide Advanced Search
 search#:#search_item_filter_form#:#Search by Type
 search#:#search_item_filter_form_info#:#Search can be restricted to the chosen object types.
 search#:#search_like_info#:#Choose this option to get best results.###Needs to be adapted to new content of German lang file.
 search#:#search_limit_reached#:#Your search produced more than %s hits. You can restrict the search terms to receive more detailed results.
-search#:#search_lom#:#LOM Metadata
 search#:#search_lucene#:#Lucene search
 search#:#search_mime_excel#:#Excel Files
 search#:#search_mime_filter_form#:#Mime Type Filter
@@ -15453,8 +15443,6 @@ search#:#search_no_match#:#Your search did not match any results.
 search#:#search_no_match_hint#:#Your search for <b>%s</b> did not match any documents.<br /><br />Suggestions:<br />• Make sure all words are spelled correctly.<br />• Try different keywords.<br />• Try more general keywords.<br />• Try fewer keywords.
 search#:#search_no_selection#:#You made no selection.
 search#:#search_off#:#Off
-search#:#search_option_offline#:#Offline
-search#:#search_option_online#:#Online
 search#:#search_role_title#:#Role Name
 search#:#search_select_search_area#:#Select Search Area
 search#:#search_show_inactive_user#:#Show Inactive Users

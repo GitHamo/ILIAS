@@ -15346,13 +15346,9 @@ scov#:#crsv_create_info#:#Wählen Sie ein absolviertes Lernmodul aus, um dafür 
 scov#:#scov_create#:#SCORM-Zertifikat erstellen
 scov#:#scov_create_info#:#Wählen Sie ein SCORM-Modul, für das Sie ein Zertifikat benötigen
 search#:#add_members_header#:#Benutzer hinzufügen
-search#:#adv_md_search_title#:#Suche in den erweiterten Metadaten
 search#:#append_results#:#Ergebnisse anhängen
 search#:#btn_search#:#Suchen
 search#:#last_search_result#:#Letztes Suchergebnis
-search#:#lucene_activate_field#:#Suche aktivieren
-search#:#lucene_advanced_settings#:#Erweiterte Suche
-search#:#lucene_advanced_settings_table#:#Einstellungen zur erweiterten Suche
 search#:#lucene_all_occurrences#:#... %s weitere(s) Vorkommen
 search#:#lucene_and#:#UND
 search#:#lucene_cpu#:#Anzahl Threads
@@ -15401,11 +15397,7 @@ search#:#lucene_size_fragments#:#Länge der Textabschnitte
 search#:#lucene_tbl_create_ini#:#Java-Server Konfigurationsdatei erstellen
 search#:#search_add_members_from_container_crs#:#Benutzer aus aktuellem Kurs hinzufügen
 search#:#search_add_members_from_container_grp#:#Benutzer aus aktueller Gruppe hinzufügen
-search#:#search_adv_md#:#Benutzerdefinierte Metadaten
-search#:#search_advanced#:#Erweiterte Suche
-search#:#search_all_words#:#Alle Begriffe <small>(<i>UND</i>)</small>
 search#:#search_any#:#-- Beliebig --
-search#:#search_any_word#:#Einen der Begriffe <small>(<i>ODER</i>)</small>
 search#:#search_area#:#Suchbereich
 search#:#search_area_info#:#Bitte wählen Sie einen Bereich aus, innerhalb dem die Suche starten soll.
 search#:#search_auto_complete_length#:#Anzahl der Einträge in Auto-Complete-Liste
@@ -15432,12 +15424,10 @@ search#:#search_for_orgu_members_recursive#:#Darunterliegende einbeziehen?
 search#:#search_for_role_members#:#Nach Rollen suchen
 search#:#search_for_users#:#Nach Benutzern suchen
 search#:#search_grp_title#:#Gruppenname
-search#:#search_hide_adv_search#:#Erweiterte Suche ausblenden
 search#:#search_item_filter_form#:#Suche nach Typ
 search#:#search_item_filter_form_info#:#Suche wird auf die ausgewählten Objekttypen beschränkt.
 search#:#search_like_info#:#Erlaubt die Suche in der ILIAS-Datenbank ohne Zusatzsoftware. Der Inhalt von Dateien (z. B. PDFs oder HTML-Lernmodule) wird nicht erfasst und deshalb auch nicht als Suchergebnis angezeigt.
 search#:#search_limit_reached#:#Ihre Suche ergab mehr als %s Treffer. Sie können die Abfrage weiter einschränken, um detailliertere Treffer zu erhalten.
-search#:#search_lom#:#LOM Metadaten
 search#:#search_lucene#:#Lucene-Suche
 search#:#search_mime_excel#:#Excel-Dateien
 search#:#search_mime_filter_form#:#Dateitypen-Filter
@@ -15454,8 +15444,6 @@ search#:#search_no_match#:#Ihre Suche ergab keine Treffer.
 search#:#search_no_match_hint#:#Es wurden keine Treffer für Ihre Suchanfrage nach <b>%s</b> gefunden.<br />Vorschläge:<br /><br />• Vergewissern Sie sich, dass alle Wörter richtig geschrieben sind.<br />• Probieren Sie andere Suchbegriffe.<br />• Probieren Sie allgemeinere Suchbegriffe.<br />• Probieren Sie weniger Suchbegriffe.
 search#:#search_no_selection#:#Sie haben keine Auswahl getroffen.
 search#:#search_off#:#Aus
-search#:#search_option_offline#:#Offline
-search#:#search_option_online#:#Online
 search#:#search_role_title#:#Rollenname
 search#:#search_select_search_area#:#Suchbereich ändern
 search#:#search_show_inactive_user#:#Inaktive Benutzer anzeigen
