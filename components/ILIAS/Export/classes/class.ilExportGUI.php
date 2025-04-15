@@ -195,6 +195,10 @@ class ilExportGUI
         $table->handleCommands();
         $infos = [];
         foreach ($this->export_options as $export_option) {
+            # Do not display export option if the label is missing.
+            if ($export_option->getLabel() === '') {
+                continue;
+            }
             $infos[$export_option->getLabel()] = $this->ctrl->getLinkTarget($this, $this->builtExportOptionCommand($export_option));
         }
         if (count($infos) === 1) {
