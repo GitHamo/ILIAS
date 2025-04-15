@@ -26,9 +26,10 @@ use ILIAS\Export\ExportHandler\I\Consumer\File\Identifier\CollectionInterface as
 use ILIAS\Export\ExportHandler\I\Consumer\File\Identifier\HandlerInterface as ilExportHandlerConsumerFileIdentifierInterface;
 use ILIAS\Export\ExportHandler\I\Info\File\CollectionInterface as ilExportHandlerFileInfoCollectionInterface;
 
-class ilSkillProfileExportOption extends BasicExportOption
+class ilSkillExportOption extends BasicExportOption
 {
     protected \ILIAS\Data\Factory $data_factory;
+
     public function init(Container $DIC): void
     {
         $this->data_factory = new \ILIAS\Data\Factory();
