@@ -52,7 +52,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
         if ($breadcrumbs === null) {
             return null;
         }
-        if (!isset($_SESSION["lti_context_ids"])) {
+        if (!isset($_SESSION["lti_context_ids"]) || (is_array($_SESSION["lti_context_ids"]) && count($_SESSION["lti_context_ids"]) === 0)) {
             return $breadcrumbs;
         }
 
