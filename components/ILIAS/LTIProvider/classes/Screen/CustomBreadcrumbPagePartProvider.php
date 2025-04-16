@@ -25,12 +25,14 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 {
     private PagePartProvider $original;
     private RefineryFactory $refinery;
+    private ilLogger $logger;
 
     public function __construct(PagePartProvider $original)
     {
         global $DIC;
         $this->refinery = $DIC->refinery();
         $this->original = $original;
+        $this->logger = $DIC->logger()->root();
     }
 
     public function getTitle(): string
@@ -50,14 +52,13 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
         if ($breadcrumbs === null) {
             return null;
         }
-        if (!isset($_SESSION["ref_id"])) {
+        if (!isset($_SESSION["lti_context_ids"])) {
             return $breadcrumbs;
         }
 
         $goto_crumbs = [];
         $non_goto_crumbs = [];
-        $ref_id = $_SESSION["ref_id"];
-
+        $ref_id = $_SESSION["lti_context_ids"][0];
         foreach ($breadcrumbs->getItems() as $crumb) {
             $action = (string) $crumb->getAction();
             if (method_exists($crumb, 'getAction') && str_contains($action, 'goto.php')) {
