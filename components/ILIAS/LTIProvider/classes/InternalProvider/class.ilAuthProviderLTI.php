@@ -558,7 +558,7 @@ class ilAuthProviderLTI extends \ilAuthProvider implements \ilAuthProviderInterf
 
         $tree = $DIC->repositoryTree();
         $parent = $tree->getParentId($target_ref_id);
-        if($parent != 1) {
+        if ($parent != 1) {
             $this->handleLocalRoleAssignments($user_id, $consumer, $parent);
         }
 
