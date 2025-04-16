@@ -14203,6 +14203,7 @@ rbac#:#feed_delete#:#Webfeed löschen
 rbac#:#feed_edit_permission#:#Rechteeinstellungen ändern
 rbac#:#feed_read#:#Inhalt des Webfeeds lesen
 rbac#:#feed_write#:#Einstellungen des Webfeeds bearbeiten
+rbac#:#file_content#:#Inhalt anzeigen
 rbac#:#file_copy#:#Datei kopieren
 rbac#:#file_delete#:#Datei verschieben oder löschen
 rbac#:#file_edit_file#:#Bearbeitung in einem externen Editor erlauben, sofern vorhanden
