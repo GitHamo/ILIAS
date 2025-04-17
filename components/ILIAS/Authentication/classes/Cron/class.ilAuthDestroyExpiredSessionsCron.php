@@ -55,6 +55,14 @@ class ilAuthDestroyExpiredSessionsCron extends ilCronJob
         return true;
     }
 
+    public function getValidScheduleTypes(): array
+    {
+        return [
+            ILIAS\Cron\Schedule\CronJobScheduleType::SCHEDULE_TYPE_IN_MINUTES,
+            ILIAS\Cron\Schedule\CronJobScheduleType::SCHEDULE_TYPE_IN_HOURS
+        ];
+    }
+
     public function getDefaultScheduleType(): ILIAS\Cron\Schedule\CronJobScheduleType
     {
         return ILIAS\Cron\Schedule\CronJobScheduleType::SCHEDULE_TYPE_IN_MINUTES;
