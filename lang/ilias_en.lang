@@ -2650,6 +2650,7 @@ book#:#book_objects_available#:#Items available %s
 book#:#book_open#:#Open Booking Pool
 book#:#book_overall_limit#:#Limit Number of Bookings
 book#:#book_overall_limit_warning#:#You have reached the maximum number of bookings allowed.
+book#:#book_participant#:#Book for Participants
 book#:#book_participant_already_assigned#:#One or more participants have already been added.
 book#:#book_participant_assigned#:#Participant(s) added.
 book#:#book_period#:#Period
