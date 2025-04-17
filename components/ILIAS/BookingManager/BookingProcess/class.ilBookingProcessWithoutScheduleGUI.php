@@ -265,7 +265,7 @@ class ilBookingProcessWithoutScheduleGUI implements \ILIAS\BookingManager\Bookin
         } else {
             $conf->setHeaderText($this->lng->txt('book_confirm_booking_no_schedule'));
             $conf->addHiddenItem("object_id", $this->book_obj_id);
-            $conf->setConfirm($this->lng->txt("assign"), "saveMultipleBookings");
+            $conf->setConfirm($this->lng->txt("book_participant"), "saveMultipleBookings");
         }
 
         $conf->setCancel($this->lng->txt("cancel"), 'redirectToParticipantsList');
