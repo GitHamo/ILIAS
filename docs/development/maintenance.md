@@ -1143,9 +1143,8 @@ of ILIAS. The file contains the following fields:
 [//]: # (BEGIN Metadata)
 
 * **Metadata**
-    * Authority to Sign off on Conceptual Changes: [smeyer](https://docu.ilias.de/go/usr/191)
-    * Authority to Sign off on Code Changes: [smeyer](https://docu.ilias.de/go/usr/191)
-        , [tschmitz](https://docu.ilias.de/go/usr/92591)
+    * Authority to Sign off on Conceptual Changes: [smeyer](https://docu.ilias.de/go/usr/191), [tschmitz](https://docu.ilias.de/go/usr/92591)
+    * Authority to Sign off on Code Changes: [smeyer](https://docu.ilias.de/go/usr/191), [tschmitz](https://docu.ilias.de/go/usr/92591)
     * Authority to Curate Test Cases: [Alexandra Tödt](https://docu.ilias.de/go/usr/3139)
     * Authority to (De-)Assign Authorities: [smeyer](https://docu.ilias.de/go/usr/191)
 	* Tester: [ChrisPotter](https://docu.ilias.de/go/usr/90855)
