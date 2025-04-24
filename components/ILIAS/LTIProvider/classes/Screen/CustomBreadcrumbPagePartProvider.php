@@ -49,13 +49,13 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
     {
         global $DIC;
 
-        if($DIC ->http()->wrapper()->query()->has("ref_id")) {
+        if ($DIC ->http()->wrapper()->query()->has("ref_id")) {
             return $DIC ->http()->wrapper()->query()->retrieve("ref_id", $DIC->refinery()->to()->string());
         }
-        if(ilSession::has("ref_id")) {
+        if (ilSession::has("ref_id")) {
             return (string) ilSession::get("ref_id");
         }
-        if(ilSession::has("lti_context_ids") && is_array(ilSession::get("lti_context_ids")) && count(ilSession::get("lti_context_ids")) > 0) {
+        if (ilSession::has("lti_context_ids") && is_array(ilSession::get("lti_context_ids")) && count(ilSession::get("lti_context_ids")) > 0) {
             return (string) ilSession::get("lti_context_ids")[0];
         }
         return null;
@@ -71,7 +71,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 
         $ref_id = $this->getRefId();
         if (!isset($ref_id)) {
-            return $breadcrumbs;
+            return $DIC->ui()->factory()->breadcrumbs(array_slice($breadcrumbs->getItems(), -2));
         }
 
         $goto_crumbs = [];
@@ -91,7 +91,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 
         $final_crumbs = array_merge($last_goto, $non_goto_crumbs);
 
-        return $DIC->ui()->factory()->breadcrumbs($final_crumbs);
+        return $DIC->ui()->factory()->breadcrumbs(array_slice($final_crumbs, -1));
 
     }
 
