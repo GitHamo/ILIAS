@@ -71,7 +71,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 
         $ref_id = $this->getRefId();
         if (!isset($ref_id)) {
-            return $breadcrumbs;
+            return $DIC->ui()->factory()->breadcrumbs(array_slice($breadcrumbs->getItems(), -2));
         }
 
         $goto_crumbs = [];
@@ -91,7 +91,7 @@ class CustomBreadcrumbPagePartProvider implements PagePartProvider
 
         $final_crumbs = array_merge($last_goto, $non_goto_crumbs);
 
-        return $DIC->ui()->factory()->breadcrumbs($final_crumbs);
+        return $DIC->ui()->factory()->breadcrumbs(array_slice($final_crumbs, -1));
 
     }
 
