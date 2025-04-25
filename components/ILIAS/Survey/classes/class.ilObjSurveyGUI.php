@@ -648,7 +648,7 @@ class ilObjSurveyGUI extends ilObjectGUI implements ilCtrlBaseClassInterface
             $newObj = new ilObjSurvey();
             $newObj->setType($new_type);
             $newObj->setTitle("dummy");
-            $newObj->create(true);
+            $newObj->create();
             $this->putObjectInTree($newObj);
 
             // copy uploaded file to import directory

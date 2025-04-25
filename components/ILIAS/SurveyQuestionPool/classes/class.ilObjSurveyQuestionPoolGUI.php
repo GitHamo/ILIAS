@@ -644,7 +644,7 @@ class ilObjSurveyQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassI
 
         $newObj = new ilObjSurveyQuestionPool();
         $newObj->setTitle("dummy");
-        $newObj->create(true);
+        $newObj->create();
         $this->putObjectInTree($newObj);
 
         // import qti data
