@@ -17,6 +17,7 @@
  *********************************************************************/
 
 declare(strict_types=0);
+
 /**
  * Class ilChangeEvent tracks change events on repository objects.
  * The following events are considered to be a 'write event':
@@ -119,7 +120,6 @@ class ilChangeEvent
         int $a_ref_id,
         int $obj_id,
         int $usr_id,
-        bool $isCatchupWriteEvents = true,
         $a_ext_rc = null,
         $a_ext_time = null
     ): void {
@@ -220,10 +220,6 @@ class ilChangeEvent
             self::$has_accessed[$obj_id][$usr_id] = true;
 
             self::_recordObjStats($obj_id, $time_diff, $read_count_diff);
-        }
-
-        if ($isCatchupWriteEvents) {
-            ilChangeEvent::_catchupWriteEvents($obj_id, $usr_id);
         }
 
         // update parents (no categories or root)
@@ -522,162 +518,6 @@ class ilChangeEvent
 
                 $ilAtomQuery->run();
             }
-        }
-    }
-
-    /**
-     * Catches up with all write events which occured before the specified
-     * timestamp.
-     * @param $obj_id    int The object.
-     * @param $usr_id    int The user.
-     * @param $timestamp string|null timestamp.
-     * @return void
-     */
-    public static function _catchupWriteEvents(
-        int $obj_id,
-        int $usr_id,
-        ?string $timestamp = null
-    ): void {
-        global $DIC;
-
-        $ilDB = $DIC['ilDB'];
-
-        $query = "SELECT obj_id FROM catch_write_events " .
-            "WHERE obj_id = " . $ilDB->quote($obj_id, 'integer') . " " .
-            "AND usr_id  = " . $ilDB->quote($usr_id, 'integer');
-        $res = $ilDB->query($query);
-        if ($res->numRows()) {
-            $ts = ($timestamp == null)
-                ? ilUtil::now()
-                : $timestamp;
-        } else {
-            $ts = ilUtil::now();
-        }
-
-        // alex, use replace due to bug #10406
-        $ilDB->replace(
-            "catch_write_events",
-            array(
-                "obj_id" => array("integer", $obj_id),
-                "usr_id" => array("integer", $usr_id)
-            ),
-            array(
-                "ts" => array("timestamp", $ts)
-            )
-        );
-    }
-
-    /**
-     * Reads all write events which occured on the object
-     * which happened after the last time the user caught up with them.
-     * @param $obj_id int The object
-     * @param $usr_id int The user who is interested into these events.
-     * @return array with rows from table write_event
-     */
-    public static function _lookupUncaughtWriteEvents(
-        int $obj_id,
-        int $usr_id
-    ): array {
-        global $DIC;
-
-        $ilDB = $DIC['ilDB'];
-        $q = "SELECT ts " .
-            "FROM catch_write_events " .
-            "WHERE obj_id=" . $ilDB->quote($obj_id, 'integer') . " " .
-            "AND usr_id=" . $ilDB->quote($usr_id, 'integer');
-        $r = $ilDB->query($q);
-        $catchup = null;
-        while ($row = $r->fetchRow(ilDBConstants::FETCHMODE_ASSOC)) {
-            $catchup = $row['ts'];
-        }
-
-        if ($catchup == null) {
-            $query = sprintf(
-                'SELECT * FROM write_event ' .
-                'WHERE obj_id = %s ' .
-                'AND usr_id <> %s ' .
-                'ORDER BY ts DESC',
-                $ilDB->quote($obj_id, 'integer'),
-                $ilDB->quote($usr_id, 'integer')
-            );
-            $res = $ilDB->query($query);
-        } else {
-            $query = sprintf(
-                'SELECT * FROM write_event ' .
-                'WHERE obj_id = %s ' .
-                'AND usr_id <> %s ' .
-                'AND ts >= %s ' .
-                'ORDER BY ts DESC',
-                $ilDB->quote($obj_id, 'integer'),
-                $ilDB->quote($usr_id, 'integer'),
-                $ilDB->quote($catchup, 'timestamp')
-            );
-            $res = $ilDB->query($query);
-        }
-        $events = array();
-        while ($row = $ilDB->fetchAssoc($res)) {
-            $events[] = $row;
-        }
-        return $events;
-    }
-
-    /**
-     * Returns the change state of the object for the specified user.
-     * which happened after the last time the user caught up with them.
-     * @param $obj_id int The object
-     * @param $usr_id int The user who is interested into these events.
-     * @return int 0 = object is unchanged,
-     *                1 = object is new,
-     *                2 = object has changed
-     */
-    public static function _lookupChangeState(int $obj_id, int $usr_id): int
-    {
-        global $DIC;
-
-        $ilDB = $DIC['ilDB'];
-
-        $q = "SELECT ts " .
-            "FROM catch_write_events " .
-            "WHERE obj_id=" . $ilDB->quote($obj_id, 'integer') . " " .
-            "AND usr_id=" . $ilDB->quote($usr_id, 'integer');
-        $r = $ilDB->query($q);
-        $catchup = null;
-        while ($row = $r->fetchRow(ilDBConstants::FETCHMODE_ASSOC)) {
-            $catchup = $row['ts'];
-        }
-
-        if ($catchup == null) {
-            $ilDB->setLimit(1);
-            $query = sprintf(
-                'SELECT * FROM write_event ' .
-                'WHERE obj_id = %s ' .
-                'AND usr_id <> %s ',
-                $ilDB->quote($obj_id, 'integer'),
-                $ilDB->quote($usr_id, 'integer')
-            );
-            $res = $ilDB->query($query);
-        } else {
-            $ilDB->setLimit(1);
-            $query = sprintf(
-                'SELECT * FROM write_event ' .
-                'WHERE obj_id = %s ' .
-                'AND usr_id <> %s ' .
-                'AND ts > %s ',
-                $ilDB->quote($obj_id, 'integer'),
-                $ilDB->quote($usr_id, 'integer'),
-                $ilDB->quote($catchup, 'timestamp')
-            );
-            $res = $ilDB->query($query);
-        }
-
-        $numRows = $res->numRows();
-        if ($numRows > 0) {
-            $row = $ilDB->fetchAssoc($res);
-            // if we have write events, and user never catched one, report as new (1)
-            // if we have write events, and user catched an old write event, report as changed (2)
-            return ($catchup == null) ? 1 : 2;
-        } else {
-            return 0; // user catched all write events, report as unchanged (0)
         }
     }
 

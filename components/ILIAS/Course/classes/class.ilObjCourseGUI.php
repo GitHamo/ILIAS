@@ -912,7 +912,6 @@ class ilObjCourseGUI extends ilContainerGUI
         );
 
         ilChangeEvent::_recordWriteEvent($this->object->getId(), $this->user->getId(), 'update');
-        ilChangeEvent::_catchupWriteEvents($this->object->getId(), $this->user->getId());
 
         // lp sync confirmation required
         if ($show_lp_sync_confirmation) {

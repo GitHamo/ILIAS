@@ -201,7 +201,6 @@ class ilObjSCORMTracking
                 $refId,
                 $packageId,
                 $userId,
-                false,
                 $attempts,
                 $totalTime
             );
@@ -211,7 +210,6 @@ class ilObjSCORMTracking
                 $refId,
                 $packageId,
                 $userId,
-                false,
                 null,
                 $totalTime
             );
@@ -666,6 +664,6 @@ class ilObjSCORMTracking
                 $time += $sec;
             }
         }
-        ilChangeEvent::_recordReadEvent($a_type, $a_ref_id, $a_obj_id, $a_user_id, false, $attempts, $time);
+        ilChangeEvent::_recordReadEvent($a_type, $a_ref_id, $a_obj_id, $a_user_id, $attempts, $time);
     }
 } // END class.ilObjSCORMTracking

@@ -1400,7 +1400,6 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                         'add',
                         $ilObjDataCache->lookupObjId((int) $folder_ref_id)
                     );
-                    ilChangeEvent::_catchupWriteEvents($newNode_data['obj_id'], $ilUser->getId());
                     // END PATCH ChangeEvent: Record cut event.
                 }
             }
@@ -1434,7 +1433,6 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                         'add',
                         $ilObjDataCache->lookupObjId((int) $folder_ref_id)
                     );
-                    ilChangeEvent::_catchupWriteEvents($node_data['obj_id'], $ilUser->getId());
                     // END PATCH ChangeEvent: Record cut event.
                 }
 
@@ -1488,7 +1486,6 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                         'add',
                         $ilObjDataCache->lookupObjId((int) $folder_ref_id)
                     );
-                    ilChangeEvent::_catchupWriteEvents($node_data['obj_id'], $ilUser->getId());
                     // END PATCH ChangeEvent: Record link event.
                 }
 
@@ -1750,7 +1747,6 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                     'add',
                     $this->object->getId()
                 );
-                ilChangeEvent::_catchupWriteEvents($node_data['obj_id'], $ilUser->getId());
                 // END PATCH ChangeEvent: Record cut event.
             }
         } // END CUT
@@ -1782,7 +1778,6 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                     'add',
                     $this->object->getId()
                 );
-                ilChangeEvent::_catchupWriteEvents($node_data['obj_id'], $ilUser->getId());
                 // END PATCH ChangeEvent: Record link event.
             }
 
