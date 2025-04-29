@@ -144,7 +144,7 @@ class ilLTIAppEventListener implements \ilAppEventListener
         $this->logger->info('Trying outcome service with status ' . $a_status . ' and percentage ' . $a_percentage);
         $user = UserResult::fromResourceLink($resource_link, $ext_account);
 
-        if(!$a_percentage && $a_status != ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM) {
+        if (!$a_percentage && $a_status != ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM) {
             $score = 0;
         } else {
             if ($a_status == ilLPStatus::LP_STATUS_COMPLETED_NUM || $a_status == ilLPStatus::LP_STATUS_FAILED_NUM) {
