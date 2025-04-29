@@ -50,9 +50,9 @@ class ilLPStatusLtiOutcome extends ilLPStatus
 
             if ($ltiResult->getResult() >= $ltiMasteryScore) {
                 return self::LP_STATUS_COMPLETED_NUM;
+            } else {
+                return self::LP_STATUS_FAILED_NUM;
             }
-
-            return self::LP_STATUS_IN_PROGRESS_NUM;
         }
 
         return self::LP_STATUS_NOT_ATTEMPTED_NUM;
