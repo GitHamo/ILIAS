@@ -48,7 +48,9 @@ class ilLPStatusLtiOutcome extends ilLPStatus
             $object = $this->ensureObject($a_obj_id, $a_obj);
             $ltiMasteryScore = $object->getMasteryScore();
 
-            if ($ltiResult->getResult() >= $ltiMasteryScore) {
+            if ($ltiResult->getResult() == null) {
+                return self::LP_STATUS_NOT_ATTEMPTED_NUM;
+            } elseif ($ltiResult->getResult() >= $ltiMasteryScore) {
                 return self::LP_STATUS_COMPLETED_NUM;
             } else {
                 return self::LP_STATUS_FAILED_NUM;
