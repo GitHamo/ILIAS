@@ -145,7 +145,7 @@ class ilLTIAppEventListener implements \ilAppEventListener
         $user = UserResult::fromResourceLink($resource_link, $ext_account);
 
         if ($a_status == ilLPStatus::LP_STATUS_COMPLETED_NUM) {
-            $score = 1;
+            $score = $a_percentage / 100;
         } elseif (
             $a_status == ilLPStatus::LP_STATUS_FAILED_NUM ||
             $a_status == ilLPStatus::LP_STATUS_NOT_ATTEMPTED_NUM
@@ -154,7 +154,7 @@ class ilLTIAppEventListener implements \ilAppEventListener
         } elseif (!$a_percentage) {
             $score = 0;
         } else {
-            $score = (int) round($a_percentage / 100);
+            $score = $a_percentage / 100;
         }
 
         $this->logger->info('Sending score: ' . (string) $score);
