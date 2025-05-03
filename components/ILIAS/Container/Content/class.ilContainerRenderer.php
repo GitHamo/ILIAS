@@ -745,8 +745,10 @@ class ilContainerRenderer
         }
 
         if ($a_order_id !== "") {
+            /* blocks are ordered in page editor
             $a_tpl->setVariable("BLOCK_HEADER_ORDER_NAME", "position[blocks][" . $a_order_id . "]");
             $a_tpl->setVariable("BLOCK_HEADER_ORDER_NUM", (++$this->order_cnt) * 10);
+            */
         }
 
         $presentation_title = $title;
