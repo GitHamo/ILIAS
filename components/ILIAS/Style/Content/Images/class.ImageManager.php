@@ -102,8 +102,6 @@ class ImageManager
     ): void {
         $rid = $this->style_repo->readRid($this->style_id);
         if ($this->filenameExists($filename)) {
-            $file = $this->getWebPath($this->getByFilename($filename));
-
             // the zip stream is not seekable, which is needed by Imagick
             // so we create a seekable stream first
             $tempStream = fopen('php://temp', 'w+');
