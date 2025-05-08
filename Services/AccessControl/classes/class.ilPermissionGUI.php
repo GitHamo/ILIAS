@@ -893,8 +893,8 @@ class ilPermissionGUI extends ilPermission2GUI
             if (array_key_exists($position_id_from_post, $position_perm_post)) {
                 continue;
             }
-            $permissions = $this->getPermissionRepo()->find($ref_id, $position_id_from_post);
-            if ($permissions !== null && !$org_unit_permissions->isTemplate()) {
+            $org_unit_permissions = $this->getPermissionRepo()->find($ref_id, $position_id_from_post);
+            if ($org_unit_permissions !== null && !$org_unit_permissions->isTemplate()) {
                 $this->getPermissionRepo()->store($permissions->withOperations([]));
             }
         }
