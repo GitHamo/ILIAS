@@ -3018,6 +3018,9 @@ class ilObjTest extends ilObject
                 case "use_previous_answers":
                     $participant_functionality_settings = $participant_functionality_settings->withUsePreviousAnswerAllowed((bool) $metadata["entry"]);
                     break;
+                case 'question_list_enabled':
+                    $participant_functionality_settings = $participant_functionality_settings->withQuestionListEnabled((bool) $metadata['entry']);
+                    // no break
                 case "title_output":
                     $question_behaviour_settings = $question_behaviour_settings->withQuestionTitleOutputMode((int) $metadata["entry"]);
                     break;
@@ -3194,6 +3197,10 @@ class ilObjTest extends ilObject
                 case 'show_summary':
                     $participant_functionality_settings = $participant_functionality_settings->withQuestionListEnabled(($metadata['entry'] & 1) > 0)
                         ->withUsrPassOverviewMode((int) $metadata['entry']);
+
+                    // no break
+                case 'hide_info_tab':
+                    $additional_settings = $additional_settings->withHideInfoTab($metadata['entry'] === '1');
             }
             if (preg_match("/mark_step_\d+/", $metadata["label"])) {
                 $xmlmark = $metadata["entry"];
@@ -3499,6 +3506,11 @@ class ilObjTest extends ilObject
         $a_xml_writer->xmlElement("fieldentry", null, (int) $main_settings->getParticipantFunctionalitySettings()->getUsePreviousAnswerAllowed());
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
+        $a_xml_writer->xmlStartTag('qtimetadatafield');
+        $a_xml_writer->xmlElement('fieldlabel', null, 'question_list_enabled');
+        $a_xml_writer->xmlElement('fieldentry', null, (int) $main_settings->getParticipantFunctionalitySettings()->getQuestionListEnabled());
+        $a_xml_writer->xmlEndTag('qtimetadatafield');
+
         $a_xml_writer->xmlStartTag("qtimetadatafield");
         $a_xml_writer->xmlElement("fieldlabel", null, "title_output");
         $a_xml_writer->xmlElement("fieldentry", null, sprintf("%d", $main_settings->getQuestionBehaviourSettings()->getQuestionTitleOutputMode()));
@@ -3665,6 +3677,11 @@ class ilObjTest extends ilObject
         $a_xml_writer->xmlStartTag("qtimetadatafield");
         $a_xml_writer->xmlElement("fieldlabel", null, "show_grading_mark");
         $a_xml_writer->xmlElement("fieldentry", null, (int) $this->isShowGradingMarkEnabled());
+        $a_xml_writer->xmlEndTag("qtimetadatafield");
+
+        $a_xml_writer->xmlStartTag('qtimetadatafield');
+        $a_xml_writer->xmlElement('fieldlabel', null, 'hide_info_tab');
+        $a_xml_writer->xmlElement('fieldentry', null, (int) $this->getMainSettings()->getAdditionalSettings()->getHideInfoTab());
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         if ($this->getStartingTime() > 0) {
