@@ -16,6 +16,7 @@
  *
  *********************************************************************/
 
+use ILIAS\HTTP\Services;
 use ILIAS\Bibliographic\Field\Table;
 
 /**
@@ -37,32 +38,30 @@ abstract class ilBiblAdminFieldGUI
     public const CMD_APPLY_FILTER = 'applyFilter';
     public const CMD_RESET_FILTER = 'resetFilter';
     public const CMD_SAVE = 'save';
-    private \ILIAS\HTTP\Services $http;
+    private Services $http;
     private ilCtrl $ctrl;
     private ilTabsGUI $tabs;
     private ilLanguage $lng;
-    private ilAccessHandler $access;
-    protected \ilBiblAdminFactoryFacadeInterface $facade;
+    protected ilAccessHandler $access;
     protected Table $table;
     private \ilGlobalTemplateInterface $main_tpl;
 
     /**
      * ilBiblAdminFieldGUI constructor.
      */
-    public function __construct(ilBiblAdminFactoryFacadeInterface $facade)
+    public function __construct(protected \ilBiblAdminFactoryFacadeInterface $facade)
     {
         global $DIC;
         $this->main_tpl = $DIC->ui()->mainTemplate();
-        $this->facade = $facade;
-        $this->table = new Table(
-            $this,
-            $this->facade
-        );
         $this->http = $DIC['http'];
         $this->ctrl = $DIC['ilCtrl'];
         $this->tabs = $DIC['ilTabs'];
         $this->lng = $DIC['lng'];
-        $this->access = $DIC['ilAccess'];
+        $this->access = $DIC->access();
+        $this->table = new Table(
+            $this,
+            $this->facade
+        );
     }
 
     public function executeCommand(): void
@@ -159,10 +158,10 @@ abstract class ilBiblAdminFieldGUI
             self::SUBTAB_RIS,
             $this->lng->txt('ris'),
             $this->ctrl->getLinkTargetByClass(
-                array(
+                [
                     ilObjBibliographicAdminGUI::class,
                     ilBiblAdminRisFieldGUI::class,
-                ),
+                ],
                 ilBiblAdminRisFieldGUI::CMD_STANDARD
             )
         );
@@ -172,10 +171,10 @@ abstract class ilBiblAdminFieldGUI
             self::SUBTAB_BIBTEX,
             $this->lng->txt('bibtex'),
             $this->ctrl->getLinkTargetByClass(
-                array(
+                [
                     ilObjBibliographicAdminGUI::class,
                     ilBiblAdminBibtexFieldGUI::class,
-                ),
+                ],
                 ilBiblAdminBibtexFieldGUI::CMD_STANDARD
             )
         );
@@ -192,7 +191,6 @@ abstract class ilBiblAdminFieldGUI
     protected function save(): void
     {
         $this->saveOrdering();
-        ;
     }
 
     protected function applyFilter(): void
@@ -219,6 +217,6 @@ abstract class ilBiblAdminFieldGUI
 
     public function checkPermissionBoolAndReturn(string $permission): bool
     {
-        return (bool) $this->access->checkAccess($permission, '', $this->http->request()->getQueryParams()['ref_id']);
+        return $this->access->checkAccess($permission, '', $this->http->request()->getQueryParams()['ref_id']);
     }
 }
