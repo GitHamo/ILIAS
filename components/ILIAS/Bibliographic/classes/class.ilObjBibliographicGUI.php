@@ -21,7 +21,6 @@ use ILIAS\UI\Factory;
 use ILIAS\Refinery\Constraint;
 use ILIAS\ResourceStorage\Services;
 use ILIAS\UI\Component\Input\Container\Form\Standard;
-use ILIAS\UI\Implementation\Component\Input\UploadLimitResolver;
 
 /**
  * Class ilObjBibliographicGUI
@@ -68,19 +67,17 @@ class ilObjBibliographicGUI extends ilObject2GUI implements ilDesktopItemHandlin
     public const PROP_ONLINE_STATUS = 'online_status';
     public const SECTION_PRESENTATION = 'section_presentation';
     public const PROP_TILE_IMAGE = 'tile_image';
-    private UploadLimitResolver $upload_limit;
 
     public ?ilObject $object = null;
-    protected ?ilBiblFactoryFacade $facade = null;
-    protected ilBiblTranslationFactory $translation_factory;
-    protected ilBiblFieldFactory $field_factory;
-    protected ilBiblFieldFilterFactory $filter_factory;
-    protected ilBiblTypeFactory $type_factory;
+    protected ?\ilBiblFactoryFacade $facade = null;
+    protected \ilBiblTranslationFactory $translation_factory;
+    protected \ilBiblFieldFactory $field_factory;
+    protected \ilBiblFieldFilterFactory $filter_factory;
+    protected \ilBiblTypeFactory $type_factory;
 
     protected ilHelpGUI $help;
     protected Services $storage;
-    protected ilObjBibliographicStakeholder $stakeholder;
-    protected \ILIAS\HTTP\Services $http;
+    protected \ilObjBibliographicStakeholder $stakeholder;
     protected Factory $ui_factory;
     protected \ILIAS\Refinery\Factory $refinery;
     protected ?string $cmd = self::CMD_SHOW_CONTENT;
@@ -92,10 +89,8 @@ class ilObjBibliographicGUI extends ilObject2GUI implements ilDesktopItemHandlin
         $this->help = $DIC['ilHelp'];
         $this->storage = $DIC['resource_storage'];
         $this->stakeholder = new ilObjBibliographicStakeholder();
-        $this->http = $DIC->http();
         $this->ui_factory = $DIC->ui()->factory();
         $this->refinery = $DIC->refinery();
-        $this->upload_limit = $DIC["ui.upload_limit_resolver"];
 
         parent::__construct($a_id, $a_id_type, $a_parent_node_id);
         $DIC->language()->loadLanguageModule('bibl');
