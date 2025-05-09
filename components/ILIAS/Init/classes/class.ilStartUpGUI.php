@@ -595,47 +595,6 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
             ->withAdditionalTransformation($this->saniziteArrayElementsTrafo());
     }
 
-    private function doShibbolethAuthentication(): void
-    {
-        $this->getLogger()->debug('Trying shibboleth authentication');
-
-        $credentials = new ilAuthFrontendCredentialsShibboleth();
-        $credentials->initFromRequest();
-
-        $provider_factory = new ilAuthProviderFactory();
-        $provider = $provider_factory->getProviderByAuthMode($credentials, ilAuthUtils::AUTH_SHIBBOLETH);
-
-        $status = ilAuthStatus::getInstance();
-
-        $frontend_factory = new ilAuthFrontendFactory();
-        $frontend_factory->setContext(ilAuthFrontendFactory::CONTEXT_STANDARD_FORM);
-        $frontend = $frontend_factory->getFrontend(
-            $this->authSession,
-            $status,
-            $credentials,
-            [$provider]
-        );
-        $frontend->authenticate();
-
-        switch ($status->getStatus()) {
-            case ilAuthStatus::STATUS_AUTHENTICATED:
-                $this->logger->debug('Authentication successful; Redirecting to starting page.');
-                ilInitialisation::redirectToStartingPage();
-
-                // no break
-            case ilAuthStatus::STATUS_ACCOUNT_MIGRATION_REQUIRED:
-                $this->ctrl->redirect($this, 'showAccountMigration');
-
-                // no break
-            case ilAuthStatus::STATUS_AUTHENTICATION_FAILED:
-                $this->mainTemplate->setOnScreenMessage('failure', $status->getTranslatedReason(), true);
-                $this->ctrl->redirect($this, 'showLoginPage');
-        }
-
-        $this->mainTemplate->setOnScreenMessage('failure', $this->lng->txt('err_wrong_login'));
-        $this->showLoginPage();
-    }
-
     private function doCasAuthentication(): void
     {
         $this->getLogger()->debug('Trying cas authentication');
