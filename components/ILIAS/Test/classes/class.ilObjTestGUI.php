@@ -506,9 +506,10 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
                 $this->prepareOutput();
                 $this->addHeaderAction();
+                $this->tabs_manager->activateTab(TabsManager::TAB_ID_LEARNING_PROGRESS);
 
                 $test_session = $this->test_session_factory->getSessionByUserId($this->user->getId());
-                if (!$this->checkPermissionBool('write')
+                if (!$this->test_access->checkOtherParticipantsLearningProgressAccess()
                     && !$this->getTestObject()->canShowTestResults($test_session)) {
                     $this->tpl->setOnScreenMessage(
                         'info',
@@ -517,7 +518,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                     break;
                 }
 
-                $this->tabs_manager->activateTab(TabsManager::TAB_ID_LEARNING_PROGRESS);
                 $new_gui = new ilLearningProgressGUI(ilLearningProgressGUI::LP_CONTEXT_REPOSITORY, $this->getTestObject()->getRefId());
                 $this->ctrl->forwardCommand($new_gui);
 
