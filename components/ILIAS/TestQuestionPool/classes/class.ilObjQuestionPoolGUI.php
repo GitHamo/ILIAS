@@ -1750,6 +1750,7 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
 
     public static function _goto($a_target): void
     {
+        /** @var ILIAS\DI\Container $DIC */
         global $DIC;
         $main_tpl = $DIC->ui()->mainTemplate();
         $ilAccess = $DIC['ilAccess'];
@@ -1757,14 +1758,16 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
         $lng = $DIC['lng'];
         $ctrl = $DIC['ilCtrl'];
 
-        if ($ilAccess->checkAccess('write', '', (int) $a_target)
-            || $ilAccess->checkAccess('read', '', (int) $a_target)
+        $target_ref_id = (int) $a_target;
+
+        if ($ilAccess->checkAccess('write', '', $target_ref_id)
+            || $ilAccess->checkAccess('read', '', $target_ref_id)
         ) {
             $ctrl->setParameterByClass(ilObjQuestionPoolGUI::class, 'ref_id', $a_target);
             $ctrl->redirectByClass([ilRepositoryGUI::class, ilObjQuestionPoolGUI::class], self::DEFAULT_CMD);
             return;
         }
-        if ($ilAccess->checkAccess('visible', '', $a_target)) {
+        if ($ilAccess->checkAccess('visible', '', $target_ref_id)) {
             $DIC->ctrl()->setParameterByClass(ilInfoScreenGUI::class, 'ref_id', $a_target);
             $DIC->ctrl()->redirectByClass(
                 [
@@ -1779,7 +1782,7 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
                 'info',
                 sprintf(
                     $lng->txt('msg_no_perm_read_item'),
-                    ilObject::_lookupTitle(ilObject::_lookupObjId($a_target))
+                    ilObject::_lookupTitle(ilObject::_lookupObjId($target_ref_id))
                 ),
                 true
             );
