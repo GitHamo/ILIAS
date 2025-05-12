@@ -1274,18 +1274,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->ctrl->redirectByClass('ilObjTestGUI', self::SHOW_QUESTIONS_CMD);
     }
 
-    public function prepareOutput(bool $show_subobjects = true): bool
-    {
-        if (!$this->getCreationMode()) {
-            $settings = ilMemberViewSettings::getInstance();
-            if ($settings->isActive() && $settings->getContainer() != $this->getTestObject()->getRefId()) {
-                $settings->setContainer($this->getTestObject()->getRefId());
-                $this->rbac_system->initMemberView();
-            }
-        }
-        return parent::prepareOutput($show_subobjects);
-    }
-
     private function showEditTestPageGUI(string $cmd): void
     {
         $this->prepareOutput();
