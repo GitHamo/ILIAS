@@ -895,7 +895,7 @@ class ilPermissionGUI extends ilPermission2GUI
             }
             $org_unit_permissions = $this->getPermissionRepo()->find($ref_id, $position_id_from_post);
             if ($org_unit_permissions !== null && !$org_unit_permissions->isTemplate()) {
-                $this->getPermissionRepo()->store($permissions->withOperations([]));
+                $this->getPermissionRepo()->store($org_unit_permissions->withOperations([]));
             }
         }
 
