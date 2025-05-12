@@ -48,7 +48,6 @@ use ILIAS\TestQuestionPool\Import\TestQuestionsImportTrait;
 use ILIAS\TestQuestionPool\Questions\GeneralQuestionPropertiesRepository;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\Filesystem\Filesystem;
-use ILIAS\Filesystem\Stream\Streams;
 use ILIAS\MetaData\Services\ServicesInterface as LOMetadata;
 
 /**
@@ -2971,47 +2970,41 @@ class ilObjTest extends ilObject
                     break;
                 case 'show_introduction':
                     $introduction_settings = $introduction_settings->withIntroductionEnabled((bool) $metadata['entry']);
-                    // no break
+                    break;
                 case "showfinalstatement":
                 case 'show_concluding_remarks':
                     $finishing_settings = $finishing_settings->withConcludingRemarksEnabled((bool) $metadata["entry"]);
                     break;
+                case 'exam_conditions':
+                    $introduction_settings = $introduction_settings->withExamConditionsCheckboxEnabled($metadata['entry'] === '1');
+                    break;
                 case "highscore_enabled":
                     $gamification_settings = $gamification_settings->withHighscoreEnabled((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_anon":
                     $gamification_settings = $gamification_settings->withHighscoreAnon((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_achieved_ts":
                     $gamification_settings = $gamification_settings->withHighscoreAchievedTS((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_score":
                     $gamification_settings = $gamification_settings->withHighscoreScore((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_percentage":
                     $gamification_settings = $gamification_settings->withHighscorePercentage((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_hints":
                     $gamification_settings = $gamification_settings->withHighscoreHints((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_wtime":
                     $gamification_settings = $gamification_settings->withHighscoreWTime((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_own_table":
                     $gamification_settings = $gamification_settings->withHighscoreOwnTable((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_top_table":
                     $gamification_settings = $gamification_settings->withHighscoreTopTable((bool) $metadata["entry"]);
                     break;
-
                 case "highscore_top_num":
                     $gamification_settings = $gamification_settings->withHighscoreTopNum((int) $metadata["entry"]);
                     break;
@@ -3618,6 +3611,11 @@ class ilObjTest extends ilObject
         $a_xml_writer->xmlStartTag("qtimetadatafield");
         $a_xml_writer->xmlElement("fieldlabel", null, "show_introduction");
         $a_xml_writer->xmlElement("fieldentry", null, sprintf("%d", (int) $main_settings->getIntroductionSettings()->getIntroductionEnabled()));
+        $a_xml_writer->xmlEndTag("qtimetadatafield");
+
+        $a_xml_writer->xmlStartTag("qtimetadatafield");
+        $a_xml_writer->xmlElement("fieldlabel", null, 'exam_conditions');
+        $a_xml_writer->xmlElement("fieldentry", null, sprintf("%d", (int) $main_settings->getIntroductionSettings()->getExamConditionsCheckboxEnabled()));
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         $a_xml_writer->xmlStartTag("qtimetadatafield");
