@@ -214,7 +214,7 @@ class ilTestAccess
         }
 
         if ($this->isIpTypeOf(FILTER_FLAG_IPV6, $ip, $range_start, $range_end)) {
-            return !$this->isIpv6Between($ip, $range_start, $range_end);
+            return $this->isIpv6Between($ip, $range_start, $range_end);
         }
 
         return false;
