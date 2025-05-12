@@ -988,8 +988,8 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
     protected function redirectAfterMissingWrite()
     {
-        $this->tpl->setOnScreenMessage('failure', $this->lng->txt("no_permission"), true);
-        $target_class = get_class($this->object) . "GUI";
+        $this->tpl->setOnScreenMessage('failure', $this->lng->txt('no_permission'), true);
+        $target_class = get_class($this->object) . 'GUI';
         $this->ctrl->setParameterByClass($target_class, 'ref_id', $this->ref_id);
         $this->ctrl->redirectByClass($target_class);
     }
@@ -1497,8 +1497,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     public function importVerifiedFileObject(
         bool $skip_retrieve_selected_questions = false
     ): void {
-        if (!$this->checkPermissionBool('create', '', $this->testrequest->strVal('new_type'))) {
-            $this->redirectAfterMissingWrite();
+        if (!$this->checkPermissionBool('create', '', 'tst')) {
+            $this->tpl->setOnScreenMessage('failure', $this->lng->txt('no_permission'), true);
+            $this->ctrl->returnToParent($this);
         }
         $file_to_import = ilSession::get('path_to_import_file');
         $path_to_uploaded_file_in_temp_dir = ilSession::get('path_to_uploaded_file_in_temp_dir');
