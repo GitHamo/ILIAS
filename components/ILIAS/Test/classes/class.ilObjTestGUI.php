@@ -1387,7 +1387,8 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         ilSession::set('path_to_uploaded_file_in_temp_dir', $path_to_uploaded_file_in_temp_dir);
 
         if ($qtiParser->getQuestionSetType() !== ilObjTest::QUESTION_SET_TYPE_FIXED
-            || file_exists($this->buildResultsFilePath($importdir, $subdir))) {
+            || file_exists($this->buildResultsFilePath($importdir, $subdir))
+            || $founditems === []) {
             $this->importVerifiedFileObject(true);
             return;
         }
