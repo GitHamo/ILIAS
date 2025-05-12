@@ -5072,22 +5072,22 @@ class ilObjTest extends ilObject
 
     public function canShowTestResults(ilTestSession $test_session): bool
     {
-        $passSelector = new ilTestPassesSelector($this->db, $this);
+        $pass_selector = new ilTestPassesSelector($this->db, $this);
 
-        $passSelector->setActiveId($test_session->getActiveId());
-        $passSelector->setLastFinishedPass($test_session->getLastFinishedPass());
+        $pass_selector->setActiveId($test_session->getActiveId());
+        $pass_selector->setLastFinishedPass($test_session->getLastFinishedPass());
 
-        return $passSelector->hasReportablePasses();
+        return $pass_selector->hasReportablePasses();
     }
 
     public function hasAnyTestResult(ilTestSession $test_session): bool
     {
-        $passSelector = new ilTestPassesSelector($this->db, $this);
+        $pass_selector = new ilTestPassesSelector($this->db, $this);
 
-        $passSelector->setActiveId($test_session->getActiveId());
-        $passSelector->setLastFinishedPass($test_session->getLastFinishedPass());
+        $pass_selector->setActiveId($test_session->getActiveId());
+        $pass_selector->setLastFinishedPass($test_session->getLastFinishedPass());
 
-        return $passSelector->hasExistingPasses();
+        return $pass_selector->hasExistingPasses();
     }
 
     /**

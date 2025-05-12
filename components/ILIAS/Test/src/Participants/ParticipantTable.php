@@ -435,18 +435,33 @@ class ParticipantTable implements DataRetrieval
             )
         );
 
-        $access_filter = $this->participant_access_filter->getManageParticipantsUserFilter($this->test_object->getRefId());
-        $filtered_user_ids = $access_filter(array_map(
-            fn(Participant $participant) => $participant->getUserId(),
-            $records
-        ));
-
         $this->records = array_filter(
             $records,
-            fn(Participant $participant) => in_array($participant->getUserId(), $filtered_user_ids),
+            fn(Participant $participant) => in_array(
+                $participant->getUserId(),
+                $this->buildAccessFilteredParticipantsList($records)
+            )
         );
 
         return $this->records;
+    }
+
+    /**
+     *
+     * @param array<Participant> $records
+     * @return array<int>
+     */
+    private function buildAccessFilteredParticipantsList(array $records): array
+    {
+        $manage_access_filter = $this->participant_access_filter
+            ->getManageParticipantsUserFilter($this->test_object->getRefId());
+        $access_results_access_filter = $this->participant_access_filter
+            ->getAccessResultsUserFilter($this->test_object->getRefId());
+        $participant_ids = array_map(
+            fn(Participant $participant) => $participant->getUserId(),
+            $records
+        );
+        return $manage_access_filter($participant_ids) + $access_results_access_filter($participant_ids);
     }
 
 
