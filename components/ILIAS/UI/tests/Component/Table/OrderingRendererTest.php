@@ -47,8 +47,6 @@ class OrderingRendererTest extends TableRendererTestBase
     public function testOrderingTableRenderTableHeaderWithoutActions()
     {
         $renderer = $this->getRenderer();
-        $data_factory = new \ILIAS\Data\Factory();
-        $tpl = $this->getTemplateFactory()->getTemplate("components/ILIAS/UI/src/templates/default/Table/tpl.orderingtable.html", true, true);
         $f = $this->getColumnFactory();
         $data = new class () implements ILIAS\UI\Component\Table\OrderingRetrieval {
             public function getRows(
