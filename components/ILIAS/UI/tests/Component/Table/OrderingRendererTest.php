@@ -70,7 +70,7 @@ class OrderingRendererTest extends TableRendererTestBase
         $actual = $renderer->renderOrderingTable($table, $this->getDefaultRenderer());
         $expected = <<<EOT
 <div class="c-table-ordering" id="id_1">
-	<h3 class="ilHeader" id="id_1_label"></h3>
+	<h2 class="ilHeader" id="id_1_label"></h2>
 	<div class="viewcontrols"><form class="il-viewcontrols-form l-bar__space-keeper" method="get" id="id_2"></form></div>
 	<form method="post" class="c-table-data__table-wrapper c-table-ordering__form" action="https://localhost">
 		<table class="c-table-data__table" role="grid" aria-labelledby="id_1_label" aria-colcount="3">
