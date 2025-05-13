@@ -27,7 +27,7 @@ use ilDBInterface;
 
 class AbandonCASAuthModeUpdateObjective implements ilDatabaseUpdateSteps
 {
-    private const TABLE_NAME = 'usr_data';
+    private const string TABLE_NAME = 'usr_data';
 
     protected ilDBInterface $db;
 
@@ -39,10 +39,11 @@ class AbandonCASAuthModeUpdateObjective implements ilDatabaseUpdateSteps
     public function step_1(): void
     {
         $default_auth_mode_result = $this->db->query(
-            "SELECT value FROM settings WHERE module = " . $this->db->quote('common', ilDBConstants::T_TEXT) . " AND keyword = " . $this->db->quote('auth_mode', ilDBConstants::T_TEXT)
+            'SELECT value FROM settings WHERE module = ' . $this->db->quote('common', ilDBConstants::T_TEXT)
+                . ' AND keyword = ' . $this->db->quote('auth_mode', ilDBConstants::T_TEXT)
         );
 
-        $default_auth_mode = (int) ($this->db->fetchAssoc($default_auth_mode_result)["value"] ?? ilAuthUtils::AUTH_LOCAL);
+        $default_auth_mode = (int) ($this->db->fetchAssoc($default_auth_mode_result)['value'] ?? ilAuthUtils::AUTH_LOCAL);
 
         $this->db->manipulateF(
             'UPDATE ' . self::TABLE_NAME . ' SET auth_mode = %s WHERE auth_mode = %s',
@@ -54,19 +55,19 @@ class AbandonCASAuthModeUpdateObjective implements ilDatabaseUpdateSteps
     public function step_2(): void
     {
         $settings = [
-            "cas_server",
-            "cas_port",
-            "cas_uri",
-            "cas_login_instructions",
-            "cas_active",
-            "cas_create_users",
-            "cas_allow_local",
-            "cas_user_default_role",
+            'cas_server',
+            'cas_port',
+            'cas_uri',
+            'cas_login_instructions',
+            'cas_active',
+            'cas_create_users',
+            'cas_allow_local',
+            'cas_user_default_role',
         ];
 
         $this->db->manipulate(
-            "DELETE FROM settings WHERE module = " . $this->db->quote('common', ilDBConstants::T_TEXT) . " AND "
-            . $this->db->in("keyword", $settings, false, ilDBConstants::T_TEXT),
+            'DELETE FROM settings WHERE module = ' . $this->db->quote('common', ilDBConstants::T_TEXT) . ' AND '
+                . $this->db->in('keyword', $settings, false, ilDBConstants::T_TEXT),
         );
     }
 }
