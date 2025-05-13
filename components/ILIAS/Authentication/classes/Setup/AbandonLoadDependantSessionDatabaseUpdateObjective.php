@@ -43,7 +43,9 @@ class AbandonLoadDependantSessionDatabaseUpdateObjective implements ilDatabaseUp
                     'session_min_idle',
                     'session_max_idle',
                     'session_max_idle_after_first_request'
-                ]
+                ],
+                false,
+                \ilDBConstants::T_TEXT
             )
         );
 
