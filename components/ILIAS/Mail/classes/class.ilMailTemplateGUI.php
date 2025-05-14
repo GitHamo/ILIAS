@@ -307,8 +307,17 @@ class ilMailTemplateGUI
         if ($this->http->wrapper()->query()->has('mail_template_tpl_ids')) {
             $templateIds = $this->http->wrapper()->query()->retrieve(
                 'mail_template_tpl_ids',
-                $this->refinery->kindlyTo()->listOf($this->refinery->kindlyTo()->int())
+                $this->refinery->kindlyTo()->listOf($this->refinery->kindlyTo()->string())
             );
+            if ($templateIds === ['ALL_OBJECTS']) {
+                $templateIds = array_map(
+                    static fn(array $template): int => (int) ($template['tpl_id'] ?? 0),
+                    $this->service->listAllTemplatesAsArray()
+                );
+            } else {
+                $templateIds = $this->refinery->kindlyTo()->listOf($this->refinery->kindlyTo()->int())
+                    ->transform($templateIds);
+            }
         }
 
         if (0 === count($templateIds)) {
