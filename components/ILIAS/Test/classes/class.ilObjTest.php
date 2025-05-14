@@ -3018,6 +3018,9 @@ class ilObjTest extends ilObject
                     $question_behaviour_settings = $question_behaviour_settings->withQuestionTitleOutputMode((int) $metadata["entry"]);
                     break;
                 case "question_set_type":
+                    if ($metadata['entry'] === self::QUESTION_SET_TYPE_RANDOM) {
+                        $this->questions = [];
+                    }
                     $general_settings = $general_settings->withQuestionSetType($metadata["entry"]);
                     break;
                 case "anonymity":
