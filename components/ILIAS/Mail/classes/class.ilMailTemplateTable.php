@@ -31,7 +31,7 @@ use ILIAS\UI\Implementation\Component\Table\Action\Action;
 
 class ilMailTemplateTable implements DataRetrieval
 {
-    /** @var ilMailTemplateContext[] */
+    /** @var array<string, ilMailTemplateContext> */
     protected array $contexts = [];
 
     /** @var list<array{tpl_id: int, title: string, context: string, is_default: bool}>|null */
@@ -113,14 +113,14 @@ class ilMailTemplateTable implements DataRetrieval
     public function getContext(string $value, bool $default = false): string
     {
         if (isset($this->contexts[$value])) {
-            $isDefaultSuffix = '';
+            $is_default_suffix = '';
             if ($default) {
-                $isDefaultSuffix = $this->lng->txt('mail_template_default');
+                $is_default_suffix = $this->lng->txt('mail_template_default');
             }
 
             return implode('', [
                 $this->contexts[$value]->getTitle(),
-                $isDefaultSuffix,
+                $is_default_suffix,
             ]);
         }
 
@@ -215,12 +215,10 @@ class ilMailTemplateTable implements DataRetrieval
             [],
             fn($ret, $key, $value) => [$key, $value]
         );
-        usort($records, static function (array $left, array $right) use ($order_field): int {
-            return ilStr::strCmp(
-                $left[$order_field] ?? '',
-                $right[$order_field] ?? ''
-            );
-        });
+        usort($records, static fn(array $left, array $right): int => ilStr::strCmp(
+            $left[$order_field] ?? '',
+            $right[$order_field] ?? ''
+        ));
 
         if ($order_direction === Order::DESC) {
             $records = array_reverse($records);
