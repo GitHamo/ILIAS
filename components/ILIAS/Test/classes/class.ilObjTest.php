@@ -7101,7 +7101,6 @@ class ilObjTest extends ilObject
         $scoring = new TestScoring($this, $this->user, $this->db, $this->lng);
         $scoring->setPreserveManualScores($preserve_manscoring);
         $scoring->recalculateSolutions();
-        ilLPStatusWrapper::_updateStatus($this->getId(), $this->user->getId());
     }
 
     public static function getTestObjIdsWithActiveForUserId($userId): array
