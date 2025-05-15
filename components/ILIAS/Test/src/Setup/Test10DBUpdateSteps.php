@@ -464,4 +464,11 @@ class Test10DBUpdateSteps implements \ilDatabaseUpdateSteps
             ['operation' => [\ilDBConstants::T_TEXT, 'tst_results']]
         );
     }
+
+    public function step_14(): void
+    {
+        $this->db->manipulate(
+            'DELETE FROM settings WHERE module="assessment" AND keyword="assessment_man_scoring_fix_run"'
+        );
+    }
 }
