@@ -17735,7 +17735,7 @@ wopi#:#close_wopi_editor_info#:#It can take up to several minutes for the extern
 wopi#:#currently_supported#:#Currently supported Suffixes
 wopi#:#msg_error_wopi_invalid_discorvery_url#:#The Discovery URL entered is invalid or cannot be accessed.
 wopi#:#msg_wopi_settings_modified#:#Settings stored
-wopi#:#open_external_editor#:#Open in external Editor
+wopi#:#open_external_editor#:#Open in External Editor
 wopi#:#open_external_viewer#:#Show Content
 wopi#:#saving_interval#:#Interval
 wopi#:#saving_interval_byline#:#By default, ILIAS adds all changes made by an external editor to a draft version until this version is published manually. Activating the save interval causes a new version to be published after the specified number of seconds, if possible. Please note that a low value can lead to a large number of file versions, which in turn takes up a multiple of the hard disk space.
