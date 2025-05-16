@@ -31,8 +31,6 @@
           });
           input.setAttribute('size', longest.length);
           input.addEventListener('keydown', keyHandler);
-          input.addEventListener('keyup', onChangeHandler);
-          input.addEventListener('focus', onChangeHandler);
         }
       });
 
@@ -48,8 +46,10 @@
 
     const keyHandler = (e) => {
       if (e.key === 'Enter' && e.target.nodeName === 'LI') {
+        e.stopImmediatePropagation();
         e.preventDefault();
         onSelectHandler(e);
+        return;
       }
 
       if (e.key === 'ArrowDown') {
@@ -62,6 +62,7 @@
         if (e.target.nodeName === 'LI' && e.target.nextElementSibling !== null) {
           e.target.nextElementSibling.focus();
         }
+        return;
       }
 
       if (e.key === 'ArrowUp' && e.target.nodeName === 'LI') {
@@ -72,7 +73,10 @@
         } else {
           e.target.previousElementSibling.focus();
         }
+        return;
       }
+
+      onChangeHandler(e);
     }
 
     const onChangeHandler = (e) => {
