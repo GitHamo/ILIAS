@@ -512,10 +512,12 @@ abstract class assQuestion implements Question
                     );
 
                     ilWACSignedPath::setTokenMaxLifetimeInSeconds(60);
+                    $path_to_solution = $this->getSuggestedSolutionPathWeb() . $solution->getFilename();
+                    if (!file_exists($path_to_solution)) {
+                        break;
+                    }
                     $output[] = '<a href="'
-                        . ilWACSignedPath::signFile(
-                            $this->getSuggestedSolutionPathWeb() . $solution->getFilename()
-                        )
+                        . ilWACSignedPath::signFile($path_to_solution)
                         . '">'
                         . $possible_texts[0]
                         . '</a>';
