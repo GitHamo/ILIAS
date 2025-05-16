@@ -588,7 +588,7 @@ assessment#:#code#:#Kód
 assessment#:#codebase#:#Kódbázis
 assessment#:#concatenation#:#Szavak összekapcsolása
 assessment#:#conf_delete_pass#:#Biztos, hogy törli a már létező válaszát?
-assessment#:#confirm_log_deletion#:#Biztos, hogy véglegesen törli a kiválasztott naplóbejegyzéseket? 
+assessment#:#confirm_log_deletion#:#Biztos, hogy véglegesen törli a kiválasztott naplóbejegyzéseket?
 assessment#:#confirm_sync_questions#:#A módosított kérdés egy aktív teszt kérdésének másolata. Módosítja az eredeti kérdést is?
 assessment#:#coordinates#:#Koordináták
 assessment#:#copy_and_link_to_questionpool#:#Hozzáadás kérdésgyűjteményhez
@@ -948,7 +948,7 @@ assessment#:#new_unit#:#Új mértékegység
 assessment#:#next_question#:#Következő
 assessment#:#next_question_rows#:#Kérdések %d - %d (összesen: %d) →
 assessment#:#no_manual_feedback_export_info#:#A manuális visszajelzéseket nem exportáljuk.
-assessment#:#no_passed_after_failed#:#A nem teljesítésnek nem lehet magasabb a minimális szintje, mint a teljesítésnek. 
+assessment#:#no_passed_after_failed#:#A nem teljesítésnek nem lehet magasabb a minimális szintje, mint a teljesítésnek.
 assessment#:#no_passed_mark#:#Legalább egy értékelésnek sikeres teljesítésnek kell lennie. Az értékeléssémát nem mentettük.
 assessment#:#no_question_selected_for_move#:#Legalább egy kérdést jelöljön ki az áthelyezéshez!
 assessment#:#no_questions_available#:#Nincsenek elérhető kérdések.
@@ -3119,7 +3119,7 @@ cmix#:#cmix_add_cmi5_lm_info#:#Ezt a lehetőséget akkor kell használni, ha a t
 cmix#:#cmix_add_lrs_type#:#LRS-típus
 cmix#:#cmix_add_lrs_type_info#:#Ezek az LRS típusok érhetők el az ILIAS-ban.
 cmix#:#cmix_add_source#:#Forrás
-cmix#:#cmix_add_source_external_app#:#Az erőforrást nem az ILIAS indítja 
+cmix#:#cmix_add_source_external_app#:#Az erőforrást nem az ILIAS indítja
 cmix#:#cmix_add_source_external_app_info#:#Használja ezt a lehetőséget a külön elindított erőforrásokhoz, mint például alkalmazások vagy szimulációk. A felhasználóknak el kell fogadniuk az adatok lekérését.
 cmix#:#cmix_add_source_local_dir#:#Helyi mappa
 cmix#:#cmix_add_source_local_dir_info#:#Használja ezt a lehetőséget a helyi eszközön lévő tartalomcsomagokhoz.
@@ -5872,7 +5872,7 @@ common#:#upload_pending#:#Folyamatban
 common#:#upload_settings#:#Fájlok feltöltési beállításai
 common#:#upload_svg_rejection_message#:#Az SVG-fájl vélhetően rosszindulatú kódot tartalmaz, ezért nem dolgoztuk fel.
 common#:#upload_svg_rejection_message_base64#:#A fájl base64 kódolású részeket tartalmaz.
-common#:#upload_svg_rejection_message_elements#:#A fájl nem engedélyezettek vagy ismeretlen elemeket, attribútumokat tartalmaz. 
+common#:#upload_svg_rejection_message_elements#:#A fájl nem engedélyezettek vagy ismeretlen elemeket, attribútumokat tartalmaz.
 common#:#upload_svg_rejection_message_script#:#A fájl script-elemeket tartalmaz.
 common#:#uploaded_and_checked#:#A fájlt feltöltötte és sikeresen ellenőriztük. Elkezdheti importálását.
 common#:#uploading#:#Feltöltés…
@@ -10462,7 +10462,7 @@ gsfo#:#confirm_delete#:#Biztos, hogy törli a következő elem(ek)et?
 gsfo#:#confirm_reset#:#A lábléc alapértelmezettre állítása az összes elemet eredeti állapotába állítja. A személyre szabások és a kézi bejegyzések visszavonhatatlanul törlődnek. Biztos, hogy folytatja?
 gsfo#:#entries_add#:#Elem hozzáadása
 gsfo#:#entries_edit#:#Elem módosítása
-gsfo#:#entries_parent#:#Blokk kiválasztása 
+gsfo#:#entries_parent#:#Blokk kiválasztása
 gsfo#:#entries_select_parent#:#Elem mozgatása a csoportba
 gsfo#:#entry_action#:#Link
 gsfo#:#entry_action_info#:#Teljes link a protokollal (pl. https://www.ilias.hu)
@@ -10653,7 +10653,7 @@ irss#:#rid_deleted#:#A fájl eltávolították
 irss#:#rids_appended#:#Az erőforrás(oka)t sikeresen hozzáadta
 irss#:#rids_appended_failed#:#Egy erőforrást sem sikerült hozzáadni
 irss#:#rids_deleted#:#Az erőforrás(oka)t sikeresen törölte
-irss#:#rids_updated#:#Az erőforrás(oka)t sikeresen frissítette 
+irss#:#rids_updated#:#Az erőforrás(oka)t sikeresen frissítette
 irss#:#sorting#:#Alapértelmezett rendezés
 irss#:#sorting_1#:#Cím szerint A→Z
 irss#:#sorting_2#:#Cím szerint Z→A
@@ -11536,7 +11536,7 @@ mail#:#mail_filter_sender#:#Feladó
 mail#:#mail_filter_show_read#:#Olvasottak megjelenítése
 mail#:#mail_filter_show_system_mails#:#Rendszerértesítések megjelenítése
 mail#:#mail_filter_show_unread#:#Olvasatlanok megjelenítése
-mail#:#mail_filter_show_user_mails#:#Felhasználói levelek megjelenítése 
+mail#:#mail_filter_show_user_mails#:#Felhasználói levelek megjelenítése
 mail#:#mail_filter_show_with_attachments#:#Megjelenítés csatolmányokkal
 mail#:#mail_filter_show_without_attachment#:#Megjelenítés csatolmányok nélkül
 mail#:#mail_filter_subject#:#Tárgy
@@ -13105,7 +13105,7 @@ obj#:#obj_tool_setting_skills_info#:#Aktiválja a kompetenciamenedzsmentet és a
 obj#:#obj_tool_setting_tag_cloud#:#Címkefelhő
 obj#:#obj_tool_setting_tag_cloud_info#:#'Címkefelhő' blokk megjelenik a 'Tartalom' lapon.
 obj#:#obj_tool_setting_taxonomies#:#Taxonómiák
-obj#:#obj_tool_setting_taxonomies_info#:#A taxonómiák objektumok szűrését teszik lehetővé. A 'Beállítások' lap 'Taxonómia' allapján találhatók. 
+obj#:#obj_tool_setting_taxonomies_info#:#A taxonómiák objektumok szűrését teszik lehetővé. A 'Beállítások' lap 'Taxonómia' allapján találhatók.
 obj#:#obj_tool_setting_use_news#:#Hírek
 obj#:#obj_tool_setting_use_news_info#:#Hírblokk, illetve idővonal nézet bekapcsolása. Amennyiben aktív, a felhasználók értesítést kérhetnek a módosulásról.
 obj#:#obj_tool_setting_use_news_open_settings#:#Beállítások megnyitása
@@ -14657,6 +14657,7 @@ rbac#:#rbac_role_rights_copy_empty#:#Semmi
 rbac#:#rbac_role_selection#:#Szereptípus
 rbac#:#rbac_role_title#:#Szerepcím
 rbac#:#rbac_select_copy_targets#:#Válassza ki a célszerepköröket.
+rbac#:#rbac_select_roles#:#Szerep kiválasztása
 rbac#:#rbac_ud_global#:#Felhasználó által létrehozott globális szerepkör
 rbac#:#rbac_ud_local#:#Felhasználó által létrehozott helyi szerepkör
 rbac#:#rbac_ud_rolt#:#Felhasználó által létrehozott szerepsablon
@@ -15615,7 +15616,7 @@ shib#:#shib_account_creation_enabled#:#Bekapcsolva
 shib#:#shib_account_creation_enabled_info#:#Egy új ILIAS-fiókot hoztunk létre.
 shib#:#shib_account_creation_info#:#Az ILIAS-fiók akkor jön létre, amikor egy felhasználó még nem létező ILIAS-fiókba próbál bejelentkezni Shibboleth-en keresztül.
 shib#:#shib_account_creation_with_approval#:#Jóváhagyással
-shib#:#shib_account_creation_with_approval_info#:#Egy új, inkatív ILIAS-fiókot hoztunk létre. A felhasználót megfelelő jogosultsággal lehet aktiválni. 
+shib#:#shib_account_creation_with_approval_info#:#Egy új, inkatív ILIAS-fiókot hoztunk létre. A felhasználót megfelelő jogosultsággal lehet aktiválni.
 shib#:#shib_add_missing#:#Hiányzó szerepkörök összerendelése
 shib#:#shib_add_remove#:#Szerepkörök létrehozása/eltávolítása
 shib#:#shib_assignment_type#:#Összerendelés fajtája
@@ -17391,7 +17392,7 @@ user#:#change_email_email_confirmation_body#:#%s e-mail címe megváltozott. Enn
 user#:#change_email_email_confirmation_subject#:#E-mail cím megerősítése
 user#:#change_email_email_information_body#:#%s e-mail címének módosítása elkezdődött (%s). Egy megerősítő e-mail küldtünk az új címre. A link %s percig érvényes.
 user#:#change_email_email_information_subject#:#Információ az e-mail cím módosításáról
-user#:#change_email_email_sent#:#E-mail címe módosítása érdekében egy megerősítő linket tartalmazó e-mail küldtünk az új címre. Kérem, ellenőrizze postaládáját, illetve azt, is, hogy az üzenet ne kerüljön a levélszemetek közé. 
+user#:#change_email_email_sent#:#E-mail címe módosítása érdekében egy megerősítő linket tartalmazó e-mail küldtünk az új címre. Kérem, ellenőrizze postaládáját, illetve azt, is, hogy az üzenet ne kerüljön a levélszemetek közé.
 user#:#change_email_info_message#:#Jelenleg van egy függőben lévő kérelem a fiók e-mail-címének módosítására.
 user#:#clipboard_add_btn#:#Hozzáadás a vágólaphoz
 user#:#clipboard_add_from_btn#:#Hozzáadás a vágólapról
@@ -17783,7 +17784,7 @@ wiki#:#wiki_wiki_search#:#Wikikeresés
 wiki#:#wiki_wpg#:#Wiki oldal
 wopi#:#action_edit#:#Szerkesztés
 wopi#:#action_view#:#Megjelenítése
-wopi#:#activate_saving_interval#:#Automatikus mentés 
+wopi#:#activate_saving_interval#:#Automatikus mentés
 wopi#:#activate_wopi#:#WOPI bekapcsolása
 wopi#:#close_wopi_editor#:#Szerkesztő bezárása
 wopi#:#close_wopi_editor_info#:#Több percig is eltarthat, amíg a külső szerkesztő átviszi a változtatásokat az ILIAS-ba. Látogassa meg újra ezt az oldalt egy későbbi időpontban, ha a végrehajtott módosítások még nem láthatók.
