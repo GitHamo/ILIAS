@@ -7928,10 +7928,10 @@ crs#:#crs_visibility_unvisible#:#Der Kurs ist nicht sichtbar.
 crs#:#crs_wait_info#:#Ist die maximale Mitgliederanzahl erreicht, können sich weitere Benutzer auf eine Warteliste setzen lassen.
 crs#:#crs_waiting_list#:#Warteliste
 crs#:#crs_waiting_list_autofill#:#Mit automatischem Aufrücken
-crs#:#crs_waiting_list_autofill_info#:#Teilnehmer rücken automatisch bei Stornierungen von der Warteliste nach. Dies sollte nicht in Verbindung mit dem Beitrittsverfahren "Beitritt nach Bestätigung" benutzt werden, da die Bestätigung so umgangen wird.
+crs#:#crs_waiting_list_autofill_info#:#Personen auf der Warteliste rücken bei Stornierungen automatisch nach. Achtung: Nicht in Verbindung mit dem Beitrittsverfahren „Beitritt nach Bestätigung“ benutzen, da die Bestätigung so umgangen wird.
 crs#:#crs_waiting_list_no_autofill#:#Ohne automatisches Aufrücken
-crs#:#crs_warn_no_max_set_on_waiting_list#:#Die maximale Teilnehmeranzahl ist erreicht. Sie können sich jedoch auf die Warteliste für diesen Kurs setzen lassen und würden benachrichtigt, wenn Sie in den Kurs nachrücken könnten.
-crs#:#crs_warn_wl_set_on_waiting_list#:#Es sind bereits Teilnehmer auf der Warteliste eingetragen. Sie können sich jedoch auf die Warteliste für diesen Kurs setzen lassen. Sie werden per Mail benachrichtigt, sobald Ihr Aufnahmeantrag angenommen oder abgelehnt wurde.
+crs#:#crs_warn_no_max_set_on_waiting_list#:#Alle Plätze im Kurs sind belegt. Tragen Sie sich in die Warteliste ein. Sie werden benachrichtigt, falls im Kurs ein Platz frei wird.
+crs#:#crs_warn_wl_set_on_waiting_list#:#Es sind bereits Personen in die Warteliste eingetragen. Sie können sich auch selbst in die Warteliste eintragen. Sobald Ihr Aufnahmeantrag angenommen oder abgelehnt wird, erhalten Sie eine Mail.
 crs#:#crs_wiz_back#:#Zurück
 crs#:#crs_wiz_next#:#Speichern
 crs#:#crs_xml#:#XML
@@ -7948,7 +7948,7 @@ crs#:#event_date_time#:#Datum und Zeit
 crs#:#event_desc#:#Beschreibung
 crs#:#event_details_workflow#:#Details zur Sitzung
 crs#:#event_digit#:#Ziffer
-crs#:#event_edit_members#:#Teilnehmer
+crs#:#event_edit_members#:#Teilnahmen verwalten
 crs#:#event_etime_smaller_stime#:#Der Endtermin ist früher als der Starttermin. Bitte geben Sie eine gültige Zeitspanne ein.
 crs#:#event_file#:#Datei
 crs#:#event_files#:#Zugeordnete Dateien
@@ -7983,20 +7983,20 @@ crs#:#event_user_selection_include_requests#:#Binde alle Benutzer der Liste "Auf
 crs#:#event_user_selection_include_role#:#Binde alle Benutzer der Rolle "%1$s" ein
 crs#:#event_user_selection_include_waiting_list#:#Binde alle Benutzer der "Warteliste" ein
 crs#:#events#:#Sitzungen
-crs#:#export_members#:#Export der Teilnehmendendaten
+crs#:#export_members#:#Export
 crs#:#grouping_change_assignment#:#Zuordnungen ändern
 crs#:#grp_grp_already_assigned#:#Da Sie bereits Mitglied in einer der Gruppen sind, können Sie nicht einer weiteren Gruppe aus der Liste beitreten!
-crs#:#grp_not_all_users_assigned_msg#:#%s Teilnehmende wurde(n) in die Gruppe aufgenommen, %s Teilnehmende waren bereits in der Gruppe.
+crs#:#grp_not_all_users_assigned_msg#:#%s Personen wurden in die Gruppe aufgenommen. %s weitere waren bereits Gruppenmitglieder.
 crs#:#mem_cron_min_members_intro#:#die folgenden Kurse und Gruppen erreichen aktuell nicht die Mindestanzahl an Mitgliedern:
 crs#:#mem_cron_min_members_reason#:#Möchten Sie keine Benachrichtigungen mehr für diese Kurse und Gruppen erhalten, deaktivieren Sie in den jeweiligen Objekten die Checkbox „Benachrichtigung“ im Reiter „Mitglieder“.
-crs#:#mem_cron_min_members_subject#:#Kurs/Gruppe: Prüfung der minimalen Teilnehmerzahl
+crs#:#mem_cron_min_members_subject#:#Kurs/Gruppe: Prüfung auf minimale Anzahl an Anmeldungen
 crs#:#mem_cron_min_members_task#:#Informieren Sie die bereits angemeldeten Personen rechtzeitig, falls die Veranstaltung nicht stattfindet. Oder ändern Sie die Mindestanzahl der Mitglieder bzw. den Beitrittszeitraum. Passen Sie hierzu die Einstellungen im Abschnitt „Zeitlich begrenzter Beitritt“ bzw. „Begrenzte Mitgliederanzahl“ an.
 crs#:#obj_count_members#:#Anzahl der Mitglieder
-crs#:#sess_attendance_list#:#Teilnehmerliste
+crs#:#sess_attendance_list#:#Teilnahmeliste
 crs#:#sess_gen_attendance_list#:#Liste erstellen
 crs#:#sess_join_info#:#Bitte klicken Sie auf Anmelden, wenn Sie an dieser Sitzung teilnehmen möchten.
 crs#:#sess_limit#:#Anzahl der angezeigten Sitzungen begrenzen
-crs#:#sess_limit_info#:#Teilnehmern werden nicht alle Sitzungen angezeigt, sondern nur eine definierte Anzahl.
+crs#:#sess_limit_info#:#Es wird zunächst eine gekürzte Liste der Sitzungen präsentiert. Vergangene und künftige Sitzungen können per Klick zusätzlich eingeblendet werden.
 crs#:#sess_num_next#:#Anzahl nachfolgender Sitzungen (ab morgen)
 crs#:#sess_num_prev#:#Anzahl vergangener Sitzungen (bis einschließlich gestern)
 crs#:#sess_print_attendance_list#:#Liste drucken
@@ -8017,7 +8017,7 @@ crs#:#timings_cron_reminder_started_subject#:#Der Bearbeitungszeitraum hat begon
 crs#:#timings_edit#:#Zeitplanung bearbeiten
 crs#:#timings_of#:#Lernplanung von
 crs#:#timings_reminder_notifications#:#Benachrichtigungen zur Lernplanung versenden
-crs#:#timings_reminder_notifications_info#:#Wenn aktiviert, werden Kursteilnehmer über überschrittene Lernplanungsmaterialien informiert.
+crs#:#timings_reminder_notifications_info#:#Kursmitglieder werden informiert, wenn sie ihren Zeitplan nicht einhalten.
 crs#:#timings_timings#:#Lernplanung
 crs#:#timings_timings_off#:#Lernplanungsverwaltung aus
 crs#:#timings_timings_on#:#Lernplanungsverwaltung an
@@ -13750,7 +13750,7 @@ ps#:#ps_export_confirm_group#:#Zustimmung neuer Mitglieder beim Gruppenbeitritt,
 ps#:#ps_export_course#:#Export der Persönlichen Daten aus Kursen erlauben
 ps#:#ps_export_data#:#Daten des Persönlichen Profils
 ps#:#ps_export_excel#:#Starte Excel-Export
-ps#:#ps_export_files#:#Exportdateien
+ps#:#ps_export_files#:#Personenbezogene Daten: Exportdateien
 ps#:#ps_export_groups#:#Export der Persönlichen Daten aus Gruppen erlauben
 ps#:#ps_export_member#:#Mitglieder
 ps#:#ps_export_prgs#:#Persönliche Daten in Studienprogrammen anzeigen und exportieren
