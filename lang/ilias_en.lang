@@ -7737,11 +7737,9 @@ crs#:#crs_objective_tbl_col_final_tsts#:#Final Tests
 crs#:#crs_objective_wiz_final#:#Final Test Questions
 crs#:#crs_objective_wiz_final_info#:#Assignment of final test questions.
 crs#:#crs_objective_wiz_final_limit#:#Limits for Final Test
-crs#:#crs_objective_wiz_final_limit_info#:#Here you can define the limits for the final test questions.
 crs#:#crs_objective_wiz_materials#:#Assign Course Material
 crs#:#crs_objective_wiz_materials_info#:#You can assign course materials that are recommended for processing the learning objective.
 crs#:#crs_objective_wiz_self#:#Initial Test Questions
-crs#:#crs_objective_wiz_self_info#:#Please set the initial test questions. Initial tests are intended to examine the previous knowledge of the course members.
 crs#:#crs_objective_wiz_self_limit#:#Limits for Initial Test
 crs#:#crs_objective_wiz_self_limit_info#:#Please define the limits for initial test questions.
 crs#:#crs_objective_wiz_title#:#Describe Learning Objective
@@ -7798,7 +7796,6 @@ crs#:#crs_search_users#:#Search Users
 crs#:#crs_select_archive_language#:#Please select a language for the archive
 crs#:#crs_select_one_archive#:#Please select one archive
 crs#:#crs_select_starter#:#Select Start Object
-crs#:#crs_selected_users#:#Selected Participants
 crs#:#crs_settings#:#Course Settings
 crs#:#crs_settings_saved#:#Settings saved
 crs#:#crs_shorten_breadcrumb#:#Breadcrumb
@@ -7880,7 +7877,6 @@ crs#:#crs_timings_presetting#:#Time Target Enabled
 crs#:#crs_timings_short_active#:#Enabled
 crs#:#crs_timings_short_active_tt#:#Activate Timings
 crs#:#crs_timings_short_changeable#:#Changeable
-crs#:#crs_timings_short_changeable_tt#:#Timings changeable by participants
 crs#:#crs_timings_short_end#:#End Date
 crs#:#crs_timings_short_limit_start_end#:#Latest End Date
 crs#:#crs_timings_short_limit_start_end_tt#:#Latest end
@@ -10237,10 +10233,8 @@ grp#:#grp_custom_user_fields#:#Group Relevant User Data
 grp#:#grp_custom_user_fields_infobox#:#Create additional data fields for group members to fill in when they join. You can show this information as an additional column in the "Members" tab.
 grp#:#grp_custom_user_fields_table_title#:#Relevant User Data of This Group
 grp#:#grp_deactivate_notification#:#Deactivate Notification
-grp#:#grp_edit_members#:#Edit Participants
 grp#:#grp_enable_map#:#Enable Group Map
 grp#:#grp_err_registration_limited#:#please enter a valid start and end date for the registration
-grp#:#grp_export_members#:#Export Participants
 grp#:#grp_general_informations#:#General Information
 grp#:#grp_grp_info_reg#:#You can only register to one of these groups:
 grp#:#grp_grp_open#:#Open Group
@@ -10336,7 +10330,6 @@ grp#:#grp_reg_subject#:#Message
 grp#:#grp_registration_unlimited#:#Unlimited
 grp#:#grp_role_status#:#Role/Status
 grp#:#grp_search_users#:#Search User
-grp#:#grp_selected_users#:#Selected Participants
 grp#:#grp_set_on_waiting_list#:#You can set yourself on the waiting list. You will receive a message from a group administrator when your request has been approved or rejected.
 grp#:#grp_setting_header_presentation#:#Group Presentation
 grp#:#grp_setting_header_registration#:#Group Registration

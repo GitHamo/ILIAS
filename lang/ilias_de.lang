@@ -2289,7 +2289,7 @@ bgtask#:#bgtask_setting#:#„Herunterladen im Hintergrund“ aktivieren
 bgtask#:#bgtask_setting_info#:#Die Erstellung der ZIP-Datei erfolgt asynchron und kann jederzeit abgebrochen werden.
 bgtask#:#bgtask_setting_limit#:#Größenlimit Download-Paket
 bgtask#:#bgtask_setting_limit_info#:#Der Download eines Ordners oder mehrerer Objekte ist nur möglich, wenn die Dateigrößen in Summe den eingegebenen Wert nicht überschreiten.
-bgtask#:#bgtask_setting_threshold_count#:#Minimale Anzahl
+bgtask#:#bgtask_setting_threshold_count#:#Mindestanzahl
 bgtask#:#bgtask_setting_threshold_count_info#:#Ab diesem Wert erfolgt der Download asynchron.
 bgtask#:#bgtask_setting_threshold_size#:#Minimale Größe
 bgtask#:#bgtask_setting_threshold_size_info#:#Ab dieser Größe erfolgt der Download asynchron.
@@ -4571,7 +4571,7 @@ common#:#mcst_new#:#Neuen Mediacast anlegen
 common#:#mem_add_to_wl#:#In Warteliste eintragen
 common#:#mem_alert_no_places#:#Es sind keine freien Plätze verfügbar.
 common#:#mem_cron_min_members#:#Kurs/Gruppe: Prüfung der minimalen Teilnehmerzahl
-common#:#mem_cron_min_members_info#:#Die Kurs- bzw. Gruppenadministration wird benachrichtigt, sofern die minimale Anzahl nicht erreicht wird.
+common#:#mem_cron_min_members_info#:#Die Kurs- bzw. Gruppenadministration wird benachrichtigt, sofern die Mindestanzahl nicht erreicht wird.
 common#:#mem_end#:#Anmeldungsende:
 common#:#mem_free_places#:#Freie Plätze
 common#:#mem_max_users#:#Maximale Teilnehmeranzahl:
@@ -7642,7 +7642,7 @@ crs#:#crs_mail_type#:#Mail an Mitglieder
 crs#:#crs_map_location#:#Ort auf Karte zum Kurs
 crs#:#crs_map_settings#:#Karte
 crs#:#crs_materials#:#Materialien
-crs#:#crs_max_and_min_members_invalid#:#Die minimale Anzahl muss kleiner als die maximale Anzahl sein.
+crs#:#crs_max_and_min_members_invalid#:#Die Mindestanzahl muss kleiner als die maximale Anzahl sein.
 crs#:#crs_max_and_min_members_needed#:#Setzen Sie eine minimale oder maximale Anzahl - oder beides.
 crs#:#crs_max_members_needed#:#Für die Warteliste wird eine maximale Anzahl Mitglieder benötigt.
 crs#:#crs_max_members_reached#:#Die maximale Mitgliederanzahl wurde überschritten
@@ -7729,11 +7729,9 @@ crs#:#crs_objective_tbl_col_final_tsts#:#Abschlusstests
 crs#:#crs_objective_wiz_final#:#Fragen des  Abschlusstests festlegen
 crs#:#crs_objective_wiz_final_info#:#Legen Sie nun die Fragen des Abschlusstests fest, die das Erreichen des Lernziels überprüfen sollen.
 crs#:#crs_objective_wiz_final_limit#:#Grenzen des Abschlusstests festlegen
-crs#:#crs_objective_wiz_final_limit_info#:#Bitte tragen Sie nun die Punktzahl ein, die ein Kursteilnehmer benötigt, um das Lernziel zu bestehen.
 crs#:#crs_objective_wiz_materials#:#Lerninhalte zuordnen
 crs#:#crs_objective_wiz_materials_info#:#Hier legen Sie fest, welche Lerninhalte zur Bearbeitung des Lernziels empfohlen werden.
 crs#:#crs_objective_wiz_self#:#Fragen des Einstiegstests festlegen
-crs#:#crs_objective_wiz_self_info#:#Legen Sie nun die Fragen des Einstiegstests fest. Der Einstiegstest dient der Überprüfung, ob und welche Vorkenntnisse bei den Kursteilnehmern vorhanden sind.
 crs#:#crs_objective_wiz_self_limit#:#Grenzen des Einstiegstests festlegen
 crs#:#crs_objective_wiz_self_limit_info#:#Bitte geben Sie die Anzahl der Punkte ein, ab der keine weiteren Lerninhalte zur Bearbeitung empfohlen werden.
 crs#:#crs_objective_wiz_title#:#Lernziel beschreiben
@@ -7790,7 +7788,6 @@ crs#:#crs_search_users#:#Benutzer suchen
 crs#:#crs_select_archive_language#:#Bitte wählen Sie eine Sprache, in der das Archiv erstellt werden soll.
 crs#:#crs_select_one_archive#:#Bitte wählen Sie genau ein Archiv aus!
 crs#:#crs_select_starter#:#Startobjekt auswählen
-crs#:#crs_selected_users#:#Ausgewählte Teilnehmer
 crs#:#crs_settings#:#Kurseinstellungen
 crs#:#crs_settings_saved#:#Die Einstellungen wurden gespeichert.
 crs#:#crs_shorten_breadcrumb#:#Brotkrumennavigation
@@ -7831,8 +7828,8 @@ crs#:#crs_subscription_failed_limit#:#Die maximale Teilnehmeranzahl wurde übers
 crs#:#crs_subscription_max_members#:#Maximale Anzahl
 crs#:#crs_subscription_max_members_short#:#Begrenzte Mitgliederanzahl
 crs#:#crs_subscription_max_members_short_info#:#Es kann eine minimale bzw. maximale Anzahl von Mitgliedern festgelegt werden. Es kann eine Warteliste eingerichtet werden.
-crs#:#crs_subscription_min_members#:#Minimale Anzahl
-crs#:#crs_subscription_min_members_err#:#Die minimale Anzahl darf nicht größer als die maximale Anzahl sein.
+crs#:#crs_subscription_min_members#:#Mindestanzahl
+crs#:#crs_subscription_min_members_err#:#Die Mindestanzahl darf nicht größer als die maximale Anzahl sein.
 crs#:#crs_subscription_min_members_info#:#Wird die geforderte Mindestanzahl an Mitgliedern nicht erreicht, kann der Kurs nicht stattfinden. Wird die Mindestanzahl bis zum Ende des Beitrittszeitraums bzw. dem spätesten Kursaustritt nicht erreicht, versendet ILIAS eine Mail an die Personen, für die im Reiter „Mitglieder“ die Option „Benachrichtigung“ aktiviert ist.
 crs#:#crs_subscription_options_confirmation#:#Beitritt nach Bestätigung
 crs#:#crs_subscription_options_direct#:#Direkter Beitritt
@@ -7872,7 +7869,6 @@ crs#:#crs_timings_presetting#:#Lernplanung eingeschaltet
 crs#:#crs_timings_short_active#:#Lernplanung
 crs#:#crs_timings_short_active_tt#:#Lernplanung aktivieren
 crs#:#crs_timings_short_changeable#:#Änderbar
-crs#:#crs_timings_short_changeable_tt#:#Lernplaung änderbar durch Teilnehmer
 crs#:#crs_timings_short_end#:#Enddatum
 crs#:#crs_timings_short_limit_start_end#:#Spätestes Ende
 crs#:#crs_timings_short_limit_start_end_tt#:#Spätestes Ende
@@ -7989,7 +7985,7 @@ crs#:#grp_grp_already_assigned#:#Da Sie bereits Mitglied in einer der Gruppen si
 crs#:#grp_not_all_users_assigned_msg#:#%s Personen wurden in die Gruppe aufgenommen. %s weitere waren bereits Gruppenmitglieder.
 crs#:#mem_cron_min_members_intro#:#die folgenden Kurse und Gruppen erreichen aktuell nicht die Mindestanzahl an Mitgliedern:
 crs#:#mem_cron_min_members_reason#:#Möchten Sie keine Benachrichtigungen mehr für diese Kurse und Gruppen erhalten, deaktivieren Sie in den jeweiligen Objekten die Checkbox „Benachrichtigung“ im Reiter „Mitglieder“.
-crs#:#mem_cron_min_members_subject#:#Kurs/Gruppe: Prüfung auf minimale Anzahl an Anmeldungen
+crs#:#mem_cron_min_members_subject#:#Kurs/Gruppe: Prüfung auf Mindestanzahl an Anmeldungen
 crs#:#mem_cron_min_members_task#:#Informieren Sie die bereits angemeldeten Personen rechtzeitig, falls die Veranstaltung nicht stattfindet. Oder ändern Sie die Mindestanzahl der Mitglieder bzw. den Beitrittszeitraum. Passen Sie hierzu die Einstellungen im Abschnitt „Zeitlich begrenzter Beitritt“ bzw. „Begrenzte Mitgliederanzahl“ an.
 crs#:#obj_count_members#:#Anzahl der Mitglieder
 crs#:#sess_attendance_list#:#Teilnahmeliste
@@ -9319,7 +9315,7 @@ exc#:#exc_members_already_assigned_team#:#Dieser Benutzer ist bereits einem Team
 exc#:#exc_min_char_limit#:#Mindestanzahl Zeichen
 exc#:#exc_min_nr#:#Anzahl Übungseinheiten
 exc#:#exc_min_nr_info#:#Dieser Wert muss mindestens so hoch sein, wie die Anzahl der verpflichtenden Übungseinheiten.
-exc#:#exc_min_team_participants#:#Minimale Anzahl
+exc#:#exc_min_team_participants#:#Mindestanzahl
 exc#:#exc_msg_all_mandatory_ass#:#Sie müssen alle verpflichtenden Übungseinheiten bestehen, um die Übung als ganze zu bestehen.
 exc#:#exc_msg_deadline_request_body#:#Der folgende Benutzer hat eine individuelle Abgabefrist angefragt.
 exc#:#exc_msg_deadline_request_subject#:#Es wurde eine Abgabefrist in Übung „%s“ angefragt.
@@ -9602,9 +9598,9 @@ exc#:#exc_team_member_add#:#Team-Mitglied hinzufügen (Suche)
 exc#:#exc_team_member_container_add#:#Team-Mitglied aus Kurs/Gruppe hinzufügen
 exc#:#exc_team_member_remove_sure#:#Wollen Sie wirklich die folgenden Mitglieder Ihres Teams entfernen? Bitte beachten Sie, dass auch die jeweiligen hochgeladenen Dateien aus dem Team entfernt werden.
 exc#:#exc_team_members#:#Team-Mitglieder
-exc#:#exc_team_min_big_than_max#:#Die maximale Anzahl von Teilnehmern kann nicht kleiner als die minimale Anzahl sein.
-exc#:#exc_team_min_small_than_members#:#Die minimale Anzahl von Teilnehmern kann nicht auf %s gesetzt werden, da einige Teams %s Teilnehmer erhalten müssen.
-exc#:#exc_team_minimal_too_big#:#Die minimale Anzahl von Teilnehmern %s ist zu groß, bitte verringern Sie den Wert.
+exc#:#exc_team_min_big_than_max#:#Die maximale Anzahl von Teilnehmern kann nicht kleiner als die Mindestanzahl sein.
+exc#:#exc_team_min_small_than_members#:#Die Mindestanzahl von Teilnehmern kann nicht auf %s gesetzt werden, da einige Teams %s Teilnehmer erhalten müssen.
+exc#:#exc_team_minimal_too_big#:#Die Mindestanzahl von Teilnehmern %s ist zu groß, bitte verringern Sie den Wert.
 exc#:#exc_team_multi_create#:#Team erstellen
 exc#:#exc_team_multi_dissolve#:#Team(s) auflösen
 exc#:#exc_team_notification_body_add#:#Sie wurden zu einer Team-Upload-Übungseinheit hinzugefügt.
@@ -10229,10 +10225,8 @@ grp#:#grp_custom_user_fields#:#Personenbezogene Angaben
 grp#:#grp_custom_user_fields_infobox#:#Legen Sie weitere Datenfelder an, welche Gruppenmitglieder beim Beitritt ausfüllen. Die Angaben können Sie im Reiter "Mitglieder" als zusätzliche Spalte einblenden.
 grp#:#grp_custom_user_fields_table_title#:#Personenbezogene Angaben zu dieser Gruppe
 grp#:#grp_deactivate_notification#:#Benachrichtigung deaktivieren
-grp#:#grp_edit_members#:#Teilnehmerverwaltung
 grp#:#grp_enable_map#:#Gruppenkarte aktivieren
 grp#:#grp_err_registration_limited#:#Bitte geben Sie ein gültiges Start- und Enddatum der Registrierung ein.
-grp#:#grp_export_members#:#Teilnehmerexport
 grp#:#grp_general_informations#:#Allgemeine Informationen
 grp#:#grp_grp_info_reg#:#Die folgenden Gruppen unterliegen einer Mitgliedschaftsbeschränkung. Sie können nur einer dieser Gruppen beitreten:
 grp#:#grp_grp_open#:#Gruppe öffnen
@@ -10280,7 +10274,7 @@ grp#:#grp_mail_wl_bod#:#Sie sind auf die Warteliste der Gruppe „%s“ gesetzt 
 grp#:#grp_mail_wl_sub#:#Ihre Anmeldung für Gruppe „%s“
 grp#:#grp_map_location#:#Standort auf Gruppenkarte
 grp#:#grp_map_settings#:#Einstellungen Karte
-grp#:#grp_max_and_min_members_invalid#:#Die minimale Anzahl muss kleiner als die maximale Anzahl sein.
+grp#:#grp_max_and_min_members_invalid#:#Die Mindestanzahl muss kleiner als die maximale Anzahl sein.
 grp#:#grp_mem_contacts#:#Kontaktperson
 grp#:#grp_mem_tbl_header#:#Gruppenteilnehmer
 grp#:#grp_member_administration#:#Teilnehmerverwaltung
@@ -10328,7 +10322,6 @@ grp#:#grp_reg_subject#:#Nachricht
 grp#:#grp_registration_unlimited#:#Zeitlich unbegrenzt
 grp#:#grp_role_status#:#Rolle/Status
 grp#:#grp_search_users#:#Benutzer suchen
-grp#:#grp_selected_users#:#Ausgewählte Teilnehmer
 grp#:#grp_set_on_waiting_list#:#Wenn Sie einen Aufnahmeantrag stellen, werden Sie auf die Warteliste gesetzt. Sie werden dann von der Gruppenleitung benachrichtigt, ob Ihr Aufnahmeantrag angenommen oder abgelehnt wird.
 grp#:#grp_setting_header_presentation#:#Darstellung
 grp#:#grp_setting_header_registration#:#Selbstständiger Beitritt durch Benutzer
@@ -10365,7 +10358,7 @@ grp#:#grp_wrong_min_max_members#:#Setzen Sie eine minimale oder maximale Anzahl 
 grp#:#grp_wrong_reg_time_limit#:#Bitte überprüfen Sie Ihre Eingaben zum Anmeldungszeitraum.
 grp#:#reg_grp_max_members#:#Maximale Anzahl
 grp#:#reg_grp_max_members_short#:#Begrenzte Mitgliederanzahl
-grp#:#reg_grp_min_members#:#Minimale Anzahl
+grp#:#reg_grp_min_members#:#Mindestanzahl
 gsfo#:#accessibility#:#Barrierefreiheit
 gsfo#:#confirm_delete#:#Möchten Sie die folgenden Elemente wirklich löschen?
 gsfo#:#confirm_reset#:#Durch das Zurücksetzen der Fußzeile werden alle Einträge in ihren ursprünglichen Zustand zurückversetzt. Alle Anpassungen und manuellen Einträge werden gelöscht. Möchten Sie fortfahren?
@@ -14370,7 +14363,7 @@ rbac#:#poll_write#:#Abstimmung bearbeiten
 rbac#:#positions_override_operations#:#Globale Einstellungen überschreiben
 rbac#:#precondition_not_obligatory_alt#:#Die Vorbedingung ist optional
 rbac#:#precondition_num_obligatory#:#Anzahl benötigter Materialien
-rbac#:#precondition_num_optional_info#:#Bitte geben Sie die minimale Anzahl der Materialien an, die notwendig ist, um die Vorbedingung zu erfüllen.
+rbac#:#precondition_num_optional_info#:#Bitte geben Sie die Mindestanzahl der Materialien an, die notwendig ist, um die Vorbedingung zu erfüllen.
 rbac#:#precondition_obligatory#:#Verpflichtend
 rbac#:#precondition_obligatory_alt#:#Die Vorbedingung muss erfüllt werden
 rbac#:#precondition_obligatory_info#:#Verpflichtende Vorbedingungen müssen erfüllt werden, um Zugriff zu erhalten.
