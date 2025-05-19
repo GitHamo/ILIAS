@@ -3577,7 +3577,7 @@ common#:#assf_questiontypes#:#Frageneinstellungen
 common#:#assign#:#Zuweisen
 common#:#assign_global_role#:#Einer globalen Rolle zuordnen
 common#:#assign_local_role#:#Lokale Rolle zuweisen
-common#:#assigned_members#:#Zugeordnete Teilnehmer
+common#:#assigned_members#:#Zugeordnete Personen
 common#:#assigned_roles#:#Zugewiesene Rollen
 common#:#associated_user#:#Mitglied
 common#:#astounded#:#Astounded
@@ -4018,7 +4018,7 @@ common#:#enable_anonymous_fora_desc#:#Muss aktiviert sein, damit in Foren die Fu
 common#:#enable_calendar#:#Kalender aktivieren
 common#:#enable_comments_export#:#Export von Kommentaren
 common#:#enable_course_group_notifications#:#Tägliche Mail über Neuigkeiten aus Gruppen und Kursen
-common#:#enable_course_group_notifications_desc#:#Bei Aktivierung können Teilnehmer eine Zusammenfassung der News abonnieren.
+common#:#enable_course_group_notifications_desc#:#Mitglieder können eine Zusammenfassung der News abonnieren.
 common#:#enable_custom_icons#:#Anpassbare Symbole aktivieren
 common#:#enable_custom_icons_info#:#Damit können Sie eigene Symbole (Icons) für einzelne Container-Objekte und die Inhaltsseite definieren. Die entsprechenden Bilddateien laden Sie in den Eigenschaften der Objekte hoch.
 common#:#enable_dnd_upload#:#Drag-and-Drop-Upload aktivieren
@@ -4297,7 +4297,7 @@ common#:#grp_dismiss_myself#:#Sind Sie sicher, dass Sie die Mitgliedschaft in di
 common#:#grp_edit#:#Einstellungen der Gruppe
 common#:#grp_err_administrator_required#:#Das Gruppenmitglied wurde nicht entfernt. Pro Gruppe wird mindestens eine Person als Gruppenadministration benötigt.
 common#:#grp_header_edit_members#:#Mitglieder bearbeiten
-common#:#grp_list_members#:#Teilnehmer auflisten
+common#:#grp_list_members#:#Mitglieder auflisten
 common#:#grp_list_reg#:#Beitritt
 common#:#grp_list_reg_end#:#Anmeldungsende
 common#:#grp_list_reg_limit_full#:#Keine freien Plätze verfügbar
@@ -4649,7 +4649,7 @@ common#:#mcst_add#:#Mediacast anlegen
 common#:#mcst_new#:#Neuen Mediacast anlegen
 common#:#mem_add_to_wl#:#In Warteliste eintragen
 common#:#mem_alert_no_places#:#Es sind keine freien Plätze verfügbar.
-common#:#mem_cron_min_members#:#Kurs/Gruppe: Prüfung der minimalen Teilnehmerzahl
+common#:#mem_cron_min_members#:#Kurs/Gruppe: Prüfung auf Mindestanzahl an Anmeldungen
 common#:#mem_cron_min_members_info#:#Die Kurs- bzw. Gruppenadministration wird benachrichtigt, sofern die Mindestanzahl nicht erreicht wird.
 common#:#mem_end#:#Anmeldungsende:
 common#:#mem_free_places#:#Freie Plätze
