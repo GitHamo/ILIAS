@@ -2736,23 +2736,23 @@ cat#:#cat_hide_tax_in_side_block#:#Don't Present in Side Panel
 cat#:#cat_import#:#Import Category
 cat#:#cat_more_translations#:#More Translations
 cat#:#cat_show_tax_in_side_block#:#Present in Side Panel
-cert#:#cert_currently_no_certs#:#Currently you did not achieve any certificate, yet.
+cert#:#cert_currently_no_certs#:#You do not have any certificates yet.
 cert#:#cert_description_label#:#Description
 cert#:#cert_download_label#:#Download
-cert#:#cert_error_no_access#:#You have no access to this certificate.
+cert#:#cert_error_no_access#:#You do not have the permissions necessary to access this certificate.
 cert#:#cert_issued_on_label#:#Issued On
 cert#:#cert_object_label#:#Object
 cert#:#cert_sortable_by_issue_date_asc#:#Issue Date Ascending
 cert#:#cert_sortable_by_issue_date_desc#:#Issue Date Descending
 cert#:#cert_sortable_by_title_asc#:#Title Ascending
 cert#:#cert_sortable_by_title_desc#:#Title Descending
-cert#:#certificate_achievement#:#%1$s achieved.
+cert#:#certificate_achievement#:#%1$s obtained.
 cert#:#certificate_achievement_sub_obj#:#Certificate for %1$s
 cert#:#certificate_no_object_title#:#No object title available
 cert#:#certificate_same_not_saved#:#No new version of certificate template was saved, because the values didn't change.
 cert#:#error_creating_certificate_pdf#:#The certificate could not be created. Please contact the administrator to check the certificate server.
 cert#:#user_certificates#:#Certificates
-certificate#:#cert_cron_task_desc#:#This job's responsibility is the creation of persisting certificate data based on learning achievements of users.
+certificate#:#cert_cron_task_desc#:#This cron job creates persistent certificates based on the learning achievements of users.
 certificate#:#cert_cron_task_title#:#Certificates
 certificate#:#cert_form_sec_add_features#:#Additional Features
 certificate#:#cert_form_sec_availability#:#Availability
@@ -2762,64 +2762,64 @@ certificate#:#certificate_a4_landscape#:#A4 Landscape (210 mm x 297 mm)
 certificate#:#certificate_a5#:#A5 (210 mm x 148 mm)
 certificate#:#certificate_a5_landscape#:#A5 Landscape (148 mm x 210 mm)
 certificate#:#certificate_background_image#:#Background Image
-certificate#:#certificate_card_tile_image#:#Card Tile Image
-certificate#:#certificate_change_active_status#:#The active state of the certificate has been changed
-certificate#:#certificate_confirm_deletion_text#:#Do you really want to delete the certificate and all its related data?
-certificate#:#certificate_custom#:#Custom...
+certificate#:#certificate_card_thumbnail_image#:#Thumbnail Image
+certificate#:#certificate_change_active_status#:#The ‘Active’ status of the certificate has been changed.
+certificate#:#certificate_confirm_deletion_text#:#Are you sure you want to delete all of the data entered for this certificate template?
+certificate#:#certificate_custom#:#Custom
 certificate#:#certificate_edit#:#Create/Edit a Certificate Template
-certificate#:#certificate_error_import#:#An error occurred during the import of a certificate!
-certificate#:#certificate_error_upload_bgimage#:#An error occurred during the upload of the background image!
+certificate#:#certificate_error_import#:#An error occurred while trying to import the certificate!
+certificate#:#certificate_error_upload_bgimage#:#An error occurred while trying to upload the background image.
 certificate#:#certificate_export#:#Export
-certificate#:#certificate_failed#:#failed
+certificate#:#certificate_failed#:#Failed
 certificate#:#certificate_file_basename#:#Certificate
 certificate#:#certificate_id#:#Certificate ID
-certificate#:#certificate_issue_date#:#Issue Date
+certificate#:#certificate_issue_date#:#Date of Issue
 certificate#:#certificate_learning_progress_must_be_active#:#Only objects with an active Learning Progress can be selected. The Learning Progress is deactivated on the following objects: %s
 certificate#:#certificate_letter#:#Letter (11 inch x 8.5 inch)
 certificate#:#certificate_letter_landscape#:#Letter Landscape (8.5 inch x 11 inch)
-certificate#:#certificate_margin_body#:#Body Margin
-certificate#:#certificate_not_well_formed#:#The certificate text is not well formed. Please enter valid XHTML for the certificate text!
+certificate#:#certificate_margin_body#:#Text Margins
+certificate#:#certificate_not_well_formed#:#The certificate text is not correctly formatted. Please enter valid XHTML for the certificate text.
 certificate#:#certificate_page_format#:#Page Format
-certificate#:#certificate_page_format_info#:#Please select the default page format for new certificates.
+certificate#:#certificate_page_format_info#:#Please select the page format to be used as the default for new certificates.
 certificate#:#certificate_pageheight#:#Page Height
 certificate#:#certificate_pagewidth#:#Page Width
-certificate#:#certificate_passed#:#passed
-certificate#:#certificate_ph_birthday#:#Birthday of the user
+certificate#:#certificate_passed#:#Passed
+certificate#:#certificate_ph_birthday#:#User’s date of birth
 certificate#:#certificate_ph_cert_id#:#Unique Certificate ID
-certificate#:#certificate_ph_city#:#City of the user's address
-certificate#:#certificate_ph_country#:#Country of the user's address
-certificate#:#certificate_ph_date#:#Actual date
+certificate#:#certificate_ph_city#:#City from user's address
+certificate#:#certificate_ph_country#:#Country from user's address
+certificate#:#certificate_ph_date#:#Current date
 certificate#:#certificate_ph_date_completed#:#Date of completion
-certificate#:#certificate_ph_datetime#:#Actual date and time
+certificate#:#certificate_ph_datetime#:#Current date and time
 certificate#:#certificate_ph_datetime_completed#:#Date and time of completion
-certificate#:#certificate_ph_department#:#Department of the user
-certificate#:#certificate_ph_exercisetitle#:#Exercise Title
-certificate#:#certificate_ph_firstname#:#First name of the user
-certificate#:#certificate_ph_fullname#:#Full name of the user (title, first name and last name)
-certificate#:#certificate_ph_institution#:#Institution of the user
+certificate#:#certificate_ph_department#:#Department to which user belongs
+certificate#:#certificate_ph_exercisetitle#:#Title of exercise
+certificate#:#certificate_ph_firstname#:#User’s first name
+certificate#:#certificate_ph_fullname#:#User’s full name (title, first name and last name)
+certificate#:#certificate_ph_institution#:#Institution to which user belongs
 certificate#:#certificate_ph_introduction#:#The following placeholders may be used
-certificate#:#certificate_ph_lastaccess#:#Last access date and time of the user
-certificate#:#certificate_ph_lastname#:#Last name of the user
-certificate#:#certificate_ph_login#:#Login
-certificate#:#certificate_ph_mark#:#Users mark
-certificate#:#certificate_ph_marklong#:#Users mark (official version)
-certificate#:#certificate_ph_markshort#:#Users mark (short version)
-certificate#:#certificate_ph_matriculation#:#Matriculation number of the user
-certificate#:#certificate_ph_no_sco#:#If items are selected to determine the overall learning progress status, titles and points for these items could be displayed in certificate.
+certificate#:#certificate_ph_lastaccess#:#Date and time of last access by user
+certificate#:#certificate_ph_lastname#:#User’s last name
+certificate#:#certificate_ph_login#:#Username
+certificate#:#certificate_ph_mark#:#User’s mark
+certificate#:#certificate_ph_marklong#:#User’s mark (official version)
+certificate#:#certificate_ph_markshort#:#User’s mark (short version)
+certificate#:#certificate_ph_matriculation#:#User’s matriculation number
+certificate#:#certificate_ph_no_sco#:#If the learning progress for this learning module is determined by a collection of objects, then placeholders for the titles and points of these objects will be made available here.
 certificate#:#certificate_ph_salutation#:#Salutation
-certificate#:#certificate_ph_sco_points_max#:#placeholder<br/>for points<br/>max
-certificate#:#certificate_ph_sco_points_raw#:#placeholder<br/>for points
-certificate#:#certificate_ph_sco_points_scaled#:#placeholder<br/>for points<br/>in percent
-certificate#:#certificate_ph_sco_title#:#placeholder<br/>for title
+certificate#:#certificate_ph_sco_points_max#:#Placeholder<br/>for max<br/>points
+certificate#:#certificate_ph_sco_points_raw#:#Placeholder<br/>for points
+certificate#:#certificate_ph_sco_points_scaled#:#Placeholder<br/>for points<br/>in percent
+certificate#:#certificate_ph_sco_title#:#Placeholder<br/>for title
 certificate#:#certificate_ph_scormmaxpoints#:#Maximum value in the range for the raw score of the last relevant sco (most suitable for a final exam)
 certificate#:#certificate_ph_scormpoints#:#Points of the SCORM learning module in percent
 certificate#:#certificate_ph_scormtitle#:#Title of the SCORM learning module
-certificate#:#certificate_ph_scos#:#The following items were selected to determine the overall learning progress status and are available for statements in the certificate:
-certificate#:#certificate_ph_street#:#Street of the user's address
-certificate#:#certificate_ph_testtitle#:#Title of the test
-certificate#:#certificate_ph_title#:#Title of the user
-certificate#:#certificate_ph_title_sco#:#title
-certificate#:#certificate_ph_zipcode#:#ZIP / Post code of the user's address
+certificate#:#certificate_ph_scos#:#The following were selected to determine the overall learning progress status and are available for statements in the certificate:
+certificate#:#certificate_ph_street#:#Street from user's address
+certificate#:#certificate_ph_testtitle#:#Title of test
+certificate#:#certificate_ph_title#:#User’s title
+certificate#:#certificate_ph_title_sco#:#Title
+certificate#:#certificate_ph_zipcode#:#ZIP / Post code from user's address
 certificate#:#certificate_points_notavailable#:#This value cannot be calculated
 certificate#:#certificate_preview#:#Preview
 certificate#:#certificate_settings#:#Certificate Settings
