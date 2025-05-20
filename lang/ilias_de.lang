@@ -4574,8 +4574,8 @@ common#:#mem_cron_min_members#:#Kurs/Gruppe: Prüfung auf Mindestanzahl an Anmel
 common#:#mem_cron_min_members_info#:#Die Kurs- bzw. Gruppenadministration wird benachrichtigt, sofern die Mindestanzahl nicht erreicht wird.
 common#:#mem_end#:#Anmeldungsende:
 common#:#mem_free_places#:#Freie Plätze
-common#:#mem_max_users#:#Maximale Teilnehmeranzahl:
-common#:#mem_min_users#:#Minimale Teilnehmeranzahl
+common#:#mem_max_users#:#Maximale Anzahl an Mitgliedern
+common#:#mem_min_users#:#Mindestanzahl an Mitgliedern
 common#:#mem_participants#:#Teilnehmer
 common#:#mem_reg_expired#:#Die Anmeldungszeit ist abgelaufen.
 common#:#mem_reg_not_started#:#Die Anmeldung hat noch nicht begonnen.
@@ -10253,8 +10253,8 @@ grp#:#grp_mail_notification_reg_req_bod#:#%s hat einen Aufnahmeantrag für die G
 grp#:#grp_mail_notification_reg_req_bod2#:#Um den Benutzer zur Gruppe zuzulassen oder den Antrag abzuweisen, müssen Sie die Mitgliederverwaltung aufrufen. Wählen Sie dazu bitte folgenden Link:
 grp#:#grp_mail_notification_reg_req_sub#:#Aufnahmeantrag für Gruppe „%s“
 grp#:#grp_mail_notification_reg_sub#:#Neue Mitgliedschaft in Gruppe „%s“
-grp#:#grp_mail_notification_unsub_bod#:#die Teilnehmerin / der Teilnehmer „%s“ hat die Mitgliedschaft in der Gruppe „%s“ beendet.
-grp#:#grp_mail_notification_unsub_bod2#:#Eventuell sind Teilnehmende in die Warteliste dieser Gruppe eingetragen. Um die Liste der Teilnehmenden anzuzeigen, rufen Sie bitte folgenden Link auf:
+grp#:#grp_mail_notification_unsub_bod#:#%s ist aus der Gruppe „%s“ ausgetreten.
+grp#:#grp_mail_notification_unsub_bod2#:#Eventuell stehen Personen auf der Warteliste dieser Gruppe. Um die Liste anzuzeigen, rufen Sie bitte folgenden Link auf:
 grp#:#grp_mail_notification_unsub_sub#:#Austritt aus der Gruppe „%s“
 grp#:#grp_mail_permanent_link#:#Wählen Sie den folgenden Link, um auf den Gruppeninhalt zuzugreifen:
 grp#:#grp_mail_status_bod#:#Ihr Status in Gruppe „%s“ wurde geändert.
@@ -10276,8 +10276,8 @@ grp#:#grp_map_location#:#Standort auf Gruppenkarte
 grp#:#grp_map_settings#:#Einstellungen Karte
 grp#:#grp_max_and_min_members_invalid#:#Die Mindestanzahl muss kleiner als die maximale Anzahl sein.
 grp#:#grp_mem_contacts#:#Kontaktperson
-grp#:#grp_mem_tbl_header#:#Gruppenteilnehmer
-grp#:#grp_member_administration#:#Teilnehmerverwaltung
+grp#:#grp_mem_tbl_header#:#Mitglieder
+grp#:#grp_member_administration#:#Verwalten
 grp#:#grp_members#:#Mitglieder
 grp#:#grp_members_deleted#:#Die ausgewählten Mitglieder sind aus der Gruppe ausgetragen worden.
 grp#:#grp_members_map#:#Karte Gruppenmitglieder
@@ -10292,7 +10292,7 @@ grp#:#grp_notification#:#Benachrichtigung
 grp#:#grp_notification_activated#:#Benachrichtigung aktiviert
 grp#:#grp_notification_deactivated#:#Benachrichtigung deaktiviert
 grp#:#grp_notification_explanation_admin#:#Sie erhalten diese Mail, da für Sie als Gruppenbetreuung die Benachrichtigungen aktiviert sind.
-grp#:#grp_notification_salutation#:#Liebe Gruppenteilnehmerin, lieber Gruppenteilnehmer,
+grp#:#grp_notification_salutation#:#Hallo,
 grp#:#grp_notify_off#:#Benachrichtigungen über Neuanmeldungen deaktiviert
 grp#:#grp_notify_on#:#Benachrichtigungen über Neuanmeldungen aktiviert
 grp#:#grp_pass_request#:#Beitritt mit Gruppenpasswort
@@ -10347,11 +10347,11 @@ grp#:#grp_view_inherit#:#Durch Kurs bestimmt
 grp#:#grp_view_inherit_info#:#Wird die Ansicht des übergeordneten Kurses geändert, ändert sich auch die Gruppenansicht.
 grp#:#grp_waiting_list#:#Warteliste
 grp#:#grp_waiting_list_autofill#:#Mit automatischem Aufrücken
-grp#:#grp_waiting_list_autofill_info#:#Teilnehmer rücken automatisch bei Stornierungen von der Warteliste auf.  Dies sollte nicht in Verbindung mit dem Beitrittsverfahren "Beitritt nach Bestätigung" benutzt werden, da die Bestätigung so umgangen wird.
+grp#:#grp_waiting_list_autofill_info#:#Personen auf der Warteliste rücken bei Stornierungen automatisch nach. Achtung: Nicht in Verbindung mit dem Beitrittsverfahren „Beitritt nach Bestätigung“ benutzen, da die Bestätigung so umgangen wird.
 grp#:#grp_waiting_list_info#:#Ist die maximale Mitgliederanzahl erreicht, können sich weitere Benutzer auf eine Warteliste setzen lassen.
 grp#:#grp_waiting_list_no_autofill#:#Ohne automatisches Aufrücken
 grp#:#grp_warn_grp_type_changed#:#Sind Sie sicher, dass Sie die Gruppenart ändern möchten? Die Rechteeinstellungen dieser Gruppe werden überschrieben und an die neue Art der Gruppe angepasst.
-grp#:#grp_warn_no_max_set_on_waiting_list#:#Die maximale Teilnehmeranzahl ist erreicht. Sie können sich jedoch auf die Warteliste für diese Gruppe setzen lassen und werden dann per Mail benachrichtigt, wenn Sie nachrücken können.
+grp#:#grp_warn_no_max_set_on_waiting_list#:#Die maximale Anzahl an Mitgliedern ist erreicht. Sie können sich jedoch auf die Warteliste für diese Gruppe setzen lassen und werden dann per Mail benachrichtigt, wenn Sie nachrücken können.
 grp#:#grp_warn_wl_set_on_waiting_list#:#Es sind bereits Benutzer in der Warteliste eingetragen. Sie können sich jedoch auf die Warteliste für diese Gruppe setzenund werden dann per Mail benachrichtigt, wenn Sie nachrücken können.
 grp#:#grp_wrong_max_members#:#Für die Warteliste wird eine maximale Anzahl Mitglieder benötigt.
 grp#:#grp_wrong_min_max_members#:#Setzen Sie eine minimale oder maximale Anzahl - oder beides.
@@ -10950,19 +10950,19 @@ lso#:#lso_at_least_one_admin#:#Dieser Lernsequenz muss mindestens eine Person mi
 lso#:#lso_edit_permission#:#Rechteeinstellungen ändern
 lso#:#lso_header_delete_members#:#Sie möchten folgende Mitglieder aus der Lernsequenz austragen?
 lso#:#lso_header_edit_members#:#Mitglieder bearbeiten
-lso#:#lso_intropages_deprecationhint#:#Sie können die Einleitungs- und Abschlussseite unter "Inhalt" editieren.
+lso#:#lso_intropages_deprecationhint#:#Sie können die Einleitungs- und Abschlussseite unter „Inhalt“ editieren.
 lso#:#lso_legacy_info#:#Das Objekt öffnet sich in einem neuen Tab Ihres Browsers. Bitte kommen Sie nach Bearbeitung des Inhalts in diesen Tab zurück. Laden Sie die Seite neu, wenn sie den Inhalt bearbeitet haben, aber die „Weiter“-Schaltfläche weiterhin deaktiviert bleibt.
-lso#:#lso_mail_admission_new_bod#:#Sie sind in Lernsequenz „%s“ als Mitglied aufgenommen worden.
-lso#:#lso_mail_admission_new_sub#:#Mitgliedschaft in Lernsequenz „%s“
-lso#:#lso_mail_dismiss_bod#:#hre Mitgliedschaft in Lernsequenz „%s“ wurde beendet.
-lso#:#lso_mail_dismiss_sub#:#Mitgliedschaft in Lernsequenz „%s“ beendet
+lso#:#lso_mail_admission_new_bod#:#Sie sind in die Lernsequenz „%s“ als Mitglied aufgenommen worden.
+lso#:#lso_mail_admission_new_sub#:#Mitgliedschaft in der Lernsequenz „%s“
+lso#:#lso_mail_dismiss_bod#:#Ihre Mitgliedschaft in der Lernsequenz „%s“ wurde beendet.
+lso#:#lso_mail_dismiss_sub#:#Mitgliedschaft in der Lernsequenz „%s“ beendet
 lso#:#lso_mail_notification_reg_bod#:#%s hat einen Aufnahmeantrag für die Lernsequenz „%s“ gestellt.
 lso#:#lso_mail_notification_reg_req_bod#:#%s hat einen Aufnahmeantrag für die Lernsequenz „%s“ gestellt.
 lso#:#lso_mail_notification_reg_req_bod2#:#Um den Benutzer zur Lernsequenz zuzulassen oder den Antrag abzuweisen, müssen Sie die Mitgliederverwaltung aufrufen. Wählen Sie dazu bitte folgenden Link:
 lso#:#lso_mail_notification_reg_req_sub#:#Aufnahmeantrag für Lernsequenz „%s“
 lso#:#lso_mail_notification_reg_sub#:#Neue Mitgliedschaft in Lernsequenz „%s“
-lso#:#lso_mail_notification_unsub_bod#:#die Teilnehmerin / der Teilnehmer „%s“ hat die Mitgliedschaft in der Lernsequenz „%s“ beendet.
-lso#:#lso_mail_notification_unsub_bod2#:#Eventuell sind Teilnehmende in die Warteliste dieser Lernsequenz eingetragen. Um die Liste der Teilnehmenden anzuzeigen, rufen Sie bitte folgenden Link auf:
+lso#:#lso_mail_notification_unsub_bod#:#„%s“ ist aus der Lernsequenz „%s“ ausgetreten.
+lso#:#lso_mail_notification_unsub_bod2#:#Eventuell stehen Personen auf der Warteliste dieser Lernsequenz. Um die Liste anzuzeigen, rufen Sie bitte folgenden Link auf:
 lso#:#lso_mail_notification_unsub_sub#:#Austritt aus der Lernsequenz „%s“
 lso#:#lso_mail_permanent_link#:#Wählen Sie den folgenden Link, um auf den Inhalt der Lernsequenz zuzugreifen:
 lso#:#lso_mail_status_bod#:#Ihr Status in Lernsequenz „%s“ wurde geändert.
