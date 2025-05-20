@@ -2454,7 +2454,7 @@ bibl#:#translate#:#Übersetzen
 bkm#:#bkm_fold_created#:#Bookmark-Ordner wurde angelegt.
 blog#:#blog_abstract_image#:#Erstes Bild anzeigen
 blog#:#blog_abstract_image_height#:#Höhe
-blog#:#blog_abstract_image_info#:#Das erste im Beitrag verwendete Bild wird in der Größe so angepasst, dass seine längste Kante der hier eingegebenen Wert entspricht. Dieses Bild wird zusammen mit der Zusammenfassung des Textinhalts des Beitrags angezeigt. Bilder, die kleiner als die Mindestgröße sind, werden nicht angezeigt.
+blog#:#blog_abstract_image_info#:#Das erste im Beitrag verwendete Bild wird in der Größe so angepasst, dass seine längste Kante dem hier eingegebenen Wert entspricht. Dieses Bild wird zusammen mit der Zusammenfassung des Textinhalts angezeigt. Bilder, die kleiner als die Mindestgröße sind, werden nicht angezeigt.
 blog#:#blog_abstract_image_pixels#:#Px
 blog#:#blog_abstract_image_width#:#Breite
 blog#:#blog_abstract_shorten#:#Nur Anfang des Beitrags zeigen
@@ -2787,7 +2787,7 @@ cat#:#cat_show_tax_in_side_block#:#Im Seitenblock darstellen
 cert#:#cert_currently_no_certs#:#Aktuell besitzen Sie noch keine Zertifikate.
 cert#:#cert_description_label#:#Beschreibung
 cert#:#cert_download_label#:#Herunterladen
-cert#:#cert_error_no_access#:#Sie haben keine Berichtigung auf dieses Zertifikat zuzugreifen.
+cert#:#cert_error_no_access#:#Sie haben keine Berichtigung, auf dieses Zertifikat zuzugreifen.
 cert#:#cert_issued_on_label#:#Ausgestellt am
 cert#:#cert_object_label#:#Objekt
 cert#:#cert_sortable_by_issue_date_asc#:#Sortiert nach Ausstellungsdatum - Älteste zuerst
@@ -2832,7 +2832,7 @@ certificate#:#certificate_page_format_info#:#Bitte wählen Sie das Standard-Seit
 certificate#:#certificate_pageheight#:#Seitenhöhe
 certificate#:#certificate_pagewidth#:#Seitenbreite
 certificate#:#certificate_passed#:#bestanden
-certificate#:#certificate_ph_birthday#:#Geburtstag
+certificate#:#certificate_ph_birthday#:#Geburtsdatum
 certificate#:#certificate_ph_cert_id#:#Eindeutige Zertifikats-ID
 certificate#:#certificate_ph_city#:#Stadt
 certificate#:#certificate_ph_country#:#Land
@@ -2853,7 +2853,7 @@ certificate#:#certificate_ph_mark#:#Erreichte Note
 certificate#:#certificate_ph_marklong#:#Erreichte Note (Offizielle Bezeichnung)
 certificate#:#certificate_ph_markshort#:#Erreichte Note (Kurzbezeichnung)
 certificate#:#certificate_ph_matriculation#:#Matrikelnummer
-certificate#:#certificate_ph_no_sco#:#Wenn Materialien zur Bestimmung des Lernfortschritts ausgewählt werden, können Titel und Punktestand auch im Zertifikat angezeigt werden.
+certificate#:#certificate_ph_no_sco#:#Wenn der Lernfortschritt für dieses Lernmodul anhand einer Auswahl von Objekten bestimmt wird, werden hier Platzhalter für Titel und Punkte dieser Objekte zur Verfügung gestellt.
 certificate#:#certificate_ph_salutation#:#Anrede
 certificate#:#certificate_ph_sco_points_max#:#Platzhalter<br/>für Punkte<br/>maximal
 certificate#:#certificate_ph_sco_points_raw#:#Platzhalter<br/>für Punkte
