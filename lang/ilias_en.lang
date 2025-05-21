@@ -2749,8 +2749,8 @@ cert#:#cert_sortable_by_title_desc#:#Title Descending
 cert#:#certificate_achievement#:#%1$s obtained.
 cert#:#certificate_achievement_sub_obj#:#Certificate for %1$s
 cert#:#certificate_no_object_title#:#No object title available
-cert#:#certificate_same_not_saved#:#No new version of certificate template was saved, because the values didn't change.
-cert#:#error_creating_certificate_pdf#:#The certificate could not be created. Please contact the administrator to check the certificate server.
+cert#:#certificate_same_not_saved#:#No new version of the certificate template has been saved, as no values were changed.
+cert#:#error_creating_certificate_pdf#:#The certificate could not be created. Please contact your installation’s technical support and ask for the certificate server to be checked.
 cert#:#user_certificates#:#Certificates
 certificate#:#cert_cron_task_desc#:#This cron job creates persistent certificates based on the learning achievements of users.
 certificate#:#cert_cron_task_title#:#Certificates
@@ -2823,47 +2823,47 @@ certificate#:#certificate_ph_zipcode#:#ZIP / Post code from user's address
 certificate#:#certificate_points_notavailable#:#This value cannot be calculated
 certificate#:#certificate_preview#:#Preview
 certificate#:#certificate_settings#:#Certificate Settings
-certificate#:#certificate_short_name#:#Certificate file short title
+certificate#:#certificate_short_name#:#Certificate File Short Title
 certificate#:#certificate_short_name_description#:#Please enter a short title for the certificate name. The short title will be part of the certificate name: YYMMDD_[surname]_[SHORT_TITLE]_certificate.pdf.
 certificate#:#certificate_text#:#Certificate Text
-certificate#:#certificate_text_info#:#Please enter the certificate text. If the WYSIWYG editor is disabled in the ILIAS administration, you can still use valid XHTML to format the text.<br><br>
-certificate#:#certificate_unit_description#:#Enter units of measure as VALUE[cm|mm|in|pt|pc|px|em], e.g. 10mm or 3in
-certificate#:#certificate_usage#:#Please note that the usage of certificates is only available if the ILIAS Java-Server is running. The configuration for Java-Server is available in Administration » General Settings » Server, sub-tab Java-Server.
+certificate#:#certificate_text_info#:#Please enter the text you want to have displayed on the certificate. If the WYSIWYG editor is disabled in the ILIAS administration, you can still use valid XHTML to format the text.
+certificate#:#certificate_unit_description#:#Enter units of measurement as: VALUE[cm|mm|in|pt|pc|px|em], e.g. 10mm or 3in
+certificate#:#certificate_usage#:#Please note that certificates can only be used and created if you are using the ILIAS Java Server. The Java Server can be configured in Administration » System Settings and Maintenance » General Settings » Server » (sub-tab) Java-Server.
 certificate#:#certificate_var_max_points#:#Maximum number of points in the test used
 certificate#:#certificate_var_result_mark_long#:#Achieved mark presented in 'official form'
 certificate#:#certificate_var_result_mark_short#:#Achieved mark presented in 'short form'
-certificate#:#certificate_var_result_passed#:#Information on whether the test was passed or not
+certificate#:#certificate_var_result_passed#:#Passed
 certificate#:#certificate_var_result_percent#:#Percentage achieved in the test
 certificate#:#certificate_var_result_points#:#Number of points achieved in the test
-certificate#:#certificate_var_user_birthday#:#1977-05-08
-certificate#:#certificate_var_user_city#:#Anytown, NY
-certificate#:#certificate_var_user_country#:#USA
+certificate#:#certificate_var_user_birthday#:#22.05.1952
+certificate#:#certificate_var_user_city#:#London
+certificate#:#certificate_var_user_country#:#UK
 certificate#:#certificate_var_user_department#:#Customer Support
-certificate#:#certificate_var_user_firstname#:#Jane
-certificate#:#certificate_var_user_fullname#:#Dr. Jane Doe
-certificate#:#certificate_var_user_institution#:#ILIAS Open Source
-certificate#:#certificate_var_user_lastname#:#Doe
-certificate#:#certificate_var_user_login#:#jdoe
-certificate#:#certificate_var_user_matriculation#:#12345
-certificate#:#certificate_var_user_salutation#:#Mrs.
-certificate#:#certificate_var_user_street#:#100 Main Street
-certificate#:#certificate_var_user_title#:#Dr.
-certificate#:#certificate_var_user_zipcode#:#12345
+certificate#:#certificate_var_user_firstname#:#John
+certificate#:#certificate_var_user_fullname#:#John H. Watson, M.D
+certificate#:#certificate_var_user_institution#:#ILIAS Investigations Ltd.
+certificate#:#certificate_var_user_lastname#:#Watson
+certificate#:#certificate_var_user_login#:#jwatson
+certificate#:#certificate_var_user_matriculation#:#8201754
+certificate#:#certificate_var_user_salutation#:#Mr
+certificate#:#certificate_var_user_street#:#221B Baker Street
+certificate#:#certificate_var_user_title#:#Dr
+certificate#:#certificate_var_user_zipcode#:#NW1 6XE
 certificate#:#cmix_cert_ph_object_description#:#Description
 certificate#:#cmix_cert_ph_object_title#:#Title of the xAPI/cmi5 Object
-certificate#:#cmix_cert_ph_reached_score#:#Reached score as percentage
-certificate#:#default_background_info#:#This background image will be chosen as default background for all certificates. If you need another background image in a certficiate, you have to upload one in the certificate editor.
+certificate#:#cmix_cert_ph_reached_score#:#Score achieved in percent
+certificate#:#default_background_info#:#This background image will be used as the default background for all certificates unless a different image is uploaded when creating a certificate for a specific object.
 certificate#:#download_certificate#:#Download Certificate
-certificate#:#learning_progress_deactivated#:#The Learning Progress for this object is deactivated. To edit the certificate template and achieve user certificates the learning progress for this object must be activated.
-certificate#:#lti_cert_ph_mastery_score#:#Mastery score as percentage
+certificate#:#learning_progress_deactivated#:#Learning progress for this object is currently deactivated. In order to edit the certificate template and for users to be able to obtain certificates, learning progress for this object needs to be activated via Learning Progress » Settings.
+certificate#:#lti_cert_ph_mastery_score#:#Score achieved in percent
 certificate#:#lti_cert_ph_object_description#:#Description
 certificate#:#lti_cert_ph_object_title#:#Title of the LTI Consumer Object
 certificate#:#lti_cert_ph_reached_score#:#Reached score as percentage
 certificate#:#persistent_certificate_mode#:#User Certificate Creation
 certificate#:#persistent_certificate_mode_cron#:#Cron Job
-certificate#:#persistent_certificate_mode_cron_info#:#This option is recommended for systems with high user interaction.
+certificate#:#persistent_certificate_mode_cron_info#:#This option is recommended for systems with high levels of user interaction.
 certificate#:#persistent_certificate_mode_instant#:#Instant
-certificate#:#persistent_certificate_mode_instant_info#:#This option is recommended for systems with low up to mediocre user interactions. Systems that tend to big loading times during creation for multiple user certificates should switch to the "Cron Job" option.
+certificate#:#persistent_certificate_mode_instant_info#:#This option is recommended for systems with low up to medium levels of user interaction. Systems that tend towards longer loading times during the creation of multiple user certificates should switch to the ‘Cron Job’ option.
 chatroom#:#allow_anonymous#:#Allow Anonymous Login
 chatroom#:#allow_custom_usernames#:#Allow Custom User Names
 chatroom#:#anonymous_hint#:#Make sure to set the proper permissions in the ‘Permissions’ tab to allow anonymous user access to this repository item.
@@ -3284,7 +3284,7 @@ cmix#:#passed_label#:#Statements with the verb 'passed'
 cmix#:#privacy_options#:#Options for data security
 cmix#:#progressed_info#:#Indicates a value of how much of an actor has advanced or moved through an activity.
 cmix#:#progressed_label#:#Statements with the verb 'progressed'
-cmix#:#registration_saved_successfully#:#Registration saved successfully
+cmix#:#registration_saved_successfully#:#Saved successfully
 cmix#:#satisfied_info#:#Indicates that the authority or activity provider determined the actor has fulfilled the criteria of the object or activity.
 cmix#:#satisfied_label#:#Statements with the verb 'satisfied'
 cmix#:#sect_learning_progress_options#:#Options for Learning Progress
@@ -5101,7 +5101,7 @@ common#:#object#:#Object
 common#:#object_added#:#Object added.
 common#:#object_copy_in_progress#:#Started Copying.
 common#:#object_duplicated#:#Object copied
-common#:#object_id#:#Object-ID
+common#:#object_id#:#Object ID
 common#:#object_imported#:#Object imported
 common#:#object_list#:#List of Objects
 common#:#objects#:#Objects
@@ -17108,9 +17108,9 @@ trac#:#trac_mode_scorm_package_info#:#The learning progress status will automati
 trac#:#trac_mode_study_programme#:#Study Programme Completed
 trac#:#trac_mode_survey_finished#:#Survey Finished
 trac#:#trac_mode_survey_finished_info#:#The survey has to be finished by an user to receive the status 'Completed'.
-trac#:#trac_mode_test_finished#:#Test Must be Finished
+trac#:#trac_mode_test_finished#:#Test Must Be Finished
 trac#:#trac_mode_test_finished_info#:#A user's learning progress status is set to ‘Completed’ after the user clicks 'Finish the Test'. Regardless of whether or not the test was passed, the learning progress will be set to ‘Completed’.
-trac#:#trac_mode_test_passed#:#Test Must be Passed
+trac#:#trac_mode_test_passed#:#Test Must Be Passed
 trac#:#trac_mode_test_passed_info#:#A user's learning progress status is set to ‘Completed’ after the user passed the test. Thresholds for passing the test can be set in the 'Settings'-tab at the section 'Mark Schema'.
 trac#:#trac_mode_tlt#:#Minimally Required Amount of Time Spent on Learning Module
 trac#:#trac_mode_tlt_info#:#The status will be automatically set according to time a user spends working with the learning module. The status 'Completed' is assigned once users exceed the minimally required Typical Learning Time. <br />The Typical Learning Time can be specified in the 'Metadata'-tab.
