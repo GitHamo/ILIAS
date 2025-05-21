@@ -802,6 +802,7 @@ assessment#:#ip_range_for_single_participant#:#Sie bearbeiten die IP Bereich fü
 assessment#:#ip_range_info#:#Nur Geräte mit einer IP aus der festgelegten Spanne können den Test starten.
 assessment#:#ip_range_label#:#Beschränkung auf IPs
 assessment#:#ip_range_updated#:#Die IP Bereich wurde für die gewählten Teilnehmer aktualisiert.
+assessment#:#javaapplet#:#Java Applet###21 05 2025 new variable
 assessment#:#kiosk#:#Prüfungsansicht
 assessment#:#kiosk_description#:#Die Prüfungsansicht zeigt den Test im Kiosk-Modus. Dabei werden alle Bildschirmelemente, die nicht zum Test gehören, ausgeblendet. Um Teilnehmer effektiv daran zu hindern, während des Tests andere Webseiten zu öffnen, setzen Sie bitte zusätzlich einen auf E-Klausuren spezialisierten Browser ein (z.B. den „Safe Exam Browser“).
 assessment#:#kiosk_options#:#Angezeigte Informationen
@@ -2304,7 +2305,7 @@ badge#:#badge_sort_active_badges_first#:#Aktive Badges zuerst
 badge#:#badge_sort_active_badges_last#:#Aktive Badges zuletzt
 badge#:#badge_sort_activity_badges_first#:#Automatisch vergebene Badges zuerst
 badge#:#badge_sort_activity_badges_last#:#Automatisch vergebene Badges zuletzt
-badge#:#badge_sort_added_to_profile_first#:#Zum Profil hinzugefügte zuerst
+badge#:#badge_sort_added_to_profile_last#:#Added To Profile First###21 05 2025 new variable
 badge#:#badge_sort_excluded_from_profile_first#:#Vom Profil ausgeklammerte zuerst
 badge#:#badge_sort_manual_awarding_first#:#Badges mit manueller Vergabe zuerst
 badge#:#badge_sort_manual_awarding_last#:#Badges mit manueller Vergabe zuletzt
@@ -9747,6 +9748,7 @@ exercise#:#exc_your_submission#:#Ihre Einreichung
 exp#:#exp_create_file#:#Exportdatei erzeugen
 exp#:#exp_error_disabled#:#Der Export von Container-Objekten ist deaktiviert. Bei Fragen wenden Sie sich bitte an die technische Betreuung.
 exp#:#exp_error_too_many_objects#:#Der Export überschreitet die maximal erlaubte Zahl an Objekten (%1). Bitte wählen Sie eine kleinere Anzahl an Objekten.
+exp#:#exp_export_dropdown#:#Export###21 05 2025 new variable
 exp#:#exp_export_files#:#Exportdateien
 exp#:#exp_export_single_option#:#Export %s
 exp#:#exp_file_created#:#Eine Exportdatei wurde erstellt.
@@ -9767,7 +9769,6 @@ exp#:#export_created#:#Eine neue Exportdatei wurde erstellt.
 exp#:#export_files_deleted#:#Die ausgewählten Exportdateien wurden gelöscht.
 exp#:#export_options#:#Export Optionen
 exp#:#export_type#:#Export Typ
-export#:#exp_export_dropdown#:#Export
 export#:#exp_file#:#Dateiname
 export#:#exp_public_access#:#Öffentlicher Zugriff aktiv
 export#:#exp_size#:#Dateigröße (MB)
@@ -10444,7 +10445,6 @@ grp#:#reg_grp_min_members#:#Mindestanzahl
 gsfo#:#accessibility#:#Barrierefreiheit
 gsfo#:#confirm_delete#:#Möchten Sie die folgenden Elemente wirklich löschen?
 gsfo#:#confirm_reset#:#Durch das Zurücksetzen der Fußzeile werden alle Einträge in ihren ursprünglichen Zustand zurückversetzt. Alle Anpassungen und manuellen Einträge werden gelöscht. Möchten Sie fortfahren?
-gsfo#:#edit_translations#:#Übersetzungen bearbeiten
 gsfo#:#entries_add#:#Eintrag hinzufügen
 gsfo#:#entries_edit#:#Einträge bearbeiten
 gsfo#:#entries_parent#:#Gruppe auswählen
@@ -10486,7 +10486,6 @@ gsfo#:#reset_footer#:#Fußzeile zurücksetzen
 gsfo#:#reset_success#:#Fußzeile erfolgreich zurückgesetzt
 gsfo#:#services#:#Services
 gsfo#:#support#:#Support
-gsfo#:#translations#:#Übersetzungen
 help#:#help_all#:#Alle
 help#:#help_component#:#Komponente
 help#:#help_filter#:#Filter

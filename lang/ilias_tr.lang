@@ -174,6 +174,7 @@ administration#:#auth_auth_mode_determination#:#Kimlik Doğrulama Yöntemi Belir
 administration#:#auth_automatic#:#Sabit Sıralama
 administration#:#auth_by_user#:#Kullanıcı tarafından
 administration#:#auth_kind_determination#:#Tespit Tipi
+administration#:#auth_mode_default_change_info#:#Changing the default authentication method affects all user accounts configured to use the default authentication method. If the selected default method (e.g., Shibboleth, SAML, SOAP, ...) does not support or is not configured to allow fallback to local ILIAS authentication, affected users may no longer be able to log in. To avoid this, please ensure that local fallback authentication is activated in the configuration of the selected method, or that the authentication method stored for affected user accounts is manually changed.###21 05 2025 new variable
 administration#:#auth_mode_determination_info#:#Kullanıcıların oturum açma ekranında kimlik doğrulama yöntemini seçebilmesi veya sabit kimlik doğrulama yöntemi kullanılması için birini seçin.
 administration#:#clean#:#Temizleyin
 administration#:#clean_desc#:#Geçersiz referansları ve ağaç girdilerini silin. Ağaç yapısında boşluklara ilk değerini ver
@@ -259,6 +260,7 @@ administration#:#language_scope_unchanged#:#Sadece değişmemiş girdiler
 administration#:#language_scope_unchanged_info#:#Export all default language entries that are not changed in the database. This is the opposite to "Local changes only". Both together are a complete backup of the current language in the database.###07 11 2014 new variable
 administration#:#language_settings#:#Dil Ayarları
 administration#:#language_statistics#:#İstatistik
+administration#:#language_translation#:#Page translation###21 05 2025 new variable
 administration#:#language_translation_enabled#:#Sayfa çevirisi etkin
 administration#:#language_variables_saved#:#The changes to the language variables were saved successfully.###29 07 2022 new variable
 administration#:#log_scan#:#Günlük tarama sonuçları
@@ -505,10 +507,8 @@ assessment#:#ass_comments#:#Comments###10 11 2018 new variable
 assessment#:#ass_competence_respect_level_ordering#:#Please note that the competence thresholds have to be defined in an ascending order according to the available levels.###25 10 2016 new variable
 assessment#:#ass_completion_by_submission#:#Başvuru ile Tamamlandı
 assessment#:#ass_completion_by_submission_info#:#Etkinse, bu soru için en az bir dosya gönderme maksimum puan alma için yeterlidir. Puan daha sonra elle değiştirilebilir. Bu ayarı değiştirme önceden gönderilen sorulara etki etmez
-assessment#:#ass_create_export_file#:#Test Dışa Aktarma Dosyası Oluştur
 assessment#:#ass_create_export_file_with_results#:#Create Test Export File (incl. Participant Results)###25 10 2016 new variable
 assessment#:#ass_create_export_test_archive#:#Create Test Archive File###24 10 2013 new variable
-assessment#:#ass_create_export_test_results#:#Test Sonuçları için Dışa Aktarma Dosyası Oluştur
 assessment#:#ass_create_question#:#Create Question###24 10 2013 new variable
 assessment#:#ass_imap_hint#:#Hint to be shown as Tooltip###25 10 2016 new variable
 assessment#:#ass_imap_map_file_not_readable#:#The uploaded image map could not be read.###25 10 2016 new variable
@@ -552,6 +552,7 @@ assessment#:#backtocallingpage#:#Back to the question page###29 07 2022 new vari
 assessment#:#backtocallingpool#:#Back to the question pool###29 07 2022 new variable
 assessment#:#backtocallingtest#:#Teste gitmek için geri dön
 assessment#:#baseunit#:#Base Unit###24 10 2013 new variable
+assessment#:#broken_test#:#Broken Test###21 05 2025 new variable
 assessment#:#bulkedit_author#:#Set Author###28 10 2024 new variable
 assessment#:#bulkedit_lifecycle#:#Set Lifecycle###28 10 2024 new variable
 assessment#:#bulkedit_taxonomies#:#Set Taxonomies###28 10 2024 new variable
@@ -610,6 +611,9 @@ assessment#:#deleteSuggestedSolution#:#Bu önerilen çözümü çıkarın
 assessment#:#delete_all_user_data_confirmation#:#Bu testteki tüm kullanıcıların test verilerini silmek istiyor musunuz ?
 assessment#:#delete_image_header#:#Resimn sil
 assessment#:#delete_image_question#:#Gerçekten resmi silmek istiyor musunuz ?
+assessment#:#delete_mark_confirmation#:#Are you sure you want to delete the following mark?###21 05 2025 new variable
+assessment#:#delete_participants_no_valid_participants_selected#:#Test results already exist for the selected participants, so they cannot be removed.###21 05 2025 new variable
+assessment#:#delete_result_no_valid_participants_selected#:#There are no test results for the selected participants, so they cannot be removed.###21 05 2025 new variable
 assessment#:#delete_selected_user_data_confirmation#:#Seçili kullanıcıların test verileri silmek istediğinizden emin misiniz?
 assessment#:#delete_user_data#:#Seçilmiş Kullanıcıların Test Verilerini Sil
 assessment#:#description_maxchars#:#Bu cevap metni için karakter sınırlaması girilmediyse karakter limiti yoktur.
@@ -743,7 +747,9 @@ assessment#:#finish_pass_for_user_confirmation#:#Are you sure you want to finish
 assessment#:#finish_pass_for_user_in_processing_time#:#WARNING: the processing time for this user is not over yet! You should only end the test run if there is a compelling reason (e.g. exclusion from the test).###26 08 2024 new variable
 assessment#:#finish_test#:#Testi Bitir
 assessment#:#finish_test_all#:#Are you sure you want to finish the test attempts for all users?###28 10 2024 new variable
+assessment#:#finish_test_more_than_one_selected#:#Only a single participant may be selected to finish the pass if the test allows only one pass.###21 05 2025 new variable
 assessment#:#finish_test_multiple#:#Are you sure you want to finish the test attempts for the following participants?###28 10 2024 new variable
+assessment#:#finish_test_no_valid_participants_selected#:#There are no active test runs for the selected participants, so they cannot be completed.###21 05 2025 new variable
 assessment#:#finish_test_single#:#Are you sure you want to finish the test attempt for the participant "%s"?###28 10 2024 new variable
 assessment#:#finish_unfinished_passes#:#Finish open Passes###25 10 2016 new variable
 assessment#:#finish_unfinished_passes_desc#:#Passes which have a Finishing time or a Duration limit configured will be closed by this cron job. ###25 10 2016 new variable
@@ -765,6 +771,7 @@ assessment#:#fq_precision_info#:#Enter the number of desired decimal places.###2
 assessment#:#fq_question_desc#:#You can define variables by inserting $v1, $v2 ... $vn, results by inserting $r1, $r2 .... $rn at the desired position in the question text. Click on the button "Parse Question" to create editing forms for variables and results.###06 11 2013 new variable
 assessment#:#gap#:#Boşluk
 assessment#:#gap_combination#:#Gap Combination###26 09 2014 new variable
+assessment#:#gaps#:#Gaps###21 05 2025 new variable
 assessment#:#glossary_term#:#Sözlük Terim
 assessment#:#grading_mark_msg#:#Your resulting mark is: &quot;[mark]&quot;###26 09 2014 new variable
 assessment#:#grading_status_failed_msg#:#Sorry, you <b>failed</b> the test.###26 09 2014 new variable
@@ -942,6 +949,7 @@ assessment#:#new_unit#:#New Unit###24 10 2013 new variable
 assessment#:#next_question#:#Sonraki
 assessment#:#next_question_rows#:#Sorular %d - %d of %d >>
 assessment#:#no_manual_feedback_export_info#:#Manual feedbacks will not be exported.###26 08 2024 new variable
+assessment#:#no_passed_after_failed#:#Failing marks cannot have a higher minimum level than any passing mark.###21 05 2025 new variable
 assessment#:#no_passed_mark#:#GEÇTİ için en az bir tane not ayarlamalısınız ! Not şeması kayıt edilmedi.
 assessment#:#no_question_selected_for_move#:#Taşımak için en az biri soru seçiniz !
 assessment#:#no_questions_available#:#Mevcut soru yok !
@@ -957,6 +965,7 @@ assessment#:#not_yet_accessed#:#Henüz Erişilmedi
 assessment#:#nr_of_correct_answers#:#İstenen Cevap Sayısı
 assessment#:#number_of_answers#:#Cevap Sayısı
 assessment#:#numeric_gap#:#Sayısal Boşluk
+assessment#:#old_mark_default_not_applied#:#The marks from your personal settings could not be applied as they use an old format. All other settings have been updated.###21 05 2025 new variable
 assessment#:#option_label#:#Option Labels###26 09 2014 new variable
 assessment#:#option_label_adequate#:#adequate###26 09 2014 new variable
 assessment#:#option_label_adequate_or_not#:#adequate / not adequate###26 09 2014 new variable
@@ -1326,6 +1335,7 @@ assessment#:#toplist_col_score#:#Puan
 assessment#:#toplist_col_wtime#:#Çalışma Süresi
 assessment#:#total_attempts#:#Total Attempts###28 10 2024 new variable
 assessment#:#total_duration#:#Total Duration###28 10 2024 new variable
+assessment#:#total_max_points_cannot_be_negative#:#The maximum amount of reachable points cannot be negative.###21 05 2025 new variable
 assessment#:#true#:#Doğru
 assessment#:#tst_access_code_created#:#Test sonuçlarına kalıcı erişim sağlamak ve bu teste devam etme imkanı sunmak için, benzersiz bir sınama erişim kodu oluşturuldu. Bu kodu, daha sonra kullanmak için not ediniz.
 assessment#:#tst_activate_skill_service#:#Activate Competence Service###26 09 2014 new variable
@@ -1337,6 +1347,8 @@ assessment#:#tst_add_quest_cont_edit_mode_IPE#:#Additional Content Editing with 
 assessment#:#tst_add_quest_cont_edit_mode_IPE_info#:#No formatting of text in question and answers. No use of LaTex either. But feedback and hints can be reused when question is embedded in ILIAS learning module.###29 07 2022 new variable
 assessment#:#tst_add_quest_cont_edit_mode_RTE#:#Default Editing Mode for Additional Question Content###24 10 2013 new variable
 assessment#:#tst_add_quest_cont_edit_mode_RTE_info#:#Allows text formatting of questions, answers, feedbacks and hints. But feedback and hints cannot be reused when question is embedded in ILIAS learning module.###29 07 2022 new variable
+assessment#:#tst_add_quest_cont_edit_mode_plain#:#Use plain text###21 05 2025 new variable
+assessment#:#tst_add_quest_cont_edit_mode_plain_info#:#No formatting of text in question, answers, feedback, and hints.###21 05 2025 new variable
 assessment#:#tst_addit_passes_blocked_after_passed_msg#:#You have passed the test. The test cannot be started again.###07 02 2020 new variable
 assessment#:#tst_all_test_competences#:#All Test Competence###26 09 2014 new variable
 assessment#:#tst_all_user_data_deleted#:#Bu testin tüm kullanıcı verileri silindi !
@@ -1672,7 +1684,6 @@ assessment#:#tst_objective_oriented_test_pass_without_questions#:#The started pa
 assessment#:#tst_objective_progress_header#:#Learning Objective Progress###25 10 2016 new variable
 assessment#:#tst_objectives_progress_header#:#Learning Objectives Progress###25 10 2016 new variable
 assessment#:#tst_old_style_rnd_quest_set_broken#:#This random test is in a irreparable state, because one or more connected question pools have been deleted. Therefor participants cannot take the test any longer.###30 08 2015 new variable
-assessment#:#tst_optional_questions_confirmation_fixed_test#:#<b>Question related to allready passed learning objectives were answered in previous passes.</b><br /><br />You want to navigate to a question, that relates to an allready passed learning objective.<br />You can choose:<br /><br />I you proceed, you can work on or simply review these questions. If you change your answers that were adopted from previous passes, you can also degrade your learning objective result.<br /><br />If you decide to not work on or review these questions, you can go back. The questions will be considered in the evaluation in every case.###30 08 2015 new variable
 assessment#:#tst_optional_questions_confirmation_non_fixed_test#:#<b>Question related to allready passed learning objectives are optional.</b><br /><br />You want to navigate to a question, that relates to an allready passed learning objective.<br />You can choose:<br /><br />I you proceed, you can work on these questions. Your answers from previous attempts were not adopted, since new random questions were selected for this attempt. With working on this questions you can also degrade your learning objective result.<br /><br />If you decide to not work on these questions, you can go back. In this case these questions won't be considered in the evaluation.###30 08 2015 new variable
 assessment#:#tst_out_of_time_message#:#You have reached the maximum allowed processing time of the test!###26 08 2024 new variable
 assessment#:#tst_participant#:#Katılımcı
@@ -1829,6 +1840,7 @@ assessment#:#tst_res_jump_to_participant_hint_opt#:#Jump to Participant
 assessment#:#tst_res_lo_objectives_header#:#Relevant Learning Objectives###30 08 2015 new variable
 assessment#:#tst_res_lo_try_header#:#Attempt###30 08 2015 new variable
 assessment#:#tst_res_lo_try_n#:#Attempt %s###30 08 2015 new variable
+assessment#:#tst_res_tab_msg_no_lp_access#:#You are currently not allowed to access your Learning Progress, as you are not allowed to see your test results.###21 05 2025 new variable
 assessment#:#tst_res_tab_msg_res_after_date#:#You test results will be offered here on the following date: %s###10 11 2018 new variable
 assessment#:#tst_res_tab_msg_res_after_date_no_res#:#When you take the test your results will be offered here on the following date: %s###10 11 2018 new variable
 assessment#:#tst_res_tab_msg_res_after_finish_test#:#After finishing the test your results will be offered here.###10 11 2018 new variable
@@ -2082,7 +2094,6 @@ auth#:#auth_cron_destroy_expired_sessions_desc#:#This job deletes expires sessio
 auth#:#auth_err_expired#:#Your session has been deactivated due to inactivity.###25 10 2016 new variable
 auth#:#auth_err_invalid_user_account#:#Authentication failed due to an internal failure.###25 10 2016 new variable
 auth#:#auth_err_ldap_exception#:#Authentication failed due to an internal authentication failure (LDAP).###25 10 2016 new variable
-auth#:#auth_err_login_attempts_deactivation#:#The user account has been deactivated due wrong login attempts.###07 02 2017 new variable
 auth#:#auth_info_add#:#Eğer ILIAS kayıtlı asla eğer bu seçeneği seçin. Yeni bir hesap oluşturulur.
 auth#:#auth_info_migrate#:#Zaten bir ILIAS hesabı kişisel verilerinizi (Posta, Test sonuçları ...) göç etmek adınızı ve şifrenizi girin varsa.
 auth#:#auth_ldap_server_ds#:#LDAP-Server###25 10 2016 new variable
@@ -2148,6 +2159,8 @@ auth#:#auth_oidc_update_field_info#:#Automatisch aktualisieren###10 11 2018 new 
 auth#:#auth_oidc_update_role_info#:#Nur bei Erstanmeldung (automatische Synchronisierung) anwenden###10 11 2018 new variable
 auth#:#auth_oidconnect#:#OpenID Connect###10 11 2018 new variable
 auth#:#auth_page_type_auth#:#Login Page###29 07 2022 new variable
+auth#:#auth_required_password#:#Please enter a password.###21 05 2025 new variable
+auth#:#auth_required_username#:#Please enter a username.###21 05 2025 new variable
 auth#:#auth_saml_add_idp_btn#:#Add new Identity Provider###31 08 2017 new variable
 auth#:#auth_saml_add_idp_md_error#:#The given value was not a valid XML document. Ensure the XML contains a valid Identity Provider.###31 08 2017 new variable
 auth#:#auth_saml_add_idp_md_info#:#Please enter the XML formatted metadata for the Identity Provider.###31 08 2017 new variable
@@ -2247,16 +2260,10 @@ background_tasks#:#waiting#:#Waiting###31 08 2017 new variable
 badge#:#awarded_by#:#Awarded by###26 08 2024 new variable
 badge#:#badge_activity_badges#:#Activity Badges###25 10 2016 new variable
 badge#:#badge_add_template#:#Add Template###25 10 2016 new variable
-badge#:#badge_add_to_backpack#:#Add to Backpack###25 10 2016 new variable
-badge#:#badge_add_to_backpack_multi#:#Trying to add %s to Backpack###25 10 2016 new variable
 badge#:#badge_add_to_profile#:#Add to Profile###25 10 2016 new variable
 badge#:#badge_assignment_deletion_confirmation#:#Are you sure you want to revoke the following badge assignments for "%s"?###25 10 2016 new variable
 badge#:#badge_award_badge#:#Award Badge###25 10 2016 new variable
-badge#:#badge_backpack_connect_failed#:#The Mozilla Backpack could not be requested for %s.###25 10 2016 new variable
-badge#:#badge_backpack_email#:#Mozilla Backpack Account (Email)###25 10 2016 new variable
-badge#:#badge_backpack_gallery_info#:#These are your published badge collections in your Mozilla Backpack.###25 10 2016 new variable
-badge#:#badge_backpack_list#:#My Backpack###25 10 2016 new variable
-badge#:#badge_backpack_no_groups#:#The Mozilla Backpack is empty or non-public.###25 10 2016 new variable
+badge#:#badge_award_revoke#:#Award/Revoke Badge###21 05 2025 new variable
 badge#:#badge_badge#:#Badge###25 10 2016 new variable
 badge#:#badge_course_lp#:#Course LP###25 10 2016 new variable
 badge#:#badge_course_lp_invalid#:#The following objects have a LP mode which is not supported: %s.###25 10 2016 new variable
@@ -2266,7 +2273,6 @@ badge#:#badge_criteria#:#Criteria###25 10 2016 new variable
 badge#:#badge_crs_merit#:#Merit###25 10 2016 new variable
 badge#:#badge_deletion#:#Badge successfully deleted.###28 10 2024 new variable
 badge#:#badge_deletion_confirmation#:#Are you sure you want to delete the following badges and all their respective assignments? ###25 10 2016 new variable
-badge#:#badge_edit_with_published#:#%s users have already added this badge to their backpack. Because of this changing badge attributes will lead to inconsistencies. Creating a new badge might be a better solution.###25 10 2016 new variable
 badge#:#badge_image_from_template#:#Use Template###25 10 2016 new variable
 badge#:#badge_image_from_upload#:#Upload Image###25 10 2016 new variable
 badge#:#badge_image_template_form#:#Image Template###25 10 2016 new variable
@@ -2285,26 +2291,24 @@ badge#:#badge_notification_osd#:#You just received new badges: [BADGE_LIST]###25
 badge#:#badge_notification_parent_goto#:#To repository###25 10 2016 new variable
 badge#:#badge_notification_reason#:#You are receiving this message to be able to add the badges to your profile.###25 10 2016 new variable
 badge#:#badge_notification_subject#:#Badges received###25 10 2016 new variable
-badge#:#badge_obi_activate#:#Activate Mozilla Open Badges Infrastructure###25 10 2016 new variable
-badge#:#badge_obi_activate_info#:#Users can export Badges from ILIAS. They can use their Badges to prove their qualification in other web applications. ###25 10 2016 new variable
-badge#:#badge_obi_contact#:#Contact Email###25 10 2016 new variable
-badge#:#badge_obi_contact_info#:#This E-Mail adress will not be shown but baked into the Badge. ###25 10 2016 new variable
-badge#:#badge_obi_organisation#:#Organisation###25 10 2016 new variable
-badge#:#badge_obi_organisation_info#:#This entry will be displayed as the Issuer of the Badge.###25 10 2016 new variable
-badge#:#badge_obi_salt#:#Salt###25 10 2016 new variable
-badge#:#badge_obi_salt_info#:#Enter a combination of characters and numbers to allow third parties to validate the authenticity of a Badge. Please do not change the entry afterwards. ###25 10 2016 new variable
 badge#:#badge_object_badges#:#Object Badges###25 10 2016 new variable
 badge#:#badge_personal_badges#:#My Badges###25 10 2016 new variable
 badge#:#badge_profile_less#:#Show less###25 10 2016 new variable
-badge#:#badge_profile_manage#:#Manage###25 10 2016 new variable
 badge#:#badge_profile_more#:#Show all###25 10 2016 new variable
-badge#:#badge_profile_view#:#View###25 10 2016 new variable
 badge#:#badge_remove_badge#:#Revoke Badge###25 10 2016 new variable
 badge#:#badge_remove_from_profile#:#Remove from Profile###25 10 2016 new variable
 badge#:#badge_select_one#:#You have to select at least one badge###28 10 2024 new variable
 badge#:#badge_service_activate#:#Activate Service###25 10 2016 new variable
 badge#:#badge_service_activate_info#:#Activate the service to make badges available###25 10 2016 new variable
 badge#:#badge_settings#:#Badge Settings###25 10 2016 new variable
+badge#:#badge_sort_active_badges_first#:#Active Badges First###21 05 2025 new variable
+badge#:#badge_sort_active_badges_last#:#Active Badges Last###21 05 2025 new variable
+badge#:#badge_sort_activity_badges_first#:#Activity Badges First###21 05 2025 new variable
+badge#:#badge_sort_activity_badges_last#:#Activity Badges Last###21 05 2025 new variable
+badge#:#badge_sort_added_to_profile_last#:#Added To Profile First###21 05 2025 new variable
+badge#:#badge_sort_excluded_from_profile_first#:#Excluded From Profile First###21 05 2025 new variable
+badge#:#badge_sort_manual_awarding_first#:#Badges mit manueller Vergabe zuerst###21 05 2025 new variable
+badge#:#badge_sort_manual_awarding_last#:#Badges mit manueller Vergabe zuletzt###21 05 2025 new variable
 badge#:#badge_subtype_auto#:#automatic###25 10 2016 new variable
 badge#:#badge_subtype_manual#:#manual###25 10 2016 new variable
 badge#:#badge_template_deletion_confirmation#:#Are you sure you want to delete the following image templates?###25 10 2016 new variable
@@ -2645,6 +2649,7 @@ book#:#book_objects_available#:#Objects available %s###10 11 2018 new variable
 book#:#book_open#:#Open Booking Pool###31 08 2017 new variable
 book#:#book_overall_limit#:#Limit number of bookings###26 09 2014 new variable
 book#:#book_overall_limit_warning#:#You have reached the maximum number of bookings.###26 09 2014 new variable
+book#:#book_participant#:#Book for Participants###21 05 2025 new variable
 book#:#book_participant_already_assigned#:#Participant(s) already assigned.###10 11 2018 new variable
 book#:#book_participant_assigned#:#Participant(s) assigned###10 11 2018 new variable
 book#:#book_period#:#Dönemi
@@ -2792,11 +2797,6 @@ cert#:#cert_sortable_by_title_asc#:#Nach Titel aufsteigend###10 11 2018 new vari
 cert#:#cert_sortable_by_title_desc#:#Nach Titel absteigend###10 11 2018 new variable
 cert#:#certificate_achievement#:#%1$s achieved.###10 11 2018 new variable
 cert#:#certificate_achievement_sub_obj#:#Certificate for %1$s###10 11 2018 new variable
-cert#:#certificate_migration_confirm_start#:#ILIAS 5.4.x implemented changes to the certificates. If the download of acquired certificates was previously linked to your current authorizations and your status to the learning objects or the availability, certificates can now be acquired persistently. For this start the migration.###10 11 2018 new variable
-cert#:#certificate_migration_confirm_started#:#The migration was started.###10 11 2018 new variable
-cert#:#certificate_migration_go#:#Start Migration###10 11 2018 new variable
-cert#:#certificate_migration_lastrun_failed#:#The migration of the certificates failed. Try again?###10 11 2018 new variable
-cert#:#certificate_no_object_desc#:#No object description available###10 11 2018 new variable
 cert#:#certificate_no_object_title#:#No object title available###10 11 2018 new variable
 cert#:#certificate_same_not_saved#:#No new version of certificate template was saved, because the values didn't change.###10 11 2018 new variable
 cert#:#error_creating_certificate_pdf#:#The certificate could not be created. Please contact the administrator to check the certificate server.###10 11 2018 new variable
@@ -2854,12 +2854,7 @@ certificate#:#certificate_ph_mark#:#Kullanıcılar işareti
 certificate#:#certificate_ph_marklong#:#Kullanıcılar işareti (resmi sürüm)
 certificate#:#certificate_ph_markshort#:#Kullanıcılar işareti (kısa versiyon)
 certificate#:#certificate_ph_matriculation#:#Matriculation number of the user###11 03 2014 new variable
-certificate#:#certificate_ph_maxpoints#:#Maksimum kullanılabilir puan
 certificate#:#certificate_ph_no_sco#:#Ürün bu öğeler için genel öğrenme ilerleme durumu, unvan ve noktaları belirlemek için seçilirse sertifikası görüntülenir olabilir.
-certificate#:#certificate_ph_passed#:#"geçti" veya "başarısız", test sonuçlarına bağlı
-certificate#:#certificate_ph_passed_exercise#:#"Geçti" veya "Başarısız"
-certificate#:#certificate_ph_resultpercent#:#Kullanıcının ulaşıldı yüzdesi
-certificate#:#certificate_ph_resultpoints#:#Kullanıcı Ulaşıldı noktaları
 certificate#:#certificate_ph_salutation#:#Selamlama
 certificate#:#certificate_ph_sco_points_max#:#Noktası ile max <br/> tutucudur <br/>
 certificate#:#certificate_ph_sco_points_raw#:#tutucu noktaları için <br/>
@@ -2903,12 +2898,6 @@ certificate#:#certificate_var_user_salutation#:#Bayan
 certificate#:#certificate_var_user_street#:#100 Main Street
 certificate#:#certificate_var_user_title#:#Dr
 certificate#:#certificate_var_user_zipcode#:#12345
-certificate#:#certificate_visibility#:#Görüş
-certificate#:#certificate_visibility_always#:#Her zaman görünür
-certificate#:#certificate_visibility_introduction#:#Katılımcılar test sonuçları ekranından sertifika indirmek için sunulacaktır.
-certificate#:#certificate_visibility_never#:#Görünmez
-certificate#:#certificate_visibility_passed#:#Sadece Görünür Kullanıcı Testi Geçti eğer
-certificate#:#certificate_visibility_passed_exercise#:#Sadece Görünür Kullanıcı Egzersiz Geçti eğer
 certificate#:#cmix_cert_ph_object_description#:#Description###07 02 2020 new variable
 certificate#:#cmix_cert_ph_object_title#:#Title of the xAPI/cmi5 Object###07 02 2020 new variable
 certificate#:#cmix_cert_ph_reached_score#:#Reached score as percentage###07 02 2020 new variable
@@ -2985,8 +2974,6 @@ chatroom#:#chat_osc_accepts_messages_yes#:#Receives Chat Messages###25 10 2016 n
 chatroom#:#chat_osc_add_user#:#Add Further Users###25 10 2016 new variable
 chatroom#:#chat_osc_conversations#:#Conversations###25 10 2016 new variable
 chatroom#:#chat_osc_doesnt_accept_msg#:#Conversations not possible###25 10 2016 new variable
-chatroom#:#chat_osc_dont_accept_msg#:#You currently cannot be invited to conversations. If desired you can change this in your <a href="%s">'Personal Settings'</a>.###25 10 2016 new variable
-chatroom#:#chat_osc_dont_accept_msg_link_txt#:#'Personal Settings'###07 02 2020 new variable
 chatroom#:#chat_osc_head_grp_x_persons#:#%s Users###10 11 2018 new variable
 chatroom#:#chat_osc_invite_to_conversation#:#Add to Conversation###25 10 2016 new variable
 chatroom#:#chat_osc_leave_grp_conv#:#Leave Conversation###25 10 2016 new variable
@@ -3129,10 +3116,12 @@ cmix#:#btn_change_registration#:#Submit###07 02 2020 new variable
 cmix#:#btn_create_lrs_type#:#Add LRS-Type###07 02 2020 new variable
 cmix#:#btn_create_registration#:#Submit###07 02 2020 new variable
 cmix#:#change_registration#:#E-Mail address for Registration###07 02 2020 new variable
+cmix#:#cmiexit#:#You can now close the window.###21 05 2025 new variable
 cmix#:#cmix_add#:#Add xAPI/cmi5 Object###07 02 2020 new variable
 cmix#:#cmix_add_cmi5_lm#:#cmi5 Learning Module###07 02 2020 new variable
 cmix#:#cmix_add_cmi5_lm_info#:#This option should be used when the content is a cmi5 compliant learning module. Related features like suitable reportings are available without further configurations.###07 02 2020 new variable
 cmix#:#cmix_add_lrs_type#:#LRS-Type###07 02 2020 new variable
+cmix#:#cmix_add_lrs_type_info#:#These Types of Learning Record Stores have been made available in the ILIAS Administration.###02 02 2025 new variable
 cmix#:#cmix_add_source#:#Source###07 02 2020 new variable
 cmix#:#cmix_add_source_external_app#:#Resource not launched by ILIAS###07 02 2020 new variable
 cmix#:#cmix_add_source_external_app_info#:#Use this option for separately launched resources as e.g. apps or simulations. Users must agree to the fetching of data.###07 02 2020 new variable
@@ -3336,6 +3325,7 @@ cmix#:#launch_url#:#URL of the resource###07 02 2020 new variable
 cmix#:#launch_url_info#:#Insert here the Internet address by adding http:// or https:// . Options for data security are also relevant for remote resources.###07 02 2020 new variable
 cmix#:#log_options#:#Options for the display of transmitted data###07 02 2020 new variable
 cmix#:#lrs_authentication#:#Authentication###07 02 2020 new variable
+cmix#:#lrs_type_not_avail_msg#:#This LRS Type is not available.###21 05 2025 new variable
 cmix#:#no_substatements_info#:#With this option - which is only available for the ILIAS LRS proxy - the storage of subordinate statements can be suppressed. This can for example affect the answering of single tasks in a test. The content is informed that the statements would have been saved.###29 07 2022 new variable
 cmix#:#no_substatements_label#:#Do not store substatements###29 07 2022 new variable
 cmix#:#online_info#:#This makes the object visible and usable for the users.###07 02 2020 new variable
@@ -3841,6 +3831,7 @@ common#:#copy_all#:#Tümünü kopyala
 common#:#copy_n_of_suffix#:#- Kopyala (% 1 $ s)
 common#:#copy_of#:#Arasında Kopya
 common#:#copy_of_suffix#:#- Kopya
+common#:#copy_perma_link#:#Copy link to clipboard###21 05 2025 new variable
 common#:#copy_selected_items#:#Kopya
 common#:#count#:#Sayımı
 common#:#counter_novelty#:#News###26 08 2024 new variable
@@ -3989,6 +3980,7 @@ common#:#download_selected_items#:#Download###24 10 2013 new variable
 common#:#downloading_settings#:#İndirme Ayarları
 common#:#dpro_accept_usr_agreement#:#Accept Declaration of Data Protection?###26 08 2024 new variable
 common#:#dpro_accept_usr_agreement_intro#:#There is a new Declaration of Data Protection. You need to accept it before proceeding with the use of ILIAS. Read the following document carefully and give your consent or dissent at the bottom of the page.###26 08 2024 new variable
+common#:#dpro_agreed_on#:#DoDP agreed to on###21 05 2025 new variable
 common#:#dpro_force_accept_usr_agreement#:#You must accept the Declaration of Data Protection!###26 08 2024 new variable
 common#:#dpro_no_agreement_description#:#There is currently no Declaration of Data Protection document available for this installation. Please contact the <a href="%1$s">system administrator</a>.###26 08 2024 new variable
 common#:#dpro_refuse_acceptance#:#Refuse to Accept the Declaration of Data Protection###26 08 2024 new variable
@@ -4003,6 +3995,7 @@ common#:#dpro_withdraw_consent_info_external#:#Please contact the administrator 
 common#:#drafts#:#Taslaklar
 common#:#drag_file_here#:#Drag-and-drop your file here###23 10 2017 new variable
 common#:#drag_files_here#:#Drag-and-drop your files here###24 10 2013 new variable
+common#:#drag_handle#:#Draggable element###21 05 2025 new variable
 common#:#drop_files_on_repo_obj_info#:#Drop the files here to upload them into this object.###24 10 2013 new variable
 common#:#edit#:#Edit
 common#:#edit_assignments#:#Düzenleme Atamalar
@@ -4595,6 +4588,7 @@ common#:#login_information_settings_saved#:#Giriş bilgileri başarıyla kaydedi
 common#:#login_invalid#:#Seçilen giriş geçersizdir! Yalnızca aşağıdaki karakterlere izin verilir (en az 3 karakter):. AZ az 0-9 _ - + * @!% $ ~
 common#:#login_to_ilias#:#Giriş
 common#:#login_to_ilias_via_cas#:#Merkez Kimlik Doğrulama Hizmeti ile ILIAS'a Giriş
+common#:#login_to_ilias_via_login_form#:#Login to ILIAS###21 05 2025 new variable
 common#:#login_to_ilias_via_saml#:#Login to ILIAS via SAML Authentification###31 08 2017 new variable
 common#:#login_to_ilias_via_shibboleth#:#ILIAS'a şunlar ile giriş yap
 common#:#loginname_already_exists#:#Bu oturum açma adı zaten var.
@@ -4783,6 +4777,7 @@ common#:#msg_input_char_limit_max#:#You have entered more characters than allowe
 common#:#msg_input_char_limit_min#:#You have to enter the minimum of characters specified.###26 08 2024 new variable
 common#:#msg_input_does_not_match_regexp#:#geçerli bir değer veriniz.
 common#:#msg_input_is_required#:#Bu giriş gereklidir. Lütfen bir değer giriniz.
+common#:#msg_invalid_value_css_rect_input#:#The entered value is incorrect, do not use any plus or minus symbols in combination with the entered integer. Please check your input.###21 05 2025 new variable
 common#:#msg_is_last_role#:#Aşağıdaki kullanıcıların son global rolü kaldırıldı
 common#:#msg_last_role_for_registration#:#en az bir rolü yeni kullanıcılar için kayıt formunu mevcut olmalıdır. Bu rol mevcut sadece biridir.
 common#:#msg_link_clipboard_p#:#Now, please select the desired location, where the selected objects should be linked to and click the button Paste.###25 10 2016 new variable
@@ -4990,6 +4985,8 @@ common#:#obj_grp_duplicate#:#Kopya Grubu
 common#:#obj_grpr#:#Group Reference###25 10 2016 new variable
 common#:#obj_grps#:#Group###24 10 2013 new variable
 common#:#obj_grps_desc#:#General settings for Groups###24 10 2013 new variable
+common#:#obj_gsfo#:#Footer###21 05 2025 new variable
+common#:#obj_gsfo_desc#:#Administrate Footer Layout and Content###21 05 2025 new variable
 common#:#obj_hlps#:#Yardım Sistemi
 common#:#obj_hlps_desc#:#Online yardım için Ayarları
 common#:#obj_htlm#:#Öğrenim Modülü HTML
@@ -5178,6 +5175,7 @@ common#:#object_copy_in_progress#:#Kopyalama Başladı.
 common#:#object_duplicated#:#Nesne kopyalandı
 common#:#object_id#:#Nesne Kimliği
 common#:#object_imported#:#Nesne Alındı
+common#:#object_list#:#List of Objects###21 05 2025 new variable
 common#:#objects#:#Nesneler
 common#:#objf#:#Nesne tanımları
 common#:#objs_bibl#:#Bibliographies###24 10 2013 new variable
@@ -5315,6 +5313,7 @@ common#:#pd_items_news#:#Kişisel Haberleri Ekle
 common#:#pdf_export#:#PDF olarak kaydet
 common#:#perm_settings#:#İzinler
 common#:#perma_link#:#Kalıcı Bağlantı
+common#:#perma_link_copied#:#Link to this page has been copied to the clipboard.###21 05 2025 new variable
 common#:#permission#:#İzin
 common#:#permission_denied#:#İzin Verilmedi
 common#:#permission_settings#:#Nesne İzin Ayarları
@@ -5685,7 +5684,6 @@ common#:#show_users_online#:#Aktif kullanıcıları göster
 common#:#show_who_is_online#:#Show who is online###29 07 2022 new variable
 common#:#side_frame#:#Yan Çerçeve
 common#:#signature#:#İmza
-common#:#simultaneous_login_detected#:#Erişiminiz aynı hesap ile eş zamanlı giriş nedeniyle engellendi
 common#:#size#:#Boyut
 common#:#skills#:#Yetkinlikler
 common#:#skin_style#:#Standart Arayüz / Stil
@@ -6063,7 +6061,6 @@ common#:#withdrawal_sure_account_no_consent_yet#:#Are you sure that you do not w
 common#:#wizard_search_list#:#Aramanız aşağıdaki hitleri üretti. Bunlardan birini seçiniz.
 common#:#wizard_title_info#:#Çoğaltmak istediğiniz nesnenin başlığını giriniz.
 common#:#write#:#Yaz
-common#:#wrong_ip_detected#:#Erişiminiz yanlış istemci ip nedeniyle engellendi. <br> Sistem yöneticinize başvurun.
 common#:#year#:#Yıl
 common#:#yearly#:#Yıllık
 common#:#years#:#Yıllar
@@ -6211,8 +6208,6 @@ content#:#cont_active_from#:#Activation Start###30 08 2015 new variable
 content#:#cont_active_to#:#Activation End###30 08 2015 new variable
 content#:#cont_add_area#:#Alan Ekle
 content#:#cont_add_cell#:#Add Column###31 08 2017 new variable
-content#:#cont_add_change_comment#:#Yorum değiştir ekle
-content#:#cont_add_definition#:#Tanım Ekle
 content#:#cont_add_elements#:#Yeni öğeler eklemek için tutuculara tıklayın.
 content#:#cont_add_file#:#Dosya Ekle
 content#:#cont_add_images#:#Resimleri Ekle
@@ -6330,7 +6325,6 @@ content#:#cont_click_starting_point#:#Çokgenin başlangıç ​​noktası üze
 content#:#cont_click_tl_corner#:#İstenen alanın sol üst köşesine tıklayın.
 content#:#cont_code_import_file#:#Import###26 08 2024 new variable
 content#:#cont_code_manual_editing#:#Manuelle Eingabe###26 08 2024 new variable
-content#:#cont_col_ordering#:#Column Ordering###06 11 2013 new variable
 content#:#cont_colspan#:#Sütun Birleştir
 content#:#cont_commented_by#:#Commented by###07 02 2020 new variable
 content#:#cont_comments#:#Mağaza Yorumları
@@ -6386,7 +6380,6 @@ content#:#cont_def_map_areas#:#Standart Link Alanları
 content#:#cont_def_organization#:#varsayılan
 content#:#cont_default#:#Standart
 content#:#cont_definition#:#Tanım
-content#:#cont_definitions#:#Tanımlar
 content#:#cont_delete_content#:#Delete Content###29 07 2022 new variable
 content#:#cont_delete_selected#:#Sil
 content#:#cont_delete_style#:#Stili Sil
@@ -7254,7 +7247,6 @@ content#:#cont_update_section#:#Bölümü Güncelle
 content#:#cont_update_skills#:#Yetkinlik Düzenle
 content#:#cont_update_verification#:#Edit Sertifika
 content#:#cont_upload_dir#:#Yükleme dizini
-content#:#cont_upload_dir_info#:#Büyük bir SCORM ve paketler yerine HTML kopyalanabilir hangi Server dizin yükleniyordu. Sadece ILIAS yöneticileri bu dizinden dosyaları bir seçim göreceksiniz. Bölü olmadan tam sunucu yolunu girin.
 content#:#cont_upload_file#:#Upload File###29 07 2022 new variable
 content#:#cont_upload_multi_srt_howto#:#This feature allows you to upload multiple subtitle (srt) files in a zip file for all media objects of the learning module. Your .zip file should contain all .srt files on the top level (no subdirectories). The file names should end with "_&lt;lang code&gt;.srt" where lang code is e.g. "en", "it", "de". The rest of the filename should correspond to the name of the video file, e.g. "my_video.mp4" -> "my_video_en.srt".###30 08 2015 new variable
 content#:#cont_uploaded_file#:#Varolan Dosya
@@ -7294,19 +7286,15 @@ content#:#copied_to_clipboard#:#Panoya kopyalanan nesne (ler).
 content#:#dgl_pagebreak#:#PageBreak
 content#:#glo_add_new_term#:#Ekle Yeni Dönem
 content#:#glo_content_settings#:#Content###11 03 2014 new variable
-content#:#glo_definition_abbr#:#Def.
 content#:#glo_editing_view#:#Düzenleme Görünümü
 content#:#glo_full_definitions#:#Tam Tanımlar
 content#:#glo_full_definitions_info#:#Terimler ve tanımlar tamamen ana görünümünde görüntülenir.
 content#:#glo_hide_taxonomy#:#Hide Taxonomy###06 11 2013 new variable
 content#:#glo_list_usages#:#Liste Kullanımları
 content#:#glo_mode_normal_info#:#Only terms created within this glossar will be included.###11 03 2014 new variable
-content#:#glo_online_info#:#Only if the glossary is online, users are able to use the glossary.###11 03 2014 new variable
 content#:#glo_presentation_mode#:#Sunum Modu
 content#:#glo_presentation_view#:#Sunum Görünümü
 content#:#glo_quick_navigation#:#Hızlı Erişim
-content#:#glo_show_taxonomy#:#Göster Taksonomi
-content#:#glo_show_taxonomy_info#:#The taxonomy will be visible in the presentation view of the glossary and can be used to select referenced terms.###11 03 2014 new variable
 content#:#glo_style#:#Sözlük Stil
 content#:#glo_table_form#:#Tablo Formu'nda
 content#:#glo_table_form_info#:#Terimler ve tanım ilk iki sütunlu bir genel bakış gösterilmektedir. Vadeli tıkladığınızda ayrı bir ekranda bir terimin tam içeriğini açar.
@@ -7335,8 +7323,6 @@ content#:#lm_only_one_download_per_type#:#Please note that you can only make one
 content#:#lm_rate_page#:#Rate page###30 12 2013 new variable
 content#:#lm_rating#:#Rate Learning Module###30 12 2013 new variable
 content#:#mep_folder_created#:#yeni klasör eklendi.
-content#:#mob_upload_dir#:#Yükleme Dizini
-content#:#mob_upload_dir_info#:#Birden fazla dosya ortam havuzları medya nesneleri oluşturmak için kullanılan hangi Server dizin. Sadece ILIAS yöneticileri bu dizinden dosyaları bir seçim göreceksiniz. Bölü olmadan tam sunucu yolunu girin.
 content#:#msg_entry_added#:#Menü girdisi eklendi
 content#:#msg_entry_removed#:#Menü girdisi kaldırıldı
 content#:#msg_entry_updated#:#Menü girişi güncellendi
@@ -7419,8 +7405,10 @@ copg#:#copg_more_character_formats#:#More Styles for Characters###26 08 2024 new
 copg#:#copg_obj_types#:#Object Types###26 08 2024 new variable
 copg#:#copg_page_element_not_found#:#Page element not found.###29 07 2022 new variable
 copg#:#copg_page_type_stys#:#Layout Page###29 07 2022 new variable
+copg#:#copg_pages#:#Pages###21 05 2025 new variable
 copg#:#copg_par_format_selection#:#Paragraph Format Selection###26 08 2024 new variable
 copg#:#copg_pc_mob_does_not_exist#:#This media object does not exist.###26 08 2024 new variable
+copg#:#copg_plugin_not_avail#:#Plugin %s not available.###21 05 2025 new variable
 copg#:#copg_questions_not_supported_here#:#Questions are not supported in this context.###07 02 2017 new variable
 copg#:#copg_reload_page#:#Reload Page###29 07 2022 new variable
 copg#:#copg_remove_formats#:#Remove Formatting###26 08 2024 new variable
@@ -7821,11 +7809,9 @@ crs#:#crs_objective_tbl_col_final_tsts#:#Abschlusstests###30 08 2015 new variabl
 crs#:#crs_objective_wiz_final#:#Final Test Soruları
 crs#:#crs_objective_wiz_final_info#:#Son test soruları Atama.
 crs#:#crs_objective_wiz_final_limit#:#Final Test için Sınırları
-crs#:#crs_objective_wiz_final_limit_info#:#İşte Eğer nihai test soruları için sınırlarını tanımlayabilirsiniz.
 crs#:#crs_objective_wiz_materials#:#Ders Materyali Atama
 crs#:#crs_objective_wiz_materials_info#:#Sen öğrenme hedefine işleme için önerilen ders materyallerinin atayabilirsiniz.
 crs#:#crs_objective_wiz_self#:#İlk Test Soruları
-crs#:#crs_objective_wiz_self_info#:#ilk test soruları belirtiniz. İlk testler ders katılımcıların önceki bilgileri incelemek için tasarlanmıştır.
 crs#:#crs_objective_wiz_self_limit#:#İlk test için Sınırları
 crs#:#crs_objective_wiz_self_limit_info#:#ilk test soruları için sınırlarını tanımlamak lütfen.
 crs#:#crs_objective_wiz_title#:#Öğrenme Amaç Tanım
@@ -7882,7 +7868,6 @@ crs#:#crs_search_users#:#Kullanıcı Ara
 crs#:#crs_select_archive_language#:#arşivi için bir dil seçiniz
 crs#:#crs_select_one_archive#:#bir arşiv seçiniz
 crs#:#crs_select_starter#:#Başlat Nesnesi Seç
-crs#:#crs_selected_users#:#Seçilmiş Katılımcılar
 crs#:#crs_settings#:#Ders Ayarları
 crs#:#crs_settings_saved#:#Ayarlar kaydedildi
 crs#:#crs_shorten_breadcrumb#:#Breadcrumb###10 11 2018 new variable
@@ -7964,7 +7949,6 @@ crs#:#crs_timings_presetting#:#Zaman Hedefi Etkin
 crs#:#crs_timings_short_active#:#Etkin
 crs#:#crs_timings_short_active_tt#:#Activate Timings###10 11 2018 new variable
 crs#:#crs_timings_short_changeable#:#Değiştirilebilir
-crs#:#crs_timings_short_changeable_tt#:#Timings changeable by participants###10 11 2018 new variable
 crs#:#crs_timings_short_end#:#End Date###07 02 2020 new variable
 crs#:#crs_timings_short_limit_start_end#:#son Bitiş Tarihi
 crs#:#crs_timings_short_limit_start_end_tt#:#Latest end###10 11 2018 new variable
@@ -8227,6 +8211,8 @@ dateplaner#:#cal_booking_confirmation_subject#:#Randevu "% s" rezerve edilmişti
 dateplaner#:#cal_booking_confirmation_user#:#Bu orijinal posta gelen kullanıcı için bir kopyasıdır:
 dateplaner#:#cal_booking_confirmed#:#Randevu başarıyla rezerve edilmiştir.
 dateplaner#:#cal_booking_failed_info#:#This appointment is booked out. Please choose another appointment.###24 10 2013 new variable
+dateplaner#:#cal_booking_manager_confirmation_body#:#%s has booked an appointment with %s.###21 05 2025 new variable
+dateplaner#:#cal_booking_owner_confirmation_body#:#%s has booked an appointment with you.###21 05 2025 new variable
 dateplaner#:#cal_cache#:#Takvim Önbellek
 dateplaner#:#cal_cache_disabled#:#Kapalı
 dateplaner#:#cal_cache_enabled#:#Etkin
@@ -8625,6 +8611,9 @@ dcl#:#dcl_confirm_delete_table#:#Eğer gerçekten içerik ve yapısı ile bu tab
 dcl#:#dcl_confirm_storing_records#:#Please validate and confirm your input.###25 10 2016 new variable
 dcl#:#dcl_confirm_storing_records_no_permission#:#You have no permission to change the record afterwards.###25 10 2016 new variable
 dcl#:#dcl_copy#:#Kopya Veri Toplama
+dcl#:#dcl_copy_field#:#Copy###21 05 2025 new variable
+dcl#:#dcl_copy_field_desc#:#Field to copy options stored in a different field of a table.###21 05 2025 new variable
+dcl#:#dcl_copy_title#:#Copy of table and field###21 05 2025 new variable
 dcl#:#dcl_create_date#:#Creation Date###25 10 2016 new variable
 dcl#:#dcl_create_entry_rules#:#Entry Creation###29 07 2022 new variable
 dcl#:#dcl_create_field#:#Oluştur Alan
@@ -8632,10 +8621,10 @@ dcl#:#dcl_create_fields#:#Please create at least one field in the tab "List Fiel
 dcl#:#dcl_creation_date#:#Creation Date###20 07 2014 new variable
 dcl#:#dcl_creation_date_description#:#The date on which the entry was created.###20 07 2014 new variable
 dcl#:#dcl_datatype#:#Datatipi
+dcl#:#dcl_date#:#Date Entry###21 05 2025 new variable
+dcl#:#dcl_date_desc#:#Field for a date.###21 05 2025 new variable
 dcl#:#dcl_date_selection#:#Date Selection###31 08 2017 new variable
 dcl#:#dcl_date_selection_desc#:#Offer selection of date options.###31 08 2017 new variable
-dcl#:#dcl_datetime#:#Datetime
-dcl#:#dcl_datetime_desc#:#Datumseingabe per Auswahlmenü oder Kalender###30 08 2015 new variable
 dcl#:#dcl_deactivate_view#:#Deactivate this view###27 01 2015 new variable
 dcl#:#dcl_default_sort_field#:#Default sort field###26 09 2014 new variable
 dcl#:#dcl_default_sort_field_desc#:#Tabelle wird standardmässig nach dem ausgewählten Feld sortiert.###30 08 2015 new variable
@@ -8644,15 +8633,15 @@ dcl#:#dcl_delete_fields#:#Delete fields###26 09 2014 new variable
 dcl#:#dcl_delete_fields_no_selection#:#Please select at least one field to delete###26 08 2024 new variable
 dcl#:#dcl_delete_perm#:#Kullanıcı girişleri silebilirsiniz
 dcl#:#dcl_delete_records#:#Delete records###26 09 2014 new variable
-dcl#:#dcl_delete_tables#:#Delete Tables###25 10 2016 new variable
-dcl#:#dcl_delete_tables_no_selection#:#Please select at least one table to delete###26 08 2024 new variable
 dcl#:#dcl_delete_views#:#Delete Views###25 10 2016 new variable
 dcl#:#dcl_delete_views_no_selection#:#Please select at least one view to delete###26 08 2024 new variable
 dcl#:#dcl_deleted_records#:#Successfully deleted %s records###26 09 2014 new variable
+dcl#:#dcl_deprecated_copy#:#(Deprecated)###21 05 2025 new variable
 dcl#:#dcl_desc#:#Descending Order (DESC)###26 09 2014 new variable
 dcl#:#dcl_description#:#Alan Açıklama
 dcl#:#dcl_detailed_view#:#Detailed View###25 10 2016 new variable
 dcl#:#dcl_display_action_menu#:#Enable possibility to copy or link the referenced module###26 09 2014 new variable
+dcl#:#dcl_display_action_menu_desc#:#Enable possibility to copy or link the referenced module###21 05 2025 new variable
 dcl#:#dcl_display_record_alt#:#Display this entry###25 10 2016 new variable
 dcl#:#dcl_duplicate_non_unique_entries_exist#:#This may also concern existing records.###23 02 2024 new variable
 dcl#:#dcl_edit#:#Edit Veri Toplama
@@ -8672,6 +8661,7 @@ dcl#:#dcl_export_finished#:#Export finished###25 10 2016 new variable
 dcl#:#dcl_export_started#:#Asynchronous Export started###25 10 2016 new variable
 dcl#:#dcl_field_datatype#:#Alan Datatipi
 dcl#:#dcl_field_description#:#Açıklama
+dcl#:#dcl_field_description_desc#:#The description will be shown below the field inside the entry form.###21 05 2025 new variable
 dcl#:#dcl_field_required#:#Gerekli
 dcl#:#dcl_field_title_change_warning#:#You changed the title of the field hence some placeholders in the view definition might be broken. Those have to be fixed manually should the occasion arise.###26 04 2013 new variable
 dcl#:#dcl_field_title_unique#:#There exists already a field with this title. Title must be unique.###24 10 2013 new variable
@@ -8687,6 +8677,7 @@ dcl#:#dcl_formula#:#Formula###26 09 2014 new variable
 dcl#:#dcl_formula_desc#:#Ähnlich wie bei der Tabellenkalkulation können per Formel Einträge verbunden oder berechnet werden.###30 08 2015 new variable
 dcl#:#dcl_formula_detail_desc#:#Entries are generated automatically, you are not able to edit the entry.###30 08 2015 new variable
 dcl#:#dcl_height#:#Yükseklik
+dcl#:#dcl_height_desc#:#The file will be resized to the given height###21 05 2025 new variable
 dcl#:#dcl_hello#:#Dear###26 04 2013 new variable
 dcl#:#dcl_id#:#ID###20 07 2014 new variable
 dcl#:#dcl_id_description#:#The internal ID.###20 07 2014 new variable
@@ -8706,6 +8697,7 @@ dcl#:#dcl_last_edited_by_description#:#The user that edited this entry last.###2
 dcl#:#dcl_last_update#:#Last Edited###20 07 2014 new variable
 dcl#:#dcl_last_update_description#:#The date the entry was last edited.###20 07 2014 new variable
 dcl#:#dcl_learning_progress#:#izleyicinin bağlantılı modülünün öğrenme progess göster
+dcl#:#dcl_learning_progress_desc#:#Show the learning progress of the linked module of the viewer###21 05 2025 new variable
 dcl#:#dcl_legend_placeholders#:#tutucular
 dcl#:#dcl_length#:#Uzunluk
 dcl#:#dcl_length_info#:#(for more than 200 characters, use the additional option Textarea)###27 01 2015 new variable
@@ -8714,6 +8706,7 @@ dcl#:#dcl_limit_start#:#Başlat
 dcl#:#dcl_limited#:#Sınırlı Ekle / Düzenle / Sil Dönem
 dcl#:#dcl_limited_desc#:#Benutzer können Einträge nur bis zum gewählten Datum hinzufügen, bearbeiten und löschen.###30 08 2015 new variable
 dcl#:#dcl_link_detail_page#:#Link entries to detail page###26 09 2014 new variable
+dcl#:#dcl_link_detail_page_desc#:#Additionaly, the detailed view must be activated and configured within the tab "Single".###21 05 2025 new variable
 dcl#:#dcl_list_fields#:#Alanlar
 dcl#:#dcl_list_visibility_and_filter#:#Visibility and filter###07 02 2020 new variable
 dcl#:#dcl_locked#:#Kilitli
@@ -8732,13 +8725,10 @@ dcl#:#dcl_msg_no_perm_edit#:#No permission given to edit this record###26 09 201
 dcl#:#dcl_msg_no_perm_view#:#No permission given to view this record###26 09 2014 new variable
 dcl#:#dcl_msg_table_created#:#Tablo oluşturuldu
 dcl#:#dcl_msg_table_edited#:#Tablo Ayarlar kaydedildi
-dcl#:#dcl_msg_tables_delete_all#:#Could not delete: At least one Table must exist###25 10 2016 new variable
-dcl#:#dcl_msg_tables_deleted#:#Tables deleted###25 10 2016 new variable
 dcl#:#dcl_msg_tableview_created#:#Views created###25 10 2016 new variable
 dcl#:#dcl_msg_tableview_deleted#:#View deleted###25 10 2016 new variable
 dcl#:#dcl_msg_tableview_updated#:#View updated###25 10 2016 new variable
 dcl#:#dcl_msg_tableviews_delete_all#:#Could not delete: At least one View must exist###25 10 2016 new variable
-dcl#:#dcl_msg_tableviews_deleted#:#Views deleted###25 10 2016 new variable
 dcl#:#dcl_msg_tableviews_order_updated#:#Order of views updated###25 10 2016 new variable
 dcl#:#dcl_multiple_selection#:#Multiple Selection###24 10 2013 new variable
 dcl#:#dcl_new#:#Yeni Veri Toplama oluşturma
@@ -8746,15 +8736,14 @@ dcl#:#dcl_new_field#:#Yeni Alan
 dcl#:#dcl_new_table#:#Yeni Tablo
 dcl#:#dcl_next_record#:#Next record###26 09 2014 new variable
 dcl#:#dcl_no_content_warning#:#Dikkat, Veri Toplama çevrimiçi ancak henüz içeriği yok!
+dcl#:#dcl_no_entries#:#No entries###21 05 2025 new variable
 dcl#:#dcl_no_entry#:#No entry###07 02 2020 new variable
-dcl#:#dcl_no_export_content_available#:#No data available for export.###23 10 2017 new variable
+dcl#:#dcl_no_export_async_config#:#No SOAP Configuration for asyncronous exports available.###21 05 2025 new variable
 dcl#:#dcl_no_export_data_available#:#No data or fields available for export.###25 10 2016 new variable
-dcl#:#dcl_no_export_fields_available#:#No fields activated for export. Mark at least one field as exportable in the <a href="%s">table settings</a>.###23 10 2017 new variable
 dcl#:#dcl_no_fields_yet#:#There are no fields defined for this table thus you cannot create any entries yet.###14 01 2013 new variable
 dcl#:#dcl_no_read_access_on_any_standard_view#:#You don't have read access on any standard view of a table.###10 11 2018 new variable
 dcl#:#dcl_no_search_results_found_for#:#herhangi bir modül için bulunmuştur
 dcl#:#dcl_no_such_reference#:#The following value is not available in the reference table:###24 10 2013 new variable
-dcl#:#dcl_no_warnings#:#The import terminated with no warnings.###24 10 2013 new variable
 dcl#:#dcl_not_checked#:#işaretli değil.
 dcl#:#dcl_not_supported_in_import#:#This type of field is not supported in the import###24 10 2013 new variable
 dcl#:#dcl_notification_activate_dcl#:#Veri Toplama için Etkinleştir Bildirim
@@ -8768,6 +8757,7 @@ dcl#:#dcl_number#:#Integer###25 10 2016 new variable
 dcl#:#dcl_number_desc#:#Field for integer values (max. 9 digits). No decimals or fractions.###25 10 2016 new variable
 dcl#:#dcl_online_info#:#Only if the Data Collection is online, users are able to use the Data Collection.###06 02 2015 new variable
 dcl#:#dcl_order#:#Sıra
+dcl#:#dcl_origin_not_found#:#Origin field was not found!###21 05 2025 new variable
 dcl#:#dcl_own_entries#:#Only own entries###30 08 2015 new variable
 dcl#:#dcl_owner#:#Owner###20 07 2014 new variable
 dcl#:#dcl_owner_description#:#The owner of the entry.###20 07 2014 new variable
@@ -8777,7 +8767,6 @@ dcl#:#dcl_permissions_form#:#Kullanıcı hakları
 dcl#:#dcl_please_select#:#--- Please select ---###04 01 2014 new variable
 dcl#:#dcl_plugin#:#Plugin###25 10 2016 new variable
 dcl#:#dcl_plugin_desc#:#DataCollection Field-Plugins###25 10 2016 new variable
-dcl#:#dcl_plugin_hooks#:#Available Plugins###25 10 2016 new variable
 dcl#:#dcl_plugin_no_hooks_available#:#No active field-type plugins found###25 10 2016 new variable
 dcl#:#dcl_prev_record#:#Previous record###26 09 2014 new variable
 dcl#:#dcl_prop_expression#:#Expression###26 09 2014 new variable
@@ -8795,6 +8784,7 @@ dcl#:#dcl_reference_desc#:#Bereitstellen von Auswahloptionen, die in einem ander
 dcl#:#dcl_reference_link#:#Tablo görünümünde göster bağlantı olarak
 dcl#:#dcl_reference_link_info#:#Detailed View must be active in referenced table###25 10 2016 new variable
 dcl#:#dcl_reference_title#:#Referenz zu Tabelle und Feld###30 08 2015 new variable
+dcl#:#dcl_reference_title_desc#:#Entries of the selected field are options of the target field.###21 05 2025 new variable
 dcl#:#dcl_regex#:#Regular Expression (sınırlayıcı olmadan)
 dcl#:#dcl_regex_info#:#(without delimiter)###27 01 2015 new variable
 dcl#:#dcl_required#:#Gerekli Alan
@@ -8824,14 +8814,12 @@ dcl#:#dcl_table#:#Tablo
 dcl#:#dcl_table_create#:#Tablo Oluştur
 dcl#:#dcl_table_edit#:#Güncelleme Tablosu
 dcl#:#dcl_table_id#:#Tablo Kimliği
-dcl#:#dcl_table_info#:#İzni "Ayarları Düzenle" (sekme "İzni" bölümüne bakınız) ile Kullanıcılar, her zaman eklemek / düzenlemek / girişleri silmek için izniniz yok. Izni "düzenle entry" (sekme "İzinler" bölümüne bakın) olan kullanıcılar, aşağıdaki formu yalnızca belirtilen ayarlara göre izinlere sahip.
 dcl#:#dcl_table_list_fields#:#Seçilmiş Tablosu Alanları
 dcl#:#dcl_table_list_tables#:#Available Tables###25 10 2016 new variable
 dcl#:#dcl_table_settings_saved#:#Tablo Ayarlar kaydedildi.
 dcl#:#dcl_table_title_not_matching#:#The titles of the excel sheet and the Data Collection table do not match. Rename the sheet for a successfull import.###31 08 2017 new variable
 dcl#:#dcl_table_title_unique#:#There exists already a table with this title. Title must be unique.###24 10 2013 new variable
 dcl#:#dcl_tables#:#Tables###25 10 2016 new variable
-dcl#:#dcl_tables_confirm_delete#:#Do you really want to delete the following Tables?###25 10 2016 new variable
 dcl#:#dcl_tableview#:#View###25 10 2016 new variable
 dcl#:#dcl_tableview_add#:#Add New View###25 10 2016 new variable
 dcl#:#dcl_tableview_confirm_delete#:#Do you really want to delete the following View?###25 10 2016 new variable
@@ -8863,17 +8851,21 @@ dcl#:#dcl_title_standardview#:#Standard Views###10 11 2018 new variable
 dcl#:#dcl_unique#:#Benzersiz
 dcl#:#dcl_unique_desc#:#In dieses Feld kann ein gleichlautender Eintrag nur einmal vorgenommen werden.###30 08 2015 new variable
 dcl#:#dcl_unique_exception#:#Girdiğiniz değeri zaten başka bir kayda alınır.
+dcl#:#dcl_unknown#:#Unkown###21 05 2025 new variable
 dcl#:#dcl_unknown_exception#:#Girdiğiniz değer geçerli değil.
+dcl#:#dcl_unknown_plugin#:#Unknown plugin type###21 05 2025 new variable
 dcl#:#dcl_update_field#:#Update Field
 dcl#:#dcl_update_record#:#Güncelleme Tutanak
 dcl#:#dcl_url#:#URL
 dcl#:#dcl_view_configuration#:#View Configuration###29 07 2022 new variable
 dcl#:#dcl_view_own_records_perm#:#View only own entries###26 09 2014 new variable
+dcl#:#dcl_view_own_records_perm_desc#:#Dont show entries of other users.###21 05 2025 new variable
 dcl#:#dcl_view_settings#:#View Settings###29 07 2022 new variable
 dcl#:#dcl_view_viewdefinition#:#Viewdefinition
 dcl#:#dcl_visible#:#Tüm kullanıcılar görebilir
 dcl#:#dcl_visible_desc#:#Benutzer können diese Tabelle über das Auswahlmenü "Tabelle" aufrufen.###30 08 2015 new variable
 dcl#:#dcl_width#:#Genişlik
+dcl#:#dcl_width_desc#:#The file will be resized to the given width.###21 05 2025 new variable
 dcl#:#dcl_wrong_input_type#:#Girdiğiniz değeri spesifikasyonu (Yanlış Tipi) eşleşmiyor.
 dcl#:#dcl_wrong_length#:#Girdiğiniz metin çok uzun.
 dcl#:#dcl_wrong_regex#:#Girdiğiniz metin bu alanda (Regular Expression) için şartname eşleşmiyor.
@@ -9282,6 +9274,7 @@ exc#:#exc_assignments_deleted#:#atamaları silinmiştir.
 exc#:#exc_blog_created#:#blog oluşturuldu.
 exc#:#exc_blog_returned#:#Atama Blog
 exc#:#exc_blog_selected#:#Blog atanmıştır.
+exc#:#exc_cannot_submit_any_files#:#You cannot submit any files anymore.###21 05 2025 new variable
 exc#:#exc_chars_remaining#:#Characters remaining:###31 08 2017 new variable
 exc#:#exc_comment_for_learner_edit#:#Edit Comment for Learner###26 09 2014 new variable
 exc#:#exc_comment_for_learner_info#:#A notification is sent to the user and the feedback will be listed in the user's assignment view.###26 09 2014 new variable
@@ -9710,6 +9703,7 @@ exc#:#exc_template#:#Template###31 08 2017 new variable
 exc#:#exc_text_assignment_edit#:#Edit Text###24 10 2013 new variable
 exc#:#exc_text_assignment_show#:#Show Text###24 10 2013 new variable
 exc#:#exc_text_saved#:#Text has been saved.###07 02 2020 new variable
+exc#:#exc_too_many_files#:#The upload contains too many files.###21 05 2025 new variable
 exc#:#exc_total_exc#:#Toplam Egzersiz
 exc#:#exc_total_members#:#Total Exercise Members###10 11 2018 new variable
 exc#:#exc_type#:#Type###26 08 2024 new variable
@@ -9760,12 +9754,20 @@ exercise#:#exc_your_submission#:#Sizin Gönderme
 exp#:#exp_create_file#:#Dışa Aktarma Dosyası Oluştur
 exp#:#exp_error_disabled#:#The export feature is disabled for containers. You may contact your system administrator.###07 02 2020 new variable
 exp#:#exp_error_too_many_objects#:#The export exceeds the maximum number of allowerd objects (%1). Please select a lower number of objects.###07 02 2020 new variable
+exp#:#exp_export_dropdown#:#Export###21 05 2025 new variable
 exp#:#exp_export_files#:#Dosyaları Dışa Aktar
+exp#:#exp_export_single_option#:#Export %s###21 05 2025 new variable
 exp#:#exp_file_created#:#The export file has been created.###10 07 2013 new variable
+exp#:#exp_format_dropdown-csv#:#as CSV###21 05 2025 new variable
+exp#:#exp_format_dropdown-html#:#as HTML###21 05 2025 new variable
+exp#:#exp_format_dropdown-xls#:#as XLS###21 05 2025 new variable
+exp#:#exp_format_dropdown-xml#:#as XML###21 05 2025 new variable
 exp#:#exp_html#:#HTML###28 10 2024 new variable
 exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for version %s exists.###26 08 2024 new variable
+exp#:#exp_not_public_access_status#:#Not published###21 05 2025 new variable
 exp#:#exp_print_pdf#:#Print/PDF###29 07 2022 new variable
 exp#:#exp_print_pdf_info#:#To create a PDF please use the "Print to PDF" target as soon as the print view is presented.###29 07 2022 new variable
+exp#:#exp_public_access_status#:#Available on ‘Info’-tab###21 05 2025 new variable
 exp#:#exp_really_delete#:#Bu dışa aktarım dosyalarını silmek istediğinizden emin misiniz?
 exp#:#exp_show_print_view#:#Show Print View###29 07 2022 new variable
 exp#:#exp_xml#:#XML
@@ -9773,7 +9775,6 @@ exp#:#export_created#:#yeni dışa aktarma dosyası oluşturuldu.
 exp#:#export_files_deleted#:#The selected export files have been deleted.###26 08 2024 new variable
 exp#:#export_options#:#Export Options###28 10 2024 new variable
 exp#:#export_type#:#Export Type###28 10 2024 new variable
-export#:#exp_export_dropdown#:#Export###28 10 2024 new variable
 export#:#exp_file#:#File Name###28 10 2024 new variable
 export#:#exp_public_access#:#Public Access###28 10 2024 new variable
 export#:#exp_size#:#File Size (MB)###28 10 2024 new variable
@@ -9795,8 +9796,6 @@ export#:#export_resource#:#Kaynak
 export#:#export_save_selection#:#Dışarı Aktarıma Başla
 export#:#export_select_resources#:#Seç Kaynakları
 export#:#no_file#:#No file###08 10 2015 new variable
-file#:#action_download#:#Download file###26 08 2024 new variable
-file#:#action_show#:#Redirect user to the file’s ‘Info’ tab###26 08 2024 new variable
 file#:#add_icon#:#Add Icon###26 08 2024 new variable
 file#:#amount_of_downloads#:#Downloads###26 08 2024 new variable
 file#:#amount_of_downloads_since#:#%d times since %s###26 08 2024 new variable
@@ -9808,6 +9807,10 @@ file#:#could_not_create_file_objs#:#An error occurred while creating your file o
 file#:#de_activate_icon#:#Activate / Deactivate###26 08 2024 new variable
 file#:#download_ascii_filename#:#Allow Only ASCII Characters in Downloaded Filenames###26 08 2024 new variable
 file#:#download_ascii_filename_info#:#Downloaded files should only have ASCII-characters in their filename. Deactivate to use all characters.###26 08 2024 new variable
+file#:#file_action_download#:#Download file or view content###21 05 2025 new variable
+file#:#file_action_download_info#:#If WOPI is activated and the permission 'View Content' is given, the file is shown in tab 'Content'. If not, the file will be offered for direct download.###21 05 2025 new variable
+file#:#file_action_show#:#Redirect user to the file’s ‘Info’ tab###21 05 2025 new variable
+file#:#file_action_show_info#:#The 'Info' tab is shown where the file could be downloaded in a second step.###21 05 2025 new variable
 file#:#file_btn_lp_toggle_state_completed#:#Set Not Completed###26 08 2024 new variable
 file#:#file_btn_lp_toggle_state_not_completed#:#Set Completed###26 08 2024 new variable
 file#:#file_copy#:#Dosya Kopyalama
@@ -9857,6 +9860,8 @@ file#:#preview_caption#:#Preview %sof %s###26 08 2024 new variable
 file#:#preview_image_size_info#:#The preview versions of images will be downscaled or upscaled as appropriate, so that their longest side is the length (in px) entered here.###26 08 2024 new variable
 file#:#preview_persisting#:#Persistent Preview Images###26 08 2024 new variable
 file#:#preview_persisting_info#:#Generated preview images will be stored by ILIAS and used from then on each time the preview icon for that file is clicked on. If deactivated, previews will be generated anew each time.###26 08 2024 new variable
+file#:#previews_for_tiles#:#Tiles###21 05 2025 new variable
+file#:#previews_for_tiles_info#:#Use Preview for Tiles where possible.###21 05 2025 new variable
 file#:#publish_before_delete#:#It was not possible to delete any of the existing versions because an unpublished draft exists.###26 08 2024 new variable
 file#:#replace_file_info#:#Tüm eski dosya sürümlerinin silinecektir.
 file#:#resource_id#:#Resource ID###29 07 2022 new variable
@@ -9914,7 +9919,6 @@ fold#:#fold_settings#:#Folder Settings###24 10 2013 new variable
 form#:#email_not_match#:#Your entries for the email address don't match! Please re-enter your email address.###24 10 2013 new variable
 form#:#form_alphabet_all#:#Tüm
 form#:#form_chars_remaining#:#Characters remaining:###10 11 2018 new variable
-form#:#form_date_aria_desc#:#The following input format is required:###29 07 2022 new variable
 form#:#form_date_duration_end#:#End###25 10 2016 new variable
 form#:#form_date_duration_start#:#Start###25 10 2016 new variable
 form#:#form_days#:#gün
@@ -10210,7 +10214,7 @@ glo#:#glo_bulk_confirmation#:#Please check if all terms and definitions are list
 glo#:#glo_bulk_creation#:#Bulk Creation###26 08 2024 new variable
 glo#:#glo_change_to_collection_unavailable_info#:#To change the type of content assembly to "Collection Glossary", you first have to delete all existing terms within this glossary in tab "Content".###26 08 2024 new variable
 glo#:#glo_change_to_standard_unavailable_info#:#To change the type of content assembly to "Standard Glossary", you first have to remove the selected glossaries in tab "Content".###26 08 2024 new variable
-glo#:#glo_col_ordering_info#:#Order the titles of the metadata fields. They are presented as column headers in the table presentation of the glossary.###29 07 2022 new variable
+glo#:#glo_check#:#Check###21 05 2025 new variable
 glo#:#glo_collection#:#Collection Glossary###29 07 2022 new variable
 glo#:#glo_collection_empty_info#:#This collection glossary is currently empty. Please add at least one glossary to it.###26 08 2024 new variable
 glo#:#glo_collection_info#:#The glossary collects additional terms of other glossaries.###29 07 2022 new variable
@@ -10227,8 +10231,11 @@ glo#:#glo_flashcards#:#Flashcards###26 08 2024 new variable
 glo#:#glo_flashcards_from_today_confirmation#:#The box contains %s flashcards already presented today. Do you want to include only the remaining %s flashcards or all %s flashcards?###26 08 2024 new variable
 glo#:#glo_flashcards_from_today_only_info#:#The box contains only flashcards already presented today. Please confirm that these %s flashcards will be shown to you again.###26 08 2024 new variable
 glo#:#glo_flashcards_intro#:#Your goal is to correctly remember each flashcard four times in a row.<br />To begin with, all of the flashcards are in box 1.<br />Flagging a flashcard as "I got it right" will advance it to the next box.<br />Flagging a flashcard as "I was wrong" will return the card to the first box.<br />To start, select a box. This will reveal the flashcards.###26 08 2024 new variable
+glo#:#glo_flashcards_progress#:#%s of %s###21 05 2025 new variable
 glo#:#glo_introduction#:#Introduction###26 08 2024 new variable
 glo#:#glo_link_glo_in_glo#:#Should all glossary terms of the target glossary be linked in the current glossary now?###25 10 2016 new variable
+glo#:#glo_link_to_usages#:#Link###21 05 2025 new variable
+glo#:#glo_md_advanced#:#Further Details###21 05 2025 new variable
 glo#:#glo_page_type_gdf#:#Term Definition###29 07 2022 new variable
 glo#:#glo_please_select_other_glo#:#Please select another glossary.###29 07 2022 new variable
 glo#:#glo_quit_box#:#Quit Box###26 08 2024 new variable
@@ -10238,17 +10245,16 @@ glo#:#glo_reference_terms#:#Reference Terms###25 10 2016 new variable
 glo#:#glo_referenced_term#:#Referenced Term###25 10 2016 new variable
 glo#:#glo_removed_from_collection_info#:#The glossary has been removed from the collection glossary.###26 08 2024 new variable
 glo#:#glo_reset_all_boxes#:#Reset All Boxes###26 08 2024 new variable
+glo#:#glo_save_and_continue#:#Save and Continue###21 05 2025 new variable
 glo#:#glo_select_source_glo#:#Please select a source glossary.###25 10 2016 new variable
 glo#:#glo_select_terms#:#Select Terms###25 10 2016 new variable
 glo#:#glo_selected_glossaries#:#Selected Glossaries###26 08 2024 new variable
 glo#:#glo_selected_glossaries_info#:#Terms are collected from the following glossaries:###26 08 2024 new variable
 glo#:#glo_selected_glossary_is_current_info#:#The selected glossary corresponds to the current glossary. Please select another glossary.###26 08 2024 new variable
 glo#:#glo_selected_terms_have_been_copied#:#The selected terms have been copied to the clipboard. Please open the target glossary and click "Paste".###25 10 2016 new variable
-glo#:#glo_show_definition#:#Show Definition###26 08 2024 new variable
 glo#:#glo_show_in_presentation#:#Shown in Presentation View###26 08 2024 new variable
 glo#:#glo_show_in_presentation_off#:#Hide in Presentation View###26 08 2024 new variable
 glo#:#glo_show_in_presentation_on#:#Show in Presentation View###26 08 2024 new variable
-glo#:#glo_show_term#:#Show Term###26 08 2024 new variable
 glo#:#glo_tax_info#:#A taxonomy in a Glossary classifies and filters the terms. It always is available in the editing view. For the presentation view, the taxonomy must first be activated. In glossaries, only one taxonomy can be used.###26 08 2024 new variable
 glo#:#glo_term#:#Glossary Term###24 10 2013 new variable
 glo#:#glo_term_definition_pairs#:#Term/Definition Pairs###26 08 2024 new variable
@@ -10258,8 +10264,11 @@ glo#:#glo_term_reference#:#Term Reference###25 10 2016 new variable
 glo#:#glo_term_vs_def#:#Term vs. Definition###26 08 2024 new variable
 glo#:#glo_term_vs_def_info#:#Show a term first, the learner has to guess the definition.###26 08 2024 new variable
 glo#:#glo_terms_per_page#:#Terms per Page###26 08 2024 new variable
+glo#:#glo_usage_link#:#Usage Link###21 05 2025 new variable
 glo#:#glo_use_all_flashcards#:#Use All Flashcards (%s)###26 08 2024 new variable
 glo#:#glo_use_remaining_flashcards#:#Use Remaining Flashcards (%s)###26 08 2024 new variable
+glo#:#glo_what_means_definition#:#What does the following mean?###21 05 2025 new variable
+glo#:#glo_what_means_term#:#What does "%s" mean?###21 05 2025 new variable
 grp#:#crs_add_grouping#:#Üyelik Sınırlaması Ekle
 grp#:#crs_grouping_delete_sure#:#Eğer bu üyelik sınırlama silmek istediğinizden emin misiniz?
 grp#:#crs_grouping_deleted#:#üyelik sınırlaması Silindi.
@@ -10305,10 +10314,8 @@ grp#:#grp_custom_user_fields#:#Grup Ilgili Kullanıcı Verileri
 grp#:#grp_custom_user_fields_infobox#:#Create additional data fields for group members to fill in when they join. You can show this information as an additional column in the "Members" tab.###26 08 2024 new variable
 grp#:#grp_custom_user_fields_table_title#:#Relevant User Data of This Group###26 08 2024 new variable
 grp#:#grp_deactivate_notification#:#Bildirim Deactivate
-grp#:#grp_edit_members#:#Katılımcıları Düzenle
 grp#:#grp_enable_map#:#etkinleştir Grup Haritası
 grp#:#grp_err_registration_limited#:#please enter a valid start and end date for the registration###07 02 2017 new variable
-grp#:#grp_export_members#:#Katılımcıları Dışa Aktar
 grp#:#grp_general_informations#:#Genel Bilgi
 grp#:#grp_grp_info_reg#:#Sadece bu gruplardan birine kayıt olabilirsiniz:
 grp#:#grp_grp_open#:#Open Group###31 08 2017 new variable
@@ -10404,7 +10411,6 @@ grp#:#grp_reg_subject#:#Mesaj
 grp#:#grp_registration_unlimited#:#Sınırsız
 grp#:#grp_role_status#:#Rol / Durum
 grp#:#grp_search_users#:#Kullanıcı Ara
-grp#:#grp_selected_users#:#Seçilmiş Katılımcılar
 grp#:#grp_set_on_waiting_list#:#Sen bekleme listesine Katılma isteğinizi ekleyebilirsiniz. İsteğiniz onay veya red edildiğinde bir grup yöneticisi bir mesaj alacaksınız.
 grp#:#grp_setting_header_presentation#:#Grup Sunumu
 grp#:#grp_setting_header_registration#:#Grup Kaydı
@@ -10480,8 +10486,6 @@ gsfo#:#group_translate#:#Translate###28 10 2024 new variable
 gsfo#:#info_not_deletable_core#:#Default Items cannot be deleted.###28 10 2024 new variable
 gsfo#:#info_not_deletable_not_empty#:#Groups with Entries cannot be deleted.###28 10 2024 new variable
 gsfo#:#legal_information#:#Legal Information###28 10 2024 new variable
-gsfo#:#obj_gsfo#:#Footer###28 10 2024 new variable
-gsfo#:#obj_gsfo_desc#:#Administrate Footer Layout and Content###28 10 2024 new variable
 gsfo#:#order_saved#:#Order saved###28 10 2024 new variable
 gsfo#:#permanent#:#permanent###28 10 2024 new variable
 gsfo#:#reset_footer#:#Reset Footer###28 10 2024 new variable
@@ -10638,6 +10642,7 @@ irss#:#revision_status_20#:#Draft###26 08 2024 new variable
 irss#:#revisions#:#Available Revisions###26 08 2024 new variable
 irss#:#rid_deleted#:#File removed###26 08 2024 new variable
 irss#:#rids_appended#:#Resource(s) added###26 08 2024 new variable
+irss#:#rids_appended_failed#:#No Resource(s) added###21 05 2025 new variable
 irss#:#rids_deleted#:#Resource(s) deleted###26 08 2024 new variable
 irss#:#rids_updated#:#Ressource(n) updated###26 08 2024 new variable
 irss#:#sorting#:#Default Ordering###26 08 2024 new variable
@@ -10898,6 +10903,7 @@ ldoc#:#ldoc_form_edit_doc_head#:#Edit Document###26 08 2024 new variable
 ldoc#:#ldoc_form_new_doc_head#:#Create Document###26 08 2024 new variable
 ldoc#:#ldoc_last_modified#:#Last Change###26 08 2024 new variable
 ldoc#:#ldoc_ldoc_settings#:#Settings###26 08 2024 new variable
+ldoc#:#ldoc_order_invalid#:#Please enter a number for the order###21 05 2025 new variable
 ldoc#:#ldoc_period#:#Period###26 08 2024 new variable
 ldoc#:#ldoc_period_from#:#From###26 08 2024 new variable
 ldoc#:#ldoc_period_until#:#Until###26 08 2024 new variable
@@ -10954,6 +10960,9 @@ lm#:#lm_est_reading_time_info#:#In Learning Modules in the repository the estima
 lm#:#lm_insert_chapter#:#Insert chapter###28 10 2024 new variable
 lm#:#lm_insert_chapter_after#:#Insert chapter after###28 10 2024 new variable
 lm#:#lm_insert_chapter_before#:#Insert chapter before###28 10 2024 new variable
+lm#:#lm_insert_chapter_clip#:#Insert chapter from clipboard###21 05 2025 new variable
+lm#:#lm_insert_chapter_clip_after#:#Insert chapter from clipboard after###21 05 2025 new variable
+lm#:#lm_insert_chapter_clip_before#:#Insert chapter from clipboard before###21 05 2025 new variable
 lm#:#lm_insert_layout_after#:#Insert template after###28 10 2024 new variable
 lm#:#lm_insert_layout_before#:#Insert template before###28 10 2024 new variable
 lm#:#lm_insert_page#:#Insert page###28 10 2024 new variable
@@ -11122,6 +11131,12 @@ lti#:#conf_privacy_ident_il_uuid_ext_account#:#External User ID combined with a 
 lti#:#conf_privacy_ident_il_uuid_ext_account_info#:#This is identical to each call, but may allow a direct conclusion about the user.###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_login#:#ILIAS Login combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_login_info#:#Sends the login name. This is identical to each call, but may allow a direct conclusion about the ILIAS user.###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_random#:#Random ID combined with a unique ILIAS platform ID formatted as an E-Mail address###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_random_info#:#For each ILIAS object and ILIAS user a random ID is generated which remains identical for each call. Conclusions about a user are very limited because it is practically impossible to create user profiles across objects.###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256#:#Hash combined with a unique ILIAS platform id formatted as an E-Mail address###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256_info#:#This is identical to each call, but does not permit any direct conclusions about the ILIAS user.###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url#:#Hash combined with the ILIAS Domain formatted as an E-Mail address.###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url_info#:#This is identical to each call, with with a maximum of 80 characters significantly shorter than the variant with the ILIAS platform ID and allows only very limited conclusions about the ILIAS user.###21 05 2025 new variable
 lti#:#conf_privacy_ident_il_uuid_user_id#:#ILIAS user id combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_user_id_info#:#Sends the internal numeric user id. This is identical to each call, but may allow conclusions about the ILIAS user.###26 08 2024 new variable
 lti#:#conf_privacy_ident_info#:#Standard is frequently the email address. The unique ILIAS platform id is:###26 08 2024 new variable
@@ -11207,13 +11222,16 @@ lti#:#launched#:#Resource was already launched.###07 02 2020 new variable
 lti#:#learning_progress_options#:#Options for Learning Progress###07 02 2020 new variable
 lti#:#lm_only_one_download_per_type#:#Please note that you can only make one file per type (XML, HTML, SCORM) public accessible.###31 08 2017 new variable
 lti#:#lti13_hints#:#If the tool was created without dynamic registration, the following data must be entered for the tool to run.###26 08 2024 new variable
+lti#:#lti_13_authentication_url#:#Authentication Request URL###21 05 2025 new variable
 lti#:#lti_13_client_id#:#Client-ID###26 08 2024 new variable
 lti#:#lti_13_deployment_id#:#Deployment-ID###26 08 2024 new variable
+lti#:#lti_13_keyset_url#:#Public Keyset URL###21 05 2025 new variable
 lti#:#lti_13_platform_id#:#Platform-ID###26 08 2024 new variable
 lti#:#lti_13_step1#:#Step 1###26 08 2024 new variable
 lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Redirection URI, and Registration URL:###26 08 2024 new variable
 lti#:#lti_13_step2#:#Step 2###26 08 2024 new variable
 lti#:#lti_13_step2_info#:#You will receive information from the initiating platform (Consumer), which you must enter in the following fields. After saving, the LTI 1.3 functionalities are available.###26 08 2024 new variable
+lti#:#lti_13_token_url#:#Access Token URL###21 05 2025 new variable
 lti#:#lti_action_accept_provider_as_global#:#Accept Provider as Global Provider for all Users###07 02 2020 new variable
 lti#:#lti_action_accept_providers_as_global#:#Accept Providers as Global###07 02 2020 new variable
 lti#:#lti_action_delete_providers#:#Delete Providers###07 02 2020 new variable
@@ -11227,6 +11245,8 @@ lti#:#lti_at_least_one_prov_has_usages#:#At least one provider could not be dele
 lti#:#lti_auth_failed_invalid_key#:#Authentication failed, no valid consumer key given.###31 08 2017 new variable
 lti#:#lti_con_content_item#:#Support for Deep Linking###26 08 2024 new variable
 lti#:#lti_con_content_item_url#:#Content URL###26 08 2024 new variable
+lti#:#lti_con_grade_synchronization#:#Advanced Grading Services###21 05 2025 new variable
+lti#:#lti_con_grade_synchronization_info#:#The LTI tool must offer 'Assignment and Grade Services'.###21 05 2025 new variable
 lti#:#lti_con_initiate_login_url#:#Initiate Login URL###26 08 2024 new variable
 lti#:#lti_con_key_type#:#Public Key Type###26 08 2024 new variable
 lti#:#lti_con_key_type_jwk#:#URL (Json Web Token)###26 08 2024 new variable
@@ -11246,6 +11266,10 @@ lti#:#lti_con_prov_category_info#:#Category to filter entries when LTI Consumer 
 lti#:#lti_con_prov_custom_params#:#Custom Parameters for this specific Provider###07 02 2020 new variable
 lti#:#lti_con_prov_custom_params_info#:#Please enter them in the form param1=value1; param2=value2###07 02 2020 new variable
 lti#:#lti_con_prov_description#:#Description###07 02 2020 new variable
+lti#:#lti_con_prov_dyn_reg_params#:#Optional Parameters###21 05 2025 new variable
+lti#:#lti_con_prov_dyn_reg_params_info#:#Here, for example, references to target objects in the tool can be specified.###21 05 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url#:#Registration URL of the Tool###21 05 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url_info#:#Note: Not every tool supports dynamic registration.###21 05 2025 new variable
 lti#:#lti_con_prov_external_provider#:#External Provider###07 02 2020 new variable
 lti#:#lti_con_prov_external_provider_info#:#A hint will be shown to users when dealing with an external Provider. An external Provider is characterized by insufficient influence on the Provider by the operator of the ILIAS-installation. This is the case when there are no rights to delete.###07 02 2020 new variable
 lti#:#lti_con_prov_group_options#:#Options to group and filter Providers###07 02 2020 new variable
@@ -11314,6 +11338,8 @@ lti#:#lti_custom_new#:#Create Own Provider Settings###07 02 2020 new variable
 lti#:#lti_delete_consume_provider#:#Delete Provider###07 02 2020 new variable
 lti#:#lti_delete_consume_providers#:#Delete Providers###07 02 2020 new variable
 lti#:#lti_delete_provider#:#Delete Provider###07 02 2020 new variable
+lti#:#lti_dyn_reg_add_tool#:#Add###21 05 2025 new variable
+lti#:#lti_dynamic_registration#:#Create Own Settings for Tool with Dynamic Registration (LTI 1.3)###21 05 2025 new variable
 lti#:#lti_edit_consumer#:#Edit LTI Consumer###31 08 2017 new variable
 lti#:#lti_exit#:#Close LTI Session###31 08 2017 new variable
 lti#:#lti_exited#:#LTI Session closed###31 08 2017 new variable
@@ -11634,10 +11660,11 @@ mail#:#mail_subject_prefix#:#Posta Konusu
 mail#:#mail_subject_prefix_info#:#e-postalar oluşturulan giden oto konu satırına önüne alınacağı, bir metin girin.
 mail#:#mail_subject_too_long#:#The subject is too long.###26 08 2024 new variable
 mail#:#mail_success_removed_user#:#User(s) successfully removed from mailing list.###28 10 2024 new variable
-mail#:#mail_sure_delete#:#İşaretli postaları silmek istediğinizden emin misiniz?
 mail#:#mail_sure_delete_entry#:#Aşağıdaki girdileri silmek istediğinizden emin misiniz?
 mail#:#mail_sure_delete_file#:#Seçilen dosyaları silmek istediğinizden emin misiniz?
 mail#:#mail_sure_delete_folder#:#klasörü ve içindekileri kalıcı olarak silinecek
+mail#:#mail_sure_delete_p#:#Are you sure you want to delete the following mails?###21 05 2025 new variable
+mail#:#mail_sure_delete_s#:#Are you sure you want to delete the following mail?###21 05 2025 new variable
 mail#:#mail_sure_remove_user#:#Are you sure you want to remove the following user(s) from the members list?###28 10 2024 new variable
 mail#:#mail_system_sys_env_from_addr#:#Technical Sender###31 08 2017 new variable
 mail#:#mail_system_sys_env_from_addr_info#:#If you leave this field empty, the sender email address will be used if SMTP transfer is enabled. Otherwise it is the server administrator's responsibility to configure this value.###31 08 2017 new variable
@@ -11986,7 +12013,6 @@ meta#:#md_copyright_link#:#URL###26 08 2024 new variable
 meta#:#md_copyright_link_info#:#Link to the licence###26 08 2024 new variable
 meta#:#md_copyright_preview#:#Copyright (Önizleme)
 meta#:#md_copyright_selection#:#Telif ön ayarlar
-meta#:#md_copyright_settings#:#Telif Ayarları
 meta#:#md_copyright_value#:#Copyright
 meta#:#md_copyrights_deleted#:#Silinmiş Copyright
 meta#:#md_days#:#Gün:
@@ -12012,6 +12038,10 @@ meta#:#md_obj_types#:#Atanan Nesneler
 meta#:#md_record_export_table#:#Dosyaları Dışa Aktar
 meta#:#md_record_list_table#:#Mevcut Metadata Setleri
 meta#:#md_separated_by#:#%s ile ayrılmış
+meta#:#md_settings#:#Settings###21 05 2025 new variable
+meta#:#md_settings_harvester#:#OER Harvester###21 05 2025 new variable
+meta#:#md_settings_licence#:#Terms of Usage###21 05 2025 new variable
+meta#:#md_settings_publishing#:#Querying by Repositories###21 05 2025 new variable
 meta#:#md_time#:#Süre:
 meta#:#md_unknown_vocabulary_flag#:#(unknown vocabulary)###28 10 2024 new variable
 meta#:#md_used#:#Kullanım
@@ -12597,9 +12627,12 @@ meta#:#meta_obj_type_mandatory#:#Mandatory###30 08 2015 new variable
 meta#:#meta_obj_type_optional#:#Optional###30 08 2015 new variable
 meta#:#meta_oer_blocked#:#Ignored by OER Harvester###10 11 2018 new variable
 meta#:#meta_oer_blocked_info#:#Will not be listed automatically as Open Educational Ressource (OER)###10 11 2018 new variable
+meta#:#meta_oer_categories#:#Categories for Objects Gathered###21 05 2025 new variable
 meta#:#meta_oer_copyright_selection#:#Lizenzauswahl###10 11 2018 new variable
 meta#:#meta_oer_copyright_selection_info#:#Nur Objekte, die unter den/der ausgewählten Lizenz veröffentlicht sind, werden in die OER-Kategorie verknüpft.###10 11 2018 new variable
 meta#:#meta_oer_exposed_source#:#Category for Published OER Content###28 10 2024 new variable
+meta#:#meta_oer_harvested_licences#:#Licences for Harvesting###21 05 2025 new variable
+meta#:#meta_oer_harvested_types#:#Types of Objects to be Harvested###21 05 2025 new variable
 meta#:#meta_oer_harvester#:#OER Harvester###10 11 2018 new variable
 meta#:#meta_oer_harvester_desc#:#OER Harvester###10 11 2018 new variable
 meta#:#meta_oer_object_type_selection#:#Harvested Object Types###28 10 2024 new variable
@@ -12989,18 +13022,12 @@ noti#:#noti_notification_deactivated#:#Notification Deactivated###10 11 2018 new
 notifications_adm#:#enable_osd#:#Enable Toasts###26 08 2024 new variable
 notifications_adm#:#enable_osd_desc#:#If enabled, users are notified by a pop-up about new notifications.###26 08 2024 new variable
 notifications_adm#:#notification_settings#:#Notification Settings###26 08 2024 new variable
-notifications_adm#:#osd_delay#:#Presentation Delay###26 08 2024 new variable
-notifications_adm#:#osd_delay_desc#:#Delay of the visible presentation in milliseconds.###26 08 2024 new variable
-notifications_adm#:#osd_error_presentation_time_too_small#:#The Presentation Time has to be at least than 1000 miliseconds.###26 08 2024 new variable
-notifications_adm#:#osd_error_refresh_interval_smaller_than_delay_and_vanish_combined#:#The Refresh Interval has to be greater than the Presentation Time and the Presentation Delay combined.###26 08 2024 new variable
 notifications_adm#:#osd_error_refresh_interval_too_small#:#The Refresh Interval has to be at least than 3000 miliseconds.###26 08 2024 new variable
 notifications_adm#:#osd_interval#:#Refreshinterval###26 08 2024 new variable
 notifications_adm#:#osd_interval_desc#:#Polling interval for checking of new notifications in miliseconds. A lower number will notify the user more quickly but increases the number of requests the web server must handle.###26 08 2024 new variable
 notifications_adm#:#osd_play_sound#:#Play a Sound###26 08 2024 new variable
 notifications_adm#:#osd_play_sound_desc#:#Play a sound when receiving a new notficiation.###26 08 2024 new variable
 notifications_adm#:#osd_settings#:#Toasts###26 08 2024 new variable
-notifications_adm#:#osd_vanish#:#Presentation Time###26 08 2024 new variable
-notifications_adm#:#osd_vanish_desc#:#Visible time of a notification on the screen in miliseconds.###26 08 2024 new variable
 obj#:#activation_visible_when_disabled#:#Görüş
 obj#:#activation_visible_when_disabled_info#:#Eğer seçilmiş , malzeme bile belirli durumu dışında görülebilir.
 obj#:#availability_period_changed#:#The availability period for the selected objects has been changed successfully.###26 08 2024 new variable
@@ -13013,6 +13040,7 @@ obj#:#copy_container_page_yes_label#:#Copy Content Page###26 08 2024 new variabl
 obj#:#custom_icon#:#Custom Icon###27 01 2015 new variable
 obj#:#edit_availability_period#:#Availability Period###26 08 2024 new variable
 obj#:#edit_questions#:#Edit Questions###26 04 2013 new variable
+obj#:#multiple_reference_deletion_info#:#Further references exist for the following objects.###21 05 2025 new variable
 obj#:#no_objects_selected#:#At least one object needs to be selected.###26 08 2024 new variable
 obj#:#obj_activate_content_lang#:#Activate Translation for Page Editing###22 01 2014 new variable
 obj#:#obj_activate_multilang#:#Activate Multilinguality###22 01 2014 new variable
@@ -13068,12 +13096,14 @@ obj#:#obj_tool_setting_skills_info#:#Activates competence management and compete
 obj#:#obj_tool_setting_tag_cloud#:#Tag Cloud###26 09 2014 new variable
 obj#:#obj_tool_setting_tag_cloud_info#:#The "tag cloud" block will be displayed inside the "Content" tab.###26 09 2014 new variable
 obj#:#obj_tool_setting_taxonomies#:#Taxonomies###26 09 2014 new variable
+obj#:#obj_tool_setting_taxonomies_info#:#Taxonomies allow the filtering of objects. They are created in the "Taxonomy" sub-tab in the "Settings" tab.###21 05 2025 new variable
 obj#:#obj_tool_setting_use_news#:#News###25 10 2016 new variable
 obj#:#obj_tool_setting_use_news_info#:#Activate the news block and/or timeline view.###25 10 2016 new variable
 obj#:#obj_tool_setting_use_news_open_settings#:#Open Settings###25 10 2016 new variable
 obj#:#obj_user_decides_notification#:#Members have to manually activate notifications###31 08 2017 new variable
 obj#:#obj_user_not_disable_not#:#Member are not allowed to deactivate notifications###31 08 2017 new variable
 obj#:#online_input_byline#:#The object has been published and can be accessed by anyone with read access. Other access prerequisites or time-based access restrictions may still apply. This settings applies to the object wherever it is used in the repository.###26 08 2024 new variable
+obj#:#select_import_type_info#:#The type of the object in the file to be imported cannot be determined automatically. The file was probably renamed. Please select the type of object in the file.###21 05 2025 new variable
 obj#:#select_object_type#:#Select Object Type###26 08 2024 new variable
 obj#:#svy_results#:#Results###24 10 2013 new variable
 obj#:#unequal_items_for_availability_period_message#:#You have selected items with different availability periods. Overwrite existing settings below or cancel action to keep current availability periods.###26 08 2024 new variable
@@ -13112,7 +13142,7 @@ orgu#:#msg_confirm_deletion#:#Would you really like to delete tho following Posi
 orgu#:#msg_confirm_remove_user#:#Would you really like to remove the following User from the Position %s?###22 11 2017 new variable
 orgu#:#msg_deleted#:#Deleted###31 08 2017 new variable
 orgu#:#msg_position_created#:#Position created.###22 11 2017 new variable
-orgu#:#msg_position_udpated#:#Position aktualisiert###10 11 2018 new variable
+orgu#:#msg_position_delete_fail#:#Position wurde nicht gefunden.###21 05 2025 new variable
 orgu#:#msg_position_updated#:#Position updated.###22 11 2017 new variable
 orgu#:#msg_success_permission_saved#:#Permissions saved.###10 11 2018 new variable
 orgu#:#no_assignment#:#Please check your XML-File. There is no User Assignment.###22 01 2014 new variable
@@ -13224,8 +13254,6 @@ pd#:#pd_enable_user_publish_info#:#Etkinse, kullanıcılar kendi profillerini,ç
 pd#:#pd_ended#:#Ended###31 08 2017 new variable
 pd#:#pd_export_profile#:#Kişisel Bilgileri Dışa Aktar
 pd#:#pd_import_personal_data#:#Kişisel Bilgileri İçe Aktar
-pd#:#pd_my_memberships_intro#:#Üyeliklerinize Hoşgeldiniz
-pd#:#pd_my_memberships_intro2#:#Bu katılmak tüm dersler ve gruplar için kişisel bir alandır Şu anda, size atanmış herhangi bir üyeliğin yok. . <br /> <ol> <li> Onlara katılarak kendi yöneticileri tarafından izin verilmiş olması kaydıyla ders veya gruplara katılabilirler </ li> <li>: Bir ders ya da grubun bir üyesi olmak için, iki yolu vardır Bir ders ya da grup administratrator size bir üyelik atayabilirsiniz. </ li> </ ol> <br /> Herhangi bir durumda, ilgili nesneler bu yerde otomatik olarak görünecektir.
 pd#:#pd_my_memberships_sort_default#:#Default of Sort Option###31 08 2017 new variable
 pd#:#pd_no_items_to_manage#:#No items available for removal.###26 08 2024 new variable
 pd#:#pd_not_dated#:#Not Dated###26 08 2024 new variable
@@ -13409,6 +13437,7 @@ prg#:#pc_prgstatus_unlimited_validation#:#Unlimited validity###26 08 2024 new va
 prg#:#percentage#:#%###07 02 2020 new variable
 prg#:#prg_access_by_orgu#:#Access Control by Organisation Unit Positions###29 07 2022 new variable
 prg#:#prg_access_by_orgu_byline#:#If enabled, additional access control rules can be defined by positions in organisational units.###29 07 2022 new variable
+prg#:#prg_acknowledge_all_completed_courses#:#Acknowledge All Completed Courses###21 05 2025 new variable
 prg#:#prg_acknowledge_completed_courses#:#Acknowledge Completed Courses###25 10 2015 new variable
 prg#:#prg_add#:#Add Study Programme###30 08 2015 new variable
 prg#:#prg_added_course_ref_successful#:#New course-reference was added successfully###30 08 2015 new variable
@@ -13749,6 +13778,7 @@ prtf#:#prtf_sure_delete_portfolio_pages#:#Aşağıdaki portföy sayfaları silme
 prtf#:#prtf_sure_delete_portfolios#:#Aşağıdaki portföyleri silmek istediğinizden emin misiniz?
 prtf#:#prtf_tab_other_users#:#Diğer kullanıcılar itibaren Portfolyolar
 prtf#:#prtf_tab_portfolios#:#Benim Portföyler
+prtf#:#prtf_table_of_contents#:#Table of Contents###21 05 2025 new variable
 prtf#:#prtf_template_editor_placeholder_info#:#This placeholder will be replaced in the portfolio.###24 10 2013 new variable
 prtf#:#prtf_template_import_blog_create#:#Create New Blog###24 10 2013 new variable
 prtf#:#prtf_template_import_blog_ignore#:#Remove Blog Page###24 10 2013 new variable
@@ -14036,7 +14066,7 @@ rbac#:#chtr_moderate#:#Kullanıcı sohbet tartışma ılımlı olabilir
 rbac#:#chtr_read#:#Kullanıcı Chatroom de katılmak ve katılabilir
 rbac#:#chtr_visible#:#Chatroom görünür
 rbac#:#chtr_write#:#Kullanıcı Chatroom ve ban kullanıcıların ayarlarını düzenleyebilirsiniz
-rbac#:#cmis_edit_permissions#:#User can change permission settings of xAPI/cmi5 administration.###29 07 2022 new variable
+rbac#:#cmis_edit_permission#:#User can change permission settings of xAPI/cmi5 administration.###21 05 2025 new variable
 rbac#:#cmis_read#:#User has read access to xAPI/cmi5 administration.###29 07 2022 new variable
 rbac#:#cmis_visible#:#Administration of xAPI/cmi5 is visible.###29 07 2022 new variable
 rbac#:#cmis_write#:#User can edit settings of xAPI/cmi5 administration.###29 07 2022 new variable
@@ -14109,6 +14139,10 @@ rbac#:#dcl_write#:#Kullanıcı ayarları ve veri toplama içeriğini düzenleyeb
 rbac#:#delete_files#:#Delete Files###24 10 2013 new variable
 rbac#:#delete_folders#:#Delete Folders###24 10 2013 new variable
 rbac#:#delete_wiki_pages#:#Delete Pages###30 08 2015 new variable
+rbac#:#dpro_edit_permission#:#User can change permission settings in the Declaration of Data Protected administration###21 05 2025 new variable
+rbac#:#dpro_read#:#User has read access to the Declaration of Data Protection administration###21 05 2025 new variable
+rbac#:#dpro_visible#:#Declaration of Data Protection administration is visible###21 05 2025 new variable
+rbac#:#dpro_write#:#Edit settings in the Declaration of Data Protection###21 05 2025 new variable
 rbac#:#dshs_change_presentation#:#Change presentation of dashboard view###07 02 2020 new variable
 rbac#:#dshs_edit_permission#:#User can change permission settings of Dashboard administration###07 02 2020 new variable
 rbac#:#dshs_read#:#User has read access to Dashboard administration###07 02 2020 new variable
@@ -14156,6 +14190,7 @@ rbac#:#feed_delete#:#Kullanıcı web besleme taşıyabilir veya silebilirsiniz
 rbac#:#feed_edit_permission#:#Yetki Ayarlarını Değiştir
 rbac#:#feed_read#:#Kullanıcı web beslemesinin içeriğini okuyabilir
 rbac#:#feed_write#:#Kullanıcı web besleme ayarlarını düzenleyebilirsiniz
+rbac#:#file_content#:#Show Content###21 05 2025 new variable
 rbac#:#file_copy#:#Kullanıcı dosyayı kopyalayabilirsiniz
 rbac#:#file_delete#:#Kullanıcı dosya taşıyabilir veya silebilirsiniz
 rbac#:#file_edit_file#:#Allow to edit the file in an external editor, if available###26 08 2024 new variable
@@ -14163,6 +14198,7 @@ rbac#:#file_edit_learning_progress#:#User can edit learning progress settings###
 rbac#:#file_edit_permission#:#Yetki Ayarlarını Değiştir
 rbac#:#file_read#:#Kullanıcı dosyayı indirebilirsiniz
 rbac#:#file_read_learning_progress#:#User can view learning progress of other users###10 11 2018 new variable
+rbac#:#file_view_content#:#File content presented in browser (if WOPI is active)###21 05 2025 new variable
 rbac#:#file_visible#:#Dosya görülebilir
 rbac#:#file_write#:#Kullanıcı dosya ayarlarını düzenleyin ve dosyanın yeni sürümünü yükleyebilirsiniz
 rbac#:#files_visible#:#Files Visible###24 10 2013 new variable
@@ -14190,9 +14226,11 @@ rbac#:#frm_add_reply#:#Kullanıcılar ilanıyla cevap veremezsiniz
 rbac#:#frm_add_thread#:#Kullanıcı, yeni bir konu ekleyebilirsiniz
 rbac#:#frm_copy#:#Kullanıcı forumu kopyalayabilirsiniz
 rbac#:#frm_delete#:#Kullanıcı forumu taşıyabilir veya silebilirsiniz
+rbac#:#frm_edit_learning_progress#:#User can edit learning progress settings###21 05 2025 new variable
 rbac#:#frm_edit_permission#:#Yetki Ayarlarını Değiştir
 rbac#:#frm_moderate_frm#:#Kullanıcı ilanları, düzenleyebilir sansür ve silebilirsiniz
 rbac#:#frm_read#:#Kullanıcı forumun içeriğini okuyabilir
+rbac#:#frm_read_learning_progress#:#User can view learning progress of other users###21 05 2025 new variable
 rbac#:#frm_visible#:#Forum görünür
 rbac#:#frm_write#:#Kullanıcı forumu ayarları ve moderatörleri düzenleyebilirsiniz
 rbac#:#frma_edit_permission#:#Kullanıcı Forumu idaresinin izin ayarlarını değiştirebilirsiniz
@@ -14255,6 +14293,10 @@ rbac#:#il_lti_global_role#:#LTI User###29 07 2022 new variable
 rbac#:#il_sess_participant#:#Session Participant###31 08 2017 new variable
 rbac#:#il_sess_status_closed#:#Non-Participant Closed Session###31 08 2017 new variable
 rbac#:#ilias_id#:#ILIAS-ID###27 01 2015 new variable
+rbac#:#impr_edit_permission#:#User can change permission settings of Legal Notice administration###21 05 2025 new variable
+rbac#:#impr_read#:#User can read in Legal Notice administration###21 05 2025 new variable
+rbac#:#impr_visible#:#Administration of Legal Notice is visible###21 05 2025 new variable
+rbac#:#impr_write#:#User can edit content and settings of Legal Notice###21 05 2025 new variable
 rbac#:#info_user_view_changed#:#Kullanıcı görünümü Değiştirildi
 rbac#:#internal_mail#:#Dahili Posta
 rbac#:#invite#:#Ankete davet
@@ -14302,7 +14344,7 @@ rbac#:#lso_read_learning_progress#:#User can view learning progress of other use
 rbac#:#lso_unparticipate#:#User can unsubscribe from a Learning Sequence###07 02 2020 new variable
 rbac#:#lso_visible#:#Learning Sequence is visible###10 11 2018 new variable
 rbac#:#lso_write#:#User can edit settings of Learning Sequence###10 11 2018 new variable
-rbac#:#lsos_edit_permissions#:#User can change permission settings of Learning Sequences administration.###29 07 2022 new variable
+rbac#:#lsos_edit_permission#:#User can change permission settings of Learning Sequences administration.###21 05 2025 new variable
 rbac#:#lsos_read#:#User has read access to Learning Sequences administration.###29 07 2022 new variable
 rbac#:#lsos_visible#:#Administration of Learning Sequences is visible.###29 07 2022 new variable
 rbac#:#lsos_write#:#User can edit settings of Learning Sequences administration.###29 07 2022 new variable
@@ -14369,7 +14411,8 @@ rbac#:#moderate_frm#:#Ilımlı
 rbac#:#msg_anonymous_cannot_be_assigned#:#Anonymous cannot be assigned to a role.###26 08 2024 new variable
 rbac#:#msg_no_roles_of_type#:#Seçilen filtre ayarı ile kullanılabilir rol yok
 rbac#:#news_add_news#:#Add News###25 10 2016 new variable
-rbac#:#nots_edit_permissions#:#User can change permission settings of Notes administration.###29 07 2022 new variable
+rbac#:#no_corresponding_roles#:#No corresponding roles could be found.###21 05 2025 new variable
+rbac#:#nots_edit_permission#:#User can change permission settings of Notes administration.###21 05 2025 new variable
 rbac#:#nots_read#:#User has read access to Notes administration.###29 07 2022 new variable
 rbac#:#nots_visible#:#Administration of Notes is visible.###29 07 2022 new variable
 rbac#:#nots_write#:#User can edit settings of Notes administration.###29 07 2022 new variable
@@ -14449,7 +14492,7 @@ rbac#:#prgs_edit_permission#:#Change permission settings in Study Programme admi
 rbac#:#prgs_read#:#User has read access to Study Programme administration###08 10 2015 new variable
 rbac#:#prgs_visible#:#Study Programme administration is visible###08 10 2015 new variable
 rbac#:#prgs_write#:#Edit settings in Study Programme administration###08 10 2015 new variable
-rbac#:#prss_edit_permissions#:#User can change permission settings of Personal Resources administration.###29 07 2022 new variable
+rbac#:#prss_edit_permission#:#User can change permission settings of Personal Resources administration.###21 05 2025 new variable
 rbac#:#prss_read#:#User has read access to Personal Resources administration.###29 07 2022 new variable
 rbac#:#prss_visible#:#Administration of Personal Resources is visible.###29 07 2022 new variable
 rbac#:#prss_write#:#User can edit settings of Personal Resources administration.###29 07 2022 new variable
@@ -14487,7 +14530,10 @@ rbac#:#rbac_choose_copy_targets#:#Hedef rolleri seçmek için bir sorgu girin.
 rbac#:#rbac_condition_delete_sure#:#istiyorsanız, aşağıdaki koşulların silmek istediğinizden emin misiniz?
 rbac#:#rbac_context_global#:#Genel
 rbac#:#rbac_copy_behaviour#:#Rol Kopyalama Ayarları
+rbac#:#rbac_copy_behaviour_info#:#Transfer Permissions from: %s to: %s###21 05 2025 new variable
 rbac#:#rbac_copy_finished#:#kopyalama tamamlandı.
+rbac#:#rbac_copy_multi_targets#:#%s, %s and %s further Roles selected%s###21 05 2025 new variable
+rbac#:#rbac_copy_no_targets#:#At least one Role must be selected as Target###21 05 2025 new variable
 rbac#:#rbac_copy_role#:#Kopyala Rolü
 rbac#:#rbac_copy_role_add_perm#:#Add Permissions###24 10 2013 new variable
 rbac#:#rbac_copy_role_copy#:#Copy Permissions###24 10 2013 new variable
@@ -14613,6 +14659,7 @@ rbac#:#rbac_ud_local#:#Kullanıcı yerel rolü tanımlı
 rbac#:#rbac_ud_rolt#:#Kullanıcı rolü şablonu tanımlı
 rbac#:#rbac_unprotected_delete_local_policies_info#:#Aktifse, bütün yerel politikalar silinecektir. Kurslar ve gruplarda İzinler yeni başlatıldı olacak.
 rbac#:#rbac_unprotected_keep_local_policies_info#:#tüm yerel politikalar tutmak için bu modu seçin.
+rbac#:#rbac_view_content#:#View Content###21 05 2025 new variable
 rbac#:#rcat_delete#:#Kullanıcı ECS Kategori taşıyabilir veya silebilirsiniz
 rbac#:#rcat_edit_permission#:#Kullanıcı izin ayarlarını değiştirebilir
 rbac#:#rcat_read#:#Kullanıcı ECS Kategori kullanabilirsiniz
@@ -14785,6 +14832,7 @@ rbac#:#tst_edit_learning_progress#:#Öğrenme süreci düzenleme
 rbac#:#tst_edit_permission#:#Yetki ayarlarını değiştir
 rbac#:#tst_read#:#Test olma
 rbac#:#tst_read_learning_progress#:#User can view learning progress of other users###26 09 2014 new variable
+rbac#:#tst_tst_history_read#:#View History###21 05 2025 new variable
 rbac#:#tst_tst_results#:#User has access to test results###10 11 2018 new variable
 rbac#:#tst_visible#:#Test görme
 rbac#:#tst_write#:#Kullanıcı içeriği ve test ayarlarını düzenleme
@@ -14797,7 +14845,7 @@ rbac#:#usrf_read#:#Kullanıcı Kullanıcı yönetimi için okuma erişimi vardı
 rbac#:#usrf_read_users#:#Kullanıcı yerel kullanıcı hesapları (yerel yöneticiler) okuma erişimi
 rbac#:#usrf_visible#:#Kullanıcı yönetimi görülebilir
 rbac#:#usrf_write#:#Kullanıcı yönetiminde Ayarları düzenle
-rbac#:#wbdv_edit_permissions#:#User can change permission settings of WebDAV administration.###29 07 2022 new variable
+rbac#:#wbdv_edit_permission#:#User can change permission settings of WebDAV administration.###21 05 2025 new variable
 rbac#:#wbdv_read#:#User has read access to WebDAV administration.###29 07 2022 new variable
 rbac#:#wbdv_visible#:#Administration of WebDAV is visible.###29 07 2022 new variable
 rbac#:#wbdv_write#:#User can edit settings of WebDAV administration.###29 07 2022 new variable
@@ -14981,6 +15029,7 @@ rep#:#rep_fav_intro2#:#Klicken Sie auf '%s' und wählen Sie aus dem verfügbaren
 rep#:#rep_fav_intro3#:#Wenn Sie etwas gefunden haben, das Sie interessiert, können Sie es ganz einfach zu Ihren Favoriten hinzufügen. Wählen Sie beim gewünschten Objekt im <i>Aktionen</i>-Menü die Option "<i>Zu Favoriten hinzufügen</i>".###07 02 2020 new variable
 rep#:#rep_favourites#:#Favourites###29 07 2022 new variable
 rep#:#rep_favourites_info#:#Users can mark single repository items as favourites. Favourites lists can be activated and configured in the dashboard and menu settings.###29 07 2022 new variable
+rep#:#rep_input_not_empty#:#This field must not be empty, please provide a value.###21 05 2025 new variable
 rep#:#rep_intro#:#Repository hoş geldiniz!
 rep#:#rep_intro1#:#Tüm kullanıcılar için öğrenme kaynakları ve çalışma oluşturabilirsiniz bu alanda. Tüm kaynaklar kategorilerde düzenlenmiştir. Kategoriler kuruluş (örneğin bölümler), disiplinleri hierarchie, ya da bir okul sınıflarının yapısını yansıtabilir.
 rep#:#rep_intro2#:#Üç adımda bir başlangıç ​​yapı inşa etmek için ihtiyaç vardır:
@@ -15374,12 +15423,8 @@ search#:#lucene_or#:#VEYA
 search#:#lucene_port#:#Port
 search#:#lucene_prefix_wildcard#:#Prefix Wildcard Queries###24 10 2013 new variable
 search#:#lucene_prefix_wildcard_info#:#If enabled, prefix wildcard queries (*LIAS finds ILIAS) are supported.###24 10 2013 new variable
-search#:#lucene_relevance#:#Arama Sonuçları Uygunluk
 search#:#lucene_settings_tab#:#Lucene
 search#:#lucene_settings_title#:#Lucene Ayarları
-search#:#lucene_show_relevance#:#göster Uygunluk
-search#:#lucene_show_relevance_info#:#Arama sonuçları kendi alaka düzeyine göre sıralanır. Aktive edilmiş ise, alaka her arama sonucu için ek bilgi olarak gösterilir.
-search#:#lucene_show_sub_relevance#:#Show Subitem Relevance###24 10 2013 new variable
 search#:#lucene_size_frag_info#:#Vurgulanan sınamayı parçalarının maksimum boyutu seçiniz.
 search#:#lucene_size_fragments#:#Metin Fragments Büyüklüğü
 search#:#lucene_tbl_create_ini#:#Ini-Dosya Java Sunucusu Oluşturma
@@ -15465,6 +15510,7 @@ search#:#search_user_search_info_form#:#If enabled, users data will be indexed a
 search#:#search_users#:#Kullanıcıları Ara
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#kadar
+search#:#user_search_settings_section#:#User Search in 'Member'-tabs###21 05 2025 new variable
 sess#:#il_sess_participant#:#Session Participants###10 11 2018 new variable
 sess#:#il_sess_status_open#:#Open Session###29 07 2022 new variable
 sess#:#mail_sess_roles#:#Send Mail to Session Roles###10 11 2018 new variable
@@ -15511,6 +15557,7 @@ sess#:#sess_members_gallery#:#Session Gallery###10 11 2018 new variable
 sess#:#sess_members_print_title#:#Session Participants###31 08 2017 new variable
 sess#:#sess_msg_applicants_assigned#:#Applicant(s) registered for session.###26 09 2014 new variable
 sess#:#sess_msg_applicants_removed#:#Applicant(s) removed from list.###26 09 2014 new variable
+sess#:#sess_new#:#Create Session###21 05 2025 new variable
 sess#:#sess_new_registrations#:#Join Request###25 10 2016 new variable
 sess#:#sess_notification_option#:#Option###07 02 2020 new variable
 sess#:#sess_notification_option_inherit#:#Inherit from Parent###07 02 2020 new variable
@@ -15924,10 +15971,12 @@ style#:#sty_ca_cntr_class#:#Carousel Container###30 08 2015 new variable
 style#:#sty_ca_icntr_class#:#Carousel Item Container###30 08 2015 new variable
 style#:#sty_ca_icont_class#:#Carousel Item Content###30 08 2015 new variable
 style#:#sty_ca_ihead_class#:#Carousel Item Header###30 08 2015 new variable
+style#:#sty_cannot_be_copied#:#The following style types cannot be copied###21 05 2025 new variable
 style#:#sty_caption#:#Başlık
 style#:#sty_caption_class#:#Başlık
 style#:#sty_carousel_templates#:#Carousel Templates###30 08 2015 new variable
 style#:#sty_cat_assignments#:#Stil / Kategori Atamalar
+style#:#sty_change_user_assignment#:#Change User Assignment###21 05 2025 new variable
 style#:#sty_characteristic_already_exists#:#Bu başlık ile A tarzı sınıf zaten bu tarz içinde var.
 style#:#sty_class#:#Style Class###29 07 2022 new variable
 style#:#sty_class_name#:#Class Name###29 07 2022 new variable
@@ -15998,6 +16047,7 @@ style#:#sty_images#:#Görüntüleri
 style#:#sty_import_page_layout#:#Sayfa Düzenini Dışa Aktar
 style#:#sty_import_stylesheet#:#Stil İçe Aktar
 style#:#sty_import_system_style#:#Import an existing system style as zip.###25 10 2016 new variable
+style#:#sty_imported_layout#:#Imported Page Layout###21 05 2025 new variable
 style#:#sty_individual_styles#:#Bireysel Stilleri
 style#:#sty_keep_existing#:#Mevcut tutun
 style#:#sty_left#:#Sol
@@ -16026,6 +16076,7 @@ style#:#sty_min_height#:#Minimum Yükseklik
 style#:#sty_move_lm_styles#:#Öğrenme Modülleri Stilini Değiştir
 style#:#sty_move_style#:#Stil Değiştir
 style#:#sty_move_user_styles#:#Kullanıcıların Stilini Değiştirin
+style#:#sty_move_user_styles_saved#:#The assignment of the users assigned to skind-id %s has been changed to skin-id %s.###21 05 2025 new variable
 style#:#sty_msg_characteristic_must_only_include#:#Tarzı sınıfların başlığı sadece aşağıdaki karakterleri içerebilir:
 style#:#sty_msg_color_must_only_include#:#renk adı yalnızca aşağıdaki karakterleri içerebilir:
 style#:#sty_msg_input_must_be_numeric#:#Girdi sayısal olmalıdır.
@@ -17330,7 +17381,9 @@ ui#:#ui_md_input_view#:#View###26 08 2024 new variable
 ui#:#ui_pagination_unlimited#:#Unlimited###26 08 2024 new variable
 ui#:#ui_select_dropdown_label#:#Please select###26 08 2024 new variable
 ui#:#ui_table_no_records#:#No records###26 08 2024 new variable
+ui#:#ui_table_order#:#Order###21 05 2025 new variable
 ui#:#ui_transcription#:#Transcript###29 07 2022 new variable
+ui#:#vc_sort#:#Sort by:###21 05 2025 new variable
 user#:#all_roles_has_starting_point#:#All the roles have starting points###31 08 2017 new variable
 user#:#back_to_starting_points_list#:#Back to Starting Points###31 08 2017 new variable
 user#:#change_email_email_confirmation_body#:#The email address for the account %s was changed. To confirm this change, please click on this link %s. The link is valid for %s minutes.###28 10 2024 new variable
@@ -17519,6 +17572,7 @@ webr#:#webr_list_added#:#A new weblink list has been created.###29 07 2022 new v
 webr#:#webr_list_desc#:#Weblink Listesi Açıklama
 webr#:#webr_list_set#:#The weblink has been set to a weblink list.###29 07 2022 new variable
 webr#:#webr_list_title#:#Weblink Listesi Başlığı
+webr#:#webr_new#:#Create Weblink###21 05 2025 new variable
 webr#:#webr_new_link#:#Add New Weblink
 webr#:#webr_new_list#:#Add New Weblink List###29 07 2022 new variable
 webr#:#webr_new_list_info#:#Please enter a title and optionally a description for the presentation of this Weblink List in the repository.###29 07 2022 new variable

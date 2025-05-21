@@ -174,6 +174,7 @@ administration#:#auth_auth_mode_determination#:#Azonosítási mód meghatározá
 administration#:#auth_automatic#:#Rögzített sorrend
 administration#:#auth_by_user#:#A felhasználó által
 administration#:#auth_kind_determination#:#Meghatározásfajta
+administration#:#auth_mode_default_change_info#:#Changing the default authentication method affects all user accounts configured to use the default authentication method. If the selected default method (e.g., Shibboleth, SAML, SOAP, ...) does not support or is not configured to allow fallback to local ILIAS authentication, affected users may no longer be able to log in. To avoid this, please ensure that local fallback authentication is activated in the configuration of the selected method, or that the authentication method stored for affected user accounts is manually changed.###21 05 2025 new variable
 administration#:#auth_mode_determination_info#:#Jelölje be, ha a felhasználóknak ki kell választaniuk az azonosítási módot a bejelentkező képernyőn, vagy ha bejelentkezési módok rögzített sorrendjével kerül kezelésre.
 administration#:#clean#:#Rendbetétel
 administration#:#clean_desc#:#Érvénytelen hivatkozások és faszerkezet-bejegyzések eltávolítása. Hézagok inicializálása a faszerkezetben.
@@ -1334,6 +1335,7 @@ assessment#:#toplist_col_score#:#Pont
 assessment#:#toplist_col_wtime#:#Kidolgozási idő
 assessment#:#total_attempts#:#Összes kitöltés
 assessment#:#total_duration#:#Összes időtartam
+assessment#:#total_max_points_cannot_be_negative#:#The maximum amount of reachable points cannot be negative.###21 05 2025 new variable
 assessment#:#true#:#Igaz
 assessment#:#tst_access_code_created#:#Egyedi hozzáférési kódot állítottunk be az Ön számára, hogy bármikor elérhesse teszteredményeit, és hogy lehetősége legyen ennek a tesztnek a folytatására. Jegyezze fel ezt a kódot, hogy később a teszt elérhesse, illetve folytathassa.
 assessment#:#tst_activate_skill_service#:#Kompetenciaszolgáltatás
@@ -2647,6 +2649,7 @@ book#:#book_objects_available#:#%s elérhető objektum
 book#:#book_open#:#Foglalásgyűjtemény megnyitása
 book#:#book_overall_limit#:#Foglalások maximális száma
 book#:#book_overall_limit_warning#:#Foglalásai elérték a maximális megengedett számot.
+book#:#book_participant#:#Book for Participants###21 05 2025 new variable
 book#:#book_participant_already_assigned#:#Egy vagy több résztvevőt már korábban hozzárendeltek.
 book#:#book_participant_assigned#:#A résztvevő(k)nek sikeresen lefoglalta.
 book#:#book_period#:#Időszak
@@ -3113,6 +3116,7 @@ cmix#:#btn_change_registration#:#Mehet
 cmix#:#btn_create_lrs_type#:#LRS-típus hozzáadása
 cmix#:#btn_create_registration#:#Mehet
 cmix#:#change_registration#:#E-mail cím a regisztrációhoz
+cmix#:#cmiexit#:#You can now close the window.###21 05 2025 new variable
 cmix#:#cmix_add#:#xAPI/cmi5-objektum hozzáadása
 cmix#:#cmix_add_cmi5_lm#:#cmi5-tananyag
 cmix#:#cmix_add_cmi5_lm_info#:#Ezt a lehetőséget akkor kell használni, ha a tartalom egy cmi5-kompatibilis tanulási modul. A kapcsolódó szolgáltatások, mint például a megfelelő jelentések, további konfiguráció nélkül is elérhetők.
@@ -3991,6 +3995,7 @@ common#:#dpro_withdraw_consent_info_external#:#Kérem, tájékoztassa a hiteles�
 common#:#drafts#:#Piszkozatok
 common#:#drag_file_here#:#Ide fogd-és-vidd a fájlt
 common#:#drag_files_here#:#Ide fogd-és-vidd a fájlokat
+common#:#drag_handle#:#Draggable element###21 05 2025 new variable
 common#:#drop_files_on_repo_obj_info#:#Ide fogd-és-vidd a fájlokat a feltöltéshez
 common#:#edit#:#Módosítás
 common#:#edit_assignments#:#Feladatok módosítása
@@ -4583,6 +4588,7 @@ common#:#login_information_settings_saved#:#A bejelentkezési információkat si
 common#:#login_invalid#:#A választott felhasználónév nem érvényes! Csak a következő karakterek használhatók (minimum 3 karakter): A-Z a-z 0-9 _.+*@!$%~
 common#:#login_to_ilias#:#Bejelentkezés az ILIAS-ba
 common#:#login_to_ilias_via_cas#:#Központi hitelesítési szolgáltatáson keresztüli bejelentkezés az ILIAS-ba
+common#:#login_to_ilias_via_login_form#:#Login to ILIAS###21 05 2025 new variable
 common#:#login_to_ilias_via_saml#:#Bejelentkezés az ILIAS-ba SAML hitelesítésen keresztül
 common#:#login_to_ilias_via_shibboleth#:#ILIAS-ba bejelentkezés ezen keresztül:
 common#:#loginname_already_exists#:#Már van ilyen felhasználónév.
@@ -6202,7 +6208,6 @@ content#:#cont_active_from#:#Aktiválás kezdete
 content#:#cont_active_to#:#Aktiválás vége
 content#:#cont_add_area#:#Terület hozzáadása
 content#:#cont_add_cell#:#Oszlop hozzáadása
-content#:#cont_add_definition#:#Meghatározás hozzáadása
 content#:#cont_add_elements#:#Egy <b>új tartalomelem hozzáadásához</b> kattintson egy + jelre.
 content#:#cont_add_file#:#Fájl hozzáadása
 content#:#cont_add_images#:#Kép hozzáadása
@@ -6320,7 +6325,6 @@ content#:#cont_click_starting_point#:#Kattintson a sokszög kezdőpontjára.
 content#:#cont_click_tl_corner#:#Kattintson a kívánt terület bal felső sarkába.
 content#:#cont_code_import_file#:#Importálás
 content#:#cont_code_manual_editing#:#Kézi bevitel
-content#:#cont_col_ordering#:#Oszloprendezés
 content#:#cont_colspan#:#Col. Span
 content#:#cont_commented_by#:#A hozzászólást írta
 content#:#cont_comments#:#Megjegyzések tárolása
@@ -6376,7 +6380,6 @@ content#:#cont_def_map_areas#:#Alapértelmezett linkterületek
 content#:#cont_def_organization#:#alapértelmezett
 content#:#cont_default#:#Alapértelmezett
 content#:#cont_definition#:#Meghatározás
-content#:#cont_definitions#:#Meghatározások
 content#:#cont_delete_content#:#Tartalom törlése
 content#:#cont_delete_selected#:#Törlés
 content#:#cont_delete_style#:#Stílus törlése
@@ -7283,19 +7286,15 @@ content#:#copied_to_clipboard#:#Másolt objektum(ok) vágólapra tétele.
 content#:#dgl_pagebreak#:#Laptörés
 content#:#glo_add_new_term#:#Új fogalom létrehozása
 content#:#glo_content_settings#:#Tartalom
-content#:#glo_definition_abbr#:#megh. #
 content#:#glo_editing_view#:#Szerkesztési nézet
 content#:#glo_full_definitions#:#Teljes meghatározások
 content#:#glo_full_definitions_info#:#Fogalmak és meghatározásaik teljes egészében megjelennek a főnézetben.
 content#:#glo_hide_taxonomy#:#Taxonómia elrejtése
 content#:#glo_list_usages#:#Előfordulások listája
 content#:#glo_mode_normal_info#:#Az ebben a fogalomtárban létrehozott összes fogalmat fogja tartalmazni.
-content#:#glo_online_info#:#A felhasználók csak akkor használhatják a fogalomtárat, ha az online.
 content#:#glo_presentation_mode#:#Megjelenítés módja
 content#:#glo_presentation_view#:#Megjelenítési nézet
 content#:#glo_quick_navigation#:#Gyors navigáció
-content#:#glo_show_taxonomy#:#Taxonómia
-content#:#glo_show_taxonomy_info#:#Külön allapon lehet definálni, majd szűrésre lehet használni a fogalomtár megjelenítési nézetében.
 content#:#glo_style#:#Fogalomtárstílus
 content#:#glo_table_form#:#Táblázatos formában
 content#:#glo_table_form_info#:#A fogalmak és meghatározásaik először kétoszlopos áttekintésben jelennek meg. Egy fogalomra kattintva új ablakban nyílik meg annak teljes tartalma.
@@ -7406,6 +7405,7 @@ copg#:#copg_more_character_formats#:#További karakterstílusok
 copg#:#copg_obj_types#:#Objektumtípusok
 copg#:#copg_page_element_not_found#:#Az oldalelem nem található.
 copg#:#copg_page_type_stys#:#Lapelrendezés
+copg#:#copg_pages#:#Pages###21 05 2025 new variable
 copg#:#copg_par_format_selection#:#Bekezdésformátumok
 copg#:#copg_pc_mob_does_not_exist#:#Ez a médiaelem nem létezik.
 copg#:#copg_plugin_not_avail#:#'%s' bővítmény nem érhető el
@@ -7809,11 +7809,9 @@ crs#:#crs_objective_tbl_col_final_tsts#:#Záró tesztek
 crs#:#crs_objective_wiz_final#:#Záró teszt kérdései
 crs#:#crs_objective_wiz_final_info#:#Záró tesztkérdések megadása.
 crs#:#crs_objective_wiz_final_limit#:#Küszöbérték a záró teszthez
-crs#:#crs_objective_wiz_final_limit_info#:#Itt határozhatja meg a korlátokat a záró teszt kérdéseihez.
 crs#:#crs_objective_wiz_materials#:#Kurzusanyagok hozzárendelése
 crs#:#crs_objective_wiz_materials_info#:#Megadhat ajánlott kurzusanyagokat a tanulási cél eléréséhez.
 crs#:#crs_objective_wiz_self#:#Belépő teszt kérdései
-crs#:#crs_objective_wiz_self_info#:#Határozza meg a belépő tesztkérdéseket. A belépő teszt célja hogy megvizsgálja a kurzusrésztvevők meglévő tudását.
 crs#:#crs_objective_wiz_self_limit#:#Küszöbérték a belépő teszthez
 crs#:#crs_objective_wiz_self_limit_info#:#Határozza meg a korlátokat a belépő teszt kérdéseihez!
 crs#:#crs_objective_wiz_title#:#Tanulási cél leírása
@@ -7870,7 +7868,6 @@ crs#:#crs_search_users#:#Felhasználók keresése
 crs#:#crs_select_archive_language#:#Válasszon ki egy nyelvet az archívumhoz
 crs#:#crs_select_one_archive#:#Válasszon ki egy archívumot
 crs#:#crs_select_starter#:#Kezdőobjektum kiválasztása
-crs#:#crs_selected_users#:#Kiválasztott résztvevők
 crs#:#crs_settings#:#Kurzusbeállítások
 crs#:#crs_settings_saved#:#A beállításokat sikeresen mentette.
 crs#:#crs_shorten_breadcrumb#:#Navigációs sor
@@ -7952,7 +7949,6 @@ crs#:#crs_timings_presetting#:#Javasolt tanulási időszak beállítása
 crs#:#crs_timings_short_active#:#Engedélyezett
 crs#:#crs_timings_short_active_tt#:#Időzítés aktiválása
 crs#:#crs_timings_short_changeable#:#Módosítható
-crs#:#crs_timings_short_changeable_tt#:#Az időzítést a résztvevők módosíthatják
 crs#:#crs_timings_short_end#:#Záró dátum
 crs#:#crs_timings_short_limit_start_end#:#Legkésőbbi befejezési dátum
 crs#:#crs_timings_short_limit_start_end_tt#:#Legkésőbbi befejezés
@@ -8625,10 +8621,10 @@ dcl#:#dcl_create_fields#:#Kattintson egy táblára a 'Táblák' lap alatt, majd 
 dcl#:#dcl_creation_date#:#Létrehozás dátuma
 dcl#:#dcl_creation_date_description#:#A bejegyzés létrehozásának dátuma.
 dcl#:#dcl_datatype#:#Adattípus
+dcl#:#dcl_date#:#Date Entry###21 05 2025 new variable
+dcl#:#dcl_date_desc#:#Field for a date.###21 05 2025 new variable
 dcl#:#dcl_date_selection#:#Dátumválasztó
 dcl#:#dcl_date_selection_desc#:#Dátumlehetőségek választásának felkínálása.
-dcl#:#dcl_datetime#:#Dátum
-dcl#:#dcl_datetime_desc#:#Dátum beviteli mező.
 dcl#:#dcl_deactivate_view#:#Nézet kikapcsolása
 dcl#:#dcl_default_sort_field#:#Alapértelmezett rendezési mező
 dcl#:#dcl_default_sort_field_desc#:#A táblázatot alapértelmezetten ezen mező alapján rendezzük.
@@ -8637,8 +8633,6 @@ dcl#:#dcl_delete_fields#:#Mezők törlése
 dcl#:#dcl_delete_fields_no_selection#:#Legalább egy törlendő mezőt válasszon ki
 dcl#:#dcl_delete_perm#:#A felhasználó törölhet rekordokat
 dcl#:#dcl_delete_records#:#Bejegyzések törlése
-dcl#:#dcl_delete_tables#:#Táblák törlése
-dcl#:#dcl_delete_tables_no_selection#:#Legalább egy törlendő táblát válasszon ki
 dcl#:#dcl_delete_views#:#Nézetek törlése
 dcl#:#dcl_delete_views_no_selection#:#Legalább egy törlendő nézetet válasszon ki
 dcl#:#dcl_deleted_records#:#Sikeresen törölt %s bejegyzéseket
@@ -8731,13 +8725,10 @@ dcl#:#dcl_msg_no_perm_edit#:#Nincs jogosultsága a bejegyzés szerkesztéséhez
 dcl#:#dcl_msg_no_perm_view#:#Nincs jogosultsága a bejegyzés megtekintéséhez
 dcl#:#dcl_msg_table_created#:#Sikeresen létrehozott egy táblát
 dcl#:#dcl_msg_table_edited#:#A táblabeállításokat sikeresen mentette.
-dcl#:#dcl_msg_tables_delete_all#:#Nem törölhető: legalább egy táblának maradni kell
-dcl#:#dcl_msg_tables_deleted#:#A táblákat sikeresen törölte.
 dcl#:#dcl_msg_tableview_created#:#Nézetet sikeresen létrehozta
 dcl#:#dcl_msg_tableview_deleted#:#Nézetet sikeresen törölte
 dcl#:#dcl_msg_tableview_updated#:#Nézetet sikeresen módosította
 dcl#:#dcl_msg_tableviews_delete_all#:#Nem törölhető: legalább egy nézetnek maradni kell
-dcl#:#dcl_msg_tableviews_deleted#:#Nézeteket sikeresen törölte
 dcl#:#dcl_msg_tableviews_order_updated#:#Nézetek sorrendjét sikeresen mentette
 dcl#:#dcl_multiple_selection#:#Többszörös kiválasztás
 dcl#:#dcl_new#:#Új adatgyűjtés létrehozása
@@ -8747,14 +8738,12 @@ dcl#:#dcl_next_record#:#Következő bejegyzés
 dcl#:#dcl_no_content_warning#:#Figyelem, az adatgyűjtés online, de még nincs tartalma!
 dcl#:#dcl_no_entries#:#Nincs bejegyzés
 dcl#:#dcl_no_entry#:#Egy bejegyzés sem található
-dcl#:#dcl_no_export_content_available#:#Nincs exportálható bejegyzés.
+dcl#:#dcl_no_export_async_config#:#No SOAP Configuration for asyncronous exports available.###21 05 2025 new variable
 dcl#:#dcl_no_export_data_available#:#Nincs exportálható mező, illetve bejegyzés.
-dcl#:#dcl_no_export_fields_available#:#Nincs exportálhatóként megjelölt mező. Jelöljön meg legalább egy mezőt exportálhatóként a <a href="%s">táblázat beállításaiban</a>.
 dcl#:#dcl_no_fields_yet#:#Ez az adatkészlet még nem tartalmaz mezőket. A metaadatokat a különböző mezőtípusok egyikébe kell bevinni. A metaadatok megadásához hozzon létre legalább egy adatmezőt.
 dcl#:#dcl_no_read_access_on_any_standard_view#:#A táblázat alapértelmezett nézetéhez nincs olvasási hozzáférése.
 dcl#:#dcl_no_search_results_found_for#:#Egyetlen tananyagot sem sikerült találni ez alapján:
 dcl#:#dcl_no_such_reference#:#Az alábbi érték nem érhető el a referenciatáblában:
-dcl#:#dcl_no_warnings#:#Az import figyelmeztetés nélkül véget ért.
 dcl#:#dcl_not_checked#:#Nem kipipált
 dcl#:#dcl_not_supported_in_import#:#Ez a mezőtípus nem támogatott az importban.
 dcl#:#dcl_notification_activate_dcl#:#Értesítés bekapcsolása adatgyűjtésre
@@ -8778,7 +8767,6 @@ dcl#:#dcl_permissions_form#:#Felhasználói műveletek
 dcl#:#dcl_please_select#:#--- Válasszon ---
 dcl#:#dcl_plugin#:#Bővítmény
 dcl#:#dcl_plugin_desc#:#Adatgyűjtésmező-bővítmények
-dcl#:#dcl_plugin_hooks#:#Elérhető bővítmények
 dcl#:#dcl_plugin_no_hooks_available#:#Egy aktív mezőtípusú bővítmény sem található
 dcl#:#dcl_prev_record#:#Előző bejegyzés
 dcl#:#dcl_prop_expression#:#Kifejezés
@@ -8832,7 +8820,6 @@ dcl#:#dcl_table_settings_saved#:#A táblabeállításokat sikeresen mentette.
 dcl#:#dcl_table_title_not_matching#:#Az Excel munkalap neve és az adatgyűjtés neve nem azonos, kérem, nevezze át a munkalapot.
 dcl#:#dcl_table_title_unique#:#Ilyen táblanév már létezik. A táblanévnek egyedinek kell lennie.
 dcl#:#dcl_tables#:#Táblák
-dcl#:#dcl_tables_confirm_delete#:#Biztos, hogy törli az alábbi táblákat?
 dcl#:#dcl_tableview#:#Nézet
 dcl#:#dcl_tableview_add#:#Új nézet létrehozása
 dcl#:#dcl_tableview_confirm_delete#:#Biztos, hogy törli az alábbi nézetet?
@@ -8864,7 +8851,9 @@ dcl#:#dcl_title_standardview#:#Standard nézetek
 dcl#:#dcl_unique#:#Egyedi
 dcl#:#dcl_unique_desc#:#Ebben a mezőben minden értéknek különböznie kell egymástól.
 dcl#:#dcl_unique_exception#:#Az Ön által megadott értéket már másik bejegyzés tartalmazza.
+dcl#:#dcl_unknown#:#Unkown###21 05 2025 new variable
 dcl#:#dcl_unknown_exception#:#Az Ön által megadott érték nem érvényes.
+dcl#:#dcl_unknown_plugin#:#Unknown plugin type###21 05 2025 new variable
 dcl#:#dcl_update_field#:#Mező frissítése
 dcl#:#dcl_update_record#:#Bejegyzés módosítása
 dcl#:#dcl_url#:#URL
@@ -10225,7 +10214,7 @@ glo#:#glo_bulk_confirmation#:#Kérjük, ellenőrizze, hogy az összes fogalom é
 glo#:#glo_bulk_creation#:#Tömeges létrehozás
 glo#:#glo_change_to_collection_unavailable_info#:#Ha a tartalom-összeállítás típusát 'Gyűjtő fogalomtár'-ra módosítja, először törölnie kell az összes létező fogalmat a fogalomtárból a 'Tartalom' lapon.
 glo#:#glo_change_to_standard_unavailable_info#:#Ha a tartalom-összeállítás típusát 'Szokásos fogalomtár'-ra módosítja, először el kell távolítania a kiválasztott fogalomtárat a 'Tartalom' lapon.
-glo#:#glo_col_ordering_info#:#A metaadat-mezők címeinek rendezése. Ezek oszlopfejlécként jelennek meg fogalomtár táblázatos megjelenítéskor.
+glo#:#glo_check#:#Check###21 05 2025 new variable
 glo#:#glo_collection#:#Gyűjtő fogalomtár
 glo#:#glo_collection_empty_info#:#Ez a gyűjtő fogalomtár jelenleg üres. Kérem, adjon hozzá legalább egy fogalmat.
 glo#:#glo_collection_info#:#A gyűjtő fogalomtár más fogalomtárak tartalmát jeleníti meg.
@@ -10242,8 +10231,11 @@ glo#:#glo_flashcards#:#Kártyák
 glo#:#glo_flashcards_from_today_confirmation#:#A dobozból ma már megjelenítettünk %s kártyát. Csak a hátralévő %s vagy az összes %s kártyát jelenítsük meg?
 glo#:#glo_flashcards_from_today_only_info#:#A dobozban lévő összes kártyát ma már megjelenítettük. Kérem, erősítse meg, hogy ezt a(z) %s kártyát még egyszer jelenítsük meg.
 glo#:#glo_flashcards_intro#:#A cél az, hogy mindegyik kártyára egymás után négyszer helyesen emlékezzen.<br />Kezdésnek az összes kártya az 1. dobozban található.<br />Ha egy kártyát 'Eltaláltam'-mal jelöl meg, az átkerül a következő dobozba.<br />Ha egy kártyát 'Tévedtem'-mel jelöl meg, akkor a kártya visszakerül az 1. dobozba.<br />A kezdéshez jelöljön ki egy dobozt. Ez felfedi a kártyákat.
+glo#:#glo_flashcards_progress#:#%s of %s###21 05 2025 new variable
 glo#:#glo_introduction#:#Bemutatkozás
 glo#:#glo_link_glo_in_glo#:#Biztos, hogy a célfogalomtár összes fogalmát linkeli a jelenlegi fogalomtárban?
+glo#:#glo_link_to_usages#:#Link###21 05 2025 new variable
+glo#:#glo_md_advanced#:#Further Details###21 05 2025 new variable
 glo#:#glo_page_type_gdf#:#Fogalommeghatározás
 glo#:#glo_please_select_other_glo#:#Válasszon másik fogalomtárat.
 glo#:#glo_quit_box#:#Doboz bezárása
@@ -10253,17 +10245,16 @@ glo#:#glo_reference_terms#:#Kifejezéshivatkozások
 glo#:#glo_referenced_term#:#Hivatkozott fogalom
 glo#:#glo_removed_from_collection_info#:#A fogalomtárat sikeresen eltávolította a gyűjtő fogalomtárból.
 glo#:#glo_reset_all_boxes#:#Az összes doboz alaphelyzetbe állítása.
+glo#:#glo_save_and_continue#:#Save and Continue###21 05 2025 new variable
 glo#:#glo_select_source_glo#:#Válasszon forrás fogalomtárat.
 glo#:#glo_select_terms#:#Fogalmak kiválasztása
 glo#:#glo_selected_glossaries#:#Fogalomtárak kiválasztása
 glo#:#glo_selected_glossaries_info#:#A következő fogalomtárakból gyűjtöttük össze a kifejezeéseket:
 glo#:#glo_selected_glossary_is_current_info#:#A jelenlegi a kiválasztott fogalomtár. Kérjük, válasszon másikat.
 glo#:#glo_selected_terms_have_been_copied#:#A kiválasztott fogalmakat a vágólapra másoltuk. Nyissa meg a cél fogalomtárat, majd nyomja meg a 'Beillesztés' gombot.
-glo#:#glo_show_definition#:#Meghatározások megjelenítése
 glo#:#glo_show_in_presentation#:#Látszódjon megjelenítési nézetben
 glo#:#glo_show_in_presentation_off#:#Ne látszódjon megjelenítési nézetben
 glo#:#glo_show_in_presentation_on#:#Látszódjon megjelenítési nézetben
-glo#:#glo_show_term#:#Fogalmak megjelenítése
 glo#:#glo_tax_info#:#A taxonomia használatával osztályokba rendezheti és szűrheti a foglmakat. Szerkesztő nézetben mindig elérhető. Megjelenítési módban be kell kapcsolni. A fogalomtárban csak egy taxonómia használható.
 glo#:#glo_term#:#Fogalom a fogalomtárban
 glo#:#glo_term_definition_pairs#:#Fogalom/Meghatározás párok
@@ -10273,8 +10264,11 @@ glo#:#glo_term_reference#:#Fogalomhivatkozás
 glo#:#glo_term_vs_def#:#Fogalom vs. meghatározás
 glo#:#glo_term_vs_def_info#:#Először megjelenik a fogalom, ami alapján a meghatározást kell kitalálni.
 glo#:#glo_terms_per_page#:#Fogalmak száma oldalanként
+glo#:#glo_usage_link#:#Usage Link###21 05 2025 new variable
 glo#:#glo_use_all_flashcards#:#Az összes kártya használata (%s)
 glo#:#glo_use_remaining_flashcards#:#A hártalévő kártyák használata (%s)
+glo#:#glo_what_means_definition#:#What does the following mean?###21 05 2025 new variable
+glo#:#glo_what_means_term#:#What does "%s" mean?###21 05 2025 new variable
 grp#:#crs_add_grouping#:#Tagságkorlátozás létrehozása
 grp#:#crs_grouping_delete_sure#:#Biztos, hogy törli ezt a tagsági korlátozást?
 grp#:#crs_grouping_deleted#:#Törölt tagsági korlátozás
@@ -10320,10 +10314,8 @@ grp#:#grp_custom_user_fields#:#Csoporthoz tartozó felhasználói adatok
 grp#:#grp_custom_user_fields_infobox#:#Hozzon létre további adatmezőket a csoporttagok számára, amelyeket csatlakozáskor ki kell töltenie. Ezt az információt további oszlopként is megjelenítheti a 'Tagok' lapon.
 grp#:#grp_custom_user_fields_table_title#:#A csoport releváns felhasználói adatai
 grp#:#grp_deactivate_notification#:#Értesítés kikapcsolása
-grp#:#grp_edit_members#:#Résztvevők módosítása
 grp#:#grp_enable_map#:#Csoporttérkép engedélyezése
 grp#:#grp_err_registration_limited#:#Valós dátumot adjon meg a regisztráció nyitó- és záródátumának
-grp#:#grp_export_members#:#Résztvevők exportálása
 grp#:#grp_general_informations#:#Általános információk
 grp#:#grp_grp_info_reg#:#Csak egy csoportba regisztrálhat ezek közül:
 grp#:#grp_grp_open#:#Csoport megnyitása
@@ -10419,7 +10411,6 @@ grp#:#grp_reg_subject#:#Üzenet
 grp#:#grp_registration_unlimited#:#Korlátlan
 grp#:#grp_role_status#:#Szerep/állapot
 grp#:#grp_search_users#:#Felhasználó keresése
-grp#:#grp_selected_users#:#Kiválasztott résztvevők
 grp#:#grp_set_on_waiting_list#:#Feljelentkezhet a várólistára. Egy üzenetet fog kapni a csoportvezetőtől, amikor kérését jóváhagyják vagy elutasítják.
 grp#:#grp_setting_header_presentation#:#Csoportmegjelenítés
 grp#:#grp_setting_header_registration#:#Csoportregisztráció
@@ -13787,6 +13778,7 @@ prtf#:#prtf_sure_delete_portfolio_pages#:#Biztos, hogy törli az alábbi portfó
 prtf#:#prtf_sure_delete_portfolios#:#Biztos, hogy törli az alábbi portfóliót?
 prtf#:#prtf_tab_other_users#:#Felhasználók portfóliói
 prtf#:#prtf_tab_portfolios#:#Portfólióim
+prtf#:#prtf_table_of_contents#:#Table of Contents###21 05 2025 new variable
 prtf#:#prtf_template_editor_placeholder_info#:#A portfólióban ezt a helyőrzőt majd lecseréljük.
 prtf#:#prtf_template_import_blog_create#:#Új blog létrehozása
 prtf#:#prtf_template_import_blog_ignore#:#Blogoldal eltávolítása
@@ -14198,6 +14190,7 @@ rbac#:#feed_delete#:#A felhasználó áthelyezhet vagy törölhet webhírforrás
 rbac#:#feed_edit_permission#:#A felhasználó módosíthatja a jogosultsági beállításokat
 rbac#:#feed_read#:#A felhasználó olvashat webhírforrást
 rbac#:#feed_write#:#A felhasználó módosíthat webhírforrás-beállításokat
+rbac#:#file_content#:#Show Content###21 05 2025 new variable
 rbac#:#file_copy#:#A felhasználó másolhat fájlt
 rbac#:#file_delete#:#A felhasználó áthelyezhet vagy törölhet fájlt
 rbac#:#file_edit_file#:#Fájl módosításának engedélyezése külső szerkesztővel (ha van)
@@ -14537,7 +14530,10 @@ rbac#:#rbac_choose_copy_targets#:#Adjon meg egy kifejezést, mellyel megtalálha
 rbac#:#rbac_condition_delete_sure#:#Biztos, hogy törli az alábbi előfeltételeket?
 rbac#:#rbac_context_global#:#Globális
 rbac#:#rbac_copy_behaviour#:#Szerepmásolási beállítások
+rbac#:#rbac_copy_behaviour_info#:#Transfer Permissions from: %s to: %s###21 05 2025 new variable
 rbac#:#rbac_copy_finished#:#A másolás befejeződött.
+rbac#:#rbac_copy_multi_targets#:#%s, %s and %s further Roles selected%s###21 05 2025 new variable
+rbac#:#rbac_copy_no_targets#:#At least one Role must be selected as Target###21 05 2025 new variable
 rbac#:#rbac_copy_role#:#Szerepkör másolása
 rbac#:#rbac_copy_role_add_perm#:#Hozzáadási engedélyek
 rbac#:#rbac_copy_role_copy#:#Másolási engedélyek
@@ -15975,6 +15971,7 @@ style#:#sty_ca_cntr_class#:#Körhintatároló
 style#:#sty_ca_icntr_class#:#Körhintaelem-tároló
 style#:#sty_ca_icont_class#:#Körhintaelem-tartalom
 style#:#sty_ca_ihead_class#:#Körhintafejléc
+style#:#sty_cannot_be_copied#:#The following style types cannot be copied###21 05 2025 new variable
 style#:#sty_caption#:#Felirat
 style#:#sty_caption_class#:#Felirat
 style#:#sty_carousel_templates#:#Körhinta-sablonok
@@ -17384,6 +17381,7 @@ ui#:#ui_md_input_view#:#Megtekintés
 ui#:#ui_pagination_unlimited#:#Korlátlan
 ui#:#ui_select_dropdown_label#:#Kérem, válasszon
 ui#:#ui_table_no_records#:#Egy bejegyzés sem található
+ui#:#ui_table_order#:#Order###21 05 2025 new variable
 ui#:#ui_transcription#:#Transcript
 ui#:#vc_sort#:#Rendezés alapja:
 user#:#all_roles_has_starting_point#:#Az összes szabálynak van kiindulási pontja
