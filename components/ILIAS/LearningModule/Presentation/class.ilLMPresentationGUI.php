@@ -1672,6 +1672,7 @@ class ilLMPresentationGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInt
         }
 
         $this->setContentStyles();
+        $this->tpl->addCss(ilObjStyleSheet::getContentPrintStyle());
 
         $tpl = new ilTemplate("tpl.lm_print_view.html", true, true, "components/ILIAS/LearningModule");
 
@@ -1783,8 +1784,10 @@ class ilLMPresentationGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInt
 
                     $chapter_title = $chap->_getPresentationTitle(
                         $node["obj_id"],
+                        ilLMObject::CHAPTER_TITLE,
                         $this->lm->isActiveNumbering(),
                         (bool) $this->lm_set->get("time_scheduled_page_activation"),
+                        false,
                         0,
                         $this->lang
                     );
