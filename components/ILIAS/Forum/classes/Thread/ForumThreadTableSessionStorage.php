@@ -130,7 +130,7 @@ class ForumThreadTableSessionStorage
             return $query_thread_page;
         }
 
-        return $this->getKeyValueFromSession(
+        return (int) $this->getKeyValueFromSession(
             $this->forum_ref_id,
             self::KEY_THREAD_PAGE,
             $query_thread_page
