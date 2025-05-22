@@ -4738,13 +4738,13 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
             return true;
         }
 
-        if (!$this->objProperties->isUserToggleNoti()) {
+        if (!$this->objProperties->isUserToggleNoti() && $this->objProperties->getNotificationType() === 'all_users') {
             return true;
         }
 
         $ref_id = $this->retrieveRefId();
-        if ($this->isParentObjectCrsOrGrp()) {
-            $frm_noti = new ilForumNotification($ref_id);
+        if ($this->isParentObjectCrsOrGrp() && $this->objProperties->getNotificationType() === 'per_user') {
+            $frm_noti = new ilForumNotification($this->retrieveRefId());
             $frm_noti->setUserId($this->user->getId());
 
             return !$frm_noti->isUserToggleNotification();
