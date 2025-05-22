@@ -195,6 +195,9 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function properties(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
         $this->tabs->activateTab("id_settings");
 
         $this->initSettingsForm();
@@ -298,6 +301,10 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function saveProperties(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
+
         $obj_service = $this->getObjectService();
 
         $this->initSettingsForm();
@@ -366,6 +373,10 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function setStartFile(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
+
         // try to determine start file from request
         $start_file = $this->http->wrapper()->query()->has('lm_path')
             ? $start_file = $this->http->wrapper()->query()->retrieve(
