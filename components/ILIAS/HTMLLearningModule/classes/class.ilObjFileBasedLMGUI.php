@@ -197,6 +197,9 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function properties(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
         $this->tabs->activateTab("id_settings");
 
         $this->initSettingsForm();
@@ -300,6 +303,10 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function saveProperties(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
+
         $obj_service = $this->getObjectService();
 
         $this->initSettingsForm();
@@ -368,10 +375,15 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
     public function setStartFile(): void
     {
+        if (!$this->checkPermissionBool("write")) {
+            $this->error->raiseError($this->lng->txt("permission_denied"), $this->error->MESSAGE);
+        }
+
         // try to determine start file from request
         $start_file = $this->http->wrapper()->query()->has('lm_path')
             ? $start_file = $this->http->wrapper()->query()->retrieve(
-                'lm_path', $this->refinery->kindlyTo()->listOf($this->refinery->kindlyTo()->string())
+                'lm_path',
+                $this->refinery->kindlyTo()->listOf($this->refinery->kindlyTo()->string())
             )[0] ?? ''
             : '';
         // the ContainerResourceGUI uses e bin2hex/hex2bin serialization of pathes. Due to the internals of
@@ -384,7 +396,7 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
 
         if ($start_file === '') {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('cont_no_start_file'), true);
-        }else {
+        } else {
             $this->object->setStartFile($start_file);
             $this->object->update();
             $this->tpl->setOnScreenMessage('success', $this->lng->txt('cont_start_file_set'), true);
@@ -578,10 +590,12 @@ class ilObjFileBasedLMGUI extends ilObjectGUI
             ilObjectGUI::_gotoRepositoryNode($a_target, "infoScreen");
         } elseif ($access->checkAccess("read", "", ROOT_FOLDER_ID)) {
             $main_tpl->setOnScreenMessage(
-                'failure', sprintf(
-                $lng->txt("msg_no_perm_read_item"),
-                ilObject::_lookupTitle(ilObject::_lookupObjId($a_target))
-            ), true
+                'failure',
+                sprintf(
+                    $lng->txt("msg_no_perm_read_item"),
+                    ilObject::_lookupTitle(ilObject::_lookupObjId($a_target))
+                ),
+                true
             );
             ilObjectGUI::_gotoRepositoryRoot();
         }
