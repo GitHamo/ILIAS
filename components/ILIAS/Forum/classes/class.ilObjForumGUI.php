@@ -4593,11 +4593,11 @@ EOD
             return true;
         }
 
-        if (!$this->objProperties->isUserToggleNoti()) {
+        if (!$this->objProperties->isUserToggleNoti() && $this->objProperties->getNotificationType() === 'all_users') {
             return true;
         }
 
-        if ($this->isParentObjectCrsOrGrp()) {
+        if ($this->isParentObjectCrsOrGrp() && $this->objProperties->getNotificationType() === 'per_user') {
             $frm_noti = new ilForumNotification($this->object->getRefId());
             $frm_noti->setUserId($this->user->getId());
 
