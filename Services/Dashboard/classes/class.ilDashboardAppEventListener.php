@@ -18,18 +18,19 @@
 
 declare(strict_types=1);
 
-class ilDclDateSelectionRecordRepresentation extends ilDclSelectionRecordRepresentation
+class ilDashboardAppEventListener implements ilAppEventListener
 {
-    public const PROP_SELECTION_TYPE = 'date_selection_type';
-    public const PROP_SELECTION_OPTIONS = 'date_selection_options';
+    private static ?ilDBStatement $clean_up = null;
 
-    public function getHTML(bool $link = true, array $options = []): string
+    public static function handleEvent(string $component, string $event, array $parameter): void
     {
-        $values = [];
-        foreach (ilDclSelectionOption::getValues((int) $this->getField()->getId(), $this->getRecordField()->getValue()) as $value) {
-            $values[] = date($this->user->getDateFormat()->toString(), strtotime($value));
+        if ($event === 'deleteUser') {
+            global $DIC;
+            self::$clean_up ??= $DIC->database()->prepare(
+                'DELETE FROM desktop_item WHERE user_id = ?',
+                [ilDBConstants::T_INTEGER]
+            );
+            $DIC->database()->execute(self::$clean_up, [$parameter['usr_id']]);
         }
-
-        return implode(' | ', $values);
     }
 }
