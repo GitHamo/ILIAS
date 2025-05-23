@@ -1305,6 +1305,8 @@ class ilObject
 
             $this->app_event_handler->raise('components/ILIAS/ILIASObject', 'beforeDeletion', ['object' => $this]);
 
+            $this->getObjectProperties()->deletePropertyTranslations();
+
             $sql =
                 "DELETE FROM " . self::TABLE_OBJECT_DATA . PHP_EOL
                 . "WHERE obj_id = " . $this->db->quote($this->getId(), "integer") . PHP_EOL
@@ -1328,8 +1330,6 @@ class ilObject
 
             // keep log of core object data
             ilObjectDataDeletionLog::add($this);
-
-            $this->getObjectProperties()->deletePropertyTranslations();
 
             // remove news
             $news_item = new ilNewsItem();
