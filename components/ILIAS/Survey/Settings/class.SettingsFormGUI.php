@@ -206,6 +206,14 @@ class SettingsFormGUI
         $desc->setValue($survey->getLongDescription());
         $form->addItem($desc);
 
+        $ne = new \ilNonEditableValueGUI($lng->txt("type"));
+        $ne->setValue(
+            $this->domain_service
+                ->modeProvider($survey->getMode())
+                ->getTitle()
+        );
+        $form->addItem($ne);
+
         if ($feature_config->usesAppraisees()) {
             $self_rate = new \ilCheckboxInputGUI($lng->txt("survey_360_self_raters"), "self_rate");
             $self_rate->setInfo($lng->txt("survey_360_self_raters_info"));
