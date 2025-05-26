@@ -463,6 +463,10 @@ class ilContainer extends ilObject
         $mom_noti = new ilMembershipNotifications($this->getRefId());
         $mom_noti->cloneSettings($new_obj->getRefId());
 
+        // clone filter fields
+        $container_filter_service = new ilContainerFilterService();
+        $container_filter_service->cloneFilterFields($this->getRefId(), $new_obj->getRefId());
+
         return $new_obj;
     }
 
