@@ -140,7 +140,12 @@ class ilECSCmsCourseMemberCommandQueueHandler implements ilECSCommandQueueHandle
      */
     protected function doUpdate($a_content_id, $course_member): bool
     {
-        $this->log->debug('Starting ecs  member update');
+        $this->log->debug('Starting ecs member update');
+
+        if (is_array($course_member) && !isset($course_member["lectureID"])) {
+            $this->log->warning('Missing course id in course_member');
+            return false;
+        }
 
         $course_id = (int) $course_member->lectureID;
         if (!$course_id) {
@@ -191,6 +196,10 @@ class ilECSCmsCourseMemberCommandQueueHandler implements ilECSCommandQueueHandle
     protected function readAssignments($course, $course_member): array
     {
         //TODO check if this switch is still needed
+        if (!property_exists($course, 'groupScenario')) {
+            $course->groupScenario = ilECSMappingUtils::PARALLEL_ONE_COURSE;
+        }
+
         switch ((int) $course->groupScenario) {
             case ilECSMappingUtils::PARALLEL_ONE_COURSE:
                 $this->log->debug('Parallel group scenario one course.');
@@ -221,21 +230,29 @@ class ilECSCmsCourseMemberCommandQueueHandler implements ilECSCommandQueueHandle
                 continue;
             }
 
-            foreach ((array) $member->groups as $pgroup) {
-                // the sequence number in the course ressource
-                $sequence_number = (int) $pgroup->num;
-                // find parallel group with by sequence number
-                $tmp_pgroup = $course->groups[$sequence_number];
-                if (is_object($tmp_pgroup) && $tmp_pgroup->id !== '') {
-                    $this->log->debug('Found parallel group with id: ' . $tmp_pgroup->id . ': for sequence number: ' . $sequence_number);
+            if (property_exists($member, 'groups')) {
+                foreach ((array) $member->groups as $pgroup) {
+                    // the sequence number in the course ressource
+                    $sequence_number = (int) $pgroup->num;
+                    // find parallel group with by sequence number
+                    if (property_exists($course, 'groups')) {
+                        $tmp_pgroup = $course->groups[$sequence_number] ?? null;
 
-                    // @todo check hierarchy of roles
-                    $assigned[$tmp_pgroup->id][$member->personID] = array(
-                        'id' => $member->personID,
-                        'role' => $pgroup->role
-                    );
-                } else {
-                    $this->log->warning('Cannot find parallel group with sequence id: ' . $sequence_number);
+                        if (is_object($tmp_pgroup) && $tmp_pgroup->id !== '') {
+                            $this->log->debug('Found parallel group with id: ' . $tmp_pgroup->id . ': for sequence number: ' . $sequence_number);
+
+                            // @todo check hierarchy of roles
+                            $assigned[$tmp_pgroup->id][$member->personID] = array(
+                                'id' => $member->personID,
+                                'role' => $pgroup->role
+                            );
+                        } else {
+                            $this->log->warning('Cannot find parallel group with sequence id: ' . $sequence_number);
+                        }
+                    } else {
+                        $this->log->error('Invalid course/group-configuration found, ignoring}');
+                    }
+
                 }
             }
         }
@@ -353,7 +370,7 @@ class ilECSCmsCourseMemberCommandQueueHandler implements ilECSCommandQueueHandle
                 $assignment->setServer($this->getServer()->getServerId());
                 $assignment->setMid($this->mid);
                 $assignment->setCmsId($course_id);
-                $assignment->setCmsSubId((int) $sub_id);
+                $assignment->setCmsSubId(is_null($sub_id) ? $sub_id : (int) $sub_id);
                 $assignment->setObjId($obj_id);
                 $assignment->setUid((string) $person_id);
                 $assignment->save();
