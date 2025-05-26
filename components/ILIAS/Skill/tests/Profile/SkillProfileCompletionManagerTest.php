@@ -42,7 +42,8 @@ class SkillProfileCompletionManagerTest extends TestCase
                 array $skills,
                 string $gap_mode = "",
                 string $gap_mode_type = "",
-                int $gap_mode_obj_id = 0
+                int $gap_mode_obj_id = 0,
+                string $trigger_user = ""
             ): array {
                 $actual_levels = [];
 
