@@ -194,7 +194,7 @@ class ilModulesTableGUI extends ilTable2GUI
     {
         if ((int) $a_set["pos_group"] !== $this->old_grp_id) {
             $this->tpl->setCurrentBlock("pos_grp_bl");
-            $this->tpl->setVariable("TXT_POS_GRP", $this->pos_group_options[$a_set["pos_group"]]);
+            $this->tpl->setVariable("TXT_POS_GRP", $this->pos_group_options[$a_set["pos_group"]] ?? "");
             $this->tpl->parseCurrentBlock();
 
             $this->tpl->setCurrentBlock("tbl_content");
