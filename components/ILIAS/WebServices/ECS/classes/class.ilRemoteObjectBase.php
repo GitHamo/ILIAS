@@ -122,7 +122,7 @@ abstract class ilRemoteObjectBase extends ilObject2
      */
     public function getOrganization(): string
     {
-        return $this->organization;
+        return $this->organization ?? '';
     }
 
     /**
