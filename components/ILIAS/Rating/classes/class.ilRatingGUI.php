@@ -593,9 +593,9 @@ class ilRatingGUI
             );
             $elements = [$popover, $button];
         } else {
-            $button = $button->withOnLoadCode(function ($id) {
-                return "return false;";
-            });
+            /*$button = $button->withOnLoadCode(function ($id) {
+                return "";
+            });*/
             $button = $button->withHelpTopics(
                 ...$f->helpTopics(...$tt_topics)
             );
