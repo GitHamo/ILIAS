@@ -247,6 +247,7 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                 break;
 
             case "ilexportgui":
+                $this->checkPermission("write");
                 $this->getTemplate();
                 $this->setTabs();
                 $this->tabs->activateTab("export");
@@ -263,6 +264,10 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                 break;
 
             case "ilglossaryforeigntermcollectorgui":
+                if (!$this->rbacsystem->checkAccess('write', $this->object->getRefId()) &&
+                    !$this->rbacsystem->checkAccess('edit_content', $this->object->getRefId())) {
+                    throw new ilGlossaryException("No permission.");
+                }
                 $this->ctrl->setReturn($this, "");
                 $this->getTemplate();
                 $this->setTabs();
@@ -273,11 +278,16 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                 break;
 
             case "iltermdefinitionbulkcreationgui":
+                if (!$this->rbacsystem->checkAccess('write', $this->object->getRefId()) &&
+                    !$this->rbacsystem->checkAccess('edit_content', $this->object->getRefId())) {
+                    throw new ilGlossaryException("No permission.");
+                }
                 $this->ctrl->setReturn($this, "listTerms");
                 $this->ctrl->forwardCommand($this->term_def_bulk_gui);
                 break;
 
             case strtolower(SettingsGUI::class):
+                $this->checkPermission("write");
                 $this->getTemplate();
                 $this->setTabs();
                 $this->tabs->activateTab("settings");
@@ -295,6 +305,10 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
                 break;
 
             default:
+                if (!$this->rbacsystem->checkAccess('write', $this->object->getRefId()) &&
+                    !$this->rbacsystem->checkAccess('edit_content', $this->object->getRefId())) {
+                    throw new ilGlossaryException("No permission.");
+                }
                 $cmd = $this->ctrl->getCmd("listTerms");
 
                 if (($cmd == "create") && ($this->edit_request->getNewType() == "term")) {
@@ -852,11 +866,16 @@ class ilObjGlossaryGUI extends ilObjectGUI implements \ILIAS\Taxonomy\Settings\M
         // list terms
         $cmd = $this->ctrl->getCmd();
         $force_active = ($cmd == "" || $cmd == "listTerms");
-        $this->tabs_gui->addTab(
-            "content",
-            $this->lng->txt("content"),
-            $this->ctrl->getLinkTarget($this, "listTerms")
-        );
+
+
+        if ($this->rbacsystem->checkAccess('write', $this->object->getRefId()) ||
+            $this->rbacsystem->checkAccess('edit_content', $this->object->getRefId())) {
+            $this->tabs_gui->addTab(
+                "content",
+                $this->lng->txt("content"),
+                $this->ctrl->getLinkTarget($this, "listTerms")
+            );
+        }
 
         $this->tabs_gui->addTab(
             "info_short",
