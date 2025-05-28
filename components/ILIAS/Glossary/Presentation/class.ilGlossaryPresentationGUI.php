@@ -861,6 +861,16 @@ class ilGlossaryPresentationGUI implements ilCtrlBaseClassInterface
                         $lng->txt("glo_editing_view"),
                         "ilias.php?baseClass=ilGlossaryEditorGUI&amp;ref_id=" . $this->requested_ref_id
                     );
+                } else if($ilAccess->checkAccess("edit_permission", "", $this->requested_ref_id)) {
+                    $this->tabs_gui->addNonTabbedLink(
+                        "editing_view",
+                        $lng->txt("glo_editing_view"),
+                        $ilCtrl->getLinkTargetByClass([
+                            ilGlossaryEditorGUI::class,
+                            ilObjGlossaryGUI::class,
+                            ilPermissionGUI::class
+                        ], "perm")
+                    );
                 }
             }
         } else {
