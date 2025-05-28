@@ -43,16 +43,17 @@ class SkillTreeManager
     protected int $requested_ref_id = 0;
 
     public function __construct(
-        int $skmg_ref_id,
         \ilTree $repository_tree,
         SkillTreeFactory $tree_factory
     ) {
         global $DIC;
-
+        $skmg_obj = current(\ilObject::_getObjectsByType("skmg"));
+        if ($skmg_obj) {
+            $this->skmg_ref_id = (int) current(\ilObject::_getAllReferences((int) $skmg_obj["obj_id"]));
+        }
         $this->ctrl = $DIC->ctrl();
         $this->error = $DIC["ilErr"];
         $this->lng = $DIC->language();
-        $this->skmg_ref_id = $skmg_ref_id;
         $this->repository_tree = $repository_tree;
         $this->tree_factory = $tree_factory;
         $this->admin_gui_request = $DIC->skills()->internal()->gui()->admin_request();

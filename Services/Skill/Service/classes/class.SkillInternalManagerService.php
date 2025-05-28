@@ -37,23 +37,17 @@ use ILIAS\Skill\Usage;
  */
 class SkillInternalManagerService
 {
-    /**
-     * @var int ref id of skill management administration node
-     */
-    protected int $skmg_ref_id = 0;
     protected \ilTree $repository_tree;
     protected Tree\SkillTreeFactory $skill_tree_factory;
     protected \ilRbacSystem $rbac_system;
     protected int $usr_id = 0;
 
     public function __construct(
-        int $skmg_ref_id,
         \ilTree $repository_tree,
         Tree\SkillTreeFactory $skill_tree_factory,
         \ilRbacSystem $rbac_system,
         int $usr_id
     ) {
-        $this->skmg_ref_id = $skmg_ref_id;
         $this->repository_tree = $repository_tree;
         $this->skill_tree_factory = $skill_tree_factory;
         $this->rbac_system = $rbac_system;
@@ -73,7 +67,6 @@ class SkillInternalManagerService
     public function getTreeManager(): Tree\SkillTreeManager
     {
         return new Tree\SkillTreeManager(
-            $this->skmg_ref_id,
             $this->repository_tree,
             $this->skill_tree_factory
         );
