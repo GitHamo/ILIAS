@@ -5863,7 +5863,7 @@ class ilObjTest extends ilObject
             )
             ->withTestBehaviourSettings(
                 $main_settings->getTestBehaviourSettings()
-                ->withNumberOfTries($testsettings['NrOfTries'])
+                ->withNumberOfTries((int) $testsettings['NrOfTries'])
                 ->withBlockAfterPassedEnabled((bool) $testsettings['BlockAfterPassed'])
                 ->withPassWaiting($testsettings['pass_waiting'])
                 ->withKioskMode($testsettings['Kiosk'])
