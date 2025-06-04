@@ -34,7 +34,7 @@ class SkillTreeManager
     protected \ilCtrl $ctrl;
     protected \ilErrorHandling $error;
     protected \ilLanguage $lng;
-    protected int $skmg_ref_id = 0;
+    protected int $skmg_ref_id;
     protected \ilTree $repository_tree;
     protected SkillTreeFactory $tree_factory;
     protected SkillTreeAccess $tree_access_manager;
@@ -47,10 +47,6 @@ class SkillTreeManager
         SkillTreeFactory $tree_factory
     ) {
         global $DIC;
-        $skmg_obj = current(\ilObject::_getObjectsByType("skmg"));
-        if ($skmg_obj) {
-            $this->skmg_ref_id = (int) current(\ilObject::_getAllReferences((int) $skmg_obj["obj_id"]));
-        }
         $this->ctrl = $DIC->ctrl();
         $this->error = $DIC["ilErr"];
         $this->lng = $DIC->language();
@@ -75,8 +71,8 @@ class SkillTreeManager
         $tree_obj->setDescription($description);
         $tree_obj->create();
         $tree_obj->createReference();
-        $tree_obj->putInTree($this->skmg_ref_id);
-        $tree_obj->setPermissions($this->skmg_ref_id);
+        $tree_obj->putInTree($this->getSkillManagementRefId());
+        $tree_obj->setPermissions($this->getSkillManagementRefId());
 
         $tree = $this->tree_factory->getTreeById($tree_obj->getId());
         $root_node = new \ilSkillRoot();
@@ -107,7 +103,7 @@ class SkillTreeManager
 
     public function getTrees(): \Generator
     {
-        foreach ($this->repository_tree->getChilds($this->skmg_ref_id) as $c) {
+        foreach ($this->repository_tree->getChilds($this->getSkillManagementRefId()) as $c) {
             if ($c["type"] == "skee") {
                 yield new \ilObjSkillTree((int) $c["child"]);
             }
@@ -125,6 +121,13 @@ class SkillTreeManager
      */
     public function getSkillManagementRefId(): int
     {
+        if (isset($this->skmg_ref_id)) {
+            return $this->skmg_ref_id;
+        }
+        $skmg_obj = current(\ilObject::_getObjectsByType("skmg"));
+        if ($skmg_obj) {
+            $this->skmg_ref_id = (int) current(\ilObject::_getAllReferences((int) $skmg_obj["obj_id"]));
+        }
         return $this->skmg_ref_id;
     }
 }
