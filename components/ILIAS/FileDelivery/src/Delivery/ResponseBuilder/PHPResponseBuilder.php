@@ -86,54 +86,61 @@ class PHPResponseBuilder implements ResponseBuilder
         if (!$this->supportPartial()) {
             return $response;
         }
-        $server_params = $request->getServerParams();
 
-        $byte_offset = 0;
-        $byte_length = $content_length = $stream->getSize();
+        $filesize = $stream->getSize();
+        $range_header = $request->getHeaderLine('Range');
+        $start = 0;
+        $end = $filesize - 1;
+        $status = 200;
 
-        if (isset($server_params['HTTP_RANGE']) && preg_match(
-            '%bytes=(\d+)-(\d+)?%i',
-            (string) $server_params['HTTP_RANGE'],
-            $match
-        )) {
-            $byte_offset = (int) $match[1];
-            if (isset($match[2])) {
-                $finish_bytes = (int) $match[2];
-                $byte_length = $finish_bytes + 1;
-            } else {
-                $finish_bytes = $content_length;
+        $headers = [
+            ResponseHeader::ACCEPT_RANGES => 'bytes',
+        ];
+
+        if ($range_header && preg_match('/bytes=(\d+)-(\d*)/', $range_header, $matches)) {
+            $start = (int) $matches[1];
+            if (isset($matches[2]) && $matches[2] !== '') {
+                $end = (int) $matches[2];
             }
-            $response = $response->withStatus(206, 'Partial Content');
-            $response = $response->withHeader(
-                ResponseHeader::CONTENT_RANGE,
-                "bytes {$byte_offset}-{$finish_bytes}/{$content_length}"
-            );
+
+            if ($start > $end || $end >= $filesize) {
+                return $response
+                    ->withStatus(416)
+                    ->withHeader(ResponseHeader::CONTENT_RANGE, "bytes */$filesize");
+            }
+
+            $status = 206;
+            $headers[ResponseHeader::CONTENT_RANGE] = "bytes $start-$end/$filesize";
         }
 
-        $byte_range = $byte_length - $byte_offset;
+        $length = $end - $start + 1;
+        $headers[ResponseHeader::CONTENT_LENGTH] = (string) $length;
 
-        $response = $response->withHeader(ResponseHeader::CONTENT_LENGTH, $byte_length);
+        $handle = $stream->detach();
+        if ($handle === false) {
+            return $response->withStatus(500);
+        }
 
-        $buffer_size = 512 * 16;
-        $bite_pool = $byte_range;
+        fseek($handle, $start);
 
-        $fh = $stream->detach();
-
-        while ($bite_pool > 0) {
-            $chunk_size_requested = min($buffer_size, $bite_pool);
-            $buffer = fread($fh, $chunk_size_requested);
-            $chunk_actual_size = strlen($buffer);
-
-            if ($chunk_actual_size === 0) {
-                throw new \RuntimeException("Chunksize became 0");
+        $buffer_size = 8192;
+        while ($length > 0 && !feof($handle)) {
+            $read_length = min($buffer_size, $length);
+            $buffer = fread($handle, $read_length);
+            if ($buffer === false || $buffer === '') {
+                break;
             }
-
-            $bite_pool -= $chunk_actual_size;
-
             $response->getBody()->write($buffer);
+            $length -= strlen($buffer);
         }
 
-        return $response;
+        fclose($handle);
+
+        foreach ($headers as $key => $value) {
+            $response = $response->withHeader($key, $value);
+        }
+
+        return $response->withStatus($status);
     }
 
     public function supportPartial(): bool
