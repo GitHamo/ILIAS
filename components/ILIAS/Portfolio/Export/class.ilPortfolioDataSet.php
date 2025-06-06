@@ -203,6 +203,9 @@ class ilPortfolioDataSet extends ilDataSet
             case "portfolio_page":
                 $prtt_id = (int) $a_mapping->getMapping("components/ILIAS/Portfolio", "prtt", $a_rec["PortfolioId"]);
                 if ($prtt_id) {
+                    if ((int) $a_rec["Type"] != ilPortfolioTemplatePage::TYPE_PAGE) {
+                        return;
+                    }
                     $newObj = new ilPortfolioTemplatePage();
                     $newObj->setPortfolioId($prtt_id);
                     $newObj->setTitle($a_rec["Title"]);

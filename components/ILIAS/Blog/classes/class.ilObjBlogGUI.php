@@ -979,7 +979,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         }
 
         $ppic = "";
-        if ($this->blog_settings?->getProfilePicture()) {
+        if ($this->blog_settings?->getProfilePicture() && !$a_export) {
             // repository (multi-user)
             if ($this->id_type === self::REPOSITORY_NODE_ID) {
                 // #15030
@@ -1000,6 +1000,8 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                     $ppic = basename($ppic);
                 }
             }
+        } else {
+            $ppic = ilUtil::getImagePath("standard/icon_blog.svg");
         }
         $a_tpl->resetHeaderBlock(false);
         $a_tpl->setTitleIcon($ppic);
@@ -1863,15 +1865,15 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         }
 
         // create export file
-        ilExport::_createExportDirectory($this->object->getId(), $type, "blog");
-        $exp_dir = ilExport::_getExportDirectory($this->object->getId(), $type, "blog");
+        //ilExport::_createExportDirectory($this->object->getId(), $type, "blog");
+        //$exp_dir = ilExport::_getExportDirectory($this->object->getId(), $type, "blog");
 
         $subdir = $this->object->getType() . "_" . $this->object->getId();
         if ($print_version) {
             $subdir .= "print";
         }
 
-        $blog_export = new BlogHtmlExport($this, $exp_dir, $subdir);
+        $blog_export = new BlogHtmlExport($this, "", $subdir);
         $blog_export->setPrintVersion($print_version);
         $blog_export->includeComments($a_include_comments);
         $blog_export->exportHTML();

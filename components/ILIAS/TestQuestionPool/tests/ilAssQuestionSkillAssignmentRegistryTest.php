@@ -36,36 +36,36 @@ class ilAssQuestionSkillAssignmentRegistryTest extends assBaseTestCase
     }
 
     /**
-     * @dataProvider serializedData
      * @param          $value
      * @param          $chunkSize
      * @param callable $preCallback
      * @param callable $postCallback
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('serializedData')]
     public function testSkillAssignmentsCanBetStoredAndFetchedBySerializationStrategy($value, $chunkSize, callable $preCallback, callable $postCallback): void
     {
         $this->markTestSkipped('Data Provider needs to be revisited.');
 
         $settingsMock = $this->getMockBuilder('ilSetting')->disableOriginalConstructor()->onlyMethods(['set', 'get', 'delete'])->getMock();
 
-        $settingsMock->expects($this->any())->method('set')->will(
-            $this->returnCallback(function ($key, $value) {
+        $settingsMock->expects($this->any())->method('set')->willReturnCallback(
+            function ($key, $value) {
                 $this->storage[$key] = $value;
-            })
+            }
         );
 
-        $settingsMock->expects($this->any())->method('get')->will(
-            $this->returnCallback(function ($key, $value) {
+        $settingsMock->expects($this->any())->method('get')->willReturnCallback(
+            function ($key, $value) {
                 return $this->storage[$key] ?? $value;
-            })
+            }
         );
 
-        $settingsMock->expects($this->any())->method('delete')->will(
-            $this->returnCallback(function ($key, $value) {
+        $settingsMock->expects($this->any())->method('delete')->willReturnCallback(
+            function ($key) {
                 if (isset($this->storage[$key])) {
                     unset($this->storage[$key]);
                 }
-            })
+            }
         );
 
         $valueToTest = $preCallback($value);
@@ -79,9 +79,7 @@ class ilAssQuestionSkillAssignmentRegistryTest extends assBaseTestCase
         $this->assertEquals($value, $postCallback($actual));
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[\PHPUnit\Framework\Attributes\DoesNotPerformAssertions]
     public function testInvalidChunkSizeWillRaiseException(): void
     {
         $settingsMock = $this->getMockBuilder('ilSetting')->disableOriginalConstructor()->onlyMethods(['set', 'get', 'delete'])->getMock();

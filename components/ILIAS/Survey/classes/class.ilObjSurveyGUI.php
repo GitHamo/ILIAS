@@ -774,7 +774,7 @@ class ilObjSurveyGUI extends ilObjectGUI implements ilCtrlBaseClassInterface
                 ->execution()->runSession();
             $sess->setCode(ilObject::_lookupObjId($ref_id), $a_access_code);
             $ctrl->setParameterByClass("ilObjSurveyGUI", "ref_id", $ref_id);
-            $ctrl->redirectByClass("ilObjSurveyGUI", "infoScreen");
+            $ctrl->redirectByClass("ilObjSurveyGUI", "run");
         }
 
         // write permission -> info screen

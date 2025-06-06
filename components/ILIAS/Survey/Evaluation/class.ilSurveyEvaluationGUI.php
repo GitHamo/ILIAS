@@ -1257,12 +1257,15 @@ class ilSurveyEvaluationGUI
         $ilToolbar->addFormButton($lng->txt("select"), "competenceEval");
 
         $pskills_gui = new ilPersonalSkillsGUI();
-        $rater = $this->evaluation_manager->getCurrentRater();
+        $rater = $this->evaluation_manager->getCurrentRater(
+            $this->object->getMode() === ilObjSurvey::MODE_IND_FEEDB
+        );
         if ($rater !== "") {
             if (strpos($rater ?? "", "u") === 0) {
                 $rater = substr($rater, 1);
             }
-            $pskills_gui->setTriggerUserFilter([$rater]);
+            $pskills_gui->setTriggerUserFilter($rater);
+            $pskills_gui->setHistoryView(true);
         }
 
         if (strpos($comp_eval_mode ?? "", "gap_") === 0) {

@@ -18,6 +18,13 @@
 	background-color: transparent;
 }
 
+#tinytarget_div .tox-tinymce {
+	border-radius: 0;
+}
+#tinytarget_div .tox.tox-edit-focus .tox-edit-area::before {
+	opacity: 0;
+}
+
 div.ilc_QuestionPlaceHolder
 {
 	padding: 10px 10px 10px 10px;

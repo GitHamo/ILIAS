@@ -3584,7 +3584,7 @@
 <!-- GridCell -->
 <xsl:template match="GridCell">
 	<xsl:variable name="container_edit_class"><xsl:if test="$mode = 'edit'"> copg-edit-container</xsl:if></xsl:variable>
-	<div>
+	<div style="position: relative;">
 		<xsl:attribute name="class">
 			<xsl:if test="@WIDTH_S != ''"> col-sm-<xsl:value-of select="@WIDTH_S"/></xsl:if>
 			<xsl:if test="@WIDTH_M != ''"> col-md-<xsl:value-of select="@WIDTH_M"/></xsl:if>
