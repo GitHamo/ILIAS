@@ -87,7 +87,7 @@ class RegistrationFilterComponent
         ];
         $role_map = [];
         foreach ($this->rbac_review->getGlobalRoles() as $role_id) {
-            if (!in_array($role_id, [SYSTEM_ROLE_ID, ANONYMOUS_ROLE_ID], true)) {
+            if (!\in_array($role_id, [SYSTEM_ROLE_ID, ANONYMOUS_ROLE_ID], true)) {
                 $role_map[$role_id] = ilObject::_lookupTitle($role_id);
             }
         }

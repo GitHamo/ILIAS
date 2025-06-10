@@ -25,7 +25,7 @@ use ilDBInterface;
 
 class RegistrationCodeRepository
 {
-    private const TABLE_NAME = 'reg_registration_codes';
+    private const string TABLE_NAME = 'reg_registration_codes';
 
     public function __construct(
         protected readonly ilDBInterface $db
@@ -48,7 +48,7 @@ class RegistrationCodeRepository
         if ($code_filter->getAccessLimitation()) {
             $where[] = 'alimit = ' . $this->db->quote($code_filter->getAccessLimitation(), ilDBConstants::T_TEXT);
         }
-        if (count($where)) {
+        if ($where !== []) {
             return ' WHERE ' . implode(' AND ', $where);
         }
 
@@ -144,7 +144,7 @@ class RegistrationCodeRepository
      */
     public function deleteCodes(array $ids): bool
     {
-        if (count($ids)) {
+        if (\count($ids)) {
             return (bool) $this->db->manipulate('DELETE FROM ' . self::TABLE_NAME . ' WHERE ' . $this->db->in(
                 'code_id',
                 $ids,

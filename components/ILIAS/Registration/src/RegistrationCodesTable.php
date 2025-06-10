@@ -138,7 +138,7 @@ class RegistrationCodesTable implements DataRetrieval
             $filter
         );
 
-        if (count($codes_data) === 0 && $range->getStart() > 0) {
+        if (\count($codes_data) === 0 && $range->getStart() > 0) {
             $codes_data = $this->code_repository->getCodesData(
                 $order_field,
                 $order_direction,
@@ -154,10 +154,9 @@ class RegistrationCodesTable implements DataRetrieval
             $date_format = $this->data_factory->dateFormat()->withTime24($this->actor->getDateFormat());
         }
 
-        $options = [];
         $role_map = [];
         foreach ($this->rbac_review->getGlobalRoles() as $role_id) {
-            if (!in_array($role_id, [SYSTEM_ROLE_ID, ANONYMOUS_ROLE_ID], true)) {
+            if (!\in_array($role_id, [SYSTEM_ROLE_ID, ANONYMOUS_ROLE_ID], true)) {
                 $role_map[$role_id] = ilObject::_lookupTitle($role_id);
             }
         }
@@ -186,7 +185,7 @@ class RegistrationCodesTable implements DataRetrieval
                 $result[$k]['role'] = '';
             }
 
-            if ($code['role_local']) {
+            if (\is_string($code['role_local'])) {
                 $local = [];
                 foreach (explode(';', $code['role_local']) as $role_id) {
                     $role = ilObject::_lookupTitle((int) $role_id);
@@ -194,7 +193,7 @@ class RegistrationCodesTable implements DataRetrieval
                         $local[] = $role;
                     }
                 }
-                if (count($local)) {
+                if (\count($local)) {
                     sort($local);
                     $result[$k]['role_local'] = implode('<br />', $local);
                 }
@@ -230,7 +229,7 @@ class RegistrationCodesTable implements DataRetrieval
                         if ((int) $limit['y']) {
                             $limit_caption[] = (int) $limit['y'] . ' ' . $this->lng->txt('years');
                         }
-                        if (count($limit_caption)) {
+                        if (\count($limit_caption)) {
                             $result[$k]['alimit'] = $this->lng->txt('reg_access_limitation_mode_relative_target') .
                                 ': ' . implode(', ', $limit_caption);
                         }
