@@ -17,15 +17,20 @@ il.Wiki.Pres = {
     });
   },
 
-  performHTMLExportWithComments() {
+  performHTMLExportWithComments: function () {
     const t = il.Wiki.Pres;
     t.performHTMLExport(1);
   },
 
-  performHTMLExport(with_comments = 0) {
+  performHTMLExport: function (with_comments = 0) {
     const t = il.Wiki.Pres;
     t.with_comments = with_comments;
-    $("<div id='il_wiki_export_progress'></div>").insertAfter('#il_wiki_user_export');
+    console.log("performHTMLExport" + with_comments);
+    if (document.getElementById('il_wiki_user_export')) {
+      $("<div id='il_wiki_export_progress'></div>").insertAfter("#il_wiki_user_export");
+    } else {
+      $("<div id='il_wiki_export_progress'></div>").insertAfter("#il_wiki_user_export2");
+    }
     t.startHTMLExport();
   },
 
