@@ -43,13 +43,13 @@ il.Wiki.Pres = {
 			with_comments: t.with_comments
 		};
 
-		il.Util.sendAjaxGetRequestToUrl(t.url + "&cmd=initUserHTMLExport", par, {}, function (o) {
+		il.repository.core.fetchUrl(t.url + "&cmd=initUserHTMLExport", par, {}, function (o) {
 			var t = il.Wiki.Pres;
-			console.log(o.responseText);
-			if (o.responseText == 2) {
+			console.log(o.text);
+			if (o.text == 2) {
 				window.location.href = t.url + "&cmd=" + t.getDownloadCommand();
 			} else {
-				il.Util.sendAjaxGetRequestToUrl(t.url + "&cmd=startUserHTMLExport", par, {}, function () {
+				il.repository.core.fetchUrl(t.url + "&cmd=startUserHTMLExport", par, {}, function () {
 				});
 				var t = il.Wiki.Pres;
 				t.updateProgress();
@@ -63,14 +63,14 @@ il.Wiki.Pres = {
 			with_comments: t.with_comments
 		};
 
-		il.Util.sendAjaxGetRequestToUrl(t.url + "&cmd=getUserHTMLExportProgress", par, {}, t.ajaxProgressSuccess);
+		il.repository.core.fetchUrl(t.url + "&cmd=getUserHTMLExportProgress", par, {}, t.ajaxProgressSuccess);
 	},
 
 	ajaxProgressSuccess: function (o) {
 		var t = il.Wiki.Pres;
 
-		if(o.responseText !== undefined) {
-			var s = JSON.parse(o.responseText);
+		if(o.text !== undefined) {
+			var s = JSON.parse(o.text);
 			$("#il_wiki_export_progress").html(s.progressBar);
 			if (s.status != 0) {
 				window.setTimeout(t.updateProgress, 1000);
