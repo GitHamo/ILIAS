@@ -1213,13 +1213,8 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
             }
 
             // permanent link
-<<<<<<< HEAD:components/ILIAS/Blog/classes/class.ilObjBlogGUI.php
-            if ($a_cmd !== "preview") {
-=======
             if ($this->node_id !== null &&
-                $a_cmd !== "preview" &&
-                $a_cmd !== "previewEmbedded") {
->>>>>>> abda22a3a05 (44734: HTML export of portfolios with blogs AND submission of portfolios with blogs in an exercise results in an error):Modules/Blog/classes/class.ilObjBlogGUI.php
+                $a_cmd !== "preview") {
                 if ($this->id_type === self::WORKSPACE_NODE_ID) {
                     $goto = $this->gui->permanentLink(0, (int) $this->node_id)->getPermanentLink((int) $item["id"]);
                 } else {
