@@ -162,7 +162,7 @@ class ilObjectBadgeTableGUI implements DataRetrieval
     }
 
     /**
-     * @param list<array{
+     * @param array{
      *     id: int,
      *     active: bool,
      *     type: string,
@@ -183,9 +183,9 @@ class ilObjectBadgeTableGUI implements DataRetrieval
      *      parent_title: ?string,
      *      parent_type: ?string,
      *      deleted: bool
-     *  } $record
-     * }>
-     * @return list<array{
+     *  }
+     * } $record
+     * @return array{
      *     id: int,
      *     active: bool,
      *     type: string,
@@ -194,7 +194,7 @@ class ilObjectBadgeTableGUI implements DataRetrieval
      *     title_sortable: string,
      *     container: string,
      *     container_sortable: string
-     * }>
+     * }
      */
     private function enrichRecord(
         ModalBuilder $modal_builder,
