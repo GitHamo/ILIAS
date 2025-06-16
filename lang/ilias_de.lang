@@ -10509,6 +10509,11 @@ help#:#help_tooltips_and_help#:#Tooltips und Handlungsanweisungen
 help#:#help_tooltips_only#:#Nur Tooltips
 help#:#help_topcis#:#Themen
 help#:#help_tt_text#:#Text
+htlm#:#file_import_from_upload_dir_failed#:#Datei aus Uploadverzeichnis nicht importiert
+htlm#:#file_imported_from_upload_dir#:#Datei aus Uploadverzeichnis importiert
+htlm#:#import_from_upload_dir#:#Import aus Uploadverzeichnis
+htlm#:#import_from_upload_dir_file_name#:#Dateiname
+htlm#:#import_from_upload_dir_info#:#Bitte Datei zur Übernahme auswählen
 iass#:#download_assessment_paper#:#Prüfungsblatt herunterladen
 iass#:#grading#:#Bewertung
 iass#:#grading_info#:#Bewertungsinformationen
@@ -13347,6 +13352,7 @@ prg#:#auto_membership_src_type#:#Typ
 prg#:#auto_membership_title#:#Quellen für automatische Zuweisung
 prg#:#auto_memberships#:#Automatische Zuweisung
 prg#:#category#:#Kategorie
+prg#:#cert_relevance#:#Zertifikat
 prg#:#completion_date#:#Abschlussdatum
 prg#:#confirm_to_remove_selected_assignments#:#Benutzerzuweisung(en) wirklich entfernen?
 prg#:#cont_ed_insert_prgactionnote#:#Studienprogramm Aktionshinweis einfügen

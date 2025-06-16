@@ -16,39 +16,29 @@
  *
  *********************************************************************/
 
-declare(strict_types=1);
+namespace ILIAS\COPage\Setup;
 
-namespace ILIAS\HTMLLearningModule;
-
-use ILIAS\Repository\RepoServiceBase;
-
-/**
- * @author Alexander Killing <killing@leifos.de>
- */
-class InternalRepoService
+class ilCOPageHotfix9DBUpdateSteps implements \ilDatabaseUpdateSteps
 {
-    use RepoServiceBase;
-
-    protected InternalDataService $data;
     protected \ilDBInterface $db;
 
-    public function __construct(InternalDataService $data, \ilDBInterface $db)
+    public function prepare(\ilDBInterface $db): void
     {
-        $this->data = $data;
         $this->db = $db;
     }
 
-    /*
-    public function ...() : ...\RepoService
+    public function step_1(): void
     {
-        return new ...\RepoService(
-            $this->data,
-            $this->db
+        $this->db->modifyTableColumn(
+            'copg_section_timings',
+            'unix_ts',
+            [
+                'type' => 'integer',
+                'length' => 8,
+                'notnull' => true,
+                'default' => 0
+            ]
         );
-    }*/
+    }
 
-    /*public function accessSession() : AccessSessionRepository
-    {
-        return new AccessSessionRepository();
-    }*/
 }
