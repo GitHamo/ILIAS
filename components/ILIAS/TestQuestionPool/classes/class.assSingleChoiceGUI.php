@@ -258,21 +258,16 @@ class assSingleChoiceGUI extends assQuestionGUI implements ilGuiQuestionScoringA
         $keys = $this->getChoiceKeys();
         foreach ($keys as $answer_id) {
             $answer = $this->object->answers[$answer_id];
-            if (($active_id > 0) && (!$show_correct_solution)) {
-                if ($graphical_output) {
-                    $correctness_icon = $this->generateCorrectnessIconsForCorrectness(self::CORRECTNESS_NOT_OK);
-
-                    if ((string) $user_solution === (string) $answer_id) {
-                        if ($answer->getPoints() == $this->object->getMaximumPoints()) {
-                            $correctness_icon = $this->generateCorrectnessIconsForCorrectness(self::CORRECTNESS_OK);
-                        } elseif ($answer->getPoints() > 0) {
-                            $correctness_icon = $this->generateCorrectnessIconsForCorrectness(self::CORRECTNESS_MOSTLY_OK);
-                        }
-                    }
-                    $template->setCurrentBlock('icon_ok');
-                    $template->setVariable('ICON_OK', $correctness_icon);
-                    $template->parseCurrentBlock();
-                }
+            if ($active_id > 0 && !$show_correct_solution && $graphical_output) {
+                $correctness = $this->generateCorrectness(
+                    (string) $user_solution,
+                    (string) $answer_id,
+                    $answer->getPoints(),
+                    $this->object->getMaximumPoints()
+                );
+                $template->setCurrentBlock('icon_ok');
+                $template->setVariable('ICON_OK', $this->generateCorrectnessIconsForCorrectness($correctness));
+                $template->parseCurrentBlock();
             }
             if ($answer->hasImage()) {
                 $template->setCurrentBlock('answer_image');
@@ -349,6 +344,28 @@ class assSingleChoiceGUI extends assQuestionGUI implements ilGuiQuestionScoringA
             $solutionoutput = $this->getILIASPage($solutionoutput);
         }
         return $solutionoutput;
+    }
+
+    private function generateCorrectness(
+        string $user_solution,
+        string $answer_id,
+        float $answer_points,
+        float $maximum_points
+    ): int {
+        if ($user_solution === $answer_id
+                && $answer_points === $maximum_points
+            || $user_solution !== $answer_id
+                && $answer_points === 0.0
+        ) {
+            return self::CORRECTNESS_OK;
+        }
+
+        if ($user_solution === $answer_id
+            && $answer_points > 0.0) {
+            return self::CORRECTNESS_MOSTLY_OK;
+        }
+
+        return self::CORRECTNESS_NOT_OK;
     }
 
     public function getPreview(
