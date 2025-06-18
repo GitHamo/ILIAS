@@ -689,7 +689,7 @@ abstract class ilParticipants
     public function isBlocked(int $a_usr_id): bool
     {
         if (isset($this->participants_status[$a_usr_id])) {
-            return (bool) $this->participants_status[$a_usr_id]['blocked'];
+            return (bool) ($this->participants_status[$a_usr_id]['blocked'] ?? false);
         }
         return false;
     }
@@ -700,7 +700,7 @@ abstract class ilParticipants
     public function hasPassed(int $a_usr_id): bool
     {
         if (isset($this->participants_status[$a_usr_id])) {
-            return (bool) $this->participants_status[$a_usr_id]['passed'];
+            return (bool) ($this->participants_status[$a_usr_id]['passed'] ?? false);
         }
         return false;
     }
@@ -886,7 +886,7 @@ abstract class ilParticipants
     public function isNotificationEnabled(int $a_usr_id): bool
     {
         if (isset($this->participants_status[$a_usr_id])) {
-            return (bool) $this->participants_status[$a_usr_id]['notification'];
+            return (bool) ($this->participants_status[$a_usr_id]['notification'] ?? false);
         }
         return false;
     }
@@ -894,7 +894,7 @@ abstract class ilParticipants
     public function isContact(int $a_usr_id): bool
     {
         if (isset($this->participants_status[$a_usr_id])) {
-            return (bool) $this->participants_status[$a_usr_id]['contact'];
+            return (bool) ($this->participants_status[$a_usr_id]['contact'] ?? false);
         }
         return false;
     }
