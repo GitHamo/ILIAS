@@ -53,9 +53,11 @@ class ilBlogDraftsDerivedTaskProvider implements ilDerivedTaskProvider
     {
         $tasks = [];
 
-        $blogs = ilBlogPosting::searchBlogsByAuthor($user_id);
+        global $DIC;
+        $mgr = $DIC->blog()->internal()->domain()->posting();
+        $blogs = $mgr->searchBlogsByAuthor($user_id);
         foreach ($blogs as $blog_id) {
-            $posts = ilBlogPosting::getAllPostings($blog_id);
+            $posts = $mgr->getAllByBlog($blog_id);
             foreach ($posts as $post_id => $post) {
                 if ((int) $post['author'] !== $user_id) {
                     continue;

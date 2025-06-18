@@ -18,6 +18,9 @@
 
 declare(strict_types=1);
 
+use ILIAS\Blog\InternalDataService;
+use ILIAS\Blog\Posting\PostingManager;
+
 /**
  * Class ilBlogPosting
  *
@@ -32,6 +35,15 @@ class ilBlogPosting extends ilPageObject
     protected int $author = 0;
     protected bool $approved = false;
     protected ?ilDateTime $withdrawn = null;
+    protected InternalDataService $internal_data;
+    protected PostingManager $posting_manager;
+
+    public function afterConstructor(): void
+    {
+        global $DIC;
+        $this->internal_data = $DIC->blog()->internal()->data();
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+    }
 
     public function getParentType(): string
     {
@@ -111,33 +123,21 @@ class ilBlogPosting extends ilPageObject
     public function create(
         bool $a_import = false
     ): void {
-        $ilDB = $this->db;
-
-        $id = $ilDB->nextId("il_blog_posting");
+        $data = $this->internal_data;
+        $post = $data->posting(
+            0,
+            $this->getBlogId(),
+            $this->getTitle(),
+            new ilDateTime(ilUtil::now(), IL_CAL_DATETIME),
+            $this->getAuthor(),
+            $this->isApproved(),
+            $this->getWithdrawn()
+        );
+        $id = $this->posting_manager->create($post);
         $this->setId($id);
 
         if (!$a_import) {
-            $created = ilUtil::now();
-        } else {
-            $created = $this->getCreated()->get(IL_CAL_DATETIME);
-        }
-
-        // we are using a separate creation date to enable sorting without JOINs
-        $withdrawn = $this->getWithdrawn()?->get(IL_CAL_DATETIME);
-        $query = "INSERT INTO il_blog_posting (id, title, blog_id, created, author, approved, last_withdrawn)" .
-            " VALUES (" .
-            $ilDB->quote($this->getId(), "integer") . "," .
-            $ilDB->quote($this->getTitle(), "text") . "," .
-            $ilDB->quote($this->getBlogId(), "integer") . "," .
-            $ilDB->quote($created, "timestamp") . "," .
-            $ilDB->quote($this->getAuthor(), "integer") . "," .
-            $ilDB->quote($this->isApproved(), "integer") . "," . // #16526 - import
-            $ilDB->quote($withdrawn, "timestamp") . ")";
-        $ilDB->manipulate($query);
-
-        if (!$a_import) {
             parent::create($a_import);
-            // $this->saveInternalLinks($this->getXMLContent());
         }
     }
 
@@ -147,22 +147,27 @@ class ilBlogPosting extends ilPageObject
         bool $a_notify = true,
         string $a_notify_action = "update"
     ) {
-        $ilDB = $this->db;
-
-        // blog_id, author and created cannot be changed
-        $withdrawn = $this->getWithdrawn()?->get(IL_CAL_DATETIME);
-        $query = "UPDATE il_blog_posting SET" .
-            " title = " . $ilDB->quote($this->getTitle(), "text") .
-            ",created = " . $ilDB->quote($this->getCreated()->get(IL_CAL_DATETIME), "timestamp") .
-            ",approved =" . $ilDB->quote($this->isApproved(), "integer") .
-            ",last_withdrawn =" . $ilDB->quote($withdrawn, "timestamp") .
-            " WHERE id = " . $ilDB->quote($this->getId(), "integer");
-        $ilDB->manipulate($query);
+        $data = $this->internal_data;
+        $post = $data->posting(
+            $this->getId(),
+            $this->getBlogId(),
+            $this->getTitle(),
+            $this->getCreated(),
+            $this->getAuthor(),
+            $this->isApproved(),
+            $this->getWithdrawn()
+        );
+        $this->posting_manager->update($post);
 
         $ret = parent::update($a_validate, $a_no_history);
 
         if ($a_notify && $this->getActive()) {
-            ilObjBlog::sendNotification($a_notify_action, $this->blog_node_is_wsp, $this->blog_node_id, $this->getId());
+            ilObjBlog::sendNotification(
+                $a_notify_action,
+                $this->blog_node_is_wsp,
+                $this->blog_node_id,
+                $this->getId()
+            );
         }
 
         return $ret;
@@ -217,9 +222,7 @@ class ilBlogPosting extends ilPageObject
             $this->getParentType()
         );
 
-        $query = "DELETE FROM il_blog_posting" .
-            " WHERE id = " . $ilDB->quote($this->getId(), "integer");
-        $ilDB->manipulate($query);
+        $this->posting_manager->delete($this->getId());
 
         parent::delete();
     }
@@ -251,17 +254,11 @@ class ilBlogPosting extends ilPageObject
     ): void {
         global $DIC;
 
-        $ilDB = $DIC->database();
         $lom_services = $DIC->learningObjectMetadata();
-
-        $query = "SELECT * FROM il_blog_posting" .
-            " WHERE blog_id = " . $ilDB->quote($a_blog_id, "integer");
-        $set = $ilDB->query($query);
-        while ($rec = $ilDB->fetchAssoc($set)) {
-            // delete lom
-            $lom_services->deleteAll($a_blog_id, $rec["id"], "blp");
-
-            $post = new ilBlogPosting($rec["id"]);
+        $mgr = $DIC->blog()->internal()->domain()->posting();
+        foreach ($mgr->getAllByBlog($a_blog_id, 0) as $posting) {
+            $lom_services->deleteAll($a_blog_id, $posting->getId(), "blp");
+            $post = new ilBlogPosting($posting->getId());
             $post->delete();
         }
     }
@@ -270,16 +267,7 @@ class ilBlogPosting extends ilPageObject
         int $a_posting_id
     ): ?int {
         global $DIC;
-
-        $ilDB = $DIC->database();
-
-        $query = "SELECT blog_id FROM il_blog_posting" .
-            " WHERE id = " . $ilDB->quote($a_posting_id, "integer");
-        $set = $ilDB->query($query);
-        if ($rec = $ilDB->fetchAssoc($set)) {
-            return (int) $rec["blog_id"];
-        }
-        return null;
+        return $DIC->blog()->internal()->domain()->posting()->lookupBlogId($a_posting_id);
     }
 
     /**
@@ -292,37 +280,31 @@ class ilBlogPosting extends ilPageObject
     ): array {
         global $DIC;
 
-        $ilDB = $DIC->database();
-
         $pages = parent::getAllPages("blp", $a_blog_id);
+        $posts = [];
+        foreach ($DIC->blog()->internal()->domain()->posting()->getAllByBlog(
+            $a_blog_id,
+            $a_limit,
+            $a_offset
+        ) as $posting) {
+            $id = $posting->getId();
+            if (isset($pages[$id])) {
+                $posts[$id] = $pages[$id];
+                $posts[$id]["title"] = $posting->getTitle();
+                $posts[$id]["created"] = $posting->getCreated();
+                $posts[$id]["author"] = $posting->getAuthor();
+                $posts[$id]["approved"] = $posting->isApproved();
+                $posts[$id]["last_withdrawn"] = $posting->getLastWithdrawn();
 
-        if ($a_limit) {
-            $ilDB->setLimit($a_limit, $a_offset);
-        }
-
-        $query = "SELECT * FROM il_blog_posting" .
-            " WHERE blog_id = " . $ilDB->quote($a_blog_id, "integer") .
-            " ORDER BY created DESC";
-        $set = $ilDB->query($query);
-        $post = array();
-        while ($rec = $ilDB->fetchAssoc($set)) {
-            if (isset($pages[$rec["id"]])) {
-                $post[$rec["id"]] = $pages[$rec["id"]];
-                $post[$rec["id"]]["title"] = $rec["title"];
-                $post[$rec["id"]]["created"] = new ilDateTime($rec["created"], IL_CAL_DATETIME);
-                $post[$rec["id"]]["author"] = $rec["author"];
-                $post[$rec["id"]]["approved"] = (bool) $rec["approved"];
-                $post[$rec["id"]]["last_withdrawn"] = new ilDateTime($rec["last_withdrawn"], IL_CAL_DATETIME);
-
-                foreach (self::getPageContributors("blp", $rec["id"]) as $editor) {
-                    if ($editor["user_id"] != $rec["author"]) {
-                        $post[$rec["id"]]["editors"][] = $editor["user_id"];
+                foreach (self::getPageContributors("blp", $id) as $editor) {
+                    if ($editor["user_id"] != $posting->getAuthor()) {
+                        $posts[$id]["editors"][] = $editor["user_id"];
                     }
                 }
             }
         }
 
-        return $post;
+        return $posts;
     }
 
     /**
@@ -333,17 +315,10 @@ class ilBlogPosting extends ilPageObject
         int $a_posting_id
     ): bool {
         global $DIC;
-
-        $ilDB = $DIC->database();
-
-        $query = "SELECT id FROM il_blog_posting" .
-            " WHERE blog_id = " . $ilDB->quote($a_blog_id, "integer") .
-            " AND id = " . $ilDB->quote($a_posting_id, "integer");
-        $set = $ilDB->query($query);
-        if ($rec = $ilDB->fetchAssoc($set)) {
-            return true;
-        }
-        return false;
+        return $DIC->blog()->internal()->domain()->posting()->exists(
+            $a_blog_id,
+            $a_posting_id
+        );
     }
 
     /**
@@ -352,12 +327,8 @@ class ilBlogPosting extends ilPageObject
     public static function getLastPost(
         int $a_blog_id
     ): int {
-        $data = self::getAllPostings($a_blog_id, 1);
-        if ($data) {
-            $keys = array_keys($data);
-            return end($keys);
-        }
-        return 0;
+        global $DIC;
+        return $DIC->blog()->internal()->domain()->posting()->getLastPost($a_blog_id);
     }
 
     /**
@@ -378,19 +349,9 @@ class ilBlogPosting extends ilPageObject
         int $a_user_id
     ): array {
         global $DIC;
-
-        $ilDB = $DIC->database();
-
-        $ids = array();
-
-        $sql = "SELECT DISTINCT(blog_id)" .
-            " FROM il_blog_posting" .
-            " WHERE author = " . $ilDB->quote($a_user_id);
-        $set = $ilDB->query($sql);
-        while ($row = $ilDB->fetchAssoc($set)) {
-            $ids[] = (int) $row["blog_id"];
-        }
-        return $ids;
+        return $DIC->blog()->internal()->domain()->posting()->searchBlogsByAuthor(
+            $a_user_id
+        );
     }
 
     public function getNotificationAbstract(): string

@@ -21,6 +21,7 @@ declare(strict_types=1);
 use ILIAS\Blog\StandardGUIRequest;
 use ILIAS\Repository\Profile\ProfileGUI;
 use ILIAS\MetaData\Services\ServicesInterface as LOMServices;
+use ILIAS\Blog\Posting\PostingManager;
 
 /**
  * Class ilBlogPosting GUI class
@@ -40,6 +41,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     protected ilSetting $settings;
     protected LOMServices $lom_services;
     protected int $node_id;
+    protected PostingManager $postingManager;
     protected ?object $access_handler = null;
     protected bool $enable_public_notes = false;
     protected bool $may_contribute = false;
@@ -116,6 +118,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         $this->notes = $DIC->notes();
         $this->profile_gui = $DIC->blog()->internal()->gui()->profile();
         $this->blog_gui = $DIC->blog()->internal()->gui();
+        $this->postingManager = $DIC->blog()->internal()->domain()->posting();
     }
 
     public function executeCommand(): string
@@ -666,9 +669,13 @@ class ilBlogPostingGUI extends ilPageObjectGUI
 
         // other keywords in blog
         $other = array();
-        foreach (array_keys(ilBlogPosting::getAllPostings($this->getBlogPosting()->getBlogId())) as $posting_id) {
-            if ($posting_id != $this->getBlogPosting()->getId()) {
-                $other = array_merge($other, ilBlogPosting::getKeywords($this->getBlogPosting()->getBlogId(), $posting_id));
+        foreach ($this->postingManager->getAllByBlog($this->getBlogPosting()->getBlogId(), 0) as $posting) {
+            $pid = $posting->getId();
+            if ($pid !== $this->getBlogPosting()->getId()) {
+                $other = array_merge(
+                    $other,
+                    ilBlogPosting::getKeywords($this->getBlogPosting()->getBlogId(), $pid)
+                );
             }
         }
         // #17414

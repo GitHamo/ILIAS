@@ -26,6 +26,7 @@ use ILIAS\Blog\Exercise\BlogExercise;
 use ILIAS\Blog\Access\BlogAccess;
 use ILIAS\Blog\ReadingTime\ReadingTimeManager;
 use ILIAS\Blog\Settings\SettingsManager;
+use ILIAS\Blog\Posting\PostingManager;
 use ILIAS\Notes;
 
 /**
@@ -86,6 +87,16 @@ class InternalDomainService
     {
         return self::$instance["settings"] ??
             self::$instance["settings"] = new SettingsManager(
+                $this->data,
+                $this->repo,
+                $this
+            );
+    }
+
+    public function posting(): PostingManager
+    {
+        return self::$instance["posting"] ??
+            self::$instance["posting"] = new PostingManager(
                 $this->data,
                 $this->repo,
                 $this
