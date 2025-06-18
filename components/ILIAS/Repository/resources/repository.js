@@ -246,6 +246,11 @@ il.repository.core = (function() {
 
   function fetchUrl(url = '', params = {}, args = {}, success_cb = null) {
     let fetch_url = getFetchUrl(url);
+    let url_params = new URLSearchParams(fetch_url.search.slice(1));
+    for (const [key, value] of Object.entries(params)) {
+      url_params.append(key, value);
+    }
+    fetch_url.search = url_params;
     let config = {
       method: 'GET',
       mode: 'same-origin',
