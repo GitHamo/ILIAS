@@ -132,7 +132,7 @@ class ilAnswerFrequencyStatisticTableGUI extends ilTable2GUI
         foreach ($this->getData() as $row) {
             if (isset($row['addable'])) {
                 $this->setActionsColumnEnabled(true);
-                $this->addColumn('', '', '1%');
+                $this->addColumn('', '', '');
                 break;
             }
         }
@@ -141,7 +141,7 @@ class ilAnswerFrequencyStatisticTableGUI extends ilTable2GUI
     public function fillRow(array $a_set): void
     {
         $this->tpl->setCurrentBlock('answer');
-        $this->tpl->setVariable('ANSWER', ilHtmlPurifierFactory::getInstanceByType('qpl_usersolution')->purify($a_set['answer']));
+        $this->tpl->setVariable('ANSWER', htmlspecialchars((string) $a_set['answer'], ENT_QUOTES));
         $this->tpl->parseCurrentBlock();
 
         $this->tpl->setCurrentBlock('frequency');
