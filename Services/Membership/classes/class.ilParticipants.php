@@ -108,8 +108,8 @@ abstract class ilParticipants
             case 'sess':
                 return ilSessionParticipants::getInstance($a_ref_id);
             default:
-                $logger()->mem()->logStack();
-                $logger()->mem()->warning('Invalid ref_id -> obj_id given: ' . $a_ref_id . ' -> ' . $obj_id);
+                $logger->logStack();
+                $logger->warning('Invalid ref_id -> obj_id given: ' . $a_ref_id . ' -> ' . $obj_id);
                 throw new InvalidArgumentException('Invalid obj_id given.');
         }
     }
