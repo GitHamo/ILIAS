@@ -622,15 +622,14 @@ class ilObjMediaObject extends ilObject
 
                 // full xml for export
             case IL_MODE_FULL:
-
-                //				$meta = $this->getMetaData();
                 $xml = "<MediaObject>";
 
-                // meta data
-                $md2xml = new ilMD2XML(0, $this->getId(), $this->getType());
-                $md2xml->setExportMode(true);
-                $md2xml->startExport();
-                $xml .= $md2xml->getXML();
+                // Title and Identifier
+                $xml .= "<Identifier Entry=\"il_" . IL_INST_ID . "_mob_" . $this->getId() . "\"/>";
+                if ($this->getTitle() != "") {
+                    $xml .= "<Title>" .
+                        $this->escapeProperty($this->getTitle()) . "</Title>";
+                }
 
                 $media_items = $this->getMediaItems();
                 for ($i = 0; $i < count($media_items); $i++) {
