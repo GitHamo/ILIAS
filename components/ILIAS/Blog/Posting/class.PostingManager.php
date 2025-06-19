@@ -23,6 +23,7 @@ namespace ILIAS\Blog\Posting;
 use ILIAS\Blog\InternalDataService;
 use ILIAS\Blog\InternalRepoService;
 use ILIAS\Blog\InternalDomainService;
+use ILIAS\Blog\News\NewsManager;
 
 class PostingManager
 {

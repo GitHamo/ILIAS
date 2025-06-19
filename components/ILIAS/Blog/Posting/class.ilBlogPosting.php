@@ -245,7 +245,6 @@ class ilBlogPosting extends ilPageObject
         );
     }
 
-
     /**
      * Delete all postings for blog
      */
@@ -342,18 +341,6 @@ class ilBlogPosting extends ilPageObject
         $this->blog_node_is_wsp = $a_is_in_workspace;
     }
 
-    /**
-     * Get all blogs where user has postings
-     */
-    public static function searchBlogsByAuthor(
-        int $a_user_id
-    ): array {
-        global $DIC;
-        return $DIC->blog()->internal()->domain()->posting()->searchBlogsByAuthor(
-            $a_user_id
-        );
-    }
-
     public function getNotificationAbstract(): string
     {
         $snippet = ilBlogPostingGUI::getSnippet($this->getId(), true);
@@ -363,7 +350,6 @@ class ilBlogPosting extends ilPageObject
 
         return trim(strip_tags($snippet));
     }
-
 
     // keywords
     public function updateKeywords(
@@ -393,97 +379,5 @@ class ilBlogPosting extends ilPageObject
         }
 
         return $result;
-    }
-
-    /**
-     * Handle news item
-     */
-    public function handleNews(
-        bool $a_update = false
-    ): void {
-        $lng = $this->lng;
-        $ilUser = $this->user;
-
-        // see ilWikiPage::updateNews()
-
-        if (!$this->getActive()) {
-            return;
-        }
-
-        $news_item = null;
-
-        // try to re-use existing news item
-        if ($a_update) {
-            // get last news item of the day (if existing)
-            $news_id = ilNewsItem::getLastNewsIdForContext(
-                $this->getBlogId(),
-                "blog",
-                $this->getId(),
-                $this->getParentType(),
-                true
-            );
-            if ($news_id > 0) {
-                $news_item = new ilNewsItem($news_id);
-            }
-        }
-
-        // create new news item
-        if (!$news_item) {
-            $news_set = new ilSetting("news");
-            $default_visibility = $news_set->get("default_visibility", "users");
-
-            $news_item = new ilNewsItem();
-            $news_item->setContext(
-                $this->getBlogId(),
-                "blog",
-                $this->getId(),
-                $this->getParentType()
-            );
-            $news_item->setPriority(NEWS_NOTICE);
-            $news_item->setVisibility($default_visibility);
-        }
-
-        // news author
-        $news_item->setUserId($ilUser->getId());
-
-
-        // news title/content
-
-        $news_item->setTitle($this->getTitle());
-
-        $content = $a_update
-            ? "blog_news_posting_updated"
-            : "blog_news_posting_published";
-
-        // news "author"
-        $content = sprintf($lng->txt($content), ilUserUtil::getNamePresentation($ilUser->getId()));
-
-        // posting author[s]
-        $contributors = array();
-        foreach (self::getPageContributors($this->getParentType(), $this->getId()) as $user) {
-            $contributors[] = $user["user_id"];
-        }
-        if (count($contributors) > 1 || !in_array($this->getAuthor(), $contributors)) {
-            // original author should come first?
-            $authors = array(ilUserUtil::getNamePresentation($this->getAuthor()));
-            foreach ($contributors as $user_id) {
-                if ($user_id != $this->getAuthor()) {
-                    $authors[] = ilUserUtil::getNamePresentation($user_id);
-                }
-            }
-            $content .= "\n" . sprintf($lng->txt("blog_news_posting_authors"), implode(", ", $authors));
-        }
-
-        $news_item->setContentTextIsLangVar(false);
-        $news_item->setContent($content);
-
-        $snippet = ilBlogPostingGUI::getSnippet($this->getId());
-        $news_item->setContentLong($snippet);
-
-        if (!$news_item->getId()) {
-            $news_item->create();
-        } else {
-            $news_item->update(true);
-        }
     }
 }

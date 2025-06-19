@@ -18,9 +18,9 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\Blog\Access;
+namespace ILIAS\Blog\Permission;
 
-class BlogAccess
+class PermissionManager
 {
     protected int $owner;
     protected int $id_type;
@@ -94,6 +94,15 @@ class BlogAccess
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if user has admin access (approve, may edit & deactivate all postings)
+     */
+    public function canManage(): bool
+    {
+        return ($this->checkPermissionBool("redact") ||
+            $this->checkPermissionBool("write"));
     }
 
 }
