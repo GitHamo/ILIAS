@@ -1374,6 +1374,7 @@ class ilWikiPageGUI extends ilPageObjectGUI
 
         $p->copyPageToTranslation($l);
 
+        /** @var ilWikiPage $p2 */
         $p2 = ilPageObjectFactory::getInstance(
             $this->getPageObject()->getParentType(),
             $this->getPageObject()->getId(),

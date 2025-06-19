@@ -41,7 +41,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     protected ilSetting $settings;
     protected LOMServices $lom_services;
     protected int $node_id;
-    protected PostingManager $postingManager;
+    protected PostingManager $posting_manager;
     protected ?object $access_handler = null;
     protected bool $enable_public_notes = false;
     protected bool $may_contribute = false;
@@ -118,7 +118,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         $this->notes = $DIC->notes();
         $this->profile_gui = $DIC->blog()->internal()->gui()->profile();
         $this->blog_gui = $DIC->blog()->internal()->gui();
-        $this->postingManager = $DIC->blog()->internal()->domain()->posting();
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
     }
 
     public function executeCommand(): string
@@ -669,7 +669,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
 
         // other keywords in blog
         $other = array();
-        foreach ($this->postingManager->getAllByBlog($this->getBlogPosting()->getBlogId(), 0) as $posting) {
+        foreach ($this->posting_manager->getAllByBlog($this->getBlogPosting()->getBlogId(), 0) as $posting) {
             $pid = $posting->getId();
             if ($pid !== $this->getBlogPosting()->getId()) {
                 $other = array_merge(

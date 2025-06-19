@@ -486,27 +486,4 @@ class ilBlogPosting extends ilPageObject
             $news_item->update(true);
         }
     }
-
-    /**
-     * Lookup posting property
-     */
-    protected static function lookup(
-        string $a_field,
-        int $a_posting_id
-    ): ?string {
-        global $DIC;
-
-        $db = $DIC->database();
-
-        $set = $db->query("SELECT $a_field FROM il_blog_posting " .
-            " WHERE id = " . $db->quote($a_posting_id, "integer"));
-        $rec = $db->fetchAssoc($set);
-
-        return $rec[$a_field] ?? null;
-    }
-
-    public static function lookupTitle(int $a_posting_id): string
-    {
-        return (string) self::lookup("title", $a_posting_id);
-    }
 }
