@@ -1620,14 +1620,14 @@ class ilObjMediaObjectGUI extends ilObjectGUI
 
         $this->setPropertiesSubTabs("subtitles");
 
-        if (!in_array("srt", $this->file_service_settings->getWhiteListedSuffixes())) {
+        if (!in_array("vtt", $this->file_service_settings->getWhiteListedSuffixes())) {
             $tpl->setOnScreenMessage("info", $lng->txt("mob_srt_not_allowed"));
         } else {
 
             // upload file
             $ilToolbar->setFormAction($ilCtrl->getFormAction($this), true);
-            $fi = new ilFileInputGUI($lng->txt("mob_subtitle_file") . " (.srt)", "subtitle_file");
-            $fi->setSuffixes(array("srt"));
+            $fi = new ilFileInputGUI($lng->txt("mob_subtitle_file") . " (.vtt)", "subtitle_file");
+            $fi->setSuffixes(array("vtt"));
             $ilToolbar->addInputItem($fi, true);
 
             // language
@@ -1641,6 +1641,9 @@ class ilObjMediaObjectGUI extends ilObjectGUI
 
             $ilToolbar->addSeparator();
             $ilToolbar->addFormButton($lng->txt("mob_upload_multi_srt"), "uploadMultipleSubtitleFileForm");
+
+            //$ilToolbar->addSeparator();
+            //$ilToolbar->addFormButton($lng->txt("mob_generate_vtt"), "generateVTT");
         }
 
         /** @var ilObjMediaObject $mob */
@@ -1687,7 +1690,7 @@ class ilObjMediaObjectGUI extends ilObjectGUI
             $cgui->setConfirm($lng->txt("delete"), "deleteSrtFiles");
 
             foreach ($srts as $i) {
-                $cgui->addItem("srt[]", $i, "subtitle_" . $i . ".srt (" . $lng->txt("meta_l_" . $i) . ")");
+                $cgui->addItem("srt[]", $i, "subtitle_" . $i . ".vtt (" . $lng->txt("meta_l_" . $i) . ")");
             }
 
             $tpl->setContent($cgui->getHTML());
@@ -1705,7 +1708,7 @@ class ilObjMediaObjectGUI extends ilObjectGUI
         $srts = $this->sub_title_request->getSrtFiles();
         foreach ($srts as $i) {
             if (strlen($i) == 2 && !is_int(strpos($i, "."))) {
-                $this->object->removeAdditionalFile("srt/subtitle_" . $i . ".srt");
+                $this->object->removeAdditionalFile("srt/subtitle_" . $i . ".vtt");
             }
         }
         $this->tpl->setOnScreenMessage('success', $lng->txt("mob_srt_files_deleted"), true);
@@ -1781,5 +1784,11 @@ class ilObjMediaObjectGUI extends ilObjectGUI
         }
         $this->object->clearMultiSrtDirectory();
         $ilCtrl->redirect($this, "listSubtitleFiles");
+    }
+
+    protected function generateVTTObject(): void
+    {
+        $this->media_manager->generateMissingVTT($this->object->getId());
+        $this->ctrl->redirect($this, "listSubtitleFiles");
     }
 }
