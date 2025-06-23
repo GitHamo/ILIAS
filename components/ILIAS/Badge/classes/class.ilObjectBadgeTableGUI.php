@@ -146,14 +146,14 @@ class ilObjectBadgeTableGUI implements DataRetrieval
             $records = \array_slice($records, $range->getStart(), $range->getLength());
         }
 
-        $identifcations = [];
+        $identifications = [];
         foreach ($records as $record) {
             if (isset($record[self::RECORD_RAW]['image_rid']) && $record[self::RECORD_RAW]['image_rid'] !== '') {
-                $identifcations[] = $record[self::RECORD_RAW]['image_rid'];
+                $identifications[] = $record[self::RECORD_RAW]['image_rid'];
             }
         }
 
-        $this->irss->preload($identifcations);
+        $this->irss->preload($identifications);
 
         $modal_container = new ModalBuilder();
         $container_deleted_title_part = '<span class="il_ItemAlertProperty">' . $this->lng->txt('deleted') . '</span>';
