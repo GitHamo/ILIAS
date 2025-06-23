@@ -1619,6 +1619,7 @@ class ilObjMediaObjectGUI extends ilObjectGUI
         $ilUser = $this->user;
 
         $this->setPropertiesSubTabs("subtitles");
+        $this->media_manager->generateMissingVTT($this->object->getId());
 
         if (!in_array("vtt", $this->file_service_settings->getWhiteListedSuffixes())) {
             $tpl->setOnScreenMessage("info", $lng->txt("mob_srt_not_allowed"));
@@ -1688,9 +1689,9 @@ class ilObjMediaObjectGUI extends ilObjectGUI
             $cgui->setHeaderText($lng->txt("mob_really_delete_srt"));
             $cgui->setCancel($lng->txt("cancel"), "listSubtitleFiles");
             $cgui->setConfirm($lng->txt("delete"), "deleteSrtFiles");
-
             foreach ($srts as $i) {
-                $cgui->addItem("srt[]", $i, "subtitle_" . $i . ".vtt (" . $lng->txt("meta_l_" . $i) . ")");
+                $p = explode(":", $i);
+                $cgui->addItem("srt[]", $i, "subtitle_" . $p[0] . ".".$p[1]." (" . $lng->txt("meta_l_" . $p[0]) . ")");
             }
 
             $tpl->setContent($cgui->getHTML());
@@ -1706,12 +1707,17 @@ class ilObjMediaObjectGUI extends ilObjectGUI
         $ilCtrl = $this->ctrl;
 
         $srts = $this->sub_title_request->getSrtFiles();
+        $deleted = false;
         foreach ($srts as $i) {
-            if (strlen($i) == 2 && !is_int(strpos($i, "."))) {
-                $this->object->removeAdditionalFile("srt/subtitle_" . $i . ".vtt");
+            if (strlen($i) == 6 && !is_int(strpos($i, "."))) {
+                $p = explode(":", $i);
+                $this->object->removeAdditionalFile("srt/subtitle_" . $p[0] . "." . $p[1]);
+                $deleted = true;
             }
         }
-        $this->tpl->setOnScreenMessage('success', $lng->txt("mob_srt_files_deleted"), true);
+        if ($deleted) {
+            $this->tpl->setOnScreenMessage('success', $lng->txt("mob_srt_files_deleted"), true);
+        }
         $ilCtrl->redirect($this, "listSubtitleFiles");
     }
 
