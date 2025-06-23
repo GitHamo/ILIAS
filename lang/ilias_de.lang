@@ -13841,6 +13841,8 @@ ps#:#ps_error_message_password_min3_because_chars_numbers_sc#:#Minimale Passwort
 ps#:#ps_export_admin#:#Administration
 ps#:#ps_export_confirm#:#Zustimmung neuer Mitglieder beim Kursbeitritt, dass Kursverwaltung ihre persönlichen Profildaten einsehen kann
 ps#:#ps_export_confirm_group#:#Zustimmung neuer Mitglieder beim Gruppenbeitritt, dass Gruppenverwaltung ihre persönlichen Profildaten einsehen kann
+ps#:#ps_export_confirm_group_info#:#Vor dem Gruppenbeitritt müssen Mitglieder zustimmen, dass ihre persönlichen Daten von der Gruppenverwaltung eingesehen werden können.
+ps#:#ps_export_confirm_info#:#Vor dem Kursbeitritt müssen Mitglieder zustimmen, dass ihre persönlichen Daten von der Kursverwaltung eingesehen werden können.
 ps#:#ps_export_course#:#Export der Persönlichen Daten aus Kursen erlauben
 ps#:#ps_export_data#:#Daten des Persönlichen Profils
 ps#:#ps_export_excel#:#Starte Excel-Export
