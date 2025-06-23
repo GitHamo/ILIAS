@@ -238,14 +238,14 @@ class ilBadgeTableGUI implements DataRetrieval
             $records = \array_slice($records, $range->getStart(), $range->getLength());
         }
 
-        $identifcations = [];
+        $identifications = [];
         foreach ($records as $record) {
             if ($record['badge']->getImageRid() !== null && $record['badge']->getImageRid() !== '') {
-                $identifcations[] = $record['badge']->getImageRid();
+                $identifications[] = $record['badge']->getImageRid();
             }
         }
 
-        $this->irss->preload($identifcations);
+        $this->irss->preload($identifications);
 
         $modal_container = new ModalBuilder();
         foreach ($records as $record) {
