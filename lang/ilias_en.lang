@@ -13751,6 +13751,8 @@ ps#:#ps_error_message_password_min3_because_chars_numbers_sc#:#Minimum password 
 ps#:#ps_export_admin#:#Administrators
 ps#:#ps_export_confirm#:#User Confirmation when Entering Courses###Needs improvement!
 ps#:#ps_export_confirm_group#:#User Confirmation when Entering Groups###Needs improvement!
+ps#:#ps_export_confirm_group_info#:#When joining a group, users are required to accept that their personal data can be viewed by the group admins.
+ps#:#ps_export_confirm_info#:#When joining a course, users are required to accept that their personal data can be viewed by the course admins.
 ps#:#ps_export_course#:#Allow export of user profile data in courses
 ps#:#ps_export_data#:#Data Types of the Personal Profile
 ps#:#ps_export_excel#:#Start Excel Export
