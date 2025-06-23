@@ -135,10 +135,10 @@ class ilLTIAppEventListener implements \ilAppEventListener
         global $DIC;
         $logger = $DIC->logger()->root();
         $logger->debug('definePercentageByObjectId');
-        $indentifier = ilObjectFactory::getInstanceByRefId((int)$obj_id)->getType();
+        $indentifier = ilObjectFactory::getInstanceByRefId((int) $obj_id)->getType();
         $logger->info('Object type: ' . $indentifier . " for object id: " . $obj_id);
         if (in_array($indentifier, ['crs', 'grp'])) {
-            if($status == ilLPStatus::LP_STATUS_COMPLETED_NUM || $status == ilLPStatus::LP_STATUS_FAILED_NUM) {
+            if ($status == ilLPStatus::LP_STATUS_COMPLETED_NUM || $status == ilLPStatus::LP_STATUS_FAILED_NUM) {
                 $percentage = 100;
             }
         }
