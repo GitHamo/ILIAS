@@ -16,7 +16,7 @@
  *
  *********************************************************************/
 
-require_once("../vendor/autoload.php");
+require_once("../vendor/composer/vendor/autoload.php");
 require_once("../artifacts/bootstrap_default.php");
 
 use ILIAS\AuthShibboleth\LoginPerformer;
