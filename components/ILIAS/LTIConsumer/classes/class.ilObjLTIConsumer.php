@@ -1493,7 +1493,7 @@ class ilObjLTIConsumer extends ilObject2
                 $role_title = ilObject::_lookupTitle($role_id);
 
                 foreach ($instructor_base_titles as $base_title) {
-                    if (str_starts_with((string)$role_title, $base_title)) {
+                    if (str_starts_with((string) $role_title, $base_title)) {
                         return 'Instructor';
                     }
                 }
