@@ -94,7 +94,7 @@ trait GlobalDICGUIServices
     public function clearAsnyOnloadCode(): void
     {
         $this->ui()->renderer()->renderAsync(
-            $this->ui()->factory()->legacy("")
+            $this->ui()->factory()->legacy()->content("")
         );
     }
 

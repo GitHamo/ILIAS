@@ -445,7 +445,7 @@ class EditSubObjectsGUI
         if ($form->isValid()) {
             \ilLMObject::saveTitle($this->request->getEditId(), $form->getData("title"));
 
-            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
+            $ot = $this->lm->getObjectProperties()->getPropertyTranslations();
             if ($ot->getContentTranslationActivated()) {
                 foreach ($ot->getLanguages() as $lang) {
                     $code = $lang->getLanguageCode();
