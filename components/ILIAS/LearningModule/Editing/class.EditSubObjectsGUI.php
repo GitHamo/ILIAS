@@ -53,6 +53,7 @@ class EditSubObjectsGUI
             \ilPageLayout::MODULE_LM
         );
         $this->lang = $this->request->getTranslation();
+        $this->gui->initFetch();
     }
 
     public function executeCommand(): void
@@ -431,6 +432,7 @@ class EditSubObjectsGUI
 
     public function editTitle(int $id): void
     {
+        $this->gui->clearAsnyOnloadCode();
         $modal = $this->gui->modal()->form($this->getEditTitleForm($id));
         $modal->send();
     }
