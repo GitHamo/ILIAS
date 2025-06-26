@@ -112,7 +112,7 @@ class FormAdapterGUI
         $r = $DIC->ui()->renderer();
         if (!self::$initialised) {
             $main_tpl = $DIC->ui()->mainTemplate();
-            $debug = true;
+            $debug = false;
             if ($debug) {
                 $main_tpl->addJavaScript("../components/ILIAS/Repository/resources/repository.js");
             } else {
