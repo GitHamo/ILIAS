@@ -58,7 +58,8 @@ class TableAdapterGUI
         protected string $namespace = "",
         protected string $ordering_cmd = "",
         protected ?\Closure $active_action_closure = null,
-        protected ?\Closure $row_transformer = null
+        protected ?\Closure $row_transformer = null,
+        protected bool $numeric_ids = true
     ) {
         global $DIC;
         $this->ui = $DIC->ui();
@@ -195,11 +196,19 @@ class TableAdapterGUI
 
     protected function getItemIds(): array
     {
-        $ids = $this->intArray($this->row_id_token->getName());
+        if ($this->numeric_ids) {
+            $ids = $this->intArray($this->row_id_token->getName());
+        } else {
+            $ids = $this->strArray($this->row_id_token->getName());
+        }
         if (count($ids) > 0) {
             return $ids;           // from table multi action
         }
-        $ids = $this->intArray("interruptive_items");   // from confirmation
+        if ($this->numeric_ids) {
+            $ids = $this->intArray("interruptive_items");   // from confirmation
+        } else {
+            $ids = $this->strArray("interruptive_items");   // from confirmation
+        }
         if (count($ids) > 0) {
             return $ids;
         }

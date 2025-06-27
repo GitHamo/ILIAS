@@ -27,8 +27,8 @@ abstract class CommonTableBuilder
     protected TableAdapterGUI $table;
 
     public function __construct(
-        object $parent_gui,
-        string $parent_cmd,
+        protected object $parent_gui,
+        protected string $parent_cmd,
     ) {
         $this->table = new TableAdapterGUI(
             $this->getId(),

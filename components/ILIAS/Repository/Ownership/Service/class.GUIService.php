@@ -45,4 +45,24 @@ class GUIService
             $read_only
         );
     }
+
+    public function ownershipManagementTableBuilder(
+        int $user_id,
+        string $title,
+        array $objects,
+        string $selected_type,
+        object $parent_gui,
+        string $parent_cmd
+    ): OwnershipManagementTableBuilder {
+        return new OwnershipManagementTableBuilder(
+            $this->domain_service,
+            $this->gui_service,
+            $user_id,
+            $title,
+            $objects,
+            $selected_type,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
 }

@@ -72,11 +72,16 @@ class ilObjectOwnershipManagementGUI
         $toolbar = $this->gui->toolbar();
         $f = $this->gui->ui()->factory();
 
-        $tbl = new ilObjectOwnershipManagementTableGUI($this, 'listObjects', $this->user_id);
-
         if ($objects === []) {
-            $tbl->setTitle($this->lng->txt('user_owns_no_objects'));
-            $mt->setContent($tbl->getHTML());
+            $table_builder = $this->gui->ownership()->ownershipManagementTableBuilder(
+                $this->user_id,
+                $this->lng->txt('user_owns_no_objects'),
+                [],
+                '',
+                $this,
+                'listObjects'
+            );
+            $mt->setContent($table_builder->getTable()->render());
             return;
         }
 
@@ -105,10 +110,22 @@ class ilObjectOwnershipManagementGUI
             ilObject::fixMissingTitles($selected_type, $objects[$selected_type]);
         }
 
-        $tbl->setTitle($this->getLabelForObjectType($selected_type));
-        $tbl->initItems($objects[$selected_type]);
+        $table_builder = $this->gui->ownership()->ownershipManagementTableBuilder(
+            $this->user_id,
+            $this->getLabelForObjectType($selected_type),
+            $objects,
+            $selected_type,
+            $this,
+            'listObjects'
+        );
+
         $this->ctrl->setParameterByClass(self::class, 'type', $selected_type);
-        $mt->setContent($tbl->getHTML());
+
+        if ($table_builder->getTable()->handleCommand()) {
+            return;
+        }
+
+        $mt->setContent($table_builder->getTable()->render());
     }
 
     private function getLabelForObjectType(string $type): string
@@ -120,22 +137,6 @@ class ilObjectOwnershipManagementGUI
         }
 
         return $this->lng->txt('objs_' . $type);
-    }
-
-    public function applyFilter(): void
-    {
-        $tbl = new ilObjectOwnershipManagementTableGUI($this, 'listObjects', $this->user_id);
-        $tbl->resetOffset();
-        $tbl->writeFilterToSession();
-        $this->listObjects();
-    }
-
-    public function resetFilter(): void
-    {
-        $tbl = new ilObjectOwnershipManagementTableGUI($this, 'listObjects', $this->user_id);
-        $tbl->resetOffset();
-        $tbl->resetFilter();
-        $this->listObjects();
     }
 
     protected function redirectParentCmd(int $ref_id, string $cmd): void
@@ -183,42 +184,48 @@ class ilObjectOwnershipManagementGUI
         $this->ctrl->redirectByClass($path);
     }
 
-    public function delete(): void
+    public function delete(int $id): void
     {
         $this->checkReadOnly();
 
         $this->redirectParentCmd(
-            $this->own_id,
+            $id,
             'delete'
         );
     }
 
-    public function move(): void
+    public function show(int $id): void
+    {
+        $link = \ilLink::_getLink($id);
+        $this->ctrl->redirectToURL($link);
+    }
+
+    public function move(int $id): void
     {
         $this->checkReadOnly();
 
         $this->redirectParentCmd(
-            $this->own_id,
+            $id,
             'cut'
         );
     }
 
-    public function export(): void
+    public function export(int $id): void
     {
         $this->checkReadOnly();
 
         $this->redirectCmd(
-            $this->own_id,
+            $id,
             ilExportGUI::class
         );
     }
 
-    public function changeOwner(): void
+    public function changeOwner(int $id): void
     {
         $this->checkReadOnly();
 
         $this->redirectCmd(
-            $this->own_id,
+            $id,
             ilPermissionGUI::class,
             'owner'
         );
