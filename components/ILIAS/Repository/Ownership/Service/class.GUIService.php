@@ -35,5 +35,14 @@ class GUIService
         $this->gui_service = $gui_service;
         $this->domain_service = $domain_service;
     }
-    
+
+    public function ownershipManagementGUI(?int $user_id = null, bool $read_only = false): \ilObjectOwnershipManagementGUI
+    {
+        return new \ilObjectOwnershipManagementGUI(
+            $this->domain_service,
+            $this->gui_service,
+            $user_id,
+            $read_only
+        );
+    }
 }

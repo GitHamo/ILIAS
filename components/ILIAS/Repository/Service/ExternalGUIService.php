@@ -21,30 +21,19 @@ declare(strict_types=1);
 namespace ILIAS\Repository;
 
 use ILIAS\DI\Container;
+use ilObjectOwnershipManagementGUI;
 
-/**
- * @author Alexander Killing <killing@leifos.de>
- */
-class Service
+class ExternalGUIService
 {
-    protected Container $DIC;
-
-    public function __construct(Container $DIC)
-    {
-        $this->DIC = $DIC;
+    public function __construct(
+        protected InternalGUIService $internal_gui
+    ) {
     }
 
-    /**
-     * Internal service, do not use in other components
-     */
-    public function internal(): InternalService
-    {
-        return new InternalService($this->DIC);
+    public function ownershipManagementGUI(
+        ?int $user_id = null,
+        bool $read_only = false
+    ): ilObjectOwnershipManagementGUI {
+        return $this->internal_gui->ownership()->ownershipManagementGUI($user_id, $read_only);
     }
-
-    public function gui(): ExternalGUIService
-    {
-        return new ExternalGUIService($this->internal()->gui());
-    }
-
 }
