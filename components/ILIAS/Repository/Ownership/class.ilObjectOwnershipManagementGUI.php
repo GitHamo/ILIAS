@@ -20,13 +20,6 @@ declare(strict_types=1);
 
 use ILIAS\UI\Factory as UIFactory;
 
-/**
- * Class ilObjectOwnershipManagementGUI
- *
- * @author Jörg Lützenkirchen <luetzenkirchen@leifos.com>
- *
- * @ilCtrl_Calls ilObjectOwnershipManagementGUI:
- */
 class ilObjectOwnershipManagementGUI
 {
     public const P_OWNID = 'ownid';
