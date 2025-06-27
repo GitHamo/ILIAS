@@ -18,16 +18,20 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\LearningModule\Table;
+namespace ILIAS\Repository\Table;
 
 use ILIAS\UI\Component\Table;
 use ILIAS\Data\Range;
 use ILIAS\Data\Order;
+use ILIAS\Repository\RetrievalInterface;
 
 class TableRetrieval implements Table\DataRetrieval
 {
     public function __construct(
-        protected RetrievalInterface $retrieval
+        protected RetrievalInterface $retrieval,
+        protected array $actions,
+        protected ?\Closure $active_action_closure,
+        protected ?\Closure $row_transformer
     ) {
     }
 
@@ -46,7 +50,20 @@ class TableRetrieval implements Table\DataRetrieval
             $filter_data ?? [],
             $additional_parameters ?? []
         ) as $data) {
-            yield $row_builder->buildDataRow((string) $data["id"], $data);
+            if ($this->row_transformer) {
+                $table_data = ($this->row_transformer)($data);
+            } else {
+                $table_data = $data;
+            }
+            $row = $row_builder->buildDataRow((string) $data["id"], $table_data);
+            if ($this->active_action_closure) {
+                foreach ($this->actions as $action) {
+                    if (!($this->active_action_closure)($action, $data)) {
+                        $row = $row->withDisabledAction($action);
+                    }
+                }
+            }
+            yield $row;
         }
     }
 

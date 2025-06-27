@@ -18,13 +18,14 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\LearningModule\Table;
+namespace ILIAS\Repository\Table;
 
 use ILIAS\UI\Component\Table\Column\Column;
 use ILIAS\UI\Component\Table\Table;
 use ILIAS\UI\URLBuilder;
 use ILIAS\Repository\BaseGUIRequest;
 use ILIAS\UI\URLBuilderToken;
+use ILIAS\Repository\RetrievalInterface;
 
 class TableAdapterGUI
 {
@@ -54,7 +55,10 @@ class TableAdapterGUI
         protected RetrievalInterface $retrieval,
         protected object $parent_gui,
         protected string $parent_cmd = "tableCommand",
-        protected string $namespace = ""
+        protected string $namespace = "",
+        protected string $ordering_cmd = "",
+        protected ?\Closure $active_action_closure = null,
+        protected ?\Closure $row_transformer = null
     ) {
         global $DIC;
         $this->ui = $DIC->ui();
@@ -67,6 +71,7 @@ class TableAdapterGUI
         if ($namespace === "") {
             $this->namespace = $id;
         }
+        $this->order_cmd = $ordering_cmd;
 
         $form_action = $this->df->uri(
             ILIAS_HTTP_PATH . '/' .
@@ -80,13 +85,6 @@ class TableAdapterGUI
                 "ids"   //this is the parameter name to be used for row-ids
             );
 
-    }
-
-    public function ordering(
-        string $order_cmd
-    ): self {
-        $this->order_cmd = $order_cmd;
-        return $this;
     }
 
     public function textColumn(
@@ -118,11 +116,14 @@ class TableAdapterGUI
         return $this;
     }
 
-    public function redirect(
+    public function singleRedirectAction(
+        string $action,
+        string $title,
         array $class_path,
         string $cmd = "",
         string $id_param = ""
     ): self {
+        $this->addAction(self::SINGLE, $action, $title);
         $act = $this->actions[$this->last_action_key] ?? false;
         if ($act && $act["type"] === self::SINGLE) {
             $act["redirect_class_path"] = $class_path;
@@ -192,7 +193,7 @@ class TableAdapterGUI
         }
     }
 
-    public function getItemIds(): array
+    protected function getItemIds(): array
     {
         $ids = $this->intArray($this->row_id_token->getName());
         if (count($ids) > 0) {
@@ -205,7 +206,7 @@ class TableAdapterGUI
         return [];
     }
 
-    public function handleCommand(): void
+    public function handleCommand(): bool
     {
         $action = $this->str($this->action_parameter_token->getName());
         if ($action !== "") {
@@ -224,10 +225,13 @@ class TableAdapterGUI
                     $this->ctrl->redirectByClass($this->actions[$action]["redirect_class_path"], $cmd);
                 }
                 $this->parent_gui->$action($id);
+                return true;
             } else {
                 $this->parent_gui->$action($this->getItemIds());
+                return true;
             }
         }
+        return false;
     }
 
     protected function getTable(): Table
@@ -273,7 +277,12 @@ class TableAdapterGUI
                     ILIAS_HTTP_PATH . '/' .
                     $this->ctrl->getLinkTarget($this->parent_gui, $this->order_cmd)
                 );
-                $table_retrieval = new OrderingRetrieval($this->retrieval);
+                $table_retrieval = new OrderingRetrieval(
+                    $this->retrieval,
+                    array_keys($actions),
+                    $this->active_action_closure,
+                    $this->row_transformer
+                );
                 $this->table = $this
                     ->ui
                     ->factory()
@@ -283,7 +292,12 @@ class TableAdapterGUI
                     ->withActions($actions)
                     ->withRequest($this->http->request());
             } else {
-                $table_retrieval = new TableRetrieval($this->retrieval);
+                $table_retrieval = new TableRetrieval(
+                    $this->retrieval,
+                    array_keys($actions),
+                    $this->active_action_closure,
+                    $this->row_transformer
+                );
                 $this->table = $this
                     ->ui
                     ->factory()

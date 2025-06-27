@@ -18,17 +18,19 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\LearningModule\Table;
+namespace ILIAS\Repository\Table;
 
 use ILIAS\UI\Component\Table;
-use ILIAS\Data\Range;
-use ILIAS\Data\Order;
 use ILIAS\UI\Component\Table\OrderingRowBuilder;
+use ILIAS\Repository\RetrievalInterface;
 
 class OrderingRetrieval implements Table\OrderingRetrieval
 {
     public function __construct(
-        protected RetrievalInterface $retrieval
+        protected RetrievalInterface $retrieval,
+        protected array $actions,
+        protected ?\Closure $active_action_closure,
+        protected ?\Closure $row_transformer
     ) {
     }
 
@@ -39,7 +41,20 @@ class OrderingRetrieval implements Table\OrderingRetrieval
         foreach ($this->retrieval->getData(
             $visible_column_ids
         ) as $data) {
-            yield $row_builder->buildOrderingRow((string) $data["id"], $data);
+            if ($this->row_transformer) {
+                $table_data = ($this->row_transformer)($data);
+            } else {
+                $table_data = $data;
+            }
+            $row = $row_builder->buildOrderingRow((string) $data["id"], $table_data);
+            if ($this->active_action_closure) {
+                foreach ($this->actions as $action) {
+                    if (!($this->active_action_closure)($action, $data)) {
+                        $row = $row->withDisabledAction($action);
+                    }
+                }
+            }
+            yield $row;
         }
     }
 }

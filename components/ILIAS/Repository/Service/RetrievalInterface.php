@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\LearningModule\Table;
+namespace ILIAS\Repository;
 
 use ILIAS\Data\Range;
 use ILIAS\Data\Order;

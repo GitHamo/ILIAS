@@ -18,10 +18,11 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\LearningModule\Table;
+namespace ILIAS\LearningModule\Editing;
 
 use ILIAS\Data\Range;
 use ILIAS\Data\Order;
+use ILIAS\Repository\RetrievalInterface;
 
 class SubObjectRetrieval implements RetrievalInterface
 {
@@ -68,6 +69,9 @@ class SubObjectRetrieval implements RetrievalInterface
         array $parameters = []
     ): \Generator {
         foreach ($this->getChilds() as $child) {
+            $active = true;
+            $scheduled = false;
+            $deactivated_elements = false;
             if ($child["type"] === "pg") {
                 // check activation
                 $lm_set = new \ilSetting("lm");
@@ -78,25 +82,13 @@ class SubObjectRetrieval implements RetrievalInterface
                 );
 
                 // is page scheduled?
-                $img_sc = ((bool) $lm_set->get("time_scheduled_page_activation") &&
-                    \ilLMPage::_isScheduledActivation($child["obj_id"], "lm"))
-                    ? "_sc"
-                    : "";
-
-                if (!$active) {
-                    $img = "standard/icon_pg_d" . $img_sc . ".svg";
-                    $alt = $this->lng->txt("cont_page_deactivated");
-                } else {
-                    if (\ilLMPage::_lookupContainsDeactivatedElements(
+                $scheduled = ((bool) $lm_set->get("time_scheduled_page_activation") &&
+                    \ilLMPage::_isScheduledActivation($child["obj_id"], "lm"));
+                if ($active) {
+                    $deactivated_elements = (\ilLMPage::_lookupContainsDeactivatedElements(
                         $child["obj_id"],
                         "lm"
-                    )) {
-                        $img = "standard/icon_pg_del" . $img_sc . ".svg";
-                        $alt = $this->lng->txt("cont_page_deactivated_elements");
-                    } else {
-                        $img = "standard/icon_pg" . $img_sc . ".svg";
-                        $alt = $this->lng->txt("pg");
-                    }
+                    ));
                 }
             } else {
                 $img = "standard/icon_st.svg";
@@ -108,6 +100,9 @@ class SubObjectRetrieval implements RetrievalInterface
             }
             yield [
                 "id" => $child["child"],
+                "deactivated_elements" => $deactivated_elements,
+                "active" => $active,
+                "scheduled" => $scheduled,
                 "type" => $this->f->symbol()->icon()->custom(\ilUtil::getImagePath($img), $alt),
                 "title" => $child["title"],
                 "trans_title" => $trans_title
