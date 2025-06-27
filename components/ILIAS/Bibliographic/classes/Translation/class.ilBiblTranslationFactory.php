@@ -1,5 +1,7 @@
 <?php
 
+use ILIAS\DI\Container;
+
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -144,9 +146,9 @@ class ilBiblTranslationFactory implements ilBiblTranslationFactoryInterface
     ): \ilBiblTranslationInterface {
         $inst = $this->getCollectionOfTranslationsForField($field)
                      ->where(["language_key" => $language_key,])
-                     ->get();
+                     ->first();
 
-        if ($inst === []) {
+        if ($inst === null) {
             $inst = new ilBiblTranslation();
             $inst->setFieldId($field->getId());
             $inst->setLanguageKey($language_key);
