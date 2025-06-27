@@ -170,12 +170,12 @@ of ILIAS. The file contains the following fields:
     Link to a file `COMMUNITY.md` in the root of the unity in the trunk branch on
     GitHub specifying the guidelines, rules, and regulations for collaboration.
 
-## Current Maintainerships
+# Components and Related Authorities
 
 [//]: # (BEGIN ActiveRecord)
 
 * **ActiveRecord**
-	* Authority to Sign off on Conceptual Changes: [fschmid](https://docu.ilias.de/go/usr/21087)
+    * Authority to Sign off on Conceptual Changes: [fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to Sign off on Code Changes: [fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to Curate Test Cases:[fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to (De-)Assign Authorities: [fschmid](https://docu.ilias.de/go/usr/21087)
