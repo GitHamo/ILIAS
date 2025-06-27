@@ -16,15 +16,20 @@
  *
  *********************************************************************/
 
-use ILIAS\MetaData\OERExposer\OAIPMH\Handler;
+declare(strict_types=1);
 
-/*
- * Handles OAI-PMH request according to https://www.openarchives.org/OAI/openarchivesprotocol.html
- */
+namespace ILIAS\MetaData\Vocabularies\Slots\Conditions;
 
-require_once '../vendor/composer/vendor/autoload.php';
-require_once(__DIR__ . '/../artifacts/bootstrap_default.php');
-entry_point('ILIAS Legacy Initialisation Adapter');
+use ILIAS\MetaData\Elements\ElementInterface;
+use ILIAS\MetaData\Vocabularies\Slots\Identifier as SlotIdentifier;
 
-$handler = new Handler();
-$handler->sendResponseToRequest();
+class NullChecker implements CheckerInterface
+{
+    public function doesElementFitSlot(
+        ElementInterface $element,
+        SlotIdentifier $slot,
+        bool $ignore_markers = true
+    ): bool {
+        return false;
+    }
+}

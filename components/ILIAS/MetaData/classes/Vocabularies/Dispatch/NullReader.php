@@ -18,33 +18,34 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\MetaData\Vocabularies\ElementHelper;
+namespace ILIAS\MetaData\Vocabularies\Dispatch;
 
 use ILIAS\MetaData\Vocabularies\VocabularyInterface;
-use ILIAS\MetaData\Elements\ElementInterface;
 use ILIAS\MetaData\Vocabularies\Slots\Identifier as SlotIdentifier;
+use ILIAS\MetaData\Vocabularies\NullVocabulary;
 
-interface ElementHelperInterface
+class NullReader implements ReaderInterface
 {
-    public function slotForElement(ElementInterface $element): SlotIdentifier;
-
-    /**
-     * Does not check the condition of the slots, so can return multiple slots
-     * per element.
-     * @return SlotIdentifier[]
-     */
-    public function slotsForElementWithoutCondition(ElementInterface $element): \Generator;
+    public function vocabulary(string $vocab_id): VocabularyInterface
+    {
+        return new NullVocabulary();
+    }
 
     /**
      * @return VocabularyInterface[]
      */
-    public function vocabulariesForSlot(
-        SlotIdentifier $slot
-    ): \Generator;
+    public function vocabulariesForSlots(
+        SlotIdentifier ...$slots
+    ): \Generator {
+        yield from [];
+    }
 
-    public function findElementOfCondition(
-        SlotIdentifier $slot,
-        ElementInterface $element,
-        ElementInterface ...$all_elements
-    ): ?ElementInterface;
+    /**
+     * @return VocabularyInterface[]
+     */
+    public function activeVocabulariesForSlots(
+        SlotIdentifier ...$slots
+    ): \Generator {
+        yield from [];
+    }
 }
