@@ -103,7 +103,7 @@ class TableAdapterGUI
         string $title,
         bool $sortable = false
     ): self {
-        $column = $this->ui->factory()->table()->column()->statusIcon($title);
+        $column = $this->ui->factory()->table()->column()->statusIcon($title)->withIsSortable($sortable);
         $this->addColumn($key, $column);
         return $this;
     }

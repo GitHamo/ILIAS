@@ -116,4 +116,9 @@ class SubObjectRetrieval implements RetrievalInterface
     ): int {
         return count($this->getChilds());
     }
+
+    public function isFieldNumeric(string $field): bool
+    {
+        return $field === "id";
+    }
 }

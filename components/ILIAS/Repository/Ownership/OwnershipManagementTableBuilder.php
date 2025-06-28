@@ -115,7 +115,7 @@ class OwnershipManagementTableBuilder extends CommonTableBuilder
         $lng = $this->domain->lng();
 
         $table = $table
-            ->iconColumn('icon', $lng->txt('type'))
+            ->iconColumn('icon', $lng->txt('type'), false)
             ->textColumn('title', $lng->txt('title'), true)
             ->textColumn('path', $lng->txt('path'));
 

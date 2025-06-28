@@ -24,9 +24,12 @@ use ILIAS\Repository\RetrievalInterface;
 use ILIAS\Repository\InternalDomainService;
 use ILIAS\Data\Range;
 use ILIAS\Data\Order;
+use ILIAS\Repository\RetrievalBase;
 
 class OwnershipManagementRetrieval implements RetrievalInterface
 {
+    use RetrievalBase;
+
     protected array $data = [];
 
     public function __construct(
@@ -86,6 +89,12 @@ class OwnershipManagementRetrieval implements RetrievalInterface
         }
     }
 
+    public function isFieldNumeric(string $field): bool
+    {
+        return in_array($field, ['id', 'obj_id', 'ref_id']);
+    }
+
+
     protected function buildPath(int $ref_id): string
     {
         $tree = $this->domain->repositoryTree();
@@ -113,19 +122,8 @@ class OwnershipManagementRetrieval implements RetrievalInterface
     ): \Generator {
         $data = $this->data;
 
-        if ($order !== null) {
-            $sort_field = array_keys($order->get())[0];
-            $sort_direction = $order->get()[$sort_field];
-
-            usort($data, function ($a, $b) use ($sort_field, $sort_direction) {
-                $result = strcmp($a[$sort_field] ?? '', $b[$sort_field] ?? '');
-                return $sort_direction === 'ASC' ? $result : -$result;
-            });
-        }
-
-        if ($range !== null) {
-            $data = array_slice($data, $range->getStart(), $range->getLength());
-        }
+        $data = $this->applyOrder($data, $order);
+        $data = $this->applyRange($data, $range);
 
         foreach ($data as $row) {
             yield $row;

@@ -29,7 +29,6 @@ class ilCategoryAssignRoleTableGUI extends ilTable2GUI
         string $a_parent_cmd
     ) {
         global $DIC;
-
         $this->ctrl = $DIC->ctrl();
         $this->lng = $DIC->language();
         $ilCtrl = $DIC->ctrl();

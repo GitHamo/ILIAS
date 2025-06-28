@@ -37,4 +37,8 @@ interface RetrievalInterface
         array $filter,
         array $parameters
     ): int;
+
+    public function isFieldNumeric(
+        string $field
+    ): bool;
 }

@@ -1122,7 +1122,6 @@ class ilObjCategoryGUI extends ilContainerGUI implements \ILIAS\Taxonomy\Setting
         $ilHelp->setScreenId("administrate_user");
         $ilHelp->setSubScreenId("assign_roles");
 
-
         $roles = $this->getAssignableRoles();
 
         $ass_roles = $rbacreview->assignedRoles($this->cat_request->getObjId());
