@@ -98,4 +98,20 @@ class SkillInternalGUIService
             $parent_cmd
         );
     }
+
+    public function contSkillMemberTableBuilder(
+        SkillInternalManagerService $manager_service,
+        ContainerSkillManager $cont_skill_manager,
+        \ilContainer $container,
+        object $parent_gui,
+        string $parent_cmd
+    ): ContSkillMemberTableBuilder {
+        return new ContSkillMemberTableBuilder(
+            $manager_service,
+            $cont_skill_manager,
+            $container,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
 }

@@ -54,4 +54,14 @@ class SkillInternalManagerService
             $cont_skill_manager
         );
     }
+
+    public function contSkillMemberRetrieval(
+        ContainerSkillManager $cont_skill_manager,
+        \ilContainer $container
+    ): ContSkillMemberRetrieval {
+        return new ContSkillMemberRetrieval(
+            $cont_skill_manager,
+            $container
+        );
+    }
 }

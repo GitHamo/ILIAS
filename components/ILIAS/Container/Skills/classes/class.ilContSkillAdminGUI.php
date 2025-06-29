@@ -155,18 +155,29 @@ class ilContSkillAdminGUI
         $tabs->activateSubTab("members");
 
         // table
-        $tab = new ilContSkillMemberTableGUI($this, "listMembers", $this->container);
+        $table = $this->skills_gui->contSkillMemberTableBuilder(
+            $this->skills_domain,
+            $this->cont_skill_manager,
+            $this->container,
+            $this,
+            "listMembers"
+        )->getTable();
 
-        $tpl->setContent($tab->getHTML());
+        if ($table->handleCommand()) {
+            return;
+        }
+
+        $tpl->setContent($table->render());
     }
 
-    public function assignCompetences(): void
+    public function assignCompetences(int $user_id): void
     {
         $tpl = $this->tpl;
         $tabs = $this->tabs;
         $ctrl = $this->ctrl;
 
-        $ctrl->saveParameter($this, "usr_id");
+        $this->requested_usr_id = $user_id;
+        $ctrl->setParameter($this, "usr_id", $user_id);
         $tabs->activateSubTab("members");
 
         $form = $this->initCompetenceAssignmentForm();
@@ -182,7 +193,8 @@ class ilContSkillAdminGUI
         $form = new ilPropertyFormGUI();
 
         // user name
-        $name = ilObjUser::_lookupName($this->requested_usr_id);
+        $user_id = $this->requested_usr_id;
+        $name = ilObjUser::_lookupName($user_id);
         $ne = new ilNonEditableValueGUI($this->lng->txt("obj_user"), "");
         $ne->setValue($name["lastname"] . ", " . $name["firstname"] . " [" . $name["login"] . "]");
         $form->addItem($ne);
@@ -209,7 +221,7 @@ class ilContSkillAdminGUI
             $si->setOptions($options);
             $si->setInfo($this->getPathString($sk->getBaseSkillId(), $sk->getTrefId()));
             $mem_level = $this->cont_skill_manager->getMemberSkillLevel(
-                $this->requested_usr_id,
+                $user_id,
                 $sk->getBaseSkillId(),
                 $sk->getTrefId()
             );
@@ -276,13 +288,13 @@ class ilContSkillAdminGUI
         $ctrl->redirect($this, "listMembers");
     }
 
-    public function publishAssignments(): void
+    public function publishAssignments(?array $usr_ids = null): void
     {
         $ctrl = $this->ctrl;
         $lng = $this->lng;
 
-        $user_ids = $this->requested_usr_ids;
-        if (empty($this->requested_usr_ids) && $this->requested_usr_id > 0) {
+        $user_ids = $usr_ids ?? $this->requested_usr_ids;
+        if (empty($user_ids) && $this->requested_usr_id > 0) {
             $user_ids[] = $this->requested_usr_id;
         }
 
@@ -305,7 +317,7 @@ class ilContSkillAdminGUI
         $ctrl->redirect($this, "listMembers");
     }
 
-    public function deassignCompetencesConfirm(): void
+    public function deassignCompetencesConfirm(?array $usr_ids = null): void
     {
         $ctrl = $this->ctrl;
         $lng = $this->lng;
@@ -314,8 +326,8 @@ class ilContSkillAdminGUI
 
         $tabs->activateSubTab("members");
 
-        $user_ids = $this->requested_usr_ids;
-        if (empty($this->requested_usr_ids) && $this->requested_usr_id > 0) {
+        $user_ids = $usr_ids ?? $this->requested_usr_ids;
+        if (empty($user_ids) && $this->requested_usr_id > 0) {
             $user_ids[] = $this->requested_usr_id;
         }
 
