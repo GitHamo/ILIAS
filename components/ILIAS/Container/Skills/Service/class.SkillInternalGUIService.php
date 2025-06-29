@@ -60,4 +60,24 @@ class SkillInternalGUIService
     {
         return $this->request;
     }
+
+    public function contProfileTableBuilder(
+        SkillInternalManagerService $manager_service,
+        \ILIAS\Skill\Service\SkillProfileService $profile_service,
+        \ilSkillManagementSettings $skmg_settings,
+        int $cont_ref_id,
+        int $cont_member_role_id,
+        object $parent_gui,
+        string $parent_cmd
+    ): ContProfileTableBuilder {
+        return new ContProfileTableBuilder(
+            $manager_service,
+            $profile_service,
+            $skmg_settings,
+            $cont_ref_id,
+            $cont_member_role_id,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
 }

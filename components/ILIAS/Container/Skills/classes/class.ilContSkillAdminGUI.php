@@ -32,6 +32,8 @@ use ILIAS\Skill\Service\SkillUsageService;
  */
 class ilContSkillAdminGUI
 {
+    protected ContainerSkills\SkillInternalManagerService $skills_domain;
+    protected ContainerSkills\SkillInternalGUIService $skills_gui;
     protected \ILIAS\Container\InternalGUIService $gui;
     protected ilCtrl $ctrl;
     protected ilTabsGUI $tabs;
@@ -101,6 +103,8 @@ class ilContSkillAdminGUI
         $this->lng->loadLanguageModule("skmg");
         $this->lng->loadLanguageModule("error");
         $this->gui = $DIC->container()->internal()->gui();
+        $this->skills_gui = $DIC->skills()->internalContainer()->gui();
+        $this->skills_domain = $DIC->skills()->internalContainer()->manager();
     }
 
     public function executeCommand(): void
@@ -458,7 +462,6 @@ class ilContSkillAdminGUI
         $toolbar = $this->toolbar;
         $ctrl = $this->ctrl;
         $lng = $this->lng;
-
         $tabs->activateSubTab("profiles");
 
         $options = [];
@@ -505,13 +508,21 @@ class ilContSkillAdminGUI
         $toolbar->setFormAction($ctrl->getFormAction($this));
 
         // table
-        $tab = new ilContProfileTableGUI(
+        $table = $this->skills_gui->contProfileTableBuilder(
+            $this->skills_domain,
+            $this->profile_service,
+            $this->skmg_settings,
+            $this->ref_id,
+            $this->cont_member_role_id,
             $this,
-            "listProfiles",
-            $this->container->getRefId()
-        );
+            "listProfiles"
+        )->getTable();
 
-        $tpl->setContent($tab->getHTML());
+        if ($table->handleCommand()) {
+            return;
+        }
+
+        $tpl->setContent($table->render());
     }
 
     public function saveSelectedProfile(): void
@@ -578,7 +589,7 @@ class ilContSkillAdminGUI
         $ctrl->redirect($this, "listProfiles");
     }
 
-    public function confirmRemoveSingleGlobalProfile(): void
+    public function confirmRemoveSingleGlobalProfile(int $profile_id): void
     {
         $lng = $this->lng;
         $ctrl = $this->ctrl;
@@ -586,8 +597,7 @@ class ilContSkillAdminGUI
         $tabs = $this->tabs;
 
         $tabs->activateSubTab("profiles");
-
-        $profile_id = (int) $this->params["profile_id"];
+        $ctrl->setParameterByClass(self::class, "profile_id", $profile_id);
 
         if (!($profile_id > 0)) {
             $this->tpl->setOnScreenMessage('failure', $lng->txt("error_sry_error"), true);
@@ -619,7 +629,8 @@ class ilContSkillAdminGUI
         $ctrl->redirect($this, "listProfiles");
     }
 
-    public function confirmDeleteSelectedLocalProfiles(): void
+
+    public function confirmDeleteSingleLocalProfile(int $profile_id): void
     {
         $lng = $this->lng;
         $ctrl = $this->ctrl;
@@ -628,56 +639,7 @@ class ilContSkillAdminGUI
 
         $tabs->activateSubTab("profiles");
 
-        if (empty($this->requested_profile_ids)) {
-            $this->tpl->setOnScreenMessage('info', $lng->txt("no_checkbox"), true);
-            $ctrl->redirect($this, "listProfiles");
-        } else {
-            $cgui = new ilConfirmationGUI();
-            $cgui->setFormAction($ctrl->getFormAction($this));
-            $cgui->setHeaderText($lng->txt("cont_skill_really_delete_profiles_from_list"));
-            $cgui->setCancel($lng->txt("cancel"), "listProfiles");
-            $cgui->setConfirm($lng->txt("delete"), "deleteSelectedLocalProfiles");
-
-            foreach ($this->requested_profile_ids as $i) {
-                if (!($this->profile_service->lookupProfileRefId($i) > 0)) {
-                    $this->tpl->setOnScreenMessage('info', $lng->txt("cont_skill_deletion_not_possible"), true);
-                    $ctrl->redirect($this, "listProfiles");
-                }
-                $cgui->addItem("id[]", (string) $i, $this->profile_service->lookupProfileTitle($i));
-            }
-
-            $tpl->setContent($cgui->getHTML());
-        }
-    }
-
-    public function deleteSelectedLocalProfiles(): void
-    {
-        $lng = $this->lng;
-        $ctrl = $this->ctrl;
-
-        if (!empty($this->requested_profile_ids)) {
-            foreach ($this->requested_profile_ids as $id) {
-                if ($this->profile_service->lookupProfileRefId($id) > 0) {
-                    $this->profile_service->deleteProfile($id);
-                }
-            }
-        }
-        $this->tpl->setOnScreenMessage('success', $lng->txt("msg_obj_modified"), true);
-
-        $ctrl->redirect($this, "listProfiles");
-    }
-
-    public function confirmDeleteSingleLocalProfile(): void
-    {
-        $lng = $this->lng;
-        $ctrl = $this->ctrl;
-        $tpl = $this->tpl;
-        $tabs = $this->tabs;
-
-        $tabs->activateSubTab("profiles");
-
-        $profile_id = (int) $this->params["profile_id"];
-
+        $ctrl->setParameterByClass(self::class, "profile_id", $profile_id);
         if (!($profile_id > 0)) {
             $this->tpl->setOnScreenMessage('failure', $lng->txt("error_sry_error"), true);
             $ctrl->redirect($this, "listProfiles");
