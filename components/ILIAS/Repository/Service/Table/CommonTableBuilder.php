@@ -29,6 +29,7 @@ abstract class CommonTableBuilder
     public function __construct(
         protected object $parent_gui,
         protected string $parent_cmd,
+        bool $numeric_ids = true
     ) {
         $this->table = new TableAdapterGUI(
             $this->getId(),
@@ -39,7 +40,8 @@ abstract class CommonTableBuilder
             $this->getNamespace(),
             $this->getOrderingCommand(),
             \Closure::fromCallable([$this, 'activeAction']),
-            \Closure::fromCallable([$this, 'transformRow'])
+            \Closure::fromCallable([$this, 'transformRow']),
+            $numeric_ids
         );
         $this->table = $this->build($this->table);
     }

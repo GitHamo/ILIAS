@@ -370,13 +370,20 @@ class ilContSkillAdminGUI
         );
 
         // table
-        $tab = new ilContSkillTableGUI(
+        $table = $this->skills_gui->contSkillTableBuilder(
+            $this->skills_domain,
+            $this->cont_skill_manager,
+            $this->container->getId(),
+            $this->container->getRefId(),
             $this,
-            "listCompetences",
-            $this->container
-        );
+            "listCompetences"
+        )->getTable();
 
-        $tpl->setContent($tab->getHTML());
+        if ($table->handleCommand()) {
+            return;
+        }
+
+        $tpl->setContent($table->render());
     }
 
     public function selectSkill(): void
@@ -407,7 +414,7 @@ class ilContSkillAdminGUI
         $ctrl->redirect($this, "listCompetences");
     }
 
-    public function confirmRemoveSelectedSkill(): void
+    public function confirmRemoveSelectedSkill(string $skill_id): void
     {
         $lng = $this->lng;
         $ctrl = $this->ctrl;
@@ -416,7 +423,7 @@ class ilContSkillAdminGUI
 
         $tabs->activateSubTab("competences");
 
-        if (empty($this->requested_combined_skill_ids)) {
+        if ($skill_id === "") {
             $this->tpl->setOnScreenMessage('info', $lng->txt("no_checkbox"), true);
             $ctrl->redirect($this, "listCompetences");
         } else {
@@ -426,10 +433,8 @@ class ilContSkillAdminGUI
             $cgui->setCancel($lng->txt("cancel"), "listCompetences");
             $cgui->setConfirm($lng->txt("remove"), "removeSelectedSkill");
 
-            foreach ($this->requested_combined_skill_ids as $i) {
-                $s = explode(":", $i);
-                $cgui->addItem("id[]", (string) $i, ilBasicSkill::_lookupTitle((int) $s[0], (int) $s[1]));
-            }
+            $s = explode(":", $skill_id);
+            $cgui->addItem("id[]", (string) $skill_id, ilBasicSkill::_lookupTitle((int) $s[0], (int) $s[1]));
 
             $tpl->setContent($cgui->getHTML());
         }
