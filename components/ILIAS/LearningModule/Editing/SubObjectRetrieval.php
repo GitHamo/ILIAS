@@ -90,9 +90,6 @@ class SubObjectRetrieval implements RetrievalInterface
                         "lm"
                     ));
                 }
-            } else {
-                $img = "standard/icon_st.svg";
-                $alt = $this->lng->txt("st");
             }
             $trans_title = "";
             if (!in_array($this->transl, ["-", ""])) {
@@ -103,7 +100,7 @@ class SubObjectRetrieval implements RetrievalInterface
                 "deactivated_elements" => $deactivated_elements,
                 "active" => $active,
                 "scheduled" => $scheduled,
-                "type" => $this->f->symbol()->icon()->custom(\ilUtil::getImagePath($img), $alt),
+                "type" => $child["type"],
                 "title" => $child["title"],
                 "trans_title" => $trans_title
             ];

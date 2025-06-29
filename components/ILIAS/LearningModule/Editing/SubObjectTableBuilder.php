@@ -39,10 +39,10 @@ class SubObjectTableBuilder extends CommonTableBuilder
         object $parent_gui,
         string $parent_cmd
     ) {
-        parent::__construct($parent_gui, $parent_cmd);
         $this->page_layouts = \ilPageLayout::activeLayouts(
             \ilPageLayout::MODULE_LM
         );
+        parent::__construct($parent_gui, $parent_cmd);
     }
 
     protected function getId(): string
