@@ -80,7 +80,7 @@ export default class IIMUIActionHandler {
     if (action.getComponent() === 'InteractiveImage') {
       switch (action.getType()) {
         case ACTIONS.E_ADD_TRIGGER:
-          this.ui.editTrigger(model.getCurrentTrigger().nr);
+          this.ui.addTrigger();
           break;
 
         case ACTIONS.E_EDIT_TRIGGER:
@@ -125,6 +125,13 @@ export default class IIMUIActionHandler {
 
         case ACTIONS.E_TRIGGER_PROPERTIES_SAVE:
           this.sendSaveTriggerPropertiesCommand(
+            params,
+            model,
+          );
+          break;
+
+        case ACTIONS.E_TRIGGER_DELETE:
+          this.sendTriggerDeleteCommand(
             params,
             model,
           );
@@ -202,6 +209,30 @@ export default class IIMUIActionHandler {
       if (this.handleStandardResponse(result, model)) {
         this.ui.activateSlateButtons();
         this.ui.refreshTriggerViewControl();
+        this.ui.showTriggerDeleteButton();
+        this.ui.setMessage('commonSuccessMessage');
+        this.ui.editTrigger(params.nr); // this will also update the area from the model
+      }
+    });
+  }
+
+  sendTriggerDeleteCommand(params, model) {
+    let update_action;
+    const af = this.actionFactory;
+    const dispatch = this.dispatcher;
+
+    this.ui.deactivateSlateButtons();
+    this.ui.setLoader();
+
+    update_action = af.interactiveImage().command().deleteTrigger(
+      params.nr,
+    );
+
+    this.client.sendCommand(update_action).then((result) => {
+      if (this.handleStandardResponse(result, model)) {
+        this.ui.activateSlateButtons();
+        this.ui.refreshTriggerViewControl();
+        this.ui.showMainScreen();
         this.ui.setMessage('commonSuccessMessage');
       }
     });
