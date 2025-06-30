@@ -2381,9 +2381,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                     $this->testrequest->getRefId()
                 );
                 break;
-            case "create":
-            case "save":
-            case "cancel":
             case "importFile":
             case "cloneAll":
             case "importVerifiedFile":
