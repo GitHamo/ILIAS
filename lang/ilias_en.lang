@@ -11207,7 +11207,7 @@ lti#:#lti_con_prov_provider_key_global_info#:#If not set, users have to add key 
 lti#:#lti_con_prov_remarks#:#Internal Remarks
 lti#:#lti_con_prov_secret#:#Secret
 lti#:#lti_con_prov_title#:#Title
-lti#:#lti_con_prov_url#:#URL of Provider
+lti#:#lti_con_prov_url#:#URL of LTI Provider
 lti#:#lti_con_prov_use_provider_id#:#Use Provider ID
 lti#:#lti_con_prov_use_provider_id_info#:#Usually the Ref-ID of the LTI Consumer is transferred to the Provider. Some Providers map this Ref-ID with the Resource of the Provider. To get always the same Resource for these Providers this Option should be activated.
 lti#:#lti_con_prov_use_xapi#:#Provider supports request of xAPI-Statements
@@ -11272,6 +11272,7 @@ lti#:#lti_object_consumer#:#LTI Consumers
 lti#:#lti_object_release_settings_form#:#Edit LTI Releases
 lti#:#lti_provider#:#LTI Releases
 lti#:#lti_provider_not_avail_msg#:#LTI Provider is set to 'Not Available'
+lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.
 lti#:#lti_providing_tab#:#ILIAS as LTI Provider
 lti#:#lti_released_objects#:#Object Releases
 lti#:#lti_select_provider#:#Select Provider
