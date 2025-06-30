@@ -324,7 +324,10 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
         $content .= $this->getMessageArea();
         $content .= $this->ui_wrapper->getRenderedAdapterForm(
             $this->getTriggerPropertiesFormAdapter(),
-            [["InteractiveImage", "trigger.properties.save", $this->lng->txt("save")]],
+            [
+                ["InteractiveImage", "trigger.properties.save", $this->lng->txt("save")],
+                ["InteractiveImage", "trigger.delete", $this->lng->txt("delete")],
+            ],
             "copg-iim-trigger-prop-form"
         );
 
