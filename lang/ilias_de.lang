@@ -9183,7 +9183,7 @@ exc#:#exc_blog_selected#:#Das Blog wurde verknüpft.
 exc#:#exc_cannot_submit_any_files#:#Sie können keine Dateien mehr einreichen.
 exc#:#exc_chars_remaining#:#Verbleibende Zeichen
 exc#:#exc_comment_for_learner_edit#:#Als Kommentar in Textfeld eingeben
-exc#:#exc_comment_for_learner_info#:#Es wird eine Benachrichtigung an den Teilnehmer gesendet. <br /><br />Die Rückmeldung wird in seiner persönlichen Übungseinheiten-Übersicht angezeigt.
+exc#:#exc_comment_for_learner_info#:#Die Person, die die Abgabe eingereicht hat, wird per Mail benachrichtigt. <br /><br /> Die Rückmeldung wird im Reiter „Übersicht“ der Übungseinheit angezeigt.
 exc#:#exc_compare_selected_submissions#:#Vergleiche ausgewählte Lösungsabgaben
 exc#:#exc_compare_submissions#:#Vergleiche Lösungsabgaben
 exc#:#exc_completion_by_submission#:#Automatisch bei Abgabe
@@ -9244,17 +9244,17 @@ exc#:#exc_ended#:#Beendet
 exc#:#exc_ended_on#:#Beendet am
 exc#:#exc_export_excel#:#Export (Excel)
 exc#:#exc_fb_files#:#Bewertungsdateien
-exc#:#exc_fb_tutor_info#:#Wird eine Datei zur Bewertung der Übungseinheit hochgeladen, erhält die Teilnehmerin oder der Teilnehmer eine Benachrichtigung und kann dann in der Übersicht der Übungseinheiten heruntergeladen und eingesehen werden.
+exc#:#exc_fb_tutor_info#:#Die Person, welche die Abgabe eingereicht hat, wird nach dem Hochladen der Datei per Mail benachrichtigt. Die Rückmeldung wird im Reiter „Übersicht“ der Übungseinheit angezeigt und kann heruntergeladen werden.
 exc#:#exc_feedback#:#Feedback
 exc#:#exc_feedback_notification_body#:#Das Feedback zur folgenden Übungseinheit wurde freigeschaltet.
 exc#:#exc_feedback_notification_link#:#Link zur Übung
-exc#:#exc_feedback_notification_reason#:#Sie erhalten diese Nachricht, da Sie ein Teilnehmer der oben genannten Übung sind.
+exc#:#exc_feedback_notification_reason#:#Sie erhalten diese Nachricht, da Sie an der oben genannten Übung teilnehmen.
 exc#:#exc_feedback_notification_subject#:#Feedback für Übungseinheit der Übung „%s“ freigeschaltet
 exc#:#exc_files_returned_text#:#Abgegebener Text
 exc#:#exc_find_zip_error#:#Die Abgabe kann nicht geöffnet werden. Die Originaldateien wurden nicht gefunden.
 exc#:#exc_fixed_date#:#Festes Datum
 exc#:#exc_fixed_date_individual#:#Nur individuelle Termine
-exc#:#exc_fixed_date_individual_info#:#Es gibt keinen gemeinsamen Abgabetermin. Es müssen individuelle Termine für alle Teilnehmer gesetzt werden.
+exc#:#exc_fixed_date_individual_info#:#Es gibt keinen gemeinsamen Abgabetermin. Setzen Sie für jede Person einen individuellen Termin.
 exc#:#exc_fixed_date_info#:#Alle Teilnehmenden erhalten zunächst das gleiche feste Abgabedatum.
 exc#:#exc_fullscreen#:#Vollbild
 exc#:#exc_future#:#Kommende
@@ -9262,12 +9262,12 @@ exc#:#exc_given_feedback#:#Gegebene Feedbacks
 exc#:#exc_global_feedback_file#:#Musterlösung
 exc#:#exc_global_feedback_file_after_date#:#Nach festem Datum
 exc#:#exc_global_feedback_file_cron#:#Benachrichtigung bei Verfügbarkeit
-exc#:#exc_global_feedback_file_cron_info#:#Teilnehmer werden per Mail über die Verfügbarkeit der Musterlösung informiert.
+exc#:#exc_global_feedback_file_cron_info#:#Alle Personen, die an einer Übungseinheit teilnehmen, werden per Mail benachrichtigt, sobald deren Musterlösung verfügbar ist.
 exc#:#exc_global_feedback_file_date#:#Verfügbarkeit
 exc#:#exc_global_feedback_file_date_deadline#:#Nach dem Abgabetermin
 exc#:#exc_global_feedback_file_date_upload#:#Nach der Abgabe
 exc#:#exc_go_to_exercise#:#Zur Übung
-exc#:#exc_graded_mem_notified#:#Alle ausgewählten Teilnehmer mit einer Bewertung wurden benachrichtigt.
+exc#:#exc_graded_mem_notified#:#Alle ausgewählten Personen mit einer Bewertung wurden benachrichtigt.
 exc#:#exc_grades#:#Notenübersicht
 exc#:#exc_grades_overview#:#Notenübersicht
 exc#:#exc_hand_in#:#Datei abgeben
@@ -9343,7 +9343,7 @@ exc#:#exc_new_assignment#:#Neue Übungseinheit
 exc#:#exc_no_assignments#:#Keine Übungseinheiten vorhanden.
 exc#:#exc_no_assignments_available#:#Keine Übungseinheiten vorhanden. Bitte wählen Sie "Übungseinheiten" und "Bearbeiten", um eine Übungseinheit zu erstellen.
 exc#:#exc_no_deadline#:#Keine Abgabefrist
-exc#:#exc_no_deadline_info#:#Es gibt keinen Abgabetermin für die Teilnehmer.
+exc#:#exc_no_deadline_info#:#Die Abgabe ist jederzeit möglich.
 exc#:#exc_no_deadline_specified#:#Es wurde kein Abgabetermin festgelegt.
 exc#:#exc_no_feedback_dir_found_in_zip#:#Die Verzeichnisstruktur des hochgeladenen Zip-Archivs konnte nicht verarbeitet werden.
 exc#:#exc_no_get_target#:#Kein gültiges Link-Ziel gefunden.
@@ -9647,7 +9647,7 @@ excv#:#excv_create#:#Übungszertifikat erstellen
 excv#:#excv_create_info#:#Wählen Sie eine Übung, für die Sie ein Zertifikat benötigen
 exercise#:#exc_admin_settings#:#Übungs-Administration
 exercise#:#exc_comment#:#Rückmeldung
-exercise#:#exc_comment_for_learner#:#Rückmeldung für Teilnehmer
+exercise#:#exc_comment_for_learner#:#Rückmeldung zur Abgabe
 exercise#:#exc_failed#:#Nicht bestanden
 exercise#:#exc_feedback_from_tutor#:#Bewertung
 exercise#:#exc_grading#:#Bewertung
