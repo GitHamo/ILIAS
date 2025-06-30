@@ -96,6 +96,7 @@ div.ilc_VerificationPlaceHolder /* no custom image yet */
 	position:absolute;
 	width: auto;
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, .1);
+	z-index: 1;
 }
 
 button.copg-add.dropdown-toggle.btn:focus-visible {
