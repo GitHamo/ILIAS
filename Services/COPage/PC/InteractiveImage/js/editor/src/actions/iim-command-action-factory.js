@@ -12,26 +12,24 @@
  * https://www.ilias.de
  * https://github.com/ILIAS-eLearning
  *
- *********************************************************************/
+ ******************************************************************** */
 
-import ACTIONS from "./iim-action-types.js";
+import ACTIONS from './iim-action-types.js';
 
 /**
  * COPage command actions being sent to the server
  */
 export default class IIMCommandActionFactory {
-
   /**
    * @type {ClientActionFactory}
    */
-  //clientActionFactory;
-
+  // clientActionFactory;
 
   /**
    * @param {ClientActionFactory} clientActionFactory
    */
   constructor(clientActionFactory) {
-    this.COMPONENT = "InteractiveImage";
+    this.COMPONENT = 'InteractiveImage';
     this.clientActionFactory = clientActionFactory;
   }
 
@@ -44,9 +42,15 @@ export default class IIMCommandActionFactory {
   saveTriggerProperties(triggerNr, title, shapeType, coords) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_SAVE_TRIGGER_PROPERTIES, {
       trigger_nr: triggerNr,
-      title: title,
+      title,
       shape_type: shapeType,
-      coords: coords
+      coords,
+    });
+  }
+
+  deleteTrigger(nr) {
+    return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_DELETE_TRIGGER, {
+      nr,
     });
   }
 
@@ -59,8 +63,8 @@ export default class IIMCommandActionFactory {
   saveTriggerOverlay(triggerNr, overlay, coords) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_SAVE_TRIGGER_OVERLAY, {
       trigger_nr: triggerNr,
-      overlay: overlay,
-      coords: coords
+      overlay,
+      coords,
     });
   }
 
@@ -73,9 +77,9 @@ export default class IIMCommandActionFactory {
   saveTriggerPopup(triggerNr, popup, position, size) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_SAVE_TRIGGER_POPUP, {
       trigger_nr: triggerNr,
-      popup: popup,
-      position: position,
-      size: size
+      popup,
+      position,
+      size,
     });
   }
 
@@ -89,7 +93,7 @@ export default class IIMCommandActionFactory {
 
   deleteOverlay(overlay) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_DELETE_OVERLAY, {
-      overlay: overlay
+      overlay,
     });
   }
 
@@ -98,7 +102,7 @@ export default class IIMCommandActionFactory {
    * @return {CommandAction}
    */
   savePopup(data) {
-    console.log("---");
+    console.log('---');
     console.log(data);
 
     return this.clientActionFactory.formCommand(this.COMPONENT, ACTIONS.C_SAVE_POPUP, data);
@@ -106,7 +110,7 @@ export default class IIMCommandActionFactory {
 
   deletePopup(nr) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_DELETE_POPUP, {
-      nr: nr
+      nr,
     });
   }
 
@@ -117,5 +121,4 @@ export default class IIMCommandActionFactory {
   saveSettings(data) {
     return this.clientActionFactory.formCommand(this.COMPONENT, ACTIONS.C_SAVE_SETTINGS, data);
   }
-
 }
