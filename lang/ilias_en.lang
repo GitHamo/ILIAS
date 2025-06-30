@@ -9740,7 +9740,7 @@ file#:#file_rollback_rollback_first#:#The selected version could not be publishe
 file#:#file_rollback_same_version#:#This is already the published version!
 file#:#file_unpublish#:#Mark as Draft
 file#:#file_upload_info_file_with_critical_extension#:#At least one uploaded file contains a critical or unknown file ending. Whenever the file is downloaded, its ending will be changed to ‘.sec’. If necessary, contact your administrator. Filename(s): %s
-file#:#file_uploaded_by#:#Version Uploaded By
+file#:#file_uploaded_by#:#Uploaded By
 file#:#file_version_draft#:#Draft Version
 file#:#file_version_draft_info#:#The latest version of this file has the status ‘Draft’. As long as this version has not been published, no new versions can be created. People with read permission for the file get the most recent previously published version.
 file#:#form_icon_creation#:#Create Icon
