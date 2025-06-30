@@ -50,6 +50,16 @@ const presentation = (function () {
     });
   }
 
+  function positionMarker(mobElement, markerEl) {
+    mobElement.appendChild(markerEl);
+    const markX = markerEl.getAttribute('data-copg-iim-markx');
+    const markY = markerEl.getAttribute('data-copg-iim-marky');
+    markerEl.style.display = 'block';
+    markerEl.style.position = 'absolute';
+    markerEl.style.left = `${markX}px`;
+    markerEl.style.top = `${markY}px`;
+  }
+
   function init(node) {
     let iimId;
     let mobEl;
@@ -90,6 +100,7 @@ const presentation = (function () {
       areaEl = null;
       markerEl = null;
       clickEl = null;
+      svg = util.getOverlaySvg(mobEl); // this will add the svg to the mob
       if (triggerType == 'Area') {
         areaDataEl = document.querySelector(`[data-copg-iim-data-type='area'][data-copg-iim-id='${
           iimId}'][data-copg-iim-tr-nr='${triggerNr}']`);
@@ -98,9 +109,9 @@ const presentation = (function () {
       } else {
         markerEl = document.querySelector(`[data-copg-iim-data-type='marker'][data-copg-iim-id='${
           iimId}'][data-copg-iim-tr-nr='${triggerNr}']`);
+        positionMarker(mobEl, markerEl);
         clickEl = markerEl;
       }
-      svg = util.getOverlaySvg(mobEl);
       let popupEl = null;
       if (popupNr) {
         popupEl = mobEl.parentNode.parentNode.parentNode.querySelector(`[data-copg-cont-type='iim-popup'][data-copg-popup-nr='${popupNr}']`);
