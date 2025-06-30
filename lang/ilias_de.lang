@@ -742,7 +742,7 @@ assessment#:#finalized_evaluation#:#Endgültig bewertet
 assessment#:#finalized_on#:#Bewertung abgeschlossen am
 assessment#:#finish_all_user_passes#:#Alle Testdurchläufe beenden
 assessment#:#finish_pass_for_all_users#:#Wollen Sie wirklich die Test Durchläufe für alle Benutzer beenden?
-assessment#:#finish_pass_for_all_users_in_processing_time#:#Sie können die Durchläufe aller Benutzer nicht gemeinsam beenden, da für mindestens einen Benutzer die Bearbeitungszeit noch nicht vorbei ist.
+assessment#:#finish_pass_for_multiple_users_in_processing_time#:#Sie können die Durchläufe der ausgewählten Benutzer nicht gemeinsam beenden, da für mindestens einen ausgewählten Benutzer die Bearbeitungszeit noch nicht vorbei ist.
 assessment#:#finish_pass_for_user_confirmation#:#Wollen Sie den Test Durchlauf für den Teilnehmer „%s“ wirklich beenden?
 assessment#:#finish_pass_for_user_in_processing_time#:#WARNUNG: die Bearbeitungszeit für diesen Benutzer ist noch nicht vorbei! Sie sollten den Testlauf nur bei zwingendem Grund (z.B. Ausschluss vom Test) beenden.
 assessment#:#finish_test#:#Test beenden
