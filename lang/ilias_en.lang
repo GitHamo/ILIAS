@@ -10591,7 +10591,6 @@ itgr#:#itgr_desc_info#:#The description will not be a part of the item group's p
 itgr#:#itgr_edit#:#Edit Item Groups
 itgr#:#itgr_expandable_closed#:#Expandable (initially closed)
 itgr#:#itgr_expandable_open#:#Expandable (initially opened)
-itgr#:#itgr_hide_title#:#Hide Title
 itgr#:#itgr_item#:#Item
 itgr#:#itgr_list#:#List
 itgr#:#itgr_list_default#:#Default
