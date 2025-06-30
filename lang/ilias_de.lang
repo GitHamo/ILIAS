@@ -9302,7 +9302,7 @@ exc#:#exc_mandatory_info#:#Verpflichtende Übungseinheiten müssen bestanden wer
 exc#:#exc_mandatory_rand_determined#:#Zufällige Auswahl
 exc#:#exc_max_char_limit#:#Höchstanzahl Zeichen
 exc#:#exc_max_file#:#Maximale Dateianzahl
-exc#:#exc_max_file_info#:#Nach Erreichen des Limits können Teilnehmer keine weiteren Dateien hochladen. Auch in Team-Übungseinheiten wird das Limit pro Teilnehmer gewertet und nicht für das gesamte Team.
+exc#:#exc_max_file_info#:#Es kann höchstens die angegebene Anzahl von Dateien hochgeladen werden. Für Übungseinheiten, die als Team bearbeitet werden, gilt diese Obergrenze pro Person und nicht für das gesamte Team.
 exc#:#exc_max_file_reached#:#Sie können maximal %s Dateien hochladen.
 exc#:#exc_max_file_tgl#:#Uploads begrenzen
 exc#:#exc_max_team_participants#:#Maximale Anzahl
@@ -9329,13 +9329,13 @@ exc#:#exc_msg_new_message_from_pf_giver#:#Es wurde eine neue Mitteilung zur Übu
 exc#:#exc_msg_new_message_from_pf_giver2#:#Ein Peer-Feedback-Geber hat eine neue Mitteilung für Sie eingestellt:
 exc#:#exc_msg_new_message_from_pf_recipient#:#Es wurde eine neue Mitteilung zur Übung „%s“ hinzugefügt.
 exc#:#exc_msg_new_message_from_pf_recipient2#:#Ein Peer-Feedback-Nehmer hat eine neue Mitteilung für Sie eingestellt:
-exc#:#exc_msg_participants_removed#:#Die Teilnehmer wurden aus der Übung entfernt.
+exc#:#exc_msg_participants_removed#:#Die Personen wurden aus der Übung entfernt.
 exc#:#exc_msg_public_submission#:#Alle Lösungsabgaben werden nach dem Abgabetermin veröffentlicht.
 exc#:#exc_msg_saved_grades#:#Die Änderungen wurden gespeichert.
-exc#:#exc_msg_sure_to_deassign_participant#:#Wollen Sie wirklich die folgenden Teilnehmer aus allen Übungseinheiten der Übung entfernen? Alle Lösungsabgaben aus allen Übungseinheiten der Teilnehmer werden gelöscht.
-exc#:#exc_multi_feedb_info#:#Auf dieser Seite können Sie die Feedback-Dateien für mehrere Übungsteilnehmer auf einmal hochladen.<br /> <br />Klicken Sie zunächst unten auf den Button "ZIP-Verzeichnisstruktur herunterladen" und speichern Sie die ZIP-Datei auf Ihrem Computer. Dort öffnen Sie im nächsten Schritt die ZIP-Datei, um die Verzeichnisstruktur zu entpacken. Legen Sie nun die Feedback-Dateien in die entsprechenden Ordner der Übungsteilnehmer und komprimieren abschließend das Verzeichnis wieder als ZIP-Datei. Wählen Sie nun auf dieser Seite unten diese ZIP-Datei als Multi-Feedback-Datei aus und laden diese hoch. Die Bestätigungsseite führt alle hochgeladenen Dateien auf. <br /> <br /><b>Wichtig</b>: Vermeiden Sie auf jeden Fall Umlaute und Sonderzeichen in den Dateinamen, da hierdurch Probleme bei der Zuordnung der Dateien entstehen.
-exc#:#exc_multi_feedback#:#Rückmeldung an mehrere Teilnehmer
-exc#:#exc_multi_feedback_file#:#Multi-Feedback-Datei
+exc#:#exc_msg_sure_to_deassign_participant#:#Wollen Sie die folgenden Personen wirklich aus allen Übungseinheiten der Übung entfernen? Sämtliche Abgaben dieser Personen werden gelöscht.
+exc#:#exc_multi_feedb_info#:#Hier können Sie Dateien mit Rückmeldungen für mehrere Personen auf einmal hochladen. <b>Wichtig</b>: Vermeiden Sie unbedingt Umlaute und Sonderzeichen im Dateinamen. Das erzeugt Probleme bei der Zuordnung der Dateien.<br /><ol><li>Klicken Sie unten auf den Button „ZIP-Verzeichnisstruktur herunterladen“, und speichern Sie die ZIP-Datei auf Ihrem Computer.</li><li>Entpacken Sie die ZIP-Datei auf Ihrem Computer.</li><li>Öffnen Sie den Ordner. Jede Person, die an der Übung teilnimmt, hat darin einen eigenen Ordner.</li><li>Legen Sie die Dateien mit den Rückmeldungen in die entsprechenden Ordner.</li><li>Komprimieren Sie das Verzeichnis wieder als ZIP-Datei.</li><li>Wählen Sie unten auf dieser Seite unter „ZIP-Datei mit Rückmeldungen“ Ihre ZIP-Datei aus und laden diese hoch.</li><li>ILIAS zeigt eine Tabelle mit allen Namen und zugehörigen Dateien.</li><li>Prüfen Sie die Zuordnung und klicken Sie abschließend auf „Speichern“.</li></ol>
+exc#:#exc_multi_feedback#:#Rückmeldung an mehrere Personen
+exc#:#exc_multi_feedback_file#:#ZIP-Datei mit Rückmeldungen
 exc#:#exc_multi_feedback_files#:#Multi-Feedback-Dateien
 exc#:#exc_needs_deadline#:#Diese Option benötigt einen Abgabetermin.
 exc#:#exc_needs_fixed_deadline#:#Diese Funktion benötigt ein festes Abgabedatum.
@@ -9347,7 +9347,7 @@ exc#:#exc_no_deadline_info#:#Die Abgabe ist jederzeit möglich.
 exc#:#exc_no_deadline_specified#:#Es wurde kein Abgabetermin festgelegt.
 exc#:#exc_no_feedback_dir_found_in_zip#:#Die Verzeichnisstruktur des hochgeladenen Zip-Archivs konnte nicht verarbeitet werden.
 exc#:#exc_no_get_target#:#Kein gültiges Link-Ziel gefunden.
-exc#:#exc_no_graded_mem_selected#:#Bitte wählen Sie mindestens einen Teilnehmer mit Bewertung aus.
+exc#:#exc_no_graded_mem_selected#:#Wählen Sie nur Personen aus, die auch bewertet wurden.
 exc#:#exc_no_participants#:#Zur Zeit gibt es keine Teilnehmer.
 exc#:#exc_no_peer_feedback_deadline#:#Keine Frist für Abgabe des Feedbacks
 exc#:#exc_no_portfolio_templates#:#Es sind keine Portfoliovorlagen vorhanden.
@@ -9366,7 +9366,7 @@ exc#:#exc_order_by_deadline#:#Nach Abgabetermin sortieren
 exc#:#exc_overview#:#Übersicht
 exc#:#exc_participant#:#Teilnehmer
 exc#:#exc_participant_view#:#Je Teilnehmer
-exc#:#exc_participants#:#Teilnehmer
+exc#:#exc_participants#:#Personen
 exc#:#exc_pass_all#:#Nur verpflichtende Übungseinheiten
 exc#:#exc_pass_all_info#:#Teilnehmer müssen alle verpflichtenden Übungseinheiten bestehen, um die gesamte Übung zu bestehen.
 exc#:#exc_pass_minimum_nr#:#Mindestanzahl an Übungseinheiten
