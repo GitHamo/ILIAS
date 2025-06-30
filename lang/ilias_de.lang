@@ -14268,6 +14268,10 @@ rbac#:#grps_edit_permission#:#Rechteeinstellungen für die Gruppen-Administratio
 rbac#:#grps_read#:#Lesezugriff auf Gruppen-Administration
 rbac#:#grps_visible#:#Gruppen-Administration ist sichtbar
 rbac#:#grps_write#:#Einstellungen in Gruppen-Administration bearbeiten
+rbac#:#gsfo_edit_permission#:#Rechteeinstellungen für die Administration der Fußzeile ändern
+rbac#:#gsfo_read#:#Lesezugriff auf Administration der Fußzeile
+rbac#:#gsfo_visible#:#Administration der Fußzeile ist sichtbar
+rbac#:#gsfo_write#:#Einstellungen der Administration der Fußzeile bearbeiten
 rbac#:#hlps_edit_permission#:#Rechteeinstellungen für die Administration.der Online-Hilfe ändern
 rbac#:#hlps_read#:#Lesezugriff auf die Administration der Online-Hilfe
 rbac#:#hlps_visible#:#Administration der Online-Hilfe ist sichtbar.

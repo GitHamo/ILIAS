@@ -14270,6 +14270,10 @@ rbac#:#grps_edit_permission#:#User can change permission settings in Group admin
 rbac#:#grps_read#:#User has read access to Group administration
 rbac#:#grps_visible#:#Group administration is visible
 rbac#:#grps_write#:#Edit settings in Group administration
+rbac#:#gsfo_edit_permission#:#User can change permission settings in Footer administration
+rbac#:#gsfo_read#:#User has read access to Footer administration
+rbac#:#gsfo_visible#:#Footer administration is visible
+rbac#:#gsfo_write#:#Edit settings in Footer administration
 rbac#:#hlps_edit_permission#:#User can change permissions of Help System administration.
 rbac#:#hlps_read#:#User has read access to Help System administration.
 rbac#:#hlps_visible#:#Help System administration is visible.
