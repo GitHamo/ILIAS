@@ -65,11 +65,23 @@ class ParticipantTableFinishTestAction implements TableAction
         URLBuilderToken $action_token,
         URLBuilderToken $action_type_token
     ): Action {
-        return $this->ui_factory->table()->action()->standard(
+        $url_builder_with_parameters = $url_builder
+            ->withParameter($action_token, self::ACTION_ID)
+            ->withParameter($action_type_token, ParticipantTableActions::SHOW_ACTION);
+
+        if ($this->test_obj->getNrOfTries() > 1
+            || !$this->test_obj->getEnableProcessingTime()
+            || $this->test_obj->getResetProcessingTime()) {
+            return $this->ui_factory->table()->action()->standard(
+                $this->lng->txt(self::ACTION_ID),
+                $url_builder_with_parameters,
+                $row_id_token
+            )->withAsync();
+        }
+
+        return $this->ui_factory->table()->action()->single(
             $this->lng->txt(self::ACTION_ID),
-            $url_builder
-                ->withParameter($action_token, self::ACTION_ID)
-                ->withParameter($action_type_token, ParticipantTableActions::SHOW_ACTION),
+            $url_builder_with_parameters,
             $row_id_token
         )->withAsync();
     }
@@ -119,17 +131,16 @@ class ParticipantTableFinishTestAction implements TableAction
             return null;
         }
 
-        if (!$this->test_obj->getResetProcessingTime() && count($selected_participants) > 1) {
-            foreach ($selected_participants as $participant) {
-                if ($participant->hasUnfinishedAttempts()) {
-                    $this->tpl->setOnScreenMessage(
-                        \ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
-                        $this->lng->txt('finish_test_more_than_one_selected'),
-                        true
-                    );
-                    return null;
-                }
-            }
+        if (count($selected_participants) > 1
+            && $this->test_obj->getNrOfTries() === 1
+            && $this->test_obj->getEnableProcessingTime()
+            && !$this->test_obj->getResetProcessingTime()) {
+            $this->tpl->setOnScreenMessage(
+                \ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
+                $this->lng->txt('finish_test_more_than_one_selected'),
+                true
+            );
+            return null;
         }
 
         // This is required here because of late test object binding
