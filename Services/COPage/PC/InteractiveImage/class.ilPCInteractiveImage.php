@@ -280,7 +280,9 @@ class ilPCInteractiveImage extends ilPageContent
         string $a_shape_type,
         string $a_coords,
         string $a_title,
-        string $a_id
+        string $a_id,
+        string $hl_mode = "",
+        string $hl_class = ""
     ): void {
         $link = array(
             "LinkType" => IL_EXT_LINK,
@@ -293,7 +295,9 @@ class ilPCInteractiveImage extends ilPageContent
             $a_coords,
             ilUtil::stripSlashes($a_title),
             $link,
-            $a_id
+            $a_id,
+            $hl_mode,
+            $hl_class
         );
     }
 
@@ -304,7 +308,9 @@ class ilPCInteractiveImage extends ilPageContent
         ilMediaAliasItem $a_alias_item,
         string $a_shape_type,
         string $a_coords,
-        string $a_title
+        string $a_title,
+        string $hl_mode = "",
+        string $hl_class = ""
     ): void {
         $max = 0;
         $triggers = $this->getTriggers();
@@ -317,7 +323,9 @@ class ilPCInteractiveImage extends ilPageContent
             $a_shape_type,
             $a_coords,
             ilUtil::stripSlashes($a_title),
-            (string) ($max + 1)
+            (string) ($max + 1),
+            $hl_mode,
+            $hl_class
         );
 
         $attributes = array("Type" => self::AREA,
@@ -664,7 +672,7 @@ class ilPCInteractiveImage extends ilPageContent
         return null;
     }
 
-    public function setTriggerProperties(string $nr, string $title, string $shape_type, string $coords): void
+    public function setTriggerProperties(string $nr, string $title, string $shape_type, string $coords, string $hl_mode = "", string $hl_class = ""): void
     {
         $tr_node = $this->getTriggerNode($nr);
 
@@ -709,14 +717,18 @@ class ilPCInteractiveImage extends ilPageContent
                 $shape_type,
                 $coords,
                 ilUtil::stripSlashes($title),
-                $nr
+                $nr,
+                $hl_mode,
+                $hl_class
             );
         } else {
             $this->addTriggerArea(
                 $this->getStandardAliasItem(),
                 $shape_type,
                 $coords,
-                $title
+                $title,
+                $hl_mode,
+                $hl_class
             );
         }
     }

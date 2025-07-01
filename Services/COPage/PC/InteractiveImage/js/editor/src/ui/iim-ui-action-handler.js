@@ -203,6 +203,8 @@ export default class IIMUIActionHandler {
       params.title,
       params.shapeType,
       params.coords,
+      params.hl_mode,
+      params.hl_class,
     );
 
     this.client.sendCommand(update_action).then((result) => {

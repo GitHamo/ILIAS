@@ -276,6 +276,19 @@ export default class UI {
     });
   }
 
+  updateTriggerProperties() {
+    const shapeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(1)}"]`);
+    const modeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(2)}"]`).closest('.form-group');
+    const classSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(3)}"]`).closest('.form-group');
+    if (shapeSelect.value === 'Marker') {
+      modeSelect.style.display = 'none';
+      classSelect.style.display = 'none';
+    } else {
+      modeSelect.style.display = '';
+      classSelect.style.display = '';
+    }
+  }
+
   showTriggerProperties(add) {
     const dispatch = this.dispatcher;
     const action = this.actionFactory;
@@ -284,12 +297,20 @@ export default class UI {
     this.setInputValueByName('#copg-iim-trigger-prop-form', this.formInput(0), tr.title);
     if (tr.getShape()) {
       this.setInputValueByName('#copg-iim-trigger-prop-form', this.formInput(1), tr.area.shapeType);
+      this.setInputValueByName('#copg-iim-trigger-prop-form', this.formInput(2), tr.area.hMode);
+      this.setInputValueByName('#copg-iim-trigger-prop-form', this.formInput(3), tr.area.hClass);
     } else {
       this.setInputValueByName('#copg-iim-trigger-prop-form', this.formInput(1), 'Marker');
     }
     this.initTriggerViewControl();
     this.initBackButton();
     model = this.iimModel;
+    const shapeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(1)}"]`);
+    shapeSelect.addEventListener('change', (event) => {
+      this.updateTriggerProperties();
+    });
+    this.updateTriggerProperties();
+
     document.querySelectorAll("form [data-copg-ed-type='form-button']").forEach((button) => {
       const act = button.dataset.copgEdAction;
       button.addEventListener('click', (event) => {
@@ -307,6 +328,8 @@ export default class UI {
               this.getInputValueByName(this.formInput(0)),
               this.getInputValueByName(this.formInput(1)),
               coords,
+              this.getInputValueByName(this.formInput(2)),
+              this.getInputValueByName(this.formInput(3)),
             ));
             break;
           case ACTIONS.E_TRIGGER_DELETE:
@@ -344,6 +367,14 @@ export default class UI {
   setInputValueByName(sel, name, value) {
     const path = `${sel} input[name='${name}'],select[name='${name}']`;
     const el = document.querySelector(path);
+    if (el && el.options) {
+      const options = Array.from(el.options);
+      options.forEach((option) => {
+        if (option.hidden) {
+          el.removeChild(option);
+        }
+      });
+    }
     if (el) {
       el.value = value;
     }
