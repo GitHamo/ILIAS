@@ -521,7 +521,8 @@ class TestScreenGUI
     private function blockUserAfterHavingPassed(): bool
     {
         if ($this->main_settings->getTestBehaviourSettings()->getBlockAfterPassedEnabled()) {
-            return $this->test_passes_selector->hasTestPassedOnce($this->test_session->getActiveId());
+            return $this->test_passes_selector->getLastFinishedPass() >= 0
+                && $this->test_passes_selector->hasTestPassedOnce($this->test_session->getActiveId());
         }
 
         return false;
