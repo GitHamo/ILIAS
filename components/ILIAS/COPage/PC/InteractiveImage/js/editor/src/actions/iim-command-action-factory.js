@@ -39,12 +39,14 @@ export default class IIMCommandActionFactory {
    * @param redirect
    * @return {CommandAction}
    */
-  saveTriggerProperties(triggerNr, title, shapeType, coords) {
+  saveTriggerProperties(triggerNr, title, shapeType, coords, hl_mode, hl_class) {
     return this.clientActionFactory.command(this.COMPONENT, ACTIONS.C_SAVE_TRIGGER_PROPERTIES, {
       trigger_nr: triggerNr,
       title,
       shape_type: shapeType,
       coords,
+      hl_mode,
+      hl_class,
     });
   }
 
