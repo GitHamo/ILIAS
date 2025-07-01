@@ -20589,11 +20589,6 @@ img {
 	border: 0 none;
 }
 
-span.latex {
-	color: green;
-	font-weight: bold;
-}
-
 div.framed {
 	border: 1px solid #9eadba;
 	padding: 0 10px;
@@ -20602,6 +20597,12 @@ div.framed {
 	background-repeat: repeat-x;
 }
 */
+
+span.latex {
+  color: green;
+  font-weight: bold;
+}
+
 div.ilFrame {
   margin-top: -40px;
   margin-left: auto;
