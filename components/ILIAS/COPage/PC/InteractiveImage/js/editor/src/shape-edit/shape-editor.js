@@ -201,7 +201,8 @@ export default class ShapeEditor {
     this.removeAllChilds(svg);
     const cnt = 0;
     this.shapes.forEach((shape) => {
-      shape.addToSvg(svg);
+      const shapeEl = shape.addToSvg(svg);
+      shapeEl.classList.add('copg-iim-hl-mode-Edit');
     });
   }
 }

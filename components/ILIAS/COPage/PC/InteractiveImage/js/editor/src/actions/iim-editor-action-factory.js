@@ -109,12 +109,16 @@ export default class IIMEditorActionFactory {
     title,
     shapeType,
     coords,
+    hl_mode,
+    hl_class,
   ) {
     return this.editorActionFactory.action(this.COMPONENT, ACTIONS.E_TRIGGER_PROPERTIES_SAVE, {
       nr,
       title,
       shapeType,
       coords,
+      hl_mode,
+      hl_class,
     });
   }
 

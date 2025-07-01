@@ -85,6 +85,8 @@ const presentation = (function () {
         clickEl;
       let triggerType; let triggerId; let
         size;
+      let hlMode;
+      let hlClass;
       topContainer = tr.closest('.ilc_page_cont_PageContainer');
       if (!topContainer) {
         topContainer = tr.closest('#il_center_col');
@@ -105,6 +107,8 @@ const presentation = (function () {
         areaDataEl = document.querySelector(`[data-copg-iim-data-type='area'][data-copg-iim-id='${
           iimId}'][data-copg-iim-tr-nr='${triggerNr}']`);
         areaId = areaDataEl.getAttribute('data-copg-iim-area-id');
+        hlMode = areaDataEl.getAttribute('data-copg-iim-hl-mode');
+        hlClass = areaDataEl.getAttribute('data-copg-iim-hl-class');
         areaEl = document.getElementById(areaId);
       } else {
         markerEl = document.querySelector(`[data-copg-iim-data-type='marker'][data-copg-iim-id='${
@@ -122,9 +126,13 @@ const presentation = (function () {
         const area = areaFactory.area(
           areaEl.getAttribute('shape'),
           areaEl.getAttribute('coords'),
+          hlClass,
+          hlMode,
         );
         const shape = area.getShape();
         const shapeEl = shape.addToSvg(svg);
+        shapeEl.classList.add(`copg-iim-hl-mode-${hlMode}`);
+        shapeEl.classList.add(`copg-iim-hl-class-${hlClass}`);
         clickEl = shapeEl;
       }
       if (popupEl && clickEl) {

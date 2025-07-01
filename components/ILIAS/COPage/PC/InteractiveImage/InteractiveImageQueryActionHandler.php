@@ -108,7 +108,6 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
         return new Server\Response($o);
     }
 
-
     /**
      * Get interactive image model
      */
@@ -240,8 +239,8 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
         return $tpl->get();
     }
 
-    public function getBackgroundImage(
-    ): string {
+    public function getBackgroundImage(): string
+    {
 
         if ($this->pc_id !== "") {
             /** @var \ilPCInteractiveImage $pc */
@@ -287,23 +286,38 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
 
     protected function getTriggerPropertiesFormAdapter(): \ILIAS\Repository\Form\FormAdapterGUI
     {
+        $lng = $this->lng;
         return $this->gui->form(null, "#")
-                          ->text(
-                              "title",
-                              $this->lng->txt("title")
-                          )
-                          ->select(
-                              "shape",
-                              $this->lng->txt("cont_shape"),
-                              [
-                                  "Rect" => $this->lng->txt("cont_Rect"),
-                                  "Circle" => $this->lng->txt("cont_Circle"),
-                                  "Poly" => $this->lng->txt("cont_Poly"),
-                                  "Marker" => $this->lng->txt("cont_marker")
-                              ],
-                              "",
-                              "Rect"
-                          )->required();
+                         ->text(
+                             "title",
+                             $this->lng->txt("title")
+                         )
+                         ->select(
+                             "shape",
+                             $this->lng->txt("cont_shape"),
+                             [
+                                 "Rect" => $this->lng->txt("cont_Rect"),
+                                 "Circle" => $this->lng->txt("cont_Circle"),
+                                 "Poly" => $this->lng->txt("cont_Poly"),
+                                 "Marker" => $this->lng->txt("cont_marker")
+                             ],
+                             "",
+                             "Rect"
+                         )->required()
+                        ->select(
+                            "hl_mode",
+                            $this->lng->txt("cont_highlight_mode"),
+                            \ilMapArea::getAllHighlightModes(),
+                            "",
+                            ""
+                        )->required()
+                        ->select(
+                            "hl_class",
+                            $this->lng->txt("cont_highlight_class"),
+                            \ilMapArea::getAllHighlightClasses(),
+                            "",
+                            \ilMapArea::HLCL_ACCENTED
+                        )->required();
     }
 
     protected function getMessageArea(): string
@@ -379,10 +393,10 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
                              "size",
                              $this->lng->txt("cont_iim_size"),
                              [
-                        "sm" => $this->lng->txt("cont_iim_sm"),
-                        "md" => $this->lng->txt("cont_iim_md"),
-                        "lg" => $this->lng->txt("cont_iim_lg")
-                    ],
+                    "sm" => $this->lng->txt("cont_iim_sm"),
+                    "md" => $this->lng->txt("cont_iim_md"),
+                    "lg" => $this->lng->txt("cont_iim_lg")
+                ],
                              "",
                              "md"
                          )->required();
@@ -446,11 +460,13 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
             null,
             "InteractiveImage"
         ));
-        $content .= $this->section($this->ui_wrapper->getRenderedListingPanelTemplate($this->lng->txt("cont_iim_overview"), true));
+        $content .= $this->section($this->ui_wrapper->getRenderedListingPanelTemplate(
+            $this->lng->txt("cont_iim_overview"),
+            true
+        ));
 
         return $content;
     }
-
 
     protected function getBackgroundProperties(): string
     {
@@ -464,7 +480,10 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
         $content .= $this->getHeading($this->lng->txt("cont_iim_background_image"), true);
         $content .= $this->getMessageArea();
         $content .= $this->ui_wrapper->getRenderedAdapterForm(
-            $this->getPCInteractiveImageGUI()->getBackgroundPropertiesFormAdapter([get_class($this->page_gui), \ilPageEditorGUI::class, \ilPCInteractiveImageGUI::class]),
+            $this->getPCInteractiveImageGUI()->getBackgroundPropertiesFormAdapter([get_class($this->page_gui),
+                                                                                   \ilPageEditorGUI::class,
+                                                                                   \ilPCInteractiveImageGUI::class
+            ]),
             [["InteractiveImage", "component.save", $this->lng->txt("save")]]
         );
 
@@ -497,7 +516,10 @@ class InteractiveImageQueryActionHandler implements Server\QueryActionHandler
     protected function getOverlayUploadFormAdapter(): \ILIAS\Repository\Form\FormAdapterGUI
     {
         return $this->getPCInteractiveImageGUI()
-                    ->getOverlayUploadFormAdapter([get_class($this->page_gui), \ilPageEditorGUI::class, \ilPCInteractiveImageGUI::class]);
+                    ->getOverlayUploadFormAdapter([get_class($this->page_gui),
+                                                   \ilPageEditorGUI::class,
+                                                   \ilPCInteractiveImageGUI::class
+                    ]);
     }
 
     protected function getOverlayUpload(): string
