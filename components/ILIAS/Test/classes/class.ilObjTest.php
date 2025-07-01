@@ -7342,7 +7342,9 @@ class ilObjTest extends ilObject
             $percentage = ($max <= 0.0 || $reached <= 0.0) ? 0 : ($reached / $max) * 100.0;
 
             $mark = $this->getMarkSchema()->getMatchingMark($percentage);
-            $is_passed = $pass <= $test_pass_result_row['last_finished_pass'] && $mark->getPassed();
+            $is_passed = $test_pass_result_row['last_finished_pass'] !== null
+                && $pass <= $test_pass_result_row['last_finished_pass']
+                && $mark->getPassed();
 
             $user_test_result_update_callback = function () use ($active_id, $pass, $max, $reached, $is_passed, $mark) {
                 $passed_once_before = 0;
