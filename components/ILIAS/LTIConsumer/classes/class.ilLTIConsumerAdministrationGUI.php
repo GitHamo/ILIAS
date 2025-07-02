@@ -167,7 +167,7 @@ class ilLTIConsumerAdministrationGUI
 
 
         $table = $this->buildProviderTable($this, self::CMD_SHOW_GLOBAL_PROVIDER);
-        
+
         // Only set modification commands if user has write permission
         if ($this->hasWritePermission) {
             $table->setEditProviderCmd(self::CMD_SHOW_GLOBAL_PROVIDER_FORM);
@@ -475,7 +475,7 @@ class ilLTIConsumerAdministrationGUI
         $providerList->load();
 
         $table = $this->buildProviderTable($this, self::CMD_SHOW_USER_PROVIDER);
-        
+
         // Only set modification commands if user has write permission
         if ($this->hasWritePermission) {
             $table->setEditProviderCmd(self::CMD_SHOW_USER_PROVIDER_FORM);
