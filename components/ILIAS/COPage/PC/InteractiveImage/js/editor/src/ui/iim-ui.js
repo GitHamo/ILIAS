@@ -278,8 +278,8 @@ export default class UI {
 
   updateTriggerProperties() {
     const shapeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(1)}"]`);
-    const modeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(2)}"]`).closest('.form-group');
-    const classSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(3)}"]`).closest('.form-group');
+    const modeSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(2)}"]`).closest('.c-input');
+    const classSelect = document.querySelector(`#copg-iim-trigger-prop-form [name="${this.formInput(3)}"]`).closest('.c-input');
     if (shapeSelect.value === 'Marker') {
       modeSelect.style.display = 'none';
       classSelect.style.display = 'none';
