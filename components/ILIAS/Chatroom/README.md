@@ -78,7 +78,7 @@ Dependencies can be installed by the following command:
 ```bash
 npm clean-install --omit=dev --ignore-scripts
 ```
-In case you run the ILIAS chat server in a different directory, make sure you install/manage dependencies before copying the entire chat directory (`ILIAS / Modules / Chatroom / chat`) (see [Server Configuration](#server-configuration)).
+In case you run the ILIAS chat server in a different directory, make sure you install/manage dependencies before copying the entire chat directory (`components / ILIAS / Chatroom / chat`) (see [Server Configuration](#server-configuration)).
 
 ## ILIAS Configuration
 
