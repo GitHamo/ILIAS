@@ -60,7 +60,7 @@ As of ILIAS 9 the node module dependencies for the ILIAS chat server are no long
 The node module dependencies should be managed by [npm](https://www.npmjs.com/):
 
 ```bash
-cd [ILIAS_ROOT_DIRECTORY]/components/ILIAS/Chatroom/chat
+cd [ILIAS_ROOT_DIRECTORY]/Modules/Chatroom/chat
 ```
 
 ### Development
