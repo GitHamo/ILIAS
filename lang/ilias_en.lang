@@ -9157,6 +9157,7 @@ etal#:#notification_talks_subject#:#Invitation: %s
 etal#:#notification_talks_subject_update#:#Update: %s
 etal#:#notification_talks_updated#:#The following talk appointments have been changed.
 etal#:#pending_talks_warning#:#The following pending talk appointments will be replaced:
+etal#:#tala_no_content_without_admin_info#:#The Administrator role is required for access to Talk Templates.
 etal#:#talk_serial#:#Talk Serial
 etal#:#tals_add#:#Add Talks
 etal#:#tals_new#:#New Talks
