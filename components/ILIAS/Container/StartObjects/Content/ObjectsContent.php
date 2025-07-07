@@ -16,25 +16,49 @@
  *
  *********************************************************************/
 
+namespace ILIAS\Container\StartObjects\Content;
+
+use ILIAS\UI\Factory as UIFactory;
+use ILIAS\UI\Renderer as UIRenderer;
+use ILIAS\UI\Component\Panel\Sub as SubPanel;
+use ilObjUser;
+use ilObjectDataCache;
+use ilAccessHandler;
+use ilObjectDefinition;
+use ilLanguage;
+use ilCtrl;
+use ilContainerStartObjects;
+use ilContainerGUI;
+use ilFavouritesManager;
+use ilCourseLMHistory;
+use ilLink;
+use ilObjectListGUIPreloader;
+use ilObjectListGUI;
+
 /**
- * ilContainerStartObjectsContentTableGUI
  * @author Jörg Lützenkirchen <luetzenkirchen@leifos.com>
  */
-class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
+class ObjectsContent
 {
     protected ilObjUser $user;
     protected ilObjectDataCache $obj_data_cache;
     protected ilAccessHandler $access;
     protected ilObjectDefinition $obj_definition;
+    protected ilLanguage $lng;
+    protected ilCtrl $ctrl;
+    protected UIFactory $ui_factory;
+    protected UIRenderer $ui_renderer;
     protected ilContainerStartObjects $start_object;
+    protected ilContainerGUI $parent_obj;
     protected array $item_list_guis;
     protected bool $enable_desktop;
     protected ilFavouritesManager $fav_manager;
 
     public function __construct(
-        ?object $a_parent_obj,
-        string $a_parent_cmd,
+        ilContainerGUI $a_parent_obj,
         ilContainerStartObjects $a_start_objects,
+        UIFactory $ui_factory,
+        UIRenderer $ui_renderer,
         bool $a_enable_desktop = true
     ) {
         global $DIC;
@@ -43,6 +67,8 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
         $this->obj_data_cache = $DIC["ilObjDataCache"];
         $this->access = $DIC->access();
         $this->obj_definition = $DIC["objDefinition"];
+        $this->ui_factory = $ui_factory;
+        $this->ui_renderer = $ui_renderer;
         $lng = $DIC->language();
         $ilCtrl = $DIC->ctrl();
 
@@ -50,30 +76,14 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
         $this->lng->loadLanguageModule('rep');
         $this->ctrl = $ilCtrl;
 
+        $this->parent_obj = $a_parent_obj;
         $this->start_object = $a_start_objects;
         $this->enable_desktop = $a_enable_desktop;
 
-        parent::__construct($a_parent_obj, $a_parent_cmd);
-
-        $this->addColumn($this->lng->txt('crs_nr'), 'nr');
-        $this->addColumn($this->lng->txt('title'), 'title');
-        $this->addColumn($this->lng->txt('crs_objective_accomplished'), 'status');
-        $this->addColumn($this->lng->txt('actions'), '');
-
-        $this->setTitle($this->lng->txt('crs_table_start_objects'));
-        $this->setDescription($this->lng->txt('crs_info_start'));
-
-        $this->setRowTemplate("tpl.start_objects_content_row.html", "components/ILIAS/Container");
-        $this->setFormAction($this->ctrl->getFormAction($a_parent_obj));
-
-        $this->setDefaultOrderField('nr');
-        $this->setDefaultOrderDirection('asc');
         $this->fav_manager = new ilFavouritesManager();
-
-        $this->getItems();
     }
 
-    protected function getItems(): void
+    protected function getData(): array
     {
         $ilUser = $this->user;
         $ilObjDataCache = $this->obj_data_cache;
@@ -102,21 +112,30 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
 
             // add/remove desktop
             $actions = [];
+
+            if (isset($continue_data[$ref_id])) {
+                $url = ilLink::_getLink($ref_id, '', [
+                    'obj_id',
+                    $continue_data[$ref_id]['lm_page_id']
+                ]);
+                $actions[$url] = $this->lng->txt('continue_work');
+            }
+
             if ($this->enable_desktop) {
                 // add to desktop link
                 if (!$this->fav_manager->ifIsFavourite($ilUser->getId(), $ref_id)) {
                     if ($ilAccess->checkAccess('read', '', $ref_id)) {
-                        $this->ctrl->setParameter($this->getParentObject(), 'item_ref_id', $ref_id);
-                        $this->ctrl->setParameter($this->getParentObject(), 'item_id', $ref_id);
-                        $this->ctrl->setParameter($this->getParentObject(), 'type', $type);
-                        $url = $this->ctrl->getLinkTarget($this->getParentObject(), 'addToDesk');
+                        $this->ctrl->setParameter($this->parent_obj, 'item_ref_id', $ref_id);
+                        $this->ctrl->setParameter($this->parent_obj, 'item_id', $ref_id);
+                        $this->ctrl->setParameter($this->parent_obj, 'type', $type);
+                        $url = $this->ctrl->getLinkTarget($this->parent_obj, 'addToDesk');
                         $actions[$url] = $this->lng->txt("rep_add_to_favourites");
                     }
                 } else {
-                    $this->ctrl->setParameter($this->getParentObject(), 'item_ref_id', $ref_id);
-                    $this->ctrl->setParameter($this->getParentObject(), 'item_id', $ref_id);
-                    $this->ctrl->setParameter($this->getParentObject(), 'type', $type);
-                    $url = $this->ctrl->getLinkTarget($this->getParentObject(), 'removeFromDesk');
+                    $this->ctrl->setParameter($this->parent_obj, 'item_ref_id', $ref_id);
+                    $this->ctrl->setParameter($this->parent_obj, 'item_id', $ref_id);
+                    $this->ctrl->setParameter($this->parent_obj, 'type', $type);
+                    $url = $this->ctrl->getLinkTarget($this->parent_obj, 'removeFromDesk');
                     $actions[$url] = $this->lng->txt("rep_remove_from_favourites");
                 }
             }
@@ -135,9 +154,9 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
             */
 
             if ($accomplished === 'accomplished') {
-                $icon = ilUtil::getImagePath("standard/icon_ok.svg");
+                $icon = "assets/images/standard/icon_ok.svg";
             } else {
-                $icon = ilUtil::getImagePath("standard/icon_not_ok.svg");
+                $icon = "assets/images/standard/icon_not_ok.svg";
             }
 
             $items[] = [
@@ -161,7 +180,7 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
         $preloader->preload();
         unset($preloader);
 
-        $this->setData($items);
+        return $items;
     }
 
     protected function getItemListGUI(string $a_type): ?ilObjectListGUI
@@ -239,22 +258,49 @@ class ilContainerStartObjectsContentTableGUI extends ilTable2GUI
         return "";
     }
 
-    protected function fillRow(array $a_set): void
+    protected function getItemAsSubPanel(array $item): SubPanel
     {
-        $this->tpl->setVariable("VAL_NR", $a_set["nr"]);
+        $status_icon = $this->ui_factory->symbol()->icon()->custom(
+            $item['status_img'],
+            $item['status']
+        );
 
-        // begin-patch lok
-        $this->tpl->setVariable("TXT_TITLE", $this->getListItem($a_set));
-        $this->tpl->setVariable("TXT_STATUS", $a_set["status"]);
-        $this->tpl->setVariable("IMG_STATUS", $a_set["status_img"]);
-
-        if ($a_set["actions"]) {
-            $this->tpl->setCurrentBlock("link");
-            foreach ($a_set["actions"] as $url => $caption) {
-                $this->tpl->setVariable("LINK_HREF", $url);
-                $this->tpl->setVariable("LINK_NAME", $caption);
-            }
-            $this->tpl->parseCurrentBlock();
+        $actions = [];
+        foreach ($item['actions'] as $url => $caption) {
+            $actions[] = $this->ui_factory->button()->shy($caption, $url);
         }
+
+        $secondary_info = $this->ui_factory->listing()->property()->withItems([
+            [$this->lng->txt('crs_objective_accomplished'), $status_icon],
+            [$this->lng->txt('actions'), $this->ui_renderer->render($actions)]
+        ]);
+
+        return $this->ui_factory->panel()->sub(
+            '',
+            $this->ui_factory->legacy()->content($this->getListItem($item))
+        )->withFurtherInformation(
+            $this->ui_factory->panel()->secondary()->legacy(
+                '',
+                $this->ui_factory->legacy()->content($this->ui_renderer->render($secondary_info))
+            )
+        );
+    }
+
+    public function render(): string
+    {
+        $info = $this->ui_factory->panel()->sub(
+            '',
+            $this->ui_factory->legacy()->content($this->lng->txt('crs_info_start'))
+        );
+        $items = [$info];
+        foreach ($this->getData() as $datum) {
+            $items[] = $this->getItemAsSubPanel($datum);
+        }
+
+        $panel = $this->ui_factory->panel()->standard(
+            $this->lng->txt('crs_table_start_objects'),
+            $items
+        );
+        return $this->ui_renderer->render($panel);
     }
 }

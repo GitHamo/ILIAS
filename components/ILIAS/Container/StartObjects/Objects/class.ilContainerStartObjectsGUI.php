@@ -17,6 +17,10 @@
  *********************************************************************/
 
 use ILIAS\Container\StandardGUIRequest;
+use ILIAS\UI\Factory as UIFactory;
+use ILIAS\Repository\Table\TableAdapterGUI;
+use ILIAS\Container\StartObjects\Objects\Table\ObjectsBuilder as ObjectsTableBuilder;
+use ILIAS\Container\StartObjects\Objects\Table\PossibleObjectsBuilder as PossibleObjectsTableBuilder;
 
 /**
  * Class ilContainerStartObjectsGUI
@@ -33,6 +37,7 @@ class ilContainerStartObjectsGUI
     protected ilAccessHandler $access;
     protected ilSetting $settings;
     protected ilToolbarGUI $toolbar;
+    protected UIFactory $ui_factory;
     protected ilObject $object;
     protected ilContainerStartObjects $start_object;
     protected StandardGUIRequest $request;
@@ -46,6 +51,7 @@ class ilContainerStartObjectsGUI
         $this->access = $DIC->access();
         $this->settings = $DIC->settings();
         $this->toolbar = $DIC->toolbar();
+        $this->ui_factory = $DIC->ui()->factory();
         $ilCtrl = $DIC->ctrl();
         $ilTabs = $DIC->tabs();
         $lng = $DIC->language();
@@ -163,17 +169,33 @@ class ilContainerStartObjectsGUI
             );
         }
 
-        $table = new ilContainerStartObjectsTableGUI($this, 'listStructure', $this->start_object);
-        $this->tpl->setContent($table->getHTML());
+        $table = $this->buildObjectsTable();
+        if ($table->handleCommand()) {
+            return;
+        }
+
+        $this->tpl->setContent($table->render());
+    }
+
+    protected function buildObjectsTable(): TableAdapterGUI
+    {
+        $builder = new ObjectsTableBuilder(
+            $this,
+            'listStructure',
+            $this->start_object,
+            $this->lng,
+            $this->ui_factory
+        );
+        return $builder->getTable();
     }
 
     protected function saveSortingObject(): void
     {
-        $pos = $this->request->getStartObjPositions();
+        $table = $this->buildObjectsTable();
+        $pos = $table->getData();
         if (is_array($pos)) {
-            asort($pos);
             $counter = 0;
-            foreach (array_keys($pos) as $start_id) {
+            foreach ($pos as $start_id) {
                 $counter += 10;
                 $this->start_object->setObjectPos($start_id, $counter);
             }
@@ -184,9 +206,12 @@ class ilContainerStartObjectsGUI
         $this->ctrl->redirect($this, "listStructure");
     }
 
-    protected function askDeleteStarterObject(): void
+    /**
+     * @param int[] $start_obj_ids
+     */
+    public function askDeleteStarter(array $start_obj_ids): void
     {
-        if (count($this->request->getStartObjIds()) === 0) {
+        if (count($start_obj_ids) === 0) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('select_one'), true);
             $this->ctrl->redirect($this, "listStructure");
         }
@@ -203,7 +228,7 @@ class ilContainerStartObjectsGUI
 
         // list objects that should be deleted
         $all = $this->start_object->getStartObjects();
-        foreach ($this->request->getStartObjIds() as $starter_id) {
+        foreach ($start_obj_ids as $starter_id) {
             $obj_id = ilObject::_lookupObjId($all[$starter_id]["item_ref_id"]);
             $title = ilObject::_lookupTitle($obj_id);
             $icon = ilObject::_getIcon($obj_id, "tiny");
@@ -236,21 +261,40 @@ class ilContainerStartObjectsGUI
         $this->checkPermission('write');
         $this->setTabs();
 
-        $table = new ilContainerStartObjectsTableGUI($this, 'selectStarter', $this->start_object);
-        $this->tpl->setContent($table->getHTML());
+        $table = $this->buildPossibleObjectsTable();
+        if ($table->handleCommand()) {
+            return;
+        }
+
+        $this->tpl->setContent($table->render());
     }
 
-    protected function addStarterObject(): void
+    protected function buildPossibleObjectsTable(): TableAdapterGUI
+    {
+        $builder = new PossibleObjectsTableBuilder(
+            $this,
+            'selectStarter',
+            $this->start_object,
+            $this->lng,
+            $this->ui_factory
+        );
+        return $builder->getTable();
+    }
+
+    /**
+     * @param int[] $selected_ref_ids
+     */
+    public function addStarter(array $selected_ref_ids): void
     {
         $this->checkPermission('write');
 
-        if (count($this->request->getStartObjIds()) === 0) {
+        if (count($selected_ref_ids) === 0) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('select_one'), true);
             $this->ctrl->redirect($this, "selectStarter");
         }
 
         $added = 0;
-        foreach ($this->request->getStartObjIds() as $item_ref_id) {
+        foreach ($selected_ref_ids as $item_ref_id) {
             if (!$this->start_object->exists($item_ref_id)) {
                 ++$added;
                 $this->start_object->add($item_ref_id);

@@ -16,6 +16,10 @@
  *
  *********************************************************************/
 
+use ILIAS\UI\Factory as UIFactory;
+use ILIAS\UI\Renderer as UIRenderer;
+use ILIAS\Container\StartObjects\Content\ObjectsContent;
+
 /**
  * Class ilContainerStartObjectsContentGUI
  *
@@ -28,6 +32,8 @@ class ilContainerStartObjectsContentGUI
     protected ilSetting $settings;
     protected ilObjUser $user;
     protected ilContainerStartObjects $start_object;
+    protected UIFactory $ui_factory;
+    protected UIRenderer $ui_renderer;
     protected bool $enable_desktop;
     protected ilContainerGUI $parent_gui;
     protected ilContainer $parent_obj;
@@ -44,6 +50,8 @@ class ilContainerStartObjectsContentGUI
         $this->lng = $DIC->language();
         $this->settings = $DIC->settings();
         $this->user = $DIC->user();
+        $this->ui_factory = $DIC->ui()->factory();
+        $this->ui_renderer = $DIC->ui()->renderer();
         $this->parent_gui = $a_gui;
         $this->parent_obj = $a_parent_obj;
         $this->start_object = new ilContainerStartObjects(
@@ -74,15 +82,16 @@ class ilContainerStartObjectsContentGUI
 
         $lng->loadLanguageModule("crs");
 
-        $tbl = new ilContainerStartObjectsContentTableGUI(
+        $tbl = new ObjectsContent(
             $this->parent_gui,
-            "",
             $this->start_object,
+            $this->ui_factory,
+            $this->ui_renderer,
             $this->enable_desktop
         );
         $tpl->setContent(
             $this->getPageHTML() .
-            $tbl->getHTML()
+            $tbl->render()
         );
     }
 
