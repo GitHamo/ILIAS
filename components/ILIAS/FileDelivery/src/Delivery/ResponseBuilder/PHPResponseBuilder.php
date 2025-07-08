@@ -120,7 +120,7 @@ class PHPResponseBuilder implements ResponseBuilder
             fseek($fh, $start);
             $buffer_size = 8048 * 10;
             while (!feof($fh) && $length > 0) {
-                $chunk_size_requested = min($buffer_size, $end - $star);
+                $chunk_size_requested = min($buffer_size, $end - $start);
                 $content = fread($fh, $length);
                 if ($content === false) {
                     break;
@@ -129,6 +129,7 @@ class PHPResponseBuilder implements ResponseBuilder
                 $response->getBody()->write($content);
             }
         } else {
+            $length = 1024 * 1024 * 10; // 10 MB per chunk
             $content = stream_get_contents($fh, $length, $start);
             $length = strlen($content);
             $response = $response->withBody(
