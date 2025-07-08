@@ -860,7 +860,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 $question_gui->setObject($question);
                 $question_gui->setQuestionTabs();
 
-                $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
+                $this->addQuestionTitleToObjectTitle($question->getTitle());
 
                 $gui = new ilAssQuestionHintsGUI($question_gui);
 
@@ -885,7 +885,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 $question_gui->setObject($question);
                 $question_gui->setQuestionTabs();
 
-                $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
+                $this->addQuestionTitleToObjectTitle($question->getTitle());
 
                 if ($this->getTestObject()->evalTotalPersons() !== 0) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('question_is_part_of_running_test'), true);
@@ -1042,7 +1042,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
         $question_gui ??= assQuestion::instantiateQuestionGUI($this->fetchAuthoringQuestionIdParameter());
 
-        $this->addQuestionTitleToObjectTitle($question_gui->getObject()->getTitleForHTMLOutput());
+        $this->addQuestionTitleToObjectTitle($question_gui->getObject()->getTitle());
 
         if (!$this->getTestObject()->isRandomTest() && $nr_of_participants_with_results === 0) {
             $gui->setPrimaryCmd(
@@ -1107,7 +1107,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
             $question_gui->setContextAllowsSyncToPool(true);
             $question_gui->setQuestionTabs();
 
-            $this->addQuestionTitleToObjectTitle($question->getTitleForHTMLOutput());
+            $this->addQuestionTitleToObjectTitle($question->getTitle());
 
             $target = strpos($cmd, 'Return') === false ? 'stay' : 'return';
 
