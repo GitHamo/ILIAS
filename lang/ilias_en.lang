@@ -4299,7 +4299,7 @@ common#:#grp_dismiss_myself#:#Are you sure you want to unsubscribe from this gro
 common#:#grp_edit#:#Edit Group
 common#:#grp_err_administrator_required#:#Member could not be removed, at least one administrator per group is required !
 common#:#grp_header_edit_members#:#Edit members
-common#:#grp_list_members#:#List members
+common#:#grp_list_members#:#List Members
 common#:#grp_list_reg#:#Registration
 common#:#grp_list_reg_end#:#Registration End
 common#:#grp_list_reg_limit_full#:#No places left
@@ -4307,7 +4307,7 @@ common#:#grp_list_reg_limit_places#:#Free places
 common#:#grp_list_reg_noreg#:#No Registration Possible
 common#:#grp_list_reg_period#:#Registration Period
 common#:#grp_list_reg_start#:#Registration Begin
-common#:#grp_list_users#:#List users
+common#:#grp_list_users#:#List Users
 common#:#grp_mem_change_status#:#Change Participant Status
 common#:#grp_mem_send_mail#:#Send member a mail
 common#:#grp_members_gallery#:#Group Members Gallery
@@ -4631,7 +4631,7 @@ common#:#mail_not_sent#:#Mail not sent!
 common#:#mail_search_no#:#No entries found.
 common#:#mail_select_one#:#You must select one mail
 common#:#mail_send_error#:#Error sending mail
-common#:#mail_sent#:#Mail sent!
+common#:#mail_sent#:#Mail sent.
 common#:#mail_settings#:#Mail Settings
 common#:#mail_to_global_roles_not_allowed#:#%1$s (it is not allowed to send mails to global roles)
 common#:#mail_z_local#:#User Folders
@@ -5118,7 +5118,7 @@ common#:#obj_sess#:#Session
 common#:#obj_sess_duplicate#:#Copy Session
 common#:#obj_skmg#:#Competence Management
 common#:#obj_skmg_desc#:#Manage competences and competence categories.
-common#:#obj_spl#:#Question Pool Survey
+common#:#obj_spl#:#Question Pool for Surveys
 common#:#obj_spl_select#:#-- Please select one question pool survey --
 common#:#obj_st#:#Chapter
 common#:#obj_sty#:#Style
@@ -5229,7 +5229,7 @@ common#:#objs_rwik#:#ECS Wikis
 common#:#objs_sahs#:#SCORM Learning Modules
 common#:#objs_sess#:#Sessions
 common#:#objs_skee#:#Competence Trees
-common#:#objs_spl#:#Question Pools Survey
+common#:#objs_spl#:#Question Pools for Surveys
 common#:#objs_st#:#Chapters
 common#:#objs_svy#:#Surveys
 common#:#objs_tala#:#Talk Templates
@@ -5587,7 +5587,7 @@ common#:#select_file#:#Select File
 common#:#select_files_from_computer#:#Select Files
 common#:#select_max_one_item#:#Please select one item only
 common#:#select_object_to_link#:#Please select the object which you want to link
-common#:#select_one#:#Please select one item.
+common#:#select_one#:#Please make a selection.
 common#:#select_question_pool_info#:#As long as the import file contains questions, these questions will be imported to the selected questionpool as well.
 common#:#select_questionpool#:#Insert questions into
 common#:#selected#:#Selected
@@ -5596,7 +5596,7 @@ common#:#selected_items#:#Personal Items
 common#:#selected_items_back#:#Back to Personal Items
 common#:#selected_languages_updated#:#The selected languages have been updated (if installed):
 common#:#send#:#Send
-common#:#send_mail#:#Send mail
+common#:#send_mail#:#Send Mail
 common#:#sender#:#Sender
 common#:#sent#:#Sent
 common#:#sequence#:#Sequence
@@ -5715,10 +5715,10 @@ common#:#sorting_manual_header#:#Manually
 common#:#sorting_save#:#Save Order
 common#:#sorting_title_header#:#Titles in Alphabetical Order
 common#:#spacer#:#Spacer
-common#:#spl#:#Question Pool Survey
-common#:#spl_add#:#Add Question Pool Survey
-common#:#spl_import#:#Import Question Pool Survey
-common#:#spl_new#:#New Question Pool Survey
+common#:#spl#:#Question Pool for Surveys
+common#:#spl_add#:#Add Question Pool for Surveys
+common#:#spl_import#:#Import Question Pool for Surveys
+common#:#spl_new#:#New Question Pool for Surveys
 common#:#ssl#:#SSL (HTTPS)
 common#:#standard_fields#:#Standard Fields
 common#:#startpage#:#ILIAS Login Page
@@ -5744,11 +5744,11 @@ common#:#sure_delete_selected_users#:#Are you sure you want to delete the select
 common#:#survey_defaults#:#Default Settings for Surveys
 common#:#survey_unlimited_invitation#:#Unlimited Invitation
 common#:#svy#:#Survey
-common#:#svy_add#:#Add survey
-common#:#svy_finished#:#You have completed the survey
+common#:#svy_add#:#Add Survey
+common#:#svy_finished#:#You have completed this survey
 common#:#svy_new#:#New survey
-common#:#svy_not_finished#:#The survey has not been completed yet
-common#:#svy_not_started#:#You did not take part in this survey
+common#:#svy_not_finished#:#You have started this survey but not yet completed it
+common#:#svy_not_started#:#You have not yet taken part in this survey
 common#:#svy_run#:#Run
 common#:#svy_warning_survey_not_complete#:#The survey is incomplete
 common#:#switch_language#:#Switch Language
@@ -9762,9 +9762,9 @@ exp#:#exp_html#:#HTML
 exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for version %s exists.
 exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
-exp#:#exp_print_pdf_info#:#To create a PDF please use the "Print to PDF" target as soon as the print view is presented.
+exp#:#exp_print_pdf_info#:#To create a PDF please select "Print to PDF" in the print modal that appears after clicking on ‘Print View’.
 exp#:#exp_public_access_status#:#Available on ‘Info’-tab
-exp#:#exp_really_delete#:#Do you really want to delete these export files?
+exp#:#exp_really_delete#:#Are you sure you want to delete the following export file(s)?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML
 exp#:#export_created#:#A new export file has been created.
@@ -11535,7 +11535,7 @@ mail#:#mail_filter_show_without_attachment#:#Show Without Attachment
 mail#:#mail_filter_subject#:#Subject
 mail#:#mail_filter_txt#:#Filter messages by
 mail#:#mail_first_email#:#First E-Mail Address
-mail#:#mail_firstname_last_name_superior#:#Comma separated list for firstname and lastname of the user's superior(s)
+mail#:#mail_firstname_last_name_superior#:#Comma separated list of first name and last name of user's superior(s)
 mail#:#mail_folder_created#:#New folder successfully created.
 mail#:#mail_folder_deleted#:#Folder deleted.
 mail#:#mail_folder_exists#:#A folder with this name already exists.
@@ -14585,7 +14585,7 @@ rbac#:#rbac_create_rolt#:#Create new Role Template
 rbac#:#rbac_create_sahs#:#Create SCORM Learning Module
 rbac#:#rbac_create_sess#:#Create Session
 rbac#:#rbac_create_skee#:#Create Competence Tree
-rbac#:#rbac_create_spl#:#Create Question Pool Survey
+rbac#:#rbac_create_spl#:#Create Question Pool for Surveys
 rbac#:#rbac_create_svy#:#Create Survey
 rbac#:#rbac_create_tst#:#Create Test
 rbac#:#rbac_create_usr#:#User is allowed to create user accounts
@@ -14800,12 +14800,12 @@ rbac#:#svy_delete#:#User can move or delete survey
 rbac#:#svy_edit_learning_progress#:#User can edit learning progress settings
 rbac#:#svy_edit_permission#:#User can change permission settings
 rbac#:#svy_invite#:#User can invite others to a survey
-rbac#:#svy_read#:#User can participate at a survey
+rbac#:#svy_read#:#User can participate in a survey
 rbac#:#svy_read_learning_progress#:#User can view learning progress of other users
-rbac#:#svy_read_results#:#User has access to survey results of others
+rbac#:#svy_read_results#:#User has access to the survey results of other users
 rbac#:#svy_visible#:#Survey is visible
 rbac#:#svy_write#:#User can edit content and settings of survey
-rbac#:#svyf_edit_permission#:#User change permission settings in Survey administration
+rbac#:#svyf_edit_permission#:#User can change permission settings in Survey administration
 rbac#:#svyf_read#:#User has read access to Survey administration
 rbac#:#svyf_visible#:#Survey administration is visible
 rbac#:#svyf_write#:#Edit settings in Survey administration
@@ -16737,55 +16737,55 @@ survey#:#survey_reminder_subject#:#Survey "%s" – Don’t forget to take part!
 survey#:#survey_remove_competence#:#Remove Competence
 survey#:#survey_results_anonymization#:#Privacy
 survey#:#survey_results_anonymized#:#Without Names / Anonymous Survey
-survey#:#survey_results_anonymized_info#:#In the tab ‘Results’ participants' names are replaced by codes. Users having access to this tab cannot attribute answers to named participants but only to user ‘iTXaF’ (example).
-survey#:#survey_results_finished#:#Survey finished
+survey#:#survey_results_anonymized_info#:#Participants remain anonymous. Depending on global settings, the names of participants will either be replaced by the label ‘Anonymous’ or by individual codes. In the latter case users who have access to the ‘Results’ tab will not be able to attribute any answers to named participants, but only to codes, for example ‘iTXaF’.
+survey#:#survey_results_finished#:#Survey Finished
 survey#:#survey_results_not_started#:#Survey not started
 survey#:#survey_results_personalized#:#With Names
-survey#:#survey_results_personalized_info#:#In the tab ‘Results’ the names of the participants and their respective answers are listed. Users having full access to this tab can inspect who has provided which answer. Even users with limited access to the tab may deduce given answers, if the number of participants is low.
+survey#:#survey_results_personalized_info#:#The names of the participants and the answers they have given are listed in the ‘Results’ tab. Users who have full access to this tab will be able to see this data. If the number of participants is low, even users with limited access to the tab may be able to attribute answers to specific participants.
 survey#:#survey_results_started#:#Survey started
 survey#:#survey_show_blocktitle#:#Show Block Title
-survey#:#survey_show_blocktitle_description#:#If activated the block title will be shown in the survey.
+survey#:#survey_show_blocktitle_description#:#Show the title of the block in the survey.
 survey#:#survey_skill#:#Competence
 survey#:#survey_skill_assign#:#Question/Competence Assignment
 survey#:#survey_skill_level#:#Competence Level
 survey#:#survey_skill_max_scale_points#:#Max. Scale Points
 survey#:#survey_skill_nr_q#:#Number of Questions
 survey#:#survey_skill_thresholds#:#Competence Thresholds
-survey#:#survey_start#:#Go To Start Page
+survey#:#survey_start#:#Return to Start Page
 survey#:#survey_sum_of_means#:#Sum of Arithm. Means per Question
 survey#:#survey_sure_delete_constraint#:#Are you sure you want to delete the routing rule "%1$s" for the question "%2$s"?
-survey#:#survey_sure_delete_questions#:#Are you sure that you want to delete the following questions or headings?
-survey#:#survey_sync_insufficient_permissions#:#Insufficient Permissions
+survey#:#survey_sure_delete_questions#:#Are you sure that you want to delete the following questions and any associated headings?
+survey#:#survey_sync_insufficient_permissions#:#Insufficient Permissions.
 survey#:#survey_sync_question_copies#:#Sync Question Copies
-survey#:#survey_sync_question_copies_info#:#The selected questions will be replaced with the current pool version.
-survey#:#survey_sync_success#:#The selected questions were updated.
+survey#:#survey_sync_question_copies_info#:#Please select the instances of the question which should be replaced with the current pool version.
+survey#:#survey_sync_success#:#The selected questions have been updated.
 survey#:#survey_up_to_x_points#:#Up to x points
-survey#:#survey_use_start_button#:#You must enter the survey using the start button!
-survey#:#svy_activation_limited_visibility_info#:#Outside the indicated period, only the title of the survey will be displayed while the question are not accessible.
+survey#:#survey_use_start_button#:#To take part in the survey, you need to use the start button.
+survey#:#svy_activation_limited_visibility_info#:#Allow users to always see the title of the survey and its period of availability. The survey questions themselves will still only be accessible during the indicated period of availability.
 survey#:#svy_activation_online_info#:#Only if a survey is online, users can participate in it.
-survey#:#svy_add_internal_user#:#Add User
-survey#:#svy_add_internal_user_info#:#The rater has a registered user on this platform.
+survey#:#svy_add_internal_user#:#Add User Manually
+survey#:#svy_add_internal_user_info#:#Add someone as a rater who is a registered user on this platform.
 survey#:#svy_add_rater#:#Add Rater
 survey#:#svy_all_raters#:#All Raters
 survey#:#svy_all_survey_competences#:#All Survey Competences
 survey#:#svy_all_user_data_deleted#:#All user data of this survey has been deleted!
 survey#:#svy_analysis#:#Analysis
 survey#:#svy_anonymous_participants#:#List of Participants
-survey#:#svy_anonymous_participants_info#:#If activated a list of participants can be enabled in anonymous surveys.
+survey#:#svy_anonymous_participants_info#:#Add an option to the settings of surveys with anonymised participants that makes a list of participants available once the survey’s end date has been reached (as set in the ‘Administering the Survey: Access’ section of the survey’s ‘Settings’ tab).
 survey#:#svy_anonymous_participants_min#:#Minimum Number of Participants
-survey#:#svy_anonymous_participants_min_info#:#The list will only be available if there are at least the minimum number of participants.
+survey#:#svy_anonymous_participants_min_info#:#The list of participants will only be made available if (at the very least) the minimum number of participants has taken part in the survey.
 survey#:#svy_anonymous_participants_svy#:#List of Participants
-survey#:#svy_anonymous_participants_svy_info#:#If activated a list of participants is available after the end date.
+survey#:#svy_anonymous_participants_svy_info#:#Make a list of participants available via a new subtab (Participants > List of Participants) once the ‘Administering the Survey: Access’ End Date has been reached.
 survey#:#svy_answer_too_long#:#Your current answer is too long (%s characters). Please shorten your answer.
-survey#:#svy_app_see_rater_info#:#Appraisees can access rater information in the results screens, including names and e-mail addresses, if entered before when adding raters.
-survey#:#svy_appraisses_cannot_be_raters#:#User cannot be added as rater. Use self evaluation option in the survey settings instead.
+survey#:#svy_app_see_rater_info#:#Appraisees can access rater information via the ‘Results’ tab, including names and e-mail addresses, if this information was also entered when adding the raters.
+survey#:#svy_appraisses_cannot_be_raters#:#Users cannot be added as their own raters. In order for users to be able to rate themselves, please activate the ‘Self Evaluation’ option in the survey’s ‘Settings’ tab.
 survey#:#svy_back#:#Back
 survey#:#svy_categories#:#Answers
 survey#:#svy_check_evaluation_access_introduction#:#Since this survey evaluation is only accessible by survey participants you need to enter your survey access code to open the evaluation.
 survey#:#svy_check_evaluation_authentication_needed#:#Authentication needed
 survey#:#svy_check_evaluation_wrong_key#:#You entered a wrong survey access code or you have not participated the survey. Your access to the survey evaluation is denied.
 survey#:#svy_compress_view#:#Compressed View
-survey#:#svy_compress_view_info#:#If activated, all single choice questions with similar scales will be presented matrix-like.
+survey#:#svy_compress_view_info#:#Present all single choice questions that have the same answer scales in the manner of a matrix question.
 survey#:#svy_copy#:#Copy Survey
 survey#:#svy_create_question#:#Create Question
 survey#:#svy_delete_all_user_data#:#Delete all User Data
@@ -16797,56 +16797,56 @@ survey#:#svy_eval_captions_perc#:#Percentage
 survey#:#svy_eval_competences#:#Competence Results
 survey#:#svy_eval_cumulated#:#Overview
 survey#:#svy_eval_detail#:#Details
-survey#:#svy_eval_skipped_value#:#Results: ‘skipped’
-survey#:#svy_eval_skipped_value_custom#:#Use custom value
-survey#:#svy_eval_skipped_value_custom_info#:#Define any (or empty) value to use for skipped answers
+survey#:#svy_eval_skipped_value#:#Results: ‘Skipped’
+survey#:#svy_eval_skipped_value_custom#:#Use Custom Value
+survey#:#svy_eval_skipped_value_custom_info#:#Enter a value that will be used to indicate that questions have been skipped. Alternatively, leave empty to show a blank space for skipped questions.
 survey#:#svy_eval_skipped_value_custom_value#:#Value
-survey#:#svy_eval_skipped_value_lng#:#Use language file entry
+survey#:#svy_eval_skipped_value_lng#:#Use Language File Entry
 survey#:#svy_eval_skipped_value_lng_info#:#Current value: "%s"
 survey#:#svy_eval_user#:#Per Participant
 survey#:#svy_eval_view#:#View
 survey#:#svy_eval_view_charts#:#Chart
 survey#:#svy_eval_view_tables#:#Table
 survey#:#svy_eval_view_tables_charts#:#Table and chart
-survey#:#svy_evaluation_access_all_info#:#All registered users that can access the survey can also look at the results of this survey.
-survey#:#svy_evaluation_access_off_info#:#Only Users that can edit the survey (write permission) have access to the survey's results.
-survey#:#svy_evaluation_access_participants_info#:#All users that participated in the survey may choose to look at the results after finishing it.
+survey#:#svy_evaluation_access_all_info#:#All registered users who are able to access the survey may also view the results.
+survey#:#svy_evaluation_access_off_info#:#Only users who have the ‘Survey Results’ permission have access to the results.
+survey#:#svy_evaluation_access_participants_info#:#All users who participate in the survey may choose to view the results upon completion.
 survey#:#svy_export_files#:#Export Files
-survey#:#svy_export_format#:#Export survey data as
+survey#:#svy_export_format#:#Export survey data as…
 survey#:#svy_export_pdf#:#Export PDF
 survey#:#svy_ext_rater_firstname#:#First name of external rater
 survey#:#svy_ext_rater_lastname#:#Last name of external rater
 survey#:#svy_external_rater#:#Add External Rater
-survey#:#svy_external_rater_info#:#The rater is not registered on this platform.
-survey#:#svy_fraction_of_selections#:#Fraction of selections
+survey#:#svy_external_rater_info#:#Add someone who is not a registered user on this platform as a rater.
+survey#:#svy_fraction_of_selections#:#Percentage Share of Total Responses
 survey#:#svy_gap_analysis#:#Gap Analysis
 survey#:#svy_general_properties#:#General Properties
 survey#:#svy_import_codes#:#Import Codes
 survey#:#svy_import_codes_info#:#This import requires a "%s" export file.
-survey#:#svy_ind_feedb_info#:#Users get distinct evaluations by others.
+survey#:#svy_ind_feedb_info#:#Enables users to receive evaluations on an individual basis from others users.
 survey#:#svy_ind_feedb_mode#:#Individual Feedback
 survey#:#svy_mail_confirmation_subject#:#Survey "%s" - Your participation confirmation
 survey#:#svy_mail_context_rater_invitation_info#:#Invite raters to participate in a survey.
 survey#:#svy_mail_context_rater_invitation_survey_title#:#Survey Title
 survey#:#svy_mail_context_rater_invitation_title#:#Survey: Rater Invitation
-survey#:#svy_mail_context_reminder_info#:#Reminds users to participate in survey
+survey#:#svy_mail_context_reminder_info#:#Remind users to participate in survey
 survey#:#svy_mail_context_reminder_survey_title#:#Survey Title
-survey#:#svy_mail_context_reminder_title#:#Survey: Survey-Reminder
+survey#:#svy_mail_context_reminder_title#:#Survey: Survey Reminder
 survey#:#svy_mail_own_results#:#Mail given answers
-survey#:#svy_mail_own_results_body#:#you participated in the following survey:
-survey#:#svy_mail_own_results_subject#:#Survey "%s" - Your Answers
+survey#:#svy_mail_own_results_body#:#This is to confirm that you have participated in the following survey:
+survey#:#svy_mail_own_results_subject#:#Survey ‘%s’ - Your Participation Confirmation
 survey#:#svy_mail_send_confirmation#:#Send Participation Confirmation
-survey#:#svy_matrix_layout_percentages_sum_invalid#:#The column settings do not sum up to 100%.
+survey#:#svy_matrix_layout_percentages_sum_invalid#:#The column percentages need to add up to 100%.
 survey#:#svy_max_sum_score#:#Maximum Sum Score
-survey#:#svy_neutral_answer#:#Text for a Neutral Answer (‘Not Specified’, ‘I don't know’ etc.)
-survey#:#svy_no_appraisees_found#:#No appraisees with feedbacks found.
+survey#:#svy_neutral_answer#:#Text for Neutral Answer (‘Not specified’, ‘I don't know’, etc.)
+survey#:#svy_no_appraisees_found#:#No appraisees have yet closed this survey to raters. As soon as an appraisee has done so, their competence results will be visible here.
 survey#:#svy_notification_tutor_results#:#One E-Mail including Survey Results
 survey#:#svy_notification_tutor_results_alert#:#This requires an end date.
 survey#:#svy_notification_tutor_results_info#:#After reaching the end data a cron job will send an email with the detailed survey results attached to it.
 survey#:#svy_only_max_one_external_rater#:#Please select only one external rater.
 survey#:#svy_page_add_question#:#Add new %s
-survey#:#svy_page_error#:#There was an error answering a survey question. Please refer to the question to get more information on the error!
-survey#:#svy_page_errors#:#There were errors answering the survey questions. Please refer to the questions to get more information on the errors!
+survey#:#svy_page_error#:#An error occurred while answering a question. Please refer to the question for more information regarding the error.
+survey#:#svy_page_errors#:#Errors occurred with the answers to multiple survey questions. Please refer to the questions to get more information regarding the errors!
 survey#:#svy_participant#:#Participant
 survey#:#svy_participants#:#Participants
 survey#:#svy_participation#:#Participation
@@ -16855,50 +16855,50 @@ survey#:#svy_print_hide_labels#:#Hide labels
 survey#:#svy_print_show_labels#:#Show labels
 survey#:#svy_privacy_info#:#Privacy
 survey#:#svy_rater#:#Rater
-survey#:#svy_rater_see_app_info#:#The names of appraisees will be presented to raters to enable them evaluating the questions.
+survey#:#svy_rater_see_app_info#:#Raters are shown the names of their appraisees so that they can meaningfully respond to the questions concerning those individuals.
 survey#:#svy_reminder_mail_template#:#Mail Template
 survey#:#svy_reminder_mail_template_none#:#Do not use mail template
-survey#:#svy_result_mail_notification_info#:#On finishing the survey the answers of each participant will be sent to the defined recipients.
+survey#:#svy_result_mail_notification_info#:#When a participant finishes the survey, their answers will be sent to selected recipients.
 survey#:#svy_results#:#Results
 survey#:#svy_results_mail_confirm#:#Participants can request participation confirmation
-survey#:#svy_results_mail_confirm_info#:#Participants can request a mail with a confirmation of participation at the end of the survey.
-survey#:#svy_results_mail_own#:#Include given answers
-survey#:#svy_results_mail_own_info#:#The given answers will be included in the confirmation of participation.
+survey#:#svy_results_mail_confirm_info#:#Enable participants to request a mail confirming their participation in the survey upon completion.
+survey#:#svy_results_mail_own#:#Include Given Answers
+survey#:#svy_results_mail_own_info#:#The answers given by the participant will be included in their participation confirmation mail.
 survey#:#svy_results_view_own#:#Participants can View Own Answers
 survey#:#svy_results_view_own_info#:#After finishing the survey, participants can view a list of all answers they provided. They cannot change their answers
 survey#:#svy_save_and_continue#:#Save and Continue
 survey#:#svy_save_sync#:#Save and Sync Question Copies
-survey#:#svy_search_user#:#Search User
-survey#:#svy_search_user_info#:#Search for users or roles and pick participants.
-survey#:#svy_search_users#:#Search for participants
+survey#:#svy_search_user#:#Look Up User
+survey#:#svy_search_user_info#:#Look up for specific users of this platform or for the members of specific groups, courses, roles or organisational units.
+survey#:#svy_search_users#:#Look Up Users
 survey#:#svy_select_rater#:#Select Rater
-survey#:#svy_selected_user_data_deleted#:#The survey data of the selected user(s) was deleted successfully
-survey#:#svy_self_ev_access_results_all#:#Access to Self-Evaluations of All Participants
-survey#:#svy_self_ev_access_results_none#:#No Access to Results
-survey#:#svy_self_ev_access_results_own#:#Access to Own Self-Evaluations
-survey#:#svy_self_ev_info#:#Use for self evaluation.
+survey#:#svy_selected_user_data_deleted#:#The survey data of the selected participants(s) has been successfully deleted.
+survey#:#svy_self_ev_access_results_all#:#Access to self-evaluation results of all participants
+survey#:#svy_self_ev_access_results_none#:#No access to results
+survey#:#svy_self_ev_access_results_own#:#Access to own self-evaluation results
+survey#:#svy_self_ev_info#:#A survey that can be used for self-evaluation purposes.
 survey#:#svy_self_ev_mode#:#Self-Evaluation Only
-survey#:#svy_settings_section_access#:#Administering the survey: Access
-survey#:#svy_settings_section_before_start#:#Information before start of survey
-survey#:#svy_settings_section_finishing#:#Finishing the survey
-survey#:#svy_settings_section_question_behaviour#:#Administering the survey: Behaviour of question
+survey#:#svy_settings_section_access#:#Administering the Survey: Access
+survey#:#svy_settings_section_before_start#:#Information Shown Before Start of Survey
+survey#:#svy_settings_section_finishing#:#Finishing the Survey
+survey#:#svy_settings_section_question_behaviour#:#Administering the Survey: Behaviour of Question
 survey#:#svy_settings_section_reminders#:#Reminders
 survey#:#svy_show_questiontitles#:#Show Question Title
 survey#:#svy_skl_comp_assignm_not_supported#:#Competence assignment is not supported for this question type.
 survey#:#svy_sum_score#:#Sum Score
-survey#:#svy_type_of_rater#:#Type of Rater
-survey#:#svy_view_own_results#:#View given answers
-survey#:#svy_wrong_or_expired_code#:#Sorry, you entered an invalid or expired code.
-survey#:#text_maximum_chars_allowed#:#Please do not enter more than a maximum of %s characters. Any characters above will be cut.
-survey#:#text_question_not_filled_out#:#Please fill out the answer field!
-survey#:#unfold#:#Unfold
+survey#:#svy_type_of_rater#:#Method
+survey#:#svy_view_own_results#:#View Given Answers
+survey#:#svy_wrong_or_expired_code#:#Unfortunately, the code you have entered is either invalid or has expired. Please try again and if that doesn’t work, contact the person conducting this survey.
+survey#:#text_maximum_chars_allowed#:#Please limit your answer to a maximum of %s characters. If you exceed this limit, your answer will not be logged and you will be required to shorten your answer in order to proceed.
+survey#:#text_question_not_filled_out#:#Please enter your answer into the field below.
+survey#:#unfold#:#Break up Question Block
 survey#:#upper_limit#:#Upper Limit
 survey#:#use_anonymous_id#:#Show Survey Code
-survey#:#use_anonymous_id_desc#:#If checked, the username in anonymized surveys will be shown as the survey code, otherwise the text ‘Anonymous’ will be shown.
+survey#:#use_anonymous_id_desc#:#In anonymised surveys, use participants’ survey access codes as a proxy for their usernames. If left unchecked, ‘Anonymous’ will be shown in the place of usernames instead.
 survey#:#use_browser_print_function#:#Please use the print function of your web browser.
-survey#:#use_min_answers#:#Answer selections
-survey#:#use_min_answers_option#:#Set a number of answer selections
-survey#:#use_other_answer#:#Open answer
+survey#:#use_min_answers#:#Number of Answers Required
+survey#:#use_min_answers_option#:#Set a minimum and/or maximum number of answers that must be selected
+survey#:#use_other_answer#:#Open Answer
 survey#:#used#:#used
 survey#:#users_answered#:#Users Answered
 survey#:#users_invited#:#%s users have been invited
@@ -16906,43 +16906,43 @@ survey#:#users_skipped#:#Users Skipped
 survey#:#values#:#Values
 survey#:#vertical#:#Vertical
 survey#:#warning_question_not_complete#:#The question is not complete!
-survey#:#workingtime#:#Working time
-svy#:#survey_360_appraisees_remind_info#:#If self evaluation is activated, appraisees that have not yet finished the survey will be reminded.
-svy#:#survey_360_raters_remind_info#:#Raters that have not yet finished the survey will be reminded.
-svy#:#svy_0_open_appraisees#:#You cannot perform the survey for any appraisee anymore.
+survey#:#workingtime#:#Time Spent
+svy#:#survey_360_appraisees_remind_info#:#If ‘Self Evaluation’ has been activated, appraisees that have not yet finished the survey will be reminded to do so.
+svy#:#survey_360_raters_remind_info#:#Raters that have not yet finished the survey will be reminded to do so.
+svy#:#svy_0_open_appraisees#:#There are no more appraisees for you to rate or the survey is no longer open to raters.
 svy#:#svy_all_pages#:#All Pages
 svy#:#svy_all_participants#:#All Participants
 svy#:#svy_all_questions#:#All Questions
 svy#:#svy_code#:#Access Code
 svy#:#svy_codes#:#Access Codes
 svy#:#svy_current_page#:#Current Page
-svy#:#svy_finish_survey#:#Finish survey '%1'
-svy#:#svy_finished_x_appraisees#:#You have finished the survey for %s appraisee(s).
+svy#:#svy_finish_survey#:#Take part in survey ‘%1’
+svy#:#svy_finished_x_appraisees#:#You have already completed the survey for %s appraisee(s).
 svy#:#svy_information#:#Information
-svy#:#svy_invite_participants#:#Invite Participants
+svy#:#svy_invite_participants#:#Add to Tasks of Users
 svy#:#svy_link_to_svy#:#Link to Survey
 svy#:#svy_part_overview#:#Overview
 svy#:#svy_placeholders_label#:#Available Placeholders
 svy#:#svy_print_selection#:#Print View Selection
-svy#:#svy_remove_all_participants#:#Delete all Participant Data
+svy#:#svy_remove_all_participants#:#Delete All Participant Data
 svy#:#svy_remove_participants#:#Remove Participants
 svy#:#svy_selected_participants#:#Selected Participants
 svy#:#svy_selected_questions#:#Selected Questions
 svy#:#svy_selection#:#Selection
 svy#:#svy_status#:#Status
 svy#:#svy_status_finished#:#Finished
-svy#:#svy_status_in_progress#:#In Progress
-svy#:#svy_status_invited#:#Invited
-svy#:#svy_user_added_appraisee#:#Survey '%1'
+svy#:#svy_status_in_progress#:#In progress
+svy#:#svy_status_invited#:#Added to tasks
+svy#:#svy_user_added_appraisee#:#Survey ‘%1’
 svy#:#svy_user_added_appraisee_close_mail#:#The survey has been closed for your raters.
 svy#:#svy_user_added_appraisee_mail#:#You have been added to the survey as an appraisee.
-svy#:#svy_user_added_rater#:#Survey '%1'
+svy#:#svy_user_added_rater#:#Survey ‘%1’
 svy#:#svy_user_added_rater_mail#:#You have been added as a rater to the survey.
-svy#:#svy_user_added_rater_reminder_mail#:#Please finish to rate the following appraisees:
+svy#:#svy_user_added_rater_reminder_mail#:#Please don’t forget to rate the following appraisees:
 svy#:#svy_user_not_found#:#User not found.
-svy#:#svy_users_invited#:#Users have been invited.
-svy#:#svy_x_appraisees_closed_for_raters#:#%s appraisee(s) has/have closed the survey for raters.
-svy#:#svy_x_open_appraisees#:#%s appraisee(s) are open for you to rate.
+svy#:#svy_users_invited#:#A ‘to do’, notifying users that they can take part in this survey, has been added to the ‘Tasks’ section of their dashboard(s).
+svy#:#svy_x_appraisees_closed_for_raters#:#The survey has been closed to raters by %s appraisee(s).
+svy#:#svy_x_open_appraisees#:#You have %s appraisee(s) awaiting your feedback.
 svy#:#svy_your_appraisees#:#Your Appraisees
 svy#:#svy_your_raters#:#Your Raters
 svy#:#svy_your_raters_finished#:#%s of your raters have finished the survey.
@@ -17092,7 +17092,6 @@ trac#:#read_count_avg#:#Average page views
 trac#:#registration_filter#:#Date of Registration
 trac#:#search_area_info#:#Please choose one object.
 trac#:#search_terms#:#Search Term(s)
-trac#:#select_one#:#Please select one object
 trac#:#session_statistics#:#Session Statistics
 trac#:#trac_aggregation#:#Aggregation
 trac#:#trac_all#:#All
