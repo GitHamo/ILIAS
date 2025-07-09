@@ -4316,10 +4316,12 @@ common#:#il_grp_admin#:#Group Administrator
 common#:#il_grp_member#:#Group Member
 common#:#il_grp_status_closed#:#Group closed
 common#:#il_grp_status_open#:#Group open
+common#:#il_iass_member#:#Participant
 common#:#il_lso_admin#:#Learning Sequence Admin
 common#:#il_lso_member#:#Learning Sequence Member
 common#:#il_lti_instructor#:#LTI Instructor
 common#:#il_lti_learner#:#LTI Learner
+common#:#il_lti_user#:#LTI User
 common#:#il_orgu_employee#:#Employee
 common#:#il_orgu_superior#:#Superior
 common#:#ilias_version#:#ILIAS version
@@ -10521,7 +10523,6 @@ iass#:#iass_usr_download_attachment#:#Download Attachment
 iass#:#iass_usr_edit#:#Edit Participant Record
 iass#:#iass_usr_remove#:#Remove Participant from Assessment
 iass#:#iass_usr_view#:#Participant Record
-iass#:#il_iass_member#:#Participant
 iass#:#il_iass_members#:#Participants
 iass#:#lp_inactive#:#Note: the learning progress for this object is inactive. Thus memberships may not be finalised.
 iass#:#save_amend#:#Save Amended Record
