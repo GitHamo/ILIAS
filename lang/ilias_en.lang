@@ -1228,7 +1228,6 @@ assessment#:#scoringadjust#:#Corrections
 assessment#:#search_groups#:#Search Groups
 assessment#:#search_roles#:#Search Roles
 assessment#:#search_term#:#Search Term
-assessment#:#search_users#:#Search Users
 assessment#:#select_at_least_one_feedback_type_and_trigger#:#Please Select at least one type of feedback and a trigger.
 assessment#:#select_gap#:#Select Gap
 assessment#:#select_max_one_item#:#Please select one item only
@@ -5566,13 +5565,14 @@ common#:#search_active#:#Include active users
 common#:#search_at_current_position#:#At Current Position
 common#:#search_engine#:#Readable .html URLs
 common#:#search_for#:#Search For
-common#:#search_globally#:#Globally
+common#:#search_globally#:#All Content
 common#:#search_in#:#Search in
 common#:#search_inactive#:#Include inactive users
 common#:#search_new#:#New Search
 common#:#search_result#:#Search Result
 common#:#search_results#:#Search Results
-common#:#search_user#:#Search User
+common#:#search_user#:#Look Up User
+common#:#search_users#:#Look Up Users
 common#:#seas_max_hits#:#Max hits
 common#:#seas_max_hits_info#:#Please enter a number for the maximum number of search results.
 common#:#seas_settings#:#Search settings
@@ -7859,7 +7859,7 @@ crs#:#crs_reject_subscriber#:#Registration refused for "%s"
 crs#:#crs_reject_subscriber_body#:#we regret to say that your registration has been refused for the course "%s".
 crs#:#crs_reset_results#:#Reset Results
 crs#:#crs_role_status#:#Role / Status
-crs#:#crs_search_users#:#Search Users
+crs#:#crs_search_users#:#Look Up Users
 crs#:#crs_select_archive_language#:#Please select a language for the archive
 crs#:#crs_select_one_archive#:#Please select one archive
 crs#:#crs_select_starter#:#Select Start Object
@@ -10406,7 +10406,7 @@ grp#:#grp_reg_request_info#:#Interested users can send a request/message to grou
 grp#:#grp_reg_subject#:#Message
 grp#:#grp_registration_unlimited#:#Unlimited
 grp#:#grp_role_status#:#Role/Status
-grp#:#grp_search_users#:#Search User
+grp#:#grp_search_users#:#Look Up Users
 grp#:#grp_set_on_waiting_list#:#You can set yourself on the waiting list. You will receive a message from a group administrator when your request has been approved or rejected.
 grp#:#grp_setting_header_presentation#:#Group Presentation
 grp#:#grp_setting_header_registration#:#Group Registration
@@ -11093,7 +11093,7 @@ lso#:#lso_player_suspend#:#Suspend
 lso#:#lso_player_viewmodelabel#:#Learning Sequence
 lso#:#lso_print_list#:#Generate list
 lso#:#lso_read#:#User has read access to Learning Sequence
-lso#:#lso_search_users#:#Search Users
+lso#:#lso_search_users#:#Look Up Users
 lso#:#lso_settings_availability#:#Availability
 lso#:#lso_settings_availability_error#:#The end date can not be earlier than the start date
 lso#:#lso_settings_extro#:#Edit Exit Page
@@ -15516,7 +15516,6 @@ search#:#search_user#:#Users
 search#:#search_user_extended#:#Extended User Search
 search#:#search_user_search_form#:#Global User Search
 search#:#search_user_search_info_form#:#Users can be found in the global search. Furthermore, data in personal profiles of users is indexed if the Lucene fulltext search is enabled.
-search#:#search_users#:#Search Users
 search#:#select_orgu#:#Select Organisational Units
 search#:#until#:#up to
 search#:#user_search_settings_section#:#User Search in 'Member'-tabs
@@ -16571,7 +16570,6 @@ survey#:#saved_messages#:#Text Templates
 survey#:#scale#:#Scale
 survey#:#search_groups#:#Found Groups
 survey#:#search_term#:#Search Term
-survey#:#search_users#:#Search for Users
 survey#:#select_option#:#––– Please select an option –––
 survey#:#select_prior_question#:#Select a preceding question
 survey#:#select_questionpool#:#Please select a question pool to store the created question
@@ -17010,7 +17008,7 @@ tagging#:#tagging_no_obj_for_tag#:#No Resources tagged with %s.
 tagging#:#tagging_no_perm_write#:#You have no permission to change this data.
 tagging#:#tagging_other_users#:#Tags of Other Users
 tagging#:#tagging_resources_for_tag#:#Resources tagged with %s
-tagging#:#tagging_search_users#:#Search Users
+tagging#:#tagging_search_users#:#Look Up Users
 tagging#:#tagging_set_tag#:#Set Tags
 tagging#:#tagging_settings#:#Settings
 tagging#:#tagging_tag#:#Tag
@@ -17842,7 +17840,7 @@ wsp#:#wsp_set_permission_course#:#Members of Course
 wsp#:#wsp_set_permission_group#:#Members of Group
 wsp#:#wsp_set_permission_registered#:#All Registered Users
 wsp#:#wsp_set_permission_single_user#:#A Single User
-wsp#:#wsp_share_search_users#:#Search Users
+wsp#:#wsp_share_search_users#:#Look Up Users
 wsp#:#wsp_share_success#:#A new entry has been added.
 wsp#:#wsp_share_with_members#:#Share with members
 wsp#:#wsp_share_with_users#:#Share with users
