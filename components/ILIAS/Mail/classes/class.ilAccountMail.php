@@ -24,7 +24,6 @@ use ILIAS\Refinery\Factory as Refinery;
 class ilAccountMail
 {
     private readonly ilSetting $settings;
-    private readonly Refinery $refinery;
     private readonly ilTree $repository_tree;
     private readonly ilMailMimeSenderFactory $sender_factory;
     public string $u_password = '';
