@@ -25,6 +25,7 @@ use ilFileUtils;
 use ILIAS\components\ResourceStorage\Container\Wrapper\ZipReader;
 use ILIAS\Data\ObjectId;
 use ILIAS\Data\ReferenceId;
+use ILIAS\Export\ExportHandler\I\Consumer\ExportConfig\CollectionInterface as ExportConfigCollectionInterface;
 use ILIAS\Export\ExportHandler\I\FactoryInterface as ilExportHandlerFactoryInterface;
 use ILIAS\Export\ExportHandler\I\Info\Export\Container\HandlerInterface as ilExportHandlerContainerExportInfoInterface;
 use ILIAS\Export\ExportHandler\I\Info\Export\Container\ObjectId\CollectionBuilderInterface as ilExportHandlerContainerExportInfoObjectIdCollectionBuilderInterface;
@@ -101,7 +102,8 @@ class Handler implements ilExportHandlerManagerInterface
     protected function writeToElement(
         string $path_in_container,
         ilExportHandlerExportInfo $export_info,
-        ilExportHandlerRepositoryElementInterface $element
+        ilExportHandlerRepositoryElementInterface $element,
+        ExportConfigCollectionInterface $export_configs
     ): void {
         $export_info = $export_info->withCurrentElement($element);
         $manifest = $this->export_handler->part()->manifest()->handler()
@@ -113,7 +115,8 @@ class Handler implements ilExportHandlerManagerInterface
         foreach ($export_info->getComponentInfos() as $component_info) {
             $component = $this->export_handler->part()->component()->handler()
                 ->withExportInfo($export_info)
-                ->withComponentInfo($component_info);
+                ->withComponentInfo($component_info)
+                ->withExportConfigs($export_configs);
             $element->getIRSS()->write(
                 Streams::ofString($component->getXML(false)),
                 $path_in_container . DIRECTORY_SEPARATOR . $component_info->getExportFilePathInContainer()
@@ -123,10 +126,14 @@ class Handler implements ilExportHandlerManagerInterface
 
     public function createContainerExport(
         int $user_id,
-        ilExportHandlerContainerExportInfoInterface $container_export_info
+        ilExportHandlerContainerExportInfoInterface $container_export_info,
     ): ilExportHandlerRepositoryElementInterface {
         $main_export_info = $container_export_info->getMainEntityExportInfo();
-        $main_element = $this->createExport($user_id, $main_export_info, "set_" . $main_export_info->getSetNumber());
+        $main_element = $this->createExport(
+            $user_id,
+            $main_export_info,
+            "set_" . $main_export_info->getSetNumber()
+        );
         $repository = $this->export_handler->repository();
         foreach ($container_export_info->getExportInfos() as $export_info) {
             $stream = null;
@@ -183,7 +190,7 @@ class Handler implements ilExportHandlerManagerInterface
             $export_info,
             $stakeholder
         );
-        $this->writeToElement($path_in_container, $export_info, $element);
+        $this->writeToElement($path_in_container, $export_info, $element, $export_info->getExportConfigs());
 
         # write files from legacy export run dir to irss
         # tmp solution, remove later if no longer needed
@@ -199,30 +206,53 @@ class Handler implements ilExportHandlerManagerInterface
         return $element;
     }
 
+    public function createExportOfObject(
+        ilObject $export_object,
+        int $user_id,
+        ExportConfigCollectionInterface $export_configs
+    ): void {
+        $export_info = $this->getExportInfoWithObject(
+            $export_object,
+            time(),
+            $export_configs
+        );
+        $element = $this->createExport(
+            $user_id,
+            $export_info,
+            ""
+        );
+    }
+
     public function getExportInfo(
         ObjectId $object_id,
-        int $time_stamp
+        int $time_stamp,
+        ExportConfigCollectionInterface $export_configs
     ): ilExportHandlerExportInfoInterface {
         return $this->export_handler->info()->export()->handler()
-            ->withTarget($this->getExportTarget($object_id), $time_stamp);
+            ->withTarget($this->getExportTarget($object_id), $time_stamp)
+            ->withExportConfigs($export_configs);
     }
 
     public function getExportInfoWithObject(
         ilObject $export_object,
-        int $time_stamp
+        int $time_stamp,
+        ExportConfigCollectionInterface $export_configs
     ): ilExportHandlerExportInfoInterface {
         return $this->export_handler->info()->export()->handler()
-            ->withTarget($this->getExportTargetWithObject($export_object), $time_stamp);
+            ->withTarget($this->getExportTargetWithObject($export_object), $time_stamp)
+            ->withExportConfigs($export_configs);
     }
 
     public function getContainerExportInfo(
         ObjectId $main_entity_object_id,
-        ilExportHandlerContainerExportInfoObjectIdCollectionInterface $object_ids
+        ilExportHandlerContainerExportInfoObjectIdCollectionInterface $object_ids,
+        ExportConfigCollectionInterface $export_configs
     ): ilExportHandlerContainerExportInfoInterface {
         return $this->export_handler->info()->export()->container()->handler()
             ->withMainExportEntity($main_entity_object_id)
             ->withObjectIds($object_ids)
-            ->withTimestamp(time());
+            ->withTimestamp(time())
+            ->withExportConfigs($export_configs);
     }
 
     public function getObjectIdCollectioBuilder(): ilExportHandlerContainerExportInfoObjectIdCollectionBuilderInterface
