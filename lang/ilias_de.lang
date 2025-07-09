@@ -11130,7 +11130,7 @@ lti#:#conf_privacy_ident_il_uuid_SHA256#:#Hash kombiniert mit einer eindeutigen 
 lti#:#conf_privacy_ident_il_uuid_SHA256_info#:#Die Identifikation ist identisch bei jedem Aufruf, aber lässt keine direkten Rückschlüsse auf das ILIAS-Konto und die zugehörige Person zu.
 lti#:#conf_privacy_ident_il_uuid_ext_account#:#Die externe Konten-ID wird kombiniert mit einer eindeutigen ID der ILIAS-Plattform und als E-Mail-Adresse formatiert.
 lti#:#conf_privacy_ident_il_uuid_ext_account_info#:#Die Identifikation ist identisch bei jedem Aufruf und lässt direkte Rückschlüsse auf das ILIAS-Konto und die zugehörige Person zu.
-lti#:#conf_privacy_ident_il_uuid_login#:#ILIAS-Login kombiniert mit einer eindeutigen ILIAS-Plattform-ID, die als E-Mail-Adresse formatiert ist
+lti#:#conf_privacy_ident_il_uuid_login#:#ILIAS-Anmeldename kombiniert mit einer eindeutigen ILIAS-Plattform-ID, die als E-Mail-Adresse formatiert ist.
 lti#:#conf_privacy_ident_il_uuid_login_info#:#Sendet den Anmeldenamen. Dies ist identisch mit jedem Aufruf, kann aber direkte Rückschlüsse auf den ILIAS-Benutzer zulassen.
 lti#:#conf_privacy_ident_il_uuid_random#:#Zufalls-ID@ILIAS-Plattform-ID.ilias
 lti#:#conf_privacy_ident_il_uuid_random_info#:#Pro ILIAS-Objekt und ILIAS-Konto wird eine Zufalls-ID erzeugt, die bei jedem Aufruf identisch bleibt. Die E-Mail-Adresse setzt sich zusammen aus der Zufalls-ID und einer eigens
