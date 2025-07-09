@@ -17204,7 +17204,7 @@ trac#:#trac_mode_course_reference_info#:#Der Lernfortschrittmodus wird automatis
 trac#:#trac_mode_deactivated#:#Lernfortschritt ist deaktiviert
 trac#:#trac_mode_deactivated_info_new#:#Der Lernfortschrittsstatus wird nicht angezeigt und beeinflusst keine übergeordneten Objekte.
 trac#:#trac_mode_event#:#Teilnahmeliste abhaken
-trac#:#trac_mode_event_info#:#Personen mit dem Recht „Mitglieder verwalten“ erfassen die Teilnahme im Reiter „Teilnehmer“.
+trac#:#trac_mode_event_info#:#Personen mit dem Recht „Mitglieder verwalten“ erfassen die Teilnahme im Reiter „Teilnahmen“.
 trac#:#trac_mode_exercise_returned#:#Manuelle Bewertung
 trac#:#trac_mode_exercise_returned_info#:#Personen mit dem Recht „Einstellungen bearbeiten“ entscheiden anhand der Einreichungen, ob die Übungseinheit gelöst wurde. Im Reiter „Abgaben und Noten“ setzen sie händisch den jeweiligen Status.
 trac#:#trac_mode_individual_assessment#:#Manuelle Bewertung
