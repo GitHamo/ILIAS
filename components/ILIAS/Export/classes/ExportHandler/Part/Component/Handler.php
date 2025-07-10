@@ -34,7 +34,6 @@ class Handler implements ilExportHandlerPartComponentInterface
     protected ilExportHanlderExportInfoInterface $export_info;
     protected ilExportHanlderExportComponentInfoInterface $component_info;
     protected ilExportHandlerFactoryInterface $export_handler;
-    protected ExportConfigCollectionInterface $export_configs;
 
     public function __construct(
         ilExportHandlerFactoryInterface $export_handler
@@ -55,14 +54,6 @@ class Handler implements ilExportHandlerPartComponentInterface
     ): ilExportHandlerPartComponentInterface {
         $clone = clone $this;
         $clone->component_info = $component_info;
-        return $clone;
-    }
-
-    public function withExportConfigs(
-        ExportConfigCollectionInterface $export_configs
-    ): ilExportHandlerPartInterface {
-        $clone = clone $this;
-        $clone->export_configs = $export_configs;
         return $clone;
     }
 
@@ -98,7 +89,7 @@ class Handler implements ilExportHandlerPartComponentInterface
             $export = new ilExport();
             $export->setPathInfo($path_info);
             $export->setExportWriter($writer);
-            $export->setExportConfigs($this->export_configs);
+            $export->setExportConfigs($this->export_info->getExportConfigs());
             $export->export_run_dir = $this->export_info->getLegacyExportRunDir();
             $export->setExportDirectories(
                 $this->export_info->getExportFolderName(),

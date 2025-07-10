@@ -35,12 +35,9 @@ use ILIAS\Export\ExportHandler\Info\Export\Path\Factory as ExportPathInfoFactory
 
 class Factory implements ilExportHandlerExportInfoFactory
 {
-    protected ilExportHandlerFactoryInterface $export_handler;
-
     public function __construct(
-        ilExportHandlerFactoryInterface $export_handler
+        protected ilExportHandlerFactoryInterface $export_handler
     ) {
-        $this->export_handler = $export_handler;
     }
 
     public function handler(): ilExportHandlerExportInfoInterface

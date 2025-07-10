@@ -39,8 +39,4 @@ interface HandlerInterface extends ilExportHandlerPartInterface
     public function withComponentInfo(
         ilExportHanlderExportComponentInfoInterface $component_info
     ): ilExportHandlerPartComponentInterface;
-
-    public function withExportConfigs(
-        ExportConfigCollectionInterface $export_configs
-    ): ilExportHandlerPartInterface;
 }

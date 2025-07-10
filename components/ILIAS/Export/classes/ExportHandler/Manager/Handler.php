@@ -102,8 +102,7 @@ class Handler implements ilExportHandlerManagerInterface
     protected function writeToElement(
         string $path_in_container,
         ilExportHandlerExportInfo $export_info,
-        ilExportHandlerRepositoryElementInterface $element,
-        ExportConfigCollectionInterface $export_configs
+        ilExportHandlerRepositoryElementInterface $element
     ): void {
         $export_info = $export_info->withCurrentElement($element);
         $manifest = $this->export_handler->part()->manifest()->handler()
@@ -115,8 +114,7 @@ class Handler implements ilExportHandlerManagerInterface
         foreach ($export_info->getComponentInfos() as $component_info) {
             $component = $this->export_handler->part()->component()->handler()
                 ->withExportInfo($export_info)
-                ->withComponentInfo($component_info)
-                ->withExportConfigs($export_configs);
+                ->withComponentInfo($component_info);
             $element->getIRSS()->write(
                 Streams::ofString($component->getXML(false)),
                 $path_in_container . DIRECTORY_SEPARATOR . $component_info->getExportFilePathInContainer()
@@ -190,7 +188,7 @@ class Handler implements ilExportHandlerManagerInterface
             $export_info,
             $stakeholder
         );
-        $this->writeToElement($path_in_container, $export_info, $element, $export_info->getExportConfigs());
+        $this->writeToElement($path_in_container, $export_info, $element);
 
         # write files from legacy export run dir to irss
         # tmp solution, remove later if no longer needed
