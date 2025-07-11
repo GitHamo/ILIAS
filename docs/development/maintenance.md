@@ -15,6 +15,7 @@ contributors.
 * **Technical Documentation**: [Ann-Christin Gruber](https://docu.ilias.de/go/usr/94025)
 * **Online Help**: [Alexandra Tödt](https://docu.ilias.de/go/usr/3139)
 
+[//]: # (BEGIN Authorities)
 # Authorities
 The ILIAS community strives to create and maintain a secure, reliable, and
 adaptable learning management. We foster participation by a diverse set of
@@ -68,6 +69,8 @@ lie with one person and the **Authority to Sign off on Code Changes** with two
 others.
 
 More will surely emerge as the optimal solution for each unit is found.
+
+[//]: # (END Authorities)
 
 # Responsibilites
 Independently of the social organisation, for each [component](https://github.com/ILIAS-eLearning/ILIAS/blob/trunk/docs/development/components-and-directories.md) the following
