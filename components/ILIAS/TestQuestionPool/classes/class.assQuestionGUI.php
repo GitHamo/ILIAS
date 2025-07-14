@@ -1541,6 +1541,7 @@ abstract class assQuestionGUI
         if ($this->object->getId() > 0) {
             $this->setDefaultTabs($this->tabs_gui);
             $this->setQuestionSpecificTabs($this->tabs_gui);
+            $this->tabs_gui->activateTab('edit_question');
         }
         $this->addBackTab($this->tabs_gui);
     }
