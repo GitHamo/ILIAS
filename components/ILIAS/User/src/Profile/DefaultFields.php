@@ -120,6 +120,22 @@ class DefaultFields
             'lists_hide' => true,
             'group' => 'personal_data'
         ],
+        'org_units' => [
+            'input' => 'noneditable',
+            'lang_var' => 'objs_orgu',
+            'required_hide' => true,
+            'visib_reg_hide' => true,
+            'course_export_hide' => false,
+            'group_export_hide' => false,
+            'prg_export_hide' => false,
+            'export_hide' => true,
+            'changeable_hide' => true,
+            'changeable_fix_value' => 0,
+            'changeable_lua_hide' => true,
+            'changeable_lua_fix_value' => 0,
+            'method' => 'getOrgUnitsRepresentation',
+            'group' => 'personal_data'
+        ],
         'interests_general' => [
             'input' => 'multitext',
             'maxlength' => 40,
@@ -152,22 +168,6 @@ class DefaultFields
             'prg_export_hide' => true,
             'lists_hide' => true,
             'group' => 'interests'
-        ],
-        'org_units' => [
-            'input' => 'noneditable',
-            'lang_var' => 'objs_orgu',
-            'required_hide' => true,
-            'visib_reg_hide' => true,
-            'course_export_hide' => false,
-            'group_export_hide' => false,
-            'prg_export_hide' => false,
-            'export_hide' => true,
-            'changeable_hide' => true,
-            'changeable_fix_value' => 0,
-            'changeable_lua_hide' => true,
-            'changeable_lua_fix_value' => 0,
-            'method' => 'getOrgUnitsRepresentation',
-            'group' => 'contact_data'
         ],
         'institution' => [
             'input' => 'text',
@@ -387,6 +387,17 @@ class DefaultFields
             'course_export_hide' => true,
             'group_export_hide' => true,
             'export_hide' => true,
+            'prg_export_hide' => true,
+            'search_hide' => true,
+            'group' => 'settings'
+        ],
+        'session_reminder' => [
+            'input' => 'numeric',
+            'default' => 'y',
+            'required_hide' => true,
+            'visib_reg_hide' => true,
+            'course_export_hide' => true,
+            'group_export_hide' => true,
             'prg_export_hide' => true,
             'search_hide' => true,
             'group' => 'settings'

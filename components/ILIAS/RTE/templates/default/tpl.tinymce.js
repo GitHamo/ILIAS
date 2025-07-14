@@ -95,6 +95,7 @@ var ilTinyMceInitCallbackRegistry = new _ilTinyMceInitCallbackRegistry();
 window.ilTinyMceInitCallbackRegistry = ilTinyMceInitCallbackRegistry;
 
 tinymce.init({
+    license_key: 'gpl',
     selector: "textarea.RTEditor",
     branding: false,
     language: "{LANG}",
@@ -107,7 +108,7 @@ tinymce.init({
     <!-- END initial_width -->
     menubar: false,
     toolbar: "{BUTTONS_1} {BUTTONS_2} {BUTTONS_3}",
-    toolbar_sticky: true,
+    toolbar_persist: true,
     toolbar_mode: 'wrap',
     valid_elements: "{VALID_ELEMENTS}",
     image_advtab: false,

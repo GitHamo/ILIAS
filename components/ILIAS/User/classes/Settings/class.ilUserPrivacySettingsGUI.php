@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 use ILIAS\User\Profile\ChecklistStatus;
 use ILIAS\User\Profile\Mode as ProfileMode;
-
 use ILIAS\Language\Language;
 use ILIAS\UI\Component\Input\Field\Section;
 
@@ -112,7 +111,7 @@ class ilUserPrivacySettingsGUI
     }
 
     public function showPrivacySettings(
-        \ILIAS\UI\Component\Input\Container\Form\Standard $form = null
+        ?\ILIAS\UI\Component\Input\Container\Form\Standard $form = null
     ): void {
         $main_tpl = $this->main_tpl;
         $user = $this->user;
@@ -131,7 +130,7 @@ class ilUserPrivacySettingsGUI
 
         $pub_profile = new ilPublicUserProfileGUI($user->getId());
         if ($this->profile_mode->isEnabled()) {
-            $pub_profile_legacy = $this->uiFactory->legacy($pub_profile->getEmbeddable());
+            $pub_profile_legacy = $this->uifactory->legacy()->content($pub_profile->getEmbeddable());
             $html .= $this->uiRenderer->render($this->uiFactory->panel()->standard(
                 $this->lng->txt('user_profile_preview'),
                 $pub_profile_legacy
@@ -509,7 +508,7 @@ class ilUserPrivacySettingsGUI
     ): ilTemplate {
         $tpl = new ilTemplate('tpl.personal_chat_settings_form.html', true, true, 'components/ILIAS/Chatroom');
         if ($this->shouldShowOnScreenChatOptions() && $this->chatSettings->get('enable_browser_notifications', '0')) {
-            $pageTemplate->addJavaScript('assets/js/browser_notifications.js');
+            $pageTemplate->addJavaScript('assets/js/BrowserNotifications.min.js');
 
             $tpl->setVariable('ALERT_IMAGE_SRC', ilUtil::getImagePath('standard/icon_alert.svg'));
             $tpl->setVariable('BROWSER_NOTIFICATION_TOGGLE_LABEL', $this->lng->txt('osc_enable_browser_notifications_label'));

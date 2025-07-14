@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -17,6 +15,8 @@ declare(strict_types=1);
  * https://github.com/ILIAS-eLearning
  *
  *********************************************************************/
+
+declare(strict_types=1);
 
 namespace ILIAS\UI\Component\Button;
 
@@ -64,9 +64,9 @@ interface Factory
      *          sticky (stay visible on small screens).
      *   accessibility:
      *       1: >
-     *          Standard buttons MAY define aria-label attribute. Use it in cases
-     *          where a text label is not visible on the screen or when the label
-     *          does not provide enough information about the action.
+     *          Standard buttons MAY define an aria-label attribute. Use it in cases where a text label is not visible
+     *          on the screen, when the button doesn't include a glyph that comes with a fitting aria-label or when the
+     *          label does not provide enough information about the action.
      *       2: >
      *          Some Buttons can be stateful; when engaged, the state MUST be
      *          reflected in the "aria-pressed"-, respectively the "aria-checked"-attribute.
@@ -125,6 +125,10 @@ interface Factory
      *           The loading animation rules of the Standard Button MUST be respected.
      *   accessibility:
      *       1: >
+     *           Primary buttons MAY define an aria-label attribute. Use it in cases where a text label is not visible
+     *           on the screen, when the button doesn't include a glyph that comes with a fitting aria-label or when the
+     *           label does not provide enough information about the action.
+     *       2: >
      *          Some Buttons can be stateful; when engaged, the state MUST be
      *          reflected in the "aria-pressed"-, respectively the "aria-checked"-attribute.
      *          If the Button is not stateful (which is the default), the
@@ -269,10 +273,10 @@ interface Factory
      * ---
      * description:
      *   purpose: >
-     *     The bulky button is highly obtrusive. It combines the recognisability
+     *     The Bulky Button is highly obtrusive. It combines the recognisability
      *     of a graphical element with an explicit textual label on an unusually
-     *     sized button. It is hard to overlook and indicates an important action
-     *     on the screen.
+     *     sized button: The Bulky Button will expand to the entire available width.
+     *     It is hard to overlook and so indicates an important action on the screen.
      *
      *   composition: >
      *     The Bulky Button consists of an icon or glyph and a (very short) text.
@@ -320,12 +324,12 @@ interface Factory
      *        If a Bulky Button contains a Symbol, then the Label of the Icon MUST be set to "" or be omitted completely
      *        to avoid redundant alt tags which would render the Bulky Button cumbersome to be processed by screenreaders.
      * ---
-     * @param	\ILIAS\UI\Component\Symbol\Symbol		$icon_or_glyph
+     * @param	\ILIAS\UI\Component\Symbol\Symbol		$symbol
      * @param	string		$label
      * @param	string		$action
      * @return  \ILIAS\UI\Component\Button\Bulky
      */
-    public function bulky(Symbol $icon_or_glyph, string $label, string $action): Bulky;
+    public function bulky(Symbol $symbol, string $label, string $action): Bulky;
 
     /**
      * ---
@@ -381,6 +385,6 @@ interface Factory
         $on_action,
         $off_action,
         bool $is_on = false,
-        Signal $click_signal = null
+        ?Signal $click_signal = null
     ): Toggle;
 }

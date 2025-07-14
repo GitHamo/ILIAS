@@ -137,6 +137,11 @@ class UserGUIRequest
         return $this->strArray('select');
     }
 
+    public function getDefaultSessionReminder(): ?string
+    {
+        return $this->str('default_session_reminder') ?: (string) \ilSessionReminder::LEAD_TIME_DISABLED;
+    }
+
     public function getFiles(): array
     {
         return $this->strArray('file');
@@ -331,7 +336,7 @@ class UserGUIRequest
         return '';
     }
 
-    private function getFromQueryOrPost(string $key, Transformation $transformation, string $source): string|int|array
+    private function getFromQueryOrPost(string $key, Transformation $transformation, string $source): mixed
     {
         if ($source === 'query') {
             return $this->wrapper->query()->retrieve($key, $transformation);

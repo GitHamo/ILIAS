@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -16,8 +14,9 @@ declare(strict_types=1);
  * https://www.ilias.de
  * https://github.com/ILIAS-eLearning
  *
- ********************************************************************
- */
+ *********************************************************************/
+
+declare(strict_types=1);
 
 use ILIAS\Skill\Access\SkillTreeAccess;
 use ILIAS\Skill\Service\SkillAdminGUIRequest;
@@ -186,8 +185,7 @@ class ilSkillProfileGUI
                     "showUsers", "assignUser", "assignRole",
                     "confirmUserRemoval", "removeUsers", "exportProfiles", "showImportForm",
                     "importProfiles", "saveLevelOrder", "createLocal", "saveLocal",
-                    "listLocalProfiles", "showLevelsWithLocalContext", "showObjects",
-                    "showLevelsWithTableContext"))) {
+                    "listLocalProfiles", "showLevelsWithLocalContext", "showObjects"))) {
                     $this->$cmd();
                 }
                 break;
@@ -521,16 +519,6 @@ class ilSkillProfileGUI
     //// skill profile levels
     ////
 
-    public function showLevelsWithTableContext(): void
-    {
-        $ilCtrl = $this->ctrl;
-
-        if ($this->requested_table_profile_action === "editProfile" && !empty($this->requested_table_profile_ids)) {
-            $ilCtrl->setParameter($this, "sprof_id", $this->requested_table_profile_ids[0]);
-            $ilCtrl->redirect($this, "showLevels");
-        }
-    }
-
     public function showLevels(): void
     {
         $tpl = $this->tpl;
@@ -689,7 +677,7 @@ class ilSkillProfileGUI
         $this->assignLevelSelectSkill(true);
     }
 
-    public function assignLevelToProfile(Profile\SkillProfileLevel $level = null): void
+    public function assignLevelToProfile(?Profile\SkillProfileLevel $level = null): void
     {
         $ilCtrl = $this->ctrl;
         $lng = $this->lng;

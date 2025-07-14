@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -17,6 +15,8 @@ declare(strict_types=1);
  * https://github.com/ILIAS-eLearning
  *
  *********************************************************************/
+
+declare(strict_types=1);
 
 /**
  * Class ilUserAppEventListener
@@ -42,7 +42,7 @@ class ilUserAppEventListener implements ilAppEventListener
             $DIC['ilSetting']
         );
 
-        if ('components/ILIAS/Object' === $component && 'beforeDeletion' === $event) {
+        if ('components/ILIAS/ILIASObject' === $component && 'beforeDeletion' === $event) {
             if (isset($parameter['object']) && $parameter['object'] instanceof ilObjRole) {
                 $user_starting_point_repository->onRoleDeleted($parameter['object']);
             }

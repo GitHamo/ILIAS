@@ -74,7 +74,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
     public function getUIFactory(): NoUIFactory
     {
         return new class () extends NoUIFactory {
-            public function symbol(): C\Symbol\Factory
+            public function symbol(): I\Symbol\Factory
             {
                 return new S\Factory(
                     new S\Icon\Factory(),
@@ -176,6 +176,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
             ',
             null,
             'id_1',
+            null,
             'name_0/start_1'
         );
         $f2 = $this->getFormWrappedHtml(
@@ -187,23 +188,21 @@ class DurationInputTest extends ILIAS_UI_TestBase
             ',
             null,
             'id_2',
+            null,
             'name_0/end_2'
         );
 
         $expected = $this->getFormWrappedHtml(
             'duration-field-input',
             'label',
-            '<div class="c-field-duration" id="id_3">' . $f1 . $f2 . '</div>',
+            '<div class="c-field-duration">' . $f1 . $f2 . '</div>',
             'byline',
-            'id_2'
         );
         $this->assertEquals($expected, $this->render($duration));
         return $duration;
     }
 
-    /**
-     * @depends testRender
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testRender')]
     public function testRenderWithDifferentLabels($duration): void
     {
         $other_start_label = 'other startlabel';
@@ -220,6 +219,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
             ',
             null,
             'id_1',
+            null,
             'name_0/start_1'
         );
         $f2 = $this->getFormWrappedHtml(
@@ -231,15 +231,15 @@ class DurationInputTest extends ILIAS_UI_TestBase
             ',
             null,
             'id_2',
+            null,
             'name_0/end_2'
         );
 
         $expected = $this->getFormWrappedHtml(
             'duration-field-input',
             'label',
-            '<div class="c-field-duration" id="id_3">' . $f1 . $f2 . '</div>',
-            'byline',
-            'id_2',
+            '<div class="c-field-duration">' . $f1 . $f2 . '</div>',
+            'byline'
         );
         $this->assertEquals($expected, $this->render($duration));
     }
@@ -252,5 +252,6 @@ class DurationInputTest extends ILIAS_UI_TestBase
         $this->testWithNoByline($duration);
         $this->testWithRequired($duration);
         $this->testWithDisabled($duration);
+        $this->testWithAdditionalOnloadCodeRendersId($duration);
     }
 }

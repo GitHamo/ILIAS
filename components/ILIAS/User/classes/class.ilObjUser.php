@@ -1045,6 +1045,14 @@ class ilObjUser extends ilObject
         }
     }
 
+    public function getDateTimeFormat(): DateFormat
+    {
+        if ($this->getTimeFormat() == \ilCalendarSettings::TIME_FORMAT_24) {
+            return $this->date_format_factory->withTime24($this->getDateFormat());
+        }
+        return $this->date_format_factory->withTime12($this->getDateFormat());
+    }
+
     public function setPref(string $a_keyword, ?string $a_value): void
     {
         if ($a_keyword != '') {
@@ -1094,6 +1102,13 @@ class ilObjUser extends ilObject
 
         $rbacadmin = $DIC->rbac()->admin();
         $ilDB = $this->db;
+
+        $ilAppEventHandler = $DIC['ilAppEventHandler'];
+        $ilAppEventHandler->raise(
+            'Services/User',
+            'deleteUser',
+            ['usr_id' => $this->getId()]
+        );
 
         // deassign from ldap groups
         $mapping = ilLDAPRoleGroupMapping::_getInstance();
@@ -1179,16 +1194,6 @@ class ilObjUser extends ilObject
 
         // Reset owner
         $this->resetOwner();
-
-        // Trigger deleteUser Event
-        global $DIC;
-
-        $ilAppEventHandler = $DIC['ilAppEventHandler'];
-        $ilAppEventHandler->raise(
-            'components/ILIAS/User',
-            'deleteUser',
-            ['usr_id' => $this->getId()]
-        );
 
         // delete object data
         parent::delete();
@@ -3330,7 +3335,7 @@ class ilObjUser extends ilObject
         global $DIC;
 
         $ilDB = $DIC['ilDB'];
-        $query = 'SELECT usr_data.*, usr_pref.value AS language FROM usr_data LEFT JOIN usr_pref ON usr_pref.usr_id = usr_data.usr_id and usr_pref.keyword = %s';
+        $query = 'SELECT usr_data.*, usr_pref.value AS language FROM usr_data LEFT JOIN usr_pref ON usr_pref.usr_id = usr_data.usr_id and usr_pref.keyword = %s WHERE 1=1';
         $types[] = 'text';
         $values[] = 'language';
 
@@ -3882,7 +3887,7 @@ class ilObjUser extends ilObject
 
         $date = date('Y-m-d H:i:s', (time() - ($period * 24 * 60 * 60)));
 
-        $query = 'SELECT usr_id FROM usr_data WHERE $field < %s AND active = %s';
+        $query = "SELECT usr_id FROM usr_data WHERE $field < %s AND active = %s";
 
         $res = $ilDB->queryF($query, ['timestamp', 'integer'], [$date, 0]);
 
@@ -4240,7 +4245,7 @@ class ilObjUser extends ilObject
     public static function findInterests(
         string $a_term,
         ?int $a_user_id = null,
-        string $a_field_id = null
+        ?string $a_field_id = null
     ): array {
         global $DIC;
 

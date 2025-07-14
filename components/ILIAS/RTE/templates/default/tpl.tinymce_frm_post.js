@@ -73,6 +73,7 @@ function ilTinyMceInitCallback(ed) {
 }
 
 tinymce.init({
+    license_key: 'gpl',
     selector: "textarea.RTEditor",
     branding: false,
     language: "{LANG}",
@@ -81,6 +82,7 @@ tinymce.init({
     menubar: false,
     toolbar: "{BUTTONS_1} {BUTTONS_2} {BUTTONS_3}",
     toolbar_sticky: true,
+    toolbar_persist: true,
     toolbar_mode: 'wrap',
     image_advtab: true,
     image_title: true,
