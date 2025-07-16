@@ -16318,7 +16318,7 @@ survey#:#SurveyTextQuestion#:#Essay
 survey#:#add_heading#:#Add Heading
 survey#:#already_completed_survey#:#You have already completed the survey. It is not possible to take part in a survey a second time.
 survey#:#anonymization#:#Anonymisation
-survey#:#anonymize_anonymous_introduction#:#To gain access to this survey, you need to use a survey code comprised of 5 characters. This can be obtained from the person conducting this survey.<br />Please enter your code in the text field above.
+survey#:#anonymize_anonymous_introduction#:#To gain access to this survey, you need to use a survey code comprised of 5 characters. This can be obtained from the person conducting this survey. Please enter your code in the field that appears after clicking on ‘Start Survey’.
 survey#:#answer#:#Answer
 survey#:#arithmetic_mean#:#Arithmetic Mean
 survey#:#browse_for_questions#:#Add From Pool
@@ -16660,7 +16660,7 @@ survey#:#survey_auto_block_title#:#Page Header
 survey#:#survey_available_question_pools#:#Available Pools
 survey#:#survey_calc_skills#:#Determine Competence Levels
 survey#:#survey_calculate_sum_score#:#Calculate Sum Score
-survey#:#survey_calculate_sum_score_info#:#Calculates the sum of all scale values for single choice, multiple choice and matrix questions for each participant. Caution: If participants skip these kind of questions, the whole sum score will not be calculated anymore.
+survey#:#survey_calculate_sum_score_info#:#Calculate the sum of all scale values for single choice, multiple choice and matrix questions for each participant. Please note: If a participant skips any of these types of questions, their sum score will not be calculated.
 survey#:#survey_cancel_preview#:#Exit Preview
 survey#:#survey_cannot_preview_survey#:#Preview not available.
 survey#:#survey_code#:#Survey Access Code
@@ -16763,7 +16763,7 @@ survey#:#survey_sync_success#:#The selected questions have been updated.
 survey#:#survey_up_to_x_points#:#Up to x points
 survey#:#survey_use_start_button#:#To take part in the survey, you need to use the start button.
 survey#:#svy_activation_limited_visibility_info#:#Allow users to always see the title of the survey and its period of availability. The survey questions themselves will still only be accessible during the indicated period of availability.
-survey#:#svy_activation_online_info#:#Only if a survey is online, users can participate in it.
+survey#:#svy_activation_online_info#:#Users can only participate in a survey if it is online.
 survey#:#svy_add_internal_user#:#Add User Manually
 survey#:#svy_add_internal_user_info#:#Add someone as a rater who is a registered user on this platform.
 survey#:#svy_add_rater#:#Add Rater
@@ -16861,7 +16861,7 @@ survey#:#svy_reminder_mail_template#:#Mail Template
 survey#:#svy_reminder_mail_template_none#:#Do not use mail template
 survey#:#svy_result_mail_notification_info#:#When a participant finishes the survey, their answers will be sent to selected recipients.
 survey#:#svy_results#:#Results
-survey#:#svy_results_mail_confirm#:#Participants can request participation confirmation
+survey#:#svy_results_mail_confirm#:#Confirmation of Participation
 survey#:#svy_results_mail_confirm_info#:#Enable participants to request a mail confirming their participation in the survey upon completion.
 survey#:#svy_results_mail_own#:#Include Given Answers
 survey#:#svy_results_mail_own_info#:#The answers given by the participant will be included in their participation confirmation mail.
