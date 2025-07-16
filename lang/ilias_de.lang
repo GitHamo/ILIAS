@@ -9252,8 +9252,13 @@ exc#:#exc_ended#:#Beendet
 exc#:#exc_ended_on#:#Beendet am
 exc#:#exc_export_excel#:#Export (Excel)
 exc#:#exc_fb_files#:#Bewertungsdateien
+<<<<<<< HEAD
 exc#:#exc_fb_tutor_info#:#Die Person, welche die Abgabe eingereicht hat, wird nach dem Hochladen der Datei per Mail benachrichtigt. Die Rückmeldung wird im Reiter „Übersicht“ der Übungseinheit angezeigt und kann heruntergeladen werden.
 exc#:#exc_feedback#:#Feedback
+=======
+exc#:#exc_fb_tutor_info#:#Wird eine Datei zur Bewertung der Übungseinheit hochgeladen, erhält die Teilnehmerin oder der Teilnehmer eine Benachrichtigung und kann dann in der Übersicht der Übungseinheiten heruntergeladen und eingesehen werden.
+exc#:#exc_feedback#:#Rückmeldungen
+>>>>>>> 30b34896f2c (Fixed language bugs Mantis #45472  for Survey in English and #45389 and #45390 for Exercise in German)
 exc#:#exc_feedback_notification_body#:#Das Feedback zur folgenden Übungseinheit wurde freigeschaltet.
 exc#:#exc_feedback_notification_link#:#Link zur Übung
 exc#:#exc_feedback_notification_reason#:#Sie erhalten diese Nachricht, da Sie an der oben genannten Übung teilnehmen.
@@ -9396,7 +9401,7 @@ exc#:#exc_peer_review_completion_none_info#:#Die Übungseinheit wird automatisch
 exc#:#exc_peer_review_completion_one#:#Mindestens ein Feedback
 exc#:#exc_peer_review_completion_one_info#:#Die Übungseinheit wird automatisch auf "Bestanden" gesetzt, nachdem eine Lösung eingereicht wurde und mindestens ein Feedback gegeben wurde.
 exc#:#exc_peer_review_deadline#:#Feedback geben bis
-exc#:#exc_peer_review_deadline_info#:#Bis zu diesem Termin können Bewertungen abgegeben werden. Anschließend ist das erhaltene Feedback einsehbar.
+exc#:#exc_peer_review_deadline_info#:#Bis zu diesem Termin kann Feedback abgegeben werden. Anschließend ist das erhaltene Feedback einsehbar.
 exc#:#exc_peer_review_deadline_info_button#:#Endtermin: %s
 exc#:#exc_peer_review_deadline_reached#:#Feedback-Zeit ist abgelaufen.
 exc#:#exc_peer_review_file#:#Datei-Upload
@@ -9421,7 +9426,7 @@ exc#:#exc_peer_review_overview#:#Peer-Gruppen anzeigen
 exc#:#exc_peer_review_overview_invalid_users#:#Ungültige Benutzer
 exc#:#exc_peer_review_personal#:#Personalisiertes Peer-Feedback
 exc#:#exc_peer_review_personal_info#:#Peers werden mit vollem Namen gezeigt
-exc#:#exc_peer_review_rating#:#Bewertung
+exc#:#exc_peer_review_rating#:#5-Sterne-Bewertung
 exc#:#exc_peer_review_recipient#:#Feedback-Nehmer
 exc#:#exc_peer_review_reset#:#Peer-Feedback löschen und zurücksetzen
 exc#:#exc_peer_review_reset_done#:#Sämtliche Peer-Feedback-Daten wurde für die Übungseinheit gelöscht.
@@ -9429,10 +9434,10 @@ exc#:#exc_peer_review_reset_sure#:#Wollen Sie wirklich das komplette Peer-Feedba
 exc#:#exc_peer_review_show#:#Erhaltenes Feedback zeigen
 exc#:#exc_peer_review_show_missing#:#Sie können das erhaltene Feedback nicht einsehen, da Sie zu wenig Feedback gegeben haben.
 exc#:#exc_peer_review_show_received_none#:#Sie haben kein Feedback erhalten.
-exc#:#exc_peer_review_simple_unlock#:#Anzeige der erhaltenen Bewertungen
-exc#:#exc_peer_review_simple_unlock_active#:#Nach Abgabe einer Bewertung
-exc#:#exc_peer_review_simple_unlock_immed#:#Erhaltene Feedbacks immer anzeigen
-exc#:#exc_peer_review_simple_unlock_inactive#:#Nach Abgabe aller Bewertungen
+exc#:#exc_peer_review_simple_unlock#:#Anzeige des erhaltenen Feedbacks
+exc#:#exc_peer_review_simple_unlock_active#:#Direkt nach erstem abgegebenen Feedback
+exc#:#exc_peer_review_simple_unlock_immed#:#Erhaltenes Feedback immer anzeigen
+exc#:#exc_peer_review_simple_unlock_inactive#:#Nur wenn die geforderte Anzahl an Feedback gegeben wurde
 exc#:#exc_peer_review_text#:#Texteingabe
 exc#:#exc_peer_review_updated#:#Ihr Feedback wurde gespeichert.
 exc#:#exc_peer_reviews_in_lead_text#:#In %s Feedback geben
