@@ -9910,8 +9910,8 @@ INSERT INTO `il_object_def` VALUES ('impr','LegalNotice','components/ILIAS/Impri
 INSERT INTO `il_object_def` VALUES ('itgr','ItemGroup','components/ILIAS/ItemGroup','components/ILIAS/ItemGroup/classes',1,0,'db',0,0,1,1,0,0,45,NULL,5,1,1,0,0,0,0,0,0);
 INSERT INTO `il_object_def` VALUES ('lhts','LearningHistorySettings','components/ILIAS/LearningHistory','components/ILIAS/LearningHistory/classes',0,0,'sys',0,0,0,1,1,0,0,NULL,0,0,1,0,1,0,0,0,0);
 INSERT INTO `il_object_def` VALUES ('lm','LearningModule','components/ILIAS/LearningModule','components/ILIAS/LearningModule/classes',1,1,'db',0,1,1,1,0,0,120,'lres',0,1,1,0,0,0,0,1,1);
-INSERT INTO `il_object_def` VALUES ('lng','Language','components/ILIAS/Language_','components/ILIAS/Language_/classes',1,0,'0',0,0,0,0,0,0,0,NULL,0,0,1,0,0,0,0,0,0);
-INSERT INTO `il_object_def` VALUES ('lngf','LanguageFolder','components/ILIAS/Language_','components/ILIAS/Language_/classes',0,0,'sys',0,0,0,1,1,0,0,NULL,0,0,1,0,1,0,0,0,0);
+INSERT INTO `il_object_def` VALUES ('lng','Language','components/ILIAS/Language','components/ILIAS/Language/classes',1,0,'0',0,0,0,0,0,0,0,NULL,0,0,1,0,0,0,0,0,0);
+INSERT INTO `il_object_def` VALUES ('lngf','LanguageFolder','components/ILIAS/Language','components/ILIAS/Language/classes',0,0,'sys',0,0,0,1,1,0,0,NULL,0,0,1,0,1,0,0,0,0);
 INSERT INTO `il_object_def` VALUES ('logs','LoggingSettings','components/ILIAS/Logging','components/ILIAS/Logging/classes',0,1,'sys',0,0,0,1,1,0,0,NULL,0,0,1,0,1,0,0,0,0);
 INSERT INTO `il_object_def` VALUES ('lrss','LearningResourcesSettings','components/ILIAS/LearningModule','components/ILIAS/LearningModule/classes',0,0,'sys',0,0,0,1,1,0,0,NULL,0,0,1,0,1,0,0,0,0);
 INSERT INTO `il_object_def` VALUES ('lso','LearningSequence','components/ILIAS/LearningSequence','components/ILIAS/LearningSequence/classes',1,1,'0',0,0,1,1,0,0,30,'lso',300,1,1,0,0,0,0,0,1);
@@ -13898,7 +13898,7 @@ INSERT INTO `object_data` VALUES (34,'typ','lm','Learning module Object',-1,'200
 INSERT INTO `object_data` VALUES (35,'typ','notf','Note Folder Object',-1,'2002-12-21 00:04:00','2002-12-21 00:04:00','',NULL,NULL);
 INSERT INTO `object_data` VALUES (36,'typ','note','Note Object',-1,'2002-12-21 00:04:00','2002-12-21 00:04:00','',NULL,NULL);
 INSERT INTO `object_data` VALUES (37,'typ','frm','Forum object',-1,'2002-07-15 15:54:22','2003-08-15 12:36:40','',NULL,NULL);
-INSERT INTO `object_data` VALUES (70,'lng','en','installed',-1,NULL,'2025-07-18 06:53:06','',NULL,NULL);
+INSERT INTO `object_data` VALUES (70,'lng','en','installed',-1,NULL,'2025-07-18 10:29:39','',NULL,NULL);
 INSERT INTO `object_data` VALUES (71,'lng','de','not_installed',6,'2003-08-15 10:25:19','2015-12-22 16:29:24','',NULL,NULL);
 INSERT INTO `object_data` VALUES (72,'lng','es','not_installed',6,'2003-08-15 10:25:19','2003-08-15 10:25:19','',NULL,NULL);
 INSERT INTO `object_data` VALUES (73,'lng','it','not_installed',6,'2003-08-15 10:25:19','2003-08-15 10:25:19','',NULL,NULL);
@@ -25744,4 +25744,4 @@ CREATE TABLE `xmlvalue_seq` (
 
 
 
--- Dump completed on 2025-07-18  7:11:28
+-- Dump completed on 2025-07-18 10:29:40
