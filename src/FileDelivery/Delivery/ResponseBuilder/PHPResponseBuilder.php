@@ -130,7 +130,7 @@ class PHPResponseBuilder implements ResponseBuilder
                 $output_length = strlen($content);
             }
         } else {
-            $length = $buffer_size;
+            $length = min($length, $buffer_size);
             $content = stream_get_contents($fh, $length, $start);
             $output_length = strlen($content);
             $response = $response->withBody(
