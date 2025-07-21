@@ -21,11 +21,12 @@ declare(strict_types=1);
 /**
  * Temporary wrapper for the use of \ILIAS\UI\Component\Legacy\LatexContent
  * The whole MathJax service will be removed in stable ILIAS 11
- * @deprecated
+ * @deprecated - use ILIAS\UI\Component\Legacy\LatexContent instead
  */
 class ilMathJax
 {
-    public const PURPOSE_EXPORT = 'export';  // used by forum and wiki
+    public const PURPOSE_BROWSER = 'browser';
+    public const PURPOSE_EXPORT = 'export';
 
     protected static ?self $_instance;
 
@@ -35,6 +36,9 @@ class ilMathJax
     ) {
     }
 
+    /**
+     * @deprecated - use ILIAS\UI\Component\Legacy\LatexContent instead
+     */
     public static function getInstance(): ilMathJax
     {
         global $DIC;
@@ -45,7 +49,23 @@ class ilMathJax
     }
 
     /**
-     * @deprecated - MathJax is automatically included on every page
+     * @deprecated - use ILIAS\UI\Component\Legacy\LatexContent instead
+     */
+    public function setZoomFactor(float $a_factor): ilMathJax
+    {
+        return $this;
+    }
+
+    /**
+     * @deprecated - use ILIAS\UI\Component\Legacy\LatexContent instead
+     */
+    public function init(string $a_purpose = self::PURPOSE_BROWSER): ilMathJax
+    {
+        return $this;
+    }
+
+    /**
+     * @deprecated - use ILIAS\UI\Component\Legacy\LatexContent instead
      */
     public function includeMathJax(?ilGlobalTemplateInterface $a_tpl = null): ilMathJax
     {
