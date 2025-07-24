@@ -19,7 +19,11 @@
 declare(strict_types=0);
 
 use ILIAS\HTTP\GlobalHttpState;
-use ILIAS\Refinery\Factory;
+use ILIAS\Refinery\Factory as RefineryFactory;
+use ILIAS\UI\Renderer as UIRenderer;
+use ILIAS\Data\Factory as DataFactory;
+use ILIAS\Course\Grouping\Table\GroupingHandler as GroupingTableHandler;
+use ILIAS\Course\Grouping\Table\AssignmentHandler as AssignmentTableHandler;
 
 /**
  * Class ilObjCourseGroupingGUI
@@ -40,7 +44,11 @@ class ilObjCourseGroupingGUI
     protected ilTabsGUI $tabs;
     protected ilToolbarGUI $toolbar;
     protected GlobalHttpState $http;
-    protected Factory $refinery;
+    protected RefineryFactory $refinery;
+    protected UIRenderer $ui_renderer;
+
+    protected GroupingTableHandler $grouping_table_handler;
+    protected AssignmentTableHandler $assignment_table_handler;
 
     public function __construct(ilObject $content_obj, int $a_obj_id = 0)
     {
@@ -54,6 +62,7 @@ class ilObjCourseGroupingGUI
         $this->tabs = $DIC->tabs();
         $this->toolbar = $DIC->toolbar();
         $this->http = $DIC->http();
+        $this->ui_renderer = $DIC->ui()->renderer();
         $this->refinery = $DIC->refinery();
 
         $this->content_obj = $content_obj;
@@ -62,6 +71,30 @@ class ilObjCourseGroupingGUI
         $this->id = $a_obj_id;
         $this->ctrl->saveParameter($this, 'obj_id');
         $this->__initGroupingObject();
+
+        $data_factory = new DataFactory();
+        $this->grouping_table_handler = new GroupingTableHandler(
+            $this->ctrl->getLinkTarget($this, 'handleGroupingTableAction'),
+            $this->content_obj->getId(),
+            $this->lng,
+            $DIC->ui()->factory(),
+            $data_factory,
+            $this->http,
+            $this->refinery,
+            $DIC['static_url']
+        );
+        $this->assignment_table_handler = new AssignmentTableHandler(
+            $this->ctrl->getLinkTarget($this, 'handleAssignmentTableAction'),
+            $this->content_obj->getId(),
+            $this->grp_obj,
+            $this->lng,
+            $DIC->ui()->factory(),
+            $data_factory,
+            $this->http,
+            $this->refinery,
+            $DIC->user(),
+            $DIC->repositoryTree()
+        );
     }
 
     public function executeCommand(): void
@@ -95,27 +128,32 @@ class ilObjCourseGroupingGUI
             $this->ctrl->getLinkTarget($this, 'create')
         );
 
-        $table = new ilCourseGroupingTableGUI($this, 'listGroupings', $this->content_obj);
-        $this->tpl->setContent($table->getHTML());
+        $table = $this->grouping_table_handler->getTable();
+        $this->tpl->setContent($this->ui_renderer->render($table));
     }
 
-    public function askDeleteGrouping(): void
+    public function handleGroupingTableAction(): void
+    {
+        switch ($this->grouping_table_handler->getSelectedTableAction()) {
+            case GroupingTableHandler::ACTION_EDIT:
+                $selected = $this->grouping_table_handler->getSelectedGroupingIDs()[0] ?? 0;
+                $this->ctrl->setParameter($this, 'obj_id', $selected);
+                $this->ctrl->redirect($this, 'edit');
+                break;
+
+            case GroupingTableHandler::ACTION_DELETE:
+                $this->askDeleteGrouping(...$this->grouping_table_handler->getSelectedGroupingIDs());
+                break;
+        }
+    }
+
+    public function askDeleteGrouping(int ...$grouping_ids): void
     {
         if (!$this->access->checkAccess('write', '', $this->content_obj->getRefId())) {
             $this->error->raiseError($this->lng->txt('permission_denied'), $this->error->MESSAGE);
         }
 
-        $grouping = [];
-        if ($this->http->wrapper()->post()->has('grouping')) {
-            $grouping = $this->http->wrapper()->post()->retrieve(
-                'grouping',
-                $this->refinery->kindlyTo()->listOf(
-                    $this->refinery->kindlyTo()->int()
-                )
-            );
-        }
-
-        if (!count($grouping)) {
+        if (!count($grouping_ids)) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('crs_grouping_select_one'));
             $this->listGroupings();
             return;
@@ -129,7 +167,7 @@ class ilObjCourseGroupingGUI
         $cgui->setConfirm($this->lng->txt("delete"), "deleteGrouping");
 
         // list objects that should be deleted
-        foreach ($grouping as $grouping_id) {
+        foreach ($grouping_ids as $grouping_id) {
             $tmp_obj = new ilObjCourseGrouping($grouping_id);
             $cgui->addItem("grouping[]", $grouping_id, $tmp_obj->getTitle());
         }
@@ -302,12 +340,21 @@ class ilObjCourseGroupingGUI
             $this->lng->txt('back'),
             $this->ctrl->getLinkTarget($this, 'edit')
         );
-        $tmp_grouping = new ilObjCourseGrouping($this->id);
-        $table = new ilCourseGroupingAssignmentTableGUI($this, 'selectCourse', $this->content_obj, $tmp_grouping);
-        $this->tpl->setContent($table->getHTML());
+
+        $table = $this->assignment_table_handler->getTable();
+        $this->tpl->setContent($this->ui_renderer->render($table));
     }
 
-    public function assignCourse(): void
+    public function handleAssignmentTableAction(): void
+    {
+        switch ($this->assignment_table_handler->getSelectedTableAction()) {
+            case AssignmentTableHandler::ACTION_TOGGLE_ASSIGNMENT:
+                $this->assignCourse(...$this->assignment_table_handler->getSelectedRefIDs());
+                break;
+        }
+    }
+
+    public function assignCourse(int ...$ref_ids): void
     {
         if (!$this->access->checkAccess('write', '', $this->content_obj->getRefId())) {
             $this->error->raiseError($this->lng->txt('permission_denied'), $this->error->MESSAGE);
@@ -318,27 +365,29 @@ class ilObjCourseGroupingGUI
             return;
         }
 
+        // add assignments of not selected items that were assigned
+        // add assignments for selected items that were not assigned
+        $grouping = new ilObjCourseGrouping($this->id);
+        $assigned = $grouping->getAssignedItems();
+        $old_assigned_ref_ids = [];
+        foreach ($assigned as $item) {
+            $old_assigned_ref_ids[] = $item['target_ref_id'];
+        }
+        $new_assigned_ref_ids = array_merge(
+            array_diff($old_assigned_ref_ids, $ref_ids),
+            array_diff($ref_ids, $old_assigned_ref_ids)
+        );
+
         // delete all existing conditions
         $condh = new ilConditionHandler();
         $condh->deleteByObjId($this->id);
 
-        $added = 0;
-        $container_ids = [];
-        if ($this->http->wrapper()->post()->has('crs_ids')) {
-            $container_ids = $this->http->wrapper()->post()->retrieve(
-                'crs_ids',
-                $this->refinery->kindlyTo()->listOf(
-                    $this->refinery->kindlyTo()->int()
-                )
-            );
-        }
-
-        foreach ($container_ids as $course_ref_id) {
-            $tmp_crs = ilObjectFactory::getInstanceByRefId($course_ref_id);
+        foreach ($new_assigned_ref_ids as $ref_id) {
+            $tmp_crs = ilObjectFactory::getInstanceByRefId($ref_id);
             $tmp_condh = new ilConditionHandler();
             $tmp_condh->enableAutomaticValidation(false);
 
-            $tmp_condh->setTargetRefId($course_ref_id);
+            $tmp_condh->setTargetRefId($ref_id);
             $tmp_condh->setTargetObjId($tmp_crs->getId());
             $tmp_condh->setTargetType($this->getContentType());
             $tmp_condh->setTriggerRefId(0);
@@ -349,7 +398,6 @@ class ilObjCourseGroupingGUI
 
             if (!$tmp_condh->checkExists()) {
                 $tmp_condh->storeCondition();
-                ++$added;
             }
         }
 
