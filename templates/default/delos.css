@@ -3979,11 +3979,18 @@ button .minimize, button .close {
   padding-bottom: 12px;
 }
 
+*:has(> .il-counter) {
+  position: relative;
+}
+
+.il-counter {
+  font-size: 0.875rem;
+}
+
 .badge {
   min-width: 10px;
   font-size: 0.625rem;
   margin-left: -4px;
-  position: relative;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -3994,22 +4001,15 @@ button .minimize, button .close {
 .badge:empty {
   display: none;
 }
-
-.il-counter {
-  position: relative;
-  font-size: 0.875rem;
-}
-
-.il-counter-novelty {
+.badge.il-counter-novelty, .badge.il-counter-status {
   padding: 2px 4px;
   position: absolute;
+}
+.badge.il-counter-novelty {
   top: -5px;
   background-color: #B54F00;
 }
-
-.il-counter-status {
-  padding: 2px 4px;
-  position: absolute;
+.badge.il-counter-status {
   bottom: -5px;
   background-color: #737373;
 }
