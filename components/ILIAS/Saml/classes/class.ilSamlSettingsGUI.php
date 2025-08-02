@@ -87,6 +87,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
     private ?ilSamlAuth $saml_auth = null;
     private readonly \ILIAS\UI\Factory $ui_factory;
     private readonly \ILIAS\UI\Renderer $ui_renderer;
+    private readonly Profile $profile;
 
     public function __construct(private readonly int $ref_id)
     {
@@ -104,6 +105,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
         $this->refinery = $DIC->refinery();
         $this->ui_factory = $DIC->ui()->factory();
         $this->ui_renderer = $DIC->ui()->renderer();
+        $this->profile = $DIC['user']->getProfile();
 
         $this->lng->loadLanguageModule('auth');
     }
@@ -406,8 +408,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
         $form->setFormAction($this->ctrl->getFormAction($this, self::CMD_SAVE_USER_ATTRIBUTE_MAPPING));
         $form->setTitle($this->lng->txt(self::LNG_AUTH_SAML_USER_MAPPING));
 
-        $usr_profile = new Profile();
-        foreach ($usr_profile->getFields() as $field) {
+        foreach ($this->profile->getFields() as $field) {
             if (in_array($field->getIdentifier(), self::IGNORED_USER_FIELDS, true)) {
                 continue;
             }
@@ -453,8 +454,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
         if ($form->checkInput()) {
             $this->mapping->delete();
 
-            $usr_profile = new Profile();
-            foreach ($usr_profile->getFields() as $field) {
+            foreach ($this->profile->getFields() as $field) {
                 if (in_array($field->getIdentifier(), self::IGNORED_USER_FIELDS, true)) {
                     continue;
                 }
