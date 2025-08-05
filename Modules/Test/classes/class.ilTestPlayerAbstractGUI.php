@@ -760,7 +760,7 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
         $redirection_url = $this->object->getMainSettings()->getFinishingSettings()->getRedirectionUrl();
         if (!empty($redirection_url)
             && !$this->object->canShowTestResults($this->test_session)
-            && $this->object->getMainSettings()->getFinishingSettings()->getRedirectionMode() !== '0') {
+            && $this->object->getMainSettings()->getFinishingSettings()->getRedirectionMode() !== ilObjTest::REDIRECT_NONE) {
             if ($this->object->isRedirectModeKiosk()) {
                 if ($this->object->getKioskMode()) {
                     ilUtil::redirect($redirection_url);
