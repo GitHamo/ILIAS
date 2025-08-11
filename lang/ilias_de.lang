@@ -5578,7 +5578,7 @@ common#:#search_new#:#Neue Suche
 common#:#search_result#:#Suchergebnis
 common#:#search_results#:#Suchergebnisse
 common#:#search_user#:#Benutzer suchen
-common#:#search_users#:#Look Up Users###18 07 2025 new variable
+common#:#search_users#:#Benutzer suchen
 common#:#seas_max_hits#:#Maximalanzahl von Treffern
 common#:#seas_max_hits_info#:#Stellen Sie hier die Maximalanzahl von Suchergebnissen ein, die nach einer Suchanfrage ausgegeben werden. Je geringer die Zahl ist, desto schneller erfolgt der Seitenaufbau.
 common#:#seas_settings#:#Sucheinstellungen
