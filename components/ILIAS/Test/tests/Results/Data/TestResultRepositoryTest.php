@@ -408,7 +408,7 @@ class TestResultRepositoryTest extends \ilTestBaseTestCase
             function (\ilDBInterface|MockObject $mock) use ($fetch_all_return) {
                 $mock->expects($this->once())
                     ->method('query')
-                    ->with($this->equalTo("SELECT user_fi FROM tst_active WHERE "));
+                    ->with($this->equalTo("SELECT user_fi FROM tst_active WHERE\n"));
                 $mock->expects($this->once())->method('fetchAll')->willReturn($fetch_all_return);
             }
         );

@@ -1789,19 +1789,23 @@ class ilObjTest extends ilObject
      */
     public function getTestResult(
         int $active_id,
-        ?int $pass = null,
+        ?int $attempt = null,
         bool $ordered_sequence = false,
         bool $consider_hidden_questions = true,
         bool $consider_optional_questions = true
     ): array {
         $test_result = $this->test_result_repository->getTestResult($active_id);
 
-        if ($pass === null) {
-            $pass = $test_result->getAttempt();
+        if ($test_result === null) {
+            $test_result = $this->test_result_repository->updateTestResultCache($active_id);
+        }
+
+        if ($attempt === null) {
+            $attempt = $test_result->getAttempt();
         }
 
         $test_sequence_factory = new ilTestSequenceFactory($this, $this->db, $this->questionrepository);
-        $test_sequence = $test_sequence_factory->getSequenceByActiveIdAndPass($active_id, $pass);
+        $test_sequence = $test_sequence_factory->getSequenceByActiveIdAndPass($active_id, $attempt);
 
         $test_sequence->setConsiderHiddenQuestionsEnabled($consider_hidden_questions);
         $test_sequence->setConsiderOptionalQuestionsEnabled($consider_optional_questions);
@@ -1841,33 +1845,22 @@ class ilObjTest extends ilObject
         $solutionresult = $this->db->queryF(
             $query,
             ['integer', 'integer'],
-            [$active_id, $pass]
+            [$active_id, $attempt]
         );
 
         while ($row = $this->db->fetchAssoc($solutionresult)) {
             $arr_results[ $row['question_fi'] ] = $row;
         }
 
-        $num_worked_through = count($arr_results);
+        $result = $this->db->query(
+            'SELECT qpl_questions.*, qpl_qst_type.type_tag, qpl_sol_sug.question_fi has_sug_sol' . PHP_EOL
+            . 'FROM	qpl_qst_type, qpl_questions' . PHP_EOL
+            . 'LEFT JOIN qpl_sol_sug' . PHP_EOL
+            . 'ON qpl_sol_sug.question_fi = qpl_questions.question_id' . PHP_EOL
+            . 'WHERE qpl_qst_type.question_type_id = qpl_questions.question_type_fi' . PHP_EOL
+            . 'AND ' . $this->db->in('qpl_questions.question_id', $sequence, false, 'integer')
+        );
 
-        $IN_question_ids = $this->db->in('qpl_questions.question_id', $sequence, false, 'integer');
-
-        $query = "
-			SELECT		qpl_questions.*,
-						qpl_qst_type.type_tag,
-						qpl_sol_sug.question_fi has_sug_sol
-
-			FROM		qpl_qst_type,
-						qpl_questions
-
-			LEFT JOIN	qpl_sol_sug
-			ON			qpl_sol_sug.question_fi = qpl_questions.question_id
-
-			WHERE		qpl_qst_type.question_type_id = qpl_questions.question_type_fi
-			AND			$IN_question_ids
-		";
-
-        $result = $this->db->query($query);
         $unordered = [];
         $key = 1;
         while ($row = $this->db->fetchAssoc($result)) {
@@ -1883,16 +1876,16 @@ class ilObjTest extends ilObject
             }
 
             $data = [
-                "nr" => "$key",
-                "title" => ilLegacyFormElementsUtil::prepareFormOutput($row['title']),
-                "max" => round($row['points'], 2),
-                "reached" => round($arr_results[$row['question_id']]['reached'] ?? 0, 2),
-                "percent" => sprintf("%2.2f ", ($percentvalue) * 100) . "%",
-                "solution" => ($row['has_sug_sol']) ? assQuestion::_getSuggestedSolutionOutput($row['question_id']) : '',
-                "type" => $row["type_tag"],
-                "qid" => $row['question_id'],
-                "original_id" => $row["original_id"],
-                "workedthrough" => isset($arr_results[$row['question_id']]) ? 1 : 0,
+                'nr' => $key,
+                'title' => ilLegacyFormElementsUtil::prepareFormOutput($row['title']),
+                'max' => round($row['points'], 2),
+                'reached' => round($arr_results[$row['question_id']]['reached'] ?? 0, 2),
+                'percent' => sprintf('%2.2f ', ($percentvalue) * 100) . '%',
+                'solution' => ($row['has_sug_sol']) ? assQuestion::_getSuggestedSolutionOutput($row['question_id']) : '',
+                'type' => $row['type_tag'],
+                'qid' => $row['question_id'],
+                'original_id' => $row['original_id'],
+                'workedthrough' => isset($arr_results[$row['question_id']]) ? 1 : 0,
                 'answered' => $arr_results[$row['question_id']]['answered'] ?? 0,
                 'finalized_evaluation' => $arr_results[$row['question_id']]['finalized_evaluation'] ?? 0,
             ];
@@ -1901,13 +1894,10 @@ class ilObjTest extends ilObject
             $key++;
         }
 
-        $numQuestionsTotal = count($unordered);
-
         $pass_max = 0;
         $pass_reached = 0;
 
         $found = [];
-
         foreach ($sequence as $qid) {
             // building pass point sums based on prepared data
             // for question that exists in users qst sequence
@@ -1915,8 +1905,6 @@ class ilObjTest extends ilObject
             $pass_reached += round($unordered[$qid]['reached'], 2);
             $found[] = $unordered[$qid];
         }
-
-        $unordered = null;
 
         if ($this->getScoreCutting() == 1) {
             if ($pass_reached < 0) {
@@ -1927,12 +1915,12 @@ class ilObjTest extends ilObject
         $found['pass']['total_max_points'] = $pass_max;
         $found['pass']['total_reached_points'] = $pass_reached;
         $found['pass']['percent'] = ($pass_max > 0) ? $pass_reached / $pass_max : 0;
-        $found['pass']['num_workedthrough'] = $num_worked_through;
-        $found['pass']['num_questions_total'] = $numQuestionsTotal;
+        $found['pass']['num_workedthrough'] = count($arr_results);
+        $found['pass']['num_questions_total'] = count($unordered);
 
         $found['test']['total_max_points'] = $test_result->getMaxPoints();
         $found['test']['total_reached_points'] = $test_result->getReachedPoints();
-        $found['test']['result_pass'] = $test_result->getAttempt();
+        $found['test']['result_pass'] = $attempt;
         $found['test']['result_tstamp'] = $test_result->getTimestamp();
         $found['test']['passed'] = $test_result->isPassed();
 

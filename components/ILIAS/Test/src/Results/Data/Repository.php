@@ -45,10 +45,10 @@ class Repository
     public function getPassedParticipants(int $test_obj_id): array
     {
         $result = $this->db->queryF(
-            "SELECT tst_result_cache.active_fi AS active_id, tst_active.user_fi AS user_id FROM tst_result_cache 
-                    INNER JOIN tst_active ON tst_active.active_id = tst_result_cache.active_fi
-                    INNER JOIN tst_tests ON tst_tests.test_id = tst_active.test_fi
-                    WHERE tst_tests.obj_fi = %s AND tst_result_cache.passed_once = 1",
+            'SELECT tst_result_cache.active_fi AS active_id, tst_active.user_fi AS user_id FROM tst_result_cache' . PHP_EOL
+            . 'INNER JOIN tst_active ON tst_active.active_id = tst_result_cache.active_fi' . PHP_EOL
+            . 'INNER JOIN tst_tests ON tst_tests.test_id = tst_active.test_fi' . PHP_EOL
+            . 'WHERE tst_tests.obj_fi = %s AND tst_result_cache.passed_once = 1' . PHP_EOL,
             [\ilDBConstants::T_INTEGER],
             [$test_obj_id]
         );
@@ -73,9 +73,9 @@ class Repository
     public function getTestResult(int $active_id): ?ParticipantResult
     {
         $result = $this->db->queryF(
-            "SELECT tst_result_cache.*, tst_active.test_fi AS test_id FROM tst_result_cache 
-                    JOIN tst_active ON tst_result_cache.active_fi = tst_active.active_id
-                    WHERE active_fi = %s",
+            'SELECT tst_result_cache.*, tst_active.test_fi AS test_id FROM tst_result_cache' . PHP_EOL
+            . 'JOIN tst_active ON tst_result_cache.active_fi = tst_active.active_id' . PHP_EOL
+            . 'WHERE active_fi = %s',
             [\ilDBConstants::T_INTEGER],
             [$active_id]
         );
@@ -97,9 +97,6 @@ class Repository
             $attempt_result['last_finished_pass'],
             $attempt_result['finalized_by'],
         );
-        if (!$status->isFinished()) {
-            return null;
-        }
 
         $result = $this->buildTestResultObject($attempt_result);
         $callback = function () use ($result) {
@@ -217,7 +214,7 @@ class Repository
     private function fetchTestAttemptResult(int $active_id, int $attempt): ?array
     {
         return $this->db->fetchAssoc($this->db->queryF(
-            "SELECT tst_pass_result.*, tst_active.last_finished_pass, tst_active.user_fi AS user_id, tst_tests.test_id, 
+            "SELECT tst_pass_result.*, tst_active.last_finished_pass, tst_active.user_fi AS user_id, tst_tests.test_id,
                     tst_tests.obj_fi AS test_obj_id, tst_pass_result.maxpoints AS max_points, points AS reached_points,
                     tst_result_cache.passed_once AS passed_once_before
                     FROM tst_pass_result
@@ -289,7 +286,7 @@ class Repository
             \ilObjTest::QUESTION_SET_TYPE_RANDOM => $this->db->queryF(
                 "SELECT tst_test_rnd_qst.pass, COUNT(tst_test_rnd_qst.question_fi) qcount, SUM(qpl_questions.points) qsum
 						FROM tst_test_rnd_qst, qpl_questions
-						WHERE tst_test_rnd_qst.question_fi = qpl_questions.question_id 
+						WHERE tst_test_rnd_qst.question_fi = qpl_questions.question_id
 						    AND tst_test_rnd_qst.active_fi = %s AND	pass = %s
 						GROUP BY tst_test_rnd_qst.active_fi, tst_test_rnd_qst.pass",
                 [\ilDBConstants::T_INTEGER, \ilDBConstants::T_INTEGER],
@@ -335,7 +332,12 @@ class Repository
         $this->db->manipulate("DELETE FROM tst_test_result WHERE {$condition}");
         $this->db->manipulate("DELETE FROM tst_pass_result WHERE {$condition}");
 
-        $user_ids = $this->db->fetchAll($this->db->query("SELECT user_fi FROM tst_active WHERE {$condition}"));
+        $user_ids = $this->db->fetchAll(
+            $this->db->query(
+                'SELECT user_fi FROM tst_active WHERE' . PHP_EOL
+                . $this->db->in('active_id', $active_ids, false, \ilDBConstants::T_INTEGER)
+            )
+        );
         foreach ($user_ids as $row) {
             $this->cache->delete($row['user_fi'] . ':' . $test_obj_id);
         }
@@ -409,8 +411,8 @@ class Repository
         }
 
         $status = $this->db->fetchAssoc($this->db->queryF(
-            "SELECT tst_result_cache.passed, tst_result_cache.failed, (tst_active.last_finished_pass IS NOT NULL) AS finished  
-                    FROM tst_result_cache 
+            "SELECT tst_result_cache.passed, tst_result_cache.failed, (tst_active.last_finished_pass IS NOT NULL) AS finished
+                    FROM tst_result_cache
                     INNER JOIN tst_active ON tst_active.active_id = tst_result_cache.active_fi
                     INNER JOIN tst_tests ON tst_tests.test_id = tst_active.test_fi
                     WHERE tst_active.user_fi = %s AND tst_tests.obj_fi = %s",
