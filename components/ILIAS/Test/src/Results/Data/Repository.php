@@ -180,7 +180,8 @@ class Repository
                     'answeredquestions' => [\ilDBConstants::T_INTEGER, $result_object->getAnsweredQuestions()],
                     'workingtime' => [\ilDBConstants::T_INTEGER, $result_object->getWorkingTime()],
                     'tstamp' => [\ilDBConstants::T_INTEGER, time()],
-                    'exam_id' => [\ilDBConstants::T_TEXT, $result_object->getExamId()]
+                    'exam_id' => [\ilDBConstants::T_TEXT, $result_object->getExamId()],
+                    'finalized_by' => [\ilDBConstants::T_TEXT, $result_object->getFinalizedBy()]
                 ]
             );
         };
@@ -239,9 +240,10 @@ class Repository
     private function fetchTestResult(int $active_id, int $attempt): ?array
     {
         return $this->db->fetchAssoc($this->db->queryF(
-            "SELECT pass, SUM(points) AS points, COUNT(DISTINCT(question_fi)) answeredquestions
-                    FROM tst_test_result
-                    WHERE active_fi = %s AND pass = %s",
+            'SELECT pass, SUM(points) AS points,' . PHP_EOL
+            . 'COUNT(DISTINCT(question_fi)) answeredquestions' . PHP_EOL
+            . 'FROM tst_test_result' . PHP_EOL
+            . 'WHERE active_fi = %s AND pass = %s',
             [\ilDBConstants::T_INTEGER,\ilDBConstants::T_INTEGER],
             [$active_id, $attempt]
         ));
