@@ -240,10 +240,15 @@ class Repository
     private function fetchTestResult(int $active_id, int $attempt): ?array
     {
         return $this->db->fetchAssoc($this->db->queryF(
-            'SELECT pass, SUM(points) AS points,' . PHP_EOL
-            . 'COUNT(DISTINCT(question_fi)) answeredquestions' . PHP_EOL
-            . 'FROM tst_test_result' . PHP_EOL
-            . 'WHERE active_fi = %s AND pass = %s',
+            'SELECT r.pass,' . PHP_EOL
+            . 'SUM(r.points) AS points,' . PHP_EOL
+            . 'COUNT(DISTINCT(r.question_fi)) answeredquestions,' . PHP_EOL
+            . 'pr.exam_id,' . PHP_EOL
+            . 'pr.finalized_by' . PHP_EOL
+            . 'FROM tst_test_result r' . PHP_EOL
+            . 'INNER JOIN  tst_pass_result pr' . PHP_EOL
+            . 'ON r.active_fi = pr.active_fi AND r.pass = pr.pass' . PHP_EOL
+            . 'WHERE r.active_fi = %s AND r.pass = %s',
             [\ilDBConstants::T_INTEGER,\ilDBConstants::T_INTEGER],
             [$active_id, $attempt]
         ));

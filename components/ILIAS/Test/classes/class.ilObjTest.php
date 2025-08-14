@@ -1007,7 +1007,7 @@ class ilObjTest extends ilObject
             $this,
             $this->user,
             $this->db,
-            $this->lng
+            $this->test_result_repository
         );
 
         array_walk(
