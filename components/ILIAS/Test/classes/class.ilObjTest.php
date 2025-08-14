@@ -7547,13 +7547,16 @@ class ilObjTest extends ilObject
 
         $result = $this->db->queryF(
             '
-			SELECT		SUM(points) reachedpoints,
-						SUM(hint_count) hint_count,
-						SUM(hint_points) hint_points,
-						COUNT(DISTINCT(question_fi)) answeredquestions
-			FROM		tst_test_result
-			WHERE		active_fi = %s
-			AND			pass = %s
+			SELECT		SUM(r.points) reachedpoints,
+						SUM(r.hint_count) hint_count,
+						SUM(r.hint_points) hint_points,
+						COUNT(DISTINCT(r.question_fi)) answeredquestions,
+                        pr.finalized_by finalized_by
+			FROM		tst_test_result r
+            INNER JOIN  tst_pass_result pr
+                ON r.active_fi = pr.active_fi AND r.pass = pr.pass
+			WHERE		r.active_fi = %s
+			AND			r.pass = %s
 			',
             ['integer','integer'],
             [$active_id, $pass]
@@ -7591,7 +7594,8 @@ class ilObjTest extends ilObject
                         'tstamp' => ['integer', time()],
                         'hint_count' => ['integer', $row['hint_count']],
                         'hint_points' => ['float', $row['hint_points']],
-                        'exam_id' => ['text', $exam_identifier]
+                        'exam_id' => ['text', $exam_identifier],
+                        'finalized_by' => ['text', $row['finalized_by']]
                     ]
                 );
             };
