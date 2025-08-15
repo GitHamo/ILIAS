@@ -14643,6 +14643,7 @@ rbac#:#rbac_log_source_object#:#Source object
 rbac#:#rbac_msg_user_already_assigned#:#The chosen users are already assigned to this role.
 rbac#:#rbac_not_change_existing_objects#:#Do NOT change existing objects
 rbac#:#rbac_permissions#:#Permissions
+rbac#:#rbac_precondition_condition#:#Access requires having this status
 rbac#:#rbac_precondition_hide#:#Hide Object
 rbac#:#rbac_precondition_hide_info#:# This option allows to hide the object for users who currently have not fulfilled the preconditions. Therefore, all not accessible content is invisible.
 rbac#:#rbac_precondition_minimum_optional#:#At least 2 preconditions have to remain optional.
