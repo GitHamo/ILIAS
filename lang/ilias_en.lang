@@ -9715,7 +9715,7 @@ exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for versi
 exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
 exp#:#exp_print_pdf_info#:#To create a PDF please select "Print to PDF" in the print modal that appears after clicking on ‘Print View’.
-exp#:#exp_public_access_status#:#Available on ‘Info’-tab
+exp#:#exp_public_access_status#:#Available in ‘Info’-tab
 exp#:#exp_really_delete#:#Are you sure you want to delete the following export file(s)?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML
