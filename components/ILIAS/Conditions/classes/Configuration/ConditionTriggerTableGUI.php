@@ -104,7 +104,7 @@ class ConditionTriggerTableGUI implements DataRetrieval
             'condition' => $this->ui_factory
                 ->table()
                 ->column()
-                ->text($this->lng->txt('condition'))
+                ->text($this->lng->txt('rbac_precondition_condition'))
                 ->withIsSortable(true),
             'obligatory' => $this->ui_factory
                 ->table()

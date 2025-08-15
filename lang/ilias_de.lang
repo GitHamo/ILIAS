@@ -13890,7 +13890,7 @@ rbac#:#accs_read#:#Einstellungen zur Barrierefreiheit einsehen
 rbac#:#accs_visible#:#Administrationsknoten „Barrierefreiheit“ sehen
 rbac#:#accs_write#:#Einstellungen zur Barrierefreiheit bearbeiten
 rbac#:#activate_wiki_protection#:#Schreibschutz aktivieren
-rbac#:#active_preconditions#:#Definierte Vorbedingungen
+rbac#:#active_preconditions#:#Vorbedingungen
 rbac#:#add_consultation_hours#:#Sprechstundentermine anlegen
 rbac#:#add_consume_provider#:#Eigene LTI-Provider-Einstellungen hinzufügen
 rbac#:#add_pages#:#Seiten erstellen
@@ -14397,8 +14397,8 @@ rbac#:#poll_visible#:#Abstimmung ist sichtbar
 rbac#:#poll_write#:#Abstimmung bearbeiten
 rbac#:#positions_override_operations#:#Globale Einstellungen überschreiben
 rbac#:#precondition_not_obligatory_alt#:#Die Vorbedingung ist optional
-rbac#:#precondition_num_obligatory#:#Anzahl benötigter Materialien
-rbac#:#precondition_num_optional_info#:#Bitte geben Sie die Mindestanzahl der Materialien an, die notwendig ist, um die Vorbedingung zu erfüllen.
+rbac#:#precondition_num_obligatory#:#Geforderte Anzahl Materialien
+rbac#:#precondition_num_optional_info#:#Anzahl von Materialien, die bis zum festgelegten Status / Ergebnis zu bearbeiten sind
 rbac#:#precondition_obligatory#:#Verpflichtend
 rbac#:#precondition_obligatory_alt#:#Die Vorbedingung muss erfüllt werden
 rbac#:#precondition_obligatory_info#:#Verpflichtende Vorbedingungen müssen erfüllt werden, um Zugriff zu erhalten.
@@ -14565,16 +14565,17 @@ rbac#:#rbac_log_source_object#:#Quell-Objekt
 rbac#:#rbac_msg_user_already_assigned#:#Die ausgewählten Benutzer sind dieser Rolle bereits zugeordnet.
 rbac#:#rbac_not_change_existing_objects#:#Vorhandene Objekte NICHT anpassen
 rbac#:#rbac_permissions#:#Rechte
+rbac#:#rbac_precondition_condition#:#Zugriff erfordert folgenden Status
 rbac#:#rbac_precondition_hide#:#Objekt verbergen
 rbac#:#rbac_precondition_hide_info#:#Dieses Objekt wird Benutzern solange nicht angezeigt, bis die definierten Vorbedingungen erfüllt sind.
 rbac#:#rbac_precondition_minimum_optional#:#Es müssen mindestens zwei Vorbedingungen optional verbleiben.
 rbac#:#rbac_precondition_mode#:#Modus
-rbac#:#rbac_precondition_mode_all#:#Alle Vorbedingungen
-rbac#:#rbac_precondition_mode_all_info#:#Alle definierten Vorbedingungen müssen für einen Zugriff erfüllt werden.
-rbac#:#rbac_precondition_mode_subset#:#Untermenge der Vorbedingungen
-rbac#:#rbac_precondition_mode_subset_info#:#Eine Untermenge der definierten Vorbedingungen muss für einen Zugriff erfüllt werden. Einige Vorbedingungen können trotzdem verpflichtend sein.
-rbac#:#rbac_precondition_save_obligatory#:#Verpflichtend speichern
-rbac#:#rbac_precondition_source#:#Vorbedingung durch
+rbac#:#rbac_precondition_mode_all#:#Alle Vorbedingungen erfüllen
+rbac#:#rbac_precondition_mode_all_info#:#Um auf dieses Objekt zuzugreifen, muss jemand vorher alle Vorbedingungen erfüllen und alle Materialien bis zum festgelegten Status / Ergebnis bearbeiten.
+rbac#:#rbac_precondition_mode_subset#:#Nur einige Vorbedingungen erfüllen
+rbac#:#rbac_precondition_mode_subset_info#:#Die festgelegte Anzahl von Materialien muss bis zum festgelegten Status / Ergebnis bearbeitet werden.<br/>Achtung: Das Durcharbeiten einiger Materialien kann trotzdem auf "verpflichtend" gesetzt werden.
+rbac#:#rbac_precondition_save_obligatory#:#Verpflichtend-Status speichern
+rbac#:#rbac_precondition_source#:#Materialien
 rbac#:#rbac_precondition_target#:#Vorbedingung für Zugriff auf
 rbac#:#rbac_repository_permissions#:#Magazinrechte
 rbac#:#rbac_role_delete_qst#:#Sind Sie sicher, dass Sie diese Rolle löschen möchten. Alle Rechte, die durch die Rolle gewährt werden, sind dann unwiderruflich aufgehoben.
