@@ -39,9 +39,9 @@ use ILIAS\Refinery\ConstraintViolationException;
  */
 class ilConditionHandlerGUI
 {
-    private const LIST_MODE_UNDEFINED = 'undefined';
-    private const LIST_MODE_ALL = 'all';
-    private const LIST_MODE_SUBSET = 'subset';
+    private const string LIST_MODE_UNDEFINED = 'undefined';
+    private const string LIST_MODE_ALL = 'all';
+    private const string LIST_MODE_SUBSET = 'subset';
 
     protected ilCtrl $ctrl;
     protected ilLanguage $lng;
