@@ -24,6 +24,7 @@ use ILIAS\Data\DateFormat\DateFormat;
 use ILIAS\Data\DateFormat\Factory as DateFormatFactory;
 use ILIAS\Data\Factory as DataFactory;
 use ILIAS\Authentication\Password\LocalUserPasswordManager;
+use ILIAS\Export\ExportHandler\Factory as ExportFactory;
 
 /**
  * User class
@@ -116,7 +117,6 @@ class ilObjUser extends ilObject
     protected string $first_login = '';	// timestamp
     protected bool $profile_incomplete = false;
     protected ?string $avatar_rid = null;
-
     protected DateFormatFactory $date_format_factory;
     private ilCronDeleteInactiveUserReminderMail $cron_delete_user_reminder_mail;
     private Services $irss;
@@ -3950,18 +3950,22 @@ class ilObjUser extends ilObject
 
     public function exportPersonalData(): void
     {
-        $exp = new ilExport();
-        $dir = ilExport::_getExportDirectory($this->getId(), 'xml', 'usr', 'personal_data');
-        ilFileUtils::delDir($dir, true);
-        $title = $this->getLastname() . ', ' . $this->getLastname() . ' [' . $this->getLogin() . ']';
-        $exp->exportEntity(
-            'personal_data',
-            $this->getId(),
-            '',
-            'components/ILIAS/User',
-            $title,
-            $dir
+        if (!isset($this->user)) {
+            global $DIC;
+            $this->user = $DIC->user();
+        }
+        $export_consumer = (new ExportFactory())->consumer()->handler();
+        $configs = $export_consumer->exportConfig()->allExportConfigs();
+        /** @var ilUserExportConfig $config */
+        $config = $configs->getElementByClassName('ilUserExportConfig');
+        $config->setExportType('personal_data');
+        $export = $export_consumer->createStandardExportByObject(
+            $this->user->getId(),
+            $this,
+            $configs
         );
+        $export->getIRSS()->download();
+        $export->getIRSS()->delete($export_consumer->exportStakeholderHandler());
     }
 
     public function getPersonalDataExportFile(): string
@@ -4013,7 +4017,7 @@ class ilObjUser extends ilObject
         $imp->importEntity(
             $a_file['tmp_name'],
             $a_file['name'],
-            'personal_data',
+            'usr',
             'components/ILIAS/User'
         );
     }
