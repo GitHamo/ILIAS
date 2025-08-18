@@ -117,6 +117,7 @@ class ilObjUser extends ilObject
     protected string $first_login = '';	// timestamp
     protected bool $profile_incomplete = false;
     protected ?string $avatar_rid = null;
+    protected \ILIAS\FileDelivery\Delivery\StreamDelivery $delivery;
     protected DateFormatFactory $date_format_factory;
     private ilCronDeleteInactiveUserReminderMail $cron_delete_user_reminder_mail;
     private Services $irss;
@@ -147,6 +148,7 @@ class ilObjUser extends ilObject
 
         $this->app_event_handler = $DIC['ilAppEventHandler'];
         $this->date_format_factory = (new DataFactory())->dateFormat();
+        $this->delivery = $DIC->fileDelivery()->delivery();
     }
 
     /**
@@ -3964,8 +3966,10 @@ class ilObjUser extends ilObject
             $this,
             $configs
         );
-        $export->getIRSS()->download();
+        $stream = Streams::ofString($export->getIRSSInfo()->getStream()->getContents());
+        $file_name = $export->getIRSSInfo()->getFileName();
         $export->getIRSS()->delete($export_consumer->exportStakeholderHandler());
+        $this->delivery->deliver($stream, $file_name);
     }
 
     public function getPersonalDataExportFile(): string
