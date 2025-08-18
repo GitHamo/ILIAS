@@ -157,6 +157,7 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
 
             case 'iltestsubmissionreviewgui':
                 $this->checkTestExecutable();
+                $this->handleCheckTestPassValid(true);
 
                 $gui = new ilTestSubmissionReviewGUI($this, $this->object, $this->test_session);
                 $gui->setObjectiveOrientedContainer($this->getObjectiveOrientedContainer());
@@ -230,12 +231,12 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
                     $this->checkTestExecutable();
                 }
 
-                if ($cmd === 'outQuestionSummary') {
-                    $this->handleCheckTestPassValid();
+                if ($cmd === 'outQuestionSummary'
+                    || $cmd === 'submitSolution') {
+                    $this->handleCheckTestPassValid(true);
                 }
 
-                if ($cmd === 'showQuestion'
-                    || $cmd === 'outQuestionSummary') {
+                if ($cmd === 'showQuestion') {
                     $testPassesSelector = new ilTestPassesSelector($this->db, $this->object);
                     $testPassesSelector->setActiveId($this->test_session->getActiveId());
                     $testPassesSelector->setLastFinishedPass($this->test_session->getLastFinishedPass());
@@ -3090,14 +3091,22 @@ JS;
         $this->test_sequence->saveToDb();
     }
 
-    protected function handleCheckTestPassValid(): void
+    protected function handleCheckTestPassValid(bool $with_redirect = false): void
     {
         $testObj = new ilObjTest($this->ref_id, true);
 
         $participants = $testObj->getActiveParticipantList();
         $participant = $participants->getParticipantByActiveId($this->testrequest->getActiveId());
-        if (!$participant || !$participant->hasUnfinishedPasses()) {
-            $this->tpl->setOnScreenMessage('failure', $this->lng->txt('tst_current_run_no_longer_valid'), true);
+        if ($participant && $participant->hasUnfinishedPasses()) {
+            return;
+        }
+        $this->tpl->setOnScreenMessage('failure', $this->lng->txt('tst_current_run_no_longer_valid'), true);
+        if ($with_redirect) {
+            $this->ctrl->redirectByClass([
+                ilRepositoryGUI::class,
+                ilObjTestGUI::class,
+                TestScreenGUI::class
+            ]);
         }
     }
 
