@@ -206,6 +206,10 @@ abstract class ilTestOutputGUI extends ilTestPlayerAbstractGUI
                     }
                 }
 
+                if ($cmd === 'outQuestionSummary') {
+                    $this->handleCheckTestPassValid();
+                }
+
                 $cmd .= 'Cmd';
                 $ret = $this->$cmd();
                 break;
