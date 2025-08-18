@@ -200,7 +200,12 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
                     $this->checkTestExecutable();
                 }
 
-                if (strtolower($cmd) === 'showquestion') {
+                if ($cmd === 'outQuestionSummary') {
+                    $this->handleCheckTestPassValid();
+                }
+
+                if ($cmd === 'showQuestion'
+                    || $cmd === 'outQuestionSummary') {
                     $testPassesSelector = new ilTestPassesSelector($this->db, $this->object);
                     $testPassesSelector->setActiveId($this->test_session->getActiveId());
                     $testPassesSelector->setLastFinishedPass($this->test_session->getLastFinishedPass());
@@ -3013,7 +3018,7 @@ JS;
         $participants = $testObj->getActiveParticipantList();
         $participant = $participants->getParticipantByActiveId($this->testrequest->getActiveId());
         if (!$participant || !$participant->hasUnfinishedPasses()) {
-            $this->tpl->setOnScreenMessage('failure', $this->lng->txt("tst_current_run_no_longer_valid"), true);
+            $this->tpl->setOnScreenMessage('failure', $this->lng->txt('tst_current_run_no_longer_valid'), true);
         }
     }
 
