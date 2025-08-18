@@ -123,6 +123,7 @@ abstract class ilTestOutputGUI extends ilTestPlayerAbstractGUI
 
             case 'iltestsubmissionreviewgui':
                 $this->checkTestExecutable();
+                $this->handleCheckTestPassValid();
 
                 $gui = new ilTestSubmissionReviewGUI($this, $this->object, $this->test_session);
                 $gui->setObjectiveOrientedContainer($this->getObjectiveOrientedContainer());
@@ -206,7 +207,8 @@ abstract class ilTestOutputGUI extends ilTestPlayerAbstractGUI
                     }
                 }
 
-                if ($cmd === 'outQuestionSummary') {
+                if ($cmd === 'outQuestionSummary'
+                    || $cmd === 'submitSolution') {
                     $this->handleCheckTestPassValid();
                 }
 
