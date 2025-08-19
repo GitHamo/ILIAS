@@ -4409,7 +4409,7 @@ common#:#import_file#:#Import File
 common#:#import_file_not_valid_here#:#The import file is not valid or the contained object type cannot be imported here.
 common#:#import_finished#:#Number of imported messages.
 common#:#import_lm#:#Import ILIAS Learning module
-common#:#import_qpl#:#Import Question Pool Test
+common#:#import_qpl#:#Import Question Pool for Tests
 common#:#import_questions_into_qpl#:#Import question(s) into question pool
 common#:#import_sahs#:#Import SCORM Package
 common#:#import_sahs_info#:#To correct typos or images, use the option to replace individual files via the file directory. Upload a SCORM export from your authoring tool here and not an ILIAS export file. Make sure that your authoring tool has retained the IDs in the manifest file. Attention: Even popular authoring tools cannot do this. SCORM learning modules of certain authoring tools discard learner data obtained if you change the number of answer options of questions or insert new questions. Check in a test installation whether learning statuses that have already been achieved are possible when learning modules that have already been started are called up again.
@@ -5092,9 +5092,9 @@ common#:#obj_prtt#:#Portfolio Template
 common#:#obj_prtt_duplicate#:#Copy Portfolio Template
 common#:#obj_ps#:#Privacy and Security
 common#:#obj_ps_desc#:#Configure global privacy and security settings here.
-common#:#obj_qpl#:#Question Pool Test
-common#:#obj_qpl_duplicate#:#Copy Question Pool Test
-common#:#obj_qpl_select#:#-- Please select one question pool test --
+common#:#obj_qpl#:#Question Pool for Tests
+common#:#obj_qpl_duplicate#:#Copy Question Pool for Tests
+common#:#obj_qpl_select#:#-- Please select one question pool for tests --
 common#:#obj_rcat#:#ECS Category
 common#:#obj_rcrs#:#ECS Course
 common#:#obj_recf#:#Restored Objects
@@ -5221,7 +5221,7 @@ common#:#objs_prg#:#Study Programmes
 common#:#objs_prgr#:#Links to Study Programmes
 common#:#objs_prtf#:#Portfolios
 common#:#objs_prtt#:#Portfolio Templates
-common#:#objs_qpl#:#Question Pools Test
+common#:#objs_qpl#:#Question Pools for Tests
 common#:#objs_qst#:#Questions
 common#:#objs_rcat#:#ECS Categories
 common#:#objs_rcrs#:#ECS Courses
@@ -5422,9 +5422,9 @@ common#:#public_notes#:#Public Notes
 common#:#public_profile#:#Profile
 common#:#public_room#:#Public Chat Room
 common#:#purpose#:#Purpose
-common#:#qpl#:#Question Pool Test
-common#:#qpl_add#:#Add Question Pool Test
-common#:#qpl_new#:#New Question Pool Test
+common#:#qpl#:#Question Pool for Tests
+common#:#qpl_add#:#Add Question Pool for Tests
+common#:#qpl_new#:#New Question Pool for Tests
 common#:#query_data#:#Query data
 common#:#question#:#Question
 common#:#question_message#:#Question
@@ -14581,7 +14581,7 @@ rbac#:#rbac_create_poll#:#Create Poll
 rbac#:#rbac_create_prg#:#Create Study Programme
 rbac#:#rbac_create_prgr#:#Create link to study programme
 rbac#:#rbac_create_prtt#:#Create Portfolio Template
-rbac#:#rbac_create_qpl#:#Create Question Pool Test
+rbac#:#rbac_create_qpl#:#Create Question Pool for Tests
 rbac#:#rbac_create_rcrs#:#Create ECS Course
 rbac#:#rbac_create_role#:#Create new Role
 rbac#:#rbac_create_rolt#:#Create new Role Template
