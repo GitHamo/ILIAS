@@ -19,7 +19,7 @@
 declare(strict_types=1);
 
 use ILIAS\User\UserGUIRequest;
-use ILIAS\Language\Language;
+use ILIAS\Repository\ExternalGUIService as RepositoryGUIs;
 use ILIAS\FileUpload\FileUpload;
 use ILIAS\ResourceStorage\Services as ResourceStorageServices;
 use ILIAS\ResourceStorage\Stakeholder\ResourceStakeholder;
@@ -39,6 +39,7 @@ class ilObjUserGUI extends ilObjectGUI
     private UserGUIRequest $user_request;
     private ilHelpGUI $help;
     private ilTabsGUI $tabs;
+    private RepositoryGUIs $repository_guis;
     private ilMailMimeSenderFactory $mail_sender_factory;
 
     private FileUpload $uploads;
@@ -74,6 +75,7 @@ class ilObjUserGUI extends ilObjectGUI
         $this->ctrl = $DIC['ilCtrl'];
         $this->tabs = $DIC['ilTabs'];
         $this->help = $DIC['ilHelp'];
+        $this->repository_guis = $DIC->repository()->gui();
         $this->mail_sender_factory = $DIC->mail()->mime()->senderFactory();
 
         $this->user_profile = new ilUserProfile();
@@ -121,9 +123,12 @@ class ilObjUserGUI extends ilObjectGUI
                 $this->ctrl->forwardCommand($new_gui);
                 break;
 
-            case 'ilobjectownershipmanagementgui':
-                $gui = new ilObjectOwnershipManagementGUI($this->object->getId());
-                $this->ctrl->forwardCommand($gui);
+            case strtolower(ilObjectOwnershipManagementGUI::class):
+                $this->ctrl->forwardCommand(
+                    $this->repository_guis->ownershipManagementGUI(
+                        $this->object->getId()
+                    )
+                );
                 break;
 
             default:
