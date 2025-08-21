@@ -265,7 +265,8 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
         return [
             'enableForumNotification',
             'disableForumNotification',
-            'toggleThreadNotification'
+            'toggleThreadNotification',
+            'confirmDeleteThreadDrafts'
         ];
     }
 
@@ -3887,9 +3888,6 @@ EOD
         }
 
         $draftIds = array_filter((array) ($this->httpRequest->getParsedBody()['draft_ids'] ?? []));
-        if ([] === $draftIds) {
-            $draftIds = array_filter([(int) ($this->httpRequest->getQueryParams()['draft_id'] ?? 0)]);
-        }
 
         $instances = ilForumPostDraft::getDraftInstancesByUserId($this->user->getId());
         $checkedDraftIds = [];
