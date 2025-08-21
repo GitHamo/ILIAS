@@ -197,7 +197,7 @@ class ForumNotificationTable implements DataRetrieval
     {
         $this->initRecords($filter_data);
 
-        return count((array) $this->records);
+        return \count((array) $this->records);
     }
 
     /**
@@ -303,7 +303,7 @@ class ForumNotificationTable implements DataRetrieval
                     default => ''
                 };
             }, $this->participants->getAssignedRoles($user_id)));
-            if (in_array($user_id, $moderator_ids, true)) {
+            if (\in_array($user_id, $moderator_ids, true)) {
                 $types .= ', ' . $this->lng->txt('frm_moderators');
             }
 
@@ -371,7 +371,7 @@ class ForumNotificationTable implements DataRetrieval
      */
     private function limitRecords(array $records, Range $range): array
     {
-        return array_slice($records, $range->getStart(), $range->getLength());
+        return \array_slice($records, $range->getStart(), $range->getLength());
     }
 
     /**
