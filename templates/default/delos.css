@@ -21379,20 +21379,6 @@ a.ilMediaLightboxClose:hover {
   width: auto;
 }
 
-/* Services/UIComponent/Tooltip */
-.qtip-default {
-  font-size: 0.75rem;
-  line-height: 1.5;
-  background-color: #4c6586;
-  border-color: #4c6586;
-  color: white;
-  -webkit-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
-  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-
 /* Services/User */
 div.ilProfile {
   max-width: 450px;
