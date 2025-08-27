@@ -4401,7 +4401,7 @@ EOD
         $has_membership_enabled_parent_container = $this->object->isParentMembershipEnabledContainer();
         $user_may_disable_notifcations = (
             $this->isUserAllowedToDeactivateNotification() ||
-            $has_membership_enabled_parent_container
+            !$has_membership_enabled_parent_container
         );
 
         if ($this->objCurrentTopic->getId() > 0) {
