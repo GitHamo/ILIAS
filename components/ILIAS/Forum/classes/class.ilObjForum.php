@@ -365,14 +365,14 @@ class ilObjForum extends ilObject
             $old_forum_files->ilClone($new_obj->getId(), $newPostId);
         }
 
-        $soure_ref_id = $this->getRefId();
+        $source_ref_id = $this->getRefId();
         $target_ref_id = $new_obj->getRefId();
         $target_notifications = new ilForumNotification($target_ref_id);
 
-        if ($soure_ref_id > 0 && $target_ref_id > 0 &&
-            $this->tree->getParentId($soure_ref_id) === $this->tree->getParentId($target_ref_id)) {
+        if ($source_ref_id > 0 && $target_ref_id > 0 &&
+            $this->tree->getParentId($source_ref_id) === $this->tree->getParentId($target_ref_id)) {
             if ($new_obj->isParentMembershipEnabledContainer()) {
-                $target_notifications->cloneFromSource($soure_ref_id);
+                $target_notifications->cloneFromSource($source_ref_id);
             }
         } else {
             $object_properties = ilForumProperties::getInstance($this->getId());
