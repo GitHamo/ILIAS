@@ -4667,7 +4667,7 @@ EOD
 
         if ($this->objProperties->getNotificationType() === NotificationType::PER_USER &&
             $this->object->isParentMembershipEnabledContainer()) {
-            $frm_noti = new ilForumNotification($this->retrieveRefId());
+            $frm_noti = new ilForumNotification($this->object->getRefId());
             $frm_noti->setUserId($this->user->getId());
 
             return !$frm_noti->isUserToggleNotification();
