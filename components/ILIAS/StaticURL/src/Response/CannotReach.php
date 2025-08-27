@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -18,13 +16,21 @@ declare(strict_types=1);
  *
  *********************************************************************/
 
+namespace ILIAS\StaticURL\Response;
+
 /**
-* sets ILIAS version (this file shouldn't be merged between cvs branches)
-*
-* @author Alex Killing <alex.killing@gmx.de>
-* @version $Id$
-*
-* @package ilias-core
-*/
-const ILIAS_VERSION = "10.1 2025-08-26";
-const ILIAS_VERSION_NUMERIC = "10.1";            // since version ILIAS 6 this must be always x.y: x and y are numbers
+ * @author Fabian Schmid <fabian@sr.solutions>
+ */
+class CannotReach implements Response
+{
+    public function getURIPath(): ?string
+    {
+        return null;
+    }
+
+    public function targetCanBeReached(): bool
+    {
+        return true;
+    }
+
+}
