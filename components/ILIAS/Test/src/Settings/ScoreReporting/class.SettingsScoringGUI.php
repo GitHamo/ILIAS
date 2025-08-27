@@ -234,7 +234,7 @@ class SettingsScoringGUI extends TestSettingsGUI
     {
         $result_summary_settings = $this->test_object->getScoreSettings()
             ->getResultSummarySettings();
-        if ($result_summary_settings->getScoreReporting()->isReportingEnabled()) {
+        if (!$result_summary_settings->getScoreReporting()->isReportingEnabled()) {
             return false;
         }
 
