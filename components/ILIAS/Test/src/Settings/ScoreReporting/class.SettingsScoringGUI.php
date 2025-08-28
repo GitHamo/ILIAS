@@ -239,8 +239,8 @@ class SettingsScoringGUI extends TestSettingsGUI
         }
 
         if ($result_summary_settings->getScoreReporting() === ScoreReportingTypes::SCORE_REPORTING_DATE) {
-            return $result_summary_settings->getResultSummarySettings()
-                ->getReportingDate() <= new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+            return $result_summary_settings->getReportingDate()
+                <= new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         }
 
         return true;
