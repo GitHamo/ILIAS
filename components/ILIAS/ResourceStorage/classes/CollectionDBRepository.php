@@ -88,7 +88,7 @@ class CollectionDBRepository implements CollectionRepository
         $r = $this->db->queryF($q, ['text'], [$identification->serialize()]);
         $d = $this->db->fetchAssoc($r);
 
-        return (bool) $d['found'];
+        return (bool) ($d['found'] ?? false);
     }
 
     /**
