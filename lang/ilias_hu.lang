@@ -6165,6 +6165,7 @@ contact#:#contact_awrn_req_contacts_info#:#Az összes felhasználót felsoroljuk
 content#:#Pages#:#Lapok
 content#:#add_menu_entry#:#Menübejegyzés hozzáadása
 content#:#all_pages#:#a teljes tananyag
+content#:#cfont_act_number#:#Fejezetszámozás
 content#:#citate#:#Idéz
 content#:#citate_from#:#Idéz honnan …
 content#:#citate_page#:#Idézi ezt a lapot
@@ -6203,7 +6204,6 @@ content#:#cont_TableContent#:#Táblázattartalom
 content#:#cont_Verse#:#Verssor/Strófa
 content#:#cont_WholePicture#:#Teljes kép
 content#:#cont_accented#:#Ékezetes
-content#:#cfont_act_number#:#Fejezetszámozás
 content#:#cont_activate_html#:#HTML renderelés bekapcsolása
 content#:#cont_activate_js#:#JavaScript mód bekapcsolása
 content#:#cont_activate_media#:#Média bekapcsolása
