@@ -577,7 +577,10 @@ class ilRatingGUI
         );
 
 
-        $button = $f->button()->shy('###button###', '#');
+        $button = $f->button()->shy('###button###', '#')
+            ->withOnLoadCode(function (string $id): string {
+                return "document.getElementById('$id').classList.add('ilRating');";
+            });
         if ($has_overlay) {
             $ttpl->setVariable(
                 "RATING_DETAILS",
