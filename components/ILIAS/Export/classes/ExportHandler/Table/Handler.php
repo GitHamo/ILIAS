@@ -22,16 +22,13 @@ namespace ILIAS\Export\ExportHandler\Table;
 
 use ilCalendarSettings;
 use ilCtrl;
-use ilExportExportOptionXML;
 use ILIAS\Data\Factory as ilDataFactory;
-use ILIAS\Data\ObjectId;
 use ILIAS\DI\UIServices as ilUIServices;
 use ILIAS\Export\ExportHandler\Factory as ilExportHandler;
 use ILIAS\Export\ExportHandler\I\Consumer\Context\HandlerInterface as ilExportHandlerConsumerContextInterface;
 use ILIAS\Export\ExportHandler\I\Consumer\ExportOption\CollectionInterface as ilExportHandlerConsumerExportOptionCollectionInterface;
 use ILIAS\Export\ExportHandler\I\Consumer\File\Identifier\CollectionInterface as ilExportHandlerConsumerFileIdentifierCollectionInterface;
 use ILIAS\Export\ExportHandler\I\Table\HandlerInterface as ilExportHandlerTableInterface;
-use ILIAS\Export\ExportHandler\I\Table\RowId\CollectionInterface as ilExportHandlerTableRowCollectionInterface;
 use ILIAS\HTTP\Services as ilHTTPServices;
 use ILIAS\Refinery\Factory as ilRefineryFactory;
 use ILIAS\UI\Component\Table\Data as ilDataTable;
@@ -334,6 +331,9 @@ class Handler implements ilExportHandlerTableInterface
         $composit_ids = is_array($tokens) ? $tokens : [$tokens];
         $ids_sorted = [];
         foreach ($composit_ids as $composit_id) {
+            if (is_null($composit_id)) {
+                continue;
+            }
             $table_row_id = $this->export_handler->table()->rowId()->handler()
                 ->withCompositId($composit_id);
             $file_identifier = $this->export_handler->consumer()->file()->identifier()->handler()

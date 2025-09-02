@@ -20,13 +20,12 @@ declare(strict_types=1);
 
 namespace ILIAS\Export\ExportHandler\I\Repository\Element\Wrapper\IRSS;
 
+use ILIAS\Dataset\IRSSContainerExportConfig;
 use ILIAS\Export\ExportHandler\I\Repository\Element\HandlerInterface as ilExportHandlerRepositoryElementInterface;
+use ILIAS\Export\ExportHandler\I\Repository\Stakeholder\HandlerInterface as ExportRepositoryStakeholderInterface;
 use ILIAS\Filesystem\Stream\FileStream;
 use ILIAS\ResourceStorage\Collection\ResourceCollection;
 use ILIAS\ResourceStorage\Identification\ResourceIdentification;
-use ILIAS\ResourceStorage\Resource\StorableContainerResource;
-use ILIAS\ResourceStorage\Resource\StorableResource;
-use ILIAS\Dataset\IRSSContainerExportConfig;
 
 interface HandlerInterface
 {
@@ -74,6 +73,10 @@ interface HandlerInterface
         ilExportHandlerRepositoryElementInterface $other,
         string $path_in_container
     ): bool;
+
+    public function delete(
+        ExportRepositoryStakeholderInterface $stakeholder
+    ): void;
 
     public function isContainerExport(): bool;
 

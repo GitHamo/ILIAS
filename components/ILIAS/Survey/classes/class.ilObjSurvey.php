@@ -991,7 +991,7 @@ class ilObjSurvey extends ilObject
             $this->setSurveyId($data["survey_id"]);
             $this->setAuthor($data["author"] ?? "");
             $this->setIntroduction(ilRTE::_replaceMediaObjectImageSrc((string) $data["introduction"], 1));
-            if (strcmp($data["outro"], "survey_finished") === 0) {
+            if ($data["outro"] === "survey_finished") {
                 $this->setOutro($this->lng->txt("survey_finished"));
             } else {
                 $this->setOutro(ilRTE::_replaceMediaObjectImageSrc((string) $data["outro"], 1));
@@ -3430,7 +3430,7 @@ class ilObjSurvey extends ilObject
     ): void {
         foreach ($mapping as $original_id => $new_id) {
             $textblock = $this->getTextblock($original_id);
-            $this->saveHeading(ilUtil::stripSlashes($textblock, true, ilObjAdvancedEditing::_getUsedHTMLTagsAsString("survey")), $new_id);
+            $this->saveHeading(ilUtil::stripSlashes($textblock, true, ilRTESettings::_getUsedHTMLTagsAsString("survey")), $new_id);
         }
     }
 

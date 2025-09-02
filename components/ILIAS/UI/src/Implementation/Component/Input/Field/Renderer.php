@@ -37,6 +37,8 @@ use ILIAS\Data\DataSize;
 use ILIAS\UI\Implementation\Component\Input\Input;
 use ILIAS\Data\FiveStarRatingScale;
 use ILIAS\UI\Implementation\Component\Input\Container\Filter\ProxyFilterField;
+use ILIAS\Data\URI;
+use ILIAS\UI\Implementation\Component\ComponentHelper;
 
 /**
  * Class Renderer
@@ -44,6 +46,8 @@ use ILIAS\UI\Implementation\Component\Input\Container\Filter\ProxyFilterField;
  */
 class Renderer extends AbstractComponentRenderer
 {
+    use ComponentHelper;
+
     public const DATETIME_DATEPICKER_MINMAX_FORMAT = 'Y-m-d\Th:m';
     public const DATE_DATEPICKER_MINMAX_FORMAT = 'Y-m-d';
     public const TYPE_DATE = 'date';
@@ -137,6 +141,9 @@ class Renderer extends AbstractComponentRenderer
             case ($component instanceof F\DateTime):
                 return $this->renderDateTimeField($component, $default_renderer);
 
+            case ($component instanceof F\Image):
+                return $this->renderImageField($component, $default_renderer);
+
             case ($component instanceof F\File):
                 return $this->renderFileField($component, $default_renderer);
 
@@ -151,6 +158,12 @@ class Renderer extends AbstractComponentRenderer
 
             case ($component instanceof F\Rating):
                 return $this->renderRatingField($component, $default_renderer);
+
+            case ($component instanceof F\TreeMultiSelect):
+                return $this->renderTreeMultiSelectField($component, $default_renderer);
+
+            case ($component instanceof F\TreeSelect):
+                return $this->renderTreeSelectField($component, $default_renderer);
 
             default:
                 $this->cannotHandleComponent($component);
@@ -256,7 +269,7 @@ class Renderer extends AbstractComponentRenderer
             // with declare(strict_types=1) in place,
             // htmlspecialchars will not silently convert to string anymore;
             // therefore, the typecast must be explicit
-            return htmlspecialchars((string) $v, ENT_QUOTES);
+            return htmlspecialchars((string) $v, ENT_QUOTES, 'utf-8', false);
         };
     }
 
@@ -266,7 +279,7 @@ class Renderer extends AbstractComponentRenderer
             // with declare(strict_types=1) in place,
             // htmlentities will not silently convert to string anymore;
             // therefore, the typecast must be explicit
-            return htmlentities((string) $v);
+            return htmlentities((string) $v, ENT_QUOTES, 'utf-8', false);
         };
     }
 
@@ -301,6 +314,8 @@ class Renderer extends AbstractComponentRenderer
         $tpl = $this->getTemplate("tpl.numeric.html", true, true);
         $this->applyName($component, $tpl);
         $this->applyValue($component, $tpl, $this->escapeSpecialChars());
+
+        $tpl->setVariable("STEPSIZE", $component->getStepSize());
 
         $label_id = $this->createId();
         $tpl->setVariable('ID', $label_id);
@@ -764,14 +779,18 @@ class Renderer extends AbstractComponentRenderer
         return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get(), $label_id);
     }
 
-    protected function renderFileField(FI\File $input, RendererInterface $default_renderer): string
+    protected function renderImageField(F\Image $input, RendererInterface $default_renderer): string
+    {
+        return $this->renderFileField($input, $default_renderer);
+    }
+
+    protected function renderFileField(F\File $input, RendererInterface $default_renderer): string
     {
         $template = $this->getTemplate('tpl.file.html', true, true);
-        foreach ($input->getDynamicInputs() as $metadata_input) {
+        foreach ($input->getGeneratedDynamicInputs() as $metadata_input) {
             $file_info = null;
             if (null !== ($data = $metadata_input->getValue())) {
-                $file_id = (!$input->hasMetadataInputs()) ?
-                    $data : $data[$input->getUploadHandler()->getFileIdentifierParameterName()] ?? null;
+                $file_id = (!$input->hasMetadataInputs()) ? $data : $data[0] ?? null;
 
                 if (null !== $file_id) {
                     $file_info = $input->getUploadHandler()->getInfoResult($file_id);
@@ -844,6 +863,8 @@ class Renderer extends AbstractComponentRenderer
         $registry->register('assets/js/input.js');
         $registry->register('assets/js/core.js');
         $registry->register('assets/js/file.js');
+        // workaround to manipulate the order of scripts
+        $registry->register('assets/js/drilldown.min.js');
         $registry->register('assets/js/input.factory.min.js');
     }
 
@@ -937,7 +958,7 @@ class Renderer extends AbstractComponentRenderer
     {
         return $input->withAdditionalOnLoadCode(
             function ($id) use ($input) {
-                $current_file_count = count($input->getDynamicInputs());
+                $current_file_count = count($input->getGeneratedDynamicInputs());
                 $translations = json_encode($input->getTranslations());
                 $is_disabled = ($input->isDisabled()) ? 'true' : 'false';
                 $php_upload_limit = $this->getUploadLimitResolver()->getPhpUploadLimitInBytes();
@@ -1042,6 +1063,133 @@ class Renderer extends AbstractComponentRenderer
         }
 
         return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get());
+    }
+
+    protected function renderTreeMultiSelectField(F\TreeMultiSelect $component, RendererInterface $default_renderer): string
+    {
+        $template = $this->prepareTreeSelectTemplate($component, $default_renderer);
+
+        if ($component->canSelectChildNodes()) {
+            $select_child_nodes = 'true';
+        } else {
+            $select_child_nodes = 'false';
+        }
+
+        $enriched_component = $component->withAdditionalOnLoadCode(
+            static fn($id) => "il.UI.Input.treeSelect.initTreeMultiSelect('$id', $select_child_nodes);"
+        );
+
+        $id = $this->bindJSandApplyId($enriched_component, $template);
+
+        return $this->wrapInFormContext($component, $component->getLabel(), $template->get(), $id);
+    }
+
+    protected function renderTreeSelectField(F\TreeSelect $component, RendererInterface $default_renderer): string
+    {
+        $template = $this->prepareTreeSelectTemplate($component, $default_renderer);
+
+        $enriched_component = $component->withAdditionalOnLoadCode(
+            static fn($id) => "il.UI.Input.treeSelect.initTreeSelect('$id');"
+        );
+
+        $id = $this->bindJSandApplyId($enriched_component, $template);
+
+        return $this->wrapInFormContext($component, $component->getLabel(), $template->get(), $id);
+    }
+
+    protected function prepareTreeSelectTemplate(
+        TreeSelect|TreeMultiSelect $component,
+        RendererInterface $default_renderer,
+    ): Template {
+        $template = $this->getTemplate('tpl.tree_select.html', true, true);
+
+        if ($component->isDisabled()) {
+            $template->setVariable('DISABLED', 'disabled');
+        }
+
+        $template->setVariable('SELECT_LABEL', $this->txt('select'));
+        $template->setVariable('CLOSE_LABEL', $this->txt('close'));
+        $template->setVariable('LABEL', $component->getLabel());
+
+        $template->setVariable('INPUT_TEMPLATE', $default_renderer->render(
+            $component->getTemplateForDynamicInputs()
+        ));
+        $template->setVariable('BREADCRUMB_TEMPLATE', $default_renderer->render(
+            $this->getUIFactory()->breadcrumbs([$this->getUIFactory()->link()->standard('label', '#')])
+        ));
+        $template->setVariable('BREADCRUMBS', $default_renderer->render(
+            $this->getUIFactory()->breadcrumbs([])
+        ));
+
+        $node_factory = $this->getUIFactory()->input()->field()->node();
+        $node_generator = $component->getNodeRetrieval()->getNodes(
+            $node_factory,
+            $this->getUIFactory()->symbol()->icon(),
+        );
+
+        $nodes = [];
+        foreach ($node_generator as $node) {
+            // check against public interface, will be delegated to rendering chain.
+            $this->checkArgInstanceOf('node', $node, Component\Input\Field\Node\Node::class);
+            $nodes[] = $node;
+        }
+
+        $template->setVariable('DRILLDOWN', $default_renderer->render(
+            $this->getUIFactory()->menu()->drilldown($component->getLabel(), $nodes)
+        ));
+
+        /** @var $dynamic_inputs_generator \Generator<FormInput> */
+        $dynamic_inputs_generator = (static fn() => yield from $component->getGeneratedDynamicInputs())();
+
+        $leaf_generator = $component->getNodeRetrieval()->getNodesAsLeaf(
+            $this->getUIFactory()->input()->field()->node(),
+            $this->getUIFactory()->symbol()->icon(),
+            $component->getValue(),
+        );
+
+        $lockstep_iterator = $this->iterateGeneratorsInLockstep($leaf_generator, $dynamic_inputs_generator);
+
+        foreach ($lockstep_iterator as [$leaf, $dynamic_input]) {
+            // check against internal interface, will not be delegated to rendering chain.
+            /** @var $leaf Node\Leaf */
+            $this->checkArgInstanceOf('leaf', $leaf, Node\Leaf::class);
+
+            $value_template = $this->getTemplate('tpl.tree_select.html', true, true);
+            $value_template->setCurrentBlock('with_value_template');
+            $value_template->setVariable('NODE_ID', (string) ($leaf->getId()));
+            $value_template->setVariable('NODE_NAME', $leaf->getName());
+            $value_template->setVariable('INPUT_TEMPLATE', $default_renderer->render($dynamic_input));
+            $value_template->setVariable('UNSELECT_NODE_LABEL', sprintf($this->txt('unselect_node'), $leaf->getName()));
+            $value_template->parseCurrentBlock();
+
+            $template->setCurrentBlock('with_value');
+            $template->setVariable('VALUE', $value_template->get('with_value_template'));
+            $template->parseCurrentBlock();
+        }
+
+        $this->toJS('unselect_node');
+        $this->toJS('select_node');
+
+        return $template;
+    }
+
+    /**
+     * Iterates over two Generators in lockstep, yielding their current values as paired arrays which
+     * can be destructured.
+     *
+     * @return \Generator<array{0: mixed, 1: mixed}>
+     * @throws LogicException If one Generator finishes before the other.
+     */
+    protected function iterateGeneratorsInLockstep(\Generator $a, \Generator $b): \Generator
+    {
+        while ($a->valid() && $b->valid()) {
+            yield [$a->current(), $b->current()];
+            $a->next();
+            $b->next();
+        }
+        if ($a->valid() || $b->valid()) {
+            throw new LogicException('Generators do not have equal lenghts.');
+        }
     }
 
     private function setHelpBlockForFileField(Template $template, FI\File $input): void

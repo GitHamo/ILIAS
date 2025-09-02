@@ -161,12 +161,17 @@ class UI implements Component\Component
             $internal[UI\Implementation\Component\Input\Container\Filter\Factory::class];
         $provide[UI\Implementation\Component\Input\Field\Factory::class] = static fn() =>
             $internal[UI\Implementation\Component\Input\Field\Factory::class];
+        $provide[UI\Implementation\Component\Input\Field\Node\Factory::class] = static fn() =>
+            $internal[UI\Implementation\Component\Input\Field\Node\Factory::class];
         $provide[UI\Implementation\Component\Prompt\Factory::class] = static fn() =>
             $internal[UI\Implementation\Component\Prompt\Factory::class];
         $provide[UI\Implementation\Component\Prompt\State\Factory::class] = static fn() =>
             $internal[UI\Implementation\Component\Prompt\State\Factory::class];
         $provide[UI\Implementation\Component\Input\UploadLimitResolver::class] = static fn() =>
             $internal[UI\Implementation\Component\Input\UploadLimitResolver::class];
+        $provide[UI\Implementation\Component\Navigation\Factory::class] = static fn() =>
+            $internal[UI\Implementation\Component\Navigation\Factory::class];
+
         // =================================================================================
 
         $internal[UI\Implementation\Factory::class] = static fn() =>
@@ -201,6 +206,7 @@ class UI implements Component\Component
                 $internal[UI\Implementation\Component\Launcher\Factory::class],
                 $internal[UI\Implementation\Component\Entity\Factory::class],
                 $internal[UI\Implementation\Component\Prompt\Factory::class],
+                $internal[UI\Implementation\Component\Navigation\Factory::class],
             );
 
         $internal[UI\Implementation\Component\Counter\Factory::class] = static fn() =>
@@ -315,12 +321,15 @@ class UI implements Component\Component
             );
         $internal[UI\Implementation\Component\Input\Field\Factory::class] = static fn() =>
             new UI\Implementation\Component\Input\Field\Factory(
+                $internal[UI\Implementation\Component\Input\Field\Node\Factory::class],
                 $internal[UI\Implementation\Component\Input\UploadLimitResolver::class],
                 $internal[UI\Implementation\Component\SignalGeneratorInterface::class],
                 $pull[Data\Factory::class],
                 $pull[Refinery\Factory::class],
                 $use[Language\Language::class]
             );
+        $internal[UI\Implementation\Component\Input\Field\Node\Factory::class] = static fn() =>
+            new UI\Implementation\Component\Input\Field\Node\Factory();
         $internal[UI\Implementation\Component\Input\UploadLimitResolver::class] = static fn() =>
             new UI\Implementation\Component\Input\UploadLimitResolver(
                 $use[UI\Component\Input\Field\PhpUploadLimit::class],
@@ -457,6 +466,13 @@ class UI implements Component\Component
         $internal[UI\Implementation\Component\Prompt\State\Factory::class] = static fn() =>
             new UI\Implementation\Component\Prompt\State\Factory();
 
+        $internal[UI\Implementation\Component\Navigation\Factory::class] = static fn() =>
+            new UI\Implementation\Component\Navigation\Factory(
+                $pull[Data\Factory::class],
+                $pull[Refinery\Factory::class],
+                $use[UI\Storage::class],
+            );
+
         $internal[UI\Implementation\DefaultRenderer::class] = static fn() =>
             new UI\Implementation\DefaultRenderer(
                 $internal[UI\Implementation\Render\Loader::class],
@@ -517,7 +533,17 @@ class UI implements Component\Component
                             $pull[Data\Factory::class],
                             $use[UI\HelpTextRetriever::class],
                             $internal[UI\Implementation\Component\Input\UploadLimitResolver::class],
-                        )
+                        ),
+                        new UI\Implementation\Component\Menu\MenuRendererFactory(
+                            $use[UI\Implementation\FactoryInternal::class],
+                            $internal[UI\Implementation\Render\TemplateFactory::class],
+                            $use[Language\Language::class],
+                            $internal[UI\Implementation\Render\JavaScriptBinding::class],
+                            $use[UI\Implementation\Render\ImagePathResolver::class],
+                            $pull[Data\Factory::class],
+                            $use[UI\HelpTextRetriever::class],
+                            $internal[UI\Implementation\Component\Input\UploadLimitResolver::class],
+                        ),
                     )
                 )
             );
@@ -569,7 +595,7 @@ class UI implements Component\Component
         $contribute[Component\Resource\PublicAsset::class] = fn() =>
             new Component\Resource\ComponentJS($this, "js/MainControls/system_info.js");
         $contribute[Component\Resource\PublicAsset::class] = fn() =>
-            new Component\Resource\ComponentJS($this, "js/Menu/dist/drilldown.js");
+            new Component\Resource\ComponentJS($this, "js/Menu/dist/drilldown.min.js");
         $contribute[Component\Resource\PublicAsset::class] = fn() =>
             new Component\Resource\ComponentJS($this, "js/Modal/dist/modal.min.js");
         $contribute[Component\Resource\PublicAsset::class] = fn() =>

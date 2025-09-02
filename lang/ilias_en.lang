@@ -773,6 +773,7 @@ assessment#:#gap#:#Gap
 assessment#:#gap_combination#:#Gap Combination
 assessment#:#gaps#:#Gaps
 assessment#:#glossary_term#:#Glossary Term
+assessment#:#goto_first_question#:#Show first question
 assessment#:#grading_mark_msg#:#Your mark is: &quot;[mark]&quot;
 assessment#:#grading_status_failed_msg#:#Sorry, you have <b>failed</b> the test.
 assessment#:#grading_status_passed_msg#:#Congratulations, you have <b>passed</b> the test.
@@ -1219,6 +1220,7 @@ assessment#:#save_on_navigation_confirmation#:#Your changed answers will be auto
 assessment#:#save_on_navigation_forced_feedback_hint#:#Before you get feedback on your given answer.###fau: testNav
 assessment#:#save_on_navigation_locked_confirmation#:#Your changed answers will be automatically saved and locked when you navigate.###fau: testNav
 assessment#:#saved_adjustment#:#Changes saved.
+assessment#:#score_anon#:#Score anonymously
 assessment#:#score_partsol_enabled#:#Activate Half-Point Scoring
 assessment#:#score_partsol_enabled_info#:#Usually the participant has to answer the question fully correct to get the configured points. With this option the participant gets the half of the configured points with at least three correct decisions.
 assessment#:#scored_pass#:#Scored Test Attempt
@@ -1957,6 +1959,7 @@ assessment#:#tst_time_limit_message#:#You will have <b>%s minutes</b> to answer 
 assessment#:#tst_title_output#:#Show Question Title
 assessment#:#tst_title_output_full#:#Question Titles and Available Points
 assessment#:#tst_title_output_hide_points#:#Only Question Titles
+assessment#:#tst_title_output_info#:#Set which combination of question titles and/or points available should be visible to participants while they are taking the test and within the test attempt overview (see below).
 assessment#:#tst_title_output_no_title#:#Neither Question Titles nor Available Points
 assessment#:#tst_title_output_only_points#:#Only Available Points
 assessment#:#tst_trigger_result_refreshing#:#Results need to be recalculated. This may take a while.
@@ -2543,6 +2546,7 @@ book#:#book_bulk_creation#:#Bulk Creation
 book#:#book_bulk_data#:#Item Data
 book#:#book_cal_entry#:#Booking:
 book#:#book_confirm_booking#:#Confirm Booking
+book#:#book_confirm_booking_for_users#:#Are you sure you want to book this item for the following user(s)?
 book#:#book_confirm_booking_no_schedule#:#Are you sure you want to book the following item?
 book#:#book_confirm_booking_schedule_number_of_objects#:#Booking Confirmation
 book#:#book_confirm_booking_schedule_number_of_objects_info#:#Please enter the number of items that you would like to book.
@@ -3221,6 +3225,8 @@ cmix#:#content_privacy_ident#:#User identification for resource
 cmix#:#content_privacy_name#:#User name for resource
 cmix#:#create_lrs_type_form#:#New LRS Type
 cmix#:#create_registration#:#Register your E-Mail address
+cmix#:#cron_xapi_del#:#Delete xAPI/cmi5 data in the Learning Record Store
+cmix#:#cron_xapi_del_desc#:#Data is deleted according to the settings of the xAPI/cmi5 objects.
 cmix#:#cron_xapi_results_evaluation#:#Fetch xAPI/cmi5 Results
 cmix#:#cron_xapi_results_evaluation_desc#:#Requests all xAPI results from learning record stores for objects not supporting the ILIAS xAPI proxy.
 cmix#:#description_info#:#The description will be shown below the title.
@@ -4224,6 +4230,7 @@ common#:#group_status#:#Group is
 common#:#groupings#:#Membership Limitations
 common#:#groupings_assigned_obj_crs#:#Assigned Courses
 common#:#groupings_assigned_obj_grp#:#Assigned Groups
+common#:#groupings_source#:#Source
 common#:#groups#:#Groups
 common#:#grp#:#Group
 common#:#grp_add#:#Add Group
@@ -4335,7 +4342,7 @@ common#:#import_file#:#Import File
 common#:#import_file_not_valid_here#:#The import file is not valid or the contained object type cannot be imported here.
 common#:#import_finished#:#Number of imported messages.
 common#:#import_lm#:#Import ILIAS Learning module
-common#:#import_qpl#:#Import Question Pool Test
+common#:#import_qpl#:#Import Question Pool for Tests
 common#:#import_questions_into_qpl#:#Import question(s) into question pool
 common#:#import_sahs#:#Import SCORM Package
 common#:#import_sahs_info#:#To correct typos or images, use the option to replace individual files via the file directory. Upload a SCORM export from your authoring tool here and not an ILIAS export file. Make sure that your authoring tool has retained the IDs in the manifest file. Attention: Even popular authoring tools cannot do this. SCORM learning modules of certain authoring tools discard learner data obtained if you change the number of answer options of questions or insert new questions. Check in a test installation whether learning statuses that have already been achieved are possible when learning modules that have already been started are called up again.
@@ -4446,6 +4453,7 @@ common#:#last_reminder#:#Last reminder
 common#:#last_update#:#Updated
 common#:#last_visited#:#Last Visited
 common#:#lastname#:#Last Name
+common#:#latex_edit_info#:#You can enter LaTeX code in the delimiters <code>[tex]</code> and <code>[/tex]</code>.
 common#:#laugh#:#Laugh
 common#:#launch#:#Launch
 common#:#ldap#:#LDAP
@@ -4735,6 +4743,7 @@ common#:#msg_no_perm_perm#:#You have no permission to change permission settings
 common#:#msg_no_perm_read#:#You have no permission to access this item.
 common#:#msg_no_perm_read_item#:#You have no permission to access item '%s’.
 common#:#msg_no_perm_read_lm#:#You have no permission to read this learning module.
+common#:#msg_no_perm_view_roles_of_user#:#You have no permission to view the role assignment of this user
 common#:#msg_no_perm_write#:#You have no permission to edit settings.
 common#:#msg_no_search_result#:#No entries found
 common#:#msg_no_search_string#:#Please enter your query.
@@ -5013,9 +5022,9 @@ common#:#obj_prtt#:#Portfolio Template
 common#:#obj_prtt_duplicate#:#Copy Portfolio Template
 common#:#obj_ps#:#Privacy and Security
 common#:#obj_ps_desc#:#Configure global privacy and security settings here.
-common#:#obj_qpl#:#Question Pool Test
-common#:#obj_qpl_duplicate#:#Copy Question Pool Test
-common#:#obj_qpl_select#:#-- Please select one question pool test --
+common#:#obj_qpl#:#Question Pool for Tests
+common#:#obj_qpl_duplicate#:#Copy Question Pool for Tests
+common#:#obj_qpl_select#:#-- Please select one question pool for tests --
 common#:#obj_rcat#:#ECS Category
 common#:#obj_rcrs#:#ECS Course
 common#:#obj_recf#:#Restored Objects
@@ -5142,7 +5151,7 @@ common#:#objs_prg#:#Study Programmes
 common#:#objs_prgr#:#Links to Study Programmes
 common#:#objs_prtf#:#Portfolios
 common#:#objs_prtt#:#Portfolio Templates
-common#:#objs_qpl#:#Question Pools Test
+common#:#objs_qpl#:#Question Pools for Tests
 common#:#objs_qst#:#Questions
 common#:#objs_rcat#:#ECS Categories
 common#:#objs_rcrs#:#ECS Courses
@@ -5343,9 +5352,9 @@ common#:#public_notes#:#Public Notes
 common#:#public_profile#:#Profile
 common#:#public_room#:#Public Chat Room
 common#:#purpose#:#Purpose
-common#:#qpl#:#Question Pool Test
-common#:#qpl_add#:#Add Question Pool Test
-common#:#qpl_new#:#New Question Pool Test
+common#:#qpl#:#Question Pool for Tests
+common#:#qpl_add#:#Add Question Pool for Tests
+common#:#qpl_new#:#New Question Pool for Tests
 common#:#query_data#:#Query data
 common#:#question#:#Question
 common#:#question_message#:#Question
@@ -5815,7 +5824,6 @@ common#:#uploading#:#Uploading...
 common#:#uri#:#URI
 common#:#url#:#URL
 common#:#url_not_found#:#File Not Found
-common#:#url_to_latex#:#URL to LaTeX CGI script
 common#:#use_customized_instructions#:#Use customized instructions:
 common#:#use_default_instructions#:#Use default instructions.
 common#:#user#:#User
@@ -8116,6 +8124,7 @@ dateplaner#:#cal_agenda#:#Agenda
 dateplaner#:#cal_all_day#:#All Day
 dateplaner#:#cal_app_info#:#Appointment Information
 dateplaner#:#cal_app_other_materials_num#:#View other materials
+dateplaner#:#cal_appointment_notifications#:#Notification
 dateplaner#:#cal_appointments#:#Appointment(s)
 dateplaner#:#cal_apps#:#Number of Appointments
 dateplaner#:#cal_assigned_appointments#:#Assigned Appointments
@@ -8124,6 +8133,7 @@ dateplaner#:#cal_back_to_list#:#Back to List
 dateplaner#:#cal_back_to_search#:#Back to Search
 dateplaner#:#cal_batch_file_downloads#:#Batch Download of Calendar Files
 dateplaner#:#cal_batch_file_downloads_info#:#Display a button in calendars to allow all files related to the current calendar/appointment view to be downloaded as a batch.
+dateplaner#:#cal_belongs_to#:#Belongs to Calendar
 dateplaner#:#cal_book_free#:#available
 dateplaner#:#cal_booked_out#:#booked up
 dateplaner#:#cal_booking_cancellation_body#:#your appointment with %s has been cancelled.
@@ -8263,8 +8273,10 @@ dateplaner#:#cal_crs_notification_sub#:#Changed Appointment in Course "%s"
 dateplaner#:#cal_crs_timing_end#:#Suggested End
 dateplaner#:#cal_crs_timing_start#:#Suggested Start
 dateplaner#:#cal_daily#:#Daily
+dateplaner#:#cal_date_and_time#:#Date and Time
 dateplaner#:#cal_date_booked#:#booked
 dateplaner#:#cal_date_format_info#:#Please choose a format for the input of dates.
+dateplaner#:#cal_date_time_title#:#Date and Time
 dateplaner#:#cal_day_end#:#Day End
 dateplaner#:#cal_day_of_month#:#Day of the month
 dateplaner#:#cal_day_overview#:#Day Overview
@@ -8303,6 +8315,8 @@ dateplaner#:#cal_download_files#:#Download Files
 dateplaner#:#cal_download_files_started#:#A ZIP archive with all download files is now created in the background. You can see the status of your background processes at the top right in the Notification Centre. You can also download the ZIP archive there.
 dateplaner#:#cal_dstart_dend_warn#:#Please check your input. The start of a day should be before the end of the day.
 dateplaner#:#cal_duration#:#Duration
+dateplaner#:#cal_duration_end#:#End
+dateplaner#:#cal_duration_start#:#Start
 dateplaner#:#cal_edit_appointment#:#Edit Appointment
 dateplaner#:#cal_edit_category#:#Edit Calendar
 dateplaner#:#cal_edit_milestone#:#Edit Milestone
@@ -8357,6 +8371,8 @@ dateplaner#:#cal_month_overview#:#Month Overview
 dateplaner#:#cal_month_s#:#Month(s)
 dateplaner#:#cal_month_selection#:#Select Month
 dateplaner#:#cal_monthly#:#Monthly
+dateplaner#:#cal_monthly_by_date#:#Monthly by Date
+dateplaner#:#cal_monthly_by_day#:#Monthly by Day
 dateplaner#:#cal_ms_details#:#Milestone Details
 dateplaner#:#cal_ms_users_responsible#:#Users Responsible
 dateplaner#:#cal_new_app#:#New Appointment
@@ -8377,6 +8393,16 @@ dateplaner#:#cal_owner#:#Owner
 dateplaner#:#cal_period#:#Period
 dateplaner#:#cal_rec_err_limit#:#Please enter a valid number of appointments.
 dateplaner#:#cal_recurrence_confirm_deletion#:#Please decide wether you want to delete single appointments or the complete series of appointments.
+dateplaner#:#cal_recurrence_count#:#Number of Appointments
+dateplaner#:#cal_recurrence_day_interval#:#Every x Day(s)
+dateplaner#:#cal_recurrence_end_date#:#End Date
+dateplaner#:#cal_recurrence_end_date_info#:#Last possible date for an appointment.
+dateplaner#:#cal_recurrence_month_interval#:#Every x Month(s)
+dateplaner#:#cal_recurrence_until#:#Recurrence End
+dateplaner#:#cal_recurrence_until_count#:#Fixed Number of Appointments
+dateplaner#:#cal_recurrence_until_end_date#:#Repeat Until End Date
+dateplaner#:#cal_recurrence_week_interval#:#Every x Week(s)
+dateplaner#:#cal_recurrence_year_interval#:#Every x Year(s)
 dateplaner#:#cal_recurrences#:#Recurrences
 dateplaner#:#cal_reg_register#:#Register
 dateplaner#:#cal_reg_registered#:#You have been registered.
@@ -8470,6 +8496,8 @@ dateplaner#:#cal_weekly#:#Weekly
 dateplaner#:#cal_where#:#Location
 dateplaner#:#cal_year_s#:#Year(s)
 dateplaner#:#cal_yearly#:#Yearly
+dateplaner#:#cal_yearly_by_date#:#Yearly by Date
+dateplaner#:#cal_yearly_by_day#:#Yearly by Day
 dateplaner#:#consultation_hours_block_title#:#Consultation Hours
 dateplaner#:#crs_cal_activation_end#:#Course Availability ends
 dateplaner#:#crs_cal_activation_start#:#Course Availability starts
@@ -8518,7 +8546,6 @@ dcl#:#dcl_change_notification_dcl_new_record#:#The following data record has bee
 dcl#:#dcl_change_notification_dcl_update_record#:#The following data record has been updated
 dcl#:#dcl_change_notification_link#:#Link to the Data Collection
 dcl#:#dcl_change_notification_subject#:#Data Collection ‘%s’ has been changed
-dcl#:#dcl_change_why_you_receive_this_email#:#You receive this message because you have activated the notification about this data collection.
 dcl#:#dcl_changed_by#:#Changed by
 dcl#:#dcl_checked#:#Checked.
 dcl#:#dcl_comments#:#Comments
@@ -8545,6 +8572,10 @@ dcl#:#dcl_date#:#Date Entry
 dcl#:#dcl_date_desc#:#Users can enter a date of their choice or select one using a calendar.
 dcl#:#dcl_date_selection#:#Date Selection
 dcl#:#dcl_date_selection_desc#:#Allow a date to be chosen from among a predefined selection of date options.
+dcl#:#dcl_datetime#:#Datetime Entry
+dcl#:#dcl_datetime_desc#:#Users can enter a date and time of their choice or select one using a calendar.
+dcl#:#dcl_datetime_selection#:#Datetime Selection
+dcl#:#dcl_datetime_selection_desc#:#Allow a date and time to be chosen from among a predefined selection of datetime options.
 dcl#:#dcl_deactivate_view#:#Deactivate this view
 dcl#:#dcl_default_sort_field#:#Default sort field
 dcl#:#dcl_default_sort_field_order#:#Default sort field order
@@ -8553,6 +8584,7 @@ dcl#:#dcl_delete_fields#:#Delete Fields
 dcl#:#dcl_delete_fields_no_selection#:#Please select at least one field to delete
 dcl#:#dcl_delete_perm#:#Delete Entries
 dcl#:#dcl_delete_records#:#Delete Entries
+dcl#:#dcl_deleted_entries#:#Deleted Entries
 dcl#:#dcl_deleted_records#:#Successfully deleted %s Entries
 dcl#:#dcl_deprecated_copy#:#(Deprecated)
 dcl#:#dcl_desc#:#Descending ↓
@@ -8594,7 +8626,6 @@ dcl#:#dcl_formula_desc#:#You can aggregate several entries in a record with a fo
 dcl#:#dcl_formula_detail_desc#:#Entries are generated automatically, you are not able to edit the entry.
 dcl#:#dcl_height#:#Height in Pixels
 dcl#:#dcl_height_desc#:#The height of the file will be reduced to this value during upload.
-dcl#:#dcl_hello#:#Dear
 dcl#:#dcl_id#:#ID
 dcl#:#dcl_id_description#:#The internal ID.
 dcl#:#dcl_ilias_reference#:#Repository Object
@@ -8648,11 +8679,11 @@ dcl#:#dcl_msg_tableviews_delete_all#:#Could not delete: At least one View must e
 dcl#:#dcl_msg_tableviews_order_updated#:#Order of views updated
 dcl#:#dcl_multiple_selection#:#Multiple Selection
 dcl#:#dcl_new#:#Create New Data Collection
+dcl#:#dcl_new_entries#:#New Entries
 dcl#:#dcl_new_field#:#New Field
 dcl#:#dcl_new_table#:#New Table
 dcl#:#dcl_new_view#:#New View
 dcl#:#dcl_next_record#:#Next Entry
-dcl#:#dcl_no_content_warning#:#Please note: the data collection is online but does not yet have any fields.
 dcl#:#dcl_no_entries#:#Action not permitted
 dcl#:#dcl_no_entry#:#No entry
 dcl#:#dcl_no_export_async_config#:#No SOAP Configuration for asyncronous exports available.
@@ -8664,11 +8695,12 @@ dcl#:#dcl_no_such_reference#:#The following value is not available in the refere
 dcl#:#dcl_no_tableview_found#:#No visible tableview found!
 dcl#:#dcl_not_checked#:#Not checked.
 dcl#:#dcl_not_supported_in_import#:#This type of field is not supported in the import
-dcl#:#dcl_notification_activate_dcl#:#Activate Notification for Data Collection
+dcl#:#dcl_notification_activate#:#Activate Notification for Data Collection
 dcl#:#dcl_notification_activated#:#Notification Activated
-dcl#:#dcl_notification_deactivate_dcl#:#Deactivate Notification for Data Collection
+dcl#:#dcl_notification_deactivate#:#Deactivate Notification for Data Collection
 dcl#:#dcl_notification_deactivated#:#Notification Deactivated
 dcl#:#dcl_notification_info#:#Users can choose for themselves if they wish to activate notifications for their accounts.
+dcl#:#dcl_notification_settings#:#Notification Settings
 dcl#:#dcl_notimage_exception#:#The file has to be a picture.
 dcl#:#dcl_noturl_exception#:#Please enter a link (beginning with http:// or www.) or an e-mail address.
 dcl#:#dcl_number#:#Integer
@@ -8729,8 +8761,6 @@ dcl#:#dcl_supported_filetypes_desc#:#You can set which file types can be uploade
 dcl#:#dcl_switch_table#:#Switch Table
 dcl#:#dcl_switch_view#:#Change View
 dcl#:#dcl_table#:#Table
-dcl#:#dcl_table_create#:#Create Table
-dcl#:#dcl_table_edit#:#Update Table
 dcl#:#dcl_table_id#:#Table ID
 dcl#:#dcl_table_list_fields#:#Fields Of Selected Table
 dcl#:#dcl_table_list_tables#:#Available Tables
@@ -8774,6 +8804,7 @@ dcl#:#dcl_unknown_exception#:#The value you entered is not valid.
 dcl#:#dcl_unknown_plugin#:#Unknown plugin type
 dcl#:#dcl_update_field#:#Update Field
 dcl#:#dcl_update_record#:#Update Entry
+dcl#:#dcl_updated_entries#:#Updated Entries
 dcl#:#dcl_url#:#Mandatory URL or E-Mail
 dcl#:#dcl_view_configuration#:#View Configuration
 dcl#:#dcl_view_own_records_perm#:#View Only Own Entries
@@ -9689,7 +9720,7 @@ exp#:#exp_import_validation_err_no_matching_xsd#:#No valid schema file for versi
 exp#:#exp_not_public_access_status#:#Not published
 exp#:#exp_print_pdf#:#Print/PDF
 exp#:#exp_print_pdf_info#:#To create a PDF please select "Print to PDF" in the print modal that appears after clicking on ‘Print View’.
-exp#:#exp_public_access_status#:#Available on ‘Info’-tab
+exp#:#exp_public_access_status#:#Available in ‘Info’-tab
 exp#:#exp_really_delete#:#Are you sure you want to delete the following export file(s)?
 exp#:#exp_show_print_view#:#Show Print View
 exp#:#exp_xml#:#XML
@@ -11654,39 +11685,6 @@ maps#:#maps_std_location#:#Default Location
 maps#:#maps_std_location_desc#:#Click map to set location.
 maps#:#maps_tile_server#:#Server for Tiles
 maps#:#maps_zoom_level#:#Zoom Level
-mathjax#:#mathjax_enable_client#:#Enable MathJax in the Browser
-mathjax#:#mathjax_enable_client_info#:#Activates a client-side rendering of TeX in the browser by including the MathJax script. Mathjax 3 is supported, but MathJax 2 is recommended.
-mathjax#:#mathjax_enable_server#:#Enable MathJax on the Server
-mathjax#:#mathjax_enable_server_info#:#Activates a server-side rendering of TeX to graphics.
-mathjax#:#mathjax_home_link#:# ➜︎ MathJax web site
-mathjax#:#mathjax_limiter#:#Inline Delimiters
-mathjax#:#mathjax_limiter_info#:#Select the inline delimiters that ILIAS should produce for the MathJax script
-mathjax#:#mathjax_mathjax#:#MathJax
-mathjax#:#mathjax_polyfill_url#:#Url of a Polyfill
-mathjax#:#mathjax_polyfill_url_desc_line1#:#For MathJax 2 and MathJax 3 with current browsers not needed.
-mathjax#:#mathjax_polyfill_url_desc_line2#:#Please remove any reference to polyfill.io! See https://sansec.io/research/polyfill-supply-chain-attack
-mathjax#:#mathjax_script_url#:#URL of the MathJax Script
-mathjax#:#mathjax_script_url_desc_line1#:#For MathJax 2 e.g. %s
-mathjax#:#mathjax_script_url_desc_line2#:#Please activate the safe mode to avoid XSS attacks by MathJax code with javascript. For MathJax 2 it can be activated by adding the 'Safe' parameter to the CDN url. For MathJax 3 you need to include a script that configures it before MathJax is loaded. Use for example %s
-mathjax#:#mathjax_server_address#:#Server Address
-mathjax#:#mathjax_server_address_info#:#E.g. http://localhost:8003
-mathjax#:#mathjax_server_cache_cleared#:#The MathJax cache was cleared.
-mathjax#:#mathjax_server_cache_size#:#Cache Size
-mathjax#:#mathjax_server_cache_size_info#:#Disk space used for caching rendered graphics.
-mathjax#:#mathjax_server_clear_cache#:# ➜ Clear Cache Now
-mathjax#:#mathjax_server_for_browser#:#Use for Browser
-mathjax#:#mathjax_server_for_browser_info#:#TeX will be shown as SVG graphics. Enabling MathJax in the browser is unneccessary.
-mathjax#:#mathjax_server_for_export#:#Use for HTML Export
-mathjax#:#mathjax_server_for_export_info#:#TeX will be exported as SVG graphic for learning module exports to HTML.
-mathjax#:#mathjax_server_for_pdf#:#Use for PDF Generation
-mathjax#:#mathjax_server_for_pdf_info#:#The server will be used when PDF files are generated.
-mathjax#:#mathjax_server_installation#:# ➜ Installation Manual
-mathjax#:#mathjax_server_timeout#:#Timeout
-mathjax#:#mathjax_server_timeout_info#:#Timeout for calling the MathJax server in seconds
-mathjax#:#mathjax_settings#:#MathJax Settings
-mathjax#:#mathjax_test_expression#:#Test Expression
-mathjax#:#mathjax_test_expression_info_client#:#This expression will be rendered by the script in the browser.
-mathjax#:#mathjax_test_expression_info_server#:#This expression will be rendered on the server.
 mcst#:#mcst_add_new_item#:#Add New Mediacast Item
 mcst#:#mcst_audio_files#:#Audio Files
 mcst#:#mcst_audioportable_settings_info#:#Comma separated list of file suffixes
@@ -12007,7 +12005,7 @@ meta#:#meta_annotation_plural#:#Annotations
 meta#:#meta_any#:#Any
 meta#:#meta_atomic#:#Atomic
 meta#:#meta_author#:#Author
-meta#:#meta_authors#:#Authors
+meta#:#meta_authors#:#Contributors
 meta#:#meta_browser#:#Browser
 meta#:#meta_button_to_full_editor_label#:#Edit the Full Learning Object Metadata
 meta#:#meta_c_AD#:#Andorra
@@ -12974,8 +12972,9 @@ obj#:#obj_deactivate_multilang_conf#:#Do you really want to deactivate multiling
 obj#:#obj_fallback_lang#:#Default Language
 obj#:#obj_features#:#Additional Features
 obj#:#obj_import_file_error#:#This file could not be imported. Please make sure that this is a valid ILIAS export file (XML Export), of the same object type.
-obj#:#obj_insert_into_clipboard#:#Insert into Clipboard
-obj#:#obj_inserted_clipboard#:#Objects have been moved to the clipboard.
+obj#:#obj_insert_into_clipboard#:#Add to Clipboard
+obj#:#obj_inserted_clipboard#:#Selected object(s) successfully added to the clipboard.
+obj#:#obj_master_lang#:#Master Language
 obj#:#obj_more_translations#:#More Translations
 obj#:#obj_multilang_deactivated#:#Multilingualism has been deactivated.
 obj#:#obj_multilang_title_descr_only#:#Translation is activated for title and description only. Translation support for Page editing (‘Customize Page’) needs additional activation.
@@ -14486,7 +14485,7 @@ rbac#:#rbac_create_poll#:#Create Poll
 rbac#:#rbac_create_prg#:#Create Study Programme
 rbac#:#rbac_create_prgr#:#Create link to study programme
 rbac#:#rbac_create_prtt#:#Create Portfolio Template
-rbac#:#rbac_create_qpl#:#Create Question Pool Test
+rbac#:#rbac_create_qpl#:#Create Question Pool for Tests
 rbac#:#rbac_create_rcrs#:#Create ECS Course
 rbac#:#rbac_create_role#:#Create new Role
 rbac#:#rbac_create_rolt#:#Create new Role Template
@@ -14548,6 +14547,7 @@ rbac#:#rbac_log_source_object#:#Source object
 rbac#:#rbac_msg_user_already_assigned#:#The chosen users are already assigned to this role.
 rbac#:#rbac_not_change_existing_objects#:#Do NOT change existing objects
 rbac#:#rbac_permissions#:#Permissions
+rbac#:#rbac_precondition_condition#:#Access requires having this status
 rbac#:#rbac_precondition_hide#:#Hide Object
 rbac#:#rbac_precondition_hide_info#:# This option allows to hide the object for users who currently have not fulfilled the preconditions. Therefore, all not accessible content is invisible.
 rbac#:#rbac_precondition_minimum_optional#:#At least 2 preconditions have to remain optional.
@@ -16210,7 +16210,7 @@ survey#:#SurveyTextQuestion#:#Essay
 survey#:#add_heading#:#Add Heading
 survey#:#already_completed_survey#:#You have already completed the survey. It is not possible to take part in a survey a second time.
 survey#:#anonymization#:#Anonymisation
-survey#:#anonymize_anonymous_introduction#:#To gain access to this survey, you need to use a survey code comprised of 5 characters. This can be obtained from the person conducting this survey.<br />Please enter your code in the text field above.
+survey#:#anonymize_anonymous_introduction#:#To gain access to this survey, you need to use a survey code comprised of 5 characters. This can be obtained from the person conducting this survey. Please enter your code in the field that appears after clicking on ‘Start Survey’.
 survey#:#answer#:#Answer
 survey#:#arithmetic_mean#:#Arithmetic Mean
 survey#:#browse_for_questions#:#Add From Pool
@@ -16552,7 +16552,7 @@ survey#:#survey_auto_block_title#:#Page Header
 survey#:#survey_available_question_pools#:#Available Pools
 survey#:#survey_calc_skills#:#Determine Competence Levels
 survey#:#survey_calculate_sum_score#:#Calculate Sum Score
-survey#:#survey_calculate_sum_score_info#:#Calculates the sum of all scale values for single choice, multiple choice and matrix questions for each participant. Caution: If participants skip these kind of questions, the whole sum score will not be calculated anymore.
+survey#:#survey_calculate_sum_score_info#:#Calculate the sum of all scale values for single choice, multiple choice and matrix questions for each participant. Please note: If a participant skips any of these types of questions, their sum score will not be calculated.
 survey#:#survey_cancel_preview#:#Exit Preview
 survey#:#survey_cannot_preview_survey#:#Preview not available.
 survey#:#survey_code#:#Survey Access Code
@@ -16655,7 +16655,7 @@ survey#:#survey_sync_success#:#The selected questions have been updated.
 survey#:#survey_up_to_x_points#:#Up to x points
 survey#:#survey_use_start_button#:#To take part in the survey, you need to use the start button.
 survey#:#svy_activation_limited_visibility_info#:#Allow users to always see the title of the survey and its period of availability. The survey questions themselves will still only be accessible during the indicated period of availability.
-survey#:#svy_activation_online_info#:#Only if a survey is online, users can participate in it.
+survey#:#svy_activation_online_info#:#Users can only participate in a survey if it is online.
 survey#:#svy_add_internal_user#:#Add User Manually
 survey#:#svy_add_internal_user_info#:#Add someone as a rater who is a registered user on this platform.
 survey#:#svy_add_rater#:#Add Rater
@@ -16753,7 +16753,7 @@ survey#:#svy_reminder_mail_template#:#Mail Template
 survey#:#svy_reminder_mail_template_none#:#Do not use mail template
 survey#:#svy_result_mail_notification_info#:#When a participant finishes the survey, their answers will be sent to selected recipients.
 survey#:#svy_results#:#Results
-survey#:#svy_results_mail_confirm#:#Participants can request participation confirmation
+survey#:#svy_results_mail_confirm#:#Confirmation of Participation
 survey#:#svy_results_mail_confirm_info#:#Enable participants to request a mail confirming their participation in the survey upon completion.
 survey#:#svy_results_mail_own#:#Include Given Answers
 survey#:#svy_results_mail_own_info#:#The answers given by the participant will be included in their participation confirmation mail.
@@ -17231,6 +17231,7 @@ ui#:#2stars#:#two of five stars
 ui#:#3stars#:#three of five stars
 ui#:#4stars#:#four of five stars
 ui#:#5stars#:#five of five stars
+ui#:#datatable_close_warning#:#OK
 ui#:#datatable_multiaction_label#:#Bulk Actions
 ui#:#datatable_multiactionmodal_actionlabel#:#Action for All Entries
 ui#:#datatable_multiactionmodal_apply#:#Apply
@@ -17247,6 +17248,10 @@ ui#:#footer_link_groups#:#Footer Link-Groups
 ui#:#footer_links#:#Footer Links
 ui#:#footer_permanent_link#:#Footer Permanent Link
 ui#:#footer_texts#:#Footer Texts
+ui#:#image_alt_text#:#Alternate Text
+ui#:#image_purpose_decorative#:#Decorative Image
+ui#:#image_purpose_informative#:#Informative Image
+ui#:#image_purpose_user_defined#:#Image Purpose
 ui#:#label_fieldselection#:#Field Selection
 ui#:#label_fieldselection_refresh#:#Apply
 ui#:#label_modeviewcontrol#:#view mode
@@ -17266,6 +17271,7 @@ ui#:#presentation_table_collapse#:#Collapse All
 ui#:#presentation_table_expand#:#Expand All
 ui#:#rating_average#:#Others rated %s of 5
 ui#:#reset_stars#:#neutral
+ui#:#select_node#:#Add node %s to selection
 ui#:#table_posinput_col_title#:#Position
 ui#:#ui_chars_max#:#Maximum:
 ui#:#ui_chars_min#:#Minimum:
@@ -17283,12 +17289,16 @@ ui#:#ui_link_label#:#Label
 ui#:#ui_link_url#:#URL
 ui#:#ui_md_input_edit#:#Edit
 ui#:#ui_md_input_view#:#View
+ui#:#ui_nav_sequence_control_label#:#Sequence control for contents below
+ui#:#ui_nav_sequence_description#:#Used to navigate through this content or trigger actions and filters on the entire sequence.
 ui#:#ui_pagination_unlimited#:#Unlimited
 ui#:#ui_select_dropdown_label#:#Please select
 ui#:#ui_table_no_records#:#No records
 ui#:#ui_table_order#:#Order
 ui#:#ui_transcription#:#Transcript
+ui#:#unselect_node#:#Remove node %s from selection
 ui#:#vc_sort#:#Sort by:
+ui#:#warning_url_too_long_msg#:#The amount of selected rows will result in a very large URL; the Server will probably block this request.<br>Please select less rows or perform the action on all entries.
 user#:#all_roles_has_starting_point#:#All the roles have starting points
 user#:#back_to_starting_points_list#:#Back to Starting Points
 user#:#change_email_email_confirmation_body#:#The email address for the account %s was changed. To confirm this change, please click on this link %s. The link is valid for %s minutes.

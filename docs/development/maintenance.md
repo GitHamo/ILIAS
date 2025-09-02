@@ -138,7 +138,7 @@ open a PR against the `trunk`-branch of the [official ILIAS Repository](https://
 and tag it with `authorities`, `documentation` and `jour fixe`. The change will
 then be announced on the next Jour Fixe.
 * If a `Component` lacks an `Authority to Sign off on Code Changes` or if the holder
-of the last `Authority to Sign off on Code Chagnes` would like to pass the
+of the last `Authority to Sign off on Code Changes` would like to pass the
 responsibility over to somebody else, the `Component` is added to the agenda of
 the Jour Fixe by the Product Manager.
 
@@ -474,10 +474,10 @@ of ILIAS. The file contains the following fields:
       , [catenglaender](https://docu.ilias.de/go/usr/79291)
     * Authority to Curate Test Cases: [amstutz](https://docu.ilias.de/go/usr/26468)
       , [yvseiler](https://docu.ilias.de/go/usr/17694)
-    * Authority to (De-)Assign Authorities: [amstutz](https://docu.ilias.de/go/usr/26468)
+    * Authority to (De-)Assign Authorities: [yvseiler](https://docu.ilias.de/go/usr/17694)
 	* Tester: [fschmid](https://docu.ilias.de/go/usr/21087)
-    * Assignee for Security Reports: [amstutz](https://docu.ilias.de/go/usr/26468)
-    * Assignee for Security Issues: [amstutz](https://docu.ilias.de/go/usr/26468)
+    * Assignee for Security Reports: [catenglaender](https://docu.ilias.de/go/usr/79291)
+    * Assignee for Security Issues: [catenglaender](https://docu.ilias.de/go/usr/79291)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
 
 [//]: # (END CSSAndTemplates)
@@ -1739,13 +1739,13 @@ of ILIAS. The file contains the following fields:
 [//]: # (BEGIN Webservices)
 
 * **Webservices**
-    * Authority to Sign off on Conceptual Changes: [sagun](https://docu.ilias.de/go/usr/11294), [Jephte](https://docu.ilias.de/go/usr/70542)
-    * Authority to Sign off on Code Changes: [sagun](https://docu.ilias.de/go/usr/11294), [Jephte](https://docu.ilias.de/go/usr/70542)
-    * Authority to Curate Test Cases: [sagun](https://docu.ilias.de/go/usr/11294), [Jephte](https://docu.ilias.de/go/usr/70542)
+    * Authority to Sign off on Conceptual Changes: [sagun](https://docu.ilias.de/go/usr/112949), [Jephte](https://docu.ilias.de/go/usr/70542)
+    * Authority to Sign off on Code Changes: [sagun](https://docu.ilias.de/go/usr/112949), [Jephte](https://docu.ilias.de/go/usr/70542)
+    * Authority to Curate Test Cases: [sagun](https://docu.ilias.de/go/usr/112949), [Jephte](https://docu.ilias.de/go/usr/70542)
     * Authority to (De-)Assign Authorities: [Jephte](https://docu.ilias.de/go/usr/70542)
 	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
-    * Assignee for Security Reports: [sagun](https://docu.ilias.de/go/usr/11294), [Jephte](https://docu.ilias.de/go/usr/70542)
-    * Assignee for Security Issues: [sagun](https://docu.ilias.de/go/usr/11294), [Jephte](https://docu.ilias.de/go/usr/70542)
+    * Assignee for Security Reports: [sagun](https://docu.ilias.de/go/usr/112949), [Jephte](https://docu.ilias.de/go/usr/70542)
+    * Assignee for Security Issues: [sagun](https://docu.ilias.de/go/usr/112949), [Jephte](https://docu.ilias.de/go/usr/70542)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
 
 [//]: # (END Webservices)

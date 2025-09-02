@@ -62,6 +62,7 @@ class InitUIFramework
                 $c["ui.factory.launcher"],
                 $c["ui.factory.entity"],
                 $c["ui.factory.prompt"],
+                $c["ui.factory.navigation"],
             );
         };
         $c["ui.upload_limit_resolver"] = function ($c) {
@@ -252,12 +253,16 @@ class InitUIFramework
         };
         $c["ui.factory.input.field"] = function ($c) {
             return new ILIAS\UI\Implementation\Component\Input\Field\Factory(
+                $c["ui.factory.input.field.node"],
                 $c["ui.upload_limit_resolver"],
                 $c["ui.signal_generator"],
                 $c["ui.data_factory"],
                 $c["refinery"],
                 $c["lng"]
             );
+        };
+        $c["ui.factory.input.field.node"] = function ($c) {
+            return new ILIAS\UI\Implementation\Component\Input\Field\Node\Factory();
         };
         $c["ui.factory.input.container"] = function ($c) {
             return new ILIAS\UI\Implementation\Component\Input\Container\Factory(
@@ -364,6 +369,16 @@ class InitUIFramework
                             $c["help.text_retriever"],
                             $c["ui.upload_limit_resolver"]
                         ),
+                        new ILIAS\UI\Implementation\Component\Menu\MenuRendererFactory(
+                            $c["ui.factory"],
+                            $c["ui.template_factory"],
+                            $c["lng"],
+                            $c["ui.javascript_binding"],
+                            $c["ui.pathresolver"],
+                            $c["ui.data_factory"],
+                            $c["help.text_retriever"],
+                            $c["ui.upload_limit_resolver"]
+                        ),
                     )
                 )
             );
@@ -406,10 +421,18 @@ class InitUIFramework
             return new ILIAS\UI\Implementation\Component\Prompt\Factory($c["ui.signal_generator"]);
         };
 
+        $c["ui.factory.navigation"] = function ($c) {
+            return new ILIAS\UI\Implementation\Component\Navigation\Factory(
+                $c["ui.data_factory"],
+                $c["refinery"],
+                $c["ui.storage"],
+            );
+        };
+
         // currently this is will be a session storage because we cannot store
         // data on the client, see https://mantis.ilias.de/view.php?id=38503.
-        $c["ui.storage"] = function ($c): ArrayAccess {
-            return new class () implements ArrayAccess {
+        $c["ui.storage"] = function ($c): ILIAS\UI\Storage {
+            return new class () implements ILIAS\UI\Storage {
                 public function offsetExists(mixed $offset): bool
                 {
                     return ilSession::has($offset);

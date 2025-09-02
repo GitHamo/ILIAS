@@ -24,6 +24,7 @@ use ILIAS\Data\DateFormat\DateFormat;
 use ILIAS\Data\DateFormat\Factory as DateFormatFactory;
 use ILIAS\Data\Factory as DataFactory;
 use ILIAS\Authentication\Password\LocalUserPasswordManager;
+use ILIAS\Export\ExportHandler\Factory as ExportFactory;
 
 /**
  * User class
@@ -116,7 +117,7 @@ class ilObjUser extends ilObject
     protected string $first_login = '';	// timestamp
     protected bool $profile_incomplete = false;
     protected ?string $avatar_rid = null;
-
+    protected \ILIAS\FileDelivery\Delivery\StreamDelivery $delivery;
     protected DateFormatFactory $date_format_factory;
     private ilCronDeleteInactiveUserReminderMail $cron_delete_user_reminder_mail;
     private Services $irss;
@@ -147,6 +148,7 @@ class ilObjUser extends ilObject
 
         $this->app_event_handler = $DIC['ilAppEventHandler'];
         $this->date_format_factory = (new DataFactory())->dateFormat();
+        $this->delivery = $DIC->fileDelivery()->delivery();
     }
 
     /**
@@ -3170,35 +3172,42 @@ class ilObjUser extends ilObject
      * Lookup news feed hash for user. If hash does not exist, create one.
      */
     public static function _lookupFeedHash(
-        int $a_user_id,
-        bool $a_create = false
+        int $user_id,
+        bool $create = false
     ): ?string {
         global $DIC;
-
         $ilDB = $DIC['ilDB'];
 
-        if ($a_user_id > 0) {
-            $set = $ilDB->queryF(
-                'SELECT feed_hash from usr_data WHERE usr_id = %s',
-                ['integer'],
-                [$a_user_id]
-            );
-            if ($rec = $ilDB->fetchAssoc($set)) {
-                if (strlen($rec['feed_hash']) == 32) {
-                    return $rec['feed_hash'];
-                } elseif ($a_create) {
-                    $hash = md5(random_int(1, 9999999) + str_replace(' ', '', microtime()));
-                    $ilDB->manipulateF(
-                        'UPDATE usr_data SET feed_hash = %s' .
-                        ' WHERE usr_id = %s',
-                        ['text', 'integer'],
-                        [$hash, $a_user_id]
-                    );
-                    return $hash;
-                }
-            }
+        if ($user_id === 0) {
+            return null;
         }
-        return null;
+
+        $set = $ilDB->queryF(
+            'SELECT feed_hash from usr_data WHERE usr_id = %s',
+            [ilDBConstants::T_INTEGER],
+            [$user_id]
+        );
+        if (($rec = $ilDB->fetchAssoc($set)) === null) {
+            return null;
+        }
+
+        $feed_hash = $rec['feed_hash'];
+        if (is_string($feed_hash) && strlen($feed_hash) === 32) {
+            return $feed_hash;
+        }
+
+        if (!$create) {
+            return null;
+        }
+
+        $hash = md5(random_int(1, 9999999) + str_replace(' ', '', microtime()));
+        $ilDB->manipulateF(
+            'UPDATE usr_data SET feed_hash = %s' .
+            ' WHERE usr_id = %s',
+            [ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER],
+            [$hash, $user_id]
+        );
+        return $hash;
     }
 
     /**
@@ -3950,18 +3959,24 @@ class ilObjUser extends ilObject
 
     public function exportPersonalData(): void
     {
-        $exp = new ilExport();
-        $dir = ilExport::_getExportDirectory($this->getId(), 'xml', 'usr', 'personal_data');
-        ilFileUtils::delDir($dir, true);
-        $title = $this->getLastname() . ', ' . $this->getLastname() . ' [' . $this->getLogin() . ']';
-        $exp->exportEntity(
-            'personal_data',
-            $this->getId(),
-            '',
-            'components/ILIAS/User',
-            $title,
-            $dir
+        if (!isset($this->user)) {
+            global $DIC;
+            $this->user = $DIC->user();
+        }
+        $export_consumer = (new ExportFactory())->consumer()->handler();
+        $configs = $export_consumer->exportConfig()->allExportConfigs();
+        /** @var ilUserExportConfig $config */
+        $config = $configs->getElementByClassName('ilUserExportConfig');
+        $config->setExportType('personal_data');
+        $export = $export_consumer->createStandardExportByObject(
+            $this->user->getId(),
+            $this,
+            $configs
         );
+        $stream = Streams::ofString($export->getIRSSInfo()->getStream()->getContents());
+        $file_name = $export->getIRSSInfo()->getFileName();
+        $export->getIRSS()->delete($export_consumer->exportStakeholderHandler());
+        $this->delivery->deliver($stream, $file_name);
     }
 
     public function getPersonalDataExportFile(): string
@@ -4013,7 +4028,7 @@ class ilObjUser extends ilObject
         $imp->importEntity(
             $a_file['tmp_name'],
             $a_file['name'],
-            'personal_data',
+            'usr',
             'components/ILIAS/User'
         );
     }

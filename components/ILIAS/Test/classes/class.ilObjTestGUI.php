@@ -200,7 +200,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->export_factory = $local_dic['exportimport.factory'];
         $this->export_repository = $local_dic['exportimport.repository'];
         $this->participant_access_filter_factory = $local_dic['participant.access_filter.factory'];
-        $this->test_pass_result_repository = $local_dic['results.data.test_result_repository'];
+        $this->test_pass_result_repository = $local_dic['results.data.repository'];
         $this->toplist_repository = $local_dic['results.toplist.repository'];
 
         $ref_id = 0;
@@ -545,7 +545,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case strtolower(TestScoringByQuestionGUI::class):
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
+                if (!$this->access->checkAccess("read", "", $this->testrequest->getRefId())
+                    && !$this->access->checkAccess("score_anon", "", $this->testrequest->getRefId())
+                ) {
                     $this->redirectAfterMissingRead();
                 }
                 $this->prepareOutput();
@@ -556,7 +558,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case strtolower(TestScoringByParticipantGUI::class):
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
+                if (!$this->access->checkAccess("read", "", $this->testrequest->getRefId())
+                    && !$this->access->checkAccess("score_anon", "", $this->testrequest->getRefId())
+                ) {
                     $this->redirectAfterMissingRead();
                 }
                 $this->prepareOutput();
@@ -933,8 +937,8 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 }
                 if (in_array(
                     $cmd,
-                    ['editQuestion', 'previewQuestion', 'save', 'saveReturn',
-                            'syncQuestion', 'syncQuestionReturn', 'suggestedsolution']
+                    ['editQuestion', 'previewQuestion', 'save', 'saveReturn', 'uploadImage',
+                        'removeImage', 'syncQuestion', 'syncQuestionReturn', 'suggestedsolution']
                 )
                     && !$this->access->checkAccess('write', '', $this->getTestObject()->getRefId())) {
                     $this->redirectAfterMissingWrite();
@@ -1566,7 +1570,10 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     */
     public function fullscreenObject()
     {
-        $page_gui = new ilAssQuestionPageGUI($this->testrequest->raw("pg_id"));
+        $page_gui = new ilAssQuestionPageGUI($this->testrequest->raw('pg_id'));
+        $page_gui->setFileDownloadLink(
+            $this->ctrl->getLinkTargetByClass(ilObjTestGUI::class, 'downloadFile')
+        );
         $page_gui->showMediaFullscreen();
     }
 
