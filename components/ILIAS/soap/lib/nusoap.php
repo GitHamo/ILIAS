@@ -4595,15 +4595,11 @@ class nusoap_server extends nusoap_base
 
     public function addInternalPort(string $serviceName, string $url): void
     {
-        $port = $this->wsdl->ports[$serviceName . 'Port'] ?? [
-            'binding'=> $serviceName . 'Binding',
-            'location'=> [],
-            'bindingType'=>'http://schemas.xmlsoap.org/wsdl/soap/'
+        $this->wsdl->ports['Internal' . $serviceName . 'Port'] = [
+            'binding' => $serviceName . 'Binding',
+            'location'=> (string) (new \ILIAS\Data\URI($url))->withQuery(),
+            'bindingType' => 'http://schemas.xmlsoap.org/wsdl/soap/'
         ];
-
-        $port['location'] = is_array($port['location']) ? array_merge($port['location'], [$url]) : [$port['location'], $url];
-
-        $this->wsdl->ports[$serviceName . 'Port'] = $port;
     }
 }
 
