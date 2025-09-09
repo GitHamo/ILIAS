@@ -170,7 +170,7 @@ final class ilSamlIdp
         $this->setLocalLocalAuthenticationStatus((bool) ($data[self::PROP_ALLOW_LOCAL_AUTH] ?? false));
         $this->setSynchronizationStatus(($data[self::PROP_SYNC_STATUS] ?? null) !== null);
 
-        $this->setLoginClaim("");
+        $this->setLoginClaim('');
         $this->setDefaultRoleId(0);
         $this->setAccountMigrationStatus(true);
         if ($this->isSynchronizationEnabled()) {
