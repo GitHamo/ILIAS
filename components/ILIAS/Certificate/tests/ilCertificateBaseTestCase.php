@@ -49,6 +49,26 @@ abstract class ilCertificateBaseTestCase extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @param callable(): void $cb
+     */
+    protected function assertDoesNotThrow(callable $cb, string $message = ''): void
+    {
+        try {
+            $cb();
+            $this->addToAssertionCount(1);
+        } catch (Throwable $e) {
+            $this->fail(
+                trim($message . ' ' . sprintf(
+                    '(unexpected %s: %s)' . PHP_EOL . '%s',
+                    get_class($e),
+                    $e->getMessage(),
+                    $e->getTraceAsString()
+                ))
+            );
+        }
+    }
+
     protected function setGlobalVariable(string $name, mixed $value): void
     {
         global $DIC;

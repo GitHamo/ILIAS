@@ -161,12 +161,18 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
         $helper->$method('invalid-date');
     }
 
-    #[DataProvider('invalidDateProvider')]
-    public function testCannotParseTimestampWithDateTimeFormat(string $method): void
+    public function testCannotParseTimestampWithDateTimeFormat(): void
     {
         $helper = new ilCertificateDateHelper();
+
+        $this->assertDoesNotThrow(
+            fn() => $helper->formatDate($this->current_time),
+            'formatDate should not throw for a valid timestamp'
+        );
+
+        $this->expectException(ilDateTimeException::class);
         $this->expectExceptionMessage('Cannot parse date: ' . $this->current_time);
-        $helper->$method($this->current_time);
+        $helper->formatDateTime($this->current_time);
     }
 
     public function testFormatDateWithoutRelativeDates(): void
