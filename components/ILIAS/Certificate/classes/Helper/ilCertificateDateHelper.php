@@ -123,10 +123,17 @@ class ilCertificateDateHelper
             return true;
         }
 
-        if (is_string($maybe_timestamp) && ctype_digit($maybe_timestamp)) {
-            return true;
+        if (!is_string($maybe_timestamp) || !ctype_digit($maybe_timestamp)) {
+            return false;
         }
 
-        return false;
+        try {
+            $datetime = DateTimeImmutable::createFromFormat('Ymd', $maybe_timestamp);
+            return $datetime === false;
+        } catch (Throwable) {
+            // Fallthrough
+        }
+
+        return true;
     }
 }
