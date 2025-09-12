@@ -959,8 +959,7 @@ class ilObjExerciseGUI extends ilObjectGUI
         )->withActive($am->getListModeLabel($this->getCurrentMode()));
 
         $html = "";
-        $l = $f->legacy("<br><br>");
-        $html .= $r->render([$mode, $l, $panel]);
+        $html .= $r->render([$mode, $panel]);
 
         $this->tpl->setContent(
             $html
