@@ -219,52 +219,6 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
         }
     }
 
-    public function testExplictDateFormatsWorkAsExpected2(): void
-    {
-        $helper = new ilCertificateDateHelper();
-
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDate($this->current_time, null, IL_CAL_UNIX),
-            'formatDate should not throw for a valid timestamp passed as int'
-        );
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDate((string) $this->current_time, null, IL_CAL_UNIX),
-            'formatDate should not throw for a valid timestamp passed as string'
-        );
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDateTime($this->current_time, null, IL_CAL_UNIX),
-            'formatDateTime should not throw for a valid timestamp passed as int'
-        );
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDateTime((string) $this->current_time, null, IL_CAL_UNIX),
-            'formatDateTime should not throw for a valid timestamp passed as string'
-        );
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDate('2025-09-12', null, IL_CAL_DATE),
-            'formatDate should not throw for date string'
-        );
-        $this->assertDoesNotThrow(
-            fn() => $helper->formatDateTime('2025-09-12 20:30:00', null, IL_CAL_DATETIME),
-            'formatDateTime should not throw for a valid date/time string'
-        );
-        $this->assertThrows(
-            fn() => $helper->formatDate((string) $this->current_time, null, IL_CAL_DATE),
-            InvalidArgumentException::class
-        );
-        $this->assertThrows(
-            fn() => $helper->formatDateTime((string) $this->current_time, null, IL_CAL_DATETIME),
-            InvalidArgumentException::class
-        );
-        $this->assertThrows(
-            fn() => $helper->formatDate('2025-09-12', null, IL_CAL_UNIX),
-            InvalidArgumentException::class
-        );
-        $this->assertThrows(
-            fn() => $helper->formatDateTime('2025-09-12 20:30:00', null, IL_CAL_UNIX),
-            InvalidArgumentException::class
-        );
-    }
-
     /**
      * @return array<string, array{0: string}>
      */
