@@ -118,6 +118,8 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
     {
         $ts = 1757609100; // See snippet in: https://github.com/ILIAS-eLearning/ILIAS/pull/10084
 
+        class_exists('ilDateTime');
+
         return [
             'date: unix-int ok' => ['date', $ts, IL_CAL_UNIX, null, 'unix timestamp (int) accepted for date'],
             'date: unix-string ok' => [
