@@ -30,7 +30,11 @@ use ILIAS\Repository\Form\FormAdapterGUI;
  */
 class ilContentStyleSettingsGUI
 {
+<<<<<<< HEAD:components/ILIAS/Style/Content/classes/class.ilContentStyleSettingsGUI.php
     protected InternalGUIService $gui;
+=======
+    protected \ILIAS\Style\Content\InternalDomainService $domain;
+>>>>>>> 0740b8d479d (43379: Content-Style - die einem Content-Style zugeordneten Lernmodule werden nicht hochgezählt):Services/Style/Content/classes/class.ilContentStyleSettingsGUI.php
     protected ilContentStyleSettings $cs_settings;
     protected ilObjStyleSettingsGUI $parent_gui;
     protected int $obj_id;
@@ -67,7 +71,11 @@ class ilContentStyleSettingsGUI
         $this->obj_id = $this->request->getObjId();        // note that reference ID is the id of the style settings node and object ID may be a style sheet object ID
 
         $this->cs_settings = new ilContentStyleSettings();
+<<<<<<< HEAD:components/ILIAS/Style/Content/classes/class.ilContentStyleSettingsGUI.php
         $this->gui = $DIC->contentStyle()->internal()->gui();
+=======
+        $this->domain = $DIC->contentStyle()->internal()->domain();
+>>>>>>> 0740b8d479d (43379: Content-Style - die einem Content-Style zugeordneten Lernmodule werden nicht hochgezählt):Services/Style/Content/classes/class.ilContentStyleSettingsGUI.php
     }
 
     public function executeCommand(): void
@@ -152,7 +160,7 @@ class ilContentStyleSettingsGUI
         $styles = $this->cs_settings->getStyles();
         foreach ($styles as $style) {
             $style["active"] = ilObjStyleSheet::_lookupActive((int) $style["id"]);
-            $style["lm_nr"] = ilObjContentObject::_getNrOfAssignedLMs((int) $style["id"]);
+            $style["lm_nr"] = $this->domain->object(0)->countObjSelected((int) $style["id"]);
             $data[$style["title"] . ":" . $style["id"]]
                 = $style;
             if ($style["lm_nr"] > 0) {
@@ -167,9 +175,13 @@ class ilContentStyleSettingsGUI
         if ($fixed_style <= 0) {
             $data[-1] =
                 array("title" => $this->lng->txt("sty_individual_styles"),
+<<<<<<< HEAD:components/ILIAS/Style/Content/classes/class.ilContentStyleSettingsGUI.php
                       "id" => 0,
                       "lm_nr" => ilObjContentObject::_getNrLMsIndividualStyles()
                 );
+=======
+                    "id" => 0, "lm_nr" => $this->domain->object(0)->countOverallOwned());
+>>>>>>> 0740b8d479d (43379: Content-Style - die einem Content-Style zugeordneten Lernmodule werden nicht hochgezählt):Services/Style/Content/classes/class.ilContentStyleSettingsGUI.php
             $from_styles[-1] = $this->lng->txt("sty_individual_styles");
         }
 
@@ -177,9 +189,13 @@ class ilContentStyleSettingsGUI
         if ($default_style <= 0 && $fixed_style <= 0) {
             $data[0] =
                 array("title" => $this->lng->txt("sty_default_style"),
+<<<<<<< HEAD:components/ILIAS/Style/Content/classes/class.ilContentStyleSettingsGUI.php
                       "id" => 0,
                       "lm_nr" => ilObjContentObject::_getNrLMsNoStyle()
                 );
+=======
+                    "id" => 0, "lm_nr" => $this->domain->object(0)->countObjSelected(0));
+>>>>>>> 0740b8d479d (43379: Content-Style - die einem Content-Style zugeordneten Lernmodule werden nicht hochgezählt):Services/Style/Content/classes/class.ilContentStyleSettingsGUI.php
             $from_styles[0] = $this->lng->txt("sty_default_style");
             $to_styles[0] = $this->lng->txt("sty_default_style");
         }

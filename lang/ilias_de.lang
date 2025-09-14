@@ -16096,6 +16096,7 @@ style#:#sty_msg_color_must_only_include#:#Der Farbname darf nur folgende Buchsta
 style#:#sty_msg_input_must_be_numeric#:#Numerische Eingabe erforderlich.
 style#:#sty_name#:#Name
 style#:#sty_nr_learning_modules#:#Anzahl der Lernmodule
+style#:#sty_nr_objects#:#Number of Objects
 style#:#sty_odd_col_class#:#Ungerade Spalten
 style#:#sty_odd_row_class#:#Ungerade Zeilen
 style#:#sty_ol#:#Geordnete Liste
