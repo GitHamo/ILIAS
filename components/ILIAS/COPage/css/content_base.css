@@ -14,6 +14,10 @@
 	text-align: left;
 }
 
+.ilTinyMenuSection .dropdown-menu {
+	width: auto;
+}
+
 #iltinymenu div.ilTinyMenuSection p, #iltinymenu .il-copg-button-group p {
 	background-color: transparent;
 }
