@@ -376,7 +376,7 @@ class ilObjUser extends ilObject
             $this->setInactivationDate(null);
         }
 
-        $now_string = (new DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
+        $now_string = (new \DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
             ->format(self::DATABASE_DATE_FORMAT);
 
         $insert_array = [
@@ -506,7 +506,7 @@ class ilObjUser extends ilObject
             'passwd_policy_reset' => ['integer', $this->passwd_policy_reset],
             'last_update' => [
                 'timestamp',
-                (new DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
+                (new \DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
                     ->format(self::DATABASE_DATE_FORMAT)
             ],
             'inactivation_date' => ['timestamp', $this->inactivation_date],
@@ -2716,31 +2716,32 @@ class ilObjUser extends ilObject
     }
 
     public static function _toggleActiveStatusOfUsers(
-        array $a_usr_ids,
+        array $usr_ids,
         bool $a_status
     ): void {
         global $DIC;
 
-        $ilDB = $DIC['ilDB'];
+        $db = $DIC['ilDB'];
 
         if ($a_status) {
-            $q = 'UPDATE usr_data SET active = 1, inactivation_date = NULL WHERE ' .
-                $ilDB->in('usr_id', $a_usr_ids, false, 'integer');
-            $ilDB->manipulate($q);
-        } else {
-            $usrId_IN_usrIds = $ilDB->in('usr_id', $a_usr_ids, false, 'integer');
-
-            $q = 'UPDATE usr_data SET active = 0 WHERE $usrId_IN_usrIds';
-            $ilDB->manipulate($q);
-
-            $queryString = '
-				UPDATE usr_data
-				SET inactivation_date = %s
-				WHERE inactivation_date IS NULL
-				AND $usrId_IN_usrIds
-			';
-            $ilDB->manipulateF($queryString, ['timestamp'], [ilUtil::now()]);
+            $db->manipulate(
+                'UPDATE usr_data SET active = 1, inactivation_date = NULL' . PHP_EOL
+                . "WHERE {$db->in('usr_id', $usr_ids, false, 'integer')}"
+            );
+            return;
         }
+
+        $in_part = $db->in('usr_id', $usr_ids, false, 'integer');
+        $db->manipulate(
+            "UPDATE usr_data SET active = 0 WHERE {$in_part}"
+        );
+        $db->manipulateF(
+            'UPDATE usr_data SET inactivation_date = %s' . PHP_EOL
+            . "WHERE inactivation_date IS NULL AND {$in_part}",
+            ['timestamp'],
+            [(new \DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
+                ->format(self::DATABASE_DATE_FORMAT)]
+        );
     }
 
     public static function _lookupAuthMode(int $a_usr_id): string
@@ -3577,20 +3578,29 @@ class ilObjUser extends ilObject
     }
 
     public static function _setUserInactive(
-        int $a_usr_id
+        int $usr_id
     ): bool {
         global $DIC;
 
-        $ilDB = $DIC['ilDB'];
+        $db = $DIC['ilDB'];
 
-        $query = 'UPDATE usr_data SET active = 0, inactivation_date = %s WHERE usr_id = %s';
-        $affected = $ilDB->manipulateF($query, ['timestamp', 'integer'], [ilUtil::now(), $a_usr_id]);
+        $affected = $db->manipulateF(
+            'UPDATE usr_data SET active = 0, inactivation_date = %s WHERE usr_id = %s',
+            [
+                'timestamp',
+                'integer'
+            ],
+            [
+                (new \DateTimeImmutable('@' . time(), new DateTimeZone('UTC')))
+                    ->format(self::DATABASE_DATE_FORMAT),
+                $usr_id
+            ]
+        );
 
         if ($affected) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -3892,26 +3902,25 @@ class ilObjUser extends ilObject
     public static function _getUserIdsByInactivationPeriod(
         int $period
     ): array {
-        /////////////////////////////
-        $field = 'inactivation_date';
-        /////////////////////////////
-
         if (!$period) {
             throw new ilException('no valid period given');
         }
 
         global $DIC;
 
-        $ilDB = $DIC['ilDB'];
+        $db = $DIC['ilDB'];
 
-        $date = date('Y-m-d H:i:s', (time() - ($period * 24 * 60 * 60)));
-
-        $query = "SELECT usr_id FROM usr_data WHERE $field < %s AND active = %s";
-
-        $res = $ilDB->queryF($query, ['timestamp', 'integer'], [$date, 0]);
+        $res = $db->queryF(
+            'SELECT usr_id FROM usr_data WHERE inactivation_date < %s AND active = %s',
+            ['timestamp', 'integer'],
+            [
+                date('Y-m-d H:i:s', (time() - ($period * 24 * 60 * 60))),
+                0
+            ]
+        );
 
         $ids = [];
-        while ($row = $res->fetchRow(ilDBConstants::FETCHMODE_OBJECT)) {
+        while ($row = $db->fetchRow($res, ilDBConstants::FETCHMODE_OBJECT)) {
             $ids[] = (int) $row->usr_id;
         }
 

@@ -227,6 +227,12 @@ class SettingsMainGUI extends TestSettingsGUI
         $current_question_config = $this->testQuestionSetConfigFactory->getQuestionSetConfig();
         $new_question_set_type = $data[self::GENERAL_SETTINGS_SECTION_LABEL]['question_set_type'];
 
+        if ($new_question_set_type === null) {
+            $this->tpl->setOnScreenMessage('info', $this->lng->txt('tst_settings_form_reload_needed'));
+            $this->showForm();
+            return;
+        }
+
         $question_set_modal_required = $new_question_set_type !== $current_question_set_type
                 && $current_question_config->doesQuestionSetRelatedDataExist();
         $anonymity_modal_required = $this->anonymityChanged(
