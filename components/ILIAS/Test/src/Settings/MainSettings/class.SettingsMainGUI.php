@@ -557,9 +557,31 @@ class SettingsMainGUI extends TestSettingsGUI
             $inputs,
             $this->lng->txt('rep_time_based_availability')
         )->withAdditionalTransformation(
+            $this->getConstraintForActivationLimitedOptionalGroup()
+        )->withAdditionalTransformation(
             $this->getTransformationForActivationLimitedOptionalGroup()
         )->withValue(
             $this->getValueForActivationLimitedOptionalGroup()
+        );
+    }
+
+    private function getConstraintForActivationLimitedOptionalGroup(): Constraint
+    {
+        return $this->refinery->custom()->constraint(
+            function (?array $vs): bool {
+                if ($vs === null
+                    || $vs['time_limit_start'] === null
+                    || $vs['time_limit_end'] === null) {
+                    return true;
+                }
+
+                if ($vs['time_limit_start'] > $vs['time_limit_end']) {
+                    return false;
+                }
+
+                return true;
+            },
+            $this->lng->txt('duration_end_must_not_be_earlier_than_start')
         );
     }
 
