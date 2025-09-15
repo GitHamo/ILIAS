@@ -32,7 +32,8 @@ use ILIAS\UI\Component\Table\DataRetrieval;
  *
  * expected output: >
  *   ILIAS shows a table with one column and one row.
- *   The row consists of one clickable and one non-clickable link separated by simple arrows (>).
+ *   The row consists of one clickable and one non-clickable link separated by a
+ *   visible delimiter such as simple arrow (>).
  * ---
  */
 function disabled()
