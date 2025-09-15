@@ -15843,6 +15843,7 @@ style#:#sty_media_queries#:#Media Queries
 style#:#sty_media_query_info#:#Für jeden Media Query wird ein eigener CSS-Abschnitt nach dem Standard-Abschnitt (ohne Media Query) eingefügt.
 style#:#sty_min_height#:#Minimale Höhe
 style#:#sty_move_lm_styles#:#Stylesheets der Lernmodule ändern
+style#:#sty_move_obj_styles#:#Stylesheets der Objekte ändern
 style#:#sty_move_style#:#Stylesheet ändern
 style#:#sty_move_user_styles#:#Stylesheet der Benutzer ändern
 style#:#sty_msg_characteristic_must_only_include#:#Der Titel des Styles muss mit einem Buchstaben beginnen und darf keine Leerzeichen sondern nur die folgenden Zeichen enthalten:
