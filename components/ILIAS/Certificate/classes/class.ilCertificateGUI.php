@@ -39,7 +39,7 @@ use ILIAS\ResourceStorage\Identification\ResourceIdentification;
  */
 class ilCertificateGUI
 {
-    private const EDITOR_COMMAND = 'certificateEditor';
+    public const string EDITOR_COMMAND = 'certificateEditor';
 
     protected ilCtrlInterface $ctrl;
     protected ilTree $tree;
