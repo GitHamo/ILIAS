@@ -200,7 +200,7 @@ class ilContentStyleSettingsGUI
 
             // from styles selector
             $si = new ilSelectInputGUI(
-                $this->lng->txt("sty_move_lm_styles") . ": " . $this->lng->txt("sty_from"),
+                $this->lng->txt("sty_move_obj_styles") . ": " . $this->lng->txt("sty_from"),
                 "from_style"
             );
             $si->setOptions($from_styles);
