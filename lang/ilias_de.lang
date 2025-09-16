@@ -6451,7 +6451,7 @@ content#:#cont_ed_split_page_next#:#Auf nächste Seite schieben
 content#:#cont_ed_textitem#:#Testelement
 content#:#cont_ed_width#:#Breite
 content#:#cont_edit_base_image#:#Ausgangsbild bearbeiten
-content#:#cont_edit_comp#:#Bearbeitungsmodus
+content#:#cont_edit_comp#:#Bearbeiten
 content#:#cont_edit_definition#:#Definition bearbeiten
 content#:#cont_edit_file_list_properties#:#Eigenschaften der Dateilisten bearbeiten
 content#:#cont_edit_language_version#:#Version bearbeiten
@@ -6460,7 +6460,7 @@ content#:#cont_edit_marker_position#:#Markierungspunkt bearbeiten
 content#:#cont_edit_mob#:#Medienobjekt bearbeiten
 content#:#cont_edit_mob_alias_prop#:#Eigenschaften der Instanz des Medienobjekts bearbeiten
 content#:#cont_edit_mode#:#Bearbeitungsmodus
-content#:#cont_edit_multi#:#Mehrfachauswahl
+content#:#cont_edit_multi#:#Auswählen
 content#:#cont_edit_overlay_position#:#Position des Overlays bearbeiten
 content#:#cont_edit_par#:#Text bearbeiten
 content#:#cont_edit_personal_data#:#Persönliche Daten editieren
