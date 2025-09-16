@@ -532,7 +532,7 @@ class ilObjMediaObject extends ilObject
                             }
                         }
                     } else {
-                        $location = $item->getLocation();
+                        $location = trim($item->getLocation());
                         // irss
                         if ($item->getLocationType() === "LocalFile" &&
                         !is_file($this->getDataDirectory() . "/" . $item->getLocation())) {
