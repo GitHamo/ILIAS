@@ -533,8 +533,7 @@ class ilObjMediaObject extends ilObject
                             }
                         }
                     } else {
-<<<<<<< HEAD:components/ILIAS/MediaObjects/MediaObject/class.ilObjMediaObject.php
-                        $location = $item->getLocation();
+                        $location = trim($item->getLocation());
                         // irss
                         if ($item->getLocationType() === "LocalFile" &&
                         !is_file($this->getDataDirectory() . "/" . $item->getLocation())) {
@@ -543,9 +542,6 @@ class ilObjMediaObject extends ilObject
                                 $item->getLocation()
                             );
                         }
-=======
-                        $location = trim($item->getLocation());
->>>>>>> b5ad3633647 (media objects: trim location to fix leading spaces):Services/MediaObjects/classes/class.ilObjMediaObject.php
                         if ($item->getLocationType() != "LocalFile") {  //#25941
                             $location = ilUtil::secureUrl($location); //#23518
                         }
@@ -1884,65 +1880,12 @@ class ilObjMediaObject extends ilObject
                 if ($thumbnail_url !== "") {
                     $mob_logger = ilLoggerFactory::getLogger('mob');
                     $file = basename($url["path"]);
-<<<<<<< HEAD:components/ILIAS/MediaObjects/MediaObject/class.ilObjMediaObject.php
                     $this->manager->addPreviewFromUrl(
                         $this->getId(),
                         $meta["thumbnail_url"],
                         "/mob_vpreview." .
                         pathinfo($file, PATHINFO_EXTENSION)
                     );
-=======
-
-                    try {
-                        $mob_logger->debug('Trying to fetch thumbnail from YouTube: {thumbnail_url}', [
-                            'thumbnail_url' => $thumbnail_url,
-                        ]);
-
-                        $curl = new ilCurlConnection($thumbnail_url);
-                        $curl->init(true);
-                        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-                        $curl->setOpt(CURLOPT_VERBOSE, true);
-                        $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
-                        $curl->setOpt(CURLOPT_TIMEOUT_MS, 5000);
-                        $curl->setOpt(CURLOPT_TIMEOUT, 5);
-                        $curl->setOpt(CURLOPT_FAILONERROR, true);
-                        $curl->setOpt(CURLOPT_SSL_VERIFYPEER, 1);
-                        $curl->setOpt(CURLOPT_SSL_VERIFYHOST, 2);
-
-                        $response = $curl->exec();
-                        $info = $curl->getInfo();
-
-                        $mob_logger->debug('cURL Info: {info}', [
-                            'info' => print_r($info, true)
-                        ]);
-
-                        $status = $info['http_code'] ?? '';
-                        if ((int) $status === 200) {
-                            $mob_logger->debug('Successfully fetched preview file from YouTube: Received {bytes} bytes', [
-                                'bytes' => (string) strlen($response),
-                            ]);
-
-                            file_put_contents(
-                                self::_getDirectory(
-                                    $this->getId()
-                                ) . '/mob_vpreview.' . pathinfo(
-                                    $file,
-                                    PATHINFO_EXTENSION
-                                ),
-                                $response
-                            );
-                        } else {
-                            $mob_logger->error('Could not fetch thumbnail from YouTube: {thumbnail_url}', [
-                                'thumbnail_url' => $thumbnail_url,
-                            ]);
-                        }
-                    } catch (Exception $e) {
-                        $mob_logger->error('Could not fetch thumbnail from YouTube: {message}', [
-                            'message' => $e->getMessage(),
-                        ]);
-                        $mob_logger->error($e->getTraceAsString());
-                    }
->>>>>>> b5ad3633647 (media objects: trim location to fix leading spaces):Services/MediaObjects/classes/class.ilObjMediaObject.php
                 }
             }
         }
