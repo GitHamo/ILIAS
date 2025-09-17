@@ -259,13 +259,9 @@ class ilExSubmissionTextGUI extends ilExSubmissionBaseGUI
 
                 $text = $a_form->getItemByPostVar("atxt");
                 // mob id to mob src
-<<<<<<< HEAD:components/ILIAS/Exercise/Submission/class.ilExSubmissionTextGUI.php
-                $text->setValue(nl2br(ilRTE::_replaceMediaObjectImageSrc($sub->getText(), 1)));
-=======
-                $val = nl2br(ilRTE::_replaceMediaObjectImageSrc($files["atext"], 1));
+                $val = nl2br(ilRTE::_replaceMediaObjectImageSrc($sub->getText(), 1));
                 $val = $this->gui->html()->escapeCurly($val);
                 $text->setValue($val);
->>>>>>> 1deef54eb9a (41466: When using curly brackets in answer nothing in between is displayed):Modules/Exercise/Submission/class.ilExSubmissionTextGUI.php
             }
         }
         $this->tpl->setContent($a_form->getHTML());
