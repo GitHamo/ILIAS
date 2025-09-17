@@ -139,10 +139,6 @@ class ilExcCriteriaText extends ilExcCriteria
 
     public function getHTML($a_value): string
     {
-<<<<<<< HEAD:components/ILIAS/Exercise/PeerReview/Criteria/class.ilExcCriteriaText.php
-        return nl2br((string) $a_value);
-=======
-        return nl2br($this->gui->html()->escapeCurly($a_value));
->>>>>>> 1deef54eb9a (41466: When using curly brackets in answer nothing in between is displayed):Modules/Exercise/PeerReview/Criteria/class.ilExcCriteriaText.php
+        return nl2br($this->gui->html()->escapeCurly((string) $a_value));
     }
 }
