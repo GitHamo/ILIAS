@@ -49,7 +49,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
     private const string PROP_UPDATE_SUFFIX = '_update';
 
     private const string METADATA_STORAGE_KEY = 'metadata';
-    private const string METADATA_ENTITY_ID = 'metadata_entity_id';
+    private const string METADATA_ENTITY_ID = 'entity_id';
 
     /** @var list<string> */
     private const array IGNORED_USER_FIELDS = [
@@ -614,13 +614,13 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
     private function getIdpSettingsForm(array $values = []): StandardForm
     {
         $ui_field = $this->ui_factory->input()->field();
-        $metadata_entity_id = $values['entity_id'] ?? null;
+        $metadata_entity_id = $values[self::METADATA_ENTITY_ID] ?? null;
 
         /** @var list<FormInput> $inputs */
         $inputs = [
             $ui_field->text(
                 $this->lng->txt('auth_saml_idp')
-            )->withValue($values['entity_id'] ?? '')->withDisabled(true),
+            )->withValue($values[self::METADATA_ENTITY_ID] ?? '')->withDisabled(true),
             self::METADATA_STORAGE_KEY => $ui_field
                 ->textarea(
                     $this->lng->txt('auth_saml_add_idp_md_label'),
@@ -729,7 +729,7 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
 
     private function getIdpForm(): StandardForm
     {
-        $medadata_entity_id = null;
+        $medadata_entity_id = '';
 
         return $this->ui_factory->input()->container()->form()->standard(
             $this->ctrl->getFormAction($this, self::CMD_SAVE_NEW_IDP),
@@ -753,9 +753,8 @@ final class ilSamlSettingsGUI implements ilCtrlSecurityInterface, ilSamlCommands
                     ->withAdditionalTransformation(
                         $this->refinery->custom()->transformation(
                             static function (string $value) use (&$medadata_entity_id): string {
-                                // TODO: Security
                                 $sanitized_value = ilUtil::stripSlashes(trim($medadata_entity_id));
-                                if ($sanitized_value !== $value) {
+                                if ($sanitized_value !== $medadata_entity_id) {
                                     $sanitized_value = ilUtil::stripSlashes(str_replace('<', '< ', $medadata_entity_id));
                                 }
 
