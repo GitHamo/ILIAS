@@ -5876,7 +5876,6 @@ common#:#uploading#:#Enviando...
 common#:#uri#:#URI
 common#:#url#:#url
 common#:#url_not_found#:#Archivos no encontrado
-common#:#url_to_latex#:#URL del script CGI para LaTeX
 common#:#use_customized_instructions#:#Usar instrucciones propias:
 common#:#use_default_instructions#:#Usar instrucciones por defecto.
 common#:#user#:#Usuario

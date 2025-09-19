@@ -5873,7 +5873,6 @@ common#:#uploading#:#Uploading...###24 10 2013 new variable
 common#:#uri#:#URI
 common#:#url#:#URL
 common#:#url_not_found#:#文件未找到
-common#:#url_to_latex#:#URL 到 LaTeX CGI 脚本
 common#:#use_customized_instructions#:#使用自定义指令：
 common#:#use_default_instructions#:#使用默认的指令。
 common#:#user#:#用户

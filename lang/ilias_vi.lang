@@ -5876,7 +5876,6 @@ common#:#uploading#:#Uploading...###24 10 2013 new variable
 common#:#uri#:#URI###25 02 2007 new variable
 common#:#url#:#URL
 common#:#url_not_found#:#Không tìm thấy file
-common#:#url_to_latex#:#URL to LaTeX CGI script###25 02 2007 new variable
 common#:#use_customized_instructions#:#Use customized instructions:###11 03 2008 new variable
 common#:#use_default_instructions#:#Use default instructions.###11 03 2008 new variable
 common#:#user#:#Người sử dụng

@@ -5875,7 +5875,6 @@ common#:#uploading#:#Uploading...###24 10 2013 new variable
 common#:#uri#:#URI
 common#:#url#:#URL
 common#:#url_not_found#:#Το αρχείο δεν βρέθηκε
-common#:#url_to_latex#:#Script μετατροπής URL σε LaTeX CGI
 common#:#use_customized_instructions#:#Use customized instructions:
 common#:#use_default_instructions#:#Use default instructions.
 common#:#user#:#Χρήστης
