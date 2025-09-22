@@ -1016,7 +1016,7 @@ abstract class ilTestOutputGUI extends ilTestPlayerAbstractGUI
             $titleContent = $titleContent->withProperty($testExamIdLabel, $testExamIdValue);
         }
 
-        if (!$this->object->getKioskMode() || $this->object->getShowKioskModeTitle()) {
+        if ($this->object->getShowKioskModeTitle()) {
             $testNameLabel = $this->lng->txt("test");
             $testNameValue = $this->object->getTitle();
             $titleContent = $titleContent->withProperty($testNameLabel, $testNameValue, false);
