@@ -3163,7 +3163,7 @@ JS;
             $title_content = $title_content->withProperty($exam_id_label, $exam_id_value);
         }
 
-        if ($this->object->getShowKioskModeTitle()) {
+        if (!$this->object->getKioskMode() || $this->object->getShowKioskModeTitle()) {
             $test_title_label = $this->lng->txt("test");
             $test_title_value = $this->object->getTitle();
             $title_content = $title_content->withProperty($test_title_label, $test_title_value, false);
