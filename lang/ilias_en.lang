@@ -602,7 +602,6 @@ assessment#:#create_new#:#Create New
 assessment#:#created#:#Created
 assessment#:#customstyle#:#Custom Style
 assessment#:#dashboard_tab#:#Participants
-assessment#:#date_time#:#Date and Time
 assessment#:#definition#:#Definition
 assessment#:#definition_image#:#Definition Image
 assessment#:#definition_text#:#Definition Text
@@ -2187,6 +2186,8 @@ awrn#:#awrn_seconds#:#sec
 awrn#:#awrn_use_osd#:#Popup Online Users
 awrn#:#awrn_use_osd_info#:#Display a popup to indicate new online users in the ‘Who is online?’ list.
 awrn#:#awrn_user_show#:#Show Your Account in "Who-Is-Online?"
+awrn#:#awrn_user_show_default#:#Default Value for  the Visibility in "Who-Is-Online?"
+awrn#:#awrn_user_show_default_info#:#Defines the default value for the visibility of the status of a user in "Who-Is-Online?".
 awrn#:#user_awrn_default#:#Default
 awrn#:#user_awrn_hide#:#Hide my status
 awrn#:#user_awrn_show#:#Show my status
@@ -2673,6 +2674,7 @@ book#:#obj_book_duplicate#:#Copy Booking Pool
 book#:#participants#:#Participants
 book#:#reservation_deleted#:#Booking deleted.
 buddysystem#:#buddy_allow_to_contact_me#:#Allow Contact Requests
+buddysystem#:#buddy_allow_to_contact_me_default_info#:#Defines if users can send each other requests for getting into contact by default.
 buddysystem#:#buddy_allow_to_contact_me_info#:#Other users are able to send me request for getting into contact.
 buddysystem#:#buddy_bs_act_btn_txt_ignored_request_to_linked#:#Confirm Request
 buddysystem#:#buddy_bs_act_btn_txt_ignored_request_to_unlinked#:#Cancel Request
@@ -2875,6 +2877,7 @@ chatroom#:#chat_anonymous_not_allowed#:#Please login to use the chat.
 chatroom#:#chat_auth_token_info#:#Please define unique strings used by ILIAS for authentication purposes when sending requests to the chat server. You can automatically create these strings by clicking the corresponding button. Please note that the chat server is able to communicate with multiple ILIAS clients, but each client name has to be <b>unique</b>.
 chatroom#:#chat_ban#:#Ban
 chatroom#:#chat_broadcast_typing#:#Broadcast Typing
+chatroom#:#chat_broadcast_typing_default_info#:#If enabled, typing will be broadcasted to other participants of a conversation or chat room by default.
 chatroom#:#chat_broadcast_typing_info#:#If enabled, your typing will be broadcasted to other participants of a conversation or chat room.
 chatroom#:#chat_connection_disconnected#:##username# left the chat room.
 chatroom#:#chat_connection_established#:##username# has entered chat room.
@@ -2912,6 +2915,7 @@ chatroom#:#chat_message_options#:#Display
 chatroom#:#chat_no_use_typing_broadcast#:#Typing will not be broadcasted
 chatroom#:#chat_not_use_osc#:#Not Using On-Screen-Chat
 chatroom#:#chat_osc_accept_msg#:#Allow On-Screen Chat Conversations
+chatroom#:#chat_osc_accept_msg_default_info#:#If enabled, users are by default allowed to send each other messages using the on-screen chat system.
 chatroom#:#chat_osc_accept_msg_info#:#Allow other users to send you messages using the on-screen chat system.
 chatroom#:#chat_osc_accept_msg_info_slate#:#To have private conversations, you must enable your setting "Allow On-Screen Chat Conversations".
 chatroom#:#chat_osc_accept_msg_info_slate_link_txt#:#Visibility (in Profile and Privacy)
@@ -3667,7 +3671,7 @@ common#:#change_assignment#:#Change assignment
 common#:#change_header_title#:#Edit Header Title
 common#:#change_owner#:#Change Owner
 common#:#change_sort_direction#:#Change sort direction
-common#:#changeable#:#Changeable in Profile
+common#:#changeable#:#Changeable by User
 common#:#changed_to#:#changed to
 common#:#changing_loginname_not_possible_info#:#You changed your login name at last at %s. The next change can be performed at %s.
 common#:#chapter#:#Chapter
@@ -3743,6 +3747,7 @@ common#:#condition_not_finished#:#Not finished
 common#:#condition_passed#:#Passed
 common#:#condition_select_object#:#Please select one object.
 common#:#conditions_updated#:#Conditions saved
+common#:#configuration#:#Configuration
 common#:#confirm#:#Confirm
 common#:#confirm_delete_parameter#:#Do you really want to delete the parameter?
 common#:#confirmation#:#Confirmation
@@ -3767,7 +3772,7 @@ common#:#copy#:#Copy
 common#:#copyChapter#:#Copy
 common#:#copyPage#:#Copy
 common#:#copy_all#:#Copy all
-common#:#copy_n_of_suffix#:#- Copy (%1$s)
+common#:#copy_n_of_suffix#:#(%1$s)
 common#:#copy_of#:#Copy of
 common#:#copy_of_suffix#:#- Copy
 common#:#copy_perma_link#:#Copy link to clipboard
@@ -3848,6 +3853,7 @@ common#:#database#:#Database
 common#:#database_version#:#Current Database Version
 common#:#dataset#:#Item
 common#:#date#:#Date
+common#:#date_time#:#Date and Time
 common#:#dateplaner#:#Calendar
 common#:#day#:#Day
 common#:#days#:#Days
@@ -4395,7 +4401,7 @@ common#:#installed_local#:#Installed With Custom file
 common#:#instant_messengers#:#Instant Messengers
 common#:#institution#:#Institution
 common#:#internal_local_roles_only#:#Local roles (only automatically generated)
-common#:#invalid_visible_required_options_selected#:#All fields set to required has to be set to visible in registration, too.
+common#:#invalid_visible_required_options_selected#:#All fields set to required have to be set to visible in registration, too.
 common#:#invisible_block#:#Invisible Block
 common#:#invisible_block_mess#:#You do not have the permission to view this block.
 common#:#ip_address#:#IP Address
@@ -5254,6 +5260,7 @@ common#:#personal_picture#:#Avatar
 common#:#personal_profile#:#Profile and Privacy
 common#:#personal_resources#:#Personal Resources
 common#:#personal_settings#:#Settings
+common#:#personalise_date_time#:#Personalise Date and Time Settings
 common#:#persons#:#Persons
 common#:#pg_add#:#Add page
 common#:#pg_new#:#New page
@@ -5545,7 +5552,7 @@ common#:#session_mail_subject_entered#:#Joining of user "%s" in session "%s"
 common#:#session_mail_subject_registered#:#Registration of user "%s" for session "%s"
 common#:#session_reminder#:#Session Reminder
 common#:#session_reminder_alert#:#Your session expires in %1$s at %2$s!  Choose OK to continue your session. If you click Cancel you will not be reminded during the current browser session anymore.  Installation: %3$s.
-common#:#session_reminder_info#:#Receive a reminder before your online-session expires.
+common#:#session_reminder_default_lead_time_info#:#Please specify how many minutes before the expiration of a session a reminder should be shown.<br / >The function is deactivated when the value is '%s'. The recommended value is %s.<br / >The current length of a session is %s.
 common#:#session_reminder_input#:#Session Reminder (in Minutes)
 common#:#session_reminder_lead_time#:#Leadtime
 common#:#session_reminder_lead_time_info#:#Please specify how many minutes before the expiration of a session you would like to receive a reminder.<br / >The function is deactivated when the value is '%s'. Recommended value is %s.<br / >Your current length of a session is %s.
@@ -5776,9 +5783,9 @@ common#:#udf_name_already_exists#:#This field name already exists. Please choose
 common#:#udf_required_requires_visib_reg#:#When a field is ‘Required’, it must also be ‘Visible in Registration’
 common#:#udf_type_date#:#Date
 common#:#udf_type_datetime#:#Date and Time
-common#:#udf_type_select#:#Selection List (Single Choice)
+common#:#udf_type_select#:#Selection List
 common#:#udf_type_text#:#Text Field (One Line)
-common#:#udf_type_wysiwyg#:#Text Area (WYSIWYG)
+common#:#udf_type_textarea#:#Text Area
 common#:#udf_update_select_field#:#Edit Select Box
 common#:#udf_update_text_field#:#Edit Text Field
 common#:#udf_update_wysiwyg_field#:#Edit Text Area (WYSIWYG) Field
@@ -5880,7 +5887,7 @@ common#:#usr_new#:#New User
 common#:#usr_settings_changeable_lua#:#Changeable in Local User Administration
 common#:#usr_settings_explanation_profile#:#Check ‘Visible’ to show fields in the registration form and personal settings. Check ‘Changeable’ to allow the user to change the values. Please note that visible fields can always be entered in the registration form. Required fields are required in the registration form and the personal settings. All data can be changed in the user administration independent on these settings.
 common#:#usr_settings_header_profile#:#Standard User Data Fields
-common#:#usr_settings_saved#:#Global user settings saved successfully!
+common#:#usr_settings_saved#:#The configuration was saved successfully.
 common#:#usr_settings_visib_lua#:#Visible in Local User Administration
 common#:#usr_skin_style#:#Skin / Style
 common#:#usr_without_courses#:#Users without courses assigned
@@ -8063,6 +8070,10 @@ dash#:#dash_learning_sequences#:#My Learning Sequences
 dash#:#dash_list#:#List
 dash#:#dash_main_panel#:#Main Panel
 dash#:#dash_make_favourite#:#Add to Favourites
+dash#:#dash_manual_new_item_pos#:#Position of New Objects
+dash#:#dash_manual_new_item_pos_bot#:#Bottom
+dash#:#dash_manual_new_item_pos_top#:#Top
+dash#:#dash_manual_sorting_title#:#Manual Sorting of Favorites
 dash#:#dash_member_main_alt#:#Courses and groups can also be configured as a separate main menu entry.
 dash#:#dash_memberships#:#My Courses and Groups
 dash#:#dash_page_edit_info#:#The content of this page is displayed to all users on their dashboard. The contents of the various blocks of the dashboard are presented below.
@@ -8072,8 +8083,12 @@ dash#:#dash_remove_from_list#:#Remove from List
 dash#:#dash_side_panel#:#Side Panel
 dash#:#dash_sort_by_alphabet#:#Alphabet
 dash#:#dash_sort_by_location#:#Location
+dash#:#dash_sort_by_manually#:#Manually
 dash#:#dash_sort_by_start_date#:#Period of Event
 dash#:#dash_sort_by_type#:#Type
+dash#:#dash_sort_option_bot#:#Bottom
+dash#:#dash_sort_option_top#:#Top
+dash#:#dash_sort_options#:#Postition of new Objects
 dash#:#dash_sortation#:#Sortation
 dash#:#dash_study_programmes#:#My Study Programmes
 dash#:#dash_tile#:#Tile
@@ -8269,7 +8284,7 @@ dateplaner#:#cal_crs_timing_start#:#Suggested Start
 dateplaner#:#cal_daily#:#Daily
 dateplaner#:#cal_date_and_time#:#Date and Time
 dateplaner#:#cal_date_booked#:#booked
-dateplaner#:#cal_date_format_info#:#Please choose a format for the input of dates.
+dateplaner#:#cal_date_format_info#:#Please choose a format for presentation of dates.
 dateplaner#:#cal_date_time_title#:#Date and Time
 dateplaner#:#cal_day_end#:#Day End
 dateplaner#:#cal_day_of_month#:#Day of the month
@@ -8468,7 +8483,7 @@ dateplaner#:#cal_unshare#:#Cancel Sharing
 dateplaner#:#cal_unshare_cal#:#Stop Sharing
 dateplaner#:#cal_unshared_selected_usr#:#Stopped sharing the calendar with the selected users.
 dateplaner#:#cal_upcoming_events_header#:#Upcoming Events
-dateplaner#:#cal_user_date_format#:#Date Input Format
+dateplaner#:#cal_user_date_format#:#Date Format
 dateplaner#:#cal_user_notification#:#User Notification
 dateplaner#:#cal_user_notification_info#:#Selected users will be notified about this appointment by e-mail. Please enter ILIAS user names or e-mail addresses.
 dateplaner#:#cal_user_settings#:#Calendar Settings
@@ -12948,6 +12963,7 @@ obj#:#edit_questions#:#Edit Questions
 obj#:#make_default_language#:#Make Default Language
 obj#:#missing_migration#:#You cannot edit information on this page until all migrations have been run. Please contact your system administrator.
 obj#:#multiple_reference_deletion_info#:#Further references exist for the following objects.
+obj#:#multiple_selection#:#Multiple Selection
 obj#:#no_objects_selected#:#At least one object needs to be selected.
 obj#:#obj_activate_content_lang#:#Activate Translation for Page Editing
 obj#:#obj_activate_multilang#:#Activate Multilingualism
@@ -13776,12 +13792,13 @@ ps#:#ps_password_change_on_first_login_enabled#:#Change Password on First Login
 ps#:#ps_password_change_on_first_login_enabled_info#:#Require users to change their password the first time they log in (unless they self-registered).
 ps#:#ps_password_chars_and_numbers_enabled#:#Force Characters and Numbers
 ps#:#ps_password_chars_and_numbers_enabled_info#:#Require passwords to contain characters and numbers.
+ps#:#ps_password_force_user_reset#:#Force Password Reset
 ps#:#ps_password_max_age#:#Maximum Password Age
 ps#:#ps_password_max_age_info#:#Enter the maximum age allowed for passwords in days. Set to 0 to disable this option.
 ps#:#ps_password_max_length#:#Maximum Password Size
 ps#:#ps_password_max_length_info#:#Enter the maximum size allowed for account passwords. Set to 0 to disable this option.
 ps#:#ps_password_min_length#:#Minimum Password Size
-ps#:#ps_password_min_length_info#:#Enter the minimum required length for account passwords. If set to 0, passwords are still required to have a minimum length of 1. If the required length is altered, the new requirement will be applied only to those accounts created or changed after the new length is set. Existing accounts are not affected.
+ps#:#ps_password_min_length_info#:#Enter the minimum required length for account passwords. If the required length is altered, the new requirement will be applied only to those accounts created or changed after the new length is set. Existing accounts are not affected.
 ps#:#ps_password_settings#:#Password Settings
 ps#:#ps_password_special_chars_enabled#:#Force Special Characters
 ps#:#ps_password_special_chars_enabled_info#:#Require passwords to contain special characters.
@@ -14894,7 +14911,7 @@ registration#:#registration_settings#:#ILIAS Auth / Self-Registration
 registration#:#registration_tab_codes#:#Registration Codes
 registration#:#registration_tab_settings#:#Registration Settings
 registration#:#registration_used#:#Date Of Usage
-registration#:#registration_user_new_account_mail#:#Edit New Account Mail
+registration#:#registration_user_new_account_mail#:#New Account Mail
 rep#:#btn_undelete_new_location#:#Restore (new location)
 rep#:#btn_undelete_origin_location#:#Restore (same location)
 rep#:#rep_activation_access#:#Access
@@ -17295,6 +17312,8 @@ ui#:#ui_transcription#:#Transcript
 ui#:#unselect_node#:#Remove node %s from selection
 ui#:#vc_sort#:#Sort by:
 ui#:#warning_url_too_long_msg#:#The amount of selected rows will result in a very large URL; the Server will probably block this request.<br>Please select less rows or perform the action on all entries.
+user#:#activate_in_profile_fields#:#To change this setting, the user must first be allowed to change their login name under Profile > Profile Fields
+user#:#administrative_settings#:#Administrative Settings
 user#:#all_roles_has_starting_point#:#All the roles have starting points
 user#:#back_to_starting_points_list#:#Back to Starting Points
 user#:#change_email_email_confirmation_body#:#The email address for the account %s was changed. To confirm this change, please click on this link %s. The link is valid for %s minutes.
@@ -17318,11 +17337,14 @@ user#:#del_mail_body#:#Hello %1$s, %2$s You have not logged in to %3$s for a lon
 user#:#del_mail_subject#:#Your ILIAS account will be deleted soon
 user#:#delete_inactive_user_accounts_frequency#:#Frequency
 user#:#delete_inactive_user_accounts_frequency_desc#:#Frequency, in which the deletion and e-mail distribution will be tested.
+user#:#edit_field#:#Edit Field
+user#:#edit_setting#:#Edit Setting
 user#:#editing_this_role#:#Role
 user#:#email_could_not_be_changed#:#The request to change your email could not be finalized.
 user#:#enable_local_user_administration#:#Enable Local User Administration
 user#:#enable_local_user_administration_info#:#Allow local user accounts to be administrated in categories and organisational units.
 user#:#feedhash#:#Newsfeedhash
+user#:#field_type_custom#:#Custom
 user#:#has_role#:#Role
 user#:#info_accessFree_sure#:#Are you sure you want to remove the valid until date from the following accounts?
 user#:#inform_user_mail_info#:#If activated, an e-mail will be sent to the user. Its content can be defined in 'Administration » Users and Roles » User Management', tab 'Settings : New Account Mail'.
@@ -17335,6 +17357,11 @@ user#:#ldoc_not_accepted_yet#:#Not accepted yet
 user#:#msg_spoint_not_modified#:#Starting point not modified
 user#:#no_deactivate_yourself#:#You cannot deactivate your own user account.
 user#:#obj_ref_id_not_exist#:#The entered Reference-ID does not exist
+user#:#personalise_additional#:#Personalise Additional Settings
+user#:#personalise_communication#:#Personalise Communication Settings
+user#:#personalise_privacy#:#Personalise Privacy Settings
+user#:#profile_fields#:#Profile Fields
+user#:#profile_section#:#Section
 user#:#restrict_user_access#:#Restricted Search in User Accounts
 user#:#restrict_user_access_info#:#ILIAS-accounts will only be autocompleted in search for roles with ‘Read Access to User Accounts’.
 user#:#roles_without_starting_point#:#Roles without defined starting point:
@@ -17350,6 +17377,7 @@ user#:#starting_page#:#Starting Point
 user#:#starting_point#:#Starting Point
 user#:#starting_point_settings#:#Starting Point Settings
 user#:#starting_points#:#Starting Points
+user#:#udf_select_options#:#Options
 user#:#user_access_limited#:#Limited
 user#:#user_access_unlimited#:#Unlimited
 user#:#user_account_code#:#Code
@@ -17371,6 +17399,7 @@ user#:#user_account_deleted_confirmation#:#Your account has been deleted. An e-m
 user#:#user_activate_public_profile#:#Activation
 user#:#user_activate_public_profile_info#:#Your first and last name will always be visible in your profile if it is activated.
 user#:#user_activation#:#Activation
+user#:#user_admin_options#:#Options
 user#:#user_all#:#All
 user#:#user_allow_delete_own_account#:#Allow Users to Delete Own Account
 user#:#user_any#:#Any
@@ -17432,6 +17461,7 @@ user#:#user_save_ordering_and_titles#:#Save Order and Titles
 user#:#user_select_course_group#:#Select Course/Group
 user#:#user_set_publishing_options#:#Set publishing options
 user#:#user_set_visibilty_options#:#Set visibility options
+user#:#user_settings#:#User Settings
 user#:#user_store_last_visited#:#Last Visited
 user#:#user_visibility_settings#:#Visibility
 user#:#user_visible_in_profile#:#Visible in Personal Data
