@@ -96,22 +96,6 @@ class ilChatroomAdminViewGUI extends ilChatroomGUIHandler
         }
     }
 
-    protected function createSettingTemplate(ilPropertyFormGUI $form): ilTemplate
-    {
-        $furtherInformation = sprintf($this->ilLng->txt('server_further_information'), $this->getReadmePath());
-        $serverTpl = new ilTemplate('tpl.chatroom_serversettings.html', true, true, 'components/ILIAS/Chatroom');
-        $serverTpl->setVariable('VAL_SERVERSETTINGS_FORM', $form->getHTML());
-        $serverTpl->setVariable('LBL_SERVERSETTINGS_FURTHER_INFORMATION', $furtherInformation);
-
-        return $serverTpl;
-    }
-
-    protected function getReadmePath(): string
-    {
-        return 'https://raw.githubusercontent.com/' .
-            'ILIAS-eLearning/ILIAS/refs/heads/release_10/components/ILIAS/Chatroom/README.md';
-    }
-
     public function saveClientSettings(): void
     {
         $this->redirectIfNoPermission('write');
@@ -200,7 +184,6 @@ class ilChatroomAdminViewGUI extends ilChatroomGUIHandler
         }
         $form->setFormAction($this->ilCtrl->getFormAction($this->gui, 'view-saveClientSettings'));
 
-        $settingsTpl = $this->createSettingTemplate($form);
-        $this->mainTpl->setVariable('ADM_CONTENT', $settingsTpl->get());
+        $this->mainTpl->setVariable('ADM_CONTENT', $form->getHTML());
     }
 }
