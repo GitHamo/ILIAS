@@ -108,7 +108,8 @@ class ilChatroomAdminViewGUI extends ilChatroomGUIHandler
 
     protected function getReadmePath(): string
     {
-        return ilUtil::_getHttpPath() . self::CHATROOM_README_PATH;
+        return 'https://raw.githubusercontent.com/' .
+            'ILIAS-eLearning/ILIAS/refs/heads/release_10/components/ILIAS/Chatroom/README.md';
     }
 
     public function saveClientSettings(): void
