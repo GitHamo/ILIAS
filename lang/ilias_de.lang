@@ -3072,7 +3072,8 @@ chatroom#:#preferred_chatname#:#Gewünschter Name
 chatroom#:#public_chat_created#:#Es wurde ein neuer öffentlicher Chatraum im Magazin angelegt.
 chatroom#:#scope#:#Raum
 chatroom#:#select_custom_username#:#Angezeigter Name im Chat
-chatroom#:#server_further_information#:#Weitere Informationen zur Konfiguration des Servers finden Sie in der <a href="%1$s" target="_blank">Readme-Datei</a>.
+chatroom#:#server_further_information#:#Weitere Informationen zur Konfiguration des Servers finden Sie in der Readme-Datei.
+chatroom#:#server_readme_file_btn_label#:#Readme-Datei
 chatroom#:#session#:#Sitzung
 chatroom#:#settings_general#:#Allgemein
 chatroom#:#settings_title#:#Einstellungen des Chats

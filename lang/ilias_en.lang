@@ -3073,7 +3073,8 @@ chatroom#:#preferred_chatname#:#Preferred Name
 chatroom#:#public_chat_created#:#The public chat room has been added to the repository.
 chatroom#:#scope#:#Room
 chatroom#:#select_custom_username#:#Select Custom Username
-chatroom#:#server_further_information#:#You can find further information about the server configuration in the <a href="%1$s" target="_blank">readme file</a>.
+chatroom#:#server_further_information#:#You can find further information about the server configuration in the readme file.
+chatroom#:#server_readme_file_btn_label#:#Readme File
 chatroom#:#session#:#Session
 chatroom#:#settings_general#:#General
 chatroom#:#settings_title#:#Settings
