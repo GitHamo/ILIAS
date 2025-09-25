@@ -2728,7 +2728,7 @@ class ilObjUser extends ilObject
             $queryString = "
 				UPDATE usr_data
 				SET inactivation_date = %s
-				WHERE inactivation_date = NULL
+				WHERE inactivation_date IS NULL
 				AND $usrId_IN_usrIds
 			";
             $ilDB->manipulateF($queryString, ['timestamp'], [ilUtil::now()]);
