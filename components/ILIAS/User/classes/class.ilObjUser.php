@@ -30,7 +30,6 @@ use ILIAS\ResourceStorage\Services;
 use ILIAS\ResourceStorage\Identification\ResourceIdentification;
 use ILIAS\UI\Component\Symbol\Avatar\Avatar;
 use ILIAS\Data\DateFormat\DateFormat;
-use ILIAS\Data\DateFormat\Factory as DateFormatFactory;
 use ILIAS\Data\Factory as DataFactory;
 use ILIAS\Authentication\Password\LocalUserPasswordManager;
 use ILIAS\Export\ExportHandler\Factory as ExportFactory;
@@ -83,7 +82,7 @@ class ilObjUser extends ilObject
     private ProfileConfigurationRepository $profile_configuration_repository;
 
     private StreamDelivery $delivery;
-    private DateFormatFactory $date_format_factory;
+    private DataFactory $data_factory;
     private ilCronDeleteInactiveUserReminderMail $cron_delete_user_reminder_mail;
     private Services $irss;
     private ilSetting $settings;
@@ -111,7 +110,7 @@ class ilObjUser extends ilObject
         $this->profile_data = $this->profile_data_repository->getDefault();
         $this->profile_configuration_repository = $local_dic[ProfileConfigurationRepository::class];
 
-        $this->date_format_factory = (new DataFactory())->dateFormat();
+        $this->data_factory = (new DataFactory());
 
         $this->type = 'usr';
         parent::__construct($a_user_id, $a_call_by_reference);
@@ -156,7 +155,8 @@ class ilObjUser extends ilObject
         }
 
         $system_information = $this->buildSystemInformationArrayForDB();
-        $system_information['create_date'] = date('Y-m-d H:i:s');
+        $system_information['create_date'] = $this->data_factory->clock()->utc()->now()
+            ->format(self::DATABASE_DATE_FORMAT);
 
         $this->profile_data = $this->profile_data->withId($this->id);
         $this->profile_data_repository->store(
@@ -450,19 +450,19 @@ class ilObjUser extends ilObject
         }
 
         return match ((int) $format) {
-            ilCalendarSettings::DATE_FORMAT_DMY => $this->date_format_factory->germanShort(),
-            ilCalendarSettings::DATE_FORMAT_MDY => $this->date_format_factory->americanShort(),
-            ilCalendarSettings::DATE_FORMAT_YMD => $this->date_format_factory->standard(),
-            default => $this->date_format_factory->standard()
+            ilCalendarSettings::DATE_FORMAT_DMY => $this->data_factory->dateFormat()->germanShort(),
+            ilCalendarSettings::DATE_FORMAT_MDY => $this->data_factory->dateFormat()->americanShort(),
+            ilCalendarSettings::DATE_FORMAT_YMD => $this->data_factory->dateFormat()->standard(),
+            default => $this->data_factory->dateFormat()->standard()
         };
     }
 
     public function getDateTimeFormat(): DateFormat
     {
         if ($this->getTimeFormat() === (string) \ilCalendarSettings::TIME_FORMAT_24) {
-            return $this->date_format_factory->withTime24($this->getDateFormat());
+            return $this->data_factory->dateFormat()->withTime24($this->getDateFormat());
         }
-        return $this->date_format_factory->withTime12($this->getDateFormat());
+        return $this->data_factory->dateFormat()->withTime12($this->getDateFormat());
     }
 
     public function setPref(string $a_keyword, ?string $a_value): void
