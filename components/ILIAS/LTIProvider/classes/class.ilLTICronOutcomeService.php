@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of ILIAS, a powerful learning management system
  * published by ILIAS open source e-Learning e.V.
@@ -18,10 +16,9 @@ declare(strict_types=1);
  *
  *********************************************************************/
 
-use ILIAS\Cron\Job\Schedule\JobScheduleType;
-use ILIAS\Cron\Job\JobRepository;
-use ILIAS\Cron\Job\JobResult;
-use ILIAS\Cron\CronJob;
+declare(strict_types=1);
+
+use ILIAS\Cron\Schedule\CronJobScheduleType;
 
 /**
  * Description of class class
@@ -29,10 +26,10 @@ use ILIAS\Cron\CronJob;
  * @author Stefan Meyer <smeyer.ilias@gmx.de>
  *
  */
-class ilLTICronOutcomeService extends CronJob
+class ilLTICronOutcomeService extends ilCronJob
 {
     private ilLanguage $lng;
-    private JobRepository $cronRepo;
+    private ilCronJobRepository $cronRepo;
 
     public function __construct()
     {
@@ -42,9 +39,9 @@ class ilLTICronOutcomeService extends CronJob
         $this->cronRepo = $DIC->cron()->repository();
     }
 
-    public function getDefaultScheduleType(): JobScheduleType
+    public function getDefaultScheduleType(): CronJobScheduleType
     {
-        return JobScheduleType::DAILY;
+        return CronJobScheduleType::SCHEDULE_TYPE_DAILY;
     }
 
     public function getDefaultScheduleValue(): ?int
@@ -77,9 +74,12 @@ class ilLTICronOutcomeService extends CronJob
         return $this->lng->txt('lti_cron_title_desc');
     }
 
-    public function run(): JobResult
+    /**
+     * @throws ilDateTimeException
+     */
+    public function run(): ilCronJobResult
     {
-        $status = \ILIAS\Cron\Job\JobResult::STATUS_NO_ACTION;
+        $status = \ilCronJobResult::STATUS_NO_ACTION;
 
         $info = $this->cronRepo->getCronJobData($this->getId());
         $last_ts = $info['job_status_ts'] ?? false;
@@ -89,10 +89,10 @@ class ilLTICronOutcomeService extends CronJob
         $since = new ilDateTime($last_ts, IL_CAL_UNIX);
 
 
-        $result = new \ILIAS\Cron\Job\JobResult();
+        $result = new \ilCronJobResult();
         $result->setStatus($status);
         ilLTIAppEventListener::handleCronUpdate($since);
-        $result->setStatus(JobResult::STATUS_OK);
+        $result->setStatus(ilCronJobResult::STATUS_OK);
 
         return $result;
     }
