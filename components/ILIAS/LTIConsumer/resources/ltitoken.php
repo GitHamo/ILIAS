@@ -23,7 +23,7 @@ use ILIAS\Filesystem\Exception\IOException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\JWK;
 
-chdir("../../../");
+require_once("../vendor/composer/vendor/autoload.php");
 
 ilContext::init(ilContext::CONTEXT_SCORM);
 ilInitialisation::initILIAS();
@@ -138,7 +138,7 @@ function sendAccessToken(string $scopes, ilLTIConsumeProvider $provider): void
         $accessToken = JWT::encode($token, $privateKey['key'], 'RS256', $privateKey['kid']);
         $responseData = array(
             'access_token' => $accessToken,
-            'token_type' => 'baerer',
+            'token_type' => 'bearer',
             'expires_in' => 3600,
             'scope' => $scopes
         );

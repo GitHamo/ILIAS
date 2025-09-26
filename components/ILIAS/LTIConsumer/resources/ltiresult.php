@@ -18,17 +18,20 @@
 
 declare(strict_types=1);
 
-/** @noRector */
-chdir("../../../");
+require_once("../vendor/composer/vendor/autoload.php");
 
-ilContext::init(ilContext::CONTEXT_SCORM);
-ilInitialisation::initILIAS();
-
-try {
-    $token = ilObjLTIConsumer::verifyToken();
-    $data = json_decode(ilObjLTIConsumer::getRawData(), true);
-    $responseData = ilObjLTIConsumer::registerClient($data, $token);
-    ilObjLTIConsumer::sendResponseJson($responseData);
-} catch (Exception $e) {
-    ilObjLTIConsumer::sendResponseError(500, "error in ltiregistration.php");
+if (!isset($_GET['client_id']) || !strlen($_GET['client_id'])) {
+    $log = ilLoggerFactory::getLogger('lti');
+    $log->error("HTTP/1.1 401 Authorization Required");
+    header('HTTP/1.1 401 Authorization Required');
+    exit;
 }
+
+\ilContext::init(\ilContext::CONTEXT_SCORM);
+\ilInitialisation::initILIAS();
+
+$dic = $GLOBALS['DIC'];
+$log = ilLoggerFactory::getLogger('lti');
+$log->info("LTI result init successful");
+$service = new ilLTIConsumerResultService();
+$service->handleRequest();
