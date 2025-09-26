@@ -365,14 +365,9 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
     ): bool {
         $this->updateWorkingTime();
 
-        $formtimestamp = $this->testrequest->int('formtimestamp');
-        if (!$force
-            && ilSession::get('formtimestamp') !== null
-            && $formtimestamp === ilSession::get('formtimestamp')) {
+        if (!$this->checkAndUpdateSaveAllowedByFormTimestamp($force)) {
             return false;
         }
-
-        ilSession::set('formtimestamp', $formtimestamp);
 
         /*
             #21097 - exceed maximum passes
@@ -402,6 +397,22 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
         }
 
         return $saved;
+    }
+
+    private function checkAndUpdateSaveAllowedByFormTimestamp(bool $force): bool
+    {
+        if ($force) {
+            return true;
+        }
+
+        $formtimestamp = $this->testrequest->int('formtimestamp');
+        if (ilSession::get('formtimestamp') !== null
+            && $formtimestamp === ilSession::get('formtimestamp')) {
+            return false;
+        }
+
+        ilSession::set('formtimestamp', $formtimestamp);
+        return true;
     }
 
     private function buildQuestionObject(): ?assQuestion
