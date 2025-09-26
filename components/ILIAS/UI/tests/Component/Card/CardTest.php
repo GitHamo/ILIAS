@@ -158,7 +158,7 @@ class CardTest extends ILIAS_UI_TestBase
                 "<div class=\"il-card thumbnail\">" .
                 "   <div class=\"il-card-image-container\"><img src=\"src\" class=\"img-standard\" alt=\"open Card Title\" /></div>" .
                 "   <div class=\"card-no-highlight\"></div>" .
-                "   <div class=\"caption card-title\">Card Title</div>" .
+                "   <div class=\"caption card-title\"><h4>Card Title</h4></div>" .
                 "   <div class=\"caption\">Random Content</div>" .
                 "</div>";
 
@@ -177,7 +177,7 @@ class CardTest extends ILIAS_UI_TestBase
             "<div class=\"il-card thumbnail\">" .
             "   <div class=\"il-card-image-container\"><img src=\"src\" class=\"img-standard\" alt=\"open Card Title\" /></div>" .
             "   <div class=\"card-highlight\"></div>" .
-            "   <div class=\"caption card-title\">Card Title</div>" .
+            "   <div class=\"caption card-title\"><h4>Card Title</h4></div>" .
             "</div>";
 
         $this->assertHTMLEquals($this->brutallyTrimHTML($expected_html), $html);
@@ -196,7 +196,7 @@ class CardTest extends ILIAS_UI_TestBase
             "<div class=\"il-card thumbnail\">" .
             "   <div class=\"il-card-image-container\"><img src=\"src\" class=\"img-standard\" alt=\"open Card Title\" /></div>" .
             "   <div class=\"card-no-highlight\"></div>" .
-            "   <div class=\"caption card-title\">" . $r->render($title) . "</div>" .
+            "   <div class=\"caption card-title\"><h4>" . $r->render($title) . "</h4></div>" .
             "</div>";
 
         $this->assertHTMLEquals($this->brutallyTrimHTML($expected_html), $html);

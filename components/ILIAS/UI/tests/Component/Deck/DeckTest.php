@@ -120,13 +120,13 @@ class DeckTest extends ILIAS_UI_TestBase
 
         $expected_html =
                 '<div class="il-deck"><div class="row row-eq-height">
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
-						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title">Card Title</div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4"><div class="il-card thumbnail"><div class="card-no-highlight"></div><div class="caption card-title"><h4>Card Title</h4></div></div></div>
 					</div>
 				</div>';
 

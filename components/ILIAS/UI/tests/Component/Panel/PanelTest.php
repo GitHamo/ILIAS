@@ -278,7 +278,7 @@ EOT;
             <div class="col-sm-4">
                 <div class="il-card thumbnail">
                     <div class="card-no-highlight"></div>
-                    <div class="caption card-title">Card Title</div>
+                    <div class="caption card-title"><h4>Card Title</h4></div>
                 </div>
             </div>
         </div>
@@ -370,7 +370,7 @@ EOT;
                     <div class="col-sm-4">
                         <div class="il-card thumbnail">
                             <div class="card-no-highlight"></div>
-                            <div class="caption card-title">Card Title</div>
+                            <div class="caption card-title"><h4>Card Title</h4></div>
                         </div>
                     </div>
                 </div>

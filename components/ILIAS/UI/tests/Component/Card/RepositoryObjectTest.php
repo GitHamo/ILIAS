@@ -181,7 +181,7 @@ class RepositoryObjectTest extends ILIAS_UI_TestBase
 	</div>
     <div class="il-card-image-container"><img src="src" class="img-standard" alt="open Card Title" /></div>
 	<div class="card-no-highlight"></div>
-    <div class="caption card-title">Card Title</div>
+    <div class="caption card-title"><h4>Card Title</h4></div>
 </div>
 EOT);
 
@@ -214,7 +214,7 @@ EOT);
 	</div>
     <div class="il-card-image-container"><img src="src" class="img-standard" alt="open Card Title" /></div>
 	<div class="card-no-highlight"></div>
-    <div class="caption card-title">Card Title</div>
+    <div class="caption card-title"><h4>Card Title</h4></div>
 </div>
 EOT);
 
@@ -249,7 +249,7 @@ EOT);
                    </div>
                    <div class="il-card-image-container"><img src="src" class="img-standard" alt="open Card Title"/></div>
                    <div class="card-no-highlight"></div>
-                   <div class="caption card-title">Card Title</div>
+                   <div class="caption card-title"><h4>Card Title</h4></div>
                 </div>');
 
         $this->assertHTMLEquals($expected_html, $html);
@@ -282,7 +282,7 @@ EOT);
                 </div>
                 <div class="il-card-image-container"><img src="src" class="img-standard" alt="open Card Title" /></div>
                 <div class="card-no-highlight"></div>
-                <div class="caption card-title">Card Title</div>
+                <div class="caption card-title"><h4>Card Title</h4></div>
             </div>
         ');
 
