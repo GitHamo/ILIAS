@@ -256,7 +256,7 @@ class ilObjUser extends ilObject
             'time_limit_until' => $this->time_limit_until,
             'profile_incomplete' => $this->profile_incomplete,
             'auth_mode' => $this->auth_mode,
-            'ext_account' => $this->ext_account,
+            'ext_account' => $this->ext_account ?? '',
             'is_self_registered' => $this->is_self_registered,
             'last_update' => $this->last_update,
             'create_date' => $this->create_date,
