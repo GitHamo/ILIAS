@@ -3927,7 +3927,7 @@ class ilObjUser extends ilObject
         );
 
         $ids = [];
-        while ($row = $db->fetchRow($res, ilDBConstants::FETCHMODE_OBJECT)) {
+        while ($row = $db->fetchObject($res)) {
             $ids[] = (int) $row->usr_id;
         }
 
