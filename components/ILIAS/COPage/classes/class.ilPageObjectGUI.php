@@ -1556,8 +1556,6 @@ class ilPageObjectGUI
             }
             $output = str_replace("&amp;", "&", $output);
 
-            $output = ilMathJax::getInstance()->insertLatexImages($output);
-
             // insert page snippets
             //$output = $this->insertContentIncludes($output);
 
@@ -1604,6 +1602,9 @@ class ilPageObjectGUI
         }
 
         $this->addResourcesToTemplate($main_tpl);
+
+        // enable rendering of latex in the whole output
+        $output = $this->ui->renderer()->render($this->ui->factory()->legacy()->latexContent($output));
 
         //		$output = $this->selfAssessmentRendering($output);
 
@@ -1975,9 +1976,7 @@ class ilPageObjectGUI
             "active_tex",
             true
         )) {
-            if ($mathJaxSetting->get("enable") || defined("URL_TO_LATEX")) {
-                $menu["cont_more_functions"][] = ["text" => 'Tex', "action" => "selection.tex", "data" => []];
-            }
+            $menu["cont_more_functions"][] = ["text" => 'Tex', "action" => "selection.tex", "data" => []];
         }
         if (ilPageEditorSettings::lookupSettingByParentType(
             $a_par_type,
