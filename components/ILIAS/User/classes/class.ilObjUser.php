@@ -2393,23 +2393,24 @@ class ilObjUser extends ilObject
     public static function _getUserIdsByInactivationPeriod(
         int $period
     ): array {
-        global $DIC;
-        $ilDB = $DIC['ilDB'];
-
-        $field = 'inactivation_date';
-
         if (!$period) {
             throw new ilException('no valid period given');
         }
 
-        $date = date('Y-m-d H:i:s', (time() - ($period * 24 * 60 * 60)));
+        global $DIC;
+        $db = $DIC['ilDB'];
 
-        $query = "SELECT usr_id FROM usr_data WHERE $field < %s AND active = %s";
-
-        $res = $ilDB->queryF($query, ['timestamp', 'integer'], [$date, 0]);
+        $res = $db->queryF(
+            'SELECT usr_id FROM usr_data WHERE inactivation_date < %s AND active = %s',
+            ['timestamp', 'integer'],
+            [
+                date('Y-m-d H:i:s', (time() - ($period * 24 * 60 * 60))),
+                0
+            ]
+        );
 
         $ids = [];
-        while ($row = $res->fetchRow(ilDBConstants::FETCHMODE_OBJECT)) {
+        while ($row = $db->fetchObject($res)) {
             $ids[] = (int) $row->usr_id;
         }
 
