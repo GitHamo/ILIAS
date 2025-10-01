@@ -67,7 +67,11 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
 {
     use TestQuestionsImportTrait;
 
-    public const SUPPORTED_IMPORT_MIME_TYPES = [MimeType::APPLICATION__ZIP, MimeType::TEXT__XML];
+    public const SUPPORTED_IMPORT_MIME_TYPES = [
+        MimeType::APPLICATION__X_ZIP_COMPRESSED,
+        MimeType::APPLICATION__ZIP,
+        MimeType::TEXT__XML
+    ];
     public const DEFAULT_CMD = 'questions';
 
     protected Service $taxonomy;
