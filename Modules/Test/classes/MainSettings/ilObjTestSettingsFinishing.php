@@ -122,11 +122,14 @@ class ilObjTestSettingsFinishing extends TestSettings
                             true
                         ) || $v['redirect_url'] !== '';
                     },
-                    sprintf(
-                        $lng->txt('redirect_url_required_for_rule'),
-                        $lng->txt('redirect_always'),
-                        $lng->txt('redirect_in_kiosk_mode')
-                    )
+                    static function(Closure $txt, array $value): string {
+                        return sprintf(
+                            $txt('redirect_url_required_for_rule'),
+                            $value['redirect_mode'] === ilObjTest::REDIRECT_ALWAYS
+                                ? $txt('redirect_always')
+                                : $txt('redirect_in_kiosk_mode')
+                        );
+                    }
                 )
             );
 
