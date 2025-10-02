@@ -198,7 +198,7 @@ class MainSettingsDatabaseRepository implements MainSettingsRepository
                 (bool) $row['showfinalstatement'],
                 $row['finalstatement'],
                 $row['concluding_remarks_page_id'],
-                RedirectionModes::tryFrom($row['redirection_mode']) ?? RedirectionModes::REDIRECT_NONE,
+                RedirectionModes::tryFrom($row['redirection_mode']) ?? RedirectionModes::NONE,
                 $row['redirection_url'],
                 $row['mailnotification'],
                 (bool) $row['mailnottype'],

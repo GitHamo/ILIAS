@@ -22,8 +22,8 @@ namespace ILIAS\Test\Settings\MainSettings;
 
 enum RedirectionModes: int
 {
-    case REDIRECT_NONE = 0;
-    case REDIRECT_ALWAYS = 1;
-    case REDIRECT_KIOSK = 2;
-    case REDIRECT_ALWAYS_TO_LOGOUT = 3;
+    case NONE = 0;
+    case ALWAYS = 1;
+    case IF_KIOSK_ACTIVATED = 2;
+    case ALWAYS_TO_LOGOUT = 3;
 }

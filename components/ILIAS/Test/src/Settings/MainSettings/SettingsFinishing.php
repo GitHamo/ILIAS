@@ -35,7 +35,7 @@ class SettingsFinishing extends TestSettings
         protected bool $concluding_remarks_enabled = false,
         protected ?string $concluding_remarks_text = '',
         protected ?int $concluding_remarks_page_id = null,
-        protected RedirectionModes $redirection_mode = RedirectionModes::REDIRECT_NONE,
+        protected RedirectionModes $redirection_mode = RedirectionModes::NONE,
         protected ?string $redirection_url = null,
         protected int $mail_notification_content_type = 0,
         protected bool $always_send_mail_notification = false
@@ -75,14 +75,14 @@ class SettingsFinishing extends TestSettings
             static function (?array $v): array {
                 if ($v === null) {
                     return [
-                        'redirect_mode' => RedirectionModes::REDIRECT_NONE,
+                        'redirect_mode' => RedirectionModes::NONE,
                         'redirect_url' => ''
                     ];
                 }
 
                 return [
                     'redirect_mode' => RedirectionModes::tryFrom($v['redirect_mode'])
-                        ?? RedirectionModes::REDIRECT_NONE,
+                        ?? RedirectionModes::NONE,
                     'redirect_url' => $v['redirect_url']
                 ];
             }
@@ -92,13 +92,13 @@ class SettingsFinishing extends TestSettings
             'redirect_mode' => $f
                 ->radio($lng->txt('redirect_after_finishing_rule'))
                 ->withOption(
-                    (string) RedirectionModes::REDIRECT_ALWAYS->value,
+                    (string) RedirectionModes::ALWAYS->value,
                     $lng->txt('redirect_always')
                 )->withOption(
-                    (string) RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT->value,
+                    (string) RedirectionModes::ALWAYS_TO_LOGOUT->value,
                     $lng->txt('redirect_always_to_logout')
                 )->withOption(
-                    (string) RedirectionModes::REDIRECT_KIOSK->value,
+                    (string) RedirectionModes::IF_KIOSK_ACTIVATED->value,
                     $lng->txt('redirect_in_kiosk_mode')
                 )->withRequired(true)
                 ->withAdditionalTransformation($refinery->kindlyTo()->int()),
@@ -132,14 +132,14 @@ class SettingsFinishing extends TestSettings
                     static function (array $v): bool {
                         return in_array(
                             $v['redirect_mode'],
-                            [RedirectionModes::REDIRECT_NONE, RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT],
+                            [RedirectionModes::NONE, RedirectionModes::ALWAYS_TO_LOGOUT],
                             true
                         ) || $v['redirect_url'] !== '';
                     },
                     static function (\Closure $txt, array $value): string {
                         return sprintf(
                             $txt('redirect_url_required_for_rule'),
-                            $value['redirect_mode'] === RedirectionModes::REDIRECT_ALWAYS
+                            $value['redirect_mode'] === RedirectionModes::ALWAYS
                                 ? $txt('redirect_always')
                                 : $txt('redirect_in_kiosk_mode')
                         );
@@ -147,7 +147,7 @@ class SettingsFinishing extends TestSettings
                 )
             );
 
-        if ($this->getRedirectionMode() === RedirectionModes::REDIRECT_NONE) {
+        if ($this->getRedirectionMode() === RedirectionModes::NONE) {
             return $redirection_input;
         }
 
@@ -240,15 +240,15 @@ class SettingsFinishing extends TestSettings
         ];
 
         switch ($this->getRedirectionMode()) {
-            case RedirectionModes::REDIRECT_NONE:
+            case RedirectionModes::NONE:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getNoneTag();
                 break;
-            case RedirectionModes::REDIRECT_ALWAYS:
+            case RedirectionModes::ALWAYS:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getTagForLangVar('redirect_always');
                 break;
-            case RedirectionModes::REDIRECT_KIOSK:
+            case RedirectionModes::IF_KIOSK_ACTIVATED:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getTagForLangVar('redirect_in_kiosk_mode');
                 break;

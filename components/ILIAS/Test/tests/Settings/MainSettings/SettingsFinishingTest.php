@@ -102,10 +102,10 @@ class SettingsFinishingTest extends ilTestBaseTestCase
     public static function getAndWithRedirectionModeDataProvider(): array
     {
         return [
-            [RedirectionModes::REDIRECT_ALWAYS],
-            [RedirectionModes::REDIRECT_NONE],
-            [RedirectionModes::REDIRECT_KIOSK],
-            [RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT],
+            [RedirectionModes::ALWAYS],
+            [RedirectionModes::NONE],
+            [RedirectionModes::IF_KIOSK_ACTIVATED],
+            [RedirectionModes::ALWAYS_TO_LOGOUT],
         ];
     }
 
