@@ -229,7 +229,7 @@ class ilObjUser extends ilObject
         $this->profile_incomplete = $data['profile_incomplete'];
 
         $this->auth_mode = $data['auth_mode'];
-        $this->ext_account = $data['ext_account'];
+        $this->ext_account = $data['ext_account'] ?? '';
         $this->is_self_registered = $data['is_self_registered'];
     }
 
