@@ -24,6 +24,7 @@ use ILIAS\Test\Logging\TestParticipantInteractionTypes;
 use ILIAS\Test\Presentation\TestScreenGUI;
 use ILIAS\Test\Questions\Presentation\QuestionsOfAttemptTable;
 use ILIAS\Test\Results\Data\StatusOfAttempt;
+use ILIAS\Test\Settings\MainSettings\RedirectionModes;
 use ILIAS\TestQuestionPool\Questions\QuestionAutosaveable;
 use ILIAS\TestQuestionPool\Questions\QuestionPartiallySaveable;
 use ILIAS\Test\Presentation\WorkingTime;
@@ -1072,12 +1073,12 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
         $redirection_url = $this->object->getMainSettings()->getFinishingSettings()->getRedirectionUrl();
         if (empty($redirection_url)
             || $this->object->canShowTestResults($this->test_session)
-            || $redirection_mode === ilObjTest::REDIRECT_NONE
-            || $redirection_mode === ilObjTest::REDIRECT_KIOSK && !$this->object->getKioskMode()) {
+            || $redirection_mode === RedirectionModes::REDIRECT_NONE
+            || $redirection_mode === RedirectionModes::REDIRECT_KIOSK && !$this->object->getKioskMode()) {
             $this->redirectBackCmd();
         }
 
-        if ($redirection_mode === ilObjTest::REDIRECT_ALWAYS_TO_LOGOUT) {
+        if ($redirection_mode === RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT) {
             $redirection_url = ilStartUpGUI::logoutUrl();
         }
 

@@ -39,6 +39,7 @@ use ILIAS\Test\Settings\GlobalSettings\GlobalTestSettings;
 use ILIAS\Test\Settings\MainSettings\MainSettingsRepository;
 use ILIAS\Test\Settings\MainSettings\MainSettingsDatabaseRepository;
 use ILIAS\Test\Settings\MainSettings\MainSettings;
+use ILIAS\Test\Settings\MainSettings\RedirectionModes;
 use ILIAS\Test\Settings\MainSettings\SettingsIntroduction;
 use ILIAS\Test\Settings\MainSettings\SettingsFinishing;
 use ILIAS\Test\Settings\ScoreReporting\ScoreSettingsRepository;
@@ -71,11 +72,6 @@ class ilObjTest extends ilObject
     public const INVITATION_ON = 1;
     public const SCORE_LAST_PASS = 0;
     public const SCORE_BEST_PASS = 1;
-
-    public const REDIRECT_NONE = 0;
-    public const REDIRECT_ALWAYS = 1;
-    public const REDIRECT_KIOSK = 2;
-    public const REDIRECT_ALWAYS_TO_LOGOUT = 3;
 
     private ?bool $activation_limited = null;
     private array $mob_ids;
@@ -946,26 +942,6 @@ class ilObjTest extends ilObject
     {
         $end_time = $this->getMainSettings()->getAccessSettings()->getEndTime();
         return $end_time !== null ? $end_time->getTimestamp() : 0;
-    }
-
-    public function getRedirectionMode(): int
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode();
-    }
-
-    public function isRedirectModeKiosk(): bool
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode() === self::REDIRECT_KIOSK;
-    }
-
-    public function isRedirectModeNone(): bool
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode() === self::REDIRECT_NONE;
-    }
-
-    public function getRedirectionUrl(): string
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionUrl() ?? '';
     }
 
     public function isPasswordEnabled(): bool
@@ -3078,7 +3054,9 @@ class ilObjTest extends ilObject
                     $finishing_settings = $finishing_settings->withShowAnswerOverview((bool) $metadata["entry"]);
                     break;
                 case 'redirection_mode':
-                    $finishing_settings = $finishing_settings->withRedirectionMode((int) $metadata['entry']);
+                    $finishing_settings = $finishing_settings->withRedirectionMode(
+                        RedirectionModes::tryFrom($metadata['entry'] ?? 0) ?? RedirectionModes::REDIRECT_NONE
+                    );
                     break;
                 case 'redirection_url':
                     $finishing_settings = $finishing_settings->withRedirectionUrl($metadata['entry']);
@@ -3403,7 +3381,7 @@ class ilObjTest extends ilObject
 
         $a_xml_writer->xmlStartTag('qtimetadatafield');
         $a_xml_writer->xmlElement("fieldlabel", null, "redirection_mode");
-        $a_xml_writer->xmlElement("fieldentry", null, $main_settings->getFinishingSettings()->getRedirectionMode());
+        $a_xml_writer->xmlElement("fieldentry", null, $main_settings->getFinishingSettings()->getRedirectionMode()->value);
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         $a_xml_writer->xmlStartTag('qtimetadatafield');
@@ -5625,7 +5603,7 @@ class ilObjTest extends ilObject
 
             'enable_examview' => $main_settings->getFinishingSettings()->getShowAnswerOverview(),
             'ShowFinalStatement' => (int) $main_settings->getFinishingSettings()->getConcludingRemarksEnabled(),
-            'redirection_mode' => $main_settings->getFinishingSettings()->getRedirectionMode(),
+            'redirection_mode' => $main_settings->getFinishingSettings()->getRedirectionMode()->value,
             'redirection_url' => $main_settings->getFinishingSettings()->getRedirectionUrl(),
             'mailnotification' => $main_settings->getFinishingSettings()->getMailNotificationContentType(),
             'mailnottype' => (int) $main_settings->getFinishingSettings()->getAlwaysSendMailNotification(),
@@ -5823,7 +5801,7 @@ class ilObjTest extends ilObject
                     )->withConcludingRemarksEnabled(
                         $testsettings['ShowFinalStatement'] ?? $finishing_settings->getConcludingRemarksEnabled()
                     )->withRedirectionMode(
-                        $testsettings['redirection_mode'] ?? $finishing_settings->getRedirectionMode()
+                        RedirectionModes::tryFrom($testsettings['redirection_mode'] ?? 0) ?? $finishing_settings->getRedirectionMode()
                     )->withRedirectionUrl(
                         $testsettings['redirection_url'] ?? $finishing_settings->getRedirectionUrl()
                     )->withMailNotificationContentType(

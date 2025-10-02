@@ -35,7 +35,7 @@ class SettingsFinishing extends TestSettings
         protected bool $concluding_remarks_enabled = false,
         protected ?string $concluding_remarks_text = '',
         protected ?int $concluding_remarks_page_id = null,
-        protected int $redirection_mode = \ilObjTest::REDIRECT_NONE,
+        protected RedirectionModes $redirection_mode = RedirectionModes::REDIRECT_NONE,
         protected ?string $redirection_url = null,
         protected int $mail_notification_content_type = 0,
         protected bool $always_send_mail_notification = false
@@ -75,12 +75,16 @@ class SettingsFinishing extends TestSettings
             static function (?array $v): array {
                 if ($v === null) {
                     return [
-                        'redirect_mode' => \ilObjTest::REDIRECT_NONE,
+                        'redirect_mode' => RedirectionModes::REDIRECT_NONE,
                         'redirect_url' => ''
                     ];
                 }
 
-                return $v;
+                return [
+                    'redirect_mode' => RedirectionModes::tryFrom($v['redirect_mode'])
+                        ?? RedirectionModes::REDIRECT_NONE,
+                    'redirect_url' => $v['redirect_url']
+                ];
             }
         );
 
@@ -88,13 +92,13 @@ class SettingsFinishing extends TestSettings
             'redirect_mode' => $f
                 ->radio($lng->txt('redirect_after_finishing_rule'))
                 ->withOption(
-                    (string) \ilObjTest::REDIRECT_ALWAYS,
+                    (string) RedirectionModes::REDIRECT_ALWAYS->value,
                     $lng->txt('redirect_always')
                 )->withOption(
-                    (string) \ilObjTest::REDIRECT_ALWAYS_TO_LOGOUT,
+                    (string) RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT->value,
                     $lng->txt('redirect_always_to_logout')
                 )->withOption(
-                    (string) \ilObjTest::REDIRECT_KIOSK,
+                    (string) RedirectionModes::REDIRECT_KIOSK->value,
                     $lng->txt('redirect_in_kiosk_mode')
                 )->withRequired(true)
                 ->withAdditionalTransformation($refinery->kindlyTo()->int()),
@@ -128,14 +132,14 @@ class SettingsFinishing extends TestSettings
                     static function (array $v): bool {
                         return in_array(
                             $v['redirect_mode'],
-                            [\ilObjTest::REDIRECT_NONE, \ilObjTest::REDIRECT_ALWAYS_TO_LOGOUT],
+                            [RedirectionModes::REDIRECT_NONE, RedirectionModes::REDIRECT_ALWAYS_TO_LOGOUT],
                             true
                         ) || $v['redirect_url'] !== '';
                     },
                     static function (\Closure $txt, array $value): string {
                         return sprintf(
                             $txt('redirect_url_required_for_rule'),
-                            $value['redirect_mode'] === \ilObjTest::REDIRECT_ALWAYS
+                            $value['redirect_mode'] === RedirectionModes::REDIRECT_ALWAYS
                                 ? $txt('redirect_always')
                                 : $txt('redirect_in_kiosk_mode')
                         );
@@ -143,13 +147,13 @@ class SettingsFinishing extends TestSettings
                 )
             );
 
-        if ($this->getRedirectionMode() === \ilObjTest::REDIRECT_NONE) {
+        if ($this->getRedirectionMode() === RedirectionModes::REDIRECT_NONE) {
             return $redirection_input;
         }
 
         return $redirection_input->withValue(
             [
-                'redirect_mode' => $this->getRedirectionMode(),
+                'redirect_mode' => $this->getRedirectionMode()->value,
                 'redirect_url' => $this->getRedirectionUrl()
             ]
         );
@@ -217,7 +221,7 @@ class SettingsFinishing extends TestSettings
             'showfinalstatement' => ['integer', (int) $this->getConcludingRemarksEnabled()],
             'finalstatement' => ['text', $this->getConcludingRemarksText()],
             'concluding_remarks_page_id' => ['integer', $this->getConcludingRemarksPageId()],
-            'redirection_mode' => ['integer', $this->getRedirectionMode()],
+            'redirection_mode' => ['integer', $this->getRedirectionMode()->value],
             'redirection_url' => ['text', $this->getRedirectionUrl()],
             'mailnotification' => ['integer', $this->getMailNotificationContentType()],
             'mailnottype' => ['integer', (int) $this->getAlwaysSendMailNotification()]
@@ -236,15 +240,15 @@ class SettingsFinishing extends TestSettings
         ];
 
         switch ($this->getRedirectionMode()) {
-            case \ilObjTest::REDIRECT_NONE:
+            case RedirectionModes::REDIRECT_NONE:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getNoneTag();
                 break;
-            case \ilObjTest::REDIRECT_ALWAYS:
+            case RedirectionModes::REDIRECT_ALWAYS:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getTagForLangVar('redirect_always');
                 break;
-            case \ilObjTest::REDIRECT_KIOSK:
+            case RedirectionModes::REDIRECT_KIOSK:
                 $log_array[AdditionalInformationGenerator::KEY_TEST_REDIRECT_MODE] = $additional_info
                     ->getTagForLangVar('redirect_in_kiosk_mode');
                 break;
@@ -313,12 +317,12 @@ class SettingsFinishing extends TestSettings
         return $clone;
     }
 
-    public function getRedirectionMode(): int
+    public function getRedirectionMode(): RedirectionModes
     {
         return $this->redirection_mode;
     }
 
-    public function withRedirectionMode(int $redirection_mode): self
+    public function withRedirectionMode(RedirectionModes $redirection_mode): self
     {
         $clone = clone $this;
         $clone->redirection_mode = $redirection_mode;
