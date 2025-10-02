@@ -1181,7 +1181,7 @@ assessment#:#redirect_always#:#Always to the specified webpage
 assessment#:#redirect_always_to_logout#:#Always to the logout screen
 assessment#:#redirect_in_kiosk_mode#:#When ‘Exam View’ is activated to the specified webpage
 assessment#:#redirect_url_invalid#:#Please enter a valid url of the target webpage.
-assessment#:#redirect_url_required_for_rule#:#The url of the webpage is required when "%s/%s" is selected.
+assessment#:#redirect_url_required_for_rule#:#The url of the webpage is required when "%s" is selected.
 assessment#:#redirection_url#:#URL of webpage
 assessment#:#region#:#Region
 assessment#:#remaining_duration#:#Remaining Duration
