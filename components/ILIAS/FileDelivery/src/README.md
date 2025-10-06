@@ -237,17 +237,13 @@ if($is_valid) {
 The standard Signed Delivery (`$DIC['file_delivery.data_signer']`) relies on a key rotation mechanism to ensure tokens
 remain secure over time.
 - **Rotation:** At any given point, five keys are kept in rotation.
-- **Generation:** Keys are automatically generated and rotated _whenever_ `composer install`
-  or `composer dump-autoload` is executed.
+- **Generation:** Keys are automatically generated and rotated _whenever_ 
+  ILIAS is updated via CLI Setup.
 - **Location:** The rotation keys are stored and managed as an artifact in:
-  `./src/FileDelivery/artifacts/key_rotation.php`
+  `./data/key_rotation.php`
 
 # Important for System Administrators
 
-The artifact file `./src/FileDelivery/artifacts/key_rotation.php` must be synchronized across all php host deployments.
-If one deployment generates a new set of keys that others do not share, tokens signed by that php process cannot be
-verified by the others. In such a case, requests will be rejected as invalid.
-
-- If you don't have multiple php hosts you are fine.
-- If you have multiple php hosts and deploy ILIAS code into a centralized storage like an NFS you are fine as well.
-- If you have multiple php hosts and deploy ILIAS code locally onto each host you'll need to sync the artifact after each composer run between all hosts!
+The artifact file `./data/key_rotation.php` must be synchronized across all 
+php host deployments. But this should be the case anyway because the `./data` 
+folder must be the same for all deployments as well.
