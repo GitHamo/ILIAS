@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\FileDelivery\Setup;
 
-use ILIAS\Setup\Artifact\BuildStaticConfigStoredObjective;
 use ILIAS\Setup\Environment;
 use ILIAS\Setup\Artifact;
 use ILIAS\Setup\Artifact\ArrayArtifact;

@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\Setup\Artifact;
+namespace ILIAS\FileDelivery\Setup;
 
 use ILIAS\Setup\Objective;
 use ILIAS\Setup\Artifact;
