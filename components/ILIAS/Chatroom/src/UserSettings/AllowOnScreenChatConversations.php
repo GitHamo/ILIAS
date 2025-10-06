@@ -82,7 +82,7 @@ class AllowOnScreenChatConversations implements SettingDefinition
             [
                 self::KEY_ENABLE_BROWSER_NOTIFICATIONS => $field_factory->checkbox(
                     $lng->txt('osc_enable_browser_notifications_label'),
-                    sprintf(
+                    \sprintf(
                         $lng->txt('osc_enable_browser_notifications_info'),
                         (int) $chat_settings->get('conversation_idle_state_in_minutes')
                     )
@@ -103,13 +103,15 @@ class AllowOnScreenChatConversations implements SettingDefinition
         ?\ilObjUser $user = null
     ): \ilFormPropertyGUI {
         $lng->loadLanguageModule('chatroom');
-            $input = new \ilCheckboxInputGUI($lng->txt('chat_osc_accept_msg'));
-            $input->setChecked(
-                $user !== null
-                    ? $user->getPref('chat_osc_accept_msg') === 'y'
-                    : $settings->get('chat_osc_accept_msg') === 'y'
-            );
-            return $input;
+
+        $input = new \ilCheckboxInputGUI($lng->txt('chat_osc_accept_msg'));
+        $input->setChecked(
+            $user !== null
+                ? $user->getPref('chat_osc_accept_msg') === 'y'
+                : $settings->get('chat_osc_accept_msg') === 'y'
+        );
+
+        return $input;
     }
 
     public function getDefaultValueForDisplay(
@@ -135,18 +137,23 @@ class AllowOnScreenChatConversations implements SettingDefinition
         if ($input === null) {
             $user->deletePref($this->getIdentifier());
             $user->deletePref(self::KEY_ENABLE_BROWSER_NOTIFICATIONS);
+
             return $user;
         }
-        if (is_bool($input)) {
-            $user->setPref($this->getIdentifier(), $input);
+
+        if (\is_bool($input)) {
+            $user->setPref($this->getIdentifier(), (string) $input);
+
             return $user;
         }
+
         return $user;
     }
 
     public function retrieveValueFromUser(\ilObjUser $user): ?bool
     {
         $value = $user->getPref($this->getIdentifier());
+
         return $value !== null ? $value === 'y' : null;
     }
 
