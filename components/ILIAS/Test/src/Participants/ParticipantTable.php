@@ -120,7 +120,7 @@ class ParticipantTable implements DataRetrieval
             ];
 
             if ($this->scoring_enabled) {
-                $row['finalized'] = $record->isScoringFinalized();
+                $row['scoring_finalized'] = $record->isScoringFinalized();
             }
 
             $first_access = $record->getAttemptOverviewInformation()?->getStartedDate();
@@ -186,7 +186,7 @@ class ParticipantTable implements DataRetrieval
             'test_passed' => fn(string $value, Participant $record) => $value === 'true'
                 ? $record->getAttemptOverviewInformation()?->hasPassingMark() === true
                 : $record->getAttemptOverviewInformation()?->hasPassingMark() !== true,
-            'finalized' => fn(string $value, Participant $record) => $value === 'true'
+            'scoring_finalized' => fn(string $value, Participant $record) => $value === 'true'
                 ? $record->isScoringFinalized() == true
                 : $record->isScoringFinalized() === false
         ];
@@ -325,7 +325,7 @@ class ParticipantTable implements DataRetrieval
         ];
 
         if ($this->scoring_enabled) {
-            $filters['finalized'] = [
+            $filters['scoring_finalized'] = [
                 $field_factory->select($this->lng->txt('finalized_evaluation'), $yes_no_all_options),
                 true
             ];
@@ -431,7 +431,7 @@ class ParticipantTable implements DataRetrieval
                 ->withIsSortable(true);
         }
         if ($this->scoring_enabled) {
-            $columns['finalized'] = $column_factory->boolean(
+            $columns['scoring_finalized'] = $column_factory->boolean(
                 $this->lng->txt('finalized_evaluation'),
                 $this->ui_factory->symbol()->icon()->custom(
                     'assets/images/standard/icon_checked.svg',
@@ -443,7 +443,8 @@ class ParticipantTable implements DataRetrieval
                     $this->lng->txt('no'),
                     'small'
                 )
-            )->withIsSortable(true);
+            )->withIsOptional(true, false)
+            ->withIsSortable(true);
         }
 
         $columns['last_access'] = $column_factory->date(

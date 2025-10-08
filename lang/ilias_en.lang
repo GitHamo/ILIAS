@@ -737,7 +737,7 @@ assessment#:#filter_show_questionpools#:#Show Question Pools
 assessment#:#final_statement#:#Concluding Remarks
 assessment#:#final_statement_show_desc#:#Show concluding remarks after the test has been submitted (there is no option to return to the test from this page).
 assessment#:#finalized_by#:#Completed by
-assessment#:#finalized_evaluation#:#Scoring completed
+assessment#:#finalized_evaluation#:#Scoring Completed
 assessment#:#finalized_on#:#Completed at
 assessment#:#finish_all_user_passes#:#Finish all Test Attempts
 assessment#:#finish_pass_for_all_users#:#Are you sure you want to finish the test attempts for all users?
