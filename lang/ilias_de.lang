@@ -1176,9 +1176,12 @@ assessment#:#rectangle_click_tl_corner#:#Bitte klicken Sie auf die obere linke E
 assessment#:#redirectAfterSave#:#Die maximale Bearbeitungszeit für diesen Test wurde erreicht. In wenigen Sekunden werden Sie weitergeleitet...
 assessment#:#redirect_after_finishing_rule#:#Weiterleitung
 assessment#:#redirect_after_finishing_tst#:#Weiterleitung
-assessment#:#redirect_after_finishing_tst_desc#:#Teilnehmer werden nach Beenden des Tests automatisch zu einer definierten Webseite weitergeleitet. Dies geschieht nur, wenn der Test so konfiguriert wurde, dass die Teilnehmer ihre Testergebnisse nach Beenden des Tests nicht einsehen können. Wenn Sie die Adresse einer externen Webseite eingeben, verwenden Sie die vollständige URL (einschließlich „https://”). Wenn Sie zu einem Objekt in ILIAS weiterleiten, verwenden Sie den Permalink, der in der Fußzeile des betreffenden Objekts zu finden ist.
-assessment#:#redirect_always#:#immer zur definierten Zielseite
-assessment#:#redirect_in_kiosk_mode#:#nur bei aktivierter Prüfungsansicht
+assessment#:#redirect_after_finishing_tst_desc#:#Teilnehmer werden nach Beenden des Tests automatisch zu einer definierten Webseite weitergeleitet. Dies geschieht nur, wenn der Test so konfiguriert wurde, dass die Teilnehmer ihre Testergebnisse nach Beenden des Tests nicht einsehen können. Wenn Sie die Adresse einer externen Webseite eingeben, verwenden Sie die vollständige URL (einschließlich "https://"). Wenn Sie zu einem Objekt in ILIAS weiterleiten, verwenden Sie den Permalink, der in der Fußzeile des betreffenden Objekts zu finden ist.
+assessment#:#redirect_always#:#Immer zur definierten Zielseite
+assessment#:#redirect_always_to_logout#:#Immer zum Abmeldebildschirm
+assessment#:#redirect_in_kiosk_mode#:#Bei aktivierten Prüfungsansicht zur definierten Zielseite
+assessment#:#redirect_url_invalid#:#Bitte geben Sie eine gültige URL zur Zielseite an.
+assessment#:#redirect_url_required_for_rule#:#Die URL der Zielseite muss angegeben werden, wenn "%s" ausgewählt ist.
 assessment#:#redirection_url#:#URL Zielseite
 assessment#:#region#:#Region
 assessment#:#remaining_duration#:#Restdauer
@@ -3072,7 +3075,8 @@ chatroom#:#preferred_chatname#:#Gewünschter Name
 chatroom#:#public_chat_created#:#Es wurde ein neuer öffentlicher Chatraum im Magazin angelegt.
 chatroom#:#scope#:#Raum
 chatroom#:#select_custom_username#:#Angezeigter Name im Chat
-chatroom#:#server_further_information#:#Weitere Informationen zur Konfiguration des Servers finden Sie in der <a href="%1$s" target="_blank">Readme-Datei</a>.
+chatroom#:#server_further_information#:#Weitere Informationen zur Konfiguration des Servers finden Sie in der Readme-Datei.
+chatroom#:#server_readme_file_btn_label#:#Readme-Datei
 chatroom#:#session#:#Sitzung
 chatroom#:#settings_general#:#Allgemein
 chatroom#:#settings_title#:#Einstellungen des Chats
@@ -11100,7 +11104,6 @@ lso#:#lso_print_list#:#Liste erstellen
 lso#:#lso_read#:#Lesezugriff auf Learning Sequence
 lso#:#lso_search_users#:#Benutzer suchen
 lso#:#lso_settings_availability#:#Verfügbarkeit
-lso#:#lso_settings_availability_error#:#Das Enddatum darf nicht vor dem Startdatum liegen
 lso#:#lso_settings_extro#:#Abschlussseite bearbeiten
 lso#:#lso_settings_intro#:#Einleitungsseite bearbeiten
 lso#:#lso_settings_old_extro#:#Alte Abschlussseite ansehen
@@ -13282,7 +13285,7 @@ pdesk#:#bookmark_select_target#:#Bitte wählen Sie das Ziel.
 poll#:#poll_absolute#:#Aktuelle Stimmen
 poll#:#poll_activation_online_info#:#Wählen Sie diese Einstellung, um die Abstimmung für Benutzer verfügbar zumachen.
 poll#:#poll_add#:#Abstimmung anlegen
-poll#:#poll_anonymous_warning#:#Ihr Name wird in den Abstimmungsergebnissen nicht angezeigt.
+poll#:#poll_anonymous_warning#:#Ihre Stimme wurde einzeln erfasst, aber Ihr Name wird in den Abstimmungsergebnissen nicht angezeigt.
 poll#:#poll_answer#:#Antwort
 poll#:#poll_answer_selected_alt_text#:#Ausgewählt
 poll#:#poll_answers#:#Mögliche Antworten
@@ -13306,7 +13309,7 @@ poll#:#poll_max_number_of_answers#:#Maximale Antworten
 poll#:#poll_max_number_of_answers_info#:#Sie dürfen bis zu %s Antworten auswählen.
 poll#:#poll_mode#:#Modus
 poll#:#poll_mode_anonymous#:#Ohne Namen / Anonym
-poll#:#poll_mode_anonymous_info#:#Im Tab "Abstimmungsergebnisse" werden Namen der Teilnehmenden nicht aufgeführt.
+poll#:#poll_mode_anonymous_info#:#Im Tab "Abstimmungsergebnisse" werden Namen der Teilnehmenden nicht aufgeführt. Systeminterne IDs der Teilnehmenden werden allerding in der Datenbank gespeichert.
 poll#:#poll_mode_personal#:#Mit Namen
 poll#:#poll_mode_personal_info#:#Im Tab "Abstimmungsergebnisse" werden die Namen der Teilnehmenden mit ihren Antworten aufgeführt. Wer Zugriff auf diesen Tab hat, kann prüfen, wer welche Antwort gegeben hat.
 poll#:#poll_new#:#Neue Abstimmung anlegen
