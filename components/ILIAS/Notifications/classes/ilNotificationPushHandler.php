@@ -164,10 +164,10 @@ class ilNotificationPushHandler extends ilNotificationHandler
     /**
      * @param string $preffix If a info preffix is set it is required by the endpoint to be padded
      */
-    private function hash(string $data, string $key, int $length = PHP_INT_MAX, string $preffix = null): string
+    private function hash(string $data, string $key, int $length = PHP_INT_MAX, ?string $preffix = null): string
     {
         if ($preffix !== null) {
-            $data = $preffix . chr(0) . $data . chr(1);
+            $data = $preffix . \chr(0) . $data . \chr(1);
         }
         return mb_substr(hash_hmac('sha256', $data, $key, true), 0, $length, '8bit');
     }
@@ -203,7 +203,7 @@ class ilNotificationPushHandler extends ilNotificationHandler
                 'body' => $notification->shortDescription,
                 'actions' => $actions
             ]
-        ], JSON_THROW_ON_ERROR)) . chr(2);
+        ], JSON_THROW_ON_ERROR)) . \chr(2);
     }
 
     protected function handleResponse(int $http_code, string $response, string $auth): PushQueueResult
@@ -254,7 +254,7 @@ class ilNotificationPushHandler extends ilNotificationHandler
 
     protected function validateForUser(ilObjUser $user, string $id): bool
     {
-        return in_array($id, json_decode($user->getPref('push_notification_provider') ?? '[]'));
+        return \in_array($id, json_decode($user->getPref('push_notification_provider') ?? '[]'), true);
     }
 
     public function getLastQueueResult(): PushQueueResult
