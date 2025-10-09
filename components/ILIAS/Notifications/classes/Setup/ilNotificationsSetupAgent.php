@@ -62,12 +62,12 @@ class ilNotificationsSetupAgent implements Agent
         });
     }
 
-    public function getInstallObjective(Config $config = null): Objective
+    public function getInstallObjective(?Config $config = null): Objective
     {
         return new PushNotificationObjective($this->provider, $config ?? new NullConfig());
     }
 
-    public function getUpdateObjective(Config $config = null): Objective
+    public function getUpdateObjective(?Config $config = null): Objective
     {
         return new ObjectiveCollection(
             'Notification Objectives',
