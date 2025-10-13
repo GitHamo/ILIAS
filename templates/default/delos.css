@@ -4343,8 +4343,8 @@ button .minimize, button .close, button .c-input-tree_select .c-input-tree_selec
 }
 
 .il-toggle-button.on {
-  background: #6ea03c;
-  border: 1px solid #6ea03c;
+  background: rgb(76.5, 111.2727272727, 41.7272727273);
+  border: 1px solid rgb(76.5, 111.2727272727, 41.7272727273);
 }
 .il-toggle-button.on .il-toggle-label-on {
   position: absolute;
