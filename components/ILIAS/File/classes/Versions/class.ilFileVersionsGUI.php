@@ -308,7 +308,7 @@ class ilFileVersionsGUI
         }
 
         // Editor
-        $suffix = $this->current_revision?->getInformation()?->getSuffix();
+        $this->current_revision?->getInformation()?->getSuffix();
 
         if ($this->action_repo->hasEditActionForSuffix(
             $this->current_revision->getInformation()->getSuffix()
@@ -403,7 +403,7 @@ class ilFileVersionsGUI
     {
         // delete versions after confirmation
         $versions_to_delete = $this->getVersionIdsFromRequest();
-        if (is_array($versions_to_delete) && $versions_to_delete !== []) {
+        if ($versions_to_delete !== []) {
             $this->file->deleteVersions($versions_to_delete);
             $this->tpl->setOnScreenMessage('success', $this->lng->txt("file_versions_deleted"), true);
         }
@@ -454,28 +454,6 @@ class ilFileVersionsGUI
         }
 
         return [];
-    }
-
-    private function getVersionsToKeep(array $version_ids): array
-    {
-        $versions_to_keep = $this->file->getVersions();
-        array_udiff($versions_to_keep, $version_ids, static function ($v1, $v2): bool {
-            if (is_array($v1) || $v1 instanceof ilObjFileVersion) {
-                $v1 = (int) $v1["hist_entry_id"];
-            } elseif (!is_numeric($v1)) {
-                $v1 = (int) $v1;
-            }
-
-            if (is_array($v2) || $v2 instanceof ilObjFileVersion) {
-                $v2 = (int) $v2["hist_entry_id"];
-            } elseif (!is_numeric($v2)) {
-                $v2 = (int) $v2;
-            }
-
-            return $v1 === $v2;
-        });
-
-        return $versions_to_keep;
     }
 
     /**
@@ -544,16 +522,12 @@ class ilFileVersionsGUI
                 $this->file
             );
         }
-
         // confirm the deletion of the selected versions
-        if (count($non_deletion_versions) >= 1) {
-            return $this->file_component_builder->buildConfirmDeleteSpecificVersionsModal(
-                $this->ctrl->getFormActionByClass(self::class, self::CMD_CONFIRMED_DELETE_VERSIONS),
-                $this->file,
-                $deletion_version_ids
-            );
-        }
-        return null;
+        return $this->file_component_builder->buildConfirmDeleteSpecificVersionsModal(
+            $this->ctrl->getFormActionByClass(self::class, self::CMD_CONFIRMED_DELETE_VERSIONS),
+            $this->file,
+            $deletion_version_ids
+        );
     }
 
     protected function checkSanityOfDeletionRequest(array $requested_deletion_version, bool $redirect): void

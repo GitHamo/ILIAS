@@ -51,7 +51,7 @@ class EmbeddedApplication
 
     public function __construct(
         protected ResourceIdentification $identification,
-        protected Action $action,
+        protected ?Action $action,
         protected ResourceStakeholder $stakeholder,
         protected URI $back_target,
         protected bool $inline = false,
@@ -61,7 +61,7 @@ class EmbeddedApplication
         /** @var DataSigner $data_signer */
         $data_signer = $DIC['file_delivery.data_signer'];
         $this->ilias_base_url = new URI(ILIAS_HTTP_PATH);
-        $editable = $this->action->getName() === ActionTarget::EDIT->value;
+        $editable = $this->action?->getName() === ActionTarget::EDIT->value;
 
         $payload = [
             'resource_id' => $this->identification->serialize(),
