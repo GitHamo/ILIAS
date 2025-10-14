@@ -428,12 +428,8 @@ class ilObjUserGUI extends ilObjectGUI
             $this->form_gui->setValuesByPost();
             $this->tabs_gui->activateTab('properties');
             $this->renderForm();
+            return;
         }
-        $this->object = $this->user_profile->addFormValuesToUser(
-            $this->form_gui,
-            $this->context,
-            $this->object
-        );
 
         try {
             $this->object->updateLogin($this->form_gui->getInput('username'));
@@ -443,6 +439,12 @@ class ilObjUserGUI extends ilObjectGUI
             $this->renderForm();
             return;
         }
+
+        $this->object = $this->user_profile->addFormValuesToUser(
+            $this->form_gui,
+            $this->context,
+            $this->object
+        );
 
         if ($this->user->getId() === (int) SYSTEM_USER_ID
             || !in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->object->getId()))

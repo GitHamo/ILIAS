@@ -440,10 +440,8 @@ class PersonalProfileGUI
             return false;
         }
 
-        $this->user->setLogin($login);
-
         try {
-            $this->user->updateLogin($this->user->getLogin());
+            $this->user->updateLogin($login);
             return true;
         } catch (\ilUserException $e) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('form_input_not_valid'));
