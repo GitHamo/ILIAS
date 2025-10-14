@@ -28,9 +28,9 @@ use ILIAS\UI\Component\Input\Container\Form\Form;
 use ILIAS\UI\Implementation\Component\Modal\Interruptive;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\ResourceStorage\Revision\RevisionStatus;
-use ILIAS\components\WOPI\Discovery\ActionDBRepository;
-use ILIAS\components\WOPI\Discovery\ActionRepository;
-use ILIAS\components\WOPI\Embed\EmbeddedApplication;
+use ILIAS\WOPI\Discovery\ActionDBRepository;
+use ILIAS\WOPI\Discovery\ActionRepository;
+use ILIAS\WOPI\Embed\EmbeddedApplication;
 use ILIAS\Data\URI;
 use ILIAS\FileUpload\MimeType;
 use ILIAS\MetaData\Services\ServicesInterface as LOMServices;
@@ -185,7 +185,9 @@ class ilFileVersionsGUI
                     $this->current_revision->getIdentification(),
                     $action,
                     new ilObjFileStakeholder(),
-                    new URI(rtrim(ILIAS_HTTP_PATH, "/") . "/" . $this->ctrl->getLinkTarget($this, self::CMD_DEFAULT))
+                    new URI(rtrim(ILIAS_HTTP_PATH, "/") . "/" . $this->ctrl->getLinkTarget($this, self::CMD_DEFAULT)),
+                    false,
+                    $this->lng->getLangKey()
                 );
 
                 $this->ctrl->forwardCommand(

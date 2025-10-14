@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 use ILIAS\File\Capabilities\CapabilityBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
-use ILIAS\components\WOPI\Discovery\ActionRepository;
+use ILIAS\WOPI\Discovery\ActionRepository;
 use ILIAS\HTTP\Services;
 use ILIAS\StaticURL\Builder\URIBuilder;
 use PHPUnit\Framework\TestCase;

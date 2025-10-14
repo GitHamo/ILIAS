@@ -29,8 +29,8 @@ use ILIAS\File\Icon\IconDatabaseRepository;
 use ILIAS\components\File\Settings\General;
 use ILIAS\Refinery\String\Group;
 use ILIAS\Data\Factory;
-use ILIAS\components\WOPI\Discovery\ActionDBRepository;
-use ILIAS\components\WOPI\Embed\EmbeddedApplication;
+use ILIAS\WOPI\Discovery\ActionDBRepository;
+use ILIAS\WOPI\Embed\EmbeddedApplication;
 use ILIAS\Data\URI;
 use ILIAS\MetaData\Services\ServicesInterface as LOMServices;
 use ILIAS\File\Capabilities\Capabilities;
@@ -310,7 +310,8 @@ class ilObjFileGUI extends ilObject2GUI
                     $action,
                     $this->stakeholder,
                     new URI($goto_link),
-                    $capability->getCapability() === Capabilities::VIEW_EXTERNAL
+                    $capability->getCapability() === Capabilities::VIEW_EXTERNAL,
+                    $this->lng->getLangKey()
                 );
 
                 $this->ctrl->forwardCommand(
