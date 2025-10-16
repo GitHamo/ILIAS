@@ -4811,7 +4811,6 @@ common#:#no_import_file_found#:#No import file found
 common#:#no_items#:#This object is empty and contains no items.
 common#:#no_limit#:#No limit
 common#:#no_mkisofs_configured#:#You have to configure mkisofs utility in ILIAS setup to run ISO export
-common#:#no_owner#:#No Owner
 common#:#no_parent_access#:#No access to a superordinated object!
 common#:#no_permission#:#You do not have the necessary permission.
 common#:#no_roles_user_can_be_assigned_to#:#There are no global roles the user can be assigned to. Therefore you are not allowed to add users.
@@ -5620,7 +5619,6 @@ common#:#show_hidden_sections#:#Show More Information &raquo;
 common#:#show_list#:#Show List
 common#:#show_members#:#Display Members
 common#:#show_more#:#Show More
-common#:#show_owner#:#Show Owner
 common#:#show_preview#:#Show Preview
 common#:#show_users_online#:#Show active users
 common#:#show_who_is_online#:#Show who is online
@@ -5861,7 +5859,6 @@ common#:#user_profile_other#:#Other Information
 common#:#user_send_new_account_mail#:#Send new account e-mail
 common#:#user_status#:#User Status
 common#:#user_toggle_noti#:#Member is not allowed to deactivate notification
-common#:#userdata#:#User Data
 common#:#userfolder_export_csv#:#Comma Separated Values
 common#:#userfolder_export_excel_x86#:#Microsoft Excel
 common#:#userfolder_export_file#:#File
@@ -9648,7 +9645,6 @@ exc#:#exc_team_log_add_member#:#Added member %s.
 exc#:#exc_team_log_create_team#:#Team created.
 exc#:#exc_team_log_remove_file#:#Removed file %s.
 exc#:#exc_team_log_remove_member#:#Removed member %s.
-exc#:#exc_team_management_tutor#:#Team Management by Tutors
 exc#:#exc_team_max_small_than_members#:#Maximal Number of Participants can not be set as %s because some teams need to be set with %s participants.
 exc#:#exc_team_member_add#:#Add Team Member (Search)
 exc#:#exc_team_member_container_add#:#Add Team Member from Course/Group

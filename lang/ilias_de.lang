@@ -901,7 +901,7 @@ assessment#:#longmenu#:#Longmenu
 assessment#:#longmenu_answeroptions_differ#:#Diese Frage funktioniert nicht richtig, denn sie hat nicht die gleiche Anzahl Lücken im Text wie in den Antwortoptionen.
 assessment#:#longmenu_text#:#„Long Menu“-Text
 assessment#:#mailnottype#:#Ein Versand findet auch beim Beenden einzelner Testdurchläufe statt
-assessment#:#mailnottype_desc#:#Der Besitzer des Tests wird auch dann benachrichtigt, wenn die Anzahl Durchläufe nicht beschränkt ist.
+assessment#:#mailnottype_desc#:#Wer unter „Im Besitz von“ eingetragen ist, erhält auch ohne Beschränkung der Anzahl an Testdurchläufen eine Benachrichtigung.
 assessment#:#mainbar_button_label_questionlist#:#Fragenliste
 assessment#:#maintenance#:#Wartung
 assessment#:#manscoring#:#Manuelle Bewertung
@@ -1421,7 +1421,7 @@ assessment#:#tst_count_correct_solutions#:#Nur vollständig richtig beantwortete
 assessment#:#tst_count_correct_solutions_desc#:#Vollständige und richtige Antworten erhalten die maximale Punktzahl. In allen anderen Fällen gibt es 0 Punkte. Dies gilt auch für Fragen, die Punkte für Teilantworten vorsehen.
 assessment#:#tst_count_partial_solutions#:#Auch teilweise falsch beantwortete Fragen ergeben Punkte
 assessment#:#tst_count_partial_solutions_desc#:#Bei einigen Fragetypen können für korrekt gegebene Teilantworten Punkte erzielt werden. Diese werden aufsummiert. Dies betrifft die Fragetypen Multiple Choice, KPrim, Mehrfachauswahl in Imagemaps, Fehler / Worte markieren und Zuordnungsfrage.
-assessment#:#tst_current_run_no_longer_valid#:#Ihr aktueller Testdurchlauf ist nicht mehr gültig. <br>Er wurde wahrscheinlich bereits abgeschlossen oder von einem Tutor beendet.
+assessment#:#tst_current_run_no_longer_valid#:#Ihr aktueller Testdurchlauf ist nicht mehr gültig. <br>Er wurde wahrscheinlich bereits abgeschlossen oder von den Testverantwortlichen beendet.
 assessment#:#tst_default_settings#:#Persönliche Standardeinstellungen
 assessment#:#tst_defaults_applied#:#Die ausgewählten Standardeinstellungen wurden angewendet.
 assessment#:#tst_defaults_apply_not_possible#:#ILIAS konnte die ausgewählten Standardeinstellungen nicht auf diesen Test anwenden! Eventuell enthält dieser Test bereits Teilnehmerdatensätze, die verhindern, dass bestimmte Standardeinstellungen übernommen werden können.
@@ -4331,7 +4331,7 @@ common#:#il_lso_member#:#Lernsequenzmitglied
 common#:#il_lti_instructor#:#LTI Instructor
 common#:#il_lti_learner#:#LTI Learner
 common#:#il_lti_user#:#LTI User
-common#:#il_orgu_employee#:#Mitarbeiter
+common#:#il_orgu_employee#:#Team
 common#:#il_orgu_superior#:#Vorgesetzte Führungskraft
 common#:#ilias_version#:#ILIAS-Version
 common#:#image#:#Bild
@@ -4656,7 +4656,7 @@ common#:#mm_repo_tree_view_act#:#Baumansicht an
 common#:#mm_repo_tree_view_deact#:#Baumansicht aus
 common#:#mm_repository#:#Magazin
 common#:#mm_skills#:#Kompetenzen
-common#:#mm_staff_list#:#Mitarbeiterliste
+common#:#mm_staff_list#:#Teammitglieder
 common#:#mm_tags#:#Tags
 common#:#mm_task_derived_tasks#:#To-Dos
 common#:#mme_lost_item_reason#:#Eintrag wird nicht mehr angeboten.
@@ -4732,19 +4732,19 @@ common#:#msg_no_files_selected#:#Keine Dateien ausgewählt
 common#:#msg_no_language_selected#:#Angabe einer Übersetzungsprache fehlt! Sie müssen für alle Übersetzungen eine Sprache bestimmen.
 common#:#msg_no_perm_assign_role_to_user#:#Sie haben keine Berechtigung die Rollenzuweisung des Kontos zu ändern.
 common#:#msg_no_perm_assign_user_to_role#:#Sie habe keine Berechtigung, um die Kontenzuweisung zu ändern.
-common#:#msg_no_perm_copy#:#Sie besitzen keine ausreichende Berechtigung, die folgenden Objekte zu kopieren:
-common#:#msg_no_perm_create_rolt#:#Sie besitzen keine ausreichende Berechtigung um neue Rollenvorlagen anzulegen!
-common#:#msg_no_perm_cut#:#Sie besitzen keine ausreichende Berechtigung die folgenden Objekte auszuschneiden:
-common#:#msg_no_perm_delete#:#Sie besitzen keine ausreichende Berechtigung die folgenden Objekte zu löschen:
-common#:#msg_no_perm_link#:#Sie besitzen keine ausreichende Berechtigung eine Verknüpfung für die folgenden Objekte zu erstellen:
-common#:#msg_no_perm_modify_rolt#:#Sie besitzen keine ausreichende Berechtigung um Rollenvorlagen zu ändern.
-common#:#msg_no_perm_modify_user#:#Sie besitzen keine ausreichende Berechtigung um Benutzerdaten zu ändern.
-common#:#msg_no_perm_paste#:#Sie besitzen keine ausreichende Berechtigung, um die folgenden Objekte einzufügen:
-common#:#msg_no_perm_paste_object_in_folder#:#Sie besitzen keine ausreichende Berechtigung, um das Objekt %s in den Ordner %s einzufügen.
-common#:#msg_no_perm_perm#:#Sie besitzen keine ausreichende Berechtigung, um auf die Rechteeinstellungen zuzugreifen.
-common#:#msg_no_perm_read#:#Sie besitzen keine ausreichende Berechtigung, um auf dieses Objekt zuzugreifen.
+common#:#msg_no_perm_copy#:#Ihnen fehlt die Berechtigung, die folgenden Objekte zu kopieren:
+common#:#msg_no_perm_create_rolt#:#Ihnen fehlt die Berechtigung, um neue Rollenvorlagen anzulegen!
+common#:#msg_no_perm_cut#:#Ihnen fehlt die Berechtigung, die folgenden Objekte auszuschneiden:
+common#:#msg_no_perm_delete#:#Ihnen fehlt die Berechtigung, die folgenden Objekte zu löschen:
+common#:#msg_no_perm_link#:#Ihnen fehlt die Berechtigung, eine Verknüpfung für die folgenden Objekte zu erstellen:
+common#:#msg_no_perm_modify_rolt#:#Ihnen fehlt die Berechtigung, um Rollenvorlagen zu ändern.
+common#:#msg_no_perm_modify_user#:#Ihnen fehlt die Berechtigung, diese Daten zu ändern!
+common#:#msg_no_perm_paste#:#Ihnen fehlt die Berechtigung, um die folgenden Objekte einzufügen:
+common#:#msg_no_perm_paste_object_in_folder#:#Ihnen fehlt die Berechtigung, um das Objekt %s in den Ordner %s einzufügen.
+common#:#msg_no_perm_perm#:#Ihnen fehlt die Berechtigung, um auf die Rechteeinstellungen zuzugreifen.
+common#:#msg_no_perm_read#:#Ihnen fehlt die Berechtigung, um auf dieses Objekt zuzugreifen.
 common#:#msg_no_perm_read_item#:#Sie haben keine Berechtigung, auf das Objekt „%s“ zuzugreifen.
-common#:#msg_no_perm_read_lm#:#Sie besitzen keine ausreichende Berechtigung, um diese Lernmodul anzuzeigen.
+common#:#msg_no_perm_read_lm#:#Ihnen fehlt die Berechtigung, um diese Lernmodul anzuzeigen.
 common#:#msg_no_perm_view_roles_of_user#:#Sie haben keine Berechtigung, auf die Rollenzuweisung des Kontos zuzugreifen
 common#:#msg_no_perm_write#:#Sie besitzen keine Rechte, um Einstellungen zu ändern!
 common#:#msg_no_search_result#:#Keine Einträge gefunden
@@ -4760,7 +4760,7 @@ common#:#msg_obj_may_not_contain_objects_of_type#:#Das Objekt %s darf keine Obje
 common#:#msg_obj_modified#:#Änderungen gespeichert
 common#:#msg_obj_no_download#:#können nicht heruntergeladen werden.
 common#:#msg_obj_no_link#:#Das Verknüpfen von Containerobjekten wie Kategorien, Kursen, Gruppen und Ordnern ist aus technischen Gründen leider nicht möglich. Verknüpfen Sie stattdessen die einzelnen Objekte der Container zum gewünschten Ort oder verwenden die Objekttypen Kategorienlink, Kurslink bzw. Gruppenlink.
-common#:#msg_obj_perm_download#:#Sie besitzen keine ausreichende Berechtigung um folgenden Objekte herunterzuladen:
+common#:#msg_obj_perm_download#:#Ihnen fehlt die Berechtigung, um folgenden Objekte herunterzuladen:
 common#:#msg_paste_object_not_in_itself#:#Es ist nicht möglich, das Objekt „%s“ in sich selbst einzufügen.
 common#:#msg_perm_adopted_from1#:#Rechteeinstellungen übernommen von
 common#:#msg_perm_adopted_from2#:#(Die Einstellungen wurden gespeichert!)
@@ -4785,7 +4785,7 @@ common#:#my_certificates#:#Meine Zertifikate
 common#:#my_contacts#:#Meine Kontakte
 common#:#my_courses#:#Meine Kurse
 common#:#my_courses_groups#:#Meine Kurse und Gruppen
-common#:#my_staff#:#Mitarbeiter
+common#:#my_staff#:#Team
 common#:#name#:#Name
 common#:#nc_contact_requests_headline#:#Kontaktanfragen
 common#:#nc_contact_requests_number_p#:#Sie haben %s Kontaktanfragen.
@@ -4799,7 +4799,7 @@ common#:#newline#:#Zeilenumbruch
 common#:#news#:#Neuigkeiten
 common#:#next#:#weiter
 common#:#no#:#Nein
-common#:#no_access_item#:#Sie besitzen keine ausreichende Berechtigung, um auf dieses Objekt zuzugreifen.
+common#:#no_access_item#:#Ihnen fehlt die Berechtigung, um auf dieses Objekt zuzugreifen.
 common#:#no_access_item_public#:#Um dieses Objekt zu nutzen, müssen Sie angemeldet sein und entsprechende Zugriffsrechte besitzen.
 common#:#no_accessibility_control_concept_description#:#Aktuell wird in dieser Installation keine Info zur Barrierefreiheit angeboten. Bitte kontaktieren Sie die <a href="%1$s">Anlaufstelle für Barrierefreiheit</a> für weitere Informationen.
 common#:#no_checkbox#:#Sie haben keine Auswahl getroffen.
@@ -4811,7 +4811,6 @@ common#:#no_import_file_found#:#Keine Importdatei gefunden
 common#:#no_items#:#Keine Einträge
 common#:#no_limit#:#Kein Limit
 common#:#no_mkisofs_configured#:#Sie müssen das mkisofs Tool im ILIAS-Setup konfigurieren, um den ISO-Export ausführen zu können.
-common#:#no_owner#:#Kein Besitzer
 common#:#no_parent_access#:#Kein Zugriff auf ein übergeordnetes Objekt!
 common#:#no_permission#:#Sie haben nicht die entsprechenden Zugriffsrechte!
 common#:#no_roles_user_can_be_assigned_to#:#Sie haben keinen Zugriff auf globale Rollen, deswegen können Sie keine lokalen Benutzer anlegen.
@@ -4899,7 +4898,7 @@ common#:#obj_dshs#:#Dashboard
 common#:#obj_dshs_desc#:#Dashboard administrieren
 common#:#obj_ecss#:#ECS
 common#:#obj_ecss_desc#:#Enthält globale Einstellungen für den E-Learning Community Server
-common#:#obj_etal#:#Mitarbeiter-Gespräch
+common#:#obj_etal#:#Gespräch Teammitglied
 common#:#obj_exc#:#Übung
 common#:#obj_exc_duplicate#:#Übung kopieren
 common#:#obj_excv#:#Übungszertifikat
@@ -5073,7 +5072,7 @@ common#:#obj_tags#:#Tagging
 common#:#obj_tags_desc#:#Einstellungen für Tagging
 common#:#obj_tala#:#Gesprächsvorlagen
 common#:#obj_tala_desc#:#Gesprächsvorlagen
-common#:#obj_tals#:#Mitarbeiter Gesprächsserie
+common#:#obj_tals#:#Team Gesprächserie
 common#:#obj_talt#:#Gesprächsvorlage
 common#:#obj_task#:#To-Do
 common#:#obj_tax#:#Taxonomie
@@ -5129,7 +5128,7 @@ common#:#objs_copa#:#Inhaltsseiten
 common#:#objs_crs#:#Kurse
 common#:#objs_crsr#:#Kurslinks
 common#:#objs_dcl#:#Datensammlungen
-common#:#objs_etal#:#Mitarbeiter-Gespräche
+common#:#objs_etal#:#Gespräche Teammitglieder
 common#:#objs_exc#:#Übungen
 common#:#objs_file#:#Dateien
 common#:#objs_fold#:#Ordner
@@ -5619,7 +5618,6 @@ common#:#show_hidden_sections#:#Weitere Informationen anzeigen &raquo;
 common#:#show_list#:#Auflistung anzeigen
 common#:#show_members#:#Mitglieder anzeigen
 common#:#show_more#:#Mehr zeigen
-common#:#show_owner#:#Besitzerinfo
 common#:#show_preview#:#Vorschau anzeigen
 common#:#show_users_online#:#Aktive Benutzer anzeigen
 common#:#show_who_is_online#:#Zeig wer online ist
@@ -5860,7 +5858,6 @@ common#:#user_profile_other#:#Weitere Informationen
 common#:#user_send_new_account_mail#:#Begrüssungsmail versenden
 common#:#user_status#:#Benutzerstatus
 common#:#user_toggle_noti#:#Benachrichtigungen können nicht deaktiviert werden.
-common#:#userdata#:#Benutzerdaten
 common#:#userfolder_export_csv#:#Durch Komma getrennte Werte (CSV)
 common#:#userfolder_export_excel_x86#:#Microsoft Excel
 common#:#userfolder_export_file#:#Datei
@@ -9082,7 +9079,7 @@ ecs#:#ecs_lm_export_enabled#:#Freigeben
 ecs#:#ecs_lm_export_obj_settings#:#Einstellungen für Lernmodulfreigaben
 ecs#:#ecs_local_information#:#Weitere Informationen
 ecs#:#ecs_local_settings#:#Lokale Einstellungen
-ecs#:#ecs_login#:#Benutzername bzw. Externes Benutzerkonto
+ecs#:#ecs_login#:#Anmeldename bzw. externes Anmeldekonto
 ecs#:#ecs_mapping_crs#:#Zuordnung für Kurse
 ecs#:#ecs_mapping_exp_tbl#:#Zuordnung der Erweiterten Metadaten zu ECS-Daten
 ecs#:#ecs_mapping_rcrs#:#Zuordnung für ECS-Kurse
@@ -9207,10 +9204,10 @@ etal#:#tala_no_content_without_admin_info#:#Um auf Gesprächsvorlagen zuzugreife
 etal#:#talk_serial#:#Talk Serial
 etal#:#tals_add#:#Gespräche hinzufügen
 etal#:#tals_new#:#Neue Gesprächsserie
-etal#:#talt_activation_online_info#:#Markieren Sie die Vorlage als aktiv, damit diese für Mitarbeiter zur Verfügung steht.
+etal#:#talt_activation_online_info#:#Markieren Sie die Vorlage als aktiv, damit diese für Teammitglieder zur Verfügung steht.
 etal#:#talt_add#:#Erstellen
 etal#:#talt_edit#:#Allgemein
-etal#:#talt_etal#:#Mitarbeiter-Gespräch
+etal#:#talt_etal#:#Gespräch Teammitglied
 etal#:#talt_new#:#Neue Gesprächsvorlage
 etal#:#will_update_series_info_lock#:#Die Bearbeitung von allen Gesprächsterminen dieser Serie sperren
 etal#:#will_update_series_info_title#:#Änderungen am Titel gelten für alle Gesprächstermine dieser Serie.
@@ -9330,8 +9327,8 @@ exc#:#exc_grades#:#Notenübersicht
 exc#:#exc_grades_overview#:#Notenübersicht
 exc#:#exc_hand_in#:#Datei abgeben
 exc#:#exc_hand_in_lead_text#:#In %s abzugeben
-exc#:#exc_idl_request_and_tutor_needed#:#Bitte senden Sie eine Anfrage an Ihren Tutor. Dieser muss Ihnen eine individuelle Abgabefrist zuweisen.
-exc#:#exc_idl_tutor_needed#:#Ihre Anfrage wurde bereits gesendet und ist noch offen. Sie werden benachrichtigt, sobald Ihr Tutor Ihnen einen individuelle Abgabefrist zugeordnet hat.
+exc#:#exc_idl_request_and_tutor_needed#:#Bitten Sie um eine individuelle Abgabefrist. Die für Sie zuständige Person wird automatisch benachrichtigt.
+exc#:#exc_idl_tutor_needed#:#Ihre Anfrage wurde gesendet. Sie werden benachrichtigt, sobald Ihnen eine individuelle Abgabefrist gesetzt worden ist.
 exc#:#exc_import#:#Übung importieren
 exc#:#exc_individual_deadline#:#Individueller Abgabetermin
 exc#:#exc_individual_deadline_action#:#Individuellen Abgabetermin setzen
@@ -9374,8 +9371,8 @@ exc#:#exc_msg_deadline_request_body#:#Der folgende Benutzer hat eine individuell
 exc#:#exc_msg_deadline_request_subject#:#Es wurde eine Abgabefrist in Übung „%s“ angefragt.
 exc#:#exc_msg_failed_mandatory#:#Sie haben mindestens eine obgligatorische Übungseinheit nicht bestanden.
 exc#:#exc_msg_grading_done#:#Es wurde eine Übungseinheit in Übung „%s“ bewertet.
-exc#:#exc_msg_grading_done_body#:#Ein Tutor hat Ihre Lösungsabgabe in Übung „%s“ bewertet.
-exc#:#exc_msg_idl_set_body#:#Es wurde eine individuelle Abgabefrist für Sie durch den Tutor gesetzt.
+exc#:#exc_msg_grading_done_body#:#Ihre Einreichung für die Übung „%s“ wurde bewertet.
+exc#:#exc_msg_idl_set_body#:#Sie haben einen individuellen Abgabetermin erhalten. Nähere Informationen dazu finden Sie in der Übung.
 exc#:#exc_msg_idl_set_subject#:#Es wurde eine Abgabefrist in Übung „%s“ gesetzt.
 exc#:#exc_msg_min_number_ass#:#Sie müssen mindestens %s Übungseinheiten bestehen, um die Übung zu bestehen.
 exc#:#exc_msg_missed_minimum_number#:#Sie haben die Mindestanzahl an Übungseinheiten nicht bestanden.
@@ -9575,7 +9572,7 @@ exc#:#exc_submission_file#:#Dateiabgabe
 exc#:#exc_submission_no_new_files#:#Keine neuen Abgaben vorhanden.
 exc#:#exc_submission_notification#:#Benachrichtigung bei Abgabe
 exc#:#exc_submission_notification_body#:#Eine neue Abgabe für die Übung „%s“ liegt vor.
-exc#:#exc_submission_notification_info#:#Sie werden per Mail benachrichtigt, sobald neue Lösungen abgegeben wurden oder Abgabefristen beantragt werden. Dies ist eine persönliche Einstellung, die nur für Sie gilt. Andere Tutoren der Übung sind davon nicht betroffen.
+exc#:#exc_submission_notification_info#:#Sobald neue Lösungen abgegeben wurden, erhalten Sie eine Mail. Dies ist eine persönliche Einstellung, die nur für Sie gilt. Andere Personen, die Abgaben bewerten, erhalten nur dann eine Mail, wenn auch sie diese Checkbox aktivieren.
 exc#:#exc_submission_notification_link#:#Link zur Übung: %s
 exc#:#exc_submission_notification_subject#:#Eine neue Abgabe für die Übung „%s“ liegt vor
 exc#:#exc_submission_open_notification_link#:#Abgabe öffnen: %s
@@ -9644,7 +9641,6 @@ exc#:#exc_team_log_add_member#:#Mitglied %s hinzugefügt.
 exc#:#exc_team_log_create_team#:#Team erstellt.
 exc#:#exc_team_log_remove_file#:#Datei %s entfernt.
 exc#:#exc_team_log_remove_member#:#Mitglied %s entfernt.
-exc#:#exc_team_management_tutor#:#Team-Management durch Tutoren
 exc#:#exc_team_max_small_than_members#:#Die maximale Anzahl teilnehmender Personen kann nicht auf %s gesetzt werden, da einige Teams %s Personen enthalten müssen.
 exc#:#exc_team_member_add#:#Team-Mitglied hinzufügen (Suche)
 exc#:#exc_team_member_container_add#:#Team-Mitglied aus Kurs/Gruppe hinzufügen
@@ -11550,7 +11546,7 @@ mail#:#mail_nacc_target_type#:#Typ des Zielobjekts, z. B. "Kurs" für ein Kursob
 mail#:#mail_nacc_timelimit#:#Zugangszeitraum des Benutzers
 mail#:#mail_nacc_title#:#Titel
 mail#:#mail_nacc_use_placeholder#:#Im Feld 'Inhalt' können folgende Platzhalter verwendet werden
-mail#:#mail_nacc_user_fullname#:#Vollständiger Benutzername
+mail#:#mail_nacc_user_fullname#:#Nachname, Vorname [Anmeldename]
 mail#:#mail_nacc_user_login#:#Anmeldename
 mail#:#mail_new_template#:#Neue Textvorlage
 mail#:#mail_no_mail_items#:#Keine ungelesenen Mails.
@@ -11630,7 +11626,7 @@ mail#:#mail_system_usr_from_addr#:#„FROM”-Adresse für manuell versendete E-
 mail#:#mail_system_usr_from_addr_info#:#Damit die manuell aus ILIAS versendeten E-Mails nicht als Spam abgelehnt werden, muss hier eine absendende Adresse (technisch: „FROM”-Header) eingetragen werden. Bei manuell verschickten E-Mails wird die zu einem ILIAS-Konto gehörige Adresse als Antwortadresse (technisch: „REPLY-TO”-Header) übernommen. <br /><br />Beispiele: <span style="font-style: italic">info@institution.de</span> oder <span style="font-style: italic">no-reply@institution.de</span>
 mail#:#mail_system_usr_from_name#:#„FROM”-Name und Format
 mail#:#mail_system_usr_from_name_info#:#Dieser Name wird üblicherweise im E-Mail-Client in der Spalte „Von“ angezeigt. Als Platzhalter können &lbrace;&lbrace;FULLNAME&rbrace;&rbrace;, &lbrace;&lbrace;FIRSTNAME&rbrace;&rbrace; und &lbrace;&lbrace;LASTNAME&rbrace;&rbrace; genutzt werden. Diese werden dann durch die jeweiligen Daten der Person ersetzt, die eine manuelle E-Mail versendet hat.
-mail#:#mail_system_usr_general_signature#:#Benutzer Signatur
+mail#:#mail_system_usr_general_signature#:#Signatur
 mail#:#mail_tbl_head_attachments#:#Anhang
 mail#:#mail_template_client#:#Textvorlage
 mail#:#mail_template_client_info#:#Wählen Sie zwischen einer der verfügbaren Textvorlagen. Sie haben die Möglichkeit, die durch die Textvorlage angebotenen Platzhalter zu nutzen. Bei der Wahl einer Textvorlage wird der Inhalt dieser Nachricht ersetzt und etwaige Änderungen die schon vorgenommen wurden, gehen verloren. Der Betreff ändert sich nicht und muss manuell angepasst werden.
@@ -12767,11 +12763,11 @@ mst#:#mst_download_certificate#:#Zertifikat herunterladen
 mst#:#mst_list_certificates#:#Zertifikate
 mst#:#mst_list_competences#:#Kompetenzen
 mst#:#mst_list_courses#:#Einschreibungen
-mst#:#mst_list_users#:#Mitarbeiterliste
+mst#:#mst_list_users#:#Liste Teammitglieder
 mst#:#mst_memb_status_registered#:#Angemeldet
 mst#:#mst_memb_status_requested#:#Beantragt
 mst#:#mst_memb_status_waitinglist#:#Warteliste
-mst#:#mst_my_staff#:#Mitarbeiter
+mst#:#mst_my_staff#:#Team
 mst#:#mst_opt_all#:#Alle
 mst#:#mst_please_select_course#:#Bitte wählen Sie einen Kurs aus.
 mst#:#mst_profile_fulfilled#:#Erreicht
@@ -12806,10 +12802,10 @@ news#:#news_enable_private_feed_info#:#Erlaubt den Zugriff auf private und öffe
 news#:#news_feed_url#:#Feed-URL
 news#:#news_feed_url_for#:#Feed-URL für „%s“
 news#:#news_first_letter_of_word_notification#:#B
-news#:#news_get_feed_info#:#Dies ist die Adresse Ihres persönlichen Newsfeeds. Dieser Newsfeed enthält alle Neuigkeiten, die von den jeweiligen Verfassern als öffentlich definiert wurden. Dieser Newsfeed wird durch keinerlei Authentifzierungsmaßnahme geschützt.
+news#:#news_get_feed_info#:#Kopieren Sie diese Adresse in Ihren RSS-Reader. Alle öffentlich zugänglichen Neuigkeiten werden eingesammelt. Der Newsfeed wird durch keinerlei Authentifzierungsmaßnahme geschützt.
 news#:#news_get_feed_title#:#URL Ihres persönlichen Newsfeeds
 news#:#news_get_feed_url#:#Newsfeed-URL bekommen
-news#:#news_get_priv_feed_info#:#Dies ist die Adresse Ihres privaten Newsfeeds. Dieser Newsfeed enthält neben öffentlichen Neuigkeiten auch solche, die von den jeweiligen Verfassern als privat definiert wurden. Dieser Newsfeed wird durch ein Kennwort geschützt, welches Sie unter "Einstellungen" einrichten können. Bitte ersetzen Sie in der unten angezeigten URL -password- durch Ihr Feed-Passwort.
+news#:#news_get_priv_feed_info#:#Sie haben ein Passwort für Ihren privaten Newsfeed vergeben. Dieser Newsfeed enthält neben öffentlich zugänglichen auch private Neuigkeiten. Ersetzen Sie in der folgenden Feed-URL –password– durch Ihr Newsfeed-Passwort und kopieren Sie diese Adresse in Ihren RSS-Reader. Teilen Sie die Feed-URL nicht mit anderen.
 news#:#news_get_priv_feed_title#:#URL Ihres privaten Newsfeeds
 news#:#news_hide_news_block#:#Block "Neuigkeiten" verbergen
 news#:#news_hide_news_block_info#:#Verberge Block in der Lerneransicht. Der Block "Neuigkeiten" wird nur für Benutzer mit Schreibberechtigung sichtbar sein.
@@ -13049,7 +13045,7 @@ objref#:#objref_edit_title#:#Titel
 objref#:#objref_failure_target_type#:#Das Ziel des Links muss vom folgendem Typ sein:
 objref#:#objref_reuse_title#:#Titel des verlinkten Objekts übernehmen
 objref#:#objref_title_settings#:#Titel des verlinkten Objekts
-orgu#:#Staff#:#Mitarbeiter
+orgu#:#Staff#:#Team
 orgu#:#add_position#:#Position hinzufügen
 orgu#:#authorities#:#Befugnisse
 orgu#:#authority#:#Befugnisse
@@ -13060,7 +13056,7 @@ orgu#:#confirm_deletion_and_assign#:#Löschen und Benutzer zuweisen
 orgu#:#confirm_deletion_button#:#Löschen
 orgu#:#deassign_user_successful#:#Benutzer wurde erfolgreich ausgetragen.
 orgu#:#edit_translations#:#Titel und Beschreibung
-orgu#:#employee#:#Mitarbeiter
+orgu#:#employee#:#Teammitglied
 orgu#:#ext_id#:#Externe ID
 orgu#:#ext_id_updated#:#Die externe ID wurde erfolgreich aktualisiert.
 orgu#:#form_title_org_default_permissions_update#:#Standardrechte
@@ -13070,9 +13066,9 @@ orgu#:#import_terminated_with_errors#:#Der Import hat Fehler erkannt.
 orgu#:#import_terminated_with_warnings#:#Der Import hat Warnungen erzeugt
 orgu#:#import_xml_file#:#Import-Datei
 orgu#:#local_other_roles#:#Weitere lokale Rollen %s
-orgu#:#local_staff#:#Mitarbeiter %s
-orgu#:#msg_assignment_to_employee_done#:#Zuweisung zur Position Mitarbeiter durchgeführt
-orgu#:#msg_confirm_d_ua#:#Wollen Sie folgende Benutzer der Position Mitarbeiter in ihrer jeweiligen Organisationseinheit zuweisen?
+orgu#:#local_staff#:#Teammitglied %s
+orgu#:#msg_assignment_to_employee_done#:#Zuweisung zur Position Teammitglied durchgeführt
+orgu#:#msg_confirm_d_ua#:#Wollen Sie folgende Personen der Position Teammitglied in ihrer jeweiligen Organisationseinheit zuweisen?
 orgu#:#msg_confirm_deletion#:#Wollen Sie die folgende Position wirklich löschen?
 orgu#:#msg_confirm_remove_user#:#Möchten Sie den folgenden Benutzer wirklich aus der Position %s entfernen?
 orgu#:#msg_deleted#:#Gelöscht
@@ -13105,7 +13101,7 @@ orgu#:#orgu_add#:#Organisationseinheit hinzufügen
 orgu#:#orgu_adv_settings#:#Erweiterte Einstellungen
 orgu#:#orgu_already_deleted#:#Das Objekt wurde bereits gelöscht.
 orgu#:#orgu_enable_my_staff#:#Hauptmenüeintrag aktivieren
-orgu#:#orgu_enable_my_staff_info#:#Ein neuer Haupteintrag wird im Hauptmenü angezeigt. Er kann die Einträge Mitarbeiterliste, Einschreibungen, Zertifikate, Kompetenzen, Gespräche enthalten.
+orgu#:#orgu_enable_my_staff_info#:#Ein neuer Haupteintrag wird im Hauptmenü angezeigt. Er kann die Einträge Team, Kurse, Zertifikate, Kompetenzen und Gespräche enthalten.
 orgu#:#orgu_global_set_form#:#Globale Einstellungen
 orgu#:#orgu_global_set_positions#:#Nutzung von Positionen in Objekttypen
 orgu#:#orgu_global_set_positions_type_active#:#Positionen in:
@@ -13148,7 +13144,7 @@ orgu#:#over#:#über
 orgu#:#over_-1#:#Alle
 orgu#:#placeholder#:#...
 orgu#:#positions#:#Positionen
-orgu#:#rec_staff#:#Mitarbeiter %s und nachfolgend
+orgu#:#rec_staff#:#Teammitglied %s und nachfolgend
 orgu#:#remove_successful#:#Der Benutzer wurde erfolgreich entfernt.
 orgu#:#remove_user#:#Entfernen
 orgu#:#scope#:#in
@@ -13160,7 +13156,7 @@ orgu#:#simple_import#:#Einfacher XML-Import
 orgu#:#simple_user_import#:#XML-Benutzerzuweisung
 orgu#:#simple_xls#:#Einfacher Excel-Export
 orgu#:#simple_xml#:#Einfacher XML-Export
-orgu#:#superior#:#Vorgesetzter
+orgu#:#superior#:#Führungskraft
 orgu#:#user_assignments#:#Benutzerzuweisung
 orgu#:#user_assignments_recursive#:#Benutzerzuweisung Teilbaum
 orgu#:#user_changed_successful#:#Der Benutzer wurde erfolgreich umgeschrieben.
@@ -13723,7 +13719,7 @@ prtf#:#prtf_template_title#:#Portfoliovorlage
 prtf#:#prtf_unset_as_default#:#Nicht als Mein Profil verwenden
 prtf#:#prtf_unset_default_share_info#:#Die Änderungen wurden gespeichert. Bitte überprüfen Sie die aktuellen Freigaben für das Portfolio.
 prtf#:#prtf_use_page_layout#:#Seitenlayout benutzen
-prtf#:#prtf_visible_for_tutor#:#Einsehbar für Tutor
+prtf#:#prtf_visible_for_tutor#:#Einsehbar für Übungsleitung
 prtf#:#prtt_title_info#:#Bitte beachten Sie, dass dieser Titel auch für die aus der Vorlage erstellten Portfolios verwendet wird.
 prtt#:#prtt_activation_limited_visibility_info#:#Falls aktiv, ist die Portfoliovorlage auch außerhalb der Zugriffszeiten sichtbar.
 prtt#:#prtt_activation_online_info#:#Wählen Sie diese Einstellung, um die Portfoliovorlage für Benutzer verfügbar zu machen.
@@ -13786,10 +13782,10 @@ ps#:#ps_export_groups#:#Export der Persönlichen Daten aus Gruppen erlauben
 ps#:#ps_export_member#:#Mitglieder
 ps#:#ps_export_prgs#:#Persönliche Daten in Studienprogrammen anzeigen und exportieren
 ps#:#ps_export_settings#:#Einstellungen zum Export
-ps#:#ps_export_sub#:#Noch nicht freigeschaltete Benutzer
+ps#:#ps_export_sub#:#Noch nicht freigeschaltete Personen
 ps#:#ps_export_tutor#:#Kursbetreuung
-ps#:#ps_export_user_data#:#Benutzerdaten
-ps#:#ps_export_wait#:#Benutzer auf der Warteliste
+ps#:#ps_export_user_data#:#Personenbezogene Daten
+ps#:#ps_export_wait#:#Personen auf der Warteliste
 ps#:#ps_field_type#:#Datenfeldtyp
 ps#:#ps_files_deleted#:#Die Exportdateien wurden gelöscht.
 ps#:#ps_grp_user_fields#:#Persönliche Angaben zu dieser Gruppe
@@ -13828,7 +13824,7 @@ ps#:#ps_type_select#:#Auswahlliste
 ps#:#ps_type_select_long#:#Auswahlliste (feste Werte)
 ps#:#ps_type_text#:#Textfeld
 ps#:#ps_type_txt_long#:#Textfeld (beliebige Werte)
-ps#:#ps_user_selection#:#Benutzerauswahl
+ps#:#ps_user_selection#:#Personenkreis
 ps#:#ps_warning_modify#:#Achtung: mindestens ein Benutzer hat der Nutzungsvereinbarung bereits zugestimmt. Das Ändern der Einstellungen bewirkt, dass die Nutzungsvereinbarung zurückgesetzt wird.
 ps#:#rbac_log#:#Rechteeinstellungs-Log
 ps#:#rbac_log_age#:#Log-Einträge vorhalten
@@ -17164,7 +17160,7 @@ trac#:#trac_not_participated#:#Nicht teilgenommen
 trac#:#trac_not_registered#:#Nicht angemeldet
 trac#:#trac_object_link#:#Link zum Objekt
 trac#:#trac_object_name#:#Name des Objekts
-trac#:#trac_object_owner#:#Besitzer des Objekts
+trac#:#trac_object_owner#:#Objekt im Besitz von
 trac#:#trac_object_stat_access#:#Nutzungsintensität
 trac#:#trac_object_stat_admin#:#Datenverwaltung
 trac#:#trac_object_stat_daily#:#Tagesverlauf
