@@ -15409,8 +15409,10 @@ search#:#search_no_match#:#Ihre Suche ergab keine Treffer.
 search#:#search_no_match_hint#:#Es wurden keine Treffer für Ihre Suchanfrage nach <b>%s</b> gefunden.<br />Vorschläge:<br /><br />• Vergewissern Sie sich, dass alle Wörter richtig geschrieben sind.<br />• Probieren Sie andere Suchbegriffe.<br />• Probieren Sie allgemeinere Suchbegriffe.<br />• Probieren Sie weniger Suchbegriffe.
 search#:#search_no_selection#:#Sie haben keine Auswahl getroffen.
 search#:#search_off#:#Aus
+search#:#search_readme_file#:#Readme-Datei
 search#:#search_role_title#:#Rollenname
 search#:#search_select_search_area#:#Suchbereich ändern
+search#:#search_server_further_information#:#Weitere Informationen zur Konfiguration des Lucene-Servers finden Sie in der Readme-Datei.
 search#:#search_show_inactive_user#:#Inaktive Benutzer anzeigen
 search#:#search_show_inactive_user_info#:#In der Benutzersuche werden auch Benutzer angezeigt, deren Konto nicht aktiv ist.
 search#:#search_show_limited_user#:#Zeitlich begrenzte Benutzer anzeigen

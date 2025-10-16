@@ -15412,8 +15412,10 @@ search#:#search_no_match#:#Your search did not match any results.
 search#:#search_no_match_hint#:#Your search for <b>%s</b> did not match any documents.<br /><br />Suggestions:<br />• Make sure all words are spelled correctly.<br />• Try different keywords.<br />• Try more general keywords.<br />• Try fewer keywords.
 search#:#search_no_selection#:#You made no selection.
 search#:#search_off#:#Off
+search#:#search_readme_file#:#Readme File
 search#:#search_role_title#:#Role Name
 search#:#search_select_search_area#:#Select Search Area
+search#:#search_server_further_information#:#You can find further information about the Lucene server configuration in the readme file.
 search#:#search_show_inactive_user#:#Show Inactive Users
 search#:#search_show_inactive_user_info#:#If enabled, the user search will show inactive users, too.
 search#:#search_show_limited_user#:#Show Users with Limited Access
