@@ -276,9 +276,9 @@ of ILIAS. The file contains the following fields:
 
 [//]: # (END Blog)
 
-[//]: # (BEGIN BookingTool)
+[//]: # (BEGIN BookingPool)
 
-* **Booking Tool**
+* **Booking Pool**
     * Authority to Sign off on Conceptual Changes: [simon.lowe](https://docu.ilias.de/go/usr/79091), [oliver.samoila](https://docu.ilias.de/go/usr/26160)
     * Authority to Sign off on Code Changes: [tjoussen](https://docu.ilias.de/go/usr/103745)
     * Authority to Curate Test Cases: [simon.lowe](https://docu.ilias.de/go/usr/79091), [tjoussen](https://docu.ilias.de/go/usr/103745)
@@ -288,7 +288,7 @@ of ILIAS. The file contains the following fields:
     * Assignee for Security Issues: [tjoussen](https://docu.ilias.de/go/usr/103745)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
 
-[//]: # (END BookingTool)
+[//]: # (END BookingPool)
 
 [//]: # (BEGIN Calendar)
 
