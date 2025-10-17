@@ -98,7 +98,7 @@ final class HttpPathBuilder
         );
 
         if (!\in_array($uri->getHost(), $allowed_hosts, true)) {
-            // throw new \RuntimeException('Request rejected, the given HTTP host is not in the "allowed_hosts" list');
+            throw new \RuntimeException('Request rejected, the given HTTP host is not in the "allowed_hosts" list');
         }
 
         return $uri;

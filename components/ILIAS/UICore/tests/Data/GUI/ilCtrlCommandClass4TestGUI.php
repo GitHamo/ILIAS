@@ -18,13 +18,22 @@
 
 declare(strict_types=1);
 
-$data_dir = dirname(__DIR__, 3);
+namespace Data\GUI;
 
-// the returned data is invalid due to the paths violating
-// the ILIAS naming scheme 'class.<ClassName>GUI.php'.
+use ilCtrlBaseClassInterface;
 
-return array(
-    'ilCtrlBaseClass1TestGUI' => $data_dir . '/GUI/something.ilCtrlBaseClass1TestGUI.php',
-    'ilCtrlCommandClass1TestGUI' => $data_dir . '/GUI/class.ilCtrlCommandClass1Test.php',
-    'ilCtrlCommandClass2TestGUI' => $data_dir . '/GUI/.ilCtrlCommandClass2TestGUI.php',
-);
+/**
+ * Class ilCtrlCommandClass4TestGUI
+ *
+ * @author            Thibeau Fuhrer <thf@studer-raimann.ch>
+ *
+ * @ilCtrl_isCalledBy ilCtrlBaseClassInterface : ilCtrlCommandClass1TestGUI
+ * @ilCtrl_Calls      ilCtrlBaseClassInterface : ilCtrlCommandClass1TestGUI
+ */
+class ilCtrlCommandClass4TestGUI implements ilCtrlBaseClassInterface
+{
+    public function executeCommand(): string
+    {
+        return self::class;
+    }
+}
