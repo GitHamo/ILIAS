@@ -10452,6 +10452,7 @@ gsfo#:#reset_footer#:#Fußzeile zurücksetzen
 gsfo#:#reset_success#:#Fußzeile erfolgreich zurückgesetzt
 gsfo#:#services#:#Services
 gsfo#:#support#:#Support
+gsfo#:#translate#:#Übersetzen
 gsfo#:#translations#:#Übersetzungen
 help#:#help_all#:#Alle
 help#:#help_component#:#Komponente
@@ -12643,6 +12644,8 @@ mme#:#additional_langs#:#Zusätzliche Sprachen
 mme#:#button_save#:#Speichern
 mme#:#component_not_active#:#Komponente ist nicht aktiviert.
 mme#:#confirm_move#:#Möchten Sie diesen Eintrag zu einem Haupteintrag machen?
+mme#:#deactived_by_configuration#:#Über Konfiguration deaktiviert
+mme#:#edit_sub_tems#:#Einträge bearbeiten
 mme#:#err_uri_not_valid#:#Bitte geben Sie eine gültige URL an.
 mme#:#field_external#:#Externer Link
 mme#:#field_external_info#:#Link wird in einem neuen Fenster geöffnet.
@@ -12652,6 +12655,7 @@ mme#:#field_url#:#URL
 mme#:#field_url_info#:#Link zu der gewünschten Website, beginnend mit http(s)://
 mme#:#flush#:#Verlorene Einträge löschen
 mme#:#item_must_be_always_active#:#Eintrag muss aktiv sein.
+mme#:#item_updated#:#Eintrag gespeichert
 mme#:#main#:#Hauptmenü
 mme#:#mm_translation_lang#:#Sprache
 mme#:#mm_translation_trans#:#Übersetzung
@@ -12659,12 +12663,14 @@ mme#:#move_to_item#:#Zu Einträge verschieben
 mme#:#move_to_top_item#:#In Haupteinträge verschieben
 mme#:#msg_languages_added#:#Sprachen hinzugefügt
 mme#:#msg_moved#:#Eintrag wurde erfolgreich verschoben.
-mme#:#msg_not_moved#:#Eintrag konnte nicht verschoben werden, wähle einen gültigen Haupteintrag aus.
+mme#:#msg_not_changed#:#Die folgenden Einträge konnten nicht geändert werden: %s
+mme#:#msg_not_moved#:#Eintrag konnte nicht verschoben werden. Entweder ist das ausgewählte übergeordnete Element ungültig oder der Eintrag ist ein Container, der nicht verschoben werden kann.
 mme#:#msg_ref_id_not_callable#:#Diese Referenz-ID kann vom Hauptmenü nicht verwendet werden. Ausgewählt werden können nur Ziele im Magazin.
 mme#:#msg_restore_confirm#:#Alle angelegten Einträge und Übersetzungen werden gelöscht, die Standardeinträge werden auf ihren Ursprungszustand zurückgesetzt. Alle Anpassungen am Hauptmenü gehen verloren.
 mme#:#msg_restored#:#Hauptmenü zurückgesetzt
 mme#:#msg_subitem_deleted#:#Eintrag gelöscht.
 mme#:#msg_subitem_flushed#:#Verlorene Einträge wurden gelöscht.
+mme#:#msg_success#:#Erfolgreich gespeichert
 mme#:#msg_topitem_deleted#:#Eintrag gelöscht.
 mme#:#msg_translations_deleted#:#Übersetzungen gelöscht.
 mme#:#msg_translations_saved#:#Übersetzungen gespeichert
@@ -12681,12 +12687,13 @@ mme#:#sub_position#:#Position
 mme#:#sub_provider#:#Provider
 mme#:#sub_role_based_visibility#:#Sichtbarkeit für Rollen
 mme#:#sub_role_based_visibility_byline#:#Globale Rollen wählen, welche dieses Item sehen können. Wenn nicht aktiviert, wird das Item immer angezeigt.
-mme#:#sub_status#:#Status
+mme#:#sub_status#:#Bemerkung
 mme#:#sub_title#:#Titel
 mme#:#sub_title_default#:#Titel (Standard-Sprache)
 mme#:#sub_title_default_byline#:#Weitere Sprachen können über den Aktionslink "Übersetzen" hinzugefügt werden.
 mme#:#sub_type#:#Typ
 mme#:#sub_type_byline#:#Typ für den Eintrag auswählen. Je nach Typ sind zusätzliche Angaben nötig.
+mme#:#subitem#:#Eintrag
 mme#:#subitem_add#:#Eintrag hinzufügen
 mme#:#subitem_confirm_delete#:#Möchten Sie den folgenden Eintrag wirklich löschen?
 mme#:#subitem_delete#:#Löschen
@@ -12701,7 +12708,6 @@ mme#:#topitem_active#:#Aktiv
 mme#:#topitem_active_byline#:#Diesen Haupteintrag aktivieren
 mme#:#topitem_add#:#Haupteintrag hinzufügen
 mme#:#topitem_confirm_delete#:#Möchten Sie den folgenden Eintrag wirklich löschen?
-mme#:#topitem_css_id#:#CSS-ID
 mme#:#topitem_delete#:#Löschen
 mme#:#topitem_edit#:#Bearbeiten
 mme#:#topitem_icon#:#Icon
