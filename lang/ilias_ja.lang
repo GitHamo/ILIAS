@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#拡張ユーザ検索
 search#:#search_user_search_form#:#パーソナルフロファイルを検索
 search#:#search_user_search_info_form#:#有効にするとユーザデータが索引付けされて検索可能になります。
 search#:#search_users#:#ユーザを検索
+search#:#seas_search_type#:#検索タイプ
 search#:#select_orgu#:#Organisational Unitを選択
 search#:#until#:#最大
 sess#:#il_sess_participant#:#セッション参加者

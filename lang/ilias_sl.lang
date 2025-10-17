@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Napredno iskanje uporabnikov
 search#:#search_user_search_form#:#Iskanje v osebnih profilih
 search#:#search_user_search_info_form#:#Uporabniški podatki v osebnih profilih so indeksirani in jih je mogoče uporabiti za globalno iskanje uporabnikov.
 search#:#search_users#:#Išči uporabnika
+search#:#seas_search_type#:#Vrsta iskanja
 search#:#select_orgu#:#Select Organisational Units
 search#:#until#:#do
 sess#:#il_sess_participant#:#Udeleženec seje

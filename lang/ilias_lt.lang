@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Extended User Search###09 06 2007 new variable
 search#:#search_user_search_form#:#User Search###24 10 2013 new variable
 search#:#search_user_search_info_form#:#If enabled, users data will be indexed and is searchable.###24 10 2013 new variable
 search#:#search_users#:#Search User###19 06 2007 new variable
+search#:#seas_search_type#:#Paieškos tipas
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#iki
 sess#:#il_sess_participant#:#Session Participants###10 11 2018 new variable

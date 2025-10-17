@@ -179,7 +179,7 @@ class ilObjSearchSettingsFormGUI
 
         // Search type
         $type = $field_factory->radio(
-            $this->lng->txt('search_type')
+            $this->lng->txt('seas_search_type')
         )->withOption(
             (string) ilSearchSettings::LIKE_SEARCH,
             $this->lng->txt('search_direct'),

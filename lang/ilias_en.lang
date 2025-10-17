@@ -15368,7 +15368,7 @@ search#:#search_add_members_from_container_grp#:#Add Users From Current Group
 search#:#search_any#:#-- Any --
 search#:#search_area#:#Search Area
 search#:#search_area_info#:#Please select an area where the search should start.
-search#:#search_auto_complete_length#:#Number of Auto Complete List Entries
+search#:#search_auto_complete_length#:#Number of Auto-Complete List Entries
 search#:#search_cdate_filter#:#Filter by Creation Date
 search#:#search_cdate_filter_info#:#If enabled, the object search can be filtered by an optional creation date filter.
 search#:#search_choose_object_type#:#Please choose one object type.
@@ -15436,6 +15436,7 @@ search#:#search_user#:#Users
 search#:#search_user_extended#:#Extended User Search
 search#:#search_user_search_form#:#Global User Search
 search#:#search_user_search_info_form#:#Users can be found in the global search. Furthermore, data in personal profiles of users is indexed if the Lucene fulltext search is enabled.
+search#:#seas_search_type#:#Type
 search#:#select_orgu#:#Select Organisational Units
 search#:#until#:#up to
 search#:#user_search_settings_section#:#User Search in 'Member'-tabs

@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Avancerad användarsökning
 search#:#search_user_search_form#:#Global sökning av användare
 search#:#search_user_search_info_form#:#Login-konton kan hittas i den globala sökningen. Om Lucene-fulltextsökningen är aktiverad ingår även profildata i indexet.
 search#:#search_users#:#Sök användare
+search#:#seas_search_type#:#Typ av sökning
 search#:#select_orgu#:#Välj organisatoriska enheter
 search#:#until#:#till
 sess#:#il_sess_participant#:#Deltagare i sessionen

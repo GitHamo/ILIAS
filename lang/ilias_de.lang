@@ -3798,7 +3798,7 @@ common#:#cron_forum_notification_crob_desc#:#Wenn aktiviert, sendet ILIAS tägli
 common#:#cron_forum_notification_disabled#:#Kann nicht deaktiviert werden, wenn der Cron-Job aktiv ist.
 common#:#cron_jobs#:#Cron-Jobs
 common#:#cron_lucene_index#:#Lucene-Suchindex aktualisieren
-common#:#cron_lucene_index_info#:#Wenn eingeschaltet, wird der Lucene-Suchindex aktualisiert. Bitte konfigurieren Sie vorher den Lucene-Server in der Administration unter „Suchen und finden » Suche“, Reiter „Lucene“.
+common#:#cron_lucene_index_info#:#Startet die Aktualisierung des Lucene-Suchindexes, der neue Inhalte erfasst. Achtung: Dies erzeugt Serverlast und kann abhängig von der Installationsgröße mehrere Stunden dauern. Bitte konfigurieren Sie den Lucene-Server unter Administration > Suchen und finden > Suche > Lucene. Prüfen Sie am Fuß der Seite unter „Letzte Indexerstellung“, ob der Index einen aktuellen Zeitstempel hat.
 common#:#cron_mail_notification#:#E-Mail-Benachrichtigungen für neue Nachrichten versenden
 common#:#cron_mail_notification_cron#:#Regelmäßig per Cron-Job
 common#:#cron_mail_notification_desc#:#ILIAS verschickt auf Wunsch E-Mail-Benachrichtigungen über neue Mails. Im Gegensatz zur sofortigen Weiterleitung aller Mails sammelt dieser Cronjob die Mails eines Tages und stellt diese als Paket zu. Bitte aktivieren Sie die Option „%s“, um diese Funktion zu nutzen. Zusätzlich müssen die E-Mail-Benachrichtigungen für jedes ILIAS-Konto in den persönlichen Mail-Einstellungen aktiviert werden.
@@ -4415,7 +4415,7 @@ common#:#itgr_add#:#Objekteblock anlegen
 common#:#itgr_new#:#Neuen Objekteblock anlegen
 common#:#java_server#:#Java-Server
 common#:#java_server_host#:#Host
-common#:#java_server_info#:#Diese indexbasierte Suchart durchsucht sowohl die ILIAS-Datenbank als auch Dateien. Sie wird für größere ILIAS-Installationen empfohlen. Um die Lucene-Suche in ILIAS verwenden zu können, muss der JAVA-basierte ilServer installiert und konfiguriert sein (siehe Reiter „Lucene“).
+common#:#java_server_info#:#Es wird ein Suchindex der ILIAS-Datenbank samt enthaltener Dateien und Objekte erstellt. Um die Lucene-Suche verwenden zu können, muss der JAVA-basierte ilServer installiert und konfiguriert sein: siehe Reiter „Lucene“.
 common#:#java_server_port#:#Port
 common#:#java_server_readme#:#Zur Installationsanleitung
 common#:#join#:#Beitreten
@@ -5514,7 +5514,7 @@ common#:#search_results#:#Suchergebnisse
 common#:#search_user#:#Benutzer suchen
 common#:#seas_max_hits#:#Maximalanzahl von Treffern
 common#:#seas_max_hits_info#:#Stellen Sie hier die Maximalanzahl von Suchergebnissen ein, die nach einer Suchanfrage ausgegeben werden. Je geringer die Zahl ist, desto schneller erfolgt der Seitenaufbau.
-common#:#seas_settings#:#Sucheinstellungen
+common#:#seas_settings#:#Systemweite Suche
 common#:#second#:#Sekunde
 common#:#second_email#:#Zweite E-Mail
 common#:#seconds#:#Sekunden
@@ -15319,7 +15319,7 @@ search#:#lucene_and#:#UND
 search#:#lucene_cpu#:#Anzahl Threads
 search#:#lucene_create_ini#:#Konfigurationsdatei erstellen
 search#:#lucene_default_operator#:#Verknüpfung von Suchbegriffen
-search#:#lucene_default_operator_info#:#Bitte geben Sie das Standardverhalten für die Verknüpfung von Suchbegriffen an.
+search#:#lucene_default_operator_info#:#Verhalten bei Eingabe mehrerer Suchbegriffe: Sollen in den Suchergebnissen immer alle Begriffe vorkommen (UND) oder genügt das Vorkommen eines der Suchbegriffe (ODER)?
 search#:#lucene_download_ini#:#Konfigurationsdatei herunterladen
 search#:#lucene_err_ampersand#:#Anfragen mit dem Spezialzeichen && müssen folgende Form haben: term1 && term2.
 search#:#lucene_err_and_or_not#:#Anfragen mit AND/OR/NOT müssen folgende Form haben: term1 AND|OR|NOT|AND NOT term2.
@@ -15366,8 +15366,8 @@ search#:#search_any#:#-- Beliebig --
 search#:#search_area#:#Suchbereich
 search#:#search_area_info#:#Bitte wählen Sie einen Bereich aus, innerhalb dem die Suche starten soll.
 search#:#search_auto_complete_length#:#Anzahl der Einträge in Auto-Complete-Liste
-search#:#search_cdate_filter#:#Suche nach Erstellungsdatum
-search#:#search_cdate_filter_info#:#Bei der Suche kann das Erstellungsdatum von Objekten berücksichtigt werden.
+search#:#search_cdate_filter#:#Erstellungsdatum
+search#:#search_cdate_filter_info#:#In den Suchergebnissen erlaubt ein Filter die Eingabe eines Zeitraums.
 search#:#search_choose_object_type#:#Bitte wählen Sie mindestens einen Objekttyp aus.
 search#:#search_content#:#Seiteninhalt
 search#:#search_created_after#:#Objekte erstellt nach dem...
@@ -15375,7 +15375,7 @@ search#:#search_created_before#:#Objekte erstellt vor dem...
 search#:#search_created_on#:#Objekte erstellt am...
 search#:#search_crs_title#:#Kursname
 search#:#search_details_info#:#Detailsuche in den unten ausgewählten Objekttypen
-search#:#search_direct#:#Direktsuche
+search#:#search_direct#:#Nur Titel und Beschreibung durchsuchen
 search#:#search_err_user_not_exist#:#Es konnte kein entsprechender Benutzer gefunden werden.
 search#:#search_fast_info#:#Suche nach Titeln, Beschreibungen und Schlagwörtern
 search#:#search_field#:#Sucheingabefeld
@@ -15390,8 +15390,8 @@ search#:#search_for_role_members#:#Nach Rollen suchen
 search#:#search_for_users#:#Nach Benutzern suchen
 search#:#search_grp_title#:#Gruppenname
 search#:#search_item_filter_form#:#Suche nach Typ
-search#:#search_item_filter_form_info#:#Suche wird auf die ausgewählten Objekttypen beschränkt.
-search#:#search_like_info#:#Erlaubt die Suche in der ILIAS-Datenbank ohne Zusatzsoftware. Der Inhalt von Dateien (z. B. PDFs oder HTML-Lernmodule) wird nicht erfasst und deshalb auch nicht als Suchergebnis angezeigt.
+search#:#search_item_filter_form_info#:#Im Suchfilter werden nur die ausgewählten Arten von Inhalten angeboten.
+search#:#search_like_info#:#Es wird nur in der ILIAS-Datenbank gesucht. Zusatzsoftware ist nicht notwendig. Der Inhalt von Dateien oder Metadaten wird nicht erfasst. Nur Treffer in Titel und Beschreibung werden als Suchergebnis angezeigt.
 search#:#search_limit_reached#:#Ihre Suche ergab mehr als %s Treffer. Sie können die Abfrage weiter einschränken, um detailliertere Treffer zu erhalten.
 search#:#search_lucene#:#Lucene-Suche
 search#:#search_mime_excel#:#Excel-Dateien
@@ -15413,10 +15413,10 @@ search#:#search_readme_file#:#Readme-Datei
 search#:#search_role_title#:#Rollenname
 search#:#search_select_search_area#:#Suchbereich ändern
 search#:#search_server_further_information#:#Weitere Informationen zur Konfiguration des Lucene-Servers finden Sie in der Readme-Datei.
-search#:#search_show_inactive_user#:#Inaktive Benutzer anzeigen
-search#:#search_show_inactive_user_info#:#In der Benutzersuche werden auch Benutzer angezeigt, deren Konto nicht aktiv ist.
-search#:#search_show_limited_user#:#Zeitlich begrenzte Benutzer anzeigen
-search#:#search_show_limited_user_info#:#In der Benutzersuche werden auch Benutzer mit zeitlichem begrenztem Zugang angezeigt, die entweder noch nicht oder nicht mehr auf ILIAS zugreifen können.
+search#:#search_show_inactive_user#:#Inaktive Konten anzeigen
+search#:#search_show_inactive_user_info#:#In der Personensuche werden auch inaktive Konten angezeigt.
+search#:#search_show_limited_user#:#Zeitlich begrenzte Konten anzeigen
+search#:#search_show_limited_user_info#:#In der Personensuche werden auch Konten mit zeitlichem begrenztem Zugang angezeigt, die entweder noch nicht oder nicht mehr auf ILIAS zugreifen können.
 search#:#search_sort_by#:#Sortierung:
 search#:#search_sort_creation_date_asc#:#Ältestes
 search#:#search_sort_creation_date_desc#:#Neuestes
@@ -15434,6 +15434,7 @@ search#:#search_user_extended#:#Erweiterte Benutzersuche
 search#:#search_user_search_form#:#Globale Benutzersuche
 search#:#search_user_search_info_form#:#Anmeldekonten können in der globalen Suche gefunden werden. Sofern die Lucene-Volltextsuche aktiviert ist, werden auch Profildaten in den Index aufgenommen.
 search#:#search_users#:#Benutzer suchen
+search#:#seas_search_type#:#Art der Suche
 search#:#select_orgu#:#Organisationseinheiten auswählen
 search#:#until#:#bis
 search#:#user_search_settings_section#:#Suche im Reiter 'Mitglieder'

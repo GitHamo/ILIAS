@@ -4630,7 +4630,6 @@ common#:#mails_at_the_ilias_installation#:#%1$s új levelet kapott a(z) %2$s ILI
 common#:#mails_pl#:#levél/levelek
 common#:#main_menu#:#Főmenü
 common#:#mainbar_aria_label#:#Főmenü
-common#:#mainbar_more_label#:#More
 common#:#mainbar_more_label#:#Több
 common#:#manage_members#:#Tagok kezelése
 common#:#marked_entries#:#Megjelölt bejegyzések
@@ -15447,6 +15446,7 @@ search#:#search_user_extended#:#Részletes felhasználókeresés
 search#:#search_user_search_form#:#Felhasználói profilokban keresés
 search#:#search_user_search_info_form#:#A felhasználói profilok adatai indexeltek és a felhasználók számára kereshetőek.
 search#:#search_users#:#Felhasználók keresése
+search#:#seas_search_type#:#Keresési típus
 search#:#select_orgu#:#Válasszon szervezeti egységeket
 search#:#until#:#eddig
 sess#:#il_sess_participant#:#Esemény résztvevői

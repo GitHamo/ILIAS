@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Ricerca estesa
 search#:#search_user_search_form#:#User Search
 search#:#search_user_search_info_form#:#If enabled, users data will be indexed and is searchable.
 search#:#search_users#:#Ricerca utenti
+search#:#seas_search_type#:#Tipo di ricerca
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#a:
 sess#:#il_sess_participant#:#Session Participants

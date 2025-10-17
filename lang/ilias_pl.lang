@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Zaawansowane wyszukanie użytkownika
 search#:#search_user_search_form#:#Szukaj w osobistych profilach
 search#:#search_user_search_info_form#:#Dane użytkownika są indeksowane w osobistych profilach i mogą być wykorzystywane do szukanie użytkowników za pomocą funkcji wyszukiwania globalnego.
 search#:#search_users#:#Szukaj użytkownika
+search#:#seas_search_type#:#Typ wyszukiwania
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#aż do
 sess#:#il_sess_participant#:#Session Participants

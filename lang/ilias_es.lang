@@ -15448,6 +15448,7 @@ search#:#search_user_extended#:#Búsqueda extendida de usuarios
 search#:#search_user_search_form#:#Buscar Usuario
 search#:#search_user_search_info_form#:#Si se activa, los datos de los usuarios se indexarán y se pueden buscar.
 search#:#search_users#:#Buscar Usuarios
+search#:#seas_search_type#:#Tipo de búsqueda
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#hasta
 sess#:#il_sess_participant#:#Session Participants

@@ -15446,6 +15446,7 @@ search#:#search_user_extended#:#Prošireno pretraživanje korisnika
 search#:#search_user_search_form#:#Pretražite u osobnim profilima
 search#:#search_user_search_info_form#:#Podaci u osobnim profilima korisnika indeksiraju se i mogu se koristiti za pretraživanje korisnika.
 search#:#search_users#:#Pretraži korisnike
+search#:#seas_search_type#:#Tip
 search#:#select_orgu#:#Select Organisational Units###04 06 2021 new variable
 search#:#until#:#do
 sess#:#il_sess_participant#:#Sudionici sesije
