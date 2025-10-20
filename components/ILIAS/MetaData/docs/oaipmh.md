@@ -23,15 +23,21 @@ to the Objects and their exports.
 Currently, the OER Harvester and OAI-PMH interface only work with the
 following objects:
 
+- Blog
+- Content Page
+- Data Collection
+- Exercise
 - File
 - Glossary
-- Content Page
 - Learning Module ILIAS
-- Learning Module SCORM
 - Learning Module HTML
+- Learning Module SCORM
+- Mediacast
+- Mediapool
 - Question Pool Survey
 - Question Pool Test
-- Mediapool
+- Weblink
+- wiki
 
 In the OER Harvester cron job configuration, these types can be disabled
 individually.
