@@ -616,7 +616,12 @@ class PersonalProfileGUI
         bool $anonymized = false,
         string $key_suffix = ''
     ): void {
-        foreach ($this->profile->getVisibleFields(Context::User) as $field) {
+        foreach ($this->profile->getVisibleFields(
+            Context::User,
+            null,
+            [],
+            [FirstName::class, LastName::class]
+        ) as $field) {
             $value = $field->retrieveValueFromUser($this->user);
             if (!$anonymized && ($value === '' || $value === '-')) {
                 continue;
