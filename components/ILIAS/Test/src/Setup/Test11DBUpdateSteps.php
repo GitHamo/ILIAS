@@ -31,10 +31,10 @@ class Test11DBUpdateSteps implements \ilDatabaseUpdateSteps
 
     public function step_1(): void
     {
-        if (!$this->db->tableColumnExists('tst_tests', 'mailnotification')) {
+        if ($this->db->tableColumnExists('tst_tests', 'mailnotification')) {
             $this->db->dropTableColumn('tst_tests', 'mailnotification');
         }
-        if (!$this->db->tableColumnExists('tst_tests', 'mailnottype')) {
+        if ($this->db->tableColumnExists('tst_tests', 'mailnottype')) {
             $this->db->dropTableColumn('tst_tests', 'mailnottype');
         }
     }
