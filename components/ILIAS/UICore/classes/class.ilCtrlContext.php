@@ -324,21 +324,13 @@ class ilCtrlContext implements ilCtrlContextInterface
      */
     protected function getQueryParam(string $parameter_name): ?string
     {
-        if (!$this->request_wrapper->has($parameter_name)) {
-            return null;
+        if ($this->request_wrapper->has($parameter_name)) {
+            return $this->request_wrapper->retrieve(
+                $parameter_name,
+                $this->refinery->to()->string()
+            );
         }
 
-        return $this->request_wrapper->retrieve(
-            $parameter_name,
-            $this->refinery->custom()->transformation(
-                function ($v): ?string {
-                    if (!is_string($v)) {
-                        return $v;
-                    }
-
-                    return rawurldecode($v);
-                }
-            )
-        );
+        return null;
     }
 }
