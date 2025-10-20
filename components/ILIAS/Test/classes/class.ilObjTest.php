@@ -3060,7 +3060,7 @@ class ilObjTest extends ilObject
                     break;
                 case 'redirection_mode':
                     $finishing_settings = $finishing_settings->withRedirectionMode(
-                        RedirectionModes::tryFrom($metadata['entry'] ?? 0) ?? RedirectionModes::NONE
+                        RedirectionModes::tryFrom((int) ($metadata['entry'] ?? 0)) ?? RedirectionModes::NONE
                     );
                     break;
                 case 'redirection_url':
