@@ -330,7 +330,7 @@ class RepositoryAndDataTest extends TestCase
         $records = iterator_to_array($repo->getRecordInfos());
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp FROM il_meta_oer_exposed ORDER BY obj_id'],
+            ['SELECT obj_id, identifier, datestamp, deleted FROM il_meta_oer_exposed ORDER BY obj_id'],
             $repo->exposed_queries
         );
         $this->assertCount(4, $records);
@@ -361,7 +361,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed WHERE datestamp >= ~int:1723994~ ORDER BY obj_id'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed WHERE datestamp >= ~int:1723994~ ORDER BY obj_id'],
             $repo->exposed_queries
         );
         $this->assertCount(2, $records);
@@ -391,7 +391,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed WHERE datestamp <= ~int:1763994~ ORDER BY obj_id'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed WHERE datestamp <= ~int:1763994~ ORDER BY obj_id'],
             $repo->exposed_queries
         );
         $this->assertCount(2, $records);
@@ -415,7 +415,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed WHERE datestamp >= ~int:1723994~ AND datestamp <= ~int:1763994~ ORDER BY obj_id'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed WHERE datestamp >= ~int:1723994~ AND datestamp <= ~int:1763994~ ORDER BY obj_id'],
             $repo->exposed_queries
         );
         $this->assertCount(1, $records);
@@ -439,7 +439,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:5~'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:5~'],
             $repo->exposed_queries
         );
         $this->assertCount(1, $records);
@@ -464,7 +464,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:' . PHP_INT_MAX . '~ OFFSET ~int:5~'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:' . PHP_INT_MAX . '~ OFFSET ~int:5~'],
             $repo->exposed_queries
         );
         $this->assertCount(1, $records);
@@ -489,7 +489,7 @@ class RepositoryAndDataTest extends TestCase
         ));
 
         $this->assertSame(
-            ['SELECT obj_id, identifier, datestamp' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:5~ OFFSET ~int:10~'],
+            ['SELECT obj_id, identifier, datestamp, deleted' . ' FROM il_meta_oer_exposed ORDER BY obj_id LIMIT ~int:5~ OFFSET ~int:10~'],
             $repo->exposed_queries
         );
         $this->assertCount(1, $records);
