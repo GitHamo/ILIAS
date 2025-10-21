@@ -18,33 +18,27 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\COPage\Editor;
+namespace ILIAS\COPage\PC\Paragraph;
 
 use ILIAS\COPage\InternalGUIService;
 use ILIAS\COPage\InternalDomainService;
-use ILIAS\COPage\Editor\UI\Init;
-use ILIAS\COPage\Editor\Server\UIWrapper;
 
 class GUIService
 {
-    protected InternalGUIService $gui_service;
-    protected InternalDomainService $domain_service;
-
     public function __construct(
-        InternalDomainService $domain_service,
-        InternalGUIService $gui_service
+        protected InternalDomainService $domain_service,
+        protected InternalGUIService $gui_service
     ) {
-        $this->gui_service = $gui_service;
-        $this->domain_service = $domain_service;
     }
 
-    public function init(): Init
+    public function menu(): MenuGUI
     {
-        return new Init();
-    }
-
-    public function uiWrapper(): UIWrapper
-    {
-        return new UIWrapper($this->gui_service->ui(), $this->domain_service->lng());
+        global $DIC;
+        $style_service = $DIC->contentStyle()->internal();
+        return new MenuGUI(
+            $this->domain_service,
+            $this->gui_service,
+            $style_service
+        );
     }
 }
