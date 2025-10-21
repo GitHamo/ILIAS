@@ -26,6 +26,7 @@ use ilConditionSet;
 use ilConditionTrigger;
 use ilDBConstants;
 use ilDBInterface;
+use ilImportMapping;
 
 class Repository
 {
@@ -117,5 +118,34 @@ class Repository
                 ->withConditionSet($condition_set));
         }
         return $info_collection;
+    }
+
+    public function updateCourseValuesResultRangePercentage(
+        int $course_ref_id,
+        ilImportMapping $mapping
+    ): void {
+        $query = 'SELECT condition_id, value FROM conditions WHERE operator = "result_range_percentage" AND target_ref_id = ' . $this->db->quote($course_ref_id, ilDBConstants::T_INTEGER);
+        $new_values = [];
+        $result = $this->db->query($query);
+        while ($row = $result->fetchAssoc()) {
+            $value = unserialize($row['value']);
+            $condition_id =  (int) $row['condition_id'];
+            if (!isset($value['objective'])) {
+                continue;
+            }
+            $value['objective'] = $mapping->getMapping(
+                'components/ILIAS/Course',
+                'objectives',
+                $value['objective']
+            );
+            $new_values[$condition_id] = serialize($value);
+        }
+        if (count($new_values) === 0) {
+            return;
+        }
+        foreach ($new_values as $condition_id => $new_value) {
+            $query = 'UPDATE conditions SET value = ' . $this->db->quote($new_value, ilDBConstants::T_TEXT) . ' WHERE condition_id = ' . $this->db->quote($condition_id, ilDBConstants::T_INTEGER);
+            $this->db->manipulate($query);
+        }
     }
 }
