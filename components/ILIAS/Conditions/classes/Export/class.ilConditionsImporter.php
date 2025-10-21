@@ -112,18 +112,6 @@ class ilConditionsImporter extends ilXmlImporter
             if (is_null($new_trigger_ref_id)) {
                 continue;
             }
-            $new_value = $condition->getValue();
-            if ($condition->getOperator() === 'result_range_percentage') {
-                $value = unserialize($condition->getValue());
-                if (isset( $value['objective'])) {
-                    $value['objective'] = $mapping->getMapping(
-                        'components/ILIAS/Course',
-                        'objectives',
-                        $value['objective']
-                    );
-                    $new_value = serialize($value);
-                }
-            }
             $new_trigger_obj_id = ilObject::_lookupObjId($new_trigger_ref_id);
             $trigger = new ilConditionTrigger(
                 $new_trigger_ref_id,
@@ -133,7 +121,7 @@ class ilConditionsImporter extends ilXmlImporter
             $updated_conditions[] = (new ilCondition(
                 $trigger,
                 $condition->getOperator(),
-                $new_value
+                $condition->getValue()
             ))
                 ->withObligatory($condition->getObligatory())
                 ->withId(-1);
