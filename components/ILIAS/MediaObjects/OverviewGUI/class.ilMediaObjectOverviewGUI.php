@@ -59,7 +59,7 @@ class ilMediaObjectOverviewGUI
     {
         $filter = $this->getFilter('show');
         $table_builder = $this->getTableBuilder('show');
-        $table = $table_builder->getTable()->filterData($filter->getData());
+        $table = $table_builder->getTable()->filterData($filter->getData() ?? []);
 
         $this->gui->ui()->mainTemplate()->setContent($filter->render() . $table->render());
     }
