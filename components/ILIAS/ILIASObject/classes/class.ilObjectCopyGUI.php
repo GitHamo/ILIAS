@@ -31,6 +31,7 @@ use ILIAS\Data\Factory as DataFactory;
 use ILIAS\UI\Component\Input\Container\Form\Standard;
 use ILIAS\Object\ImplementsCreationCallback;
 use ILIAS\HTTP\GlobalHttpState;
+use ILIAS\Filesystem\Stream\Streams;
 
 /**
  * GUI class for the workflow of copying objects
@@ -114,8 +115,8 @@ class ilObjectCopyGUI
         $this->request = $DIC->http()->request();
         $this->ui_factory = $DIC['ui.factory'];
         $this->ui_renderer = $DIC['ui.renderer'];
-        $this->retriever = new ilObjectRequestRetriever($DIC->http()->wrapper(), $this->refinery);
-        $this->http = $DIC->http();
+        $this->http = $DIC['http'];
+        $this->retriever = new ilObjectRequestRetriever($this->http->wrapper(), $this->refinery);
 
         $this->container_repo = new ContainerDBRepository($DIC['ilDB']);
 
@@ -1035,22 +1036,26 @@ class ilObjectCopyGUI
         $required_steps = $options->getRequiredSteps();
 
         if ($required_steps === 0) {
-            $state = $this->ui_factory->progress()->state()->bar()->success($this->lng->txt('obj_copy_progress_success'));
+            $state = $this->ui_factory->progress()->state()->bar()
+                ->success($this->lng->txt('obj_copy_progress_success'));
             $this->log->debug('Update copy progress: 100%');
         } else {
             $completed_steps = $max_steps - $required_steps;
-            $percentage = floor(($completed_steps / $max_steps) * 100);
-            $percentage = (int) min($percentage, 99); // cap value to 99
-            $state = $this->ui_factory->progress()->state()->bar()->determinate($percentage);
-            $this->log->debug("Update copy progress: $percentage%");
+            $percentage = (int) min(
+                floor(($completed_steps / $max_steps) * 100),
+                99
+            );
+            $state = $this->ui_factory->progress()->state()->bar()
+                ->determinate($percentage);
+            $this->log->debug("Update copy progress: {$percentage}%");
         }
 
         $html = $this->ui_renderer->renderAsync($state);
 
         $this->http->saveResponse(
             $this->http->response()
-                       ->withHeader('Content-Type', 'text/html; charset=utf-8')
-                       ->withBody(\ILIAS\Filesystem\Stream\Streams::ofString($html))
+                ->withHeader('Content-Type', 'text/html; charset=utf-8')
+                ->withBody(Streams::ofString($html))
         );
         $this->http->sendResponse();
         $this->http->close();

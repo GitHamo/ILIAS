@@ -32,9 +32,9 @@ class ilObjectCopyProgressTableGUI extends ilTable2GUI
     protected array $objects = [];
 
     public function __construct(
-        protected DataFactory $data_factory,
-        protected UIRenderer $ui_renderer,
-        protected UIFactory $ui_factory,
+        private DataFactory $data_factory,
+        private UIRenderer $ui_renderer,
+        private UIFactory $ui_factory,
         ilObjectCopyGUI $parent_obj,
         string $parent_cmd,
         int $id,
