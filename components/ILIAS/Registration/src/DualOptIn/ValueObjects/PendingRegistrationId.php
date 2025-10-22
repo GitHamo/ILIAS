@@ -29,7 +29,7 @@ final readonly class PendingRegistrationId
     public function __construct(string $uuid)
     {
         if (mb_strlen($uuid) !== 36) {
-            throw new \InvalidArgumentException('Registration uuid must be 32 characters (UUIDv4).');
+            throw new \InvalidArgumentException('Registration UUID must be 32 characters (UUIDv4).');
         }
 
         $this->uuid = $uuid;
@@ -38,6 +38,11 @@ final readonly class PendingRegistrationId
     public static function create(): self
     {
         return new self((new UUIDFactory())->uuid4AsString());
+    }
+
+    public function equals(self $other): bool
+    {
+        return hash_equals($this->uuid, $other->uuid);
     }
 
     public function toString(): string

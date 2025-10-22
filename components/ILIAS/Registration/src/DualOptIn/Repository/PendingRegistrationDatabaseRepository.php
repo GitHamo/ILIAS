@@ -28,7 +28,7 @@ use ILIAS\Registration\DualOptIn\Entity\PendingRegistration;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationHash;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationId;
 
-readonly class PendingRegistrationDatabaseRepository implements PendingRegistrationRepository
+final readonly class PendingRegistrationDatabaseRepository implements PendingRegistrationRepository
 {
     public function __construct(protected ilDBInterface $db)
     {
@@ -59,8 +59,18 @@ readonly class PendingRegistrationDatabaseRepository implements PendingRegistrat
     {
         $this->db->manipulateF(
             'REPLACE INTO reg_dual_opt_in (id, usr_id, reg_hash, creation_date) VALUES (%s, %s, %s, %s)',
-            [ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER, ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER],
-            [$reg->getId(), $reg->getUserId(), $reg->getHashValue(), $reg->getCreateDate()->getTimestamp()]
+            [
+                ilDBConstants::T_TEXT,
+                ilDBConstants::T_INTEGER,
+                ilDBConstants::T_TEXT,
+                ilDBConstants::T_INTEGER
+            ],
+            [
+                $reg->id()->toString(),
+                $reg->userId()->toInt(),
+                $reg->hash()->toString(),
+                $reg->createdAt()->getTimestamp()
+            ]
         );
     }
 
@@ -80,12 +90,12 @@ readonly class PendingRegistrationDatabaseRepository implements PendingRegistrat
         return $this->rebuildObjFromRow($row);
     }
 
-    public function deleteById(string $id): void
+    public function deleteById(PendingRegistrationId $id): void
     {
         $this->db->manipulateF(
             'DELETE FROM reg_dual_opt_in WHERE id = %s',
             [ilDBConstants::T_TEXT],
-            [$id]
+            [$id->toString()]
         );
     }
 
@@ -128,8 +138,9 @@ readonly class PendingRegistrationDatabaseRepository implements PendingRegistrat
 
         $expired_registrations = [];
         while ($row = $this->db->fetchAssoc($res)) {
-            $this->deleteById($row['id']);
-            $expired_registrations[] = $this->rebuildObjFromRow($row);
+            $expired_registration = $this->rebuildObjFromRow($row);
+            $this->deleteById($expired_registration->id());
+            $expired_registrations[] = $expired_registration;
         }
 
         return $expired_registrations;

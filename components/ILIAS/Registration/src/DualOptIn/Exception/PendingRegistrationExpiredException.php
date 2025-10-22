@@ -20,11 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\Registration\DualOptIn\Exception;
 
-/**
- * Class for user related exception handling in ILIAS.
- * @author Michael Jansen <mjansen@databay.de>
- */
-class PendingRegistrationExpiredException extends DualOptInException
+final class PendingRegistrationExpiredException extends DualOptInException
 {
     public function __construct()
     {

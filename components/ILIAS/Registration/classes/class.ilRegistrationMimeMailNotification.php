@@ -73,7 +73,7 @@ class ilRegistrationMimeMailNotification extends ilMimeMailNotification
                 . '/confirmReg.php?client_id='
                 . CLIENT_ID
                 . '&rh='
-                . $this->pending_reg->getHashValue()
+                . $this->pending_reg->hash()->toString()
             );
             $this->appendBody("\n\n");
             $this->appendBody(sprintf(

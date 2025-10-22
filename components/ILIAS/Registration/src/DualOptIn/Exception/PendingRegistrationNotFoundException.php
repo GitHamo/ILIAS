@@ -20,12 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\Registration\DualOptIn\Exception;
 
-/**
- * Class for user related exception handling in ILIAS.
- * @author  Michael Jansen <mjansen@databay.de>
- * @version $Id$
- */
-class PendingRegistrationNotFoundException extends DualOptInException
+final class PendingRegistrationNotFoundException extends DualOptInException
 {
     public function __construct()
     {

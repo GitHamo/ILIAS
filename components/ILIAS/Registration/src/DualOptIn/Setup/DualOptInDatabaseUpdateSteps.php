@@ -71,32 +71,43 @@ class DualOptInDatabaseUpdateSteps implements ilDatabaseUpdateSteps
 
     public function step_2(): void
     {
-        if (
-            !$this->db->tableExists('usr_data') ||
-            !$this->db->tableColumnExists('usr_data', 'reg_hash')
-        ) {
+        if (!$this->db->tableExists('usr_data') ||
+            !$this->db->tableColumnExists('usr_data', 'reg_hash')) {
             return;
         }
 
         $res = $this->db->query(
-            "SELECT usr_id, reg_hash, create_date FROM usr_data WHERE reg_hash IS NOT NULL AND reg_hash <> ''"
+            <<<SQL
+            SELECT ud.usr_id, ud.reg_hash, ud.create_date
+            FROM usr_data ud
+            INNER JOIN object_data od ON od.obj_id = ud.usr_id
+            WHERE ud.reg_hash IS NOT NULL AND ud.reg_hash <> ''
+SQL
         );
 
         while ($row = $res->fetchRow(ilDBConstants::FETCHMODE_OBJECT)) {
             $this->db->manipulateF(
                 'INSERT INTO reg_dual_opt_in (id, usr_id, reg_hash, creation_date) VALUES (%s, %s, %s)',
-                [ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER, ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER],
-                [(new UUIDFactory())->uuid4(), $row->usr_id, $row->reg_hash, $row->create_date]
+                [
+                    ilDBConstants::T_TEXT,
+                    ilDBConstants::T_INTEGER,
+                    ilDBConstants::T_TEXT,
+                    ilDBConstants::T_INTEGER
+                ],
+                [
+                    (new UUIDFactory())->uuid4(),
+                    $row->usr_id,
+                    $row->reg_hash,
+                    (new \DateTimeImmutable($row->create_date, new \DateTimeZone('UTC')))->getTimestamp()
+                ]
             );
         }
     }
 
     public function step_3(): void
     {
-        if (
-            !$this->db->tableExists('usr_data') ||
-            !$this->db->tableColumnExists('usr_data', 'reg_hash')
-        ) {
+        if (!$this->db->tableExists('usr_data') ||
+            !$this->db->tableColumnExists('usr_data', 'reg_hash')) {
             return;
         }
 
@@ -105,17 +116,13 @@ class DualOptInDatabaseUpdateSteps implements ilDatabaseUpdateSteps
 
     public function step_4(): void
     {
-        if (
-            $this->db->tableExists('reg_dual_opt_in') &&
-            !$this->db->indexExistsByFields('reg_dual_opt_in', ['reg_hash'])
-        ) {
+        if ($this->db->tableExists('reg_dual_opt_in') &&
+            !$this->db->indexExistsByFields('reg_dual_opt_in', ['reg_hash'])) {
             $this->db->addIndex('reg_dual_opt_in', ['reg_hash'], 'i1');
         }
 
-        if (
-            $this->db->tableExists('reg_dual_opt_in') &&
-            !$this->db->indexExistsByFields('reg_dual_opt_in', ['usr_id'])
-        ) {
+        if ($this->db->tableExists('reg_dual_opt_in') &&
+            !$this->db->indexExistsByFields('reg_dual_opt_in', ['usr_id'])) {
             $this->db->addIndex('reg_dual_opt_in', ['usr_id'], 'i2');
         }
     }

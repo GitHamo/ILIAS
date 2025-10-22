@@ -25,41 +25,32 @@ use ILIAS\Data\ObjectId;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationHash;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationId;
 
-final class PendingRegistration
+final readonly class PendingRegistration
 {
-    private PendingRegistrationId $id;
-    private ObjectId $usr_id;
-    private PendingRegistrationHash $hash;
-    private DateTimeImmutable $created_at;
-
     public function __construct(
-        PendingRegistrationId $id,
-        ObjectId $usr_id,
-        PendingRegistrationHash $hash,
-        DateTimeImmutable $created_at,
+        private PendingRegistrationId $id,
+        private ObjectId $usr_id,
+        private PendingRegistrationHash $hash,
+        private DateTimeImmutable $created_at
     ) {
-        $this->id = $id;
-        $this->usr_id = $usr_id;
-        $this->hash = $hash;
-        $this->created_at = $created_at;
     }
 
-    public function getId(): string
+    public function id(): PendingRegistrationId
     {
-        return $this->id->toString();
+        return $this->id;
     }
 
-    public function getUserId(): int
+    public function userId(): ObjectId
     {
-        return $this->usr_id->toInt();
+        return $this->usr_id;
     }
 
-    public function getHashValue(): string
+    public function hash(): PendingRegistrationHash
     {
-        return $this->hash->toString();
+        return $this->hash;
     }
 
-    public function getCreateDate(): DateTimeImmutable
+    public function createdAt(): DateTimeImmutable
     {
         return $this->created_at;
     }

@@ -22,6 +22,7 @@ namespace ILIAS\Registration\DualOptIn\Repository;
 
 use ILIAS\Registration\DualOptIn\Entity\PendingRegistration;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationHash;
+use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationId;
 
 interface PendingRegistrationRepository
 {
@@ -30,6 +31,8 @@ interface PendingRegistrationRepository
     public function store(PendingRegistration $reg): void;
 
     public function findByHashValue(string $hash_value): ?PendingRegistration;
+
+    public function deleteById(PendingRegistrationId $id): void;
 
     public function deleteByUserId(int $usr_id): void;
 

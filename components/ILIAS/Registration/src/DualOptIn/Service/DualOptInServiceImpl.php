@@ -41,31 +41,33 @@ use ilRegistrationMimeMailNotification;
 use ilRegistrationSettings;
 use ilSecuritySettingsChecker;
 use ilSoapClient;
+use ilObjectNotFoundException;
 
-class DualOptInServiceImpl implements DualOptInService
+final readonly class DualOptInServiceImpl implements DualOptInService
 {
-    public const string ID = "reg_hash_service";
+    public const string ID = 'reg_hash_service';
 
     public function __construct(
-        protected readonly PendingRegistrationRepository $pending_reg_repository,
-        protected readonly ilDBInterface $db,
-        protected readonly ilComponentLogger $logger,
+        protected PendingRegistrationRepository $pending_reg_repository,
+        protected ilDBInterface $db,
+        protected ilComponentLogger $logger,
     ) {
     }
 
     /**
      * @throws PendingRegistrationNotFoundException
      * @throws PendingRegistrationExpiredException
+     * @throws ilObjectNotFoundException
      */
     public function verifyHashAndActivateUser(PendingRegistrationHash $hash): ilObjUser
     {
         $pending_reg = $this->verifyHash($hash);
 
         /** @var ilObjUser $user */
-        $user = ilObjectFactory::getInstanceByObjId($pending_reg->getUserId());
+        $user = ilObjectFactory::getInstanceByObjId($pending_reg->userId()->toInt());
         $this->activateUser($user);
 
-        $this->pending_reg_repository->deleteById($pending_reg->getId());
+        $this->pending_reg_repository->deleteById($pending_reg->id());
 
         return $user;
     }
@@ -85,10 +87,10 @@ class DualOptInServiceImpl implements DualOptInService
         if ($lifetime > 0) {
             $interval = new DateInterval("PT{$lifetime}S");
             $cutoff = (new ClockFactoryImpl())->utc()->now()->sub($interval);
-            $created = $pending_reg->getCreateDate();
+            $created = $pending_reg->createdAt();
 
             if ($created < $cutoff) {
-                $this->triggerExpiredUserCleanup($pending_reg->getUserId());
+                $this->triggerExpiredUserCleanup($pending_reg->userId());
                 throw new PendingRegistrationExpiredException();
             }
         }
@@ -136,37 +138,43 @@ class DualOptInServiceImpl implements DualOptInService
 
         $deleted_regs = $this->pending_reg_repository->deleteExpired($cutoff->getTimestamp(), $usr_id);
 
-        $this->logger->info(sprintf(
-            '%d inactive user objects eligible for deletion found and deleted (cutoff: %s, lifetime: %d s).',
-            count($deleted_regs),
-            $cutoff->format(DateTimeInterface::ATOM),
-            $lifetime
-        ));
+        $this->logger->info(
+            \sprintf(
+                '%d inactive user objects eligible for deletion found and deleted (cutoff: %s, lifetime: %d s).',
+                \count($deleted_regs),
+                $cutoff->format(DateTimeInterface::ATOM),
+                $lifetime
+            )
+        );
 
         $num_deleted_users = 0;
         foreach ($deleted_regs as $deleted_reg) {
-            $user = ilObjectFactory::getInstanceByObjId($deleted_reg->getUserId(), false);
+            $user = ilObjectFactory::getInstanceByObjId($deleted_reg->userId()->toInt(), false);
             if (!($user instanceof ilObjUser)) {
                 continue;
             }
 
-            $this->logger->info(sprintf(
-                'Deleting user (login: %s | id: %d) – expired dual opt-in (created: %s, cutoff: %s, lifetime: %d s)',
-                $user->getLogin(),
-                $user->getId(),
-                $deleted_reg->getCreateDate()->format(ilObjUser::DATABASE_DATE_FORMAT),
-                $cutoff->format(DateTimeInterface::ATOM),
-                $lifetime
-            ));
+            $this->logger->info(
+                \sprintf(
+                    'Deleting user (login: %s | id: %d) – expired dual opt-in (created: %s, cutoff: %s, lifetime: %d s)',
+                    $user->getLogin(),
+                    $user->getId(),
+                    $deleted_reg->createdAt()->format(ilObjUser::DATABASE_DATE_FORMAT),
+                    $cutoff->format(DateTimeInterface::ATOM),
+                    $lifetime
+                )
+            );
 
             $user->delete();
             ++$num_deleted_users;
         }
 
-        $this->logger->info(sprintf(
-            '%d inactive user objects with expired confirmation hash values (dual opt-in) deleted.',
-            $num_deleted_users
-        ));
+        $this->logger->info(
+            \sprintf(
+                '%d inactive user objects with expired confirmation hash values (dual opt-in) deleted.',
+                $num_deleted_users
+            )
+        );
     }
 
     private function activateUser(ilObjUser $user): void
@@ -187,7 +195,7 @@ class DualOptInServiceImpl implements DualOptInService
         $this->sendRegistrationMail($user, $settings, $password);
     }
 
-    private function triggerExpiredUserCleanup(int $usr_id): void
+    private function triggerExpiredUserCleanup(ObjectId $usr_id): void
     {
         $soap_client = new ilSoapClient();
         $soap_client->setResponseTimeout(1);
@@ -199,7 +207,7 @@ class DualOptInServiceImpl implements DualOptInService
         );
 
         $sid = session_id() . '::' . CLIENT_ID;
-        $soap_client->call('deleteExpiredDualOptInUserObjects', [$sid, $usr_id]);
+        $soap_client->call('deleteExpiredDualOptInUserObjects', [$sid, $usr_id->toInt()]);
     }
 
     private function sendRegistrationMail(ilObjUser $user, ilRegistrationSettings $settings, string $password): void

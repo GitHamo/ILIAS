@@ -22,11 +22,6 @@ namespace ILIAS\Registration\DualOptIn\Exception;
 
 use ilException;
 
-/**
- * Class for registration related exception handling in ILIAS.
- * @author  Michael Jansen <mjansen@databay.de>
- * @version $Id$
- */
 class DualOptInException extends ilException
 {
 }
