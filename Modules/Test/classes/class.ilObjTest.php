@@ -769,7 +769,8 @@ class ilObjTest extends ilObject implements ilMarkSchemaAware
             return (new ilTestPageGUI('tst', $page_id))->showPage();
         }
         return ilRTE::_replaceMediaObjectImageSrc(
-            $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksText()
+            $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksText(),
+            1
         );
     }
 
