@@ -393,7 +393,7 @@ class ilObjUser extends ilObject
     public function deletePref(string $key): void
     {
         $this->settings_data_repository->deleteSingleFor($this->id, $key);
-        unset($this->user_settings[$keyword]);
+        unset($this->user_settings[$key]);
     }
 
     public function writePrefs(): void

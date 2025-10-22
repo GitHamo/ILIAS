@@ -341,10 +341,14 @@ class ilObjUserGUI extends ilObjectGUI
             return;
         }
 
+        $new_user = new ilObjUser();
+        $new_user->create();
+        $new_user->saveAsNew();
+
         $user_object = $this->user_profile->addFormValuesToUser(
             $this->form_gui,
             $this->context,
-            new ilObjUser()
+            $new_user
         );
 
         $user_object->setLogin($this->form_gui->getInput('username'));
@@ -360,8 +364,7 @@ class ilObjUserGUI extends ilObjectGUI
 
         $user_object->setTitle($user_object->getFullname());
         $user_object->setDescription($user_object->getEmail());
-        $user_object->create();
-        $user_object->saveAsNew();
+        $user_object->update();
 
         $this->object = $this->user_settings->saveForm(
             $this->form_gui,
@@ -689,7 +692,7 @@ class ilObjUserGUI extends ilObjectGUI
         }
         $radg->addOption($op2);
         $radg->setValue(
-            $user?->getTimeLimitUnlimited() ?? false ? '1' : '0'
+            $user?->getTimeLimitUnlimited() ?? true ? '1' : '0'
         );
 
         return $radg;
