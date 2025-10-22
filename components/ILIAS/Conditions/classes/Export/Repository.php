@@ -129,7 +129,7 @@ class Repository
         $result = $this->db->query($query);
         while ($row = $result->fetchAssoc()) {
             $value = unserialize($row['value']);
-            $condition_id =  (int) $row['condition_id'];
+            $condition_id = (int) $row['condition_id'];
             if (!isset($value['objective'])) {
                 continue;
             }

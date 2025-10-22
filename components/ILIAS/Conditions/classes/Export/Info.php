@@ -89,9 +89,9 @@ class Info
     public function __toString(): string
     {
         $msg = sprintf("Info (OID:%s, RID%s:, TYPE:%s", $this->object_id, $this->reference_id, $this->object_type);
-        $msg .= sprintf("\nNumberObligatory: %s\nAllObligatory: %s\nHidden: %s", $this->condition_set->getNumObligatory(), ($this->condition_set->getAllObligatory() ? 'true': 'false'), ($this->condition_set->getHiddenStatus() ? 'true': 'false'));
+        $msg .= sprintf("\nNumberObligatory: %s\nAllObligatory: %s\nHidden: %s", $this->condition_set->getNumObligatory(), ($this->condition_set->getAllObligatory() ? 'true' : 'false'), ($this->condition_set->getHiddenStatus() ? 'true' : 'false'));
         foreach ($this->condition_set->getConditions() as $condition) {
-            $msg .= sprintf("\n- Condition(ID:%s, Operator:%s, Obligatory: %s):\n-- Value: %s", $condition->getId(), $condition->getOperator(), ($condition->getObligatory() ? 'true': 'false'), $condition->getValue());
+            $msg .= sprintf("\n- Condition(ID:%s, Operator:%s, Obligatory: %s):\n-- Value: %s", $condition->getId(), $condition->getOperator(), ($condition->getObligatory() ? 'true' : 'false'), $condition->getValue());
             $msg .= sprintf("\n-- Trigger: RID:%s OID:%s Type:%s", $condition->getTrigger()->getRefId(), $condition->getTrigger()->getObjId(), $condition->getTrigger()->getType());
         }
         return $msg;

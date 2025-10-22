@@ -40,7 +40,7 @@ class XMLWriter
         $cond_xml->addAttribute('reference_id', (string) $info->getReferenceId());
         $cond_xml->addAttribute('object_type', $info->getObjectType());
         $cond_xml->addAttribute('hide_object_enabled', (string) ((int) $info->getConditionSet()->getHiddenStatus()));
-        $cond_xml->addAttribute('all_obligatory_enabled',(string) ((int) $info->getConditionSet()->getAllObligatory()));
+        $cond_xml->addAttribute('all_obligatory_enabled', (string) ((int) $info->getConditionSet()->getAllObligatory()));
         $cond_xml->addAttribute('number_of_required_materials', (string) $info->getConditionSet()->getNumObligatory());
         $p_conds_xml = $cond_xml->addChild('Preconditions');
         foreach ($info->getConditionSet()->getConditions() as $precondition) {
