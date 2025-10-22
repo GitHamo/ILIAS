@@ -20,6 +20,10 @@ declare(strict_types=1);
 
 namespace ILIAS\Registration\DualOptIn\Exception;
 
-class DualOptInException extends \ilException
+final class PendingRegistrationAlreadyConfirmedException extends DualOptInException
 {
+    public function __construct()
+    {
+        parent::__construct('reg_confirmation_already_confirmed');
+    }
 }

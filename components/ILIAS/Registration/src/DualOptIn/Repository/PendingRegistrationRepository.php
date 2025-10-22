@@ -26,17 +26,18 @@ use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationId;
 
 interface PendingRegistrationRepository
 {
+    public function nextIdentity(): PendingRegistrationId;
+
     public function findNewHash(): PendingRegistrationHash;
 
     public function store(PendingRegistration $reg): void;
 
     public function findByHashValue(string $hash_value): ?PendingRegistration;
 
-    public function deleteById(PendingRegistrationId $id): void;
+    public function delete(PendingRegistration ...$pending_registrations): void;
 
     public function deleteByUserId(int $usr_id): void;
 
-
     /** @return list<PendingRegistration> */
-    public function deleteExpired(int $cutoff_ts, ?int $prioritize_usr_id = null): array;
+    public function findExpired(int $cutoff_ts, ?int $prioritize_usr_id = null): array;
 }

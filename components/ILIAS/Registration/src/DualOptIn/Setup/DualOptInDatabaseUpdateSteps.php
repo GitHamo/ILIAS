@@ -20,16 +20,13 @@ declare(strict_types=1);
 
 namespace ILIAS\Registration\DualOptIn\Setup;
 
-use ilDatabaseUpdateSteps;
-use ilDBConstants;
-use ilDBInterface;
 use ILIAS\Data\UUID\Factory as UUIDFactory;
 
-class DualOptInDatabaseUpdateSteps implements ilDatabaseUpdateSteps
+class DualOptInDatabaseUpdateSteps implements \ilDatabaseUpdateSteps
 {
-    protected ilDBInterface $db;
+    protected \ilDBInterface $db;
 
-    public function prepare(ilDBInterface $db): void
+    public function prepare(\ilDBInterface $db): void
     {
         $this->db = $db;
     }
@@ -42,24 +39,24 @@ class DualOptInDatabaseUpdateSteps implements ilDatabaseUpdateSteps
 
         $fields = [
             'id' => [
-                'type' => ilDBConstants::T_TEXT,
+                'type' => \ilDBConstants::T_TEXT,
                 'length' => 36,
                 'fixed' => true,
                 'notnull' => true,
             ],
             'usr_id' => [
-                'type' => ilDBConstants::T_INTEGER,
+                'type' => \ilDBConstants::T_INTEGER,
                 'length' => 8,
                 'notnull' => true
             ],
             'reg_hash' => [
-                'type' => ilDBConstants::T_TEXT,
+                'type' => \ilDBConstants::T_TEXT,
                 'length' => 16,
                 'fixed' => true,
                 'notnull' => true
             ],
             'creation_date' => [
-                'type' => ilDBConstants::T_INTEGER,
+                'type' => \ilDBConstants::T_INTEGER,
                 'length' => 8,
                 'notnull' => true
             ]
@@ -85,14 +82,14 @@ class DualOptInDatabaseUpdateSteps implements ilDatabaseUpdateSteps
 SQL
         );
 
-        while ($row = $res->fetchRow(ilDBConstants::FETCHMODE_OBJECT)) {
+        while ($row = $res->fetchRow(\ilDBConstants::FETCHMODE_OBJECT)) {
             $this->db->manipulateF(
                 'INSERT INTO reg_dual_opt_in (id, usr_id, reg_hash, creation_date) VALUES (%s, %s, %s)',
                 [
-                    ilDBConstants::T_TEXT,
-                    ilDBConstants::T_INTEGER,
-                    ilDBConstants::T_TEXT,
-                    ilDBConstants::T_INTEGER
+                    \ilDBConstants::T_TEXT,
+                    \ilDBConstants::T_INTEGER,
+                    \ilDBConstants::T_TEXT,
+                    \ilDBConstants::T_INTEGER
                 ],
                 [
                     (new UUIDFactory())->uuid4(),

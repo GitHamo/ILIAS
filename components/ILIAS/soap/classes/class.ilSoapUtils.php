@@ -461,9 +461,11 @@ class ilSoapUtils extends ilSoapAdministration
         global $DIC;
 
         $dual_opt_in_service = new DualOptInServiceImpl(
+            new ilRegistrationSettings(),
             new PendingRegistrationDatabaseRepository($DIC->database()),
             $DIC->database(),
             $DIC->logger()->user(),
+            (new \ILIAS\Data\Factory())->clock()
         );
         $dual_opt_in_service->deleteExpiredUserObjects($usr_id);
 

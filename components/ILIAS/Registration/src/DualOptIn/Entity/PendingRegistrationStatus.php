@@ -18,8 +18,11 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\Registration\DualOptIn\Exception;
+namespace ILIAS\Registration\DualOptIn\Entity;
 
-class DualOptInException extends \ilException
+enum PendingRegistrationStatus
 {
+    case PENDING;
+    case CONFIRMED;
+    case EXPIRED;
 }

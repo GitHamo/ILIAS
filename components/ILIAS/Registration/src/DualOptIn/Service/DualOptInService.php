@@ -22,19 +22,20 @@ namespace ILIAS\Registration\DualOptIn\Service;
 
 use ILIAS\Registration\DualOptIn\Exception\PendingRegistrationExpiredException;
 use ILIAS\Registration\DualOptIn\Exception\PendingRegistrationNotFoundException;
+use ILIAS\Registration\DualOptIn\Exception\PendingRegistrationAlreadyConfirmedException;
 use ILIAS\Registration\DualOptIn\ValueObjects\PendingRegistrationHash;
-use ilObjUser;
-use ilRegistrationSettings;
 
 interface DualOptInService
 {
     /**
      * @throws PendingRegistrationNotFoundException
      * @throws PendingRegistrationExpiredException
+     * @throws PendingRegistrationAlreadyConfirmedException
+     * @throws \ilObjectNotFoundException
      */
-    public function verifyHashAndActivateUser(PendingRegistrationHash $hash): ilObjUser;
+    public function verifyHashAndActivateUser(PendingRegistrationHash $hash): \ilObjUser;
 
-    public function distributeMailsOnRegistration(ilObjUser $user, ilRegistrationSettings $settings): void;
+    public function distributeMailsOnRegistration(\ilObjUser $user): void;
 
     public function deleteExpiredUserObjects(int $usr_id): void;
 }

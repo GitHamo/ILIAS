@@ -1521,21 +1521,23 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
                 ]))]);
 
             $dual_opt_in_service = new DualOptInServiceImpl(
+                new ilRegistrationSettings(),
                 new PendingRegistrationDatabaseRepository($this->dic->database()),
                 $this->dic->database(),
-                $this->dic->logger()->user()
+                $this->dic->logger()->user(),
+                (new \ILIAS\Data\Factory())->clock()
             );
-            $user = $dual_opt_in_service->verifyHashAndActivateUser($reg_hash);
+            $dual_opt_in_service->verifyHashAndActivateUser($reg_hash);
         } catch (DualOptInException $exception) {
             $this->mainTemplate->setOnScreenMessage(
-                ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
+                \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_FAILURE,
                 $this->lng->txt($exception->getMessage()),
                 true
             );
             $this->ctrl->redirectToURL(sprintf('./login.php?cmd=force_login&lang=%s', $this->lng->getLangKey()));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->mainTemplate->setOnScreenMessage(
-                ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
+                \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_FAILURE,
                 $this->lng->txt('reg_confirmation_hash_not_passed'),
                 true
             );
@@ -1543,7 +1545,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
         }
 
         $this->mainTemplate->setOnScreenMessage(
-            ilGlobalTemplateInterface::MESSAGE_TYPE_SUCCESS,
+            \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_SUCCESS,
             $this->lng->txt('reg_account_confirmation_successful'),
             true
         );

@@ -14851,6 +14851,7 @@ registration#:#reg_approve#:#Registration with Approval
 registration#:#reg_approve_info#:#Newly-registered users have to be approved by an administrator.
 registration#:#reg_approve_needs_recipient#:#For the registration type ‘Registration with Approval’ you should appoint at least one user who will be notified about new registrations.
 registration#:#reg_available_roles#:#Available Roles:
+registration#:#reg_confirmation_already_confirmed#:#The registration is no longer pending, it has already been confirmed. 
 registration#:#reg_confirmation_hash_life_time#:#Valid for
 registration#:#reg_confirmation_hash_life_time_expired#:#This confirmation link is no longer valid. Please re-register and click on the link in the new confirmation e-mail within a few minutes of receipt.
 registration#:#reg_confirmation_hash_life_time_info#:#Enter for how long (in seconds ) the confirmation link should be valid. The recommended value is 1800 seconds.
