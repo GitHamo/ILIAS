@@ -26,9 +26,5 @@ interface Webservice
 {
     public function getProtocol(): ServiceProtocol;
 
-    public function getBasePath(): string;
-
-    public function isEnabled(): bool;
-
     public function handle(Payload $payload): Payload;
 }

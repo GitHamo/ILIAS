@@ -29,8 +29,6 @@ use RuntimeException;
 readonly class RestWebservice implements Webservice
 {
     public function __construct(
-        private string $basePath,
-        private bool $isEnabled,
         private bool $debug,
     ) {}
 
@@ -38,18 +36,6 @@ readonly class RestWebservice implements Webservice
     public function getProtocol(): ServiceProtocol
     {
         return ServiceProtocol::REST;
-    }
-
-    #[Override]
-    public function getBasePath(): string
-    {
-        return $this->basePath;
-    }
-
-    #[Override]
-    public function isEnabled(): bool
-    {
-        return $this->isEnabled;
     }
 
     #[Override]

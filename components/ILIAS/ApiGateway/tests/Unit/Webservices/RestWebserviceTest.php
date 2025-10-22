@@ -13,8 +13,6 @@ use RuntimeException;
 final class RestWebserviceTest extends TestCase
 {
     private RestWebservice $webservice;
-    private string $basePath = '/api/v1';
-    private bool $isEnabled = true;
     private bool $isDebugEnabled = false;
 
     #[\Override]
@@ -23,8 +21,6 @@ final class RestWebserviceTest extends TestCase
         parent::setUp();
 
         $this->webservice = new RestWebservice(
-            $this->basePath,
-            $this->isEnabled,
             $this->isDebugEnabled,
         );
     }
@@ -34,27 +30,6 @@ final class RestWebserviceTest extends TestCase
         self::assertSame(
             ServiceProtocol::REST,
             $this->webservice->getProtocol(),
-        );
-    }
-
-    public function testHasAccessorToBasePath(): void
-    {
-        self::assertSame(
-            $this->basePath,
-            $this->webservice->getBasePath(),
-        );
-    }
-
-    public function testIsEnabled(): void
-    {
-        self::assertSame(
-            $this->isEnabled,
-            $this->webservice->isEnabled(),
-        );
-
-        self::assertSame(
-            false,
-            (new RestWebservice($this->basePath, false, $this->isDebugEnabled))->isEnabled(),
         );
     }
 
@@ -79,8 +54,6 @@ final class RestWebserviceTest extends TestCase
         $payload = new Payload($payloadData);
 
         $webservice = new RestWebservice(
-            $this->basePath,
-            $this->isEnabled,
             true,
         );
 
