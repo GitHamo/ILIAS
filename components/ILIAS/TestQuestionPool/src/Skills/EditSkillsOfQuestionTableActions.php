@@ -25,7 +25,7 @@ use ILIAS\UI\Component\Table\DataRow;
 use ILIAS\UI\URLBuilder;
 use ILIAS\UI\URLBuilderToken;
 
-class SkillAssignmentTableActions
+class EditSkillsOfQuestionTableActions
 {
     public const string ROW_ID_PARAMETER = 'a_id';
     public const string FULL_ROW_ID_PARAMETER = EditSkillsOfQuestionTable::ID . '_' . self::ROW_ID_PARAMETER;
@@ -50,7 +50,7 @@ class SkillAssignmentTableActions
     ): array {
         return array_filter(
             array_map(
-                static function (SkillAssignmentTableAction $action) use (
+                static function (EditSkillsOfQuestionTableAction $action) use (
                     $url_builder,
                     $row_id_token,
                     $action_token,
@@ -65,7 +65,7 @@ class SkillAssignmentTableActions
         );
     }
 
-    public function getAction(string $action_id): ?SkillAssignmentTableAction
+    public function getAction(string $action_id): ?EditSkillsOfQuestionTableAction
     {
         return $this->actions[$action_id] ?? null;
     }

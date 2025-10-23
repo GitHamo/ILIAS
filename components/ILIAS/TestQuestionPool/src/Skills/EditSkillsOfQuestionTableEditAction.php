@@ -25,7 +25,7 @@ use ILIAS\UI\Factory as UIFactory;
 use ILIAS\UI\URLBuilder;
 use ILIAS\UI\URLBuilderToken;
 
-class SkillAssignmentTableEditAction implements SkillAssignmentTableAction
+class EditSkillsOfQuestionTableEditAction implements EditSkillsOfQuestionTableAction
 {
     public const string ACTION_ID = 'edit_assignment';
 
@@ -55,7 +55,7 @@ class SkillAssignmentTableEditAction implements SkillAssignmentTableAction
             $this->lng->txt('tst_edit_competence_assign'),
             $url_builder
                 ->withParameter($action_token, self::ACTION_ID)
-                ->withParameter($action_type_token, SkillAssignmentTableActions::SHOW_ACTION),
+                ->withParameter($action_type_token, EditSkillsOfQuestionTableActions::SHOW_ACTION),
             $row_id_token
         );
     }

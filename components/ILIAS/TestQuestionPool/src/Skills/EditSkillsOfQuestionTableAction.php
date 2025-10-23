@@ -24,7 +24,7 @@ use ILIAS\UI\URLBuilder;
 use ILIAS\UI\URLBuilderToken;
 use ILIAS\UI\Component\Table\Action\Action;
 
-interface SkillAssignmentTableAction
+interface EditSkillsOfQuestionTableAction
 {
     public function getActionId(): string;
 

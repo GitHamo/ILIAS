@@ -23,7 +23,6 @@ namespace ILIAS\TestQuestionPool\Skills;
 use ILIAS\Data\Order;
 use ILIAS\Data\Range;
 use ILIAS\TestQuestionPool\RequestDataCollector;
-use ILIAS\UI\Component\Component;
 use ILIAS\UI\Component\Table\DataRetrieval;
 use ILIAS\UI\Component\Table\DataRowBuilder;
 use ILIAS\UI\Factory as UIFactory;
@@ -38,7 +37,7 @@ class EditSkillsOfQuestionTable implements DataRetrieval
         private readonly \ilAssQuestionSkillAssignmentList $assignment_list,
         private readonly UIFactory $ui_factory,
         private readonly \ilLanguage $lng,
-        private readonly SkillAssignmentTableActions $table_actions
+        private readonly EditSkillsOfQuestionTableActions $table_actions
     ) {
     }
 
@@ -101,9 +100,9 @@ class EditSkillsOfQuestionTable implements DataRetrieval
     {
         return $url_builder->acquireParameters(
             [self::ID],
-            SkillAssignmentTableActions::ROW_ID_PARAMETER,
-            SkillAssignmentTableActions::ACTION_PARAMETER,
-            SkillAssignmentTableActions::ACTION_TYPE_PARAMETER
+            EditSkillsOfQuestionTableActions::ROW_ID_PARAMETER,
+            EditSkillsOfQuestionTableActions::ACTION_PARAMETER,
+            EditSkillsOfQuestionTableActions::ACTION_TYPE_PARAMETER
         );
     }
 

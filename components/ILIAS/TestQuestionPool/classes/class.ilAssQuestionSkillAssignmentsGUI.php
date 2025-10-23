@@ -25,8 +25,8 @@ use ILIAS\Skill\Service\SkillUsageService;
 use ILIAS\TestQuestionPool\Skills\ilAssQuestionSkillUsagesGUI;
 use ILIAS\TestQuestionPool\Skills\SkillsByQuestionOverviewTable;
 use ILIAS\TestQuestionPool\Skills\EditSkillsOfQuestionTable;
-use ILIAS\TestQuestionPool\Skills\SkillAssignmentTableActions;
-use ILIAS\TestQuestionPool\Skills\SkillAssignmentTableEditAction;
+use ILIAS\TestQuestionPool\Skills\EditSkillsOfQuestionTableActions;
+use ILIAS\TestQuestionPool\Skills\EditSkillsOfQuestionTableEditAction;
 use ILIAS\TestQuestionPool\Skills\SkillAssignmentViewControlMode;
 use ILIAS\UI\Factory as UIFactory;
 use ILIAS\UI\Renderer as UIRenderer;
@@ -414,7 +414,7 @@ class ilAssQuestionSkillAssignmentsGUI
         $question_id = $this->request_data_collector->getQuestionId();
         $question_gui ??= assQuestionGUI::_getQuestionGUI('', $question_id);
 
-        $row_id_parameter = $this->request_data_collector->strArray(SkillAssignmentTableActions::FULL_ROW_ID_PARAMETER);
+        $row_id_parameter = $this->request_data_collector->strArray(EditSkillsOfQuestionTableActions::FULL_ROW_ID_PARAMETER);
         [1 => $skill_base_id, 2 => $skill_tref_id] = explode('_', $row_id_parameter[0]);
         $assignment ??= $this->buildQuestionSkillAssignment($question_id, (int) $skill_base_id, (int) $skill_tref_id);
 
@@ -430,7 +430,7 @@ class ilAssQuestionSkillAssignmentsGUI
         if ($this->isTestQuestion($question_id)) {
             $question_gui = assQuestionGUI::_getQuestionGUI('', $question_id);
 
-            $row_id_parameter = $this->request_data_collector->string(SkillAssignmentTableActions::FULL_ROW_ID_PARAMETER);
+            $row_id_parameter = $this->request_data_collector->string(EditSkillsOfQuestionTableActions::FULL_ROW_ID_PARAMETER);
             [1 => $skill_base_id, 2 => $skill_tref_id] = explode('_', $row_id_parameter);
             $assignment = $this->buildQuestionSkillAssignment($question_id, (int) $skill_base_id, (int) $skill_tref_id);
 
@@ -567,9 +567,9 @@ class ilAssQuestionSkillAssignmentsGUI
             $assignment_list,
             $this->ui_factory,
             $this->lng,
-            (new SkillAssignmentTableActions(
+            (new EditSkillsOfQuestionTableActions(
                 $this->tpl,
-                [SkillAssignmentTableEditAction::ACTION_ID => new SkillAssignmentTableEditAction($this->ui_factory, $this->lng)]
+                [EditSkillsOfQuestionTableEditAction::ACTION_ID => new EditSkillsOfQuestionTableEditAction($this->ui_factory, $this->lng)]
             ))
         ))->getComponents(new URLBuilder($edit_uri));
 

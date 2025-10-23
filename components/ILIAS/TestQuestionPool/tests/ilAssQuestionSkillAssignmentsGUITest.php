@@ -42,8 +42,9 @@ class ilAssQuestionSkillAssignmentsGUITest extends assBaseTestCase
         $tpl = $this->createMock(ilGlobalTemplateInterface::class);
         $lng = $this->createMock(ilLanguage::class);
         $db = $this->createMock(ilDBInterface::class);
+        $tabs_gui = $this->createMock(ilTabsGUI::class);
 
-        $this->object = new ilAssQuestionSkillAssignmentsGUI($ctrl, $access, $tpl, $lng, $db);
+        $this->object = new ilAssQuestionSkillAssignmentsGUI($ctrl, $access, $tpl, $lng, $db, $tabs_gui);
     }
 
     public function testConstruct(): void
