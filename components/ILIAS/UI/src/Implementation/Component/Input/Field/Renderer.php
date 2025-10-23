@@ -141,6 +141,9 @@ class Renderer extends AbstractComponentRenderer
             case ($component instanceof F\DateTime):
                 return $this->renderDateTimeField($component, $default_renderer);
 
+            case ($component instanceof F\Image):
+                return $this->renderImageField($component, $default_renderer);
+
             case ($component instanceof F\File):
                 return $this->renderFileField($component, $default_renderer);
 
@@ -312,6 +315,8 @@ class Renderer extends AbstractComponentRenderer
         $this->applyName($component, $tpl);
         $this->applyValue($component, $tpl, $this->escapeSpecialChars());
 
+        $tpl->setVariable("STEPSIZE", $component->getStepSize());
+
         $label_id = $this->createId();
         $tpl->setVariable('ID', $label_id);
         return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get(), $label_id);
@@ -397,17 +402,29 @@ class Renderer extends AbstractComponentRenderer
         if ($value) {
             $value = array_map(
                 function ($v) {
-                    return ['value' => urlencode($v), 'display' => $v];
+                    return ['value' => rawurlencode($v), 'display' => $v];
                 },
                 $value
             );
         }
 
+        $autocomplete_endpoint = 'undefined';
+        $autocomplete_token = 'undefined';
+        if ($component->getAsyncAutocompleteEndpoint() !== null) {
+            $autocomplete_endpoint = $component->getAsyncAutocompleteEndpoint()
+                ->renderObject([$component->getAsyncAutocompleteToken()]);
+            $autocomplete_token = $component->getAsyncAutocompleteToken()->render();
+        }
+
         $component = $component->withAdditionalOnLoadCode(
-            function ($id) use ($configuration, $value) {
+            function ($id) use ($configuration, $value, $autocomplete_endpoint, $autocomplete_token) {
                 $encoded = json_encode($configuration);
                 $value = json_encode($value);
-                return "il.UI.Input.tagInput.init('{$id}', {$encoded}, {$value});";
+                return 'il.UI.Input.tagInput.init(document.querySelector('
+                . "'#{$id} .c-field-tag'), {$encoded}, {$value},"
+                . " {$autocomplete_endpoint}, "
+                . " {$autocomplete_token}"
+                . ");";
             }
         );
 
@@ -774,14 +791,18 @@ class Renderer extends AbstractComponentRenderer
         return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get(), $label_id);
     }
 
+    protected function renderImageField(F\Image $input, RendererInterface $default_renderer): string
+    {
+        return $this->renderFileField($input, $default_renderer);
+    }
+
     protected function renderFileField(F\File $input, RendererInterface $default_renderer): string
     {
         $template = $this->getTemplate('tpl.file.html', true, true);
         foreach ($input->getGeneratedDynamicInputs() as $metadata_input) {
             $file_info = null;
             if (null !== ($data = $metadata_input->getValue())) {
-                $file_id = (!$input->hasMetadataInputs()) ?
-                    $data : $data[$input->getUploadHandler()->getFileIdentifierParameterName()] ?? null;
+                $file_id = (!$input->hasMetadataInputs()) ? $data : $data[0] ?? null;
 
                 if (null !== $file_id) {
                     $file_info = $input->getUploadHandler()->getInfoResult($file_id);
@@ -845,7 +866,6 @@ class Renderer extends AbstractComponentRenderer
     public function registerResources(ResourceRegistry $registry): void
     {
         parent::registerResources($registry);
-        $registry->register('assets/js/tagify.js');
         $registry->register('assets/css/tagify.css');
         $registry->register('assets/js/tagInput.js');
 

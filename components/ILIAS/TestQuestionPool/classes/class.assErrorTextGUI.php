@@ -292,7 +292,7 @@ class assErrorTextGUI extends assQuestionGUI implements ilGuiQuestionScoringAdju
         }
 
         if ($show_question_text === true) {
-            $template->setVariable("QUESTIONTEXT", $this->object->getQuestionForHTMLOutput());
+            $template->setVariable("QUESTIONTEXT", $this->renderLatex($this->object->getQuestionForHTMLOutput()));
         }
 
         $correctness_icons = [
@@ -362,7 +362,7 @@ class assErrorTextGUI extends assQuestionGUI implements ilGuiQuestionScoringAdju
             '',
             $is_question_postponed,
             $active_id,
-            $this->generateQuestionOutput($selections, false)
+            $this->generateQuestionOutput($selections, true)
         );
     }
 
@@ -373,7 +373,7 @@ class assErrorTextGUI extends assQuestionGUI implements ilGuiQuestionScoringAdju
         if ($this->object->getTextSize() >= 10) {
             $template->setVariable("STYLE", " style=\"font-size: " . $this->object->getTextSize() . "%;\"");
         }
-        $template->setVariable("QUESTIONTEXT", $this->object->getQuestionForHTMLOutput());
+        $template->setVariable("QUESTIONTEXT", $this->renderLatex($this->object->getQuestionForHTMLOutput()));
         $errortext = $this->object->assembleErrorTextOutput($selections);
         if ($this->getTargetGuiClass() !== null) {
             $this->ctrl->setParameterByClass($this->getTargetGuiClass(), 'errorvalue', '');
@@ -432,7 +432,7 @@ class assErrorTextGUI extends assQuestionGUI implements ilGuiQuestionScoringAdju
         }
         $feedback .= '</tbody></table>';
 
-        return ilLegacyFormElementsUtil::prepareTextareaOutput($feedback, true);
+        return $this->renderLatex(ilLegacyFormElementsUtil::prepareTextareaOutput($feedback, true));
     }
 
     /**

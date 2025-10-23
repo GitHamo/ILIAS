@@ -30,7 +30,7 @@ interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 * [AutoResponder](#autoresponder)
 * [Business Rules](#business-rules)
   * [Permission Handling in Recipient Validation](#permission-handling-in-recipient-validation)
-  * [Account Status vs. Channel](#account-status-vs-channel)
+  * [Mail Delivery Rules](#mail-delivery-rules)
 
 ## General
 
@@ -851,14 +851,49 @@ identifiers, which are resolved to global roles. If the access check evaluates t
 No additional permission checks are implemented, for instance there is **no** check if a sending account is a course or
 group participant, if it explicitly enters a course or group role identifier as recipient.
 
-### Account Status vs. Channel
+### Mail Delivery Rules
 
-An account is considered to be able to read internal messages, if the `TermsOfService` are accepted (if enabled) **and**
-the account is **not** expired (see: `usr_data.time_limit_unlimited`, `usr_data.time_limit_from`, `usr_data.time_limit_until`).
+This section describes how internal and external mails are delivered in ILIAS, based on recipient account state, preferences, and mail type.
 
-* If a mail is sent as a `system` mail and an account can't read internal messages, it will be completely skipped
-  when processing recipients.
-* If a recipient account is **not** `active`, the mail will be only sent internally.
-* If a recipient account is `active`, and it can't read internal mails or it wants to receive emails externally,
-  the message will be sent as an external email. If an account is configured to receive external emails only, no internal
-  message will be sent.
+#### 1. Internal mail eligibility
+
+A recipient can receive **internal mails** if:
+
+- The user has accepted all required **Legal Documents** (Terms of Service, Data Protection), and
+- The account is **within the Limited Access period**, if configured. (`usr_data.time_limit_unlimited`, `usr_data.time_limit_from`, `usr_data.time_limit_until`).
+
+**Note:** The *active/inactive* flag does **not** affect internal mail eligibility. Inactive accounts can still receive internal mails.
+
+#### 2. Special rule for system mails
+
+For **system mails**:
+
+- If the recipient **cannot receive internal mails** (see paragraph 1), the recipient is **skipped completely**.  
+  → No internal mail and no external mail is sent.
+
+#### 3. General rules for system and user mails
+
+For each recipient account, delivery is decided as follows:
+
+- **Not active OR expired**  
+  → Mail is sent **internally only** (no external).
+
+- **Active AND not expired**
+    - **Has not accepted all legal documents**  
+      → Mail is always sent **externally**, optionally **internally**.
+    - **Wants both internal and external**  
+      → Mail is sent **internally and externally**.
+    - **Configured for external only**  
+      → Mail is sent **externally only**.
+    - **Wants no external mail and has accepted all legal documents**  
+      → Mail is sent **internally only**.
+
+#### 4. Logging behavior
+
+- **Skipped (invalid user)** → Critical log
+- **System mail skipped (cannot read internal)** → Debug log with reason
+- **External decisions**:
+    - “Only external” → Debug log (external only)
+    - “Additionally external” → Debug log (internal + external)
+    - “No external” → Debug log (internal only)
+    - “Inactive/expired” → Debug log (internal only)  

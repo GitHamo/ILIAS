@@ -65,6 +65,7 @@ use ILIAS\Skill\Service\SkillService;
 use ILIAS\ResourceStorage\Services as IRSS;
 use ILIAS\Taxonomy\DomainService as TaxonomyService;
 use ILIAS\Style\Content\Service as ContentStyle;
+use ILIAS\User\Profile\PublicProfileGUI;
 
 /**
  * Class ilObjTestGUI
@@ -112,10 +113,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
     public const SHOW_QUESTIONS_CMD = 'showQuestions';
     private const SHOW_LOGS_CMD = 'history';
-
-    private const INFO_SCREEN_CHILD_CLASSES = [
-        'ilpublicuserprofilegui', 'ilobjportfoliogui'
-    ];
 
     private const QUESTION_CREATION_POOL_SELECTION_NO_POOL = 1;
     private const QUESTION_CREATION_POOL_SELECTION_NEW_POOL = 2;
@@ -200,7 +197,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->export_factory = $local_dic['exportimport.factory'];
         $this->export_repository = $local_dic['exportimport.repository'];
         $this->participant_access_filter_factory = $local_dic['participant.access_filter.factory'];
-        $this->test_pass_result_repository = $local_dic['results.data.test_result_repository'];
+        $this->test_pass_result_repository = $local_dic['results.data.repository'];
         $this->toplist_repository = $local_dic['results.toplist.repository'];
 
         $ref_id = 0;
@@ -545,7 +542,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case strtolower(TestScoringByQuestionGUI::class):
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
+                if (!$this->access->checkAccess("read", "", $this->testrequest->getRefId())
+                    && !$this->access->checkAccess("score_anon", "", $this->testrequest->getRefId())
+                ) {
                     $this->redirectAfterMissingRead();
                 }
                 $this->prepareOutput();
@@ -556,7 +555,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case strtolower(TestScoringByParticipantGUI::class):
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
+                if (!$this->access->checkAccess("read", "", $this->testrequest->getRefId())
+                    && !$this->access->checkAccess("score_anon", "", $this->testrequest->getRefId())
+                ) {
                     $this->redirectAfterMissingRead();
                 }
                 $this->prepareOutput();
@@ -750,7 +751,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case 'ilobjectcopygui':
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
+                if ((!$this->access->checkAccess("copy", "", $this->testrequest->getRefId()))) {
                     $this->redirectAfterMissingRead();
                 }
                 $this->prepareOutput();
@@ -792,24 +793,24 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                 break;
 
             case 'ilassspecfeedbackpagegui':
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
-                    $this->redirectAfterMissingRead();
+                if ((!$this->access->checkAccess("write", "", $this->testrequest->getRefId()))) {
+                    $this->redirectAfterMissingWrite();
                 }
                 $pg_gui = new ilAssSpecFeedbackPageGUI((int) $this->testrequest->raw("feedback_id"));
                 $this->ctrl->forwardCommand($pg_gui);
                 break;
 
             case 'ilassgenfeedbackpagegui':
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
-                    $this->redirectAfterMissingRead();
+                if ((!$this->access->checkAccess("write", "", $this->testrequest->getRefId()))) {
+                    $this->redirectAfterMissingWrite();
                 }
                 $pg_gui = new ilAssGenFeedbackPageGUI($this->testrequest->int("feedback_id"));
                 $this->ctrl->forwardCommand($pg_gui);
                 break;
 
             case 'illocalunitconfigurationgui':
-                if ((!$this->access->checkAccess("read", "", $this->testrequest->getRefId()))) {
-                    $this->redirectAfterMissingRead();
+                if ((!$this->access->checkAccess("write", "", $this->testrequest->getRefId()))) {
+                    $this->redirectAfterMissingWrite();
                 }
                 $this->prepareSubGuiOutput();
 
@@ -903,7 +904,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
                     }
                     $this->ctrl->forwardCommand(new ilTestPageGUI('tst', $page_id));
                 }
-                $this->showEditTestPageGUI($cmd);
+                $this->showEditTestPageGUI();
                 break;
 
             case '':
@@ -1249,7 +1250,7 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->ctrl->redirectByClass('ilObjTestGUI', self::SHOW_QUESTIONS_CMD);
     }
 
-    private function showEditTestPageGUI(string $cmd): void
+    private function showEditTestPageGUI(): void
     {
         $this->prepareOutput();
         $this->tabs_manager->getSettingsSubTabs();
@@ -1274,7 +1275,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
         $this->content_style->gui()->addCss($this->tpl, $this->ref_id);
         $this->tpl->setContent($this->ctrl->forwardCommand($gui));
 
-        $this->tabs_manager->activateTab(TabsManager::TAB_ID_SETTINGS);
+        if ($this->ctrl->getCmdClass() === strtolower(ilTestPageGUI::class)) {
+            $this->tabs_manager->activateTab(TabsManager::TAB_ID_SETTINGS);
+        }
     }
 
     public function getTestAccess(): ilTestAccess
@@ -1566,7 +1569,10 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
     */
     public function fullscreenObject()
     {
-        $page_gui = new ilAssQuestionPageGUI($this->testrequest->raw("pg_id"));
+        $page_gui = new ilAssQuestionPageGUI($this->testrequest->raw('pg_id'));
+        $page_gui->setFileDownloadLink(
+            $this->ctrl->getLinkTargetByClass(ilObjTestGUI::class, 'downloadFile')
+        );
         $page_gui->showMediaFullscreen();
     }
 
@@ -2152,7 +2158,13 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
     private function isCommandClassAnyInfoScreenChild(): bool
     {
-        if (in_array($this->ctrl->getCmdClass(), self::INFO_SCREEN_CHILD_CLASSES)) {
+        if (in_array(
+            $this->ctrl->getCmdClass(),
+            [
+                strtolower(PublicProfileGUI::class),
+                'ilobjportfoliogui'
+            ]
+        )) {
             return true;
         }
 
@@ -2227,55 +2239,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
         if ($this->type !== 'tst') {
             $info->hideFurtherSections(false);
-        }
-
-        $info->addSection($this->lng->txt('tst_sequence_properties'));
-        $info->addProperty(
-            $this->lng->txt('tst_sequence'),
-            $this->lng->txt(
-                $this->getTestObject()->getMainSettings()->getParticipantFunctionalitySettings()->getPostponedQuestionsMoveToEnd()
-                    ? 'tst_sequence_postpone' : 'tst_sequence_fixed'
-            )
-        );
-
-        $info->addSection($this->lng->txt('tst_heading_scoring'));
-        $info->addProperty(
-            $this->lng->txt('tst_text_count_system'),
-            $this->lng->txt(
-                ($this->getTestObject()->getCountSystem() == SettingsScoring::COUNT_PARTIAL_SOLUTIONS) ? 'tst_count_partial_solutions' : 'tst_count_correct_solutions'
-            )
-        );
-        if ($this->getTestObject()->isRandomTest()) {
-            $info->addProperty($this->lng->txt('tst_pass_scoring'), $this->lng->txt(($this->getTestObject()->getPassScoring() == ilObjTest::SCORE_BEST_PASS) ? 'tst_pass_best_pass' : 'tst_pass_last_pass'));
-        }
-
-        $info->addSection($this->lng->txt('tst_score_reporting'));
-        $info->addProperty(
-            $this->lng->txt('tst_score_reporting'),
-            $this->getTestObject()->getScoreSettings()->getResultSummarySettings()
-                ->getScoreReporting()->getTranslatedValue($this->lng)
-        );
-        $reporting_date = $this->getTestObject()
-            ->getScoreSettings()
-            ->getResultSummarySettings()
-            ->getReportingDate();
-        if ($reporting_date !== null) {
-            $info->addProperty(
-                $this->lng->txt('tst_score_reporting_date'),
-                $reporting_date
-                    ->setTimezone(new DateTimeZone($this->user->getTimeZone()))
-                    ->format($this->user->getDateTimeFormat()->toString())
-            );
-        }
-
-        $info->addSection($this->lng->txt('tst_session_settings'));
-        $info->addProperty($this->lng->txt('tst_nr_of_tries'), $this->getTestObject()->getNrOfTries() === 0 ? $this->lng->txt('unlimited') : (string) $this->getTestObject()->getNrOfTries());
-        if ($this->getTestObject()->getNrOfTries() != 1) {
-            $info->addProperty(
-                $this->lng->txt('tst_nr_of_tries_of_user'),
-                ($this->test_session_factory->getSession()->getPass() === 0) ?
-                    $this->lng->txt('tst_no_tries') : (string) $this->test_session_factory->getSession()->getPass()
-            );
         }
 
         if ($this->getTestObject()->getEnableProcessingTime()) {

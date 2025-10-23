@@ -198,16 +198,6 @@ class assFormulaQuestionGUI extends assQuestionGUI
         }
     }
 
-    public function resetSavedPreviewSession(): void
-    {
-        global $DIC;
-        $ilUser = $DIC['ilUser'];
-        $user_id = $ilUser->getId();
-        $question_id = $this->object->getId();
-        $ilAssQuestionPreviewSession = new ilAssQuestionPreviewSession($user_id, $question_id);
-        $ilAssQuestionPreviewSession->setParticipantsSolution([]);
-    }
-
     public function editQuestion(
         bool $checkonly = false,
         ?bool $is_save_cmd = null,
@@ -877,7 +867,9 @@ class assFormulaQuestionGUI extends assQuestionGUI
             'not_correct' => $this->generateCorrectnessIconsForCorrectness(self::CORRECTNESS_NOT_OK)
         ];
         $questiontext = $this->object->substituteVariables($user_solutions, $graphical_output, true, $result_output, $correctness_icons);
-        $template->setVariable("QUESTIONTEXT", ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true));
+        $template->setVariable("QUESTIONTEXT", $this->renderLatex(
+            ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true)
+        ));
         $questionoutput = $template->get();
         $solutiontemplate = new ilTemplate("tpl.il_as_tst_solution_output.html", true, true, "components/ILIAS/TestQuestionPool");
         $feedback = ($show_feedback) ? $this->getGenericFeedbackOutput((int) $active_id, $pass) : "";
@@ -887,7 +879,9 @@ class assFormulaQuestionGUI extends assQuestionGUI
                 ilAssQuestionFeedback::CSS_CLASS_FEEDBACK_CORRECT : ilAssQuestionFeedback::CSS_CLASS_FEEDBACK_WRONG
             );
             $solutiontemplate->setVariable("ILC_FB_CSS_CLASS", $cssClass);
-            $solutiontemplate->setVariable("FEEDBACK", ilLegacyFormElementsUtil::prepareTextareaOutput($feedback, true));
+            $solutiontemplate->setVariable("FEEDBACK", $this->renderLatex(
+                ilLegacyFormElementsUtil::prepareTextareaOutput($feedback, true)
+            ));
         }
         $solutiontemplate->setVariable("SOLUTION_OUTPUT", $questionoutput);
 
@@ -940,7 +934,9 @@ class assFormulaQuestionGUI extends assQuestionGUI
         } else {
             $questiontext = $this->object->substituteVariables([]);
         }
-        $template->setVariable("QUESTIONTEXT", ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true));
+        $template->setVariable("QUESTIONTEXT", $this->renderLatex(
+            ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true)
+        ));
         $questionoutput = $template->get();
         if (!$show_question_only) {
             // get page object output
@@ -1005,7 +1001,9 @@ class assFormulaQuestionGUI extends assQuestionGUI
 
         $questiontext = $this->object->substituteVariables($user_solution);
 
-        $template->setVariable("QUESTIONTEXT", ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true));
+        $template->setVariable("QUESTIONTEXT", $this->renderLatex(
+            ilLegacyFormElementsUtil::prepareTextareaOutput($questiontext, true)
+        ));
 
         $questionoutput = $template->get();
         $pageoutput = $this->outQuestionPage("", $is_question_postponed, $active_id, $questionoutput);

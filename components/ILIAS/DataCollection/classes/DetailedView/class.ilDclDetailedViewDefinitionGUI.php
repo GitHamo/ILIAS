@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 /**
  * @ilCtrl_Calls ilDclDetailedViewDefinitionGUI: ilPageEditorGUI, ilEditClipboardGUI, ilMediaPoolTargetSelector
- * @ilCtrl_Calls ilDclDetailedViewDefinitionGUI: ilPublicUserProfileGUI, ilPageObjectGUI
+ * @ilCtrl_Calls ilDclDetailedViewDefinitionGUI: ILIAS\User\Profile\PublicProfileGUI, ilPageObjectGUI
  */
 class ilDclDetailedViewDefinitionGUI extends ilPageObjectGUI
 {
@@ -42,7 +42,7 @@ class ilDclDetailedViewDefinitionGUI extends ilPageObjectGUI
         $ref_id = $this->http->wrapper()->query()->retrieve('ref_id', $this->refinery->kindlyTo()->int());
         $this->setStyleId($DIC->contentStyle()->domain()->styleForRefId($ref_id)->getEffectiveStyleId());
 
-        if (!ilPageObject::_exists('dclf', $tableview_id)) {
+        if (!ilPageObject::_exists('dclf', $tableview_id, '-', true)) {
             $viewdef = new ilDclDetailedViewDefinition();
             $viewdef->setId($tableview_id);
             $viewdef->setParentId(ilObject2::_lookupObjectId($ref_id));
@@ -88,17 +88,6 @@ class ilDclDetailedViewDefinitionGUI extends ilPageObjectGUI
     public function showPage(): string
     {
         $this->tpl->addCss(ilObjStyleSheet::getContentStylePath($this->getStyleId()));
-        if ($this->getOutputMode() === ilPageObjectGUI::EDIT) {
-            $legend = $this->getPageObject()->getAvailablePlaceholders();
-            if (sizeof($legend)) {
-                $html = "<span class=\"small\">" . $this->lng->txt("dcl_legend_placeholders") . ":<br>";
-                foreach ($legend as $field) {
-                    $html .= "[[" . $field->getID() . ']]<i style="opacity: 0.3"> - ' . $field->getTitle() . '</i><br>';
-                }
-                $this->setPrependingHtml($html . "</span>");
-            }
-        }
-
         return parent::showPage();
     }
 

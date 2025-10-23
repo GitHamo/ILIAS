@@ -895,8 +895,6 @@ assessment#:#logs_wrong_test_password_provided#:#Účastník zadal nesprávné h
 assessment#:#longmenu#:#Dlouhé menu
 assessment#:#longmenu_answeroptions_differ#:#This question does not work correctly, as there are not the same amount of gaps in the text as in the correction options.###26 08 2024 new variable
 assessment#:#longmenu_text#:#Text dlouhého menu
-assessment#:#mailnottype#:#Zaslat oznámení vždy, když uživatel ukončil průchod testem
-assessment#:#mailnottype_desc#:#Notify the owner of the test <strong>even if</strong> the number of test attempts has not been limited.###26 08 2024 new variable
 assessment#:#mainbar_button_label_questionlist#:#Questionlist###26 08 2024 new variable
 assessment#:#maintenance#:#Údržba
 assessment#:#manscoring#:#Manuální hodnocení
@@ -1330,7 +1328,6 @@ assessment#:#true#:#Pravda
 assessment#:#tst_access_code_created#:#Byl vytvořen unikátní kód k Vašemu stálému přístupu k Vašim výsledkům testu, a který Vám umožňuje v testu pokračovat. Zapište si prosím tento kód pro další použití.
 assessment#:#tst_activate_skill_service#:#Aktivujte službu způsobilosti
 assessment#:#tst_activate_skill_service_desc#:#Zobrazí se nová záložka 'Způsobilosti'. V této záložce jsou otázky přiřazeny způsobilostem, poté jsou připsány prahy pro dosažení určité úrovně způsobilosti.
-assessment#:#tst_activation_limited_visibility_info#:#Je-li vybráno, tento test je viditelný i mimo zadanou dostupnost.
 assessment#:#tst_activation_online_info#:#Je-li offline, pouze správci mohou vidět a upravovat tento test.
 assessment#:#tst_add_quest_cont_edit_mode#:#Editační mód pro dodatečný obsah otázky
 assessment#:#tst_add_quest_cont_edit_mode_IPE#:#Editace dodatečného obsahu s Editorem objektů stránky
@@ -1478,12 +1475,7 @@ assessment#:#tst_finish_confirm_button#:#Ano, chci tento test ukončit
 assessment#:#tst_finish_confirm_cancel_button#:#Ne, jít zpět na předchozí otázku
 assessment#:#tst_finish_confirmation_question#:#Hodláte ukončit tento test a dosáhl(a) jste maximálního počtu povolených průchodů testem. Nebudete již moci do tohoto testu vstoupit znovu a změnit své odpovědi. Upravdu chcete tento test ukončit?
 assessment#:#tst_finish_confirmation_question_no_attempts_left#:#You are going to finish this test and reach the maximum number of allowed test attempts. You won’t be able to enter this test again to change your answers. Do you really want to finish the test?###26 08 2024 new variable
-assessment#:#tst_finish_notification#:#E-mail při dokončení
-assessment#:#tst_finish_notification_advanced#:#Poslat kompletní výsledky testu jeho vlastníkovi
-assessment#:#tst_finish_notification_content_type#:#Obsah e-mailu
-assessment#:#tst_finish_notification_desc#:#Odešle e-mail vlastníkovi testu pro každého uživatele, který dokončil test.
 assessment#:#tst_finish_notification_no#:#Žádný e-mail
-assessment#:#tst_finish_notification_simple#:#Poslat uživatelské jméno a finální datum vlastníkovi testu
 assessment#:#tst_finished#:#Ukončeno
 assessment#:#tst_form_dynamic_question_set_config#:#Pokračuje výběr otázek
 assessment#:#tst_gap_analysis#:#Analýza mezer
@@ -1491,7 +1483,6 @@ assessment#:#tst_general_properties#:#Obecná nastavení
 assessment#:#tst_header_participant#:#Výsledek:
 assessment#:#tst_header_participant_no_answer#:#Question - not answered###26 08 2024 new variable
 assessment#:#tst_header_solution#:#Správné řešení:
-assessment#:#tst_heading_scoring#:#Hodnocení
 assessment#:#tst_hide_info_tab#:#Hide Info Tab###26 08 2024 new variable
 assessment#:#tst_hide_info_tab_desc#:#Hides the tab ‘Info’ of the test.###26 08 2024 new variable
 assessment#:#tst_hide_pagecontents#:#Hide page content###26 08 2024 new variable
@@ -1558,7 +1549,6 @@ assessment#:#tst_instant_feedback_answer_specific#:#Zobrazit odpovědi specifick
 assessment#:#tst_instant_feedback_answer_specific_desc#:#Je-li zvolena zpětná vazba specifická pro odpověď, zobrazí se předem definovaná zpětná vazba v závislosti na odpovědích účastníka (pokud je podporován typem otázky).
 assessment#:#tst_instant_feedback_contents#:#Zahrnutý obsah
 assessment#:#tst_instant_feedback_desc#:#Když jsou otázky konfigurovány se zpětnou vazbou, je účastníkům poskytnuta během průchodu testem.
-assessment#:#tst_instant_feedback_forced#:#Vynutit okamžitou zpětnou vazbu
 assessment#:#tst_instant_feedback_results#:#Zobrazit výsledky (jen body)
 assessment#:#tst_instant_feedback_results_desc#:#Pokud jsou vybrány výsledky (v bodech), zobrazí se dosažené body.
 assessment#:#tst_instant_feedback_solution#:#Zobrazit řešení
@@ -1647,7 +1637,6 @@ assessment#:#tst_no_marks_defined#:#Není definována žádná známka, vytvořt
 assessment#:#tst_no_question_selected_for_moving_to_qpl#:#Vyberte alespoň jednu otázku, kterou chcete přidat do zásobníku otázek!
 assessment#:#tst_no_question_selected_for_removal#:#Vyberte prosím alespoň jednu otázku k vymazání!
 assessment#:#tst_no_scorable_qst_available#:#Žádná dostupná otázka k hodnocení
-assessment#:#tst_no_tries#:#není
 assessment#:#tst_non_avail_pool_msg_status_lost#:#Tento zásobník otázek již není k dispozici. Již není možná synchronizace otázek z tohoto zásobníku. Můžete odvodit nový zásobník otázek z otázek obsažených v tomto testu.
 assessment#:#tst_non_avail_pool_msg_status_trashed#:#Tento zásobník otázek je vyhozen, když je trvale odstraněn ze systému, test již není schopen synchronizovat z něho dotazy.
 assessment#:#tst_non_avail_pools_table#:#Žádné zásobníky otázek k dispozici
@@ -1660,7 +1649,6 @@ assessment#:#tst_notify_manscoring_done_body_msg_topic#:#manuální hodnocení p
 assessment#:#tst_nr_of_passes#:#Počet průchodů testem
 assessment#:#tst_nr_of_tries#:#Max. počet pokusů
 assessment#:#tst_nr_of_tries_desc#:#Maximální počet průchodů, které může účastník absolvovat.
-assessment#:#tst_nr_of_tries_of_user#:#Zkoušení již ukončeno
 assessment#:#tst_num_all_questions#:#Počet všech otázek
 assessment#:#tst_num_correct_answered_questions#:#Správně zodpovězené otázky
 assessment#:#tst_num_non_answered_questions_notseen#:#Nezodpovězené otázky (nikdy neviděny)
@@ -1885,16 +1873,10 @@ assessment#:#tst_score_cut_question_desc#:#Účastníci mohou získat záporné 
 assessment#:#tst_score_cut_test#:#Vynulovat záporné body testu
 assessment#:#tst_score_cut_test_desc#:#Účastníci mohou v otázkách získat záporné body. Sčítá se počet bodů získaných za všechny otázky. Pouze pokud je celkový výsledek testu záporný, bude tento celkový výsledek nastaven na 0 bodů. S tímto nastavením mají záporné body velkou váhu.
 assessment#:#tst_score_cutting#:#Vynulovat záporné body
-assessment#:#tst_score_reporting#:#Oznamování výsledků
-assessment#:#tst_score_reporting_date#:#Datum oznamování výsledků
 assessment#:#tst_search_users#:#Přidat fixní účastníky
 assessment#:#tst_select_questionpool#:#Vyberte prosím zásobník otázek k uložení vytvořené otázky
 assessment#:#tst_selected_user_data_deleted#:#Data testu vybraných uživatelů byla úspěšně vymazána
-assessment#:#tst_sequence#:#Sekvence
-assessment#:#tst_sequence_fixed#:#Sekvence otázek je pevná
-assessment#:#tst_sequence_postpone#:#Otázky mohou být odloženy na konec průchodu testem
 assessment#:#tst_sequence_properties#:#Vlastnosti sekvence
-assessment#:#tst_session_settings#:#Nastavení lekce
 assessment#:#tst_set_offline_due_to_switched_question_set_type_setting#:#Tento test byl nastaven na offline, protože nastavení módu testu bylo změněno. Musíte nastavit nový mód testu ve vztahu k nastavení otázek před tím, než bude moci test být znovu nastaven na online.
 assessment#:#tst_setting_offer_hints_info#:#Je-li zapnuto, jsou nabízeny existijící nápovědy specifické odpovědi.
 assessment#:#tst_setting_offer_hints_label#:#Nápovědy specifické odpovědi
@@ -5835,7 +5817,7 @@ common#:#udf_type_date#:#Datové pole
 common#:#udf_type_datetime#:#Datum a čas
 common#:#udf_type_select#:#Seznam výběru (roleta)
 common#:#udf_type_text#:#Textové pole (jeden řádek)
-common#:#udf_type_wysiwyg#:#Textová plocha (WYSIWYG)
+common#:#udf_type_textarea#:#Textová plocha (WYSIWYG)
 common#:#udf_update_select_field#:#Upravit vybrané pole
 common#:#udf_update_text_field#:#Upravit textové pole
 common#:#udf_update_wysiwyg_field#:#Upravit pole textové plochy (WYSIWYG)
@@ -5874,7 +5856,6 @@ common#:#uploading#:#Ukládání...
 common#:#uri#:#URI
 common#:#url#:#URL
 common#:#url_not_found#:#Soubor nenalezen
-common#:#url_to_latex#:#URL ku CGI skriptu LaTeX
 common#:#use_customized_instructions#:#Použít uživatelské instrukce:
 common#:#use_default_instructions#:#Použít výchozí instrukce.
 common#:#user#:#Uživatel
@@ -11601,7 +11582,6 @@ mail#:#mail_serial_letter_placeholders#:#Zástupné symboly sériových dopisů
 mail#:#mail_settings_external_frm_head#:#Externí e-maily
 mail#:#mail_settings_external_tab#:#Externí
 mail#:#mail_settings_general_tab#:#Všeobecné
-mail#:#mail_settings_incoming_type_see_also#:#Můžete najít další možnosti modifikovat typ příchozích emailů pro uživatele <a href="%s">zde</a>
 mail#:#mail_settings_system_frm_head#:#Systémové e-maily
 mail#:#mail_settings_user_frm_head#:#E-maily uživatele
 mail#:#mail_smtp_encryption#:#Šifrování
@@ -12999,6 +12979,7 @@ obj#:#copy_container_page_yes_label#:#Copy Content Page###26 08 2024 new variabl
 obj#:#custom_icon#:#Vlastní ikona
 obj#:#edit_availability_period#:#Availability Period###26 08 2024 new variable
 obj#:#edit_questions#:#Upravit dotazy
+obj#:#multiple_selection#:#Mnohonásobný výběr
 obj#:#no_objects_selected#:#At least one object needs to be selected.###26 08 2024 new variable
 obj#:#obj_activate_content_lang#:#Aktivovat překlad pro úpravy stránky
 obj#:#obj_activate_multilang#:#Aktivovat vícejazyčnost
@@ -15449,6 +15430,7 @@ search#:#search_user_extended#:#Rozšířené hledání uživatele
 search#:#search_user_search_form#:#Vyhledávání uživatelů
 search#:#search_user_search_info_form#:#Pokud je tato možnost povolena, data uživatelů budou indexována a bude možné je vyhledat.
 search#:#search_users#:#Hledání uživatele
+search#:#seas_search_type#:#Vyhledat typ
 search#:#select_orgu#:#Select Organisational Units###07 02 2020 new variable
 search#:#until#:#do
 sess#:#il_sess_participant#:#Účastníci relace

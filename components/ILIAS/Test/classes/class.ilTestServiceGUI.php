@@ -96,7 +96,7 @@ class ilTestServiceGUI
     protected ?ilTestSessionFactory $test_session_factory = null;
     protected ?ilTestSequenceFactory $test_sequence_factory = null;
     protected ?ilTestParticipantData $participantData = null;
-    protected TestResultRepository $test_pass_result_repository;
+    protected TestResultRepository $test_result_repository;
 
     protected ilTestParticipantAccessFilterFactory $participant_access_filter;
 
@@ -160,7 +160,7 @@ class ilTestServiceGUI
         $this->results_presentation_factory = $local_dic['results.presentation.factory'];
         $this->questionrepository = $local_dic['question.general_properties.repository'];
         $this->testquestionsrepository = $local_dic['questions.properties.repository'];
-        $this->test_pass_result_repository = $local_dic['results.data.test_result_repository'];
+        $this->test_result_repository = $local_dic['results.data.repository'];
 
         $this->service = new ilTestService($this->object, $this->db, $this->questionrepository);
 
@@ -407,7 +407,18 @@ class ilTestServiceGUI
                             $compare_template->setVariable('SOLUTION', $best_output);
                             $template->setVariable('SOLUTION_OUTPUT', $compare_template->get());
                         } else {
-                            $result_output = $question_gui->getSolutionOutput($active_id, $pass, $show_graphical_output, false, $show_question_only, $show_feedback);
+                            $result_output = $question_gui->getSolutionOutput(
+                                $active_id,
+                                $pass,
+                                $show_graphical_output,
+                                false,
+                                $show_question_only,
+                                $show_feedback,
+                                false,
+                                false,
+                                true,
+                                $show_feedback
+                            );
                             $template->setVariable('SOLUTION_OUTPUT', $result_output);
                         }
 
@@ -644,11 +655,12 @@ class ilTestServiceGUI
 
     protected function getGradingMessageBuilder(int $active_id): ilTestGradingMessageBuilder
     {
-        $gradingMessageBuilder = new ilTestGradingMessageBuilder($this->lng, $this->tpl, $this->object);
-
-        $gradingMessageBuilder->setActiveId($active_id);
-
-        return $gradingMessageBuilder;
+        return new ilTestGradingMessageBuilder(
+            $this->lng,
+            $this->tpl,
+            $this->object,
+            $this->test_result_repository->getTestResult($active_id)
+        );
     }
 
     protected function buildQuestionRelatedObjectivesList(

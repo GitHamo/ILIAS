@@ -23,6 +23,7 @@ use ILIAS\Refinery\Factory;
 use ILIAS\News\Service as News;
 use ILIAS\ILIASObject\Properties\Translations\TranslationGUI;
 use ILIAS\Data\Factory as ilDataFactory;
+use ILIAS\User\Profile\PublicProfileGUI;
 
 /**
  * Class ilObjCourseGUI
@@ -31,7 +32,7 @@ use ILIAS\Data\Factory as ilDataFactory;
  * @ilCtrl_Calls ilObjCourseGUI: ilCourseRegistrationGUI, ilCourseObjectivesGUI
  * @ilCtrl_Calls ilObjCourseGUI: ilObjCourseGroupingGUI, ilInfoScreenGUI, ilLearningProgressGUI, ilPermissionGUI
  * @ilCtrl_Calls ilObjCourseGUI: ilRepositorySearchGUI, ilConditionHandlerGUI
- * @ilCtrl_Calls ilObjCourseGUI: ilCourseContentGUI, ilPublicUserProfileGUI, ilMemberExportGUI
+ * @ilCtrl_Calls ilObjCourseGUI: ilCourseContentGUI, ILIAS\User\Profile\PublicProfileGUI, ilMemberExportGUI
  * @ilCtrl_Calls ilObjCourseGUI: ilObjectCustomUserFieldsGUI, ilMemberAgreementGUI, ilSessionOverviewGUI
  * @ilCtrl_Calls ilObjCourseGUI: ilColumnGUI, ilContainerPageGUI
  * @ilCtrl_Calls ilObjCourseGUI: ilObjectCopyGUI, ilObjectContentStyleSettingsGUI
@@ -331,7 +332,7 @@ class ilObjCourseGUI extends ilContainerGUI
         if ($conts !== []) {
             $info->addSection($this->lng->txt("crs_mem_contacts"));
             foreach ($conts as $c) {
-                $pgui = new ilPublicUserProfileGUI($c);
+                $pgui = new PublicProfileGUI($c);
                 $pgui->setBackUrl($this->ctrl->getLinkTargetByClass("ilinfoscreengui"));
                 $pgui->setEmbedded(true);
                 $info->addProperty("", $pgui->getHTML());
@@ -2125,7 +2126,7 @@ class ilObjCourseGUI extends ilContainerGUI
                 $this->ctrl->forwardCommand($course_content_obj);
                 break;
 
-            case 'ilpublicuserprofilegui':
+            case strtolower(PublicProfileGUI::class):
                 $this->tpl->enableDragDropFileUpload(null);
                 $this->setSubTabs('members');
                 $this->tabs_gui->setTabActive('members');
@@ -2137,7 +2138,7 @@ class ilObjCourseGUI extends ilContainerGUI
                         $this->refinery->kindlyTo()->int()
                     );
                 }
-                $profile_gui = new ilPublicUserProfileGUI($user_id);
+                $profile_gui = new PublicProfileGUI($user_id);
                 $profile_gui->setBackUrl($this->ctrl->getLinkTargetByClass(["ilCourseMembershipGUI",
                                                                             "ilUsersGalleryGUI"
                 ], 'view'));

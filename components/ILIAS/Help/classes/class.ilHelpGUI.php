@@ -326,7 +326,6 @@ class ilHelpGUI implements ilCtrlBaseClassInterface
 
         $a_tpl->addJavaScript("assets/js/ilHelp.js");
         $a_tpl->addJavaScript("assets/js/accordion.js");
-        iljQueryUtil::initMaphilight();
         $a_tpl->addJavaScript("components/ILIAS/COPage/js/ilCOPagePres.js");
 
         $this->setCtrlPar();
@@ -562,24 +561,6 @@ class ilHelpGUI implements ilCtrlBaseClassInterface
     public function areTooltipsActive(): bool
     {
         return $this->internal()->domain()->module()->areTooltipsActive();
-    }
-
-    public function savePersonalSettingFromLegacyForm(ilPropertyFormGUI $form): void
-    {
-        if ($this->areTooltipsActive()) {
-            $this->user->setPref('hide_help_tt', (string) (int) !$form->getInput('help_tooltips'));
-        }
-    }
-
-    public function addPersonalSettingToLegacyForm(ilPropertyFormGUI $form): void
-    {
-        if ($this->areTooltipsActive()) {
-            $this->lng->loadLanguageModule('help');
-            $cb = new ilCheckboxInputGUI($this->lng->txt('help_toggle_tooltips'), 'help_tooltips');
-            $cb->setChecked(!($this->user->prefs['hide_help_tt'] ?? false));
-            $cb->setInfo($this->lng->txt('help_toggle_tooltips_info'));
-            $form->addItem($cb);
-        }
     }
 
     /**

@@ -166,9 +166,8 @@ class VideoViewGUI
         if ($video_cnt <= 1) {
             return false;
         }
-        $autoplay = ($this->user->existsPref("mcst_autoplay"))
-            ? (bool) $this->user->getPref("mcst_autoplay")
-            : ($this->media_cast->getAutoplayMode() == \ilObjMediaCast::AUTOPLAY_ACT);
+        $autoplay = (bool) ($this->user->getPref("mcst_autoplay") ??
+            ($this->media_cast->getAutoplayMode() == \ilObjMediaCast::AUTOPLAY_ACT));
         if ($this->media_cast->getAutoplayMode() == \ilObjMediaCast::AUTOPLAY_NO) {
             $autoplay = false;
         }
@@ -295,7 +294,7 @@ class VideoViewGUI
 
             $item_tpl = new \ilTemplate("tpl.playlist_item.html", true, true, "components/ILIAS/MediaCast/Video");
             $item_tpl->setVariable("TITLE", " ");
-            $item_content = str_replace("\n", "", $item_tpl->get());
+            $item_content = str_replace(["\n", "\r"], "", $item_tpl->get());
 
             $item = $factory->item()->standard("#video-title#")
                     ->withLeadImage(
@@ -303,7 +302,7 @@ class VideoViewGUI
                     );
 
             $item_content = $renderer->render($item);
-            $item_content = str_replace("\n", "", $item_content);
+            $item_content = str_replace(["\n", "\r"], "", $item_content);
 
             $init_videos = $this->media_cast->getNumberInitialVideos() > 0
                 ? $this->media_cast->getNumberInitialVideos()

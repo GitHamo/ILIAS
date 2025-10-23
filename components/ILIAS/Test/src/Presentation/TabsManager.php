@@ -204,7 +204,8 @@ class TabsManager
 
     protected function checkScoreParticipantsTabAccess(): bool
     {
-        return $this->test_access->checkScoreParticipantsAccess();
+        return $this->test_access->checkScoreParticipantsAccess()
+            || $this->test_access->checkScoreParticipantsAccessAnon();
     }
 
     public function perform(): void
@@ -646,7 +647,7 @@ class TabsManager
             $this->tabs->addSubTabTarget(
                 self::SETTINGS_SUBTAB_ID_CERTIFICATE,
                 $this->ctrl->getLinkTargetByClass(\ilObjTestGUI::class, 'certificate'),
-                ['certificate', 'certificateEditor', 'certificateRemoveBackground', 'ceateSave',
+                ['certificate', 'certificateEditor', 'certificateRemoveBackground', 'certificateSave',
                     'certificatePreview', 'certificateDelete', 'certificateUpload', 'certificateImport'],
                 ['', 'ilobjtestgui', 'ilcertificategui']
             );

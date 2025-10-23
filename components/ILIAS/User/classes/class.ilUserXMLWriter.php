@@ -16,6 +16,12 @@
  *
  *********************************************************************/
 
+declare(strict_types=1);
+
+use ILIAS\User\LocalDIC;
+use ILIAS\User\Context;
+use ILIAS\User\Profile\Profile;
+use ILIAS\User\Settings\DataRepository as UserSettingsDataRepository;
 use ILIAS\Language\Language;
 
 /**
@@ -29,9 +35,11 @@ use ILIAS\Language\Language;
  */
 class ilUserXMLWriter extends ilXmlWriter
 {
-    private ILIAS $ilias;
-    private ilDBInterface $db;
-    private Language $lng;
+    private readonly ILIAS $ilias;
+    private readonly ilDBInterface $db;
+    private readonly Language $lng;
+    private readonly Profile $user_profile;
+    private readonly UserSettingsDataRepository $user_settings_data_repo;
     private array $users; // Missing array type.
     private int $user_id = 0;
     private bool $attach_roles = false;
@@ -52,6 +60,11 @@ class ilUserXMLWriter extends ilXmlWriter
         $this->db = $DIC['ilDB'];
         $this->lng = $DIC['lng'];
         $this->user_id = $DIC['ilUser']->getId();
+
+        $local_dic = LocalDIC::dic();
+        $this->user_profile = $local_dic[Profile::class];
+        $this->user_settings_data_repo = $local_dic[UserSettingsDataRepository::class];
+
 
         $this->attach_roles = false;
 
@@ -77,8 +90,7 @@ class ilUserXMLWriter extends ilXmlWriter
 
         $this->__buildHeader();
 
-        $udf_data = ilUserDefinedFields::_getInstance();
-        $udf_data->addToXML($this);
+        $this->addUDFsToXML();
 
         foreach ($this->users as $user) {
             $this->__handleUser($user);
@@ -115,7 +127,7 @@ class ilUserXMLWriter extends ilXmlWriter
             $this->setSettings(ilObjUserFolder::getExportSettings());
         }
 
-        $prefs = ilObjUser::_getPreferences($row['usr_id']);
+        $settings = $this->user_settings_data_repo->getFor($row['usr_id']);
 
         if ($row['language'] === null
             || $row['language'] === '') {
@@ -219,14 +231,14 @@ class ilUserXMLWriter extends ilXmlWriter
             $this->__addElement('ExternalAccount', $row['ext_account'], null, 'ext_account', true);
         }
 
-        if (isset($prefs['skin'])
-            && isset($prefs['style'])
+        if (isset($settings['skin'])
+            && isset($settings['style'])
             && $this->canExport('Look', 'skin_style')) {
             $this->__addElement(
                 'Look',
                 null,
                 [
-                    'Skin' => $prefs['skin'], 'Style' => $prefs['style']
+                    'Skin' => $settings['skin'], 'Style' => $settings['style']
                 ],
                 'skin_style',
                 true
@@ -237,8 +249,7 @@ class ilUserXMLWriter extends ilXmlWriter
         $this->__addElement('LastUpdate', $row['last_update'], null, 'last_update');
         $this->__addElement('LastLogin', $row['last_login'], null, 'last_login');
 
-        $udf_data = new ilUserDefinedData($row['usr_id']);
-        $udf_data->addToXML($this);
+        $udf_data = $this->addUDFsToXML();
 
         $this->__addElement('AccountInfo', $row['ext_account'], ['Type' => 'external']);
 
@@ -250,7 +261,7 @@ class ilUserXMLWriter extends ilXmlWriter
         $this->__addElement('Feedhash', $row['feed_hash']);
 
         if ($this->attach_preferences || $this->canExport('prefs', 'preferences')) {
-            $this->__handlePreferences($prefs, $row);
+            $this->__handlePreferences($settings, $row);
         }
 
         $this->xmlEndTag('User');
@@ -317,6 +328,14 @@ class ilUserXMLWriter extends ilXmlWriter
     }
 
     /**
+     * if set to true, all preferences of a user will be set
+     */
+    public function setAttachPreferences(bool $attach_preferences): void
+    {
+        $this->attach_preferences = $attach_preferences;
+    }
+
+    /**
      * return array with base-encoded picture data as key value,
      * encoding type as encoding, and image type as key type.
      */
@@ -341,13 +360,21 @@ class ilUserXMLWriter extends ilXmlWriter
         ];
     }
 
-
     /**
-     * if set to true, all preferences of a user will be set
+     * add user defined field data to xml (using usr dtd)
      */
-    public function setAttachPreferences(bool $attach_preferences): void
+    private function addUDFsToXML(): void
     {
-        $this->attach_preferences = $attach_preferences;
+        foreach ($this->user_profile->getVisibleFields(Context::Export) as $field) {
+            $this->xmlElement(
+                'UserDefinedField',
+                [
+                    'Id' => $field->getIdentifier(),
+                    'Name' => $field->getName($this->lng)
+                ],
+                (string) ($this->user_data['f_' . $field->getIdentifier()] ?? '')
+            );
+        }
     }
 
     /**

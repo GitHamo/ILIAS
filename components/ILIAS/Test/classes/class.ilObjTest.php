@@ -19,6 +19,7 @@
 declare(strict_types=1);
 
 use ILIAS\Test\Participants\ParticipantRepository;
+use ILIAS\Test\Results\Data\Repository;
 use ILIAS\Test\TestDIC;
 use ILIAS\Test\RequestDataCollector;
 use ILIAS\Test\TestManScoringDoneHelper;
@@ -38,6 +39,7 @@ use ILIAS\Test\Settings\GlobalSettings\GlobalTestSettings;
 use ILIAS\Test\Settings\MainSettings\MainSettingsRepository;
 use ILIAS\Test\Settings\MainSettings\MainSettingsDatabaseRepository;
 use ILIAS\Test\Settings\MainSettings\MainSettings;
+use ILIAS\Test\Settings\MainSettings\RedirectionModes;
 use ILIAS\Test\Settings\MainSettings\SettingsIntroduction;
 use ILIAS\Test\Settings\MainSettings\SettingsFinishing;
 use ILIAS\Test\Settings\ScoreReporting\ScoreSettingsRepository;
@@ -70,10 +72,6 @@ class ilObjTest extends ilObject
     public const INVITATION_ON = 1;
     public const SCORE_LAST_PASS = 0;
     public const SCORE_BEST_PASS = 1;
-
-    public const REDIRECT_NONE = 0;
-    public const REDIRECT_ALWAYS = 1;
-    public const REDIRECT_KIOSK = 2;
 
     private ?bool $activation_limited = null;
     private array $mob_ids;
@@ -145,6 +143,7 @@ class ilObjTest extends ilObject
 
     protected ?ilTestParticipantList $access_filtered_participant_list = null;
     protected ParticipantRepository $participant_repository;
+    protected Repository $test_result_repository;
 
     protected LOMetadata $lo_metadata;
 
@@ -180,6 +179,7 @@ class ilObjTest extends ilObject
         $this->testrequest = $local_dic['request_data_collector'];
         $this->participant_repository = $local_dic['participant.repository'];
         $this->export_factory = $local_dic['exportimport.factory'];
+        $this->test_result_repository = $local_dic['results.data.repository'];
 
         parent::__construct($id, $a_call_by_reference);
 
@@ -517,13 +517,6 @@ class ilObjTest extends ilObject
             }
         }
 
-        $this->storeActivationSettings(
-            $this->isActivationLimited(),
-            $this->getActivationStartingTime(),
-            $this->getActivationEndingTime(),
-            $this->getActivationVisibility(),
-        );
-
         if ($properties_only) {
             return;
         }
@@ -615,23 +608,6 @@ class ilObjTest extends ilObject
             $this->setTestId($data->test_id);
             $this->loadQuestions();
         }
-
-        // moved activation to ilObjectActivation
-        if (isset($this->ref_id)) {
-            $activation = ilObjectActivation::getItem($this->ref_id);
-            switch ($activation["timing_type"]) {
-                case ilObjectActivation::TIMINGS_ACTIVATION:
-                    $this->setActivationLimited(true);
-                    $this->setActivationStartingTime($activation["timing_start"]);
-                    $this->setActivationEndingTime($activation["timing_end"]);
-                    $this->setActivationVisibility($activation["visible"]);
-                    break;
-
-                default:
-                    $this->setActivationLimited(false);
-                    break;
-            }
-        }
     }
 
     /**
@@ -685,7 +661,10 @@ class ilObjTest extends ilObject
             return (new ilTestPageGUI('tst', $page_id))->showPage();
         }
 
-        return $this->getMainSettings()->getIntroductionSettings()->getIntroductionText();
+        return ilRTE::_replaceMediaObjectImageSrc(
+            $this->getMainSettings()->getIntroductionSettings()->getIntroductionText(),
+            1
+        );
     }
 
     private function cloneIntroduction(): ?int
@@ -703,7 +682,10 @@ class ilObjTest extends ilObject
         if ($page_id !== null) {
             return (new ilTestPageGUI('tst', $page_id))->showPage();
         }
-        return $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksText();
+        return ilRTE::_replaceMediaObjectImageSrc(
+            $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksText(),
+            1
+        );
     }
 
     private function cloneConcludingRemarks(): ?int
@@ -968,26 +950,6 @@ class ilObjTest extends ilObject
         return $end_time !== null ? $end_time->getTimestamp() : 0;
     }
 
-    public function getRedirectionMode(): int
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode();
-    }
-
-    public function isRedirectModeKiosk(): bool
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode() === self::REDIRECT_KIOSK;
-    }
-
-    public function isRedirectModeNone(): bool
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionMode() === self::REDIRECT_NONE;
-    }
-
-    public function getRedirectionUrl(): string
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getRedirectionUrl() ?? '';
-    }
-
     public function isPasswordEnabled(): bool
     {
         return $this->getMainSettings()->getAccessSettings()->getPasswordEnabled();
@@ -1004,7 +966,7 @@ class ilObjTest extends ilObject
             $this,
             $this->user,
             $this->db,
-            $this->lng
+            $this->test_result_repository
         );
 
         array_walk(
@@ -1242,6 +1204,8 @@ class ilObjTest extends ilObject
         if ($this->isRandomTest()) {
             $this->db->manipulate("DELETE FROM tst_test_rnd_qst WHERE {$in_active_ids}");
         }
+
+        $this->test_result_repository->removeTestResults($active_ids, $this->getId());
 
         foreach ($active_ids as $active_id) {
             // remove file uploads
@@ -1784,19 +1748,23 @@ class ilObjTest extends ilObject
      */
     public function getTestResult(
         int $active_id,
-        ?int $pass = null,
+        ?int $attempt = null,
         bool $ordered_sequence = false,
         bool $consider_hidden_questions = true,
         bool $consider_optional_questions = true
     ): array {
-        $results = $this->getResultsForActiveId($active_id);
+        $test_result = $this->test_result_repository->getTestResult($active_id);
 
-        if ($pass === null) {
-            $pass = (int) $results['pass'];
+        if ($test_result === null) {
+            $test_result = $this->test_result_repository->updateTestResultCache($active_id);
+        }
+
+        if ($attempt === null) {
+            $attempt = $test_result->getAttempt();
         }
 
         $test_sequence_factory = new ilTestSequenceFactory($this, $this->db, $this->questionrepository);
-        $test_sequence = $test_sequence_factory->getSequenceByActiveIdAndPass($active_id, $pass);
+        $test_sequence = $test_sequence_factory->getSequenceByActiveIdAndPass($active_id, $attempt);
 
         $test_sequence->setConsiderHiddenQuestionsEnabled($consider_hidden_questions);
         $test_sequence->setConsiderOptionalQuestionsEnabled($consider_optional_questions);
@@ -1836,33 +1804,22 @@ class ilObjTest extends ilObject
         $solutionresult = $this->db->queryF(
             $query,
             ['integer', 'integer'],
-            [$active_id, $pass]
+            [$active_id, $attempt]
         );
 
         while ($row = $this->db->fetchAssoc($solutionresult)) {
             $arr_results[ $row['question_fi'] ] = $row;
         }
 
-        $num_worked_through = count($arr_results);
+        $result = $this->db->query(
+            'SELECT qpl_questions.*, qpl_qst_type.type_tag, qpl_sol_sug.question_fi has_sug_sol' . PHP_EOL
+            . 'FROM	qpl_qst_type, qpl_questions' . PHP_EOL
+            . 'LEFT JOIN qpl_sol_sug' . PHP_EOL
+            . 'ON qpl_sol_sug.question_fi = qpl_questions.question_id' . PHP_EOL
+            . 'WHERE qpl_qst_type.question_type_id = qpl_questions.question_type_fi' . PHP_EOL
+            . 'AND ' . $this->db->in('qpl_questions.question_id', $sequence, false, 'integer')
+        );
 
-        $IN_question_ids = $this->db->in('qpl_questions.question_id', $sequence, false, 'integer');
-
-        $query = "
-			SELECT		qpl_questions.*,
-						qpl_qst_type.type_tag,
-						qpl_sol_sug.question_fi has_sug_sol
-
-			FROM		qpl_qst_type,
-						qpl_questions
-
-			LEFT JOIN	qpl_sol_sug
-			ON			qpl_sol_sug.question_fi = qpl_questions.question_id
-
-			WHERE		qpl_qst_type.question_type_id = qpl_questions.question_type_fi
-			AND			$IN_question_ids
-		";
-
-        $result = $this->db->query($query);
         $unordered = [];
         $key = 1;
         while ($row = $this->db->fetchAssoc($result)) {
@@ -1878,16 +1835,16 @@ class ilObjTest extends ilObject
             }
 
             $data = [
-                "nr" => "$key",
-                "title" => ilLegacyFormElementsUtil::prepareFormOutput($row['title']),
-                "max" => round($row['points'], 2),
-                "reached" => round($arr_results[$row['question_id']]['reached'] ?? 0, 2),
-                "percent" => sprintf("%2.2f ", ($percentvalue) * 100) . "%",
-                "solution" => ($row['has_sug_sol']) ? assQuestion::_getSuggestedSolutionOutput($row['question_id']) : '',
-                "type" => $row["type_tag"],
-                "qid" => $row['question_id'],
-                "original_id" => $row["original_id"],
-                "workedthrough" => isset($arr_results[$row['question_id']]) ? 1 : 0,
+                'nr' => $key,
+                'title' => ilLegacyFormElementsUtil::prepareFormOutput($row['title']),
+                'max' => round($row['points'], 2),
+                'reached' => round($arr_results[$row['question_id']]['reached'] ?? 0, 2),
+                'percent' => sprintf('%2.2f ', ($percentvalue) * 100) . '%',
+                'solution' => ($row['has_sug_sol']) ? assQuestion::_getSuggestedSolutionOutput($row['question_id']) : '',
+                'type' => $row['type_tag'],
+                'qid' => $row['question_id'],
+                'original_id' => $row['original_id'],
+                'workedthrough' => isset($arr_results[$row['question_id']]) ? 1 : 0,
                 'answered' => $arr_results[$row['question_id']]['answered'] ?? 0,
                 'finalized_evaluation' => $arr_results[$row['question_id']]['finalized_evaluation'] ?? 0,
             ];
@@ -1896,13 +1853,10 @@ class ilObjTest extends ilObject
             $key++;
         }
 
-        $numQuestionsTotal = count($unordered);
-
         $pass_max = 0;
         $pass_reached = 0;
 
         $found = [];
-
         foreach ($sequence as $qid) {
             // building pass point sums based on prepared data
             // for question that exists in users qst sequence
@@ -1911,13 +1865,7 @@ class ilObjTest extends ilObject
             $found[] = $unordered[$qid];
         }
 
-        $unordered = null;
-
         if ($this->getScoreCutting() == 1) {
-            if ($results['reached_points'] < 0) {
-                $results['reached_points'] = 0;
-            }
-
             if ($pass_reached < 0) {
                 $pass_reached = 0;
             }
@@ -1926,25 +1874,14 @@ class ilObjTest extends ilObject
         $found['pass']['total_max_points'] = $pass_max;
         $found['pass']['total_reached_points'] = $pass_reached;
         $found['pass']['percent'] = ($pass_max > 0) ? $pass_reached / $pass_max : 0;
-        $found['pass']['num_workedthrough'] = $num_worked_through;
-        $found['pass']['num_questions_total'] = $numQuestionsTotal;
+        $found['pass']['num_workedthrough'] = count($arr_results);
+        $found['pass']['num_questions_total'] = count($unordered);
 
-        $found["test"]["total_max_points"] = $results['max_points'];
-        $found["test"]["total_reached_points"] = $results['reached_points'];
-        $found["test"]["result_pass"] = $results['pass'];
-        $found['test']['result_tstamp'] = $results['tstamp'];
-
-        if ((!$found['pass']['total_reached_points']) or (!$found['pass']['total_max_points'])) {
-            $percentage = 0.0;
-        } else {
-            $percentage = ($found['pass']['total_reached_points'] / $found['pass']['total_max_points']) * 100.0;
-
-            if ($percentage < 0) {
-                $percentage = 0.0;
-            }
-        }
-
-        $found["test"]["passed"] = $results['passed'];
+        $found['test']['total_max_points'] = $test_result->getMaxPoints();
+        $found['test']['total_reached_points'] = $test_result->getReachedPoints();
+        $found['test']['result_pass'] = $attempt;
+        $found['test']['result_tstamp'] = $test_result->getTimestamp();
+        $found['test']['passed'] = $test_result->isPassed();
 
         return $found;
     }
@@ -2096,36 +2033,12 @@ class ilObjTest extends ilObject
         return $time;
     }
 
+    /**
+     * @depracated 11, will be removed in 12, use TestResultManager::fetchWorkingTime instead
+     */
     public function getWorkingTimeOfParticipantForPass(int $active_id, int $pass): int
     {
-        $result = $this->db->queryF(
-            "SELECT * FROM tst_times WHERE active_fi = %s AND pass = %s ORDER BY started",
-            ['integer','integer'],
-            [$active_id, $pass]
-        );
-        $time = 0;
-        while ($row = $this->db->fetchAssoc($result)) {
-            preg_match("/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/", $row["started"], $matches);
-            $epoch_1 = mktime(
-                (int) $matches[4],
-                (int) $matches[5],
-                (int) $matches[6],
-                (int) $matches[2],
-                (int) $matches[3],
-                (int) $matches[1]
-            );
-            preg_match("/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/", $row["finished"], $matches);
-            $epoch_2 = mktime(
-                (int) $matches[4],
-                (int) $matches[5],
-                (int) $matches[6],
-                (int) $matches[2],
-                (int) $matches[3],
-                (int) $matches[1]
-            );
-            $time += ($epoch_2 - $epoch_1);
-        }
-        return $time;
+        return $this->test_result_repository->fetchWorkingTime($active_id, $pass);
     }
 
     /**
@@ -2457,6 +2370,21 @@ class ilObjTest extends ilObject
         return $list->getAccessFilteredList(
             $this->participant_access_filter->getAccessStatisticsUserFilter($this->getRefId())
         );
+    }
+
+    /**
+     * return int[]
+     */
+    public function getAnonOnlyParticipantIds(): array
+    {
+        $list = new ilTestParticipantList($this, $this->user, $this->lng, $this->db);
+        $list->initializeFromDbRows($this->getTestParticipants());
+        if ($this->getAnonymity()) {
+            return $list->getAllUserIds();
+        }
+        return $list->getAccessFilteredList(
+            $this->participant_access_filter->getAnonOnlyParticipantsUserFilter($this->getRefId())
+        )->getAllUserIds();
     }
 
     public function getUnfilteredEvaluationData(): ilTestEvaluationData
@@ -3062,12 +2990,6 @@ class ilObjTest extends ilObject
                 case "count_system":
                     $scoring_settings = $scoring_settings->withCountSystem((int) $metadata["entry"]);
                     break;
-                case "mailnotification":
-                    $finishing_settings = $finishing_settings->withMailNotificationContentType((int) $metadata["entry"]);
-                    break;
-                case "mailnottype":
-                    $finishing_settings = $finishing_settings->withAlwaysSendMailNotification((bool) $metadata["entry"]);
-                    break;
                 case "exportsettings":
                     $result_details_settings = $result_details_settings->withExportSettings((int) $metadata["entry"]);
                     break;
@@ -3132,7 +3054,9 @@ class ilObjTest extends ilObject
                     $finishing_settings = $finishing_settings->withShowAnswerOverview((bool) $metadata["entry"]);
                     break;
                 case 'redirection_mode':
-                    $finishing_settings = $finishing_settings->withRedirectionMode((int) $metadata['entry']);
+                    $finishing_settings = $finishing_settings->withRedirectionMode(
+                        RedirectionModes::tryFrom((int) ($metadata['entry'] ?? 0)) ?? RedirectionModes::NONE
+                    );
                     break;
                 case 'redirection_url':
                     $finishing_settings = $finishing_settings->withRedirectionUrl($metadata['entry']);
@@ -3151,18 +3075,6 @@ class ilObjTest extends ilObject
                     break;
                 case 'show_grading_mark':
                     $result_summary_settings = $result_summary_settings->withShowGradingMarkEnabled((bool) $metadata["entry"]);
-                    break;
-                case 'activation_limited':
-                    $this->setActivationLimited((bool) $metadata['entry']);
-                    break;
-                case 'activation_start_time':
-                    $this->setActivationStartingTime($metadata['entry'] !== 'null' ? (int) $metadata['entry'] : null);
-                    break;
-                case 'activation_end_time':
-                    $this->setActivationEndingTime($metadata['entry'] !== 'null' ? (int) $metadata['entry'] : null);
-                    break;
-                case 'activation_visibility':
-                    $this->setActivationVisibility($metadata['entry']);
                     break;
                 case 'autosave':
                     $question_behaviour_settings = $question_behaviour_settings->withAutosaveEnabled((bool) $metadata['entry']);
@@ -3289,8 +3201,6 @@ class ilObjTest extends ilObject
             null,
             $settings->getRedirectionMode(),
             $settings->getRedirectionUrl(),
-            $settings->getMailNotificationContentType(),
-            $settings->getAlwaysSendMailNotification()
         );
     }
 
@@ -3469,7 +3379,7 @@ class ilObjTest extends ilObject
 
         $a_xml_writer->xmlStartTag('qtimetadatafield');
         $a_xml_writer->xmlElement("fieldlabel", null, "redirection_mode");
-        $a_xml_writer->xmlElement("fieldentry", null, $main_settings->getFinishingSettings()->getRedirectionMode());
+        $a_xml_writer->xmlElement("fieldentry", null, $main_settings->getFinishingSettings()->getRedirectionMode()->value);
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         $a_xml_writer->xmlStartTag('qtimetadatafield');
@@ -3606,16 +3516,6 @@ class ilObjTest extends ilObject
         $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "mailnotification");
-        $a_xml_writer->xmlElement("fieldentry", null, $main_settings->getFinishingSettings()->getMailNotificationContentType());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "mailnottype");
-        $a_xml_writer->xmlElement("fieldentry", null, (int) $main_settings->getFinishingSettings()->getAlwaysSendMailNotification());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
         $a_xml_writer->xmlElement("fieldlabel", null, "exportsettings");
         $a_xml_writer->xmlElement("fieldentry", null, $this->getExportSettings());
         $a_xml_writer->xmlEndTag("qtimetadatafield");
@@ -3689,26 +3589,6 @@ class ilObjTest extends ilObject
             );
             $a_xml_writer->xmlEndTag("qtimetadatafield");
         }
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "activation_limited");
-        $a_xml_writer->xmlElement("fieldentry", null, (int) $this->isActivationLimited());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "activation_start_time");
-        $a_xml_writer->xmlElement("fieldentry", null, (int) $this->getActivationStartingTime());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "activation_end_time");
-        $a_xml_writer->xmlElement("fieldentry", null, (int) $this->getActivationEndingTime());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
-
-        $a_xml_writer->xmlStartTag("qtimetadatafield");
-        $a_xml_writer->xmlElement("fieldlabel", null, "activation_visibility");
-        $a_xml_writer->xmlElement("fieldentry", null, (int) $this->getActivationVisibility());
-        $a_xml_writer->xmlEndTag("qtimetadatafield");
 
         $a_xml_writer->xmlStartTag("qtimetadatafield");
         $a_xml_writer->xmlElement("fieldlabel", null, "autosave");
@@ -5009,7 +4889,7 @@ class ilObjTest extends ilObject
             }
 
             if ($this->isBlockPassesAfterPassedEnabled() && !$testPassesSelector->openPassExists()) {
-                if (ilObjTestAccess::_isPassed($user_id, $this->getId())) {
+                if ($this->test_result_repository->isPassed($user_id, $this->getId())) {
                     $result['executable'] = false;
                     $result['errormessage'] = $this->lng->txt("tst_addit_passes_blocked_after_passed_msg");
                     return $result;
@@ -5671,11 +5551,6 @@ class ilObjTest extends ilObject
             'questionSetType' => $main_settings->getGeneralSettings()->getQuestionSetType(),
             'Anonymity' => (int) $main_settings->getGeneralSettings()->getAnonymity(),
 
-            'activation_limited' => $this->isActivationLimited(),
-            'activation_start_time' => $this->getActivationStartingTime(),
-            'activation_end_time' => $this->getActivationEndingTime(),
-            'activation_visibility' => $this->getActivationVisibility(),
-
             'IntroEnabled' => (int) $main_settings->getIntroductionSettings()->getIntroductionEnabled(),
             'ExamConditionsCheckboxEnabled' => (int) $main_settings->getIntroductionSettings()->getExamConditionsCheckboxEnabled(),
 
@@ -5716,10 +5591,8 @@ class ilObjTest extends ilObject
 
             'enable_examview' => $main_settings->getFinishingSettings()->getShowAnswerOverview(),
             'ShowFinalStatement' => (int) $main_settings->getFinishingSettings()->getConcludingRemarksEnabled(),
-            'redirection_mode' => $main_settings->getFinishingSettings()->getRedirectionMode(),
+            'redirection_mode' => $main_settings->getFinishingSettings()->getRedirectionMode()->value,
             'redirection_url' => $main_settings->getFinishingSettings()->getRedirectionUrl(),
-            'mailnotification' => $main_settings->getFinishingSettings()->getMailNotificationContentType(),
-            'mailnottype' => (int) $main_settings->getFinishingSettings()->getAlwaysSendMailNotification(),
 
             'skill_service' => (int) $main_settings->getAdditionalSettings()->getSkillsServiceEnabled(),
 
@@ -5802,14 +5675,6 @@ class ilObjTest extends ilObject
         } else {
             $info = 'old_mark_default_not_applied';
         }
-
-
-        $this->storeActivationSettings(
-            (bool) ($testsettings['is_activation_limited'] ?? false),
-            $activation_starting_time,
-            $activation_ending_time,
-            (bool) ($testsettings['activation_visibility'] ?? false),
-        );
 
         $main_settings = $this->getMainSettings();
 
@@ -5922,13 +5787,9 @@ class ilObjTest extends ilObject
                     )->withConcludingRemarksEnabled(
                         $testsettings['ShowFinalStatement'] ?? $finishing_settings->getConcludingRemarksEnabled()
                     )->withRedirectionMode(
-                        $testsettings['redirection_mode'] ?? $finishing_settings->getRedirectionMode()
+                        RedirectionModes::tryFrom($testsettings['redirection_mode'] ?? 0) ?? $finishing_settings->getRedirectionMode()
                     )->withRedirectionUrl(
                         $testsettings['redirection_url'] ?? $finishing_settings->getRedirectionUrl()
-                    )->withMailNotificationContentType(
-                        $testsettings['mailnotification'] ?? $finishing_settings->getMailNotificationContentType()
-                    )->withAlwaysSendMailNotification(
-                        $testsettings['mailnottype'] ?? $finishing_settings->getAlwaysSendMailNotification()
                     )
             )->withAdditionalSettings(
                 $additional_settings
@@ -6397,7 +6258,7 @@ class ilObjTest extends ilObject
     public function isPluginActive($a_pname): bool
     {
         if (!$this->component_repository->getComponentByTypeAndName(
-            ilComponentInfo::TYPE_MODULES,
+            ilComponentInfo::TYPE_COMPONENT,
             'TestQuestionPool'
         )->getPluginSlotById('qst')->hasPluginName($a_pname)) {
             return false;
@@ -6405,7 +6266,7 @@ class ilObjTest extends ilObject
 
         return $this->component_repository
             ->getComponentByTypeAndName(
-                ilComponentInfo::TYPE_MODULES,
+                ilComponentInfo::TYPE_COMPONENT,
                 'TestQuestionPool'
             )
             ->getPluginSlotById(
@@ -6414,23 +6275,6 @@ class ilObjTest extends ilObject
             ->getPluginByName(
                 $a_pname
             )->isActive();
-    }
-
-    public function getPassed($active_id)
-    {
-        $result = $this->db->queryF(
-            "SELECT passed FROM tst_result_cache WHERE active_fi = %s",
-            ['integer'],
-            [$active_id]
-        );
-        if ($result->numRows()) {
-            $row = $this->db->fetchAssoc($result);
-            return $row['passed'];
-        } else {
-            $counted_pass = ilObjTest::_getResultPass($active_id);
-            $result_array = &$this->getTestResult($active_id, $counted_pass);
-            return $result_array["test"]["passed"];
-        }
     }
 
     /**
@@ -6555,85 +6399,6 @@ class ilObjTest extends ilObject
             ->write();
     }
 
-    public function getMailNotification(): int
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getMailNotificationContentType();
-    }
-
-    public function sendSimpleNotification($active_id)
-    {
-        $mail = new ilTestMailNotification();
-        $owner_id = $this->getOwner();
-        $usr_data = $this->userLookupFullName(ilObjTest::_getUserIdFromActiveId($active_id));
-        $mail->sendSimpleNotification($owner_id, $this->getTitle(), $usr_data);
-    }
-
-    public function sendAdvancedNotification(int $active_id): void
-    {
-        $mail = new ilTestMailNotification();
-        $owner_id = $this->getOwner();
-        $usr_data = $this->userLookupFullName(ilObjTest::_getUserIdFromActiveId($active_id));
-
-        $path = $this->export_factory->getExporter(
-            $this,
-            ExportImportTypes::SCORED_ATTEMPT
-        )->withFilterByActiveId($active_id)
-            ->write();
-
-        $delivered_file_name = 'result_' . $active_id . '.xlsx';
-        $fd = new ilFileDataMail(ANONYMOUS_USER_ID);
-        $fd->copyAttachmentFile($path, $delivered_file_name);
-        $file_names[] = $delivered_file_name;
-
-        $mail->sendAdvancedNotification($owner_id, $this->getTitle(), $usr_data, $file_names);
-
-        if (count($file_names)) {
-            $fd->unlinkFiles($file_names);
-            unset($fd);
-            @unlink($path);
-        }
-    }
-
-    public function getResultsForActiveId(int $active_id): array
-    {
-        $query = "
-			SELECT		*
-			FROM		tst_result_cache
-			WHERE		active_fi = %s
-		";
-
-        $result = $this->db->queryF(
-            $query,
-            ['integer'],
-            [$active_id]
-        );
-
-        if (!$result->numRows()) {
-            $this->updateTestResultCache($active_id);
-
-            $query = "
-				SELECT		*
-				FROM		tst_result_cache
-				WHERE		active_fi = %s
-			";
-
-            $result = $this->db->queryF(
-                $query,
-                ['integer'],
-                [$active_id]
-            );
-        }
-
-        $row = $this->db->fetchAssoc($result);
-
-        return $row;
-    }
-
-    public function getMailNotificationType(): bool
-    {
-        return $this->getMainSettings()->getFinishingSettings()->getAlwaysSendMailNotification();
-    }
-
     public function getExportSettings(): int
     {
         return $this->getScoreSettings()->getResultDetailsSettings()->getExportSettings();
@@ -6755,56 +6520,6 @@ class ilObjTest extends ilObject
     public function isOnline(): bool
     {
         return $this->online;
-    }
-
-    public function setActivationVisibility($a_value)
-    {
-        $this->activation_visibility = (bool) $a_value;
-    }
-
-    public function getActivationVisibility(): bool
-    {
-        return $this->activation_visibility;
-    }
-
-    public function isActivationLimited(): ?bool
-    {
-        return $this->activation_limited;
-    }
-
-    public function setActivationLimited($a_value)
-    {
-        $this->activation_limited = (bool) $a_value;
-    }
-
-    public function storeActivationSettings(
-        ?bool $is_activation_limited = false,
-        ?int $activation_starting_time = null,
-        ?int $activation_ending_time = null,
-        bool $activation_visibility = false,
-    ): void {
-        if (!$this->ref_id) {
-            return;
-        }
-
-        $item = new ilObjectActivation();
-        $is_activation_limited ??= false;
-
-        if (!$is_activation_limited) {
-            $item->setTimingType(ilObjectActivation::TIMINGS_DEACTIVATED);
-        } else {
-            $item->setTimingType(ilObjectActivation::TIMINGS_ACTIVATION);
-            $item->setTimingStart($activation_starting_time);
-            $item->setTimingEnd($activation_ending_time);
-            $item->toggleVisible($activation_visibility);
-        }
-
-        $item->update($this->ref_id);
-
-        $this->setActivationLimited($is_activation_limited);
-        $this->setActivationStartingTime($activation_starting_time);
-        $this->setActivationStartingTime($activation_ending_time);
-        $this->setActivationVisibility($activation_visibility);
     }
 
     public function getIntroductionPageId(): int
@@ -6955,26 +6670,6 @@ class ilObjTest extends ilObject
     public function getEnableExamview(): bool
     {
         return $this->getMainSettings()->getFinishingSettings()->getShowAnswerOverview();
-    }
-
-    public function setActivationStartingTime(?int $starting_time = null)
-    {
-        $this->activation_starting_time = $starting_time;
-    }
-
-    public function setActivationEndingTime(?int $ending_time = null)
-    {
-        $this->activation_ending_time = $ending_time;
-    }
-
-    public function getActivationStartingTime(): ?int
-    {
-        return $this->activation_starting_time;
-    }
-
-    public function getActivationEndingTime(): ?int
-    {
-        return $this->activation_ending_time;
     }
 
     /**
@@ -7394,168 +7089,6 @@ class ilObjTest extends ilObject
             $this->score_settings_repo = new ScoreSettingsDatabaseRepository($this->db);
         }
         return $this->score_settings_repo;
-    }
-
-    public function updateTestResultCache(int $active_id, ?ilAssQuestionProcessLocker $process_locker = null): void
-    {
-        $pass = ilObjTest::_getResultPass($active_id);
-
-        if ($pass !== null) {
-            $query = '
-                SELECT		tst_pass_result.*,
-                            tst_active.last_finished_pass
-                FROM		tst_pass_result
-                INNER JOIN  tst_active
-                on          tst_pass_result.active_fi = tst_active.active_id
-                WHERE		active_fi = %s
-                AND			pass = %s
-            ';
-
-            $result = $this->db->queryF(
-                $query,
-                ['integer','integer'],
-                [$active_id, $pass]
-            );
-
-            $test_pass_result_row = $this->db->fetchAssoc($result);
-
-            if (!is_array($test_pass_result_row)) {
-                $test_pass_result_row = [];
-            }
-            $max = (float) ($test_pass_result_row['maxpoints'] ?? 0);
-            $reached = (float) ($test_pass_result_row['points'] ?? 0);
-            $percentage = ($max <= 0.0 || $reached <= 0.0) ? 0 : ($reached / $max) * 100.0;
-
-            $mark = $this->getMarkSchema()->getMatchingMark($percentage);
-            $is_passed = $test_pass_result_row['last_finished_pass'] !== null
-                && $pass <= $test_pass_result_row['last_finished_pass']
-                && $mark->getPassed();
-
-            $user_test_result_update_callback = function () use ($active_id, $pass, $max, $reached, $is_passed, $mark) {
-                $passed_once_before = 0;
-                $query = 'SELECT passed_once FROM tst_result_cache WHERE active_fi = %s';
-                $res = $this->db->queryF($query, ['integer'], [$active_id]);
-                while ($passed_once_result_row = $this->db->fetchAssoc($res)) {
-                    $passed_once_before = (int) $passed_once_result_row['passed_once'];
-                }
-
-                $passed_once = (int) ($is_passed || $passed_once_before);
-
-                $this->db->manipulateF(
-                    'DELETE FROM tst_result_cache WHERE active_fi = %s',
-                    ['integer'],
-                    [$active_id]
-                );
-
-                if ($reached < 0.0) {
-                    $reached = 0.0;
-                }
-
-                $mark_short_name = $mark->getShortName();
-                if ($mark_short_name === '') {
-                    $mark_short_name = ' ';
-                }
-
-                $mark_official_name = $mark->getOfficialName();
-                if ($mark_official_name === '') {
-                    $mark_official_name = ' ';
-                }
-
-                $this->db->insert(
-                    'tst_result_cache',
-                    [
-                        'active_fi' => ['integer', $active_id],
-                        'pass' => ['integer', $pass ?? 0],
-                        'max_points' => ['float', $max],
-                        'reached_points' => ['float', $reached],
-                        'mark_short' => ['text', $mark_short_name],
-                        'mark_official' => ['text', $mark_official_name],
-                        'passed_once' => ['integer', $passed_once],
-                        'passed' => ['integer', (int) $is_passed],
-                        'failed' => ['integer', (int) !$is_passed],
-                        'tstamp' => ['integer', time()]
-                    ]
-                );
-            };
-
-            if (is_object($process_locker)) {
-                $process_locker->executeUserTestResultUpdateLockOperation($user_test_result_update_callback);
-            } else {
-                $user_test_result_update_callback();
-            }
-        }
-    }
-
-    public function updateTestPassResults(
-        int $active_id,
-        int $pass,
-        ?ilAssQuestionProcessLocker $process_locker = null,
-        ?int $test_obj_id = null
-    ): array {
-        $data = $this->getQuestionCountAndPointsForPassOfParticipant($active_id, $pass);
-        $time = $this->getWorkingTimeOfParticipantForPass($active_id, $pass);
-
-        $result = $this->db->queryF(
-            '
-			SELECT		SUM(points) reachedpoints,
-						COUNT(DISTINCT(question_fi)) answeredquestions
-			FROM		tst_test_result
-			WHERE		active_fi = %s
-			AND			pass = %s
-			',
-            ['integer','integer'],
-            [$active_id, $pass]
-        );
-
-        if ($result->numRows() > 0) {
-            $row = $this->db->fetchAssoc($result);
-
-            if ($row['reachedpoints'] === null
-                || $row['reachedpoints'] < 0.0) {
-                $row['reachedpoints'] = 0.0;
-            }
-
-            $exam_identifier = ilObjTest::buildExamId($active_id, $pass, $test_obj_id);
-
-            $update_pass_result_callback = function () use ($data, $active_id, $pass, $row, $time, $exam_identifier) {
-                $this->db->replace(
-                    'tst_pass_result',
-                    [
-                        'active_fi' => ['integer', $active_id],
-                        'pass' => ['integer', $pass]
-                    ],
-                    [
-                        'points' => ['float', $row['reachedpoints']],
-                        'maxpoints' => ['float', $data['points']],
-                        'questioncount' => ['integer', $data['count']],
-                        'answeredquestions' => ['integer', $row['answeredquestions']],
-                        'workingtime' => ['integer', $time],
-                        'tstamp' => ['integer', time()],
-                        'exam_id' => ['text', $exam_identifier]
-                    ]
-                );
-            };
-
-            if (is_object($process_locker) && $process_locker instanceof ilAssQuestionProcessLocker) {
-                $process_locker->executeUserPassResultUpdateLockOperation($update_pass_result_callback);
-            } else {
-                $update_pass_result_callback();
-            }
-        }
-
-        $this->updateTestResultCache($active_id, $process_locker);
-
-        return [
-            'active_fi' => $active_id,
-            'pass' => $pass,
-            'points' => $row['reachedpoints'],
-            'maxpoints' => $data['points'],
-            'questioncount' => $data['count'],
-            'answeredquestions' => $row['answeredquestions'],
-            'workingtime' => $time,
-            'tstamp' => time(),
-            'exam_id' => $exam_identifier
-        ];
     }
 
     public function addToNewsOnOnline(

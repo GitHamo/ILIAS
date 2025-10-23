@@ -85,8 +85,10 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
 
         $this->initJavascript();
 
-        if (!$this->test_access->checkScoreParticipantsAccess()
-            || !$this->object->getGlobalSettings()->isManualScoringEnabled()) {
+        $globally_enabled = $this->object->getGlobalSettings()->isManualScoringEnabled();
+        $access_granted = $this->test_access->checkScoreParticipantsAccess()
+            || $this->test_access->checkScoreParticipantsAccessAnon();
+        if (!($globally_enabled && $access_granted)) {
             $this->tpl->setOnScreenMessage('info', $this->lng->txt('cannot_edit_test'), true);
             $this->ctrl->redirectByClass([\ilRepositoryGUI::class, \ilObjTestGUI::class, \ilInfoScreenGUI::class]);
         }
@@ -141,7 +143,8 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
                     $this->participant_access_filter,
                     $this->object,
                     $question_id
-                )
+                ),
+                $this->object->getAnonymity() || !$this->test_access->checkScoreParticipantsAccess(),
             )
         ];
 
@@ -198,7 +201,7 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
             $feedback_text = \ilUtil::stripSlashes(
                 $form->getInput('feedback'),
                 false,
-                \ilObjAdvancedEditing::_getUsedHTMLTagsAsString('assessment')
+                \ilRTESettings::_getUsedHTMLTagsAsString('assessment')
             );
         }
         if ($new_reached_points !== $previously_reached_points) {
@@ -332,7 +335,7 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
         ))->getHTMLAsync());
 
         return $this->ui_factory->modal()->roundtrip(
-            $this->getModalTitle($active_id),
+            $this->getModalTitle($active_id, $attempt),
             $content
         );
     }
@@ -377,10 +380,15 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
         );
     }
 
-    private function getModalTitle(int $active_id): string
+    private function getModalTitle(int $active_id, int $attempt): string
     {
-        if ($this->object->getAnonymity() === true) {
-            return $this->lng->txt('answers_of') . ' ' . $this->lng->txt('anonymous');
+        $usr_id = $this->object->_getUserIdFromActiveId($active_id);
+        if ($this->object->getAnonymity() === true
+            || in_array($usr_id, $this->object->getAnonOnlyParticipantIds())
+        ) {
+            return $this->lng->txt('answers_of')
+                . ' '
+                . \ilObjTest::buildExamId($active_id, $attempt, $this->object->getId());
         }
         return $this->lng->txt('answers_of') . ' ' . $this->object->getCompleteEvaluationData()
             ->getParticipant($active_id)
@@ -427,7 +435,6 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
         $reached_points_input->allowDecimals(true);
         $reached_points_input->setSize(5);
         $reached_points_input->setMaxValue($available_points, true);
-        $reached_points_input->setMinValue(0);
         $reached_points_input->setDisabled($finalized);
         $reached_points_input->setValue((string) $reached_points);
         $reached_points_input->setClientSideValidation(true);
@@ -495,7 +502,7 @@ class TestScoringByQuestionGUI extends TestScoringByParticipantGUI
             $this->tpl->addJavaScript($math_jax_setting->get('path_to_mathjax'));
         }
 
-        if (\ilObjAdvancedEditing::_getRichTextEditor() === 'tinymce') {
+        if ((new \ilRTESettings($this->lng, $this->user))->getRichTextEditor() === 'tinymce') {
             $this->initTinymce();
         }
     }
