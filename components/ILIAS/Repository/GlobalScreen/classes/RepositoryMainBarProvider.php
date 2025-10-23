@@ -35,7 +35,7 @@ use ILIAS\DI\Container;
 use ILIAS\Repository\StandardGUIRequest;
 use ilStr;
 use ilPDSelectedItemsBlockViewSettings;
-use ILIAS\UI\Component\Legacy\Content;
+use ILIAS\UI\Component\Legacy;
 use ilFavouritesListGUI;
 
 /**
@@ -96,7 +96,7 @@ class RepositoryMainBarProvider extends AbstractStaticMainMenuProvider
         $entries[]
             = $this->mainmenu->complex($this->if->identifier('rep_tree_view'))
             ->withVisibilityCallable($access_helper->isRepositoryVisible())
-            ->withContentWrapper(function () use ($ref_id): Content {
+            ->withContentWrapper(function () use ($ref_id): Legacy\Content {
                 return $this->dic->ui()->factory()->legacy()->content($this->renderRepoTree($ref_id));
             })
             ->withSupportsAsynchronousLoading($asynch)
@@ -116,7 +116,7 @@ class RepositoryMainBarProvider extends AbstractStaticMainMenuProvider
             ->withPosition(30)
             ->withSymbol($icon)
             ->withParent($top)
-            ->withContentWrapper(function () use ($p): Content {
+            ->withContentWrapper(function () use ($p): Legacy\Content {
                 return $this->dic->ui()->factory()->legacy()->content($p->renderLastVisited());
             });
 
@@ -128,7 +128,7 @@ class RepositoryMainBarProvider extends AbstractStaticMainMenuProvider
                                     ->withTitle($title)
                                     ->withSymbol($icon)
                                     ->withContentWrapper(
-                                        static fn(): Legacy =>
+                                        static fn(): Legacy\Content =>
                                             $f->legacy()->content((new ilFavouritesListGUI())->render())
                                     )
                                     ->withParent(StandardTopItemsProvider::getInstance()->getPersonalWorkspaceIdentification())

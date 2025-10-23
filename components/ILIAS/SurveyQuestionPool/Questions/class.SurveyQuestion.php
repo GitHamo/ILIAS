@@ -40,7 +40,6 @@ class SurveyQuestion
     public bool $obligatory;
     public ilLanguage $lng;
     public int $orientation;    // 0 = vertical, 1 = horizontal
-    /** @var ilSurveyMaterial[] */
     public array $material;
     public bool $complete;
     protected array $cumulated;
