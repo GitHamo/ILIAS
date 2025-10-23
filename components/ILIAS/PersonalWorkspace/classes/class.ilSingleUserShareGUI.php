@@ -28,7 +28,7 @@ class ilSingleUserShareGUI
     protected ilLanguage $lng;
 
     public function __construct(
-        ilPortfolioAccessHandler|ilWorkspaceAccessHandler $wsp_access_handler = null,
+        ilPortfolioAccessHandler|ilWorkspaceAccessHandler|null $wsp_access_handler = null,
         ?int $wsp_node_id = null
     ) {
         global $DIC;
