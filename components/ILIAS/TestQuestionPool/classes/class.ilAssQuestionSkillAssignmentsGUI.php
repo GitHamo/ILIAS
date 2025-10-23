@@ -22,6 +22,7 @@ use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\TestQuestionPool\QuestionPoolDIC;
 use ILIAS\TestQuestionPool\RequestDataCollector;
 use ILIAS\Skill\Service\SkillUsageService;
+use ILIAS\TestQuestionPool\Skills\ilAssQuestionSkillUsagesGUI;
 use ILIAS\TestQuestionPool\Skills\SkillsByQuestionOverviewTable;
 use ILIAS\TestQuestionPool\Skills\EditSkillsOfQuestionTable;
 use ILIAS\TestQuestionPool\Skills\SkillAssignmentTableActions;
@@ -90,7 +91,8 @@ class ilAssQuestionSkillAssignmentsGUI
         private ilAccessHandler $access,
         private ilGlobalTemplateInterface $tpl,
         private ilLanguage $lng,
-        private ilDBInterface $db
+        private ilDBInterface $db,
+        private ilTabsGUI $tabs
     ) {
 
         $local_dic = QuestionPoolDIC::dic();
@@ -187,6 +189,10 @@ class ilAssQuestionSkillAssignmentsGUI
             $this->ctrl->redirect($this, self::CMD_SHOW_SKILL_QUEST_ASSIGNS);
         }
 
+        if (in_array($command, [self::CMD_EDIT_SKILL_QUEST_ASSIGNS])) {
+            $this->modifyTabs();
+        }
+
         switch ($nextClass) {
             case strtolower(__CLASS__):
             case '':
@@ -199,6 +205,27 @@ class ilAssQuestionSkillAssignmentsGUI
 
                 throw new ilTestQuestionPoolException('unsupported next class in ctrl flow');
         }
+    }
+
+    private function modifyTabs(): void
+    {
+        $this->tabs->clearTargets();
+        $this->tabs->setBackTarget(
+            $this->lng->txt('back'),
+            $this->ctrl->getLinkTargetByClass(
+                ilAssQuestionSkillAssignmentsGUI::class,
+                ilAssQuestionSkillAssignmentsGUI::CMD_SHOW_SKILL_QUEST_ASSIGNS
+            )
+        );
+        $this->tabs->addTab(
+            strtolower(ilAssQuestionSkillAssignmentsGUI::class),
+            $this->lng->txt('qpl_skl_sub_tab_quest_assign'),
+            $this->ctrl->getLinkTargetByClass(
+                ilAssQuestionSkillAssignmentsGUI::class,
+                ilAssQuestionSkillAssignmentsGUI::CMD_EDIT_SKILL_QUEST_ASSIGNS
+            )
+        );
+        $this->tabs->activateTab(strtolower(ilAssQuestionSkillAssignmentsGUI::class));
     }
 
     private function isAvoidManipulationRedirectRequired($command): bool
