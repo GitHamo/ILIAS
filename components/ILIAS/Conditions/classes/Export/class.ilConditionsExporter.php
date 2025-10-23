@@ -23,7 +23,6 @@ use ILIAS\Conditions\Export\Factory as ConditionExportFactory;
 class ilConditionsExporter extends ilXmlExporter
 {
     protected const string ENTITY = 'cond';
-    protected const array CONTAINER_TYPES = ['crs', 'grp', 'cat'];
     protected ConditionExportFactory $factory;
     protected ilTree $tree;
 
@@ -40,9 +39,6 @@ class ilConditionsExporter extends ilXmlExporter
         string $a_id
     ): string {
         if ($a_entity !== self::ENTITY) {
-            return '';
-        }
-        if (!in_array(ilObject::_lookupType((int) $a_id), self::CONTAINER_TYPES)) {
             return '';
         }
         $ref_id = min(ilObject::_getAllReferences((int) $a_id));
