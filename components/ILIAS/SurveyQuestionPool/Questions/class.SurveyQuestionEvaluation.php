@@ -52,7 +52,7 @@ abstract class SurveyQuestionEvaluation
      *
      * @return ilSurveyEvaluationResults|array
      */
-    public function getResults(): ilSurveyEvaluationResults
+    public function getResults(): ilSurveyEvaluationResults|array
     {
         $results = new ilSurveyEvaluationResults($this->question);
         $answers = $this->getAnswerData();
