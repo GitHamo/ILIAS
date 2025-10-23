@@ -42,7 +42,7 @@ class ilConditionsImporter extends ilXmlImporter
         if ($a_entity !== self::ENTITY) {
             return;
         }
-        $root_id = (int) min(array_keys($a_mapping->getAllMappings()['components/ILIAS/Container']['objs']));
+        $root_id = $this->determineRootIdOfImportTree($a_mapping);
         if ($root_id !== (int) $a_id) {
             return;
         }
@@ -54,6 +54,14 @@ class ilConditionsImporter extends ilXmlImporter
         $updated_infos = $this->updateInfosWithMapping($infos, $a_mapping);
         $repository = $this->factory->repository();
         $repository->writeByInfos($updated_infos);
+    }
+
+    protected function determineRootIdOfImportTree(
+        ilImportMapping $mapping
+    ): int {
+        // $root_id relies on the fact that the smallest obj_id belongs to the first imported
+        // object, wich is the root of the imported object tree
+        return (int) min(array_keys($mapping->getAllMappings()['components/ILIAS/Container']['objs']));
     }
 
     protected function updateInfosWithMapping(
