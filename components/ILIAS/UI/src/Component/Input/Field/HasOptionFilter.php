@@ -23,18 +23,12 @@ namespace ILIAS\UI\Component\Input\Field;
 use ILIAS\UI\Component\Input\Container\Form\FormInput;
 
 /**
- * This is what a radio-input looks like.
+ * Allows fields with list-like items to be collapsible with a searchbar filter
  */
-interface Radio extends HasOptionFilter
+interface HasOptionFilter extends FormInput
 {
     /**
-     * Add an option-entry to the radio-input.
+     * Adds a collapsed view and a searchbar to the field.
      */
-    public function withOption(string $value, string $label, ?string $byline = null): Radio;
-
-    /**
-     * Get byline for a single option.
-     * Returns null, if none present.
-     */
-    public function getBylineFor(string $value): ?string;
+    public function withHasOptionFilter(bool $has_option_filter = true): static;
 }

@@ -14,17 +14,23 @@
  * https://www.ilias.de
  * https://github.com/ILIAS-eLearning
  *
- *********************************************************************/
+ * @author Thibeau Fuhrer <thibeau@sr.solutions>
+ */
 
 declare(strict_types=1);
 
-namespace ILIAS\UI\Component\Input\Field;
+namespace ILIAS\UI\Implementation\Component\Input\Field;
 
-use ILIAS\UI\Component\Input\Container\Filter\FilterInput;
+use ILIAS\UI\Implementation\Component\Input as I;
+use ILIAS\UI\Component\Input as C;
 
 /**
- * This describes a multi-select input.
+ * @see I\Field\HasOptionFilter for implementation
  */
-interface MultiSelect extends FilterInput, HasOptionFilter
+interface HasOptionFilterInternal extends C\Field\HasOptionFilter
 {
+    /**
+     * @return array<string, string> (value => label)
+     */
+    public function getOptions(): array;
 }

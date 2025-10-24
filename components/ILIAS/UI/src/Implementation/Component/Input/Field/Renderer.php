@@ -626,6 +626,11 @@ class Renderer extends AbstractComponentRenderer
         $id = $this->createId();
 
         foreach ($component->getOptions() as $value => $label) {
+            // @todo: can we get rid of this enganglement?
+            if ($component->hasOptionFilter()) {
+                $tpl->touchBlock('is_filter_option');
+            }
+
             $opt_id = $id . '_' . $value . '_opt';
 
             $tpl->setCurrentBlock('optionblock');
@@ -649,7 +654,16 @@ class Renderer extends AbstractComponentRenderer
             $tpl->parseCurrentBlock();
         }
 
-        return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get());
+        if ($component->hasOptionFilter()) {
+            // @todo: can we get rid of this enganglement?
+            $tpl->touchBlock("has_option_filter");
+            $field_html = $tpl->get();
+            [$field_html, $component] = $this->renderOptionFilter($field_html, $component, $default_renderer);
+        } else {
+            $field_html = $tpl->get();
+        }
+
+        return $this->wrapInFormContext($component, $component->getLabel(), $field_html);
     }
 
     protected function renderMultiSelectField(F\MultiSelect $component, RendererInterface $default_renderer): string
@@ -661,6 +675,11 @@ class Renderer extends AbstractComponentRenderer
             $value = $component->getValue();
             $name = $this->applyName($component, $tpl);
             foreach ($options as $opt_value => $opt_label) {
+                // @todo: can we get rid of this enganglement?
+                if ($component->hasOptionFilter()) {
+                    $tpl->touchBlock('is_filter_option');
+                }
+
                 $tpl->setCurrentBlock("option");
                 $tpl->setVariable("NAME", $name);
                 $tpl->setVariable("VALUE", $opt_value);
@@ -669,13 +688,23 @@ class Renderer extends AbstractComponentRenderer
                 if ($value && in_array($opt_value, $value)) {
                     $tpl->setVariable("CHECKED", 'checked="checked"');
                 }
+
                 $tpl->parseCurrentBlock();
             }
         } else {
             $tpl->touchBlock("no_options");
         }
 
-        return $this->wrapInFormContext($component, $component->getLabel(), $tpl->get());
+        if ($component->hasOptionFilter()) {
+            // @todo: can we get rid of this enganglement?
+            $tpl->touchBlock("has_option_filter");
+            $field_html = $tpl->get();
+            [$field_html, $component] = $this->renderOptionFilter($field_html, $component, $default_renderer);
+        } else {
+            $field_html = $tpl->get();
+        }
+
+        return $this->wrapInFormContext($component, $component->getLabel(), $field_html);
     }
 
     protected function renderDateTimeField(F\DateTime $component, RendererInterface $default_renderer): string
@@ -1218,5 +1247,52 @@ class Renderer extends AbstractComponentRenderer
         $template->parseCurrentBlock();
 
         $template->parseCurrentBlock();
+    }
+
+    /**
+     * Renders a list search around input fields that support it.
+     *
+     * @param string $input_html Rendered HTML of the inner input field made searchable.
+     * @param F\HasOptionFilterInternal $component The component object to attach onload JavaScript to.
+     * @return array{0: string, 1: F\HasOptionFilterInternal}
+     */
+    protected function renderOptionFilter(string $input_html, F\HasOptionFilterInternal $component, RendererInterface $default_renderer): array
+    {
+        $option_filter_template = $this->getTemplate("tpl.option_filter.html", true, true);
+        $option_filter_template->setVariable('INPUT', $input_html);
+
+        $search_input_id = $this->createId();
+        $search_input_label_id = $this->createId();
+        $search_input_description_id = $this->createId();
+        $list_id = $this->createId();
+
+        $option_filter_template->setVariable('SEARCH_INPUT_ID', $search_input_id);
+        $option_filter_template->setVariable('SEARCH_INPUT_LABEL_ID', $search_input_label_id);
+        $option_filter_template->setVariable('SEARCH_INPUT_DESCRIPTION_ID', $search_input_description_id);
+        $option_filter_template->setVariable('LIST_ID', $list_id);
+
+        $no_selection_text = $this->txt('ui_field_option_filter_no_selection');
+        $option_filter_template->setVariable('NOTHING_SELECTED', $no_selection_text);
+        $option_filter_template->setVariable('ARIA_FILTERED_RESULTS', $this->txt('ui_field_option_filter_filtered_results_aria_label'));
+
+        $option_filter_template->setVariable('SEARCH_LABEL', $this->txt("ui_field_option_filter_search_in"));
+        $option_filter_template->setVariable('SCREEN_READER_HINT', $this->txt('ui_field_option_filter_screen_reader_hint'));
+        $option_filter_template->setVariable('NO_MATCH', $this->txt('ui_field_option_filter_no_match'));
+        $option_filter_template->setVariable('OPTIONS_SHOWN', $this->txt('ui_field_option_filter_options_shown'));
+
+        $expand_icon = $default_renderer->render($this->getUIFactory()->symbol()->glyph()->expand());
+        $option_filter_template->setVariable('EXPAND_TEXT', $expand_icon . $this->txt('ui_field_option_filter_show_all_options'));
+
+        $collapse_icon = $default_renderer->render($this->getUIFactory()->symbol()->glyph()->collapseHorizontal());
+        $option_filter_template->setVariable('COLLAPSE_TEXT', $collapse_icon . $this->txt('ui_field_option_filter_show_less'));
+
+        $remove_icon = $default_renderer->render($this->getUIFactory()->symbol()->glyph()->remove());
+        $option_filter_template->setVariable('CLEAR_SEARCH_BTN', $remove_icon . $this->txt('ui_field_option_filter_clear_search'));
+
+        $component = $component->withAdditionalOnLoadCode(
+            static fn($id): string => "il.UI.Input.optionFilter.init(document.getElementById('$id'));",
+        );
+
+        return [$option_filter_template->get(), $component];
     }
 }
