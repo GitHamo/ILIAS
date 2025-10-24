@@ -21,10 +21,13 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway;
 
 use ILIAS\ApiGateway\Models\Payload;
+use Throwable;
 
 interface Webservice
 {
     public function getProtocol(): ServiceProtocol;
 
     public function handle(Payload $payload): Payload;
+
+    public function handleError(Throwable $exception): Payload;
 }

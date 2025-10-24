@@ -20,16 +20,18 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Webservices;
 
+use ILIAS\ApiGateway\Configuration\WebConfig;
 use ILIAS\ApiGateway\Models\Payload;
 use ILIAS\ApiGateway\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice;
 use Override;
 use RuntimeException;
+use Throwable;
 
 readonly class RestWebservice implements Webservice
 {
     public function __construct(
-        private bool $debug,
+        private WebConfig $config,
     ) {}
 
     #[Override]
@@ -41,19 +43,50 @@ readonly class RestWebservice implements Webservice
     #[Override]
     public function handle(Payload $payload): Payload
     {
-        $jsonFlags = $this->debug ? JSON_PRETTY_PRINT : 0;
-
-        $responseBody = json_encode([
+        $payloadData = [
             'success' => true,
             'data' => $payload->getData(),
-        ], $jsonFlags);
+        ];
 
-        if ($responseBody === false) {
-            throw new RuntimeException('Failed to encode payload');
+        $jsonFlags = $this->config->debugMode ? JSON_PRETTY_PRINT : 0;
+
+        return $this->createPayload($payloadData, $jsonFlags);
+    }
+
+    #[Override]
+    public function handleError(Throwable $exception): Payload
+    {
+        $payloadData = [
+            'success' => false,
+            'error' => $exception->getMessage(),
+        ];
+
+        if ($this->config->logErrorDetails) {
+            $payloadData['stack'] = $exception->getTrace();
         }
 
-        return $payload
-            ->withHeader('Content-Type', 'application/json')
-            ->withBody($responseBody);
+        $jsonFlags = $this->config->debugMode ? JSON_PRETTY_PRINT : 0;
+        $jsonFlags |= JSON_UNESCAPED_SLASHES;
+        $jsonFlags |= JSON_UNESCAPED_UNICODE;
+
+        return $this->createPayload($payloadData, $jsonFlags);
+    }
+
+    private function createPayload(mixed $data, int $jsonFlags): Payload
+    {
+        $body = json_encode($data, $jsonFlags);
+
+        if ($body === false) {
+            throw new RuntimeException('Failed to encode payload data');
+        }
+
+        return new Payload(
+            $data,
+            [
+                'Content-Type' => 'application/json',
+                'Content-Length' => strlen($body),
+            ],
+            $body,
+        );
     }
 }

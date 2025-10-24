@@ -23,7 +23,7 @@ namespace ILIAS\ApiGateway\Models;
 readonly class Payload
 {
     /**
-     * @param array<string, string> $headers
+     * @param array<string, string|int> $headers
      */
     public function __construct(
         private mixed $data = null,
@@ -40,7 +40,7 @@ readonly class Payload
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public function getHeaders(): array
     {
