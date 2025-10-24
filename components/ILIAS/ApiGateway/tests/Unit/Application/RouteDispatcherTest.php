@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Application;
+
+use ILIAS\ApiGateway\Application\RouteDispatcher;
+use ILIAS\ApiGateway\Models\Payload;
+use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Webservice;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\StreamInterface;
+
+class RouteDispatcherTest extends TestCase
+{
+    private RouteDispatcher $dispatcher;
+    private Webservice&MockObject $webserviceMock;
+    private Request&MockObject $requestMock;
+    private Response&MockObject $responseMock;
+    private StreamInterface&MockObject $streamMock;
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        $this->webserviceMock = $this->createMock(Webservice::class);
+        $this->requestMock = $this->createMock(Request::class);
+        $this->responseMock = $this->createMock(Response::class);
+        $this->streamMock = $this->createMock(StreamInterface::class);
+
+        $this->responseMock->method('getBody')->willReturn($this->streamMock);
+
+        $this->dispatcher = new RouteDispatcher($this->webserviceMock);
+    }
+
+    public function testDispatchSuccessfullyHandlesRequestAndWritesResponse(): void
+    {
+        $queryParams = ['queryParam' => 'queryValue', 'routeParam' => 'routeValue'];
+        $routeArgs = ['routeParam' => 'routeValue-override'];
+        $mergedParams = array_merge($queryParams, $routeArgs);
+        $handlerResponseBody = ['handler' => 'response'];
+        $serviceResponseBody = '{"service":"response"}';
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+
+        $routeHandlerMock = $this->createMock(RouteHandler::class);
+
+        $routeHandlerMock->method('__invoke')
+            ->with($this->callback(function (array $params) use ($mergedParams): bool {
+                self::assertEquals($mergedParams, $params);
+
+                return true;
+            }))
+            ->willReturn($handlerResponseBody);
+
+        $originalPayload = new Payload(data: $handlerResponseBody);
+        $payload = $originalPayload->withBody($serviceResponseBody);
+
+        $this->webserviceMock->method('handle')
+            ->with(
+                self::equalTo($originalPayload),
+            )
+            ->willReturn($payload);
+
+        $this->streamMock->expects(self::once())
+            ->method('write')
+            ->with($serviceResponseBody);
+
+        $response = ($this->dispatcher)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $routeHandlerMock,
+        );
+
+        self::assertSame($this->responseMock, $response);
+    }
+}
