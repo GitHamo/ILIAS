@@ -912,7 +912,13 @@ class ilMailFolderGUI implements ilCtrlSecurityInterface
         $form->addItem($date);
 
         $message = new ilCustomInputGUI($this->lng->txt('message') . ':');
-        $message->setHtml(ilUtil::htmlencodePlainString($mail_data['m_message'] ?? '', true));
+        $message->setHtml(
+            str_replace(
+                ['{', '}'],
+                ['&#123;', '&#125;'],
+                ilUtil::htmlencodePlainString($mail_data['m_message'] ?? '', true)
+            )
+        );
         $form->addItem($message);
 
         if ($mail_data['attachments']) {
