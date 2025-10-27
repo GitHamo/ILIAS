@@ -10520,6 +10520,7 @@ help#:#gdtr_next_step#:#Nächster Schritt
 help#:#gdtr_permission#:#Berechtigung
 help#:#gdtr_primary_button#:#Primary Button
 help#:#gdtr_reset_tour#:#Tour zurücksetzen
+help#:#gdtr_reset_tour_mess#:#Wenn Sie die Tour zurücksetzen, werden alle diejenigen, die zuvor die Tour abgeschlossen haben, die Tour erneut präsentiert bekommen. Möchten Sie fortfahren?
 help#:#gdtr_screen_ids#:#Screen IDs
 help#:#gdtr_screen_ids_info#:#Mehrere IDs müssen durch Kommas separiert werden.
 help#:#gdtr_step#:#Schritt
@@ -10527,6 +10528,7 @@ help#:#gdtr_step_type#:#Typ
 help#:#gdtr_table#:#Tabelle
 help#:#gdtr_tabs#:#Reiter
 help#:#gdtr_toolbar#:#Toolbar
+help#:#gdtr_tour_has_been_reset#:#Die Tour wurde zurückgesetzt.
 help#:#gdtr_tour_steps#:#Schritte
 help#:#gdtr_tours#:#Tours
 help#:#gdtr_type#:#Typ

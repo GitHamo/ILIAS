@@ -161,7 +161,7 @@ il.guidedTour = (function ($) {
   }
 
   function generateIdIfMissing(el) {
-    if (!el.id) {
+    if (el && !el.id) {
       el.id = `uid-${Math.random().toString(36).substr(2, 9)}`;
     }
   }
