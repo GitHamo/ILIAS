@@ -90,7 +90,7 @@ class ilGuidedTourGUI implements ilCtrlBaseClassInterface
         // ensure popover js being loaded
         $r->render($f->popover()->standard($f->legacy()->content('')));
 
-        $debug = true;
+        $debug = false;
         $mt->addJavaScript("assets/js/repository.js");
         if ($debug) {
             $mt->addJavaScript("../components/ILIAS/Help/resources/guided-tour.js");
