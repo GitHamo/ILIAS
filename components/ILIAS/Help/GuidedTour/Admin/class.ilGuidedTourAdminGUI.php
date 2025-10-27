@@ -269,7 +269,7 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
          ->withActionButtonLabel($lng->txt("gdtr_reset_tour"));
     }
 
-    protected function resetTour() : void
+    protected function resetTour(): void
     {
         $mt = $this->gui->ui()->mainTemplate();
         $lng = $this->domain->lng();
@@ -361,6 +361,11 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
         if ($perm_val === "0") {
             $perm_val = "";
         }
+        $lang_val = (string) $settings?->getLanguage();
+        $lang_vals = $this->domain->tourSettings()->getLangOptions($lang_val);
+        if ($perm_val === "0") {
+            $perm_val = "";
+        }
         return $this
             ->gui
             ->form([self::class], "saveSettings")
@@ -388,7 +393,15 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
                 ],
                 "",
                 $perm_val
+            )
+            ->select(
+                "lang",
+                $lng->txt("gdtr_language"),
+                $lang_vals,
+                "",
+                $lang_val
             );
+
     }
 
     public function saveSettings(): void
@@ -406,7 +419,8 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
                 $tour_id,
                 (bool) $form->getData("active"),
                 $form->getData("screen_ids"),
-                PermissionType::from((int) $form->getData("permission"))
+                PermissionType::from((int) $form->getData("permission")),
+                $form->getData("lang")
             ));
             $mt->setOnScreenMessage("success", $lng->txt("msg_obj_modified"), true);
             $ctrl->redirectByClass(self::class, "editSettings");

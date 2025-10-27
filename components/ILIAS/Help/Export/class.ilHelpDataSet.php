@@ -92,7 +92,8 @@ class ilHelpDataSet extends ilDataSet
                         "Title" => "text",
                         "Description" => "text",
                         "Permission" => "integer",
-                        "ScreenIds" => "text"
+                        "ScreenIds" => "text",
+                        "Lang" => "text"
                     ];
             }
         }
@@ -147,7 +148,7 @@ class ilHelpDataSet extends ilDataSet
         if ($a_entity === "gdtr") {
             switch ($a_version) {
                 case "10.0":
-                    $this->getDirectDataFromQuery("SELECT hs.obj_id, title, description, permission, screen_ids " .
+                    $this->getDirectDataFromQuery("SELECT hs.obj_id, title, description, permission, screen_ids, lang " .
                         " FROM help_gt_settings hs JOIN object_data od ON (hs.obj_id = od.obj_id)" .
                         "WHERE " .
                         $ilDB->in("hs.obj_id", $a_ids, false, "integer"));
@@ -238,7 +239,8 @@ class ilHelpDataSet extends ilDataSet
                         $newObj->getId(),
                         false,
                         $a_rec["ScreenIds"],
-                        \ILIAS\Help\GuidedTour\Settings\PermissionType::from((int) $a_rec["Permission"])
+                        \ILIAS\Help\GuidedTour\Settings\PermissionType::from((int) $a_rec["Permission"]),
+                        $a_rec["Lang"],
                     )
                 );
                 break;

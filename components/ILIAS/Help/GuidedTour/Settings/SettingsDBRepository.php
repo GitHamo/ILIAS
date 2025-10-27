@@ -38,7 +38,8 @@ class SettingsDBRepository
         ], [
             'active' => ['integer', $settings->isActive() ? 1 : 0],
             'screen_ids' => ['text', $settings->getScreenIds()],
-            'permission' => ['integer', $settings->getPermission()->value]
+            'permission' => ['integer', $settings->getPermission()->value],
+            'lang' => ['text', $settings->getLanguage()]
         ]);
     }
 
@@ -59,7 +60,8 @@ class SettingsDBRepository
             (int) $record['obj_id'],
             (bool) $record['active'],
             (string) $record['screen_ids'],
-            PermissionType::from((int) $record['permission'])
+            PermissionType::from((int) $record['permission']),
+            (string) $record['lang'],
         );
     }
 

@@ -10516,6 +10516,7 @@ help#:#gdtr_id_pres_users#:#Show IDs for User Accounts
 help#:#gdtr_id_pres_users_info#:#Login names of user that should get element IDs presented. Separate multiple entries by comma.
 help#:#gdtr_id_settings#:#ID Settings
 help#:#gdtr_import_tour#:#Import Tour
+help#:#gdtr_language#:#Language
 help#:#gdtr_list_tours_mess#:#To activate the presentation of screen and element IDs as tooltips, switch to ID Settings and enter your account name.
 help#:#gdtr_mainbar#:#Mainbar
 help#:#gdtr_metabar#:#Metabar

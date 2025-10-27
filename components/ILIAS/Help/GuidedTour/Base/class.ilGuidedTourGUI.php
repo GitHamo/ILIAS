@@ -154,6 +154,12 @@ class ilGuidedTourGUI implements ilCtrlBaseClassInterface
             if (!$found) {
                 continue;
             }
+            // check language
+            if ($settings->getLanguage() !== "") {
+                if ($this->user->getLanguage() !== $settings->getLanguage()) {
+                    continue;
+                }
+            }
             // check permission
             if ($ref_id > 0) {
                 if ($settings->getPermission() !== PermissionType::None) {

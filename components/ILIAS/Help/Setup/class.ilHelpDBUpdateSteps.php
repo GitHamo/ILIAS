@@ -186,4 +186,16 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
         }
     }
 
+    public function step_9(): void
+    {
+        if (!$this->db->tableColumnExists('help_gt_settings', 'lang')) {
+            $this->db->addTableColumn('help_gt_settings', 'lang', array(
+                'type' => 'text',
+                'notnull' => true,
+                'length' => 10,
+                'default' => ''
+            ));
+        }
+    }
+
 }

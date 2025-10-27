@@ -45,8 +45,9 @@ class InternalDataService
         int $obj_id,
         bool $active,
         string $screen_ids,
-        PermissionType $permission
+        PermissionType $permission,
+        string $lang
     ): Settings {
-        return new Settings($obj_id, $active, $screen_ids, $permission);
+        return new Settings($obj_id, $active, $screen_ids, $permission, $lang);
     }
 }

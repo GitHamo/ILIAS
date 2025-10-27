@@ -26,7 +26,8 @@ class Settings
         protected int $obj_id,
         protected bool $active,
         protected string $screen_ids,
-        protected PermissionType $permission
+        protected PermissionType $permission,
+        protected string $lang
     ) {
     }
 
@@ -48,5 +49,10 @@ class Settings
     public function getPermission(): PermissionType
     {
         return $this->permission;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->lang;
     }
 }

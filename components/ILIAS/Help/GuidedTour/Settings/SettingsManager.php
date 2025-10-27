@@ -23,6 +23,7 @@ namespace ILIAS\Help\GuidedTour\Settings;
 use ilDBInterface;
 use ILIAS\Help\GuidedTour\InternalDataService;
 use ILIAS\Help\GuidedTour\InternalRepoService;
+use ILIAS\Help\GuidedTour\InternalDomainService;
 
 class SettingsManager
 {
@@ -30,7 +31,8 @@ class SettingsManager
 
     public function __construct(
         protected InternalDataService $data,
-        InternalRepoService $repo
+        InternalRepoService $repo,
+        protected InternalDomainService $domain
     ) {
         $this->repo = $repo->settings();
     }
@@ -49,4 +51,18 @@ class SettingsManager
     {
         $this->repo->delete($obj_id);
     }
+
+    public function getLangOptions(string $lang = ""): array
+    {
+        $options = [];
+        $this->domain->lng()->loadLanguageModule("meta");
+        foreach ($this->domain->lng()->getInstalledLanguages() as $key) {
+            $options[$key] = $this->domain->lng()->txt('meta_l_' . $key);
+        }
+        if ($lang !== "" && !isset($options[$lang])) {
+            $options[$lang] = $this->domain->lng()->txt('meta_l_' . $lang);
+        }
+        return $options;
+    }
+
 }
