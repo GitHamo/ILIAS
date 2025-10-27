@@ -66,6 +66,10 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
                 break;
 
             case strtolower(ilGuidedTourPageGUI::class):
+                $mt = $this->gui->mainTemplate();
+                $lng = $this->domain->lng();
+                $this->setStepsHeader();
+                $mt->setOnScreenMessage("info", $lng->txt("gdtr_edit_page_info"));
                 $ctrl->setReturnByClass(self::class, "listSteps");
                 $ctrl->saveParameterByClass(self::class, "step_id");
                 $ret = $this->forwardToPageObject();
@@ -380,7 +384,7 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
             ->text(
                 "screen_ids",
                 $lng->txt("gdtr_screen_ids"),
-                "",
+                $lng->txt("gdtr_screen_ids_info"),
                 $settings?->getScreenIds()
             )
             ->select(
@@ -391,14 +395,14 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
                     (string) PermissionType::Write->value => $lng->txt("write"),
                     (string) PermissionType::Create->value => $lng->txt("create"),
                 ],
-                "",
+                $lng->txt("gdtr_permission_info"),
                 $perm_val
             )
             ->select(
                 "lang",
                 $lng->txt("gdtr_language"),
                 $lang_vals,
-                "",
+                $lng->txt("gdtr_language_info"),
                 $lang_val
             );
 
@@ -502,6 +506,8 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
     {
         $this->setSingleStepHeader();
         $mt = $this->gui->ui()->mainTemplate();
+        $lng = $this->domain->lng();
+        $mt->setOnScreenMessage("info", $lng->txt("gdtr_edit_step_info"));
         $mt->setContent($this->getStepForm()->render());
     }
 
@@ -521,16 +527,16 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
         return $this->gui->form([self::class], "saveStep")
             ->section("sec", $lng->txt("gdtr_step"))
             ->switch("type", $lng->txt("gdtr_step_type"), "", $type_val)
-            ->group((string) StepType::Mainbar->value, $lng->txt("gdtr_mainbar"))
+            ->group((string) StepType::Mainbar->value, $lng->txt("gdtr_mainbar"), $lng->txt("gdtr_mainbar_info"))
             ->text("mb_element_id", $lng->txt("gdtr_element_id"), "", $mb_element_id)
-            ->group((string) StepType::Metabar->value, $lng->txt("gdtr_metabar"))
+            ->group((string) StepType::Metabar->value, $lng->txt("gdtr_metabar"), $lng->txt("gdtr_metabar_info"))
             ->text("mt_element_id", $lng->txt("gdtr_element_id"), "", $mt_element_id)
-            ->group((string) StepType::Tab->value, $lng->txt("gdtr_tabs"))
+            ->group((string) StepType::Tab->value, $lng->txt("gdtr_tabs"), $lng->txt("gdtr_tabs_info"))
             ->text("tab_element_id", $lng->txt("gdtr_element_id"), "", $tab_element_id)
-            ->group((string) StepType::Form->value, $lng->txt("gdtr_form"))
-            ->group((string) StepType::Table->value, $lng->txt("gdtr_table"))
-            ->group((string) StepType::Toolbar->value, $lng->txt("gdtr_toolbar"))
-            ->group((string) StepType::PrimaryButton->value, $lng->txt("gdtr_primary_button"))
+            ->group((string) StepType::Form->value, $lng->txt("gdtr_form"), $lng->txt("gdtr_form_info"))
+            ->group((string) StepType::Table->value, $lng->txt("gdtr_table"), $lng->txt("gdtr_table_info"))
+            ->group((string) StepType::Toolbar->value, $lng->txt("gdtr_toolbar"), $lng->txt("gdtr_toolbar_info"))
+            ->group((string) StepType::PrimaryButton->value, $lng->txt("gdtr_primary_button"), $lng->txt("gdtr_primary_button_info"))
             ->end();
     }
 
@@ -560,10 +566,12 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
             );
             if ($step_id > 0) {
                 $this->step_manager->update($step);
+                $ctrl->redirectByClass(self::class, "listSteps");
             } else {
-                $this->step_manager->create($step);
+                $new_id = $this->step_manager->create($step);
+                $ctrl->setParameterByClass(self::class, "step_id", $new_id);
+                $ctrl->redirectByClass(ilGuidedTourPageGUI::class, "edit");
             }
-            $ctrl->redirectByClass(self::class, "listSteps");
         } else {
             $mt->setContent($form->render());
         }
@@ -571,12 +579,14 @@ class ilGuidedTourAdminGUI // implements ilCtrlBaseClassInterface
 
     public function editStep(int $step_id): void
     {
+        $mt = $this->gui->mainTemplate();
+        $lng = $this->domain->lng();
         $this->setSingleStepHeader();
+        $mt->setOnScreenMessage("info", $lng->txt("gdtr_edit_step_info"));
         $ctrl = $this->gui->ctrl();
         $ctrl->setParameterByClass(self::class, "step_id", $step_id);
         $step = $this->step_manager->getById($step_id);
         $form = $this->getStepForm($step);
-        $mt = $this->gui->ui()->mainTemplate();
         $mt->setContent($form->render());
     }
 

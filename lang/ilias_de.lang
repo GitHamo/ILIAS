@@ -10504,31 +10504,42 @@ help#:#gdtr_delete_tour_mess#:#Sind Sie sicher, dass diese Tour gelöscht werden
 help#:#gdtr_deleted_step#:#Der Schritt wurde gelöscht.
 help#:#gdtr_deleted_tour#:#Die Tour wurde gelöscht.
 help#:#gdtr_edit_content#:#Inhalt bearbeiten
+help#:#gdtr_edit_page_info#:#Bearbeiten Sie den Inhalt, der erscheinen soll um das ausgewählte Bedienelement zu beschreiben.
 help#:#gdtr_edit_properties#:#Eigenschaften bearbeiten
+help#:#gdtr_edit_step_info#:#In diesem Formular spezifizieren Sie das Bedienelement auf dem Bildschirm, welches einen Erklärungstext in diesem Schritt der Tour erhalten soll. In der Präsentation wird dann ein Popover mit dem definierten Erklärungstext neben dem angegebenen Element dargestellt.
 help#:#gdtr_edit_steps#:#Edit Steps
 help#:#gdtr_element_id#:#Element ID
 help#:#gdtr_form#:#Formular
+help#:#gdtr_form_info#:#Das erste Formular im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. ein Formular enthalten.
 help#:#gdtr_guided_tours#:#Guided Tours
-help#:#gdtr_id_pres_users#:#IDs anzeigen für Benutzer
-help#:#gdtr_id_pres_users_info#:#Loginnamen von Benutzern, denen die Element IDs angezeigt werden. Mehrere Einträge müssen durch Kommas separiert werden.
+help#:#gdtr_id_pres_users#:#IDs anzeigen für ILIAS-Konten
+help#:#gdtr_id_pres_users_info#:#ILIAS-Konten, denen die Element IDs angezeigt werden. Mehrere Einträge müssen durch Kommas separiert werden.
 help#:#gdtr_id_settings#:#ID Einstellungen
 help#:#gdtr_import_tour#:#Tour importieren
 help#:#gdtr_language#:#Sprache
+help#:#gdtr_language_info#:#Aktiviert eine Guided-Tour nur für Personen mit der eingestellten Sprache.
 help#:#gdtr_list_tours_mess#:#Um die Anzeige von Screen- und Element-IDs als Tooltips zu aktivieren, müssen Sie ihren Accountnamen in den ID Einstellungen eintragen.
 help#:#gdtr_mainbar#:#Mainbar
+help#:#gdtr_mainbar_info#:#Die Mainbar ist das Hauptmenü auf der linken Seite. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
 help#:#gdtr_metabar#:#Metabar
+help#:#gdtr_metabar_info#:#Die Metabar ist das Menü im rechten, oberen Bildrand. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
 help#:#gdtr_next_step#:#Nächster Schritt
 help#:#gdtr_permission#:#Berechtigung
+help#:#gdtr_permission_info#:#Aktiviert eine Guided-Tour für Personen mit gegebener Berechtigung, z.B. nur wenn das "Einstellungen bearbeiten" Recht vorhanden ist. Bei der Auswahl von "Erstellen" muss der Nutzende im aktuellen Bereich irgendein Objekt erstellen können.
 help#:#gdtr_primary_button#:#Primary Button
+help#:#gdtr_primary_button_info#:#Der erste Primary-Button im Hauptbereich der Ansicht. Dieser wird um Gegensatz zu anderen Aktionsknöpfen betont dargestellt. Normalerweise sollen Ansichten nur max. eine Primary-Button enthalten.
 help#:#gdtr_reset_tour#:#Tour zurücksetzen
 help#:#gdtr_reset_tour_mess#:#Wenn Sie die Tour zurücksetzen, werden alle diejenigen, die zuvor die Tour abgeschlossen haben, die Tour erneut präsentiert bekommen. Möchten Sie fortfahren?
 help#:#gdtr_screen_ids#:#Screen IDs
-help#:#gdtr_screen_ids_info#:#Mehrere IDs müssen durch Kommas separiert werden.
+help#:#gdtr_screen_ids_info#:#Ermöglicht es, eine Guided-Tour für einzelne Ansichten des Systems zu aktivieren. Wenn die ID-Anzeige aktiviert ist, wird die Screen-ID einer Ansicht ganz oben im Kopfbereich angezeigt. Mehrere IDs müssen durch Kommas separiert werden.
 help#:#gdtr_step#:#Schritt
-help#:#gdtr_step_type#:#Typ
+help#:#gdtr_step_type#:#Bedienelement
 help#:#gdtr_table#:#Tabelle
+help#:#gdtr_table_info#:#Die erste Tabelle im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. eine Tabelle enthalten.
 help#:#gdtr_tabs#:#Reiter
+help#:#gdtr_tabs_info#:#Die Reiter werden in der Mitte unter dem Haupttitel einer Ansicht dargestellt. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
 help#:#gdtr_toolbar#:#Toolbar
+help#:#gdtr_toolbar_info#:#Die erste Toolbar im Hauptbereich der Ansicht. Diese wird normalerweise unterhalb der Reiter dargestellt und kann mehrere Bedienelemente enthalten. Normalerweise sollen Ansichten nur max. eine Toolbar enthalten.
 help#:#gdtr_tour_has_been_reset#:#Die Tour wurde zurückgesetzt.
 help#:#gdtr_tour_steps#:#Schritte
 help#:#gdtr_tours#:#Tours
