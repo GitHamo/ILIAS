@@ -20,8 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\Test\Scoring\Manual;
 
-use ILIAS\TestQuestionPool\Questions\GeneralQuestionProperties;
-
 class Positions
 {
     /**
@@ -37,7 +35,7 @@ class Positions
      * @param array <int $question_id, GeneralQuestionProperties $properties> $question_properties
      */
     public function __construct(
-        private array $user_questions,
+        array $user_questions,
         private array $user_attempts,
         private array $question_properties
     ) {
@@ -86,39 +84,74 @@ class Positions
 
     private function applyMode(ConsecutiveScoringMode $mode, array $positions): array
     {
-        $ret = [];
         if ($mode->isSingle()) {
-            foreach ($positions as $set) {
-                [$uids, $qids] = $set;
-                foreach ($qids as $qid) {
-                    $ret[] = [$uids, [$qid]];
-                }
-            }
-
-            if (!$mode->isUserCentric()) {
-                usort($ret, static fn($a, $b) => $a[1][0] <=> $b[1][0]);
-            }
-            return $ret;
+            return $this->buildSingleModePositionsList($mode, $positions);
         }
 
+        return $this->buildAllPositionsList($mode, $positions);
+    }
+
+    private function buildSingleModePositionsList(ConsecutiveScoringMode $mode, array $positions): array
+    {
+        $reordered_positions = array_reduce(
+            $positions,
+            static function (array $c, ?array $v): array {
+                [$uids, $qids] = $v;
+                if ($qids === null) {
+                    return $c;
+                }
+                foreach ($qids as $qid) {
+                    $c[] = [$uids, [$qid]];
+                }
+                return $c;
+            },
+            []
+        );
+
+        if ($reordered_positions === []) {
+            return [null];
+        }
+
+        if (!$mode->isUserCentric()) {
+            usort($reordered_positions, static fn($a, $b) => $a[1][0] <=> $b[1][0]);
+        }
+
+        return $reordered_positions;
+    }
+
+    private function buildAllPositionsList(ConsecutiveScoringMode $mode, array $positions): array
+    {
         if ($mode->isUserCentric()) {
             return $positions;
         }
 
-        $q2u = [];
-        foreach ($positions as $set) {
-            [$uids, $qids] = $set;
-            foreach ($qids as $qid) {
-                if (! array_key_exists($qid, $q2u)) {
-                    $q2u[$qid] = [];
+        $questions2users = array_reduce(
+            $positions,
+            static function (array $c, ?array $v): array {
+                [$uids, $qids] = $v;
+                if ($qids === null) {
+                    return $c;
                 }
-                $q2u[$qid] = array_unique(array_merge($q2u[$qid], $uids));
-            }
-        }
-        foreach ($q2u as $qid => $uids) {
-            $ret[] = [$uids, [$qid]];
+                foreach ($qids as $qid) {
+                    if (!array_key_exists($qid, $c)) {
+                        $c[$qid] = [];
+                    }
+                    $c[$qid] = array_unique(array_merge($c[$qid], $uids));
+                }
+                return $c;
+            },
+            []
+        );
+
+        $reorderd_positions = [];
+        foreach ($questions2users as $qid => $uids) {
+            $reorderd_positions[] = [$uids, [$qid]];
         }
 
-        return $ret;
+        if ($reorderd_positions === []) {
+            return [null];
+        }
+
+        return $reorderd_positions;
     }
 }

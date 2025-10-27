@@ -292,14 +292,17 @@ class Repository
      */
     private function fetchAdditionalTestData(int $active_id, int $attempt): array
     {
-        $result = $this->db->queryF(
-            "SELECT tst_tests.question_set_type FROM tst_active
-                    INNER JOIN tst_tests ON tst_active.test_fi = tst_tests.test_id
-                    WHERE tst_active.active_id = %s",
+        $qst_set_type_result = $this->db->queryF(
+            'SELECT tst_test_settings.question_set_type FROM tst_active' . PHP_EOL
+            . 'INNER JOIN tst_tests ON tst_active.test_fi = tst_tests.test_id' . PHP_EOL
+            . 'INNER JOIN tst_test_settings ON tst_tests.settings_id = tst_test_settings.id' . PHP_EOL
+            . 'WHERE tst_active.active_id = %s',
             [\ilDBConstants::T_INTEGER],
             [$active_id]
         );
-        $question_set_type = $result->numRows() > 0 ? $this->db->fetchAssoc($result)['question_set_type'] : '';
+        $question_set_type = $qst_set_type_result->numRows() > 0
+            ? $this->db->fetchAssoc($qst_set_type_result)['question_set_type']
+            : '';
 
         $result = match ($question_set_type) {
             \ilObjTest::QUESTION_SET_TYPE_RANDOM => $this->db->queryF(
