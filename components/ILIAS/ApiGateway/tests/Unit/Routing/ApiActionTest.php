@@ -8,6 +8,7 @@ use Closure;
 use ILIAS\ApiGateway\Routing\ApiAction;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ApiActionTest extends TestCase
@@ -66,8 +67,8 @@ final class ApiActionTest extends TestCase
 
     /**
      * @param string[] $methods
-     * @dataProvider edgeCasesDataProvider
      */
+    #[DataProvider('edgeCasesDataProvider')]
     public function testHandlesEdgeCases(
         string $name,
         string $path,
@@ -141,9 +142,8 @@ final class ApiActionTest extends TestCase
 
     /**
      * @param array<string, int|string|bool> $params
-     * 
-     * @dataProvider invokableHandlerDataProvider
      */
+    #[DataProvider('invokableHandlerDataProvider')]
     public function testProvidesInvokableHandler(
         Closure $handler,
         mixed $expected,
@@ -167,35 +167,35 @@ final class ApiActionTest extends TestCase
     }
 
     /**
-     * @return array<string, array{handler: Closure, expectedHandlerResult: mixed, handlerParams: array<string, int|string|bool>}>
+     * @return array<string, array{handler: Closure, expected: mixed, params: array<string, int|string|bool>}>
      */
     public static function invokableHandlerDataProvider(): array
     {
         return [
             'handler_returns_string_with_params' => [
                 'handler' => fn(array $params) => 'Result: ' . $params['id'],
-                'expectedHandlerResult' => 'Result: 42',
-                'handlerParams' => ['id' => '42'],
+                'expected' => 'Result: 42',
+                'params' => ['id' => '42'],
             ],
             'handler_returns_integer_no_params' => [
                 'handler' => fn() => 123,
-                'expectedHandlerResult' => 123,
-                'handlerParams' => [],
+                'expected' => 123,
+                'params' => [],
             ],
             'handler_returns_array_with_params' => [
                 'handler' => fn(array $params) => ['status' => 'ok', 'data' => $params],
-                'expectedHandlerResult' => ['status' => 'ok', 'data' => ['item' => 'new']],
-                'handlerParams' => ['item' => 'new'],
+                'expected' => ['status' => 'ok', 'data' => ['item' => 'new']],
+                'params' => ['item' => 'new'],
             ],
             'handler_returns_boolean' => [
                 'handler' => fn() => true,
-                'expectedHandlerResult' => true,
-                'handlerParams' => [],
+                'expected' => true,
+                'params' => [],
             ],
             'handler_with_no_params_expected' => [
                 'handler' => fn() => 'OK',
-                'expectedHandlerResult' => 'OK',
-                'handlerParams' => [],
+                'expected' => 'OK',
+                'params' => [],
             ],
         ];
     }
