@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\Test\Setup;
 
-use ILIAS\components\Database\PDO\FieldDefinition\ForeignKeyConstraints;
+use ILIAS\Database\PDO\FieldDefinition\ForeignKeyConstraints;
 
 class Test11DBUpdateSteps implements \ilDatabaseUpdateSteps
 {
