@@ -1691,53 +1691,61 @@ class ilObjCmiXapi extends ilObject2
      * get latest statement from session
      * @return mixed|null
      */
+
     public function getLastStatement(string $sess): mixed
     {
         global $DIC;
+
         $lrsType = $this->getLrsType();
 
-        //$this->getLrsEndpoint())) . '/api/' . self::ENDPOINT_AGGREGATE_SUFFIX;
         $defaultLrs = $lrsType->getLrsEndpointStatementsAggregationLink();
-        //$fallbackLrs = $lrsType->getLrsFallbackEndpoint();
         $defaultBasicAuth = $lrsType->getBasicAuth();
-        //$fallbackBasicAuth = $lrsType->getFallbackBasicAuth();
         $defaultHeaders = [
             'X-Experience-API-Version' => '1.0.3',
             'Authorization' => $defaultBasicAuth,
             'Cache-Control' => 'no-cache, no-store, must-revalidate'
         ];
-        /*
-        $fallbackHeaders = [
-            'X-Experience-API-Version' => '1.0.3',
-            'Authorization' => $fallbackBasicAuth,
-            'Content-Type' => 'application/json;charset=utf-8',
-            'Cache-Control' => 'no-cache, no-store, must-revalidate'
-        ];
-        */
+
         $pipeline = json_encode($this->getLastStatementPipline($sess));
         $defaultLastStatementUrl = $defaultLrs . "?pipeline=" . urlencode($pipeline);
-        $client = new GuzzleHttp\Client();
-        $req_opts = array(
-            GuzzleHttp\RequestOptions::VERIFY => true,
-            GuzzleHttp\RequestOptions::CONNECT_TIMEOUT => 10,
-            GuzzleHttp\RequestOptions::HTTP_ERRORS => false
-        );
-        $defaultLastStatementRequest = new GuzzleHttp\Psr7\Request(
-            'GET',
-            $defaultLastStatementUrl,
-            $defaultHeaders
-        );
-        $promises = array();
-        $promises['defaultLastStatement'] = $client->sendAsync($defaultLastStatementRequest, $req_opts);
-        try {
-            $responses = GuzzleHttp\Promise\Utils::settle($promises)->wait();
-            $body = '';
-            ilCmiXapiAbstractRequest::checkResponse($responses['defaultLastStatement'], $body, [200]);
-            return json_decode($body, (bool) JSON_OBJECT_AS_ARRAY);
-        } catch (Exception $e) {
-            $this->log()->error('error:' . $e->getMessage());
+
+        $headers = [];
+        foreach ($defaultHeaders as $key => $value) {
+            $headers[] = "$key: $value";
+        }
+
+        $ch = curl_init($defaultLastStatementUrl);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+        ]);
+
+        $body = curl_exec($ch);
+        $error = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($error) {
+            $this->log()->error("cURL error: " . $error);
             return null;
         }
+
+        if ($httpCode < 200 || $httpCode >= 300) {
+            $this->log()->error("Unexpected HTTP status: {$httpCode}");
+            return null;
+        }
+
+        $decoded = json_decode($body, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->log()->error("JSON decode error: " . json_last_error_msg());
+            return null;
+        }
+
+        return $decoded;
     }
 
     /**
@@ -1792,12 +1800,7 @@ class ilObjCmiXapi extends ilObject2
 
     public static function log(): ilLogger
     {
-        if (self::PLUGIN) {
-            global $log;
-            return $log;
-        } else {
-            return \ilLoggerFactory::getLogger('cmix');
-        }
+        return \ilLoggerFactory::getLogger('cmix');
     }
 
 
