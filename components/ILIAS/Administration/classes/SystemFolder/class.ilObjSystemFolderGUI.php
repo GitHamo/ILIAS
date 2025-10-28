@@ -31,8 +31,12 @@ class ilObjSystemFolderGUI extends ilObject2GUI
     {
         $this->lng->loadLanguageModule("administration");
         $this->prepareOutput();
-        $this->tabs_gui->clearTargets();
         $this->viewObject();
+    }
+
+    public function getAdminTabs(): void
+    {
+        // no tabs
     }
 
     public function viewObject(): void
