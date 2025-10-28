@@ -18,9 +18,7 @@
 
 declare(strict_types=1);
 
-chdir("../../../");
-require_once 'vendor/composer/vendor/autoload.php';
-
+require_once __DIR__ . '/../vendor/composer/vendor/autoload.php';
 /**
  * see: https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md#fetch_url
  * response should always be a valid json object
@@ -57,7 +55,6 @@ try {
     $objId = $param['obj_id'];
     $refId = $param['ref_id'];
 
-    #\XapiProxy\DataService::initIlias($_COOKIE['ilClientId']);
     ilInitialisation::initILIAS();
     $DIC = $GLOBALS['DIC'];
 } catch (ilCmiXapiException $e) {

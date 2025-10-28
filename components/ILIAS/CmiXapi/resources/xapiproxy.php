@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 // hardcoded namespace
 // attention: maybe a problem with composer v2 / psr4 autoload  requires exact matching of namespace and parent folder name?
+
 namespace XapiProxy;
 
 // hardcoded context for better performance
@@ -57,24 +58,10 @@ if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW'])) {
     exit;
 }
 
-/**
- * handle path context
- */
-
-if ($plugin) {
-    /**
-     *
-     * required for Plugin in ILIAS 5.x
-    */
-    //require_once __DIR__.'/classes/XapiProxy/vendor/autoload.php';
-
-    chdir("../../../../../../../../");
-} else {
-    chdir("../../../");
-}
+require_once '../vendor/composer/vendor/autoload.php';
 //instead of DataService
 \ilContext::init(\ilContext::CONTEXT_SCORM);
-\ilInitialisation::initILIAS();
+ilInitialisation::initILIAS();
 //    DataService::initIlias($client);
 $dic = $GLOBALS['DIC'];
 

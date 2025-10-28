@@ -18,16 +18,9 @@
 
 declare(strict_types=1);
 
-$messages = array();
-
-$defaultLanguage = "en";
-
-$lang = (isset($_GET['lang'])) ? $_GET['lang'] : $defaultLanguage;
-
-$messages['de'] = "Sie können nun das Fenster schließen.";
-$messages['en'] = "You can now close the window.";
-$messages['fr'] = "Vous pouvez maintenant fermer la fenêtre de navigation";
-
-$message = (array_key_exists($lang, $messages)) ? $messages[$lang] : $messages[$defaultLanguage];
-echo "<pre>{$message}</pre>";
+$text = "You can now close the window.";
+if (isset($_GET['text'])) {
+    $text = rawurldecode($_GET['text']);
+}
+echo "<pre>" . strip_tags($text) . "</pre>";
 exit;
