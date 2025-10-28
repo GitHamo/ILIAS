@@ -165,9 +165,11 @@ class RepositoryMainBarProvider extends AbstractStaticMainMenuProvider
             return $title . " - " . $dic->language()->txt("rep_main_page");
         };
 
-        $action = static function (): string {
+        $action = function (): string {
             try {
-                $static_link = (string) (new StandardURIBuilder(ILIAS_HTTP_PATH))->build('', null, ['?target=root_1']);
+                /** @var StandardURIBuilder $static_url_uri_builder */
+                $static_url_uri_builder = $this->dic['static_url.uri_builder'];
+                $static_link = $static_url_uri_builder->buildLegacy(1, 'root');
             } catch (InvalidArgumentException $e) {
                 return "";
             }

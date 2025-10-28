@@ -16,26 +16,15 @@
  *
  *********************************************************************/
 
-namespace ILIAS\StaticURL\Response;
+declare(strict_types=1);
+
+namespace ILIAS\StaticURL;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class CannotHandle implements Response
+interface Configuration
 {
-    public function getURIPath(): ?string
-    {
-        return null;
-    }
-
-    public function targetCanBeReached(): bool
-    {
-        return false;
-    }
-
-    public function shift(): int
-    {
-        return 0;
-    }
+    public function get(Config $config): mixed;
 
 }

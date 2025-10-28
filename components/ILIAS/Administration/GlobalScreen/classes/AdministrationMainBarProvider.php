@@ -227,7 +227,7 @@ class AdministrationMainBarProvider extends AbstractStaticMainMenuProvider
             "maintenance" =>
                 array("adma", "serv", "cron", "bnmk", "lngf", "hlps", "wfe", 'fils', 'logs', 'sysc', "recf", "root"),
             "layout_and_navigation" =>
-                array("mme", "gsfo", "dshs", "stys", "adve"),
+                array("mme", "gsfo", "dshs", "stys", "adve", "stus"),
             "repository_and_objects" =>
                 array("reps", "crss", "grps", "prgs", "bibs", "blga", "cpad", "chta", "facs", "frma", "lrss",
                       "mcts", "mobs", "svyf", "assf", "wbrs", 'lsos'),

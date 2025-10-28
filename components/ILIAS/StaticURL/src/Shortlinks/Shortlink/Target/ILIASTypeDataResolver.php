@@ -16,26 +16,28 @@
  *
  *********************************************************************/
 
-namespace ILIAS\StaticURL\Response;
+declare(strict_types=1);
+
+namespace ILIAS\StaticURL\Shortlinks\Shortlink\Target;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class CannotHandle implements Response
+class ILIASTypeDataResolver implements TypeDataResolver
 {
-    public function getURIPath(): ?string
-    {
-        return null;
+    public function __construct(
+        private \ilTree $tree
+    ) {
     }
 
-    public function targetCanBeReached(): bool
+    public function resolveForRefId(int $ref_id): RepoTypeData
     {
-        return false;
-    }
+        $tree_info = $this->tree->getNodeData($ref_id);
 
-    public function shift(): int
-    {
-        return 0;
+        return new RepoTypeData(
+            $tree_info['type'],
+            (int) $tree_info['ref_id'],
+        );
     }
 
 }

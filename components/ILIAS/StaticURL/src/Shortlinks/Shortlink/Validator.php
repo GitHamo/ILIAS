@@ -16,26 +16,20 @@
  *
  *********************************************************************/
 
-namespace ILIAS\StaticURL\Response;
+declare(strict_types=1);
+
+namespace ILIAS\StaticURL\Shortlinks\Shortlink;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class CannotHandle implements Response
+class Validator
 {
-    public function getURIPath(): ?string
-    {
-        return null;
-    }
+    public const string PATTERN = '/^[a-zA-Z0-9\-_]+$/';
 
-    public function targetCanBeReached(): bool
+    public function isValid(string $alias): bool
     {
-        return false;
+        // only a-zA-Z0-9-_ allowed
+        return preg_match(self::PATTERN, $alias) === 1;
     }
-
-    public function shift(): int
-    {
-        return 0;
-    }
-
 }

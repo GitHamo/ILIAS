@@ -16,26 +16,15 @@
  *
  *********************************************************************/
 
-namespace ILIAS\StaticURL\Response;
+declare(strict_types=1);
+
+namespace ILIAS\StaticURL\Shortlinks\Shortlink\Target;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class CannotHandle implements Response
+enum Type: string
 {
-    public function getURIPath(): ?string
-    {
-        return null;
-    }
-
-    public function targetCanBeReached(): bool
-    {
-        return false;
-    }
-
-    public function shift(): int
-    {
-        return 0;
-    }
-
+    case REPO = 'repo';
+    case CUSTOM = 'cust';
 }

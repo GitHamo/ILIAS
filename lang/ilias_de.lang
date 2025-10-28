@@ -5092,6 +5092,8 @@ common#:#obj_skmg_desc#:#Kompetenzen und Kategorien verwalten
 common#:#obj_spl#:#Fragenpool für Umfragen
 common#:#obj_spl_select#:#-- Bitte wählen Sie einen Fragenpool für Umfragen aus --
 common#:#obj_st#:#Kapitel
+common#:#obj_stus#:#Kurz-URLs
+common#:#obj_stus_desc#:#Globale Kurz-URL-Einstellungen
 common#:#obj_sty#:#Style
 common#:#obj_stys#:#Layout
 common#:#obj_stys_desc#:#Einstellungen für das Erscheinungsbild der Installation und für Styles bestimmter Inhaltsobjekte
@@ -14822,6 +14824,9 @@ rbac#:#spl_read#:#Fragen im Pool können eingesehen und für Umfrage übernommen
 rbac#:#spl_visible#:#Fragenpool ist sichtbar
 rbac#:#spl_write#:#Fragen und Einstellungen des Fragenpools bearbeiten
 rbac#:#statistics_read#:#Statistiken einsehen
+rbac#:#stus_edit_permission#:#Benutzer kann die Berechtigungseinstellungen in der Kurz-URL-Verwaltung ändern
+rbac#:#stus_read#:#Benutzer kann die Kurz-URL-Verwaltung einsehen
+rbac#:#stus_write#:#Benutzer kann Kurz-URLs bearbeiten
 rbac#:#sty_write_content#:#Content-Styles bearbeiten
 rbac#:#sty_write_page_layout#:#Seitenlayouts bearbeiten
 rbac#:#sty_write_system#:#System-Styles bearbeiten
@@ -15876,6 +15881,38 @@ skmg#:#skmg_usage_type_info_prof#:#Nutzung in Kompetenzprofilen
 skmg#:#skmg_usage_type_info_res#:#Zuordnung zu Magazinobjekten
 skmg#:#skmg_usage_type_info_user#:#Zuordnung zu Benutzern
 skmg#:#skmg_your_self_evaluation#:#Ihre Selbsteinschätzung
+stus#:#stus_action_delete#:#Löschen
+stus#:#stus_action_edit#:#Bearbeiten
+stus#:#stus_action_toggle#:#De-/Aktivieren
+stus#:#stus_active#:#Aktiv
+stus#:#stus_alias#:#Kurz-URL
+stus#:#stus_alias_already_exists#:#Die Kurz-URL ist bereits vergeben. Bitte wählen Sie eine andere.
+stus#:#stus_alias_invalid#:#Die Kurz-URL enthält ungültige Zeichen. Erlaubte Zeichen: A-Z, a-z, 0-9, - und _
+stus#:#stus_confirm_delete#:#Einträge löschen
+stus#:#stus_create_shortlink#:#Kurz-URL anlegen
+stus#:#stus_delete#:#Löschen
+stus#:#stus_delete_shortlink#:#Löschen
+stus#:#stus_delete_shortlink_msg#:#Kurz-URL gelöscht
+stus#:#stus_index#:#Verwalten
+stus#:#stus_info#:#Informationen
+stus#:#stus_info_active#:#Inaktive Kurz-URLs werden nicht weitergeleitet, wenn sie aufgerufen werden.
+stus#:#stus_info_alias#:#Darf nur die folgenden Zeichen enthalten: A-Z, a-z, 0-9, - und _
+stus#:#stus_info_target_ref_id#:#Ziel-Objekt
+stus#:#stus_order_saved#:#Reihenfolge gespeichert
+stus#:#stus_prefix#:#Präfix
+stus#:#stus_rbac_permissions#:#Rechte
+stus#:#stus_shortlink#:#Kurz-URL
+stus#:#stus_shortlinks#:#Kurz-URLs
+stus#:#stus_shortlinks_deleted#:#Kurz-URLs wurden gelöscht
+stus#:#stus_shortlinks_toggled#:#Kurz-URLs wurden de-/aktiviert
+stus#:#stus_stus_stored_sucessfully#:#Kurz-URL erfolgreich gespeichert
+stus#:#stus_stus_toggle#:#De-/Aktivieren
+stus#:#stus_target_link#:#Ziel-Objekt
+stus#:#stus_target_ref_id#:#Ziel-Objekt
+stus#:#stus_target_ref_id_required#:#Wählen Sie ein Ziel-Objekt aus.
+stus#:#stus_toggle#:#De-/Aktivieren
+stus#:#stus_toggle_shortlink#:#Status ändern
+stus#:#stus_toggle_shortlink_msg#:#Möchten Sie den Aktiv-Status der folgenden Einträge ändern?
 style#:#Style#:#Style
 style#:#adapt_icon#:#Anpassung der Icons
 style#:#adapt_icon_description#:#Passe die Iconfarbe oder das Icon an.

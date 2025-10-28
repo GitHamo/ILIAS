@@ -16,26 +16,28 @@
  *
  *********************************************************************/
 
-namespace ILIAS\StaticURL\Response;
+declare(strict_types=1);
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class CannotHandle implements Response
+class ilObjStaticUrlService extends ilObject
 {
-    public function getURIPath(): ?string
+    public function __construct(int $id = 0, bool $call_by_reference = true)
     {
-        return null;
+        $this->type = "stus";
+        parent::__construct($id, $call_by_reference);
     }
 
-    public function targetCanBeReached(): bool
+    #[\Override]
+    public function getPresentationTitle(): string
     {
-        return false;
+        return $this->lng->txt("obj_stus");
     }
 
-    public function shift(): int
+    #[\Override]
+    public function getLongDescription(): string
     {
-        return 0;
+        return $this->lng->txt("obj_stus_desc");
     }
-
 }
