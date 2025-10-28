@@ -17,7 +17,6 @@
  *********************************************************************/
 
 declare(strict_types=1);
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ILIAS\DI\Container;
 use ILIAS\GlobalScreen\Helper\BasicAccessCheckClosures;
@@ -25,9 +24,7 @@ use ILIAS\GlobalScreen\Helper\BasicAccessCheckClosures;
 class ilServicesGlobalScreenTest extends TestCase
 {
     private ?Container $dic_backup = null;
-    private int $SYSTEM_FOLDER_ID;
     private int $ROOT_FOLDER_ID;
-    private int $ONE_ADMIN_NODE_ID = 123;
 
     protected function setUp(): void
     {
@@ -37,7 +34,6 @@ class ilServicesGlobalScreenTest extends TestCase
         if (!defined('SYSTEM_FOLDER_ID')) {
             define('SYSTEM_FOLDER_ID', 42);
         }
-        $this->SYSTEM_FOLDER_ID = SYSTEM_FOLDER_ID;
         if (!defined('ROOT_FOLDER_ID')) {
             define('ROOT_FOLDER_ID', 24);
         }
@@ -53,14 +49,8 @@ class ilServicesGlobalScreenTest extends TestCase
     public function testAdminAccessTrue(): void
     {
         global $DIC;
-        $DIC['tree'] = $tree_mock = $this->createMock(ilTree::class);
         $DIC['rbacsystem'] = $rbac_mock = $this->createMock(ilRbacSystem::class);
         $class = new BasicAccessCheckClosures($DIC);
-
-        $tree_mock->expects($this->once())
-                  ->method('getChildIds')
-                  ->with($this->SYSTEM_FOLDER_ID)
-                  ->willReturn([$this->ONE_ADMIN_NODE_ID]);
 
         $rbac_mock->expects($this->once())
                   ->method('hasAnyAdminReadPermission')
@@ -75,14 +65,8 @@ class ilServicesGlobalScreenTest extends TestCase
     public function testAdminAccessFalse(): void
     {
         global $DIC;
-        $DIC['tree'] = $tree_mock = $this->createMock(ilTree::class);
         $DIC['rbacsystem'] = $rbac_mock = $this->createMock(ilRbacSystem::class);
         $class = new BasicAccessCheckClosures($DIC);
-
-        $tree_mock->expects($this->once())
-                  ->method('getChildIds')
-                  ->with($this->SYSTEM_FOLDER_ID)
-                  ->willReturn([$this->ONE_ADMIN_NODE_ID]);
 
         $rbac_mock->expects($this->once())
                   ->method('hasAnyAdminReadPermission')
@@ -97,14 +81,8 @@ class ilServicesGlobalScreenTest extends TestCase
     public function testAdminAcessTrueButWithClosure(): void
     {
         global $DIC;
-        $DIC['tree'] = $tree_mock = $this->createMock(ilTree::class);
         $DIC['rbacsystem'] = $rbac_mock = $this->createMock(ilRbacSystem::class);
         $class = new BasicAccessCheckClosures($DIC);
-
-        $tree_mock->expects($this->once())
-                  ->method('getChildIds')
-                  ->with($this->SYSTEM_FOLDER_ID)
-                  ->willReturn([$this->ONE_ADMIN_NODE_ID]);
 
         $rbac_mock->expects($this->once())
                   ->method('hasAnyAdminReadPermission')
