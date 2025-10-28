@@ -177,6 +177,9 @@ class Table implements OrderingRetrieval, toComponent
                     )
                 ]
             )
+            ->withOrderingDisabled(
+                !$this->can_edit
+            )
             ->withRequest($this->request)
             ->withActions($actions);
     }
