@@ -489,6 +489,16 @@ class ilCmiXapiSettingsGUI
                 $userName->setDisabled(true);
             }
 
+            if ($this->object->getContentType() == ilObjCmiXapi::CONT_TYPE_CMI5) {
+                $item = new ilCheckboxInputGUI($this->language->txt('enrich_data_label'), 'enrich_data');
+                $item->setInfo($this->language->txt('enrich_data_info'));
+                $item->setChecked($this->object->getEnrichData());
+                if ($this->object->getLrsType()->getForcePrivacySettings()) {
+                    $item->setDisabled(true);
+                }
+                $form->addItem($item);
+            }
+
         }
 
         $item = new ilRadioGroupInputGUI($this->language->txt('conf_delete_data'), 'delete_data');
@@ -499,6 +509,9 @@ class ilCmiXapiSettingsGUI
         }
         $item->setValue((string) $this->object->getDeleteData());
         $item->setInfo($this->language->txt('conf_delete_data_info'));
+        if ($this->object->getLrsType()->getForcePrivacySettings()) {
+            $item->setDisabled(true);
+        }
         $form->addItem($item);
 
 
@@ -642,6 +655,7 @@ class ilCmiXapiSettingsGUI
                 $this->object->setDuration((bool) $form->getInput("duration"));
                 $this->object->setNoSubstatements((bool) $form->getInput("no_substatements"));
                 $this->object->setDeleteData((int) $form->getInput("delete_data"));
+                $this->object->setEnrichData((bool) $form->getInput("enrich_data"));
             }
         } else { //SourceTypeExternal
             $this->object->setBypassProxyEnabled(true);

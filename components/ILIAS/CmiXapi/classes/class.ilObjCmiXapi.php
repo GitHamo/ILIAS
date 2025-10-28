@@ -146,6 +146,8 @@ class ilObjCmiXapi extends ilObject2
     protected bool $no_substatements = false;
 
     protected int $deleteData = 0;
+    
+    protected bool $enrichData = false;
 
     protected ?ilCmiXapiUser $currentCmixUser = null;
 
@@ -689,7 +691,16 @@ class ilObjCmiXapi extends ilObject2
         $this->bypassProxyEnabled = $bypassProxyEnabled;
     }
 
-    //todo?
+    public function getEnrichData(): bool
+    {
+        return $this->enrichData;
+    }
+
+    public function setEnrichData(bool $enrichData): void
+    {
+        $this->enrichData = $enrichData;
+    }
+
     protected function doRead(): void
     {
         $this->load();
@@ -743,6 +754,7 @@ class ilObjCmiXapi extends ilObject2
             $this->setTimestamp((bool) $row['c_timestamp']);
             $this->setDuration((bool) $row['duration']);
             $this->setNoSubstatements((bool) $row['no_substatements']);
+            $this->setEnrichData((bool) $row['enrich_data']);
             $this->setDeleteData((int) $row['delete_data']);
 
             $this->setUserPrivacyComment((string) $row['usr_privacy_comment']);
@@ -823,7 +835,8 @@ class ilObjCmiXapi extends ilObject2
             'c_timestamp' => ['integer', (int) $this->getTimestamp()],
             'duration' => ['integer', (int) $this->getDuration()],
             'no_substatements' => ['integer', (int) $this->getNoSubstatements()],
-            'delete_data' => ['integer', $this->getDeleteData()]
+            'delete_data' => ['integer', $this->getDeleteData()],
+            'enrich_data' => ['integer', (int) $this->getEnrichData()]
         ]);
 
         $this->saveRepositoryActivationSettings();
@@ -897,13 +910,15 @@ class ilObjCmiXapi extends ilObject2
                 c_timestamp = %s,
                 duration = %s,
                 no_substatements = %s,
-                delete_data = %s
+                delete_data = %s,
+                enrich_data = %s
             WHERE lrs_type_id = %s
 		";
 
         $DIC->database()->manipulateF(
             $query,
             ['integer',
+             'integer',
              'integer',
              'integer',
              'integer',
@@ -939,6 +954,7 @@ class ilObjCmiXapi extends ilObject2
              $lrsType->getDuration(),
              $lrsType->getNoSubstatements(),
              $lrsType->getDeleteData(),
+             $lrsType->getEnrichData(),
              $lrsType->getTypeId()
             ]
         );
@@ -1233,7 +1249,8 @@ class ilObjCmiXapi extends ilObject2
             'c_timestamp' => (int) $this->getTimestamp(),
             'duration' => (int) $this->getDuration(),
             'no_substatements' => (int) $this->getNoSubstatements(),
-            'delete_data' => (int) $this->getDeleteData()
+            'delete_data' => (int) $this->getDeleteData(),
+            'enrich_data' => (int) $this->getEnrichData()
             //'bypass_proxy' => (int) $this->isBypassProxyEnabled()
         ];
     }
@@ -1294,6 +1311,7 @@ class ilObjCmiXapi extends ilObject2
         $new_obj->setDuration($this->getDuration());
         $new_obj->setNoSubstatements($this->getNoSubstatements());
         $new_obj->setDeleteData($this->getDeleteData());
+        $new_obj->setEnrichData($this->getEnrichData());
         $new_obj->update();
 
         if ($this->getSourceType() == self::SRC_TYPE_LOCAL) {
@@ -1311,6 +1329,7 @@ class ilObjCmiXapi extends ilObject2
         // delete file data entry
         $query = "DELETE FROM " . self::DB_TABLE_NAME . " WHERE obj_id = " . $this->database->quote($this->getId(), 'integer');
         $this->database->manipulate($query);
+        ilHistory::_removeEntriesForObject($this->getId());
 
         // delete entire directory and its content
         $dirUtil = new ilCmiXapiContentUploadImporter($this);
