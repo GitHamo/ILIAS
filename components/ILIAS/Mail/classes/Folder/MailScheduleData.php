@@ -20,14 +20,24 @@ declare(strict_types=1);
 
 namespace ILIAS\Mail\Folder;
 
-enum MailFolderType: string
+use MailDeliveryData;
+use DateTimeImmutable;
+
+readonly class MailScheduleData
 {
-    case ROOT = 'root';
-    case INBOX = 'inbox';
-    case TRASH = 'trash';
-    case DRAFTS = 'drafts';
-    case SENT = 'sent';
-    case LOCAL = 'local';
-    case USER = 'user_folder';
-    case OUTBOX = 'outbox';
+    public function __construct(
+        private MailDeliveryData $data,
+        private DateTimeImmutable $schedule_datetime
+    ) {
+    }
+
+    public function getScheduleDatetime(): DateTimeImmutable
+    {
+        return $this->schedule_datetime;
+    }
+
+    public function getMailDeliveryData(): MailDeliveryData
+    {
+        return $this->data;
+    }
 }
