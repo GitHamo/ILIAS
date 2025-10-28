@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use LogicException;
 use InvalidArgumentException;
 use ReflectionProperty;
+use Error;
 
 final class RoutesRegistryTest extends TestCase
 {
@@ -51,6 +52,15 @@ final class RoutesRegistryTest extends TestCase
 
         $serialized = serialize(RoutesRegistry::getInstance());
         unserialize($serialized);
+    }
+
+    public function test_cloning_throws_type_error(): void
+    {
+        $registry = RoutesRegistry::getInstance();
+
+        self::expectException(Error::class);
+
+        clone $registry;
     }
 
     public function test_it_registers_and_retrieves_a_route(): void
