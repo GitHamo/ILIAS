@@ -32,7 +32,7 @@ use Throwable;
 /**
  * This is the global, application-wide safety net, plugged into Slim's ErrorMiddleware.
  */
-final readonly class ErrorHandler
+readonly class ErrorHandler
 {
     public function __construct(
         private Webservice $service,

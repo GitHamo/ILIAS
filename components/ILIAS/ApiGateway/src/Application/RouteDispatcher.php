@@ -29,7 +29,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 /**
  * This class is responsible for the entire lifecycle of a successfully matched route.
  */
-final readonly class RouteDispatcher
+readonly class RouteDispatcher
 {
     public function __construct(
         private Webservice $service,

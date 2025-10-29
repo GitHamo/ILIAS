@@ -134,7 +134,6 @@ class WebAppTest extends TestCase
                 })
             );
 
-
         $webApp->run();
     }
 
