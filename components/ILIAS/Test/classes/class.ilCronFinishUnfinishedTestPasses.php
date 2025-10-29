@@ -63,7 +63,8 @@ class ilCronFinishUnfinishedTestPasses extends CronJob
 
         $this->processLockerFactory = new ilTestProcessLockerFactory(
             new ilSetting('assessment'),
-            $this->db
+            $this->db,
+            $this->logger
         );
 
         $this->test_result_repository = TestDic::dic()['results.data.repository'];
