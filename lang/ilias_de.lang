@@ -1124,11 +1124,11 @@ assessment#:#qpl_skill_point_eval_by_solution_compare#:#Ermittlung der Kompetenz
 assessment#:#qpl_skill_point_eval_mode_quest_result#:#Antwortergebnis
 assessment#:#qpl_skill_point_eval_mode_solution_compare#:#Lösungsvergleich
 assessment#:#qpl_skl_all_questions#:#Alle Fragen
-assessment#:#qpl_skl_assigned_questions:#:#Fragen mit Zuordnung
+assessment#:#qpl_skl_assigned_questions#:#Questions with assignment###29 10 2025 new variable
 assessment#:#qpl_skl_assignment_for_question#:#Kompetenz-Zuordnungen zur Frage „%s“
 assessment#:#qpl_skl_sub_tab_quest_assign#:#Fragen-Kompetenz-Zuordnung
 assessment#:#qpl_skl_sub_tab_usages#:#Vergabehäufigkeit
-assessment#:#qpl_skl_unassigned_questions:#:#Fragen ohne Zuordnung
+assessment#:#qpl_skl_unassigned_questions#:#Questions without assignment###29 10 2025 new variable
 assessment#:#qpl_skl_view_control_mode_aria:#:#Ansichtssteuerungsmodus
 assessment#:#qpl_sync_quest_skl_assigns_confirmation#:#Die Frage wurde aus einem anderen Magazinobjekt eingefügt. Soll die aktuelle Konfiguration von Kompetenzzuweisungen auf das Original der Frage übertragen werden?
 assessment#:#qpl_tab_competences#:#Kompetenzen
@@ -1254,7 +1254,6 @@ assessment#:#scoringadjust#:#Nachkorrektur
 assessment#:#search_groups#:#nach Gruppen
 assessment#:#search_roles#:#nach Rollen
 assessment#:#search_term#:#Suchbegriff
-assessment#:#search_users#:#nach Benutzern
 assessment#:#select_at_least_one_feedback_type_and_trigger#:#Bitte mindestens eine Art der Rückmeldung und einen Auslöser auswählen.
 assessment#:#select_at_least_one_lock_answer_type#:#Bitte mindestens eine Art Antworten festzuschreiben auswählen.
 assessment#:#select_gap#:#Auswahl-Lücke
@@ -1711,6 +1710,7 @@ assessment#:#tst_participant_status#:#Teilnehmerstatus
 assessment#:#tst_participating_users#:#Teilnehmende Benutzer
 assessment#:#tst_pass_best_pass#:#Besten Durchlauf des Tests bewerten
 assessment#:#tst_pass_best_pass_desc#:#Wenn multiple Durchläufe erlaubt werden, wird der Durchlauf bewertet, bei dem die höchste Punktezahl erreicht wurde.
+assessment#:#tst_pass_deletion#:#Previous Passes###29 10 2025 new variable
 assessment#:#tst_pass_deletion_allowed#:#Durchläufe, die nicht zur Bewertung verwendet werden, können gelöscht werden.
 assessment#:#tst_pass_details#:#Detaillierte Ergebnisse
 assessment#:#tst_pass_details_header_lo_initial#:#Einstiegsergebnisse zu den Lernzielen<br />%s - %s
@@ -2271,7 +2271,7 @@ badge#:#badge_sort_active_badges_first#:#Aktive Badges zuerst
 badge#:#badge_sort_active_badges_last#:#Aktive Badges zuletzt
 badge#:#badge_sort_activity_badges_first#:#Automatisch vergebene Badges zuerst
 badge#:#badge_sort_activity_badges_last#:#Automatisch vergebene Badges zuletzt
-badge#:#badge_sort_added_to_profile_first#:#Zum Profil hinzugefügte zuerst
+badge#:#badge_sort_added_to_profile_last#:#Added To Profile First###29 10 2025 new variable
 badge#:#badge_sort_excluded_from_profile_first#:#Vom Profil ausgeklammerte zuerst
 badge#:#badge_sort_manual_awarding_first#:#Badges mit manueller Vergabe zuerst
 badge#:#badge_sort_manual_awarding_last#:#Badges mit manueller Vergabe zuletzt
@@ -2790,7 +2790,7 @@ certificate#:#certificate_a4_landscape#:#A4 Quer (210 mm x 297 mm)
 certificate#:#certificate_a5#:#A5 (210 mm x 148 mm)
 certificate#:#certificate_a5_landscape#:#A5 Quer (148 mm x 210 mm)
 certificate#:#certificate_background_image#:#Hintergrundbild
-certificate#:#certificate_card_tile_image#:#Bild für Kacheldarstellung
+certificate#:#certificate_card_thumbnail_image#:#Thumbnail Image###29 10 2025 new variable
 certificate#:#certificate_change_active_status#:#Der Aktiv-Status des Zertifikats wurde geändert
 certificate#:#certificate_confirm_deletion_text#:#Wollen Sie wirklich die Zertifikat-Vorlage und alle zugehörigen Daten löschen?
 certificate#:#certificate_custom#:#Eigenes Format...
@@ -3102,7 +3102,6 @@ cmix#:#cmix_add#:#xAPI/cmi5-Objekt anlegen
 cmix#:#cmix_add_cmi5_lm#:#cmi5 Lernmodul
 cmix#:#cmix_add_cmi5_lm_info#:#Diese Option sollte verwendet werden, wenn es sich bei den Inhalten um ein cmi5 konformes Lernmodul handelt. Verwandte Funktionen wie geeignete Berichte sind ohne weitere Konfigurationen verfügbar.
 cmix#:#cmix_add_lrs_type#:#LRS-Typ
-cmix#:#cmix_add_lrs_type_info#:#Diese Typen von Learning Record Stores wurden in der ILIAS-Administration verfügbar gemacht.
 cmix#:#cmix_add_source#:#Quelle
 cmix#:#cmix_add_source_external_app#:#Nicht von ILIAS gestartete Ressource
 cmix#:#cmix_add_source_external_app_info#:#Verwenden Sie diese Option für separat gestartete Ressourcen wie z.B. Apps oder Simulationen. Benutzer müssen durch Angabe ihrer verwendeten E-Mail-Adresse dem Abruf der Daten zustimmen.
@@ -5559,6 +5558,7 @@ common#:#search_new#:#Neue Suche
 common#:#search_result#:#Suchergebnis
 common#:#search_results#:#Suchergebnisse
 common#:#search_user#:#Benutzer suchen
+common#:#search_users#:#Look Up Users###29 10 2025 new variable
 common#:#seas_max_hits#:#Maximalanzahl von Treffern
 common#:#seas_max_hits_info#:#Stellen Sie hier die Maximalanzahl von Suchergebnissen ein, die nach einer Suchanfrage ausgegeben werden. Je geringer die Zahl ist, desto schneller erfolgt der Seitenaufbau.
 common#:#seas_settings#:#Systemweite Suche
@@ -8637,6 +8637,7 @@ dcl#:#dcl_datetime#:#Datumseingabe mit Uhrzeit
 dcl#:#dcl_datetime_desc#:#Datum und Uhrzeit wird eingegeben oder im Kalender ausgewählt.
 dcl#:#dcl_datetime_selection#:#Datum mit Uhrzeit per Auswahl
 dcl#:#dcl_datetime_selection_desc#:#Aus vorgegebenen Optionen kann ein Datum mit Uhrzeit ausgewählt werden.
+dcl#:#dcl_deactivate_view#:#Deactivate this view###29 10 2025 new variable
 dcl#:#dcl_default_sort_field#:#Sortierung
 dcl#:#dcl_default_sort_field_order#:#Sortierrichtung
 dcl#:#dcl_default_sort_field_order_desc#:#Tabelle wird standardmässig nach dem ausgewählten Feld sortiert.
@@ -8653,6 +8654,7 @@ dcl#:#dcl_detailed_view#:#Einzelansicht
 dcl#:#dcl_display_action_menu#:#Kopieren
 dcl#:#dcl_display_action_menu_desc#:#Das Objekt kann von dem Eintrag aus kopiert werden.
 dcl#:#dcl_display_record_alt#:#Diesen Eintrag anzeigen
+dcl#:#dcl_duplicate_non_unique_entries_exist#:#This may also concern existing records.###23 02 2024 new variable
 dcl#:#dcl_edit#:#Einstellungen der Datensammlung
 dcl#:#dcl_edit_entry_rules#:#Eintragsbearbeitung
 dcl#:#dcl_edit_field#:#Feld bearbeiten
@@ -8786,6 +8788,7 @@ dcl#:#dcl_public_comments#:#Kommentare
 dcl#:#dcl_public_comments_desc#:#Benutzer können Datensätze dieser Tabelle kommentieren.
 dcl#:#dcl_rating#:#Bewertung
 dcl#:#dcl_rating_desc#:#Bestehende Einträge mit ein bis fünf Sternen bewerten.
+dcl#:#dcl_rbac_roles_without_read_access_on_any_standard_view#:#The following rbac roles have read access on the data collection, but no read access on any standard view of a table:###29 10 2025 new variable
 dcl#:#dcl_record#:#Eintrag
 dcl#:#dcl_record_deleted#:#Eintrag gelöscht.
 dcl#:#dcl_record_from_total#:#%d von %d
@@ -9768,6 +9771,7 @@ exercise#:#exc_your_submission#:#Ihre Einreichung
 exp#:#exp_create_file#:#Exportdatei erzeugen
 exp#:#exp_error_disabled#:#Der Export von Container-Objekten ist deaktiviert. Bei Fragen wenden Sie sich bitte an die technische Betreuung.
 exp#:#exp_error_too_many_objects#:#Der Export überschreitet die maximal erlaubte Zahl an Objekten (%1). Bitte wählen Sie eine kleinere Anzahl an Objekten.
+exp#:#exp_export_dropdown#:#Export###29 10 2025 new variable
 exp#:#exp_export_files#:#Exportdateien
 exp#:#exp_export_single_option#:#Export %s
 exp#:#exp_file_created#:#Eine Exportdatei wurde erstellt.
@@ -9788,7 +9792,6 @@ exp#:#export_created#:#Eine neue Exportdatei wurde erstellt.
 exp#:#export_files_deleted#:#Die ausgewählten Exportdateien wurden gelöscht.
 exp#:#export_options#:#Export Optionen
 exp#:#export_type#:#Export Typ
-export#:#exp_export_dropdown#:#Export
 export#:#exp_file#:#Dateiname
 export#:#exp_public_access#:#Öffentlicher Zugriff aktiv
 export#:#exp_size#:#Dateigröße (MB)
@@ -10465,7 +10468,6 @@ grp#:#reg_grp_min_members#:#Mindestanzahl
 gsfo#:#accessibility#:#Barrierefreiheit
 gsfo#:#confirm_delete#:#Möchten Sie die folgenden Elemente wirklich löschen?
 gsfo#:#confirm_reset#:#Durch das Zurücksetzen der Fußzeile werden alle Einträge in ihren ursprünglichen Zustand zurückversetzt. Alle Anpassungen und manuellen Einträge werden gelöscht. Möchten Sie fortfahren?
-gsfo#:#edit_translations#:#Übersetzungen bearbeiten
 gsfo#:#entries_add#:#Eintrag hinzufügen
 gsfo#:#entries_edit#:#Einträge bearbeiten
 gsfo#:#entries_parent#:#Gruppe auswählen
@@ -11423,6 +11425,7 @@ lti#:#lti_object_consumer#:#LTI-Konsumenten
 lti#:#lti_object_release_settings_form#:#LTI-Freigaben bearbeiten
 lti#:#lti_provider#:#LTI-Freigaben
 lti#:#lti_provider_not_avail_msg#:#LTI-Provider ist auf „Nicht verfügbar“ gesetzt.
+lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.###29 10 2025 new variable
 lti#:#lti_providing_tab#:#ILIAS als LTI-Provider
 lti#:#lti_released_objects#:#Objekt-Freigaben
 lti#:#lti_select_provider#:#Provider auswählen
@@ -15498,7 +15501,6 @@ search#:#search_area_info#:#Bitte wählen Sie einen Bereich aus, innerhalb dem d
 search#:#search_auto_complete_length#:#Anzahl der Einträge in Auto-Complete-Liste
 search#:#search_cdate_filter#:#Erstellungsdatum
 search#:#search_cdate_filter_info#:#In den Suchergebnissen erlaubt ein Filter die Eingabe eines Zeitraums.
-search#:#search_choose_object_type#:#Bitte wählen Sie mindestens einen Objekttyp aus.
 search#:#search_content#:#Seiteninhalt
 search#:#search_copyright#:#Copyright
 search#:#search_created_after#:#Objekte erstellt nach dem...
@@ -15567,7 +15569,6 @@ search#:#search_user#:#Benutzer
 search#:#search_user_extended#:#Erweiterte Benutzersuche
 search#:#search_user_search_form#:#Globale Benutzersuche
 search#:#search_user_search_info_form#:#Anmeldekonten können in der globalen Suche gefunden werden. Sofern die Lucene-Volltextsuche aktiviert ist, werden auch Profildaten in den Index aufgenommen.
-search#:#search_users#:#Benutzer suchen
 search#:#seas_search_type#:#Art der Suche
 search#:#select_orgu#:#Organisationseinheiten auswählen
 search#:#until#:#bis
@@ -16655,7 +16656,6 @@ survey#:#saved_messages#:#Verfügbare Nachrichtentexte
 survey#:#scale#:#Skala
 survey#:#search_groups#:#Gruppen
 survey#:#search_term#:#Suchbegriff(e)
-survey#:#search_users#:#Benutzer suchen
 survey#:#select_option#:#--- Bitte wählen Sie eine Antwort aus ---
 survey#:#select_prior_question#:#Eine vorherige Frage auswählen
 survey#:#select_questionpool#:#Bitte geben Sie einen Fragenpool an, dem Sie die neu erstellte Frage zuordnen
@@ -17173,7 +17173,6 @@ trac#:#read_count_avg#:#Durchschnitt Seitenaufrufe
 trac#:#registration_filter#:#Registrierungsdatum
 trac#:#search_area_info#:#Bitte wählen Sie ein Objekt aus.
 trac#:#search_terms#:#Suchbegriff(e)
-trac#:#select_one#:#Bitte wählen Sie ein Objekt aus.
 trac#:#session_statistics#:#Session-Statistik
 trac#:#trac_aggregation#:#Aggregation
 trac#:#trac_all#:#Alle
