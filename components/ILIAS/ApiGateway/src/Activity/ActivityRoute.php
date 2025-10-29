@@ -23,10 +23,16 @@ namespace ILIAS\ApiGateway\Activity;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\Component\Activities\ActivityType;
 use Override;
 
 class ActivityRoute implements Route
 {
+    public static function fromActivity(Activity $activity): self
+    {
+        return new self($activity, new ActivityRouteHandler($activity));
+    }
+
     public function __construct(
         private Activity $activity,
         private ActivityRouteHandler $handler,
@@ -45,7 +51,10 @@ class ActivityRoute implements Route
     #[Override]
     public function getMethods(): array
     {
-        return ['GET'];
+        return match ($this->activity->getType()) {
+            ActivityType::Command => ['POST'],
+            ActivityType::Query => ['GET'],
+        };
     }
 
     #[Override]
