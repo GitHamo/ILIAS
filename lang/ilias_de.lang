@@ -71,10 +71,10 @@ acc#:#acc_tbl_docs_head_title#:#Titel
 acc#:#acc_tbl_docs_title#:#Dokumente
 acc#:#acc_tree_off#:#Baumansicht aus
 acc#:#acc_tree_on#:#Baumansicht an
-adm#:#adm_acc_ctrl_cpt_desc#:#Wenn aktiviert, erscheint der Link zur "Info Barrierefreiheit" im Footer.
-adm#:#adm_acc_ctrl_cpt_enable#:#Info Barrierefreiheit aktivieren
+adm#:#adm_acc_ctrl_cpt_desc#:#Zeigt im Footer den Link zur „Info Barrierefreiheit“ an.
+adm#:#adm_acc_ctrl_cpt_enable#:#Info Barrierefreiheit
 adm#:#adm_accessibility_contacts#:#Anlaufstelle für Barrierefreiheit
-adm#:#adm_accessibility_contacts_info#:#Kontaktpersonen zur Meldung von Problemen mit der Barrierefreiheit in der Fußzeile. Komma-separierte Liste von Anmeldenamen.
+adm#:#adm_accessibility_contacts_info#:#Kontaktperson(en), um in der Fußzeile Probleme mit der Barrierefreiheit zu melden. Mehrere Anmeldenamen müssen mit Komma getrennt werden.
 adm#:#adm_awrn_support_contacts_info#:#Alle Benutzer für die technische Betreuung werden aufgelistet. Der technischen Betreuung zugeordnet werden Benutzer im Administrationsbereich „Systemeinstellungen und Wartung » Allgemeine Einstellungen“, Reiter „Kontaktinformationen”.
 adm#:#adm_support_contacts#:#Technische Betreuung
 adm#:#adm_support_contacts_info#:#Bitte tragen Sie hier komma-separiert die Anmeldenamen der Personen ein, die bei Fragen und technischen Problemen kontaktiert werden können. Die Kontaktaufnahme erfolgt per Mail über den Link „Technische Betreuung kontaktieren“ im Footer von ILIAS. Ist die „Wer ist online?“-Anzeige aktiv, werden diese Personen auch dort als technische Betreuung angezeigt.
@@ -262,8 +262,8 @@ administration#:#nothing_to_purge#:#Nichts zu eliminieren...
 administration#:#nothing_to_remove#:#Nichts zu entfernen...
 administration#:#nothing_to_restore#:#Nichts wiederherzustellen...
 administration#:#obj_blga#:#Blog
-administration#:#obj_blga_desc#:#Globale Blogeinstellungen
-administration#:#obj_chta_desc#:#Administration des Chat-Objekts und des Chat-Servers
+administration#:#obj_blga_desc#:#Einstellungen für den Objekttyp Blog
+administration#:#obj_chta_desc#:#Einstellungen für den Objekttyp Chat und zum Chat-Server
 administration#:#obj_excs#:#Übung
 administration#:#obj_excs_desc#:#Globale Übungseinstellungen
 administration#:#obj_gsfo#:#Fußzeile
@@ -3325,7 +3325,7 @@ cmix#:#show_debug#:#Lernerfahrungen anzeigen
 cmix#:#show_debug_info#:#Blendet Reiter „Lernerfahrungen“ ein und zeigt darin die persönlichen Lernerfahrungen. Die Lernerfahrungen aller Benutzer des Moduls werden angezeigt, wenn das Recht „Lernerfahrungen anderer Benutzer anzeigen“ gesetzt ist.
 cmix#:#tab_export#:#Exportieren
 cmix#:#tab_info#:#Info
-cmix#:#tab_lrs_types#:#LRS-Typen
+cmix#:#tab_lrs_types#:#Learning Record Stores
 cmix#:#tab_scoring#:#Platzierungen
 cmix#:#tab_settings#:#Einstellungen
 cmix#:#tab_statements#:#Lernerfahrungen
@@ -3333,7 +3333,7 @@ cmix#:#tbl_action_raw_data#:#Rohdaten anzeigen
 cmix#:#tbl_lrs_type_availability#:#Verwendbarkeit
 cmix#:#tbl_lrs_type_title#:#Titel
 cmix#:#tbl_lrs_type_usages#:#Anzahl der Nutzungen
-cmix#:#tbl_lrs_types_header#:#LRS-Typen
+cmix#:#tbl_lrs_types_header#:#Verfügbare Learning Record Stores (LRS)
 cmix#:#tbl_statements_actor#:#Benutzer
 cmix#:#tbl_statements_date#:#Datum
 cmix#:#tbl_statements_object#:#Objekt
@@ -4016,8 +4016,8 @@ common#:#enable_sahs_protocol_data_desc#:#Anzeige der Protokolldaten (SCORM)
 common#:#enable_search_engine#:#Öffentlichen Bereich für Suchmaschinen (z.B. Google) freigeben.<br />Bitte beachten Sie, dass für diese Einstellung das Apache-Modul "rewrite" benötigt wird, und dass .htaccess-Konfigurationen genutzt werden müssen.
 common#:#enable_trash#:#Papierkorb verwenden
 common#:#enable_trash_info#:#Gelöschte Objekte werden in den Papierkorb verschoben und können später wieder hergestellt werden. Ist der Papierkorb deaktiviert, werden Objekte beim Löschen direkt und unwiderruflich aus dem System entfernt!
-common#:#enable_webdav#:#WebDAV Zugriff aktivieren
-common#:#enable_webdav_info#:#Erlaubt WebDAV Clients den Zugriff auf das Magazin über einen Webordner. Benutzer können Webordner öffnen, indem Sie im Magazin die Aktion "Als Webordner öffnen" ausführen, oder in einem WebDAV Client folgende Adresse eingeben: <a href="%1$s" folder="%1$s">%1$s</a>
+common#:#enable_webdav#:#WebDAV-Zugriff aktivieren
+common#:#enable_webdav_info#:#Erlaubt WebDAV-Clients den Zugriff auf das Magazin über einen Webordner. Benutzer können Webordner öffnen, indem Sie im Magazin die Aktion "Als Webordner öffnen" ausführen, oder in einem WebDAV Client folgende Adresse eingeben: <a href="%1$s" folder="%1$s">%1$s</a>
 common#:#enabled#:#Eingeschaltet
 common#:#enlarge#:#Vergrössern
 common#:#enter_in_mb_desc#:#Geben Sie eine Größe in MB ein.
@@ -4564,7 +4564,7 @@ common#:#logs#:#Protokolldaten
 common#:#love#:#Love
 common#:#lres#:#Lernmaterialien
 common#:#lso_add#:#Lernsequenz anlegen
-common#:#lso_admin_form_byline#:#Allgemeine Einstellungen für Lernsequenzen
+common#:#lso_admin_form_byline#:#Einstellungen für den Objekttyp Lernsequenz
 common#:#lso_admin_form_title#:#Einstellungen
 common#:#lso_admin_interval_byline#:#Alle x Sekunden wird der Lernfortschritt für nicht vollständig integrierte Objekte abgefragt. Achtung! Je niedriger der Wert, desto häufiger wird eine Abfrage ausgeführt. Das kann sich sehr negativ auf die Systemlast auswirken; entsprechend sollte der Wert möglichst hoch gewählt werden.
 common#:#lso_admin_interval_label#:#Abfrageintervall Lernfortschritt (Sekunden)
@@ -4879,10 +4879,10 @@ common#:#obj_adma#:#Allgemeine Einstellungen
 common#:#obj_adma_desc#:#Wichtige Einstellungen für die gesamte Installation
 common#:#obj_adn#:#Ankündigungen
 common#:#obj_adve#:#Editor
-common#:#obj_adve_desc#:#Administrationseinstellungen für den ILIAS-Seiteneditor und den TinyMCE-Editor
+common#:#obj_adve_desc#:#Einstellungen für den ILIAS-Seiteneditor und den TinyMCE-Editor
 common#:#obj_ass#:#Asset
 common#:#obj_assf#:#Test und Assessment
-common#:#obj_assf_desc#:#Einstellungen und Verwaltung des Test und Assessment-Tools
+common#:#obj_assf_desc#:#Einstellungen für den Objekttyp Test
 common#:#obj_auth#:#Authentifizierung / Neuanmeldung
 common#:#obj_auth_desc#:#Konfigurieren Sie hier die Art der Benutzerauthentifizierung (Lokal, LDAP, ...) sowie die Neuanmeldungen.
 common#:#obj_awra#:#„Wer ist online?“-Anzeige
@@ -4892,16 +4892,16 @@ common#:#obj_bdga_desc#:#Verwaltung der Typen, Bildvorlagen und Activity Badges
 common#:#obj_bgtk#:#Hintergrundaufgabe
 common#:#obj_bibl#:#Literaturliste
 common#:#obj_bibs#:#Literaturliste
-common#:#obj_bibs_desc#:#Literaturlisten-Administration
+common#:#obj_bibs_desc#:#Einstellungen für den Objekttyp Literaturliste
 common#:#obj_blog#:#Blog
 common#:#obj_blog_duplicate#:#Blog kopieren
 common#:#obj_bnmk#:#Benchmarking
 common#:#obj_bnmk_desc#:#Aufzeichnung und Auswertung der Dauer von Datenbankabfragen
 common#:#obj_book#:#Buchungspool
 common#:#obj_cadm#:#Benutzerkontakte
-common#:#obj_cadm_desc#:#Administration für Benutzerkontakte
+common#:#obj_cadm_desc#:#Einstellungen für Benutzerkontakte
 common#:#obj_cals#:#Kalender
-common#:#obj_cals_desc#:#Enthält globale Einstellungen für den Kalender.
+common#:#obj_cals_desc#:#Globale Einstellungen für den Kalender.
 common#:#obj_cat#:#Kategorie
 common#:#obj_cat_duplicate#:#Kategorie kopieren
 common#:#obj_catr#:#Kategorielink
@@ -4912,23 +4912,22 @@ common#:#obj_chta#:#Chat
 common#:#obj_chtr#:#Chatraum
 common#:#obj_chtr_duplicate#:#Chatraum kopieren
 common#:#obj_cmis#:#LRS
-common#:#obj_cmis_desc#:#Typen von Learning Record Stores konfigurieren
+common#:#obj_cmis_desc#:#Learning Record Stores konfigurieren
 common#:#obj_cmix#:#xAPI/cmi5
 common#:#obj_cmps#:#Plugins
-common#:#obj_cmps_desc#:#Allgemeine Einstellungen für Plugins
+common#:#obj_cmps_desc#:#Einstellungen für installierte Plugins
 common#:#obj_coms#:#Kommentare
 common#:#obj_coms_desc#:#Kommentarfunktion administrieren
 common#:#obj_copa#:#Inhaltsseite
-common#:#obj_cpad#:#Inhaltsseiten
-common#:#obj_cpad#_desc#:#Administration Inhaltsseiten
-common#:#obj_cpad_desc#:#Administration der Inhaltsseiten
+common#:#obj_cpad#:#Inhaltsseite
+common#:#obj_cpad_desc#:#Einstellungen für den Objekttyp Inhaltsseite
 common#:#obj_cron#:#Cron Jobs
 common#:#obj_cron_desc#:#Liste aller Cron Jobs
 common#:#obj_crs#:#Kurs
 common#:#obj_crs_duplicate#:#Kurs kopieren
 common#:#obj_crsr#:#Kurslink
 common#:#obj_crss#:#Kurs
-common#:#obj_crss_desc#:#Allgemeine Einstellungen für Kurse
+common#:#obj_crss_desc#:#Einstellungen für den Objekttyp Kurs
 common#:#obj_crsv#:#Kurszertifikat
 common#:#obj_dbk#:#Digilib-Buch
 common#:#obj_dcl#:#Datensammlung
@@ -4938,33 +4937,31 @@ common#:#obj_dpro_desc#:#Datenschutzerklärung verwalten
 common#:#obj_dshs#:#Dashboard
 common#:#obj_dshs_desc#:#Dashboard administrieren
 common#:#obj_ecss#:#ECS
-common#:#obj_ecss_desc#:#Enthält globale Einstellungen für den E-Learning Community Server
+common#:#obj_ecss_desc#:#Einstellungen für den E-Learning Community Server
 common#:#obj_etal#:#Gespräch Teammitglied
 common#:#obj_exc#:#Übung
 common#:#obj_exc_duplicate#:#Übung kopieren
 common#:#obj_excv#:#Übungszertifikat
-common#:#obj_extt#:#Software von Drittanbietern
-common#:#obj_extt_desc#:#Konfigurieren Sie hier externe Software und Dienste, welche von ILIAS unterstützt werden
-common#:#obj_facs#:#Dateien
+common#:#obj_facs#:#Datei
 common#:#obj_facs_desc#:#Einstellungen für den Objekttyp Datei
 common#:#obj_file#:#Datei
 common#:#obj_file_duplicate#:#Datei kopieren
 common#:#obj_file_inline#:#Inline Datei
 common#:#obj_fils#:#Datei-Services
-common#:#obj_fils_desc#:#Konfiguration der Datei-Service Einstellungen.
+common#:#obj_fils_desc#:#Einstellungen für die Datei-Services
 common#:#obj_fold#:#Ordner
 common#:#obj_fold_duplicate#:#Ordner kopieren
 common#:#obj_frm#:#Forum
 common#:#obj_frm_duplicate#:#Forum kopieren
 common#:#obj_frma#:#Forum
-common#:#obj_frma_desc#:#Globale Einstellungen des Forums
+common#:#obj_frma_desc#:#Einstellungen für den Objekttyp Forum
 common#:#obj_glo#:#Glossar
 common#:#obj_glo_duplicate#:#Glossar kopieren
 common#:#obj_grp#:#Gruppe
 common#:#obj_grp_duplicate#:#Gruppe kopieren
 common#:#obj_grpr#:#Gruppenlink
 common#:#obj_grps#:#Gruppe
-common#:#obj_grps_desc#:#Allgemeine Einstellungen für Gruppen
+common#:#obj_grps_desc#:#Einstellungen für den Objekttyp Gruppe
 common#:#obj_gsfo#:#Fußzeile
 common#:#obj_gsfo_desc#:#Layout und Inhalt der Fußzeile verwalten
 common#:#obj_hlps#:#Online-Hilfe
@@ -4985,12 +4982,12 @@ common#:#obj_lngf#:#Sprachen
 common#:#obj_lngf_desc#:#Systemsprachen können hier verwaltet werden.
 common#:#obj_logs#:#Protokollierung
 common#:#obj_logs_desc#:#Enthält globale Einstellungen für die ILIAS-Protokollierung
-common#:#obj_lrss#:#Lernmodule
-common#:#obj_lrss_desc#:#Lernmodule usw. konfigurieren.
+common#:#obj_lrss#:#Lernmodul
+common#:#obj_lrss_desc#:#Einstellungen für die Objekttypen Lernmodul ILIAS und Lernmodul SCORM
 common#:#obj_lso#:#Lernsequenz
 common#:#obj_lso_duplicate#:#Lernsequenz kopieren
-common#:#obj_lsos#:#Lernsequenzen
-common#:#obj_lsos_desc#:#Allgemeine Einstellungen für Lernsequenzen
+common#:#obj_lsos#:#Lernsequenz
+common#:#obj_lsos_desc#:#Einstellungen für den Objekttyp Lernsequenz
 common#:#obj_lti#:#LTI-Konsument
 common#:#obj_ltis#:#LTI
 common#:#obj_ltis_desc#:#Learning Tools Interoperability
@@ -5002,13 +4999,13 @@ common#:#obj_maps#:#Karten
 common#:#obj_mcst#:#Mediacast
 common#:#obj_mcst_duplicate#:#Mediacast kopieren
 common#:#obj_mcts#:#Mediacast
-common#:#obj_mcts_desc#:#Allgemeine Einstellungen des Mediacasts
+common#:#obj_mcts_desc#:#Einstellungen für den Objekttyp Mediacast
 common#:#obj_mep#:#Medienpool
 common#:#obj_mep_duplicate#:#Mediapool kopieren
 common#:#obj_mme#:#Hauptmenü
 common#:#obj_mob#:#Medienobjekt
-common#:#obj_mobs#:#Medienobjekte und -pools
-common#:#obj_mobs_desc#:#Einstellungen für Medienobjekte und -pools
+common#:#obj_mobs#:#Medienobjekt und -pool
+common#:#obj_mobs_desc#:#Einstellungen für Medienobjekte und den Objekttyp Medienpool
 common#:#obj_not_found#:#Kein Objekt gefunden
 common#:#obj_nota#:#Benachrichtigungen
 common#:#obj_nota_desc#:#Verwaltung der Benachrichtigungen
@@ -5056,8 +5053,8 @@ common#:#obj_prg_duplicate#:#Studienprogramm kopieren
 common#:#obj_prg_select#:#-- Bitte wählen Sie ein Studienprogramm --
 common#:#obj_prgr#:#Link zum Studienprogramm
 common#:#obj_prgrs#:#Links zu Studienprogrammen
-common#:#obj_prgs#:#Studienprogramme
-common#:#obj_prgs_desc#:#Studienprogramm Administration
+common#:#obj_prgs#:#Studienprogramm
+common#:#obj_prgs_desc#:#Einstellungen für den Objekttyp Studienprogramm
 common#:#obj_prss#:#Persönliche Ressourcen
 common#:#obj_prss_desc#:#Persönliche Ressourcen administrieren
 common#:#obj_prtf#:#Portfolio
@@ -5074,14 +5071,14 @@ common#:#obj_recf#:#Wiederhergestellte Objekte
 common#:#obj_recf_desc#:#Enthält wiederhergestellte Objekte aus Systemcheck
 common#:#obj_rep#:#Magazin
 common#:#obj_reps#:#Magazin
-common#:#obj_reps_desc#:#Allgemeine Einstellungen für das Magazin
+common#:#obj_reps_desc#:#Einstellungen für das Magazin
 common#:#obj_rfil#:#ECS-Datei
 common#:#obj_rglo#:#ECS-Glossar
 common#:#obj_rgrp#:#ECS-Gruppe
 common#:#obj_rlm#:#ECS-Lernmodul
 common#:#obj_role#:#Rolle
 common#:#obj_rolf#:#Rollen
-common#:#obj_rolf_desc#:#Rollenverwaltung
+common#:#obj_rolf_desc#:#Verwaltung der Rollen und Rollenvorlagen
 common#:#obj_rolf_local#:#Lokale Rollen
 common#:#obj_rolf_local_desc#:#Enthält lokale Rollen für Objekt Nr.
 common#:#obj_rolt#:#Rollenvorlage
@@ -5110,8 +5107,8 @@ common#:#obj_stys#:#Layout
 common#:#obj_stys_desc#:#Einstellungen für das Erscheinungsbild der Installation und für Styles bestimmter Inhaltsobjekte
 common#:#obj_svy#:#Umfrage
 common#:#obj_svy_duplicate#:#Umfrage kopieren
-common#:#obj_svyf#:#Umfragen
-common#:#obj_svyf_desc#:#Systemweite Einstellungen für Umfragen
+common#:#obj_svyf#:#Umfrage
+common#:#obj_svyf_desc#:#Einstellungen für den Objekttyp Umfrage
 common#:#obj_sysc#:#System Check
 common#:#obj_sysc_desc#:#System-Check und Werkzeuge zur Fehlerbehebung
 common#:#obj_tags#:#Tagging
@@ -5142,11 +5139,11 @@ common#:#obj_type#:#Objekttyp
 common#:#obj_user#:#Benutzer
 common#:#obj_usr#:#Benutzer
 common#:#obj_usrf#:#ILIAS-Konten
-common#:#obj_usrf_desc#:#Verwaltung der Anmeldekonten für ILIAS
+common#:#obj_usrf_desc#:#Verwaltung der Anmeldekonten in ILIAS
 common#:#obj_wbdv#:#WebDAV
 common#:#obj_wbdv_desc#:#Konfiguration der WebDAV-Einstellungen.
 common#:#obj_wbrs#:#Weblink
-common#:#obj_wbrs_desc#:#Allgemeine Einstellungen für Weblinks
+common#:#obj_wbrs_desc#:#Einstellungen für den Objekttyp Weblink
 common#:#obj_webr#:#Weblink
 common#:#obj_webr_duplicate#:#Weblink-Sammlung kopieren
 common#:#obj_wfld#:#Ordner
@@ -5987,26 +5984,26 @@ common#:#webdav_chosen_language_already_used#:#Für die ausgewählte Sprache gib
 common#:#webdav_doc_delete#:#WebDAV-Anleitung löschen
 common#:#webdav_docs_mount_instructions#:#Datei mit WevDAV-Anleitung
 common#:#webdav_duplicate_detected_title#:#Folgende Objekte konnten nicht angezeigt werden, da bereits ein Objekt mit dem selben Titel angezeigt wird:
-common#:#webdav_enable_versioning#:#Datei Versionierung
+common#:#webdav_enable_versioning#:#Datei-Versionierung
 common#:#webdav_forbidden_chars_title#:#Folgende Objekte konnten nicht angezeigt werden, da sie verbotene Zeichen enthalten (\<>/:*?"|#):
 common#:#webdav_form_document#:#WebDAV-Anleitung
-common#:#webdav_form_document_info#:#Ein txt- oder html-Dokument mit einer Anleitung zum Anbinden von WebDAV an die Systeme Ihrer Wahl hochladen.
+common#:#webdav_form_document_info#:#Ein txt- oder html-Dokument mit einer Anleitung zum Anbinden von WebDAV an die Systeme Ihrer Wahl hochladen
 common#:#webdav_form_document_title#:#Titel
-common#:#webdav_form_document_title_info#:#Dieser Titel wird im Model mit der WebDAV-Anleitung angezeigt
+common#:#webdav_form_document_title_info#:#Dieser Titel wird im Model mit der WebDAV-Anleitung angezeigt.
 common#:#webdav_form_edit_doc_head#:#WebDAV-Anleitungen bearbeiten
 common#:#webdav_form_new_doc_head#:#Ein neues Dokument hinzufügen
 common#:#webdav_general_settings#:#Allgemeine Einstellungen
 common#:#webdav_missing_lang#:#Es gibt keine deutsche Version der WebDAV-Anleitung.
 common#:#webdav_mount_instructions#:#WebDAV-Anleitungen
-common#:#webdav_problem_free_container#:#In diesem Ordner wurden keine Objekte welche Probleme verursachen gefunden.
-common#:#webdav_problem_info_duplicate#:#Es existiert eine Date mit dem selben Titel wie das Infofile.
-common#:#webdav_pwd_instruction#:#Um das ILIAS-Magazin als Webordner außerhalb der aktuellen Sitzung als Webordner zu öffnen, empfehlen wir ein lokales Passwort anzulegen.<br />Dieses Passwort wird nur für die Webordner-Funktionalitäten benötigt, die ILIAS-Anmeldung erfolgt weiterhin mit Ihrem gewohnten Passwort.
+common#:#webdav_problem_free_container#:#In diesem Ordner wurden keine Objekte gefunden, welche Probleme verursachen.
+common#:#webdav_problem_info_duplicate#:#Es existiert eine Datei mit demselben Titel wie die WebDAV-Anleitung.
+common#:#webdav_pwd_instruction#:#Um das ILIAS-Magazin außerhalb der aktuellen Sitzung als Webordner zu öffnen, empfehlen wir ein lokales Passwort anzulegen.<br />Dieses Passwort wird nur für die Webordner-Funktionalitäten benötigt. Die ILIAS-Anmeldung erfolgt weiterhin mit Ihrem gewohnten Passwort.
 common#:#webdav_pwd_instruction_success#:#Ein neues lokales Passwort wurde angelegt. Sie können nun das Magazin als Webordner öffnen.
 common#:#webdav_sure_delete_documents_s#:#Soll die WebDAV-Anleitung mit folgendem Titel wirklich gelöscht werden:
 common#:#webdav_tbl_docs_head_title#:#Titel
 common#:#webdav_tbl_docs_title#:#Liste hochgeladener WebDAV-Anleitungen
 common#:#webdav_upload_instructions#:#WebDAV-Anleitung hochladen
-common#:#webdav_versioning_info#:#Wenn diese Einstellung aktiviert ist, wird für bereits existierende Dateien eine neue Version angelegt. An sonst werden diese überschrieben.
+common#:#webdav_versioning_info#:#Wenn diese Einstellung aktiviert ist, wird für bereits existierende Dateien eine neue Version angelegt. Ansonsten werden diese überschrieben.
 common#:#webfolder_dir_info#:#Sie sind hierher gelangt, weil Ihr Browser keine Webordner öffnen kann. Lesen Sie die <a href="%1$s">Anleitung zum Öffnen dieses Webordners</a>.
 common#:#webfolder_index_of#:#Inhalt von %1$s
 common#:#webfolder_instructions#:#Anleitung für Webordner
@@ -7652,7 +7649,7 @@ crs#:#crs_loc_settings_qtest_tbl#:#Einstellungen für Abschlusstest
 crs#:#crs_loc_settings_reset#:#Testergebnisse
 crs#:#crs_loc_settings_reset_enable#:#Zurücksetzen der persönlichen Testergebnisse erlauben
 crs#:#crs_loc_settings_reset_enable_info#:#Kursmitglieder können die eigenen Testergebnisse löschen, um den Kurs von neuem zu beginnen. Diese Einstellung sollte nur in der Entwicklungsphase des Kurses genutzt werden, um dessen Ablauf leichter zu überprüfen.
-crs#:#crs_loc_settings_tbl#:#Einstellungen zum Lernziel-orientierten Kurs
+crs#:#crs_loc_settings_tbl#:#Einstellungen für den Lernziel-orientierten Kurs
 crs#:#crs_loc_settings_tbl_it_nq#:#Diagnostische Einstiegstests pro Lernziel
 crs#:#crs_loc_settings_tbl_it_q#:#Qualifizierende Einstiegstests pro Lernziel
 crs#:#crs_loc_settings_tbl_its_nq_all#:#Diagnostischer Einstiegstest über alle Lernziele
@@ -11086,7 +11083,7 @@ logging#:#log_error_mail#:#Protokoll senden an (E-Mail-Adresse)
 logging#:#log_error_message#:#Entschuldigung, es ist ein Fehler aufgetreten. Eine Logdatei wurde erzeugt, die über den Error Code „%s“ identifiziert werden kann.
 logging#:#log_error_message_send_mail#:# Bitte wenden Sie sich an <a href="mailto:%s?subject=code: %s">%s</a>
 logging#:#log_error_path_not_configured_or_wrong#:#Der Pfad zu den Errorlogs (error_path) ist nicht gesetzt oder nicht erreichbar.
-logging#:#log_error_settings#:#Einstellungen zum Fehlerprotokoll
+logging#:#log_error_settings#:#Einstellungen für das Fehlerprotokoll
 logging#:#logs_settings#:#Protokollierungseinstellungen
 lso#:#abstract#:#Einleitung
 lso#:#abstract_img#:#Bild für die Einleitungsseite
@@ -13912,7 +13909,7 @@ ps#:#ps_export_files#:#Personenbezogene Daten: Exportdateien
 ps#:#ps_export_groups#:#Export der Persönlichen Daten aus Gruppen erlauben
 ps#:#ps_export_member#:#Mitglieder
 ps#:#ps_export_prgs#:#Persönliche Daten in Studienprogrammen anzeigen und exportieren
-ps#:#ps_export_settings#:#Einstellungen zum Export
+ps#:#ps_export_settings#:#Einstellungen für den Export
 ps#:#ps_export_sub#:#Noch nicht freigeschaltete Personen
 ps#:#ps_export_tutor#:#Kursbetreuung
 ps#:#ps_export_user_data#:#Personenbezogene Daten
@@ -13943,7 +13940,7 @@ ps#:#ps_password_special_chars_enabled_info#:#Wenn aktiviert, müssen Passwörte
 ps#:#ps_perform_export#:#CSV-Export starten
 ps#:#ps_prevent_simultaneous_logins#:#Verhindern gleichzeitiger Logins
 ps#:#ps_prevent_simultaneous_logins_info#:#Wenn dies aktiviert ist, werden gleichzeitige Logins mit dem gleichem ILIAS-Konto über verschiedene Rechner verhindert.
-ps#:#ps_privacy_protection#:#Einstellungen zum Datenschutz
+ps#:#ps_privacy_protection#:#Einstellungen für den Datenschutz
 ps#:#ps_profile_export#:#Schutz der Daten des Persönlichen Profils
 ps#:#ps_security_protection#:#Einstellungen zur Sicherheit
 ps#:#ps_select_one#:#Bitte wählen Sie eine Datei aus.
@@ -14099,7 +14096,7 @@ rbac#:#cals_edit_event#:#Öffentliche Kalender und Termine in ILIAS anlegen und 
 rbac#:#cals_edit_permission#:#Rechteeinstellungen der Administration für den Kalender ändern
 rbac#:#cals_read#:#Einstellungen der Kalender-Administration einsehen
 rbac#:#cals_visible#:#Administrationsknoten „Kalender“ sehen
-rbac#:#cals_write#:#Globale Einstellungen zum Kalender bearbeiten
+rbac#:#cals_write#:#Globale Einstellungen für den Kalender bearbeiten
 rbac#:#cat_administrate_users#:#Lokale Anmeldekonten verwalten
 rbac#:#cat_cat_administrate_users#:#Lokale Anmeldekonten können angelegt und verwaltet werden
 rbac#:#cat_copy#:#Kategorie kopieren
