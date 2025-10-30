@@ -37,7 +37,7 @@ final class RoutesRegistryTest extends TestCase
         $routes_property->setValue($registry, []);
     }
 
-    public function test_it_is_a_singleton(): void
+    public function testItisSingleton(): void
     {
         $first_instance = RoutesRegistry::getInstance();
         $second_instance = RoutesRegistry::getInstance();
@@ -45,7 +45,7 @@ final class RoutesRegistryTest extends TestCase
         self::assertSame($first_instance, $second_instance);
     }
 
-    public function test_it_throws_exception_on_unserialize(): void
+    public function testThrowsExceptionOnUnserialize(): void
     {
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Cannot unserialize a singleton.');
@@ -54,7 +54,7 @@ final class RoutesRegistryTest extends TestCase
         unserialize($serialized);
     }
 
-    public function test_cloning_throws_type_error(): void
+    public function testThrowsExceptionOnCloing(): void
     {
         $registry = RoutesRegistry::getInstance();
 
@@ -63,7 +63,7 @@ final class RoutesRegistryTest extends TestCase
         clone $registry;
     }
 
-    public function test_it_registers_and_retrieves_a_route(): void
+    public function test_RegistersAndRetrievesRoute(): void
     {
         $path = '/test';
         $method = 'GET';
@@ -77,7 +77,7 @@ final class RoutesRegistryTest extends TestCase
         self::assertSame($route, $this->registry->get($method, $path));
     }
 
-    public function test_it_registers_route_with_multiple_methods(): void
+    public function testRegistersRouteWithMultipleMethods(): void
     {
         $path = '/test';
         $methods = ['GET', 'POST', 'PUT'];
@@ -93,7 +93,7 @@ final class RoutesRegistryTest extends TestCase
         }
     }
 
-    public function test_it_handles_http_methods_case_insensitively(): void
+    public function testHandlesHttpMethodsCaseInsensitively(): void
     {
         $path = '/test';
         $route = $this->createMock(Route::class);
@@ -108,7 +108,7 @@ final class RoutesRegistryTest extends TestCase
         self::assertSame($route, $this->registry->get('pOsT', $path));
     }
 
-    public function test_it_throws_exception_for_route_with_no_methods(): void
+    public function testThrowsExceptionForRouteWithNoMethods(): void
     {
         $path = '/no-methods';
         $route = $this->createMock(Route::class);
@@ -121,7 +121,7 @@ final class RoutesRegistryTest extends TestCase
         $this->registry->register($route);
     }
 
-    public function test_it_throws_exception_for_duplicate_route(): void
+    public function testThrowsExceptionInCaseOfDuplicateRoute(): void
     {
         $path = '/duplicate';
         $method = 'GET';
@@ -138,12 +138,12 @@ final class RoutesRegistryTest extends TestCase
         $this->registry->register($route);
     }
 
-    public function test_get_returns_null_for_non_existent_path(): void
+    public function test_ReturnsNullForNonExistentpath(): void
     {
         self::assertNull($this->registry->get('GET', '/non-existent'));
     }
 
-    public function test_get_returns_null_for_non_existent_method(): void
+    public function test_ReturnsNullForNonExistentMethod(): void
     {
         $path = '/exists';
         $route = $this->createMock(Route::class);
@@ -154,17 +154,17 @@ final class RoutesRegistryTest extends TestCase
         self::assertNull($this->registry->get('POST', $path));
     }
 
-    public function test_has_returns_false_for_non_existent_route(): void
+    public function test_ReturnsFalseForNonExistentRoute(): void
     {
         self::assertFalse($this->registry->has('GET', '/non-existent'));
     }
 
-    public function test_all_returns_empty_array_initially(): void
+    public function testReturnsEmptyArrayInitially(): void
     {
         self::assertEmpty($this->registry->all());
     }
 
-    public function test_all_returns_all_registered_routes(): void
+    public function testReturnsAllRegisteredRoutes(): void
     {
         $route1 = $this->createMock(Route::class);
 

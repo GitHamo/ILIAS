@@ -33,7 +33,10 @@ class RoutesRegistry
 
     private function __construct() {}
 
-    private function __clone() {} // @codeCoverageIgnore because any test would fail before this line is excecuted
+    /**
+     * @codeCoverageIgnore because any test would fail before this line is excecuted
+     */
+    private function __clone() {}
 
     public function __wakeup(): void
     {
