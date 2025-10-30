@@ -33,5 +33,9 @@ class ApiGateway implements Component\Component
         array | \ArrayAccess &$internal,
     ): void {
         // This is the minimal implementation.
+        $contribute[Component\Resource\PublicAsset::class] = fn() =>
+            new Component\Resource\Endpoint($this, "rest/index.php", "rest");
+        $contribute[Component\Resource\PublicAsset::class] = fn() =>
+            new Component\Resource\OfComponent($this, "rest/.htaccess", "rest");
     }
 }
