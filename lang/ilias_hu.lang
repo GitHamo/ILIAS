@@ -15619,6 +15619,7 @@ sess#:#sess_members_gallery#:#Esemény résztvevőinek képgalériája
 sess#:#sess_members_print_title#:#Esemény résztvevői
 sess#:#sess_msg_applicants_assigned#:#Az eseményre sikeresen regisztrált jelentkező(ke)t.
 sess#:#sess_msg_applicants_removed#:#Sikeresen eltávolított jelentkező(ke)t.
+sess#:#sess_new#:#Esemény létrehozása
 sess#:#sess_new_registrations#:#Csatlakozási kérés
 sess#:#sess_notification_option#:#Lehetőség
 sess#:#sess_notification_option_inherit#:#Öröklés a szülőtől
