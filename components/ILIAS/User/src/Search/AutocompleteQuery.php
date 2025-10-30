@@ -63,7 +63,7 @@ class AutocompleteQuery
         if ($search_term === null) {
             return false;
         }
-        return strlen($search_term) >= $this->required_search_term_length;
+        return mb_strlen($search_term) >= $this->required_search_term_length;
     }
 
     /**

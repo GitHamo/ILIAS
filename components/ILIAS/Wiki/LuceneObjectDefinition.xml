@@ -36,6 +36,7 @@
 			<Param format="list" type="int" value="objId" />
 			<Field global="NO" store="YES" index="NOT_ANALYZED" column="wiki_id" type="integer" name="objId" />
 			<Field global="NO" store="YES" index="NOT_ANALYZED" column="file_id" type="integer" name="subItem" />
+            <Field global="NO" store="YES" index="NOT_ANALYZED" column="type" type="text" name="subType" />
 			<Field global="NO" store="YES" index="NOT_ANALYZED" column="type" type="text" name="type"  />
 			<Field global="YES" store="YES" index="ANALYZED" column="file_name" type="text" name="propertyHigh">
 				<Transformer name="FilenameExtractor" />
@@ -62,6 +63,7 @@
 			</Field>
 			<Field store="YES" index="NOT_ANALYZED" column="create_user" type="integer" name="owner" />
 			<Field store="YES" index="NOT_ANALYZED" column="id" type="integer" name="subItem" />
+            <Field store="YES" index="NOT_ANALYZED" column="metaType" type="text" name="subType" />
 			<Field global="NO" store="YES" index="NOT_ANALYZED" column="wiki_id" type="integer" name="objId" />
 			<Field global="NO" store="YES" index="NOT_ANALYZED" column="objType" type="text" name="type" />
 			<xi:include href="../../../components/ILIAS/AdvancedMetaData/LuceneSubItemDataSource.xml" />

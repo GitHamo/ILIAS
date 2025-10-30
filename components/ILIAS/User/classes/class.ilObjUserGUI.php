@@ -220,10 +220,13 @@ class ilObjUserGUI extends ilObjectGUI
             );
         }
 
-        // learning progress
-        if ($this->rbac_system->checkAccess('read', $this->ref_id) and
-            ilObjUserTracking::_enabledLearningProgress() and
-            ilObjUserTracking::_enabledUserRelatedData()) {
+        if ((
+            $this->context === Context::LocalUserAdministration
+                && $this->rbac_system->checkAccess('read', $this->ref_id)
+            || $this->context === Context::UserAdministration
+                && $this->rbac_system->checkAccess(\ilObjUserFolder::PERM_READ_ALL, $this->ref_id)
+        ) && ilObjUserTracking::_enabledLearningProgress()
+            && ilObjUserTracking::_enabledUserRelatedData()) {
             $this->tabs_gui->addTarget(
                 'learning_progress',
                 $this->ctrl->getLinkTargetByClass('illearningprogressgui', ''),
@@ -341,10 +344,14 @@ class ilObjUserGUI extends ilObjectGUI
             return;
         }
 
+        $new_user = new ilObjUser();
+        $new_user->create();
+        $new_user->saveAsNew();
+
         $user_object = $this->user_profile->addFormValuesToUser(
             $this->form_gui,
             $this->context,
-            new ilObjUser()
+            $new_user
         );
 
         $user_object->setLogin($this->form_gui->getInput('username'));
@@ -360,8 +367,7 @@ class ilObjUserGUI extends ilObjectGUI
 
         $user_object->setTitle($user_object->getFullname());
         $user_object->setDescription($user_object->getEmail());
-        $user_object->create();
-        $user_object->saveAsNew();
+        $user_object->update();
 
         $this->object = $this->user_settings->saveForm(
             $this->form_gui,
@@ -689,7 +695,7 @@ class ilObjUserGUI extends ilObjectGUI
         }
         $radg->addOption($op2);
         $radg->setValue(
-            $user?->getTimeLimitUnlimited() ?? false ? '1' : '0'
+            $user?->getTimeLimitUnlimited() ?? true ? '1' : '0'
         );
 
         return $radg;
@@ -948,7 +954,7 @@ class ilObjUserGUI extends ilObjectGUI
              || empty($posted_global_roles) && count($assigned_global_roles_all) === count($assigned_global_roles)) {
             $this->tpl->setOnScreenMessage(
                 'failure',
-                $this->lng->txt('msg_min_one_role') . '<br/>' . $this->lng->txt('action_aborted'),
+                "{$this->lng->txt('action_aborted')}: {$this->lng->txt('msg_min_one_role')}",
                 true
             );
             $this->ctrl->redirect($this, 'roleassignment');
@@ -1320,29 +1326,25 @@ class ilObjUserGUI extends ilObjectGUI
 
     private function checkUserWritePermission(): void
     {
-        if ($this->usrf_ref_id === USER_FOLDER_ID
-            && (
-                !$this->rbac_system->checkAccess('visible,read', $this->usrf_ref_id)
-                || !$this->rbac_system->checkAccess('write', $this->usrf_ref_id)
-                    && (
-                        !$this->access->checkPositionAccess(\ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS, $this->usrf_ref_id)
-                        || $this->access->checkPositionAccess(\ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS, $this->usrf_ref_id)
-                            && !in_array(
-                                $this->object->getId(),
-                                $this->access->filterUserIdsByPositionOfCurrentUser(
-                                    \ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS,
-                                    USER_FOLDER_ID,
-                                    [$this->object->getId()]
-                                )
-                            )
+        if ($this->context === Context::UserAdministration
+            && !(
+                $this->rbac_system->checkAccess(\ilObjUserFolder::PERM_READ_ALL_AND_WRITE, $this->usrf_ref_id)
+                || $this->access->checkPositionAccess(\ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS, $this->usrf_ref_id)
+                    && in_array(
+                        $this->object->getId(),
+                        $this->access->filterUserIdsByPositionOfCurrentUser(
+                            \ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS,
+                            USER_FOLDER_ID,
+                            [$this->object->getId()]
+                        )
                     )
-            )
-        ) {
+            )) {
             $this->tpl->setOnScreenMessage(
                 'failure',
-                $this->lng->txt('msg_no_perm_modify_user')
+                $this->lng->txt('msg_no_perm_modify_user'),
+                true
             );
-            $this->ctrl->redirectByClass(ilObjUserFolderAccess::class);
+            $this->ctrl->redirectByClass(ilObjUserFolderGUI::class);
         }
 
         // if called from local administration $this->usrf_ref_id is category id

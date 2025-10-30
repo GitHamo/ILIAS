@@ -438,8 +438,7 @@ class SettingsMainGUI extends TestSettingsGUI
         );
 
         $settings = new MainSettings(
-            $this->test_object->getTestId(),
-            $this->test_object->getId(),
+            $this->main_settings->getId(),
             $general_settings,
             $introduction_settings,
             $access_settings,
@@ -641,14 +640,11 @@ class SettingsMainGUI extends TestSettingsGUI
     private function getFinishingSettingsForStorage(array $section): SettingsFinishing
     {
         $redirect_after_finish = $section['redirect_after_finish'];
-        $finish_notification = $section['finish_notification'];
         return $this->main_settings->getFinishingSettings()
             ->withShowAnswerOverview($section['show_answer_overview'])
             ->withConcludingRemarksEnabled($section['show_concluding_remarks'])
             ->withRedirectionMode($redirect_after_finish['redirect_mode'])
-            ->withRedirectionUrl($redirect_after_finish['redirect_url'])
-            ->withMailNotificationContentType($finish_notification['notification_content_type'])
-            ->withAlwaysSendMailNotification($finish_notification['always_notify']);
+            ->withRedirectionUrl($redirect_after_finish['redirect_url']);
     }
 
     protected function getAdditionalFunctionalitySettingsSections(array $environment): array

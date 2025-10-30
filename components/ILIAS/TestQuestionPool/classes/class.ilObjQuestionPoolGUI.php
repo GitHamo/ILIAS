@@ -18,6 +18,7 @@
 
 declare(strict_types=1);
 
+use ILIAS\Skill\Service\SkillUsageService;
 use ILIAS\TestQuestionPool\QuestionPoolDIC;
 use ILIAS\TestQuestionPool\RequestDataCollector;
 use ILIAS\TestQuestionPool\Questions\Presentation\QuestionTable;
@@ -36,7 +37,6 @@ use ILIAS\Filesystem\Util\Archive\Archives;
 use ILIAS\TestQuestionPool\Import\TestQuestionsImportTrait;
 use ILIAS\FileUpload\MimeType;
 use ILIAS\UI\Component\Modal\RoundTrip as RoundTripModal;
-use ILIAS\HTTP\Services as HTTPServices;
 use ILIAS\Style\Content\Service as ContentStyle;
 
 /**
@@ -90,6 +90,7 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
     protected URLBuilderToken $row_id_token;
     private Archives $archives;
     private ContentStyle $content_style;
+    protected SkillUsageService $skill_usage_service;
 
     protected RequestDataCollector $request_data_collector;
     protected GeneralQuestionPropertiesRepository $questionrepository;
@@ -112,6 +113,7 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
         $this->taxonomy = $DIC->taxonomy();
         $this->archives = $DIC->archives();
         $this->content_style = $DIC->contentStyle();
+        $this->skill_usage_service = $DIC->skills()->usage();
 
         $this->data_factory = new DataFactory();
 
@@ -437,23 +439,31 @@ class ilObjQuestionPoolGUI extends ilObjectGUI implements ilCtrlBaseClassInterfa
 
                 break;
 
-            case 'ilquestionpoolskilladministrationgui':
+            case strtolower(ilQuestionPoolSkillAdministrationGUI::class):
+                /** @var ilObjQuestionPool $obj */
                 $obj = $this->object;
-                $gui = new ilQuestionPoolSkillAdministrationGUI(
-                    $this->ilias,
-                    $this->ctrl,
-                    $this->refinery,
-                    $this->access,
-                    $this->tabs_gui,
-                    $this->tpl,
-                    $this->lng,
-                    $this->db,
-                    $this->component_repository,
-                    $obj,
-                    $this->ref_id
-                );
 
-                $this->ctrl->forwardCommand($gui);
+                $this->ctrl->forwardCommand(
+                    new ilQuestionPoolSkillAdministrationGUI(
+                        $this->ctrl,
+                        $this->ui_factory,
+                        $this->ui_renderer,
+                        $this->http,
+                        $this->refinery,
+                        $this->access,
+                        $this->tabs_gui,
+                        $this->tpl,
+                        $this->lng,
+                        $this->db,
+                        $this->component_repository,
+                        $obj,
+                        $this->http,
+                        $this->toolbar,
+                        $this->skill_usage_service,
+                        $this->request_data_collector,
+                        $this->ref_id
+                    )
+                );
                 break;
 
             case 'ilbulkeditquestionsgui':

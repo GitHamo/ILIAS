@@ -284,7 +284,7 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
     protected function initProcessLocker($activeId)
     {
         $ilDB = $this->db;
-        $process_lockerFactory = new ilTestProcessLockerFactory($this->ass_settings, $ilDB);
+        $process_lockerFactory = new ilTestProcessLockerFactory($this->ass_settings, $ilDB, $this->logger);
         $this->process_locker = $process_lockerFactory->withContextId((int) $activeId)->getLocker();
     }
 
@@ -1032,31 +1032,6 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
             $this->test_result_repository
         ))->performFinishTasks($this->process_locker, $status_of_attempt);
         $this->test_result_repository->updateTestResultCache($this->test_session->getActiveId());
-
-        $this->sendNewPassFinishedNotificationEmailIfActivated(
-            $this->test_session->getActiveId(),
-            $this->test_session->getPass()
-        );
-    }
-
-    protected function sendNewPassFinishedNotificationEmailIfActivated(int $active_id, int $pass)
-    {
-        $notification_type = $this->object->getMainSettings()->getFinishingSettings()->getMailNotificationContentType();
-
-        if ($notification_type === 0
-            || !$this->object->getMainSettings()->getFinishingSettings()->getAlwaysSendMailNotification()
-                && $pass !== $this->object->getNrOfTries() - 1) {
-            return;
-        }
-
-        switch ($this->object->getMainSettings()->getFinishingSettings()->getMailNotificationContentType()) {
-            case 1:
-                $this->object->sendSimpleNotification($active_id);
-                break;
-            case 2:
-                $this->object->sendAdvancedNotification($active_id);
-                break;
-        }
     }
 
     protected function afterTestPassFinishedCmd()
@@ -1327,7 +1302,7 @@ abstract class ilTestPlayerAbstractGUI extends ilTestServiceGUI
 
     protected function determineSolutionPassIndex(assQuestionGUI $question_gui): int
     {
-        if ($this->object->isPreviousSolutionReuseEnabled($this->test_session->getActiveId())) {
+        if ($this->object->isPreviousSolutionReuseEnabled()) {
             $currentSolutionAvailable = $question_gui->getObject()->authorizedOrIntermediateSolutionExists(
                 $this->test_session->getActiveId(),
                 $this->test_session->getPass()
@@ -2755,7 +2730,7 @@ JS;
         $question = assQuestion::instantiateQuestion($question_id);
         $ass_settings = new ilSetting('assessment');
 
-        $process_locker_factory = new ilAssQuestionProcessLockerFactory($ass_settings, $this->db);
+        $process_locker_factory = new ilAssQuestionProcessLockerFactory($ass_settings, $this->db, ilLoggerFactory::getLogger('tst'));
         $process_locker_factory->setQuestionId($question->getId());
         $process_locker_factory->setUserId($this->user->getId());
         $question->setProcessLocker($process_locker_factory->getLocker());
@@ -2769,7 +2744,7 @@ JS;
     protected function initTestQuestionConfig(assQuestion $question_obj)
     {
         $question_obj->getTestPresentationConfig()->setPreviousPassSolutionReuseAllowed(
-            $this->object->isPreviousSolutionReuseEnabled($this->test_session->getActiveId())
+            $this->object->isPreviousSolutionReuseEnabled()
         );
     }
 
