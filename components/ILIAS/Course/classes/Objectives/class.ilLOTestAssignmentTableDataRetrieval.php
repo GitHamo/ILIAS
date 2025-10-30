@@ -39,8 +39,9 @@ class ilLOTestAssignmentTableDataRetrieval implements ilTableDataRetrievalInterf
         array $visible_column_ids,
         \ILIAS\Data\Range $range,
         \ILIAS\Data\Order $order,
-        ?array $filter_data,
-        ?array $additional_parameters
+        mixed $additional_viewcontrol_data,
+        mixed $filter_data,
+        mixed $additional_parameters
     ): Generator {
         [$column_name, $direction] = $order->join([], fn($ret, $key, $value) => [$key, $value]);
         if ($column_name === ilLOTestAssignmentTableGUI::TABLE_COL_TITLE) {
