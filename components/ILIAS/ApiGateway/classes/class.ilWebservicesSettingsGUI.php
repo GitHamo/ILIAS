@@ -34,16 +34,13 @@ class ilWebservicesSettingsGUI
 {
     private const string CMD_GENERAL = 'general';
     private const string CMD_REST = 'rest';
-    private const string CMD_SOAP = 'soap';
-    private const string INPUT_KEY_WS_ENABLED = 'ws_enabled';    
+    private const string INPUT_KEY_WS_ENABLED = 'ws_enabled';
     private const string INPUT_KEY_DOCS_ENABLED = 'docs_enabled';
     /**
      * @var array<string, string>
      */
     private const array CMD_SAVE = [
-        self::CMD_GENERAL => 'saveWebservicesSettings',
         self::CMD_REST => 'saveRestWebserviceSettings',
-        self::CMD_SOAP => 'saveSoapWebserviceSettings',
     ];
     private ilObjectGUI $current_obj;
     private ilObjectGUI $gui_obj;
@@ -106,25 +103,17 @@ class ilWebservicesSettingsGUI
     protected function setTabs(string $a_cmd = '')
     {
         if (empty($a_cmd)) {
-            $a_cmd = self::CMD_GENERAL;
+            $a_cmd = self::CMD_REST;
         }
 
         $this->tabs->activateTab('webservices_settings');
-        $this->tabs->addSubTab(
-            self::CMD_GENERAL,
-            $this->lng->txt('general'),
-            $this->ctrl->getLinkTarget($this, 'showWebservicesSettings')
-        );
+
         $this->tabs->addSubTab(
             self::CMD_REST,
-            $this->lng->txt('rest'),
+            $this->lng->txt(self::CMD_REST),
             $this->ctrl->getLinkTarget($this, 'showRestWebserviceSettings')
         );
-        $this->tabs->addSubTab(
-            self::CMD_SOAP,
-            $this->lng->txt('soap'),
-            $this->ctrl->getLinkTarget($this, 'showSoapWebserviceSettings')
-        );
+
         $this->tabs->activateSubTab($a_cmd);
     }
 
@@ -134,27 +123,13 @@ class ilWebservicesSettingsGUI
     public function executeCommand()
     {
         $next_class = $this->ctrl->getNextClass($this);
-        $cmd = $this->ctrl->getCmd("showWebservicesSettings");
+        $cmd = $this->ctrl->getCmd("showRestWebserviceSettings");
 
         switch ($next_class) {
             default:
                 $this->$cmd();
                 break;
         }
-    }
-
-    public function showWebservicesSettings(): void
-    {
-        $this->setTabs();
-
-        $this->tpl->setTitle("Webservices Settings");
-        $this->tpl->setContent("<p>Here are the general or basic webservices settings.</p>");
-    }
-
-    public function saveWebservicesSettings(): void
-    {
-        $this->tpl->setOnScreenMessage('success', $this->lng->txt("msg_config_modified"), true);
-        $this->ctrl->redirect($this, 'showWebservicesSettings');
     }
 
     public function showRestWebserviceSettings(): void
@@ -184,20 +159,6 @@ class ilWebservicesSettingsGUI
         }
     }
 
-    public function showSoapWebserviceSettings(): void
-    {
-        $this->setTabs(self::CMD_SOAP);
-
-        $this->tpl->setTitle("SOAP Webservice Settings");
-        $this->tpl->setContent("<p>Here are the SOAP webservice settings.</p>");
-    }
-
-    public function saveSoapWebserviceSettings(): void
-    {
-        $this->tpl->setOnScreenMessage('success', $this->lng->txt("msg_config_modified"), true);
-        $this->ctrl->redirect($this, 'showSoapWebserviceSettings');
-    }
-
     private function createWebserviceSettingsForm(string $a_cmd): StandardForm
     {
         $makeKey = fn(string $key): string => "{$a_cmd}_{$key}";
@@ -218,7 +179,7 @@ class ilWebservicesSettingsGUI
             )->withValue($isDocsEnabledValue),
         ];
 
-        if(!array_key_exists($a_cmd, self::CMD_SAVE)) {
+        if (!array_key_exists($a_cmd, self::CMD_SAVE)) {
             throw new \InvalidArgumentException("Unknown command {$a_cmd} for saving webservice settings.");
         }
 
