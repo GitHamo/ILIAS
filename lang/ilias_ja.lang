@@ -15619,6 +15619,7 @@ sess#:#sess_members_gallery#:#セッションギャラリー
 sess#:#sess_members_print_title#:#セッション参加者
 sess#:#sess_msg_applicants_assigned#:#応募者はセッションを登録しました。
 sess#:#sess_msg_applicants_removed#:#応募者はリストから削除しました。
+sess#:#sess_new#:#セッションを生成
 sess#:#sess_new_registrations#:#リクエストへ参加
 sess#:#sess_notification_option#:#オプション
 sess#:#sess_notification_option_inherit#:#親から引き継ぐ
