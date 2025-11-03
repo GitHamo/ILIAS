@@ -1008,7 +1008,7 @@ class ilObjUser extends ilObject
     public function updateLastVisited(array $last_visited): void
     {
         $this->last_visited = $last_visited;
-        $this->profile_data_repository->storeLastVisited($this->id, $last_visited);
+        $this->profile_data_repository->storeLastVisitedFor($this->id, $last_visited);
     }
 
     /**
