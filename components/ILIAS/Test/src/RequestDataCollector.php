@@ -57,13 +57,13 @@ class RequestDataCollector implements RequestDataCollectorInterface
 
     public function getRefId(): int
     {
-        return $this->int("ref_id");
+        return $this->int('ref_id');
     }
 
     /** @return string[] */
     public function getIds(): array
     {
-        return $this->strArray("id");
+        return $this->strArray('id');
     }
 
     public function hasQuestionId(): bool
