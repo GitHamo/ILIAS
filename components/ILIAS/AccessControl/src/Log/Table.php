@@ -172,7 +172,7 @@ class Table implements DataRetrieval
         mixed $filter_data,
         mixed $additional_parameters
     ): ?int {
-        return $this->rbac_log->getLogItemsCount($this->getRefId(), $filter_data);
+        return $this->rbac_log->getLogItemsCount($this->getRefId(), $filter_data ?? []);
     }
 
     private function getRefId(): int
