@@ -59,6 +59,7 @@ class ilObjStaticUrlServiceGUI extends ilObject2GUI
         $this->prepareOutput();
 
         $mediator = Pons::fromDIC(['stus', 'rbac', 'common', 'ui']);
+        $mediator->setGeneralLanguagePrefix('stus');
         $tabs = $mediator->tabs();
         $tabs->add(
             $view = $tabs

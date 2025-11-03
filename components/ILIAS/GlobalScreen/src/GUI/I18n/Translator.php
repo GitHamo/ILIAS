@@ -39,7 +39,7 @@ class Translator
         ?TranslationsRepository $translations_repository = null,
         string ...$module
     ) {
-        $this->prefix = $module[0] ?? '';
+        $this->prefix = ''; // $module[0] ?? ''; // Disabled auto prefixing for now
         foreach ($module as $m) {
             $this->lng->loadLanguageModule($m);
         }
@@ -72,6 +72,11 @@ class Translator
         }
 
         return $this->internal($key, $this->lng->txt($key));
+    }
+
+    public function setGeneralPrefix(string $prefix): void
+    {
+        $this->prefix = $prefix;
     }
 
     public function ml(): MultiLanguage
