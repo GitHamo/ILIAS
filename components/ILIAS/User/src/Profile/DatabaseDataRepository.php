@@ -169,6 +169,10 @@ class DatabaseDataRepository implements DataRepository
                 'is_self_registered' => [\ilDBConstants::T_INTEGER, $system_information['is_self_registered'] ? 1 : 0],
                 'last_update' => [\ilDBConstants::T_TIMESTAMP, date('Y-m-d H:i:s')],
                 'create_date' => [\ilDBConstants::T_TIMESTAMP, $system_information['create_date']],
+                'last_visited' => [
+                    \ilDBConstants::T_TEXT,
+                    $system_information['last_visited'] === [] ? null : serialize($system_information['last_visited'])
+                ]
             ]
         );
 
@@ -217,6 +221,20 @@ class DatabaseDataRepository implements DataRepository
             'UPDATE ' . self::USER_BASE_TABLE . ' SET login = %s WHERE usr_id = %s',
             [\ilDBConstants::T_TEXT, \ilDBConstants::T_INTEGER],
             [$login, $usr_id]
+        );
+    }
+
+    public function storeLastVisitedFor(
+        int $usr_id,
+        array $last_visited
+    ): void {
+        $this->db->manipulateF(
+            'UPDATE ' . self::USER_BASE_TABLE . ' SET last_visited = %s WHERE usr_id = %s',
+            [\ilDBConstants::T_TEXT, \ilDBConstants::T_INTEGER],
+            [
+                $last_visited === [] ? null : serialize($last_visited),
+                $usr_id
+            ]
         );
     }
 
@@ -330,6 +348,9 @@ class DatabaseDataRepository implements DataRepository
             'is_self_registered' => $base_data->is_self_registered === 1,
             'last_update' => $base_data->last_update ?? '',
             'create_date' => $base_data->create_date ?? '',
+            'last_visited' => $base_data->last_visited === null
+            ? []
+            : unserialize($base_data->last_visited, ['allowed_classes' => false])
         ]);
     }
 

@@ -48,6 +48,10 @@ interface DataRepository
         int $usr_id,
         string $login
     ): void;
+    public function storeLastVisitedFor(
+        int $usr_id,
+        array $last_visited
+    );
     public function searchUsers(
         SettingsDataRepository $settings_data_repository,
         ProfileFieldsConfigurationRepository $profile_fields_config_repo,
