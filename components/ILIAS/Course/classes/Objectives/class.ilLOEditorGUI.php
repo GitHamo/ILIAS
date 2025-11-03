@@ -32,12 +32,12 @@ use ILIAS\DI\UIServices as ilUIServices;
  */
 class ilLOEditorGUI
 {
-    public const TEST_TYPE_UNDEFINED = 0;
-    public const TEST_TYPE_IT = 1;
-    public const TEST_TYPE_QT = 2;
+    public const int TEST_TYPE_UNDEFINED = 0;
+    public const int TEST_TYPE_IT = 1;
+    public const int TEST_TYPE_QT = 2;
 
-    public const TEST_NEW = 1;
-    public const TEST_ASSIGN = 2;
+    public const int TEST_NEW = 1;
+    public const int TEST_ASSIGN = 2;
 
     private ilLogger $logger;
 
@@ -649,7 +649,7 @@ class ilLOEditorGUI
         $this->testOverview();
     }
 
-    protected function testAssignment(ilPropertyFormGUI $form = null): void
+    protected function testAssignment(?ilPropertyFormGUI $form = null): void
     {
         if ($this->getTestType() === ilLOSettings::TYPE_TEST_UNDEFINED) {
             $this->setTestType($this->initTestTypeFromQuery());
@@ -678,7 +678,7 @@ class ilLOEditorGUI
         );
     }
 
-    protected function testSettings(ilPropertyFormGUI $form = null): void
+    protected function testSettings(?ilPropertyFormGUI $form = null): void
     {
         $this->ctrl->setParameter($this, 'tt', $this->getTestType());
         switch ($this->getTestType()) {
