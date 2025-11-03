@@ -21,6 +21,7 @@ declare(strict_types=1);
 use ILIAS\User\LocalDIC;
 use ILIAS\User\UserGUIRequest;
 use ILIAS\User\Profile\Profile;
+use ILIAS\User\Profile\Fields\Field as ProfileField;
 use ILIAS\User\Context as ProfileContext;
 
 /**
@@ -37,6 +38,7 @@ class ilUserTableGUI extends ilTable2GUI
     private int $user_folder_id = 0;
 
     private bool $with_write_access = false;
+    protected Profile $user_profile;
     protected UserGUIRequest $user_request;
     protected array $udf_fields = [];
     protected array $filter = [];
@@ -51,6 +53,7 @@ class ilUserTableGUI extends ilTable2GUI
         global $DIC;
 
         $this->user_folder_id = $a_parent_obj->getObject()->getRefId();
+        $this->user_profile = LocalDIC::dic()[Profile::class];
 
         if ($DIC['ilAccess']->checkPositionAccess(ilObjUserFolder::ORG_OP_EDIT_USER_ACCOUNTS, $this->user_folder_id)
             || $DIC['rbacsystem']->checkAccess('write', $this->user_folder_id)
@@ -65,10 +68,10 @@ class ilUserTableGUI extends ilTable2GUI
         //		$this->setTitle($this->lng->txt("users"));
 
         $this->addColumn("", "", "1", true);
-        $this->addColumn($this->lng->txt("login"), "login");
+        $this->addColumn($this->lng->txt("login"), "username");
 
         foreach ($this->getSelectedColumns() as $c) {
-            $this->addColumn($this->lng->txt($c), $c);
+            $this->addColumn($this->lng->txt($c), (string) $c);
         }
 
         if ($this->getMode() == self::MODE_LOCAL_USER) {
@@ -87,7 +90,7 @@ class ilUserTableGUI extends ilTable2GUI
         $this->setEnableTitle(true);
         $this->initFilter();
         $this->setFilterCommand("applyFilter");
-        $this->setDefaultOrderField("login");
+        $this->setDefaultOrderField("username");
         $this->setDefaultOrderDirection("asc");
 
         $this->setSelectAllCheckbox("id[]");
@@ -131,81 +134,28 @@ class ilUserTableGUI extends ilTable2GUI
 
     public function getSelectableColumns(): array // Missing array type.
     {
-        global $DIC;
-
-        $lng = $DIC['lng'];
-
-        $up = LocalDIC::dic()[Profile::class];
-
-        // default fields
-        $cols = [];
-
-        // first and last name cannot be hidden
-        $cols["firstname"] = [
-            "txt" => $lng->txt("firstname"),
-            "default" => true];
-        $cols["lastname"] = [
-            "txt" => $lng->txt("lastname"),
-            "default" => true];
-
-        $cols["access_until"] = [
-            "txt" => $lng->txt("access_until"),
-            "default" => true];
-        $cols["last_login"] = [
-            "txt" => $lng->txt("last_login"),
-            "default" => true];
-
-        // #13967
-        $cols["create_date"] = [
-            "txt" => $lng->txt("create_date")];
-        $cols["approve_date"] = [
-            "txt" => $lng->txt("approve_date")];
-        $cols["agree_date"] = [
-            "txt" => $lng->txt("agree_date")];
-        $cols['dpro_agreed_on'] = [
-            'txt' => $lng->txt('dpro_agreed_on')];
-
         $context = ProfileContext::LocalUserAdministration;
         if ($this->getMode() === self::MODE_USER_FOLDER) {
             $context = ProfileContext::UserAdministration;
         }
 
-        $ufs = $up->getVisibleFields($context);
+        $ufs = $this->user_profile->getVisibleFields($context);
 
-        // email should be the 1st "optional" field (can be hidden)
-        if (isset($ufs['email'])) {
-            $cols['email'] = [
-                'txt' => $lng->txt('email'),
-                'default' => true];
-        }
-        if (isset($ufs['second_email'])) {
-            $cols['second_email'] = [
-                'txt' => $lng->txt('second_email'),
-                'default' => true];
-        }
-
-        foreach ($ufs as $f => $fd) {
-            if (isset($cols[$f])) {
-                continue;
-            }
-            $cols[$f] = [
-                'txt' => $fd->getLabel($this->lng),
-                'default' => false];
-        }
+        $cols = array_reduce(
+            $ufs,
+            function (array $c, ProfileField $v): array {
+                $c[$v->getIdentifier()] = [
+                    'txt' => $v->getLabel($this->lng),
+                    'default' => false
+                ];
+                return $c;
+            },
+            []
+        );
 
         $cols['auth_mode'] = [
-            'txt' => $lng->txt('auth_mode'),
+            'txt' => $this->lng->txt('auth_mode'),
             'default' => false];
-
-        foreach ($this->udf_fields as $k => $field) {
-            if ($field->hiddenInLists()) {
-                continue;
-            }
-            $cols[$k] = $field;
-        }
-
-        // fields that are always shown
-        unset($cols['username']);
 
         return $cols;
     }
