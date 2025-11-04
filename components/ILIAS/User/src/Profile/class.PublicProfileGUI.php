@@ -30,8 +30,10 @@ use ILIAS\Language\Language;
  * @author Alexander Killing <killing@leifos.de>
  * @ilCtrl_Calls ILIAS\User\Profile\PublicProfileGUI: ilObjPortfolioGUI
  */
-class PublicProfileGUI implements \ilCtrlBaseClassInterface
+class PublicProfileGUI
 {
+    public const string DEFAULT_CMD = 'view';
+
     private bool $offline = false;
     private GUIRequest $profile_request;
     private int $userid = 0;
@@ -190,10 +192,6 @@ class PublicProfileGUI implements \ilCtrlBaseClassInterface
                 break;
         }
 
-        // only for direct links
-        if (strtolower($this->profile_request->getBaseClass()) === strtolower(self::class)) {
-            $this->tpl->printToStdout();
-        }
         return (string) $ret;
     }
 
