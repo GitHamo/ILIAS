@@ -20,7 +20,9 @@ This is a generic, reusable component that provides the tools to build different
 
 ## Getting Started
 
-🟡 *Admin dashboard control is not compatible with ILIAS 12+ yet so next is only available in ILIAS 11.* 🟡
+- 🟡 *Admin dashboard control is not compatible with ILIAS 12+ yet so next is only available in ILIAS 11.*
+
+- 🟡🟡 *To enable REST Webservice for ILIAS 12+, Debug mode has to be enabled. Set `DEVMODE` to "1" in your `client.ini.php` [more info](https://docu.ilias.de/ilias.php?baseClass=illmpresentationgui&ref_id=367&obj_id=42329&srcstring=1)*
 
 To enable the REST API, the `rest_ws_enabled` setting must be activated in the ILIAS administration. The settings page can currently be accessed directly with this URL (replace `<localhost_url>` with your ILIAS instance URL):
 

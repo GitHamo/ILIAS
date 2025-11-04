@@ -23,7 +23,7 @@ use ILIAS\ApiGateway\Routing\ApiAction;
 use ILIAS\ApiGateway\ServiceProtocol;
 
 $settings = ilApiGatewaySettings::getInstance();
-$isWsEnabled = (bool) $settings->getData('rest_ws_enabled') ?? true; // @todo: remove from ?? in production (demo purposes ONLY)
+$isWsEnabled = (bool) $settings->getData('rest_ws_enabled');
 
 $baseUrl = defined('ILIAS_HTTP_PATH')
             ? rtrim(ILIAS_HTTP_PATH, '/') . '/'
@@ -35,6 +35,7 @@ $isDebugEnabled = defined('DEVMODE')
 // These would typically come from ILIAS settings or environment variables.
 $logErrors = true; // Always log errors in an API Gateway
 $logErrorDetails = $isDebugEnabled; // Log details only in debug mode
+$isWsEnabled = $isDebugEnabled; // @todo: for demo purposes only, remove on production
 
 $routes = [
     // static or extra routes
