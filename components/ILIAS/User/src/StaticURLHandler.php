@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\User;
 
 use ILIAS\User\Profile\PersonalProfileGUI;
+use ILIAS\User\Profile\PublicProfileGUI;
 use ILIAS\StaticURL\Handler\Handler;
 use ILIAS\StaticURL\Request\Request;
 use ILIAS\StaticURL\Context;
@@ -29,10 +30,11 @@ use ILIAS\StaticURL\Response\Factory;
 use ILIAS\StaticURL\Handler\BaseHandler;
 use ILIAS\StaticURL\Builder\StandardURIBuilder;
 use ILIAS\StaticURL\StaticURLConfig;
+use ILIAS\Data\ReferenceId;
 
 class StaticURLHandler extends BaseHandler implements Handler
 {
-    public const NAMESPACE = 'user';
+    public const NAMESPACE = 'usr';
     public const CHANGE_EMAIL_OPERATIONS = 'email';
 
     public function getNamespace(): string
@@ -51,7 +53,7 @@ class StaticURLHandler extends BaseHandler implements Handler
             self::CHANGE_EMAIL_OPERATIONS => $context->isUserLoggedIn()
                     ? $this->buildChangeEmailUrl($additional_params[1], $context->ctrl())
                     : $this->getLoginUrl($request, $context),
-            default => $context->ctrl()->getLinkTargetByClass([\ilDashboardGUI::class], 'jumpToProfile'),
+            default => $this->buildProfileUrl($request->getReferenceId(), $context->ctrl()),
         };
 
         return $response_factory->can($uri);
@@ -79,5 +81,13 @@ class StaticURLHandler extends BaseHandler implements Handler
             . str_replace('/', '_', rtrim($target, '/'))
             . '&cmd=force_login&lang=' . $context->getUserLanguage();
 
+    }
+
+    private function buildProfileUrl(
+        ReferenceId $target_user_id,
+        \ilCtrl $ctrl
+    ): string {
+        $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id->toInt());
+        return $ctrl->getLinkTargetByClass([\ilPublicProfileBaseClassGUI::class, PublicProfileGUI::class], PublicProfileGUI::DEFAULT_CMD);
     }
 }
