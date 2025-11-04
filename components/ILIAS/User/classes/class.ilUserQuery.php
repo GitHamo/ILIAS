@@ -265,9 +265,8 @@ class ilUserQuery
 
         $ilDB = $DIC['ilDB'];
 
-
-        $udf_fields = [];
         $usr_ids = [];
+        $multi_fields = [];
 
         $join = "";
 
@@ -282,7 +281,7 @@ class ilUserQuery
                         $join = ' LEFT JOIN (SELECT value AS dpro_agreed_on, usr_id FROM usr_pref WHERE keyword = "dpro_agree_date") AS dpro' .
                                 ' ON (usr_data.usr_id = dpro.usr_id)';
                     } elseif (substr($f, 0, 4) === "udf_") {
-                        $udf_fields[] = (int) substr($f, 4);
+                        $multi_fields[] = substr($f, 4);
                     } else {
                         $this->default_fields[] = $f;
                     }
@@ -290,19 +289,11 @@ class ilUserQuery
             }
         }
 
-        // if udf fields are involved we need the definitions
-        $udf_def = [];
-        // join udf table
-        foreach ($udf_fields as $id) {
-            $join .= " LEFT JOIN udf_clob ud_" . $id . " ON (ud_" . $id . ".field_id=" . $ilDB->quote($id) . " AND ud_" . $id . ".usr_id = usr_data.usr_id) ";
-        }
-
         // count query
         $count_query = "SELECT count(usr_data.usr_id) cnt" .
             " FROM usr_data";
 
-        $all_multi_fields = ["interests_general", "interests_help_offered", "interests_help_looking"];
-        $multi_fields = [];
+        $default_multi_fields = ["interests_general", "interests_help_offered", "interests_help_looking"];
 
         $sql_fields = [];
         foreach ($this->default_fields as $idx => $field) {
@@ -310,18 +301,13 @@ class ilUserQuery
                 continue;
             }
 
-            if (in_array($field, $all_multi_fields)) {
+            if (in_array($field, $default_multi_fields)) {
                 $multi_fields[] = $field;
             } elseif (strpos($field, ".") === false) {
                 $sql_fields[] = "usr_data." . $field;
             } else {
                 $sql_fields[] = $field;
             }
-        }
-
-        // udf fields
-        foreach ($udf_fields as $id) {
-            $sql_fields[] = "ud_" . $id . ".value udf_" . $id;
         }
 
         // basic query
@@ -395,9 +381,6 @@ class ilUserQuery
             if ($f !== '') {
                 $udf_id = explode('_', $k)[1];
                 $add = "{$where} ud_{$udf_id}.value = {$ilDB->quote($f, 'text')}";
-                if ($udf_def[$udf_id]['field_type'] === UDF_TYPE_TEXT) {
-                    $add = "{$where} {$ilDB->like("ud_{$udf_id}.value", 'text', "%{$f}%")}";
-                }
                 $query .= $add;
                 $count_query .= $add;
                 $where = ' AND';
@@ -550,10 +533,14 @@ class ilUserQuery
         // add multi-field-values to user-data
         if (count($multi_fields) && count($usr_ids)) {
             $usr_multi = [];
-            $set = $ilDB->query("SELECT * FROM usr_profile_data" .
-                " WHERE " . $ilDB->in("usr_id", $usr_ids, "", "integer"));
+            $set = $ilDB->query('SELECT * FROM usr_profile_data' .
+                ' WHERE ' . $ilDB->in('usr_id', $usr_ids, false, ilDBConstants::T_INTEGER));
             while ($row = $ilDB->fetchAssoc($set)) {
-                $usr_multi[(int) $row["usr_id"]][$row["field_id"]][] = $row["value"];
+                $field_id = $row['field_id'];
+                if (!in_array($field_id, $default_multi_fields)) {
+                    $field_id = "udf_{$row['field_id']}";
+                }
+                $usr_multi[(int) $row['usr_id']][$field_id][] = $row['value'];
             }
             foreach ($result as $idx => $item) {
                 if (isset($usr_multi[$item["usr_id"]])) {
