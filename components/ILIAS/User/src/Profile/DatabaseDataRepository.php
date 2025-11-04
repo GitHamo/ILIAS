@@ -348,9 +348,7 @@ class DatabaseDataRepository implements DataRepository
             'is_self_registered' => $base_data->is_self_registered === 1,
             'last_update' => $base_data->last_update ?? '',
             'create_date' => $base_data->create_date ?? '',
-            'last_visited' => $base_data->last_visited === null
-            ? []
-            : unserialize($base_data->last_visited, ['allowed_classes' => false])
+            'last_visited' => $this->buildLastVisited($base_data->last_visited)
         ]);
     }
 
@@ -438,5 +436,20 @@ class DatabaseDataRepository implements DataRepository
                     ? $autocomplete_query->getSearchTermQueryString() : null
             ]
         );
+    }
+
+    private function buildLastVisited(?string $last_visited): array
+    {
+        if ($last_visited === null) {
+            return [];
+        }
+
+        $unserialized = unserialize($last_visited, ['allowed_classes' => false]);
+
+        if (!is_array($unserialized)) {
+            return [];
+        }
+
+        return $unserialized;
     }
 }
