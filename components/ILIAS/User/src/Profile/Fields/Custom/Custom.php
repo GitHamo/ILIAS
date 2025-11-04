@@ -161,6 +161,11 @@ class Custom implements FieldDefinition
         );
     }
 
+    public function buildPresentationValueFromUserValue(array $value): string
+    {
+        return $this->type->buildPresentationValueFromUserValue($value, $this->additional_edit_form_data);
+    }
+
     public function retrieveValueFromUser(\ilObjUser $user): string
     {
         return $this->type->buildPresentationValueFromUserValue(
