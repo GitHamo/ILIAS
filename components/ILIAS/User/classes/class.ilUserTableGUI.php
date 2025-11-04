@@ -70,7 +70,10 @@ class ilUserTableGUI extends ilTable2GUI
         $this->setMode($a_mode);
         $this->setId("user{$this->getUserFolderId()}");
 
-        $this->selectable_columns = $this->buildSelectableColumns();
+        [
+            'selectable_columns' => $this->selectable_columns,
+            'udfs' => $this->udf_fields
+        ] = $this->buildSelectableColumnsAndUdfs();
         parent::__construct($a_parent_obj, $a_parent_cmd);
 
         $this->addColumn('', '', '1', true);
@@ -145,20 +148,19 @@ class ilUserTableGUI extends ilTable2GUI
         return $this->selectable_columns;
     }
 
-    public function buildSelectableColumns(): array
+    private function buildSelectableColumnsAndUdfs(): array
     {
-        $context = ProfileContext::LocalUserAdministration;
-        if ($this->getMode() === self::MODE_USER_FOLDER) {
-            $context = ProfileContext::UserAdministration;
-        }
 
-        $ufs = $this->user_profile->getVisibleFields($context);
 
+        $ufs = $this->user_profile->getVisibleFields($this->getFormContext());
+
+        $udfs = [];
         $cols = array_reduce(
             $ufs,
-            function (array $c, ProfileField $v): array {
+            function (array $c, ProfileField $v) use (&$udfs): array {
                 $identifier = $v->getIdentifier();
                 if ($v->isCustom()) {
+                    $udfs[] = $v;
                     $identifier = "udf_{$identifier}";
                     $c[$identifier] = null;
                 }
@@ -216,6 +218,9 @@ class ilUserTableGUI extends ilTable2GUI
                 'phone_mobile' => null,
                 'fax' => null,
                 'matriculation' => null,
+                'interests_general' => null,
+                'interests_help_offered' => null,
+                'interests_help_looking' => null,
                 'auth_mode' => [
                     'txt' => $this->lng->txt('auth_mode'),
                     'default' => false
@@ -224,7 +229,10 @@ class ilUserTableGUI extends ilTable2GUI
             ]
         );
 
-        return array_filter($cols);
+        return [
+            'selectable_columns' => array_filter($cols),
+            'udfs' => $udfs
+        ];
     }
 
     protected function buildUserQuery(): ilUserQuery
@@ -515,51 +523,23 @@ class ilUserTableGUI extends ilTable2GUI
         $this->filter['authentication'] = $si->getValue();
 
         // udf fields
-        foreach ($this->udf_fields as $id => $f) {
-            $this->addFilterItemByUdfType($id, $f['type'], true, $f['txt'], $f['options']);
+        foreach ($this->udf_fields as $f) {
+            $this->addFilterItemByUdfType($f);
         }
     }
 
     /**
      * Add filter by standard type
      */
-    public function addFilterItemByUdfType(
-        string $id,
-        string $type,
-        bool $a_optional = false,
-        ?string $caption = null,
-        array $a_options = []
+    private function addFilterItemByUdfType(
+        ProfileField $field
     ): ?ilFormPropertyGUI {
-        if (!$caption) {
-            $caption = $this->lng->txt($id);
-        }
-
-        switch ($type) {
-            case UDF_TYPE_SELECT:
-                $item = new ilSelectInputGUI($caption, $id);
-                $sel_options = ['' => $this->lng->txt('user_all')];
-                foreach ($a_options as $o) {
-                    $sel_options[$o] = $o;
-                }
-                $item->setOptions($sel_options);
-                break;
-
-            case UDF_TYPE_TEXT:
-                $item = new ilTextInputGUI($caption, $id);
-                $item->setMaxLength(64);
-                $item->setSize(20);
-                // $item->setSubmitFormOnEnter(true);
-                break;
-
-            default:
-                return null;
-        }
-
-        if ($item) {
-            $this->addFilterItem($item, $a_optional);
-            $item->readFromSession();
-            $this->filter[$id] = $item->getValue();
-        }
+        $id = "udf_{$field->getIdentifier()}";
+        $item = $field->getLegacyInput($this->lng, $this->getFormContext());
+        $item->setPostVar($id);
+        $this->addFilterItem($item, true);
+        $item->readFromSession();
+        $this->filter[$id] = $item->getValue();
         return $item;
     }
 
@@ -658,5 +638,13 @@ class ilUserTableGUI extends ilTable2GUI
         }
 
         return $value;
+    }
+
+    private function getFormContext(): ProfileContext
+    {
+        if ($this->getMode() === self::MODE_USER_FOLDER) {
+            return ProfileContext::UserAdministration;
+        }
+        return ProfileContext::LocalUserAdministration;
     }
 }
