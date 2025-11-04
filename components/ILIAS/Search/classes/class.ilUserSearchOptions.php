@@ -222,7 +222,7 @@ class ilUserSearchOptions
                 $fields[$counter]['type'] = self::FIELD_TYPE_UDF_SELECT;
             }
             $fields[$counter]['lang'] = $field->getLabel($lng);
-            $fields[$counter]['db'] = $field->getIdentifier();
+            $fields[$counter]['db'] = "udf_{$field->getIdentifier()}";
 
             switch (get_class($input)) {
                 case ilTextInputGUI::class:
