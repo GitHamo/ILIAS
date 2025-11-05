@@ -49,6 +49,7 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
         global $DIC;
         $this->logger = $DIC->logger()->auth();
 
+        $this->lng->loadLanguageModule('administration');
         $this->lng->loadLanguageModule('registration');
         $this->lng->loadLanguageModule('auth');
         $this->lng->loadLanguageModule('content');
