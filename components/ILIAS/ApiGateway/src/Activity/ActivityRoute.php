@@ -30,22 +30,23 @@ class ActivityRoute implements Route
 {
     public static function fromActivity(Activity $activity): self
     {
-        return new self($activity, new ActivityRouteHandler($activity));
+        return new self(
+            $activity,
+            new ActivityRouteHandler($activity),
+            ActivityNamespace::create(get_class($activity)),
+        );
     }
 
     public function __construct(
         private Activity $activity,
         private ActivityRouteHandler $handler,
+        private ActivityNamespace $namespace,
     ) {}
 
     #[Override]
     public function getPath(): string
     {
-        // @todo: only for phase one
-        return sprintf(
-            '/activity/%s',
-            md5((string) $this->activity->getName()), // TODO: Use Name instead of md5
-        );
+        return $this->namespace->getPath();
     }
 
     #[Override]

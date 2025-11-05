@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Activity;
 
+use ILIAS\ApiGateway\Activity\ActivityNamespace;
 use ILIAS\ApiGateway\Activity\ActivityRoute;
 use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\Component\Activities\Activity;
@@ -12,22 +13,29 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Override;
+use Tests\Unit\Fixtures\FakeTestActivity;
 
 final class ActivityRouteTest extends TestCase
 {
-    private MockObject&Activity $activityMock;
+    private Activity $activity;
     private MockObject&ActivityRouteHandler $handlerMock;
+    private ActivityNamespace $namespaceMock;
+    private string $namespace = "Foo\\Bar\\Baz";
     private ActivityRoute $route;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->activityMock = $this->createMock(Activity::class);
+        $this->activity = new FakeTestActivity();
         $this->handlerMock = $this->createMock(ActivityRouteHandler::class);
+        $this->namespaceMock = ActivityNamespace::create(
+            $this->namespace,
+        );
 
         $this->route = new ActivityRoute(
-            $this->activityMock,
-            $this->handlerMock
+            $this->activity,
+            $this->handlerMock,
+            $this->namespaceMock,
         );
     }
 
@@ -39,9 +47,13 @@ final class ActivityRouteTest extends TestCase
         ActivityType $type,
         array $expected,
     ): void {
-        $this->activityMock->method('getType')->willReturn($type);
+        $actual = new ActivityRoute(
+            new FakeTestActivity($type),
+            $this->handlerMock,
+            $this->namespaceMock,
+        );
 
-        self::assertSame($expected, $this->route->getMethods());
+        self::assertSame($expected, $actual->getMethods());
     }
 
     /**
@@ -56,6 +68,16 @@ final class ActivityRouteTest extends TestCase
         ];
     }
 
+    public function testHasAccessorToNamespacePath(): void
+    {
+        $expected = "/foo/bar/Baz";
+
+        self::assertSame(
+            $expected,
+            $this->route->getPath(),
+        );
+    }
+
     public function testHasAccessorToRouteHandler(): void
     {
         self::assertSame(
@@ -66,12 +88,13 @@ final class ActivityRouteTest extends TestCase
 
     public function testCreatesRouteFromActivity(): void
     {
-        $actual = ActivityRoute::fromActivity($this->activityMock);
+        $actual = ActivityRoute::fromActivity($this->activity);
 
         self::assertEquals(
             new ActivityRoute(
-                $this->activityMock,
-                new ActivityRouteHandler($this->activityMock),
+                $this->activity,
+                new ActivityRouteHandler($this->activity),
+                ActivityNamespace::create(get_class($this->activity)),
             ),
             $actual
         );
