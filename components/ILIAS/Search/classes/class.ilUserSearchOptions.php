@@ -31,15 +31,13 @@ use ILIAS\User\Context;
 */
 class ilUserSearchOptions
 {
-    public const FIELD_TYPE_UDF_UNDEFINED = 0;
-    public const FIELD_TYPE_UDF_SELECT = 1;
-    public const FIELD_TYPE_UDF_TEXT = 2;
-    public const FIELD_TYPE_SELECT = 3;
-    public const FIELD_TYPE_TEXT = 4;
-    // begin-patch lok
-    public const FIELD_TYPE_MULTI = 5;
-    // end-patch lok
-    public const FIELD_TYPE_UDF_WYSIWYG = 6;
+    public const int FIELD_TYPE_UDF_UNDEFINED = 0;
+    public const int FIELD_TYPE_UDF_SELECT = 1;
+    public const int FIELD_TYPE_UDF_TEXT = 2;
+    public const int FIELD_TYPE_SELECT = 3;
+    public const int FIELD_TYPE_TEXT = 4;
+    public const int FIELD_TYPE_MULTI = 5;
+    public const int FIELD_TYPE_UDF_WYSIWYG = 6;
 
 
     /**
@@ -118,9 +116,8 @@ class ilUserSearchOptions
                     );
                     break;
 
-                case 'sel_country':
+                case 'country':
                     $fields[$counter]['type'] = self::FIELD_TYPE_SELECT;
-                    $fields[$counter]['values'] = array(0 => $lng->txt('please_choose'));
 
                     // #7843 -- see ilCountrySelectInputGUI
                     $lng->loadLanguageModule('meta');
@@ -128,6 +125,7 @@ class ilUserSearchOptions
                         $fields[$counter]['values'][$c] = $lng->txt('meta_c_' . $c);
                     }
                     asort($fields[$counter]['values']);
+                    array_unshift($fields[$counter]['values'], $lng->txt('please_choose'));
                     break;
 
                 case 'org_units':
@@ -170,7 +168,6 @@ class ilUserSearchOptions
                      'zipcode',
                      'city',
                      'country',
-                     'sel_country',
                      'email',
                      'second_email',
                      'hobby',
@@ -201,7 +198,7 @@ class ilUserSearchOptions
             return true;
         }
 
-        return $profile->getFieldByIdentifier($a_key)->isSearchable();
+        return $profile->getFieldByIdentifier($a_key)?->isSearchable() ?? false;
     }
 
     public static function _saveStatus(string $a_key, bool $a_enabled): bool
@@ -225,7 +222,7 @@ class ilUserSearchOptions
                 $fields[$counter]['type'] = self::FIELD_TYPE_UDF_SELECT;
             }
             $fields[$counter]['lang'] = $field->getLabel($lng);
-            $fields[$counter]['db'] = $field->getIdentifier();
+            $fields[$counter]['db'] = "udf_{$field->getIdentifier()}";
 
             switch (get_class($input)) {
                 case ilTextInputGUI::class:

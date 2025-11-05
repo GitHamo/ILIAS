@@ -470,8 +470,8 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
         // Custom user data fields
         if ($udf_ids !== []) {
             $a_user_data = array_reduce(
-                $this->profile->getDataForMultiple($usr_ids),
-                function (array $c, ProfileData $v): array {
+                iterator_to_array($this->profile->getDataForMultiple($usr_ids)),
+                function (array $c, ProfileData $v) use ($udf_ids): array {
                     if (!$this->checkAcceptance($v->getId())) {
                         return $c;
                     }
@@ -479,6 +479,7 @@ class ilCourseParticipantsTableGUI extends ilParticipantTableGUI
                     foreach ($udf_ids as $field_id) {
                         $c[$v->getId()]['udf_' . $field_id] = $v->getAdditionalFieldByIdentifier($field_id);
                     }
+                    return $c;
                 },
                 $a_user_data
             );

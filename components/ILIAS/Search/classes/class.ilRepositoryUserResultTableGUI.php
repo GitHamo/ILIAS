@@ -220,7 +220,7 @@ class ilRepositoryUserResultTableGUI extends ilTable2GUI
                 case 'interests_help_offered':
                 case 'interests_help_looking':
                     $this->tpl->setCurrentBlock('custom_fields');
-                    $this->tpl->setVariable('VAL_CUST', implode(', ', (array) $a_set[$field]));
+                    $this->tpl->setVariable('VAL_CUST', implode(', ', $a_set[$field] ?? []));
                     $this->tpl->parseCurrentBlock();
                     break;
 
@@ -248,8 +248,12 @@ class ilRepositoryUserResultTableGUI extends ilTable2GUI
 
                     // no break
                 default:
+                    $value = $a_set[$field] ?? '';
+                    if (is_array($value)) {
+                        $value = implode(', ', $value);
+                    }
                     $this->tpl->setCurrentBlock('custom_fields');
-                    $this->tpl->setVariable('VAL_CUST', (string) ($a_set[$field] ?: ''));
+                    $this->tpl->setVariable('VAL_CUST', $value);
                     $this->tpl->parseCurrentBlock();
                     break;
             }

@@ -81,7 +81,7 @@ class DatabaseDataRepository implements DataRepository
     {
         $query = $this->db->query(
             'SELECT * FROM ' . self::USER_BASE_TABLE
-                . " WHERE {$this->db->in('usr_id', $user_ids)}"
+                . " WHERE {$this->db->in('usr_id', $user_ids, false, \ilDBConstants::T_INTEGER)}"
         );
 
         $prepared_query = $this->db->prepare('SELECT field_id, value FROM '
@@ -91,7 +91,7 @@ class DatabaseDataRepository implements DataRepository
             yield $this->buildFromData(
                 $base_data,
                 $this->db->fetchAll(
-                    $this->db->execute($prepared_query, $base_data->usr_id),
+                    $this->db->execute($prepared_query, [$base_data->usr_id]),
                     \ilDBConstants::FETCHMODE_OBJECT
                 )
             );
@@ -169,6 +169,10 @@ class DatabaseDataRepository implements DataRepository
                 'is_self_registered' => [\ilDBConstants::T_INTEGER, $system_information['is_self_registered'] ? 1 : 0],
                 'last_update' => [\ilDBConstants::T_TIMESTAMP, date('Y-m-d H:i:s')],
                 'create_date' => [\ilDBConstants::T_TIMESTAMP, $system_information['create_date']],
+                'last_visited' => [
+                    \ilDBConstants::T_TEXT,
+                    $system_information['last_visited'] === [] ? null : serialize($system_information['last_visited'])
+                ]
             ]
         );
 
@@ -217,6 +221,20 @@ class DatabaseDataRepository implements DataRepository
             'UPDATE ' . self::USER_BASE_TABLE . ' SET login = %s WHERE usr_id = %s',
             [\ilDBConstants::T_TEXT, \ilDBConstants::T_INTEGER],
             [$login, $usr_id]
+        );
+    }
+
+    public function storeLastVisitedFor(
+        int $usr_id,
+        array $last_visited
+    ): void {
+        $this->db->manipulateF(
+            'UPDATE ' . self::USER_BASE_TABLE . ' SET last_visited = %s WHERE usr_id = %s',
+            [\ilDBConstants::T_TEXT, \ilDBConstants::T_INTEGER],
+            [
+                $last_visited === [] ? null : serialize($last_visited),
+                $usr_id
+            ]
         );
     }
 
@@ -330,6 +348,7 @@ class DatabaseDataRepository implements DataRepository
             'is_self_registered' => $base_data->is_self_registered === 1,
             'last_update' => $base_data->last_update ?? '',
             'create_date' => $base_data->create_date ?? '',
+            'last_visited' => $this->buildLastVisited($base_data->last_visited)
         ]);
     }
 
@@ -417,5 +436,20 @@ class DatabaseDataRepository implements DataRepository
                     ? $autocomplete_query->getSearchTermQueryString() : null
             ]
         );
+    }
+
+    private function buildLastVisited(?string $last_visited): array
+    {
+        if ($last_visited === null) {
+            return [];
+        }
+
+        $unserialized = unserialize($last_visited, ['allowed_classes' => false]);
+
+        if (!is_array($unserialized)) {
+            return [];
+        }
+
+        return $unserialized;
     }
 }

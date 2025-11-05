@@ -77,6 +77,7 @@ class ilObjUser extends ilObject
     private string $last_profile_prompt = '';	// timestamp
     private string $first_login = '';	// timestamp
     private bool $profile_incomplete = false;
+    private array $last_visited = [];
 
     private Data $profile_data;
     private ProfileDataRepository $profile_data_repository;
@@ -234,6 +235,7 @@ class ilObjUser extends ilObject
         $this->auth_mode = $data['auth_mode'];
         $this->ext_account = $data['ext_account'] ?? '';
         $this->is_self_registered = $data['is_self_registered'];
+        $this->last_visited = $data['last_visited'];
     }
 
     private function buildSystemInformationArrayForDB(): array
@@ -263,6 +265,7 @@ class ilObjUser extends ilObject
             'is_self_registered' => $this->is_self_registered,
             'last_update' => $this->last_update,
             'create_date' => $this->create_date,
+            'last_visited' => $this->last_visited
         ];
     }
 
@@ -995,6 +998,17 @@ class ilObjUser extends ilObject
     public function getLastUpdate(): string
     {
         return $this->last_update;
+    }
+
+    public function getLastVisited(): array
+    {
+        return $this->last_visited;
+    }
+
+    public function updateLastVisited(array $last_visited): void
+    {
+        $this->last_visited = $last_visited;
+        $this->profile_data_repository->storeLastVisitedFor($this->id, $last_visited);
     }
 
     /**

@@ -810,8 +810,11 @@ class ilObjUserGUI extends ilObjectGUI
             $this->form_gui->addItem($input);
         }
 
-        foreach ($this->legal_documents->userManagementFields($this->object) as $input) {
-            $this->form_gui->addItem($input);
+        foreach ($this->legal_documents->userManagementFields($this->object) as $identifier => $value) {
+            if (is_string($value)) {
+                $value = $this->buildNonEditableInput($identifier, $value);
+            }
+            $this->form_gui->addItem($value);
         }
     }
 

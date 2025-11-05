@@ -1080,7 +1080,7 @@ assessment#:#qpl_lac_desc_compare_with_quest_res#:#Vergleiche das Ergebnis mit d
 assessment#:#qpl_lac_desc_compare_with_sequence#:#Vergleiche das Ergebnis mit der Antwortsequenz ($a,..,z$)
 assessment#:#qpl_lac_desc_compare_with_text#:#Vergleiche das Ergebnis mit dem Freitext TEXT
 assessment#:#qpl_lac_desc_logical_and#:#Logisches UND
-assessment#:#qpl_lac_desc_logical_or#:#Logisches	ODER
+assessment#:#qpl_lac_desc_logical_or#:#Logisches ODER
 assessment#:#qpl_lac_desc_negation#:#Negation
 assessment#:#qpl_lac_desc_res_of_answ_m_of_cur_quest#:#Ergebnis der m-ten Antwort der aktuellen Frage
 assessment#:#qpl_lac_desc_res_of_cur_quest#:#Ergebnis der aktuellen Frage
@@ -1124,11 +1124,11 @@ assessment#:#qpl_skill_point_eval_by_solution_compare#:#Ermittlung der Kompetenz
 assessment#:#qpl_skill_point_eval_mode_quest_result#:#Antwortergebnis
 assessment#:#qpl_skill_point_eval_mode_solution_compare#:#Lösungsvergleich
 assessment#:#qpl_skl_all_questions#:#Alle Fragen
-assessment#:#qpl_skl_assigned_questions#:#Questions with assignment###29 10 2025 new variable
-assessment#:#qpl_skl_assignment_for_question#:#Kompetenz-Zuordnungen zur Frage „%s“
-assessment#:#qpl_skl_sub_tab_quest_assign#:#Fragen-Kompetenz-Zuordnung
+assessment#:#qpl_skl_assigned_questions#:#Fragen mit Kompletenzzuordnung
+assessment#:#qpl_skl_assignment_for_question#:#Kompetenzzuordnungen zur Frage „%s“
+assessment#:#qpl_skl_sub_tab_quest_assign#:#Kompetenzzuordnungen
 assessment#:#qpl_skl_sub_tab_usages#:#Vergabehäufigkeit
-assessment#:#qpl_skl_unassigned_questions#:#Questions without assignment###29 10 2025 new variable
+assessment#:#qpl_skl_unassigned_questions#:#Fragen ohne Zuordnung
 assessment#:#qpl_skl_view_control_mode_aria:#:#Ansichtssteuerungsmodus
 assessment#:#qpl_sync_quest_skl_assigns_confirmation#:#Die Frage wurde aus einem anderen Magazinobjekt eingefügt. Soll die aktuelle Konfiguration von Kompetenzzuweisungen auf das Original der Frage übertragen werden?
 assessment#:#qpl_tab_competences#:#Kompetenzen
@@ -1710,7 +1710,7 @@ assessment#:#tst_participant_status#:#Teilnehmerstatus
 assessment#:#tst_participating_users#:#Teilnehmende Benutzer
 assessment#:#tst_pass_best_pass#:#Besten Durchlauf des Tests bewerten
 assessment#:#tst_pass_best_pass_desc#:#Wenn multiple Durchläufe erlaubt werden, wird der Durchlauf bewertet, bei dem die höchste Punktezahl erreicht wurde.
-assessment#:#tst_pass_deletion#:#Previous Passes###29 10 2025 new variable
+assessment#:#tst_pass_deletion#:#Vorherige Durchläufe
 assessment#:#tst_pass_deletion_allowed#:#Durchläufe, die nicht zur Bewertung verwendet werden, können gelöscht werden.
 assessment#:#tst_pass_details#:#Detaillierte Ergebnisse
 assessment#:#tst_pass_details_header_lo_initial#:#Einstiegsergebnisse zu den Lernzielen<br />%s - %s
@@ -2271,7 +2271,7 @@ badge#:#badge_sort_active_badges_first#:#Aktive Badges zuerst
 badge#:#badge_sort_active_badges_last#:#Aktive Badges zuletzt
 badge#:#badge_sort_activity_badges_first#:#Automatisch vergebene Badges zuerst
 badge#:#badge_sort_activity_badges_last#:#Automatisch vergebene Badges zuletzt
-badge#:#badge_sort_added_to_profile_last#:#Added To Profile First###29 10 2025 new variable
+badge#:#badge_sort_added_to_profile_last#:#Dem Profil zugeordnete zuerst
 badge#:#badge_sort_excluded_from_profile_first#:#Vom Profil ausgeklammerte zuerst
 badge#:#badge_sort_manual_awarding_first#:#Badges mit manueller Vergabe zuerst
 badge#:#badge_sort_manual_awarding_last#:#Badges mit manueller Vergabe zuletzt
@@ -2790,7 +2790,7 @@ certificate#:#certificate_a4_landscape#:#A4 Quer (210 mm x 297 mm)
 certificate#:#certificate_a5#:#A5 (210 mm x 148 mm)
 certificate#:#certificate_a5_landscape#:#A5 Quer (148 mm x 210 mm)
 certificate#:#certificate_background_image#:#Hintergrundbild
-certificate#:#certificate_card_thumbnail_image#:#Thumbnail Image###29 10 2025 new variable
+certificate#:#certificate_card_thumbnail_image#:#Miniaturbild
 certificate#:#certificate_change_active_status#:#Der Aktiv-Status des Zertifikats wurde geändert
 certificate#:#certificate_confirm_deletion_text#:#Wollen Sie wirklich die Zertifikat-Vorlage und alle zugehörigen Daten löschen?
 certificate#:#certificate_custom#:#Eigenes Format...
@@ -3291,7 +3291,7 @@ cmix#:#highscore_top_table#:#Bestenliste
 cmix#:#highscore_top_table_description#:#Teilnehmern wird eine Tabelle mit den besten Platzierungen angezeigt.
 cmix#:#highscore_wtime#:#Dauer
 cmix#:#highscore_wtime_description#:#Eine Spalte mit der Dauer wird in die Rangliste aufgenommen.
-cmix#:#info_availability#:#Hereby you can operate the availability of the LRS-type within the magazine. All types can set on "allow existing ones" instead of being deleted.###26 08 2024 new variable
+cmix#:#info_availability#:#Hiermit können Sie die Verfügbarkeit des LRS-Typs innerhalb des Magazins steuern. Alle Typen können auf „vorhandene zulassen” eingestellt werden, statt sie zu löschen.
 cmix#:#info_description#:#Diese Beschreibung wird bei der Auswahl des LRS-Typs für neue Objekte angezeigt.
 cmix#:#info_external_lrs#:#Bei einem externen Learning Record Store (LRS) wird dem Anwender ein Hinweis angezeigt. Ein externer LRS ist gekennzeichnet durch einen unzureichenden Einfluss auf den LRS und durch den Betreiber von ILIAS. Dies ist der Fall, wenn es keine Rechte zum Löschen gibt.
 cmix#:#info_lrs_endpoint#:#URL des Endpoints ohne „/“ am Ende
@@ -5558,7 +5558,7 @@ common#:#search_new#:#Neue Suche
 common#:#search_result#:#Suchergebnis
 common#:#search_results#:#Suchergebnisse
 common#:#search_user#:#Benutzer suchen
-common#:#search_users#:#Look Up Users###29 10 2025 new variable
+common#:#search_users#:#Benutzer suchen
 common#:#seas_max_hits#:#Maximalanzahl von Treffern
 common#:#seas_max_hits_info#:#Stellen Sie hier die Maximalanzahl von Suchergebnissen ein, die nach einer Suchanfrage ausgegeben werden. Je geringer die Zahl ist, desto schneller erfolgt der Seitenaufbau.
 common#:#seas_settings#:#Systemweite Suche
@@ -8637,7 +8637,7 @@ dcl#:#dcl_datetime#:#Datumseingabe mit Uhrzeit
 dcl#:#dcl_datetime_desc#:#Datum und Uhrzeit wird eingegeben oder im Kalender ausgewählt.
 dcl#:#dcl_datetime_selection#:#Datum mit Uhrzeit per Auswahl
 dcl#:#dcl_datetime_selection_desc#:#Aus vorgegebenen Optionen kann ein Datum mit Uhrzeit ausgewählt werden.
-dcl#:#dcl_deactivate_view#:#Deactivate this view###29 10 2025 new variable
+dcl#:#dcl_deactivate_view#:#Diese Ansicht deaktivieren
 dcl#:#dcl_default_sort_field#:#Sortierung
 dcl#:#dcl_default_sort_field_order#:#Sortierrichtung
 dcl#:#dcl_default_sort_field_order_desc#:#Tabelle wird standardmässig nach dem ausgewählten Feld sortiert.
@@ -8654,7 +8654,7 @@ dcl#:#dcl_detailed_view#:#Einzelansicht
 dcl#:#dcl_display_action_menu#:#Kopieren
 dcl#:#dcl_display_action_menu_desc#:#Das Objekt kann von dem Eintrag aus kopiert werden.
 dcl#:#dcl_display_record_alt#:#Diesen Eintrag anzeigen
-dcl#:#dcl_duplicate_non_unique_entries_exist#:#This may also concern existing records.###23 02 2024 new variable
+dcl#:#dcl_duplicate_non_unique_entries_exist#:#Dies kann auch existierende Einträge betreffen.
 dcl#:#dcl_edit#:#Einstellungen der Datensammlung
 dcl#:#dcl_edit_entry_rules#:#Eintragsbearbeitung
 dcl#:#dcl_edit_field#:#Feld bearbeiten
@@ -8788,7 +8788,7 @@ dcl#:#dcl_public_comments#:#Kommentare
 dcl#:#dcl_public_comments_desc#:#Benutzer können Datensätze dieser Tabelle kommentieren.
 dcl#:#dcl_rating#:#Bewertung
 dcl#:#dcl_rating_desc#:#Bestehende Einträge mit ein bis fünf Sternen bewerten.
-dcl#:#dcl_rbac_roles_without_read_access_on_any_standard_view#:#The following rbac roles have read access on the data collection, but no read access on any standard view of a table:###29 10 2025 new variable
+dcl#:#dcl_rbac_roles_without_read_access_on_any_standard_view#:#Die folgenden Rollen haben Lesezugriff auf die Datensammlung, jedoch auf keine Standard-Ansicht der Tabellen:
 dcl#:#dcl_record#:#Eintrag
 dcl#:#dcl_record_deleted#:#Eintrag gelöscht.
 dcl#:#dcl_record_from_total#:#%d von %d
@@ -9771,7 +9771,7 @@ exercise#:#exc_your_submission#:#Ihre Einreichung
 exp#:#exp_create_file#:#Exportdatei erzeugen
 exp#:#exp_error_disabled#:#Der Export von Container-Objekten ist deaktiviert. Bei Fragen wenden Sie sich bitte an die technische Betreuung.
 exp#:#exp_error_too_many_objects#:#Der Export überschreitet die maximal erlaubte Zahl an Objekten (%1). Bitte wählen Sie eine kleinere Anzahl an Objekten.
-exp#:#exp_export_dropdown#:#Export###29 10 2025 new variable
+exp#:#exp_export_dropdown#:#Export
 exp#:#exp_export_files#:#Exportdateien
 exp#:#exp_export_single_option#:#Export %s
 exp#:#exp_file_created#:#Eine Exportdatei wurde erstellt.
@@ -11425,7 +11425,7 @@ lti#:#lti_object_consumer#:#LTI-Konsumenten
 lti#:#lti_object_release_settings_form#:#LTI-Freigaben bearbeiten
 lti#:#lti_provider#:#LTI-Freigaben
 lti#:#lti_provider_not_avail_msg#:#LTI-Provider ist auf „Nicht verfügbar“ gesetzt.
-lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.###29 10 2025 new variable
+lti#:#lti_provider_not_set_msg#:#LTI-Provider/-tool ist noch nicht vollständig konfiguriert.
 lti#:#lti_providing_tab#:#ILIAS als LTI-Provider
 lti#:#lti_released_objects#:#Objekt-Freigaben
 lti#:#lti_select_provider#:#Provider auswählen

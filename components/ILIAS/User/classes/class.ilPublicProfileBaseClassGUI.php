@@ -18,10 +18,24 @@
 
 declare(strict_types=1);
 
-class ilDclDateSelectionRecordFieldModel extends ilDclSelectionRecordFieldModel
+use ILIAS\User\Profile\PublicProfileGUI;
+
+/**
+ * This class is just a connector as base classes cannot be namespaced.
+ *
+ * @ilCtrl_Calls ilPublicProfileBaseClassGUI: ILIAS\User\Profile\PublicProfileGUI
+ */
+class ilPublicProfileBaseClassGUI implements \ilCtrlBaseClassInterface
 {
-    protected function formatValue(string $value): string
+    public function executeCommand(): void
     {
-        return (strtotime($value) === false) ? $value : date($this->user->getDateFormat()->toString(), strtotime($value));
+        /** @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+
+        $DIC['ilCtrl']->forwardCommand(
+            new PublicProfileGUI()
+        );
+
+        $DIC['tpl']->printToStdout();
     }
 }
