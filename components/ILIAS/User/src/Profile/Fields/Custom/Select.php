@@ -63,58 +63,56 @@ class Select implements Type
         ?string $data
     ): \ilFormPropertyGUI {
         $parsed_data = $this->parseData($data);
-        if ($parsed_data['allow_multiple']) {
-            $input = new \ilMultiSelectInputGUI($label);
-            $input->setOptions($this->parseData($data)['options']);
-            $input->setValue($user_value);
+        if (!$parsed_data['allow_multiple']) {
+            $value = isset($user_value[0])
+                ? array_search($user_value[0], $parsed_data['options'])
+                : false;
+
+            $input = new \ilSelectInputGUI($label);
+            $input->setOptions(['' => $lng->txt('please_select')] + $parsed_data['options']);
+            $input->setValue($value !== false ? $value : '');
             return $input;
         }
 
-        $input = new \ilSelectInputGUI($label);
-        $input->setOptions(['' => $lng->txt('please_select')] + $this->parseData($data)['options']);
-        $input->setValue($user_value[0] ?? '');
-        return $input;
-    }
-
-    public function prepareUserInputForStorage(mixed $input): array
-    {
-        if (is_array($input)) {
-            return $input;
-        }
-
-        return [$input];
-    }
-
-    public function buildPresentationValueFromUserValue(
-        array $input,
-        ?string $data
-    ): string {
-        if ($data === null || $input === []) {
-            return '';
-        }
-
-        $options = $this->parseData($data)['options'];
-
-        return implode(
-            ', ',
+        $input = new \ilMultiSelectInputGUI($label);
+        $input->setOptions($parsed_data['options']);
+        $input->setValue(
             array_reduce(
-                $input,
-                static function (array $c, string|int $v) use ($options): array {
-                    if (array_key_exists($v, $options)) {
-                        $c[] = $options[$v];
-                        return $c;
-                    }
-
-                    $value = array_search($v, $options);
+                $user_value,
+                function (array $c, string $v) use ($parsed_data): array {
+                    $value = array_search($v, $parsed_data['options']);
                     if ($value === false) {
                         return $c;
                     }
 
-                    $c[] = $v;
+                    $c[] = $value;
                     return $c;
                 },
                 []
             )
+        );
+        return $input;
+
+
+    }
+
+    public function prepareUserInputForStorage(mixed $input, ?string $data): array
+    {
+        $options = $this->parseData($data)['options'];
+        if (!is_array($input)) {
+            $input = [$input];
+        }
+
+        return array_reduce(
+            $input,
+            function (array $c, string|int $v) use ($options): array {
+                $value = $options[$v] ?? null;
+                if ($value !== null) {
+                    $c[] = $value;
+                }
+                return $c;
+            },
+            []
         );
     }
 
