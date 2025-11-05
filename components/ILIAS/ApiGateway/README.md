@@ -16,9 +16,17 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 
 ### 1. ApiGateway (`components/ILIAS/ApiGateway`)
 
-This is a generic, reusable component that provides the tools to build different APIs (e.g., REST, SOAP). It acts as a wrapper and factory for the Slim application, standardizing how routes are registered and how requests and responses are handled. While it is protocol-agnostic, the primary focus of this phase is REST, with the public `/rest` endpoint serving as the entry point for all REST API routes.
+This is a generic, reusable component that provides the tools to build different APIs (e.g., REST, SOAP). It acts as a wrapper and factory for the Slim application, standardizing how routes are registered and how requests and responses are handled. It integrates several core libraries via Composer, including `slim/slim`, `slim/psr7`, and `psr/log`. While it is protocol-agnostic, the primary focus of this phase is REST, with the public `/rest` endpoint serving as the entry point for all REST API routes.
 
 ## Getting Started
+
+After checking out the branch, the first step is to install the new dependencies:
+
+```bash
+composer install
+```
+
+This will download the required libraries (like Slim) and trigger the necessary ILIAS build scripts.
 
 - 🟡 *Admin dashboard control is not compatible with ILIAS 12+ yet so next is only available in ILIAS 11.*
 
