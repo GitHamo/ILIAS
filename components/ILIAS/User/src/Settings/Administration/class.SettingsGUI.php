@@ -476,7 +476,7 @@ class SettingsGUI
     private function buildCheckPasswordMaxLengthConstraint(): Constraint
     {
         return $this->refinery->custom()->constraint(
-            static fn(array $vs): bool => $vs['password_min_length'] > $vs['password_max_length'],
+            static fn(array $vs): bool => $vs['password_min_length'] < $vs['password_max_length'],
             $this->lng->txt('ps_error_message_password_max_less_min')
         );
     }
