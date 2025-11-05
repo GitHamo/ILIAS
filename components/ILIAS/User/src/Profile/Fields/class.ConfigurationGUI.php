@@ -197,7 +197,9 @@ class ConfigurationGUI implements DataRetrieval
         }
 
         $this->storeField($data['field']);
-        $this->showCmd();
+        $this->ctrl->redirectByClass(
+            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class]
+        );
     }
 
     public function saveAfterListenerConfirmationCmd(): void
@@ -247,7 +249,9 @@ class ConfigurationGUI implements DataRetrieval
         );
         $this->available_fields = $this->repository->get();
         $this->tpl->setOnScreenMessage('success', $this->lng->txt('udf_field_deleted'), true);
-        $this->showCmd();
+        $this->ctrl->redirectByClass(
+            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class]
+        );
     }
 
     public function getRows(

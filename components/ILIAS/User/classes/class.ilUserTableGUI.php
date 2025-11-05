@@ -536,6 +536,9 @@ class ilUserTableGUI extends ilTable2GUI
     ): ?ilFormPropertyGUI {
         $id = "udf_{$field->getIdentifier()}";
         $item = $field->getLegacyInput($this->lng, $this->getFormContext());
+        if (!($item instanceof ilTableFilterItem)) {
+            $item = new ilTextInputGUI($field->getLabel($this->lng));
+        }
         $item->setPostVar($id);
         $this->addFilterItem($item, true);
         $item->readFromSession();
