@@ -54,16 +54,6 @@ readonly class ActivityNamespace
         private string $name,
     ) {}
 
-    public function getVendor(): string
-    {
-        return $this->vendor;
-    }
-
-    public function getComponent(): string
-    {
-        return $this->component;
-    }
-
     public function getPath(): string
     {
         $subject = ucfirst($this->name);
