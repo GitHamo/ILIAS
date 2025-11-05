@@ -42,13 +42,13 @@ class ProfileImplementation implements Profile
      * @return array<\ILIAS\User\Profile\Fields\Field>
      */
     public function getFields(
-        array $groups_to_skip = [],
+        array $sections_to_skip = [],
         array $fields_to_skip = []
     ): array {
         return array_reduce(
             $this->user_fields,
-            function (array $c, ProfileField $v) use ($groups_to_skip, $fields_to_skip): array {
-                if (!in_array($v->getSection(), $groups_to_skip)
+            function (array $c, ProfileField $v) use ($sections_to_skip, $fields_to_skip): array {
+                if (!in_array($v->getSection(), $sections_to_skip)
                     && !in_array(get_class($v->getDefinition()), $fields_to_skip)) {
                     $c[$v->getIdentifier()] = $v;
                 }
@@ -64,12 +64,12 @@ class ProfileImplementation implements Profile
     public function getVisibleFields(
         Context $context,
         ?\ilObjUser $user = null,
-        array $groups_to_skip = [],
+        array $sections_to_skip = [],
         array $fields_to_skip = []
     ): array {
         return array_filter(
             $this->user_fields,
-            fn(ProfileField $v) => !in_array($v->getSection(), $groups_to_skip)
+            fn(ProfileField $v) => !in_array($v->getSection(), $sections_to_skip)
                     && !in_array(get_class($v->getDefinition()), $fields_to_skip)
                     && $context->isFieldVisibleInType($v, $user)
                 ? true : false
