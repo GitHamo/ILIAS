@@ -215,13 +215,24 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
         $fields = [];
         $reg_roles = ilObjRole::_lookupRegisterAllowed();
 
-        $excluded_auth_names = ['default', 'saml', 'shibboleth', 'ldap', 'apache', 'ecs', 'openid'];
+        $excluded_auth_names = ['default', 'saml', 'shibboleth', 'ldap', 'lti', 'apache', 'ecs', 'oidc'];
         // do not list auth modes with external login screen
         // even not default, because it can easily be set to
         // a non-working auth mode
         $active_auth_modes = array_filter(
             ilAuthUtils::_getActiveAuthModes(),
-            static fn(string $auth_name): bool => in_array($auth_name, $excluded_auth_names, true),
+            static function (string $auth_name) use ($excluded_auth_names): bool {
+                foreach ($excluded_auth_names as $excluded_auth_name) {
+                    if ($auth_name === $excluded_auth_name) {
+                        return false;
+                    }
+
+                    if (str_starts_with($auth_name, $excluded_auth_name)) {
+                        return false;
+                    }
+                }
+                return true;
+            },
             ARRAY_FILTER_USE_KEY
         );
 
@@ -233,12 +244,6 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
                     $name = $this->lng->txt('auth_' . $auth_name) . ' (' . $this->lng->txt(
                         'auth_' . ilAuthUtils::_getAuthModeName($auth_key)
                     ) . ')';
-                } elseif ($id = ilLDAPServer::getServerIdByAuthMode((string) $auth_key)) {
-                    $server = ilLDAPServer::getInstanceByServerId($id);
-                    $name = $server->getName();
-                } elseif ($id = ilSamlIdp::getIdpIdByAuthMode((string) $auth_key)) {
-                    $idp = ilSamlIdp::getInstanceByIdpId($id);
-                    $name = $idp->getEntityId();
                 } else {
                     $name = $this->lng->txt('auth_' . $auth_name);
                 }
@@ -254,7 +259,7 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
                 continue;
             }
 
-            $value = $value ?? ilAuthUtils::AUTH_LOCAL;
+            $value = $value ?? ilAuthUtils::_getAuthModeName(ilAuthUtils::AUTH_LOCAL);
 
             $fields['r_' . $role['id']] = $this->ui_factory
                 ->input()
