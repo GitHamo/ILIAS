@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Webservices;
+namespace Tests\Unit\Webservice;
 
 use ILIAS\ApiGateway\Configuration\WebConfig;
 use ILIAS\ApiGateway\Models\Payload;
 use ILIAS\ApiGateway\ServiceProtocol;
-use ILIAS\ApiGateway\Webservices\RestWebservice;
+use ILIAS\ApiGateway\Webservice\RestWebservice;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 

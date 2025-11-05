@@ -25,7 +25,7 @@ use ILIAS\ApiGateway\Configuration\WebConfig;
 use ILIAS\ApiGateway\Logging\WebserviceLogger;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\ServiceProtocol;
-use ILIAS\ApiGateway\Webservices\RestWebservice;
+use ILIAS\ApiGateway\Webservice\RestWebservice;
 use ilLoggerFactory;
 use InvalidArgumentException;
 use Slim\Factory\AppFactory;

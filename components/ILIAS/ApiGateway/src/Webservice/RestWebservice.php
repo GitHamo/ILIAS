@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Webservices;
+namespace ILIAS\ApiGateway\Webservice;
 
 use ILIAS\ApiGateway\Configuration\WebConfig;
 use ILIAS\ApiGateway\Models\Payload;
@@ -43,6 +43,7 @@ readonly class RestWebservice implements Webservice
     #[Override]
     public function handle(Payload $payload): Payload
     {
+        // throw new RuntimeException('Not implemented');
         $payloadData = [
             'success' => true,
             'data' => $payload->getData(),
