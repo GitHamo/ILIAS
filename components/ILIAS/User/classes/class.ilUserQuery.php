@@ -463,7 +463,9 @@ class ilUserQuery
 
         $udf_filter = $this->getUdfFilter();
         return array_reduce(
-            array_keys($udf_filter),
+            array_keys(
+                array_filter($udf_filter)
+            ),
             fn(DataQuery $c, string $v): DataQuery => $c->withAdditionalMultiDataWhere(
                 $v,
                 $udf_filter[$v]

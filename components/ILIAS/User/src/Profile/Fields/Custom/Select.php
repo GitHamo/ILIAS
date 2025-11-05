@@ -64,33 +64,20 @@ class Select implements Type
     ): \ilFormPropertyGUI {
         $parsed_data = $this->parseData($data);
         if (!$parsed_data['allow_multiple']) {
-            $value = isset($user_value[0])
-                ? array_search($user_value[0], $parsed_data['options'])
-                : false;
-
             $input = new \ilSelectInputGUI($label);
-            $input->setOptions(['' => $lng->txt('please_select')] + $parsed_data['options']);
-            $input->setValue($value !== false ? $value : '');
+            $input->setOptions(
+                ['' => $lng->txt('please_select')]
+                + array_combine($parsed_data['options'], $parsed_data['options'])
+            );
+            $input->setValue($user_value[0] ?? '');
             return $input;
         }
 
         $input = new \ilMultiSelectInputGUI($label);
-        $input->setOptions($parsed_data['options']);
-        $input->setValue(
-            array_reduce(
-                $user_value,
-                function (array $c, string $v) use ($parsed_data): array {
-                    $value = array_search($v, $parsed_data['options']);
-                    if ($value === false) {
-                        return $c;
-                    }
-
-                    $c[] = $value;
-                    return $c;
-                },
-                []
-            )
+        $input->setOptions(
+            array_combine($parsed_data['options'], $parsed_data['options'])
         );
+        $input->setValue($user_value);
         return $input;
 
 

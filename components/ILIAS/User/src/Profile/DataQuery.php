@@ -91,11 +91,15 @@ class DataQuery
         return $clone;
     }
 
-    public function withAdditionalMultiDataWhere(string $identifier, string $value): self
+    public function withAdditionalMultiDataWhere(string $identifier, string|array $value): self
     {
+        if (is_array($value)) {
+            $value_query = $this->db->in(self::MULTI_DATA_TABLE . '.value', $value, false, \ilDBConstants::T_TEXT);
+        } else {
+            $value_query = $this->db->like(self::MULTI_DATA_TABLE . '.value', \ilDBConstants::T_TEXT, "%{$value}%");
+        }
         $clone = clone $this;
-        $clone->where[] = self::MULTI_DATA_TABLE . ".field_id = {$identifier} AND "
-            . self::MULTI_DATA_TABLE . ".value = {$value}";
+        $clone->where[] = self::MULTI_DATA_TABLE . ".field_id = '{$identifier}' AND {$value_query}";
         return $clone;
     }
 
@@ -142,7 +146,7 @@ class DataQuery
     public function withJoinedMultiDataTable(): self
     {
         $clone = clone $this;
-        $clone->joins[] = $this->buildJoinForMultiDataTable();
+        $clone->join[] = $this->buildJoinForMultiDataTable();
         $clone->multi_data_table_joined = true;
         return $clone;
     }
