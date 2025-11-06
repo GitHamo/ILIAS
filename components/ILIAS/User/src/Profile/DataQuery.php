@@ -24,11 +24,10 @@ use ILIAS\User\Profile\Fields\Field;
 
 class DataQuery
 {
-    private const string USER_TABLE = 'usr_data';
-    private const string MULTI_DATA_TABLE = 'usr_profile_data';
     private const string ARRAY_SEPARATOR = '##!:!##';
     private const string RECORDS_QUERY_INIT = 'SELECT ';
-    private const string CNT_QUERY_INIT = 'SELECT COUNT(DISTINCT ' . self::USER_TABLE . '.usr_id) cnt FROM ' . self::USER_TABLE;
+
+    private string $cnt_query_init;
 
     private array $multi_fields = [];
     private array $select_fields;
@@ -41,10 +40,14 @@ class DataQuery
 
     public function __construct(
         private readonly \ilDBInterface $db,
+        private readonly string $user_base_table_name,
+        private readonly string $user_values_table_name,
         array $select_fields
     ) {
+        $this->cnt_query_init = 'SELECT COUNT(DISTINCT ' . $this->user_base_table_name
+            . '.usr_id) cnt FROM ' . $this->user_base_table_name;
         $this->select_fields = array_map(
-            fn(string $v): string => self::USER_TABLE . '.' . $v,
+            fn(string $v): string => $this->user_base_table_name . '.' . $v,
             $select_fields
         );
     }
@@ -59,7 +62,7 @@ class DataQuery
     public function withAdditionalDefaultTableSelectField(string $field_name): self
     {
         $clone = clone $this;
-        $clone->select_fields[] = self::USER_TABLE . '.' . $field_name;
+        $clone->select_fields[] = $this->user_base_table_name . '.' . $field_name;
         return $clone;
     }
 
@@ -94,12 +97,12 @@ class DataQuery
     public function withAdditionalMultiDataWhere(string $identifier, string|array $value): self
     {
         if (is_array($value)) {
-            $value_query = $this->db->in(self::MULTI_DATA_TABLE . '.value', $value, false, \ilDBConstants::T_TEXT);
+            $value_query = $this->db->in($this->user_values_table_name . '.value', $value, false, \ilDBConstants::T_TEXT);
         } else {
-            $value_query = $this->db->like(self::MULTI_DATA_TABLE . '.value', \ilDBConstants::T_TEXT, "%{$value}%");
+            $value_query = $this->db->like($this->user_values_table_name . '.value', \ilDBConstants::T_TEXT, "%{$value}%");
         }
         $clone = clone $this;
-        $clone->where[] = self::MULTI_DATA_TABLE . ".field_id = '{$identifier}' AND {$value_query}";
+        $clone->where[] = $this->user_values_table_name . ".field_id = '{$identifier}' AND {$value_query}";
         return $clone;
     }
 
@@ -122,8 +125,8 @@ class DataQuery
         $clone = clone $this;
         $clone->order = 'ORDER BY ' . implode(', ', array_reduce(
             $order_fields,
-            static function (array $c, string $v) use ($direction): array {
-                $c[] = self::USER_TABLE . ".`{$v}` {$direction}";
+            function (array $c, string $v) use ($direction): array {
+                $c[] = $this->user_base_table_name . ".`{$v}` {$direction}";
                 return $c;
             },
             []
@@ -137,9 +140,7 @@ class DataQuery
             return $this;
         }
         $clone = clone $this;
-        $clone->withAdditionalWhere(
-            $this->db->in('usr_data.usr_id', $users, false, \ilDBConstants::T_INTEGER)
-        );
+        $clone->where[] = $this->db->in('usr_data.usr_id', $users, false, \ilDBConstants::T_INTEGER);
         return $clone;
     }
 
@@ -151,76 +152,57 @@ class DataQuery
         return $clone;
     }
 
-    public function retrieveRecords(): array
+    public function buildRecordsQueryString(): string
     {
-        $this->addAdditionalSelectAndJoinForUdfAndMultiValueFields();
-        $statement = $this->db->query(
-            self::RECORDS_QUERY_INIT . implode(', ', $this->select_fields) . PHP_EOL
+        return self::RECORDS_QUERY_INIT . implode(', ', $this->select_fields) . PHP_EOL
             . 'FROM usr_data' . PHP_EOL
             . implode(PHP_EOL, $this->join) . PHP_EOL
-            . 'WHERE usr_data.usr_id <> ' . $this->db->quote(ANONYMOUS_USER_ID, \ilDBConstants::T_INTEGER) . PHP_EOL . 'AND '
-            . implode(PHP_EOL . 'AND ', $this->where) . PHP_EOL
-            . 'GROUP BY ' . self::USER_TABLE . '.usr_id' . PHP_EOL
-            . $this->order
-        );
-
-        $result = [];
-        while (($row = $this->db->fetchAssoc($statement)) !== null) {
-            $row['usr_id'] = (int) $row['usr_id'];
-            $result[] = $this->explodeArrayValues($row);
-        }
-        return $result;
+            . 'WHERE usr_data.usr_id <> ' . $this->db->quote(ANONYMOUS_USER_ID, \ilDBConstants::T_INTEGER) . PHP_EOL
+            . $this->buildWhere()
+            . 'GROUP BY ' . $this->user_base_table_name . '.usr_id' . PHP_EOL
+            . $this->order;
     }
 
-    public function getCnt(): int
+    public function buildCntQueryString(): string
     {
-        $this->addAdditionalSelectAndJoinForUdfAndMultiValueFields();
-        return $this->db->fetchObject(
-            $this->db->query(
-                self::CNT_QUERY_INIT . PHP_EOL
-                . implode(PHP_EOL, $this->join) . PHP_EOL
-                . 'WHERE usr_data.usr_id <> ' . $this->db->quote(ANONYMOUS_USER_ID, \ilDBConstants::T_INTEGER) . PHP_EOL . 'AND '
-                . implode(PHP_EOL . 'AND ', $this->where)
-            )
-        )->cnt ?? 0;
+        return $this->cnt_query_init . PHP_EOL
+            . implode(PHP_EOL, $this->join) . PHP_EOL
+            . 'WHERE usr_data.usr_id <> ' . $this->db->quote(ANONYMOUS_USER_ID, \ilDBConstants::T_INTEGER) . PHP_EOL
+            . $this->buildWhere();
     }
 
-    private function addAdditionalSelectAndJoinForUdfAndMultiValueFields(): void
+    public function withAdditionalSelectAndJoinForUdfAndMultiValueFields(): self
     {
         if ($this->additional_fields_processed
             || $this->multi_fields === [] && $this->udf_fields === []) {
-            return;
+            return $this;
         }
 
+        $clone = clone $this;
         if (!$this->multi_data_table_joined) {
-            $this->join[] = $this->buildJoinForMultiDataTable();
-            $this->multi_data_table_joined = true;
+            $clone->join[] = $this->buildJoinForMultiDataTable();
+            $clone->multi_data_table_joined = true;
         }
 
         foreach ($this->multi_fields as $field) {
-            $this->select_fields[] = 'GROUP_CONCAT(DISTINCT IF(' . self::MULTI_DATA_TABLE
+            $clone->select_fields[] = 'GROUP_CONCAT(DISTINCT IF(' . $this->user_values_table_name
                 . ".field_id = {$this->db->quote($field, \ilDBConstants::T_TEXT)}, "
-                . self::MULTI_DATA_TABLE . '.value, NULL) '
+                . $this->user_values_table_name . '.value, NULL) '
                 . "SEPARATOR '" . self::ARRAY_SEPARATOR . "') `{$field}`";
         }
 
         foreach ($this->udf_fields as $field) {
-            $this->select_fields[] = 'GROUP_CONCAT(DISTINCT IF(' . self::MULTI_DATA_TABLE
+            $clone->select_fields[] = 'GROUP_CONCAT(DISTINCT IF(' . $this->user_values_table_name
                 . ".field_id = {$this->db->quote($field->getIdentifier(), \ilDBConstants::T_TEXT)}, "
-                . self::MULTI_DATA_TABLE . '.value, NULL) '
+                . $this->user_values_table_name . '.value, NULL) '
                 . "SEPARATOR '" . self::ARRAY_SEPARATOR . "') `udf_{$field->getIdentifier()}`";
         }
 
-        $this->additional_fields_processed = true;
+        $clone->additional_fields_processed = true;
+        return $clone;
     }
 
-    private function buildJoinForMultiDataTable(): string
-    {
-        return 'LEFT JOIN ' . self::MULTI_DATA_TABLE . ' ON '
-            . self::MULTI_DATA_TABLE . '.usr_id = ' . self::USER_TABLE . '.usr_id';
-    }
-
-    private function explodeArrayValues(array $row): array
+    public function explodeArrayValues(array $row): array
     {
         return array_map(
             static function (mixed $v): mixed {
@@ -232,5 +214,19 @@ class DataQuery
             },
             $row
         );
+    }
+
+    private function buildWhere(): string
+    {
+        if ($this->where === []) {
+            return '';
+        }
+        return 'AND ' . implode(PHP_EOL . 'AND ', $this->where) . PHP_EOL;
+    }
+
+    private function buildJoinForMultiDataTable(): string
+    {
+        return 'LEFT JOIN ' . $this->user_values_table_name . ' ON '
+            . $this->user_values_table_name . '.usr_id = ' . $this->user_base_table_name . '.usr_id';
     }
 }

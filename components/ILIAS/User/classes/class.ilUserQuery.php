@@ -20,8 +20,8 @@ declare(strict_types=1);
 
 use ILIAS\User\LocalDIC;
 use ILIAS\User\Profile\DataQuery;
-use ILIAS\User\Profile\Fields\Field as ProfileField;
 use ILIAS\User\Profile\Fields\ConfigurationRepository as ProfileFieldsConfigurationRepository;
+use ILIAS\User\Profile\DataRepository as ProfileDataRepository;
 use ILIAS\Language\Language;
 
 /**
@@ -77,6 +77,7 @@ class ilUserQuery
     protected array $udf_filter = [];
 
     private ProfileFieldsConfigurationRepository $profile_fields_repository;
+    private ProfileDataRepository $profile_data_repository;
 
     public function __construct()
     {
@@ -84,7 +85,10 @@ class ilUserQuery
         global $DIC;
         $this->lng = $DIC['lng'];
         $this->db = $DIC['ilDB'];
-        $this->profile_fields_repository = LocalDIC::dic()[ProfileFieldsConfigurationRepository::class];
+
+        $local_dic = LocalDIC::dic();
+        $this->profile_fields_repository = $local_dic[ProfileFieldsConfigurationRepository::class];
+        $this->profile_data_repository = $local_dic[ProfileDataRepository::class];
     }
 
     /**
@@ -297,9 +301,9 @@ class ilUserQuery
 
                         return $c->withAdditionalDefaultTableSelectField($v);
                     },
-                    new DataQuery($this->db, self::DEFAULT_FIELDS)
-                )->withLimitedUsers($this->users)
-            )
+                    $this->profile_data_repository->getProfileDataQuery(self::DEFAULT_FIELDS)
+                )
+            )->withLimitedUsers($this->users)
         );
 
         if ($this->first_letter !== '') {
@@ -411,21 +415,11 @@ class ilUserQuery
             );
         }
 
-        $cnt = $query->getCnt();
-
-        $offset = $this->offset;
-        $limit = $this->limit;
-
-        if ($offset >= $cnt) {
-            $offset = 0;
-        }
-
-        $this->db->setLimit($limit, $offset);
-
-        return [
-            'cnt' => $cnt,
-            'set' => $query->retrieveRecords()
-        ];
+        return $this->profile_data_repository->getCountAndRecordsForQuery(
+            $query,
+            $this->offset,
+            $this->limit
+        );
     }
 
     private function addOrderToQuery(DataQuery $query): DataQuery
