@@ -1187,9 +1187,9 @@ class ilObjUser extends ilObject
         return false;
     }
 
-    public function getPasswordAge(): int
+    public function getPasswordAgeInDays(): int
     {
-        return (int) (time() - $this->getLastPasswordChangeTS() / 86400);
+        return (int) floor((time() - $this->getLastPasswordChangeTS()) / 86400);
     }
 
     public function setLastPasswordChangeToNow(): void
