@@ -275,6 +275,42 @@ class DatabaseDataRepository implements DataRepository
         return $results;
     }
 
+    public function getProfileDataQuery(
+        array $select_fields
+    ): DataQuery {
+        return new DataQuery(
+            $this->db,
+            self::USER_BASE_TABLE,
+            self::USER_VALUES_TABLE,
+            $select_fields
+        );
+    }
+
+    /**
+     * @return array{cnt: int, set: array{string, mixed}}
+     */
+    public function getCountAndRecordsForQuery(
+        DataQuery $query,
+        int $offset,
+        int $limit
+    ): array {
+        $prepared_query = $query->withAdditionalSelectAndJoinForUdfAndMultiValueFields();
+        $cnt = $this->db->fetchObject(
+            $this->db->query($prepared_query->buildCntQueryString())
+        )->cnt ?? 0;
+
+        if ($offset >= $cnt) {
+            $offset = 0;
+        }
+
+        $this->db->setLimit($limit, $offset);
+
+        return [
+            'cnt' => $cnt,
+            'set' => $this->retrieveRecordsFromQuery($prepared_query)
+        ];
+    }
+
     private function buildFromData(
         \stdClass $base_data,
         array $additional_data
@@ -451,5 +487,17 @@ class DatabaseDataRepository implements DataRepository
         }
 
         return $unserialized;
+    }
+
+    private function retrieveRecordsFromQuery(DataQuery $query): array
+    {
+        $statement = $this->db->query($query->buildRecordsQueryString());
+
+        $result = [];
+        while (($row = $this->db->fetchAssoc($statement)) !== null) {
+            $row['usr_id'] = (int) $row['usr_id'];
+            $result[] = $query->explodeArrayValues($row);
+        }
+        return $result;
     }
 }

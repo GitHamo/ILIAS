@@ -1979,18 +1979,19 @@ class ilObjGroupGUI extends ilContainerGUI
         $udfs = $this->profile->getAllUserDefinedFields();
 
         return array_reduce(
-            $this->profile->getDataForMultiple(array_keys($a_data)),
+            iterator_to_array($this->profile->getDataForMultiple(array_keys($a_data))),
             function (array $c, ProfileData $v) use ($a_data, $udfs, $odfs): array {
                 $c[$v->getId()] = $a_data[$v->getId()];
 
                 foreach ($udfs as $field) {
                     $field_id = $field->getIdentifier();
-                    $c[$v->getId()]['udf_' . $field_id] = (string) $v->getAdditionalFieldByIdentifier($field_id);
+                    $c[$v->getId()]['udf_' . $field_id] = implode(', ', $v->getAdditionalFieldByIdentifier($field_id) ?? []);
                 }
 
                 foreach ((array) ($odfs[$v->getId()] ?? []) as $cdf_field => $cdf_value) {
                     $c[$v->getId()]['cdf_' . $cdf_field] = (string) $cdf_value;
                 }
+                return $c;
             },
             []
         );
