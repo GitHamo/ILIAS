@@ -332,7 +332,7 @@ class Field implements Property
         mixed $input,
         ?\ilPropertyFormGUI $form = null
     ): \ilObjUser {
-        if (!$context->isFieldChangeableInType($this, $user)) {
+        if (!$context->isFieldChangeable($this, $user)) {
             throw new \Exception('It is not possible to Change this from here!');
         }
         return $this->definition->addValueToUserObject($user, $input, $form);

@@ -71,7 +71,7 @@ class ProfileImplementation implements Profile
             $this->user_fields,
             fn(ProfileField $v) => !in_array($v->getSection(), $sections_to_skip)
                     && !in_array(get_class($v->getDefinition()), $fields_to_skip)
-                    && $context->isFieldVisibleInType($v, $user)
+                    && $context->isFieldVisible($v, $user)
                 ? true : false
         );
     }
@@ -268,7 +268,7 @@ class ProfileImplementation implements Profile
             $fields,
             function (\ilPropertyFormGUI $form, ProfileField $v) use ($context, $user, $do_require): \ilPropertyFormGUI {
                 $input = $v->getLegacyInput($this->lng, $context, $user);
-                $input->setDisabled(!$context->isFieldChangeableInType($v, $user));
+                $input->setDisabled(!$context->isFieldChangeable($v, $user));
                 $input->setRequired($do_require && $v->isRequired());
                 $form->addItem($input);
                 return $form;

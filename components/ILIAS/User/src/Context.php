@@ -36,7 +36,7 @@ enum Context
     case Search;
     case Export;
 
-    public function isFieldVisibleInType(
+    public function isFieldVisible(
         Field $field,
         ?\ilObjUser $user
     ): bool {
@@ -56,7 +56,7 @@ enum Context
         };
     }
 
-    public function isFieldChangeableInType(
+    public function isFieldChangeable(
         Field $field,
         ?\ilObjUser $user
     ): bool {
@@ -71,7 +71,7 @@ enum Context
         };
     }
 
-    public function isSettingAvailableInType(
+    public function isSettingAvailable(
         Setting $setting
     ): bool {
         return match($this) {
