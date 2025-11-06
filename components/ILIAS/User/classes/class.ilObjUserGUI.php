@@ -429,7 +429,8 @@ class ilObjUserGUI extends ilObjectGUI
         $profile_maybe_incomplete = $this->retrieveAllowIncompleteProfileFromPost();
         $this->initForm(!$profile_maybe_incomplete, $this->object);
 
-        if (!$this->form_gui->checkInput()) {
+        if (!$this->form_gui->checkInput()
+            || !$this->isAccessRangeInputValid()) {
             $this->form_gui->setValuesByPost();
             $this->tabs_gui->activateTab('properties');
             $this->renderForm();
@@ -1404,5 +1405,20 @@ class ilObjUserGUI extends ilObjectGUI
         }
 
         $this->redirectToRefId($this->usrf_ref_id);
+    }
+
+    private function isAccessRangeInputValid(): bool
+    {
+        if ($this->form_gui->getInput('time_limit_unlimited') === '1') {
+            return true;
+        }
+        $timefrom = $this->form_gui->getItemByPostVar('time_limit_from');
+        $timeuntil = $this->form_gui->getItemByPostVar('time_limit_until');
+        if ($timeuntil->getDate()->get(IL_CAL_UNIX) <= $timefrom->getDate()->get(IL_CAL_UNIX)) {
+            $this->tpl->setOnScreenMessage('failure', $this->lng->txt('form_input_not_valid'));
+            $timeuntil->setAlert($this->lng->txt('time_limit_not_valid'));
+            return false;
+        }
+        return true;
     }
 }
