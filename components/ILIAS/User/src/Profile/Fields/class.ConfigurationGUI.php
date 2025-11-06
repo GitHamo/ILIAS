@@ -51,6 +51,13 @@ class ConfigurationGUI implements DataRetrieval
 
     private const string CHANGED_ATTRIBUTES_PARAMETER = 'ca';
 
+    private const string DEFAULT_CMD = 'show';
+    private const string CMD_SAVE = 'save';
+    private const string CMD_CREATE = 'create';
+    private const string CMD_SAVE_AFTER_LISTENER_CONFIRMATION = 'saveAfterListenerConfirmation';
+    private const string CMD_DELETE = 'delete';
+    private const string CMD_PERFORM_TABLE_ACTION = 'action';
+
     private const string ACTION_EDIT = 'edit';
     private const string ACTION_DELETE = 'delete';
 
@@ -83,7 +90,7 @@ class ConfigurationGUI implements DataRetrieval
             new URI(
                 ILIAS_HTTP_PATH . '/' . $this->ctrl->getLinkTargetByClass(
                     [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-                    'action'
+                    self::CMD_PERFORM_TABLE_ACTION
                 )
             )
         );
@@ -173,7 +180,7 @@ class ConfigurationGUI implements DataRetrieval
         $this->storeField($data['field']);
         $this->ctrl->redirectByClass(
             [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-            'show'
+            self::DEFAULT_CMD
         );
     }
 
@@ -198,7 +205,8 @@ class ConfigurationGUI implements DataRetrieval
 
         $this->storeField($data['field']);
         $this->ctrl->redirectByClass(
-            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class]
+            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
+            self::DEFAULT_CMD
         );
     }
 
@@ -250,7 +258,8 @@ class ConfigurationGUI implements DataRetrieval
         $this->available_fields = $this->repository->get();
         $this->tpl->setOnScreenMessage('success', $this->lng->txt('udf_field_deleted'), true);
         $this->ctrl->redirectByClass(
-            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class]
+            [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
+            self::DEFAULT_CMD
         );
     }
 
@@ -466,7 +475,7 @@ class ConfigurationGUI implements DataRetrieval
             ),
             $this->ctrl->getFormActionByClass(
                 [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-                'save'
+                self::CMD_SAVE
             )
         );
     }
@@ -488,7 +497,7 @@ class ConfigurationGUI implements DataRetrieval
             ),
             $this->ctrl->getFormActionByClass(
                 [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-                'create'
+                self::CMD_CREATE
             )
         );
     }
@@ -528,7 +537,7 @@ class ConfigurationGUI implements DataRetrieval
             ),
             $this->ctrl->getFormActionByClass(
                 [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-                'saveAfterListenerConfirmation'
+                self::CMD_SAVE_AFTER_LISTENER_CONFIRMATION
             )
         );
     }
@@ -541,7 +550,7 @@ class ConfigurationGUI implements DataRetrieval
             $this->lng->txt('udf_delete_sure'),
             $this->ctrl->getFormActionByClass(
                 [\ilAdministrationGUI::class, \ilObjUserFolderGUI::class, self::class],
-                'delete'
+                self::CMD_DELETE
             )
         )->withAffectedItems([
             $this->ui_factory->modal()->interruptiveItem()->standard(

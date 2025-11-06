@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\User\Profile\Fields;
 
-use ILIAS\User\Profile\DataRepository;
 use ILIAS\Data\UUID\Factory as UUIDFactory;
 
 class CachedConfigurationRepository implements ConfigurationRepository
