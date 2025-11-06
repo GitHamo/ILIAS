@@ -90,11 +90,6 @@ class ClientIP implements FieldDefinition
         return false;
     }
 
-    public function exportForcedTo(): ?bool
-    {
-        return null;
-    }
-
     public function searchableForcedTo(): ?bool
     {
         return false;

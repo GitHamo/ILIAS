@@ -646,8 +646,8 @@ class ilObjUserGUI extends ilObjectGUI
             $this->context,
             $user
         );
-        $input->setDisabled(!$this->context->isFieldChangeableInType($field, $user));
-        $input->setRequired($this->context->isFieldChangeableInType($field, $user));
+        $input->setDisabled(!$this->context->isFieldChangeable($field, $user));
+        $input->setRequired($this->context->isFieldChangeable($field, $user));
         return $input;
     }
 
