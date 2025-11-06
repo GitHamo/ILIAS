@@ -451,10 +451,12 @@ class ilObjUserGUI extends ilObjectGUI
             $this->object
         );
 
-        if ($this->user->getId() === (int) SYSTEM_USER_ID
-            || !in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->object->getId()))
-            || in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->user->getId()))) {
-            $this->object->setPasswd($this->form_gui->getInput('passwd'), ilObjUser::PASSWD_PLAIN);
+        $passwd = $this->form_gui->getInput('passwd');
+        if (($this->user->getId() === (int) SYSTEM_USER_ID
+                || !in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->object->getId()))
+                || in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->user->getId())))
+            && !empty($passwd)) {
+            $this->object->setPasswd($passwd, ilObjUser::PASSWD_PLAIN);
         }
         if (ilAuthUtils::_isExternalAccountEnabled()) {
             $this->object->setExternalAccount($this->form_gui->getInput('ext_account'));
