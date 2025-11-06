@@ -621,7 +621,7 @@ class ilUserTableGUI extends ilTable2GUI
                 return ilDatePresentation::formatDate(new ilDate($value, IL_CAL_DATE));
 
             case 'gender':
-                return $this->lng->txt('gender_' . $value);
+                return $value === '' ? '' : $this->lng->txt('gender_' . $value);
 
             case 'create_date':
             case 'agree_date':
