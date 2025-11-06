@@ -22,12 +22,11 @@ namespace ILIAS\FileDelivery\Setup;
 
 use ILIAS\Setup\Artifact;
 use ILIAS\Setup\Artifact\ArrayArtifact;
-use ILIAS\Setup\Artifact\BuildArtifactObjective;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class KeyRotationObjective extends BuildArtifactObjective
+class KeyRotationObjective extends BuildStaticConfigStoredObjective
 {
     public const KEY_ROTATION = './data/key_rotation.php';
     public const KEY_LENGTH = 32;
