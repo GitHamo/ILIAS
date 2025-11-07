@@ -1527,7 +1527,14 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
                 $this->dic->logger()->user(),
                 (new \ILIAS\Data\Factory())->clock()
             );
-            $dual_opt_in_service->verifyHashAndActivateUser($reg_hash);
+            $user = $dual_opt_in_service->verifyHashAndActivateUser($reg_hash);
+
+            $this->mainTemplate->setOnScreenMessage(
+                \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_SUCCESS,
+                $this->lng->txt('reg_account_confirmation_successful'),
+                true
+            );
+            $this->ctrl->redirectToURL(sprintf('./login.php?cmd=force_login&lang=%s', $user->getLanguage()));
         } catch (DualOptInException $exception) {
             $this->mainTemplate->setOnScreenMessage(
                 \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_FAILURE,
@@ -1543,13 +1550,6 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
             );
             $this->ctrl->redirectToURL(sprintf('./login.php?cmd=force_login&lang=%s', $this->lng->getLangKey()));
         }
-
-        $this->mainTemplate->setOnScreenMessage(
-            \ILIAS\UICore\GlobalTemplate::MESSAGE_TYPE_SUCCESS,
-            $this->lng->txt('reg_account_confirmation_successful'),
-            true
-        );
-        $this->ctrl->redirectToURL(sprintf('./login.php?cmd=force_login&lang=%s', $user->getLanguage()));
     }
 
     /**
