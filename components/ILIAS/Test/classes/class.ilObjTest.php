@@ -26,7 +26,6 @@ use ILIAS\Test\TestManScoringDoneHelper;
 use ILIAS\Test\Logging\TestLogger;
 use ILIAS\Test\Logging\TestLogViewer;
 use ILIAS\Test\ExportImport\Factory as ExportImportFactory;
-use ILIAS\Test\ExportImport\Types as ExportImportTypes;
 use ILIAS\Test\Logging\TestAdministrationInteractionTypes;
 use ILIAS\Test\Logging\TestScoringInteractionTypes;
 use ILIAS\Test\Logging\AdditionalInformationGenerator;
@@ -671,14 +670,9 @@ class ilObjTest extends ilObject
     public function getIntroduction(): string
     {
         $page_id = $this->getMainSettings()->getIntroductionSettings()->getIntroductionPageId();
-        if ($page_id !== null) {
-            return (new ilTestPageGUI('tst', $page_id))->showPage();
-        }
-
-        return ilRTE::_replaceMediaObjectImageSrc(
-            $this->getMainSettings()->getIntroductionSettings()->getIntroductionText(),
-            1
-        );
+        return $page_id !== null
+            ? (new ilTestPageGUI('tst', $page_id))->showPage()
+            : '';
     }
 
     private function cloneIntroduction(): ?int
@@ -693,13 +687,9 @@ class ilObjTest extends ilObject
     public function getFinalStatement(): string
     {
         $page_id = $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksPageId();
-        if ($page_id !== null) {
-            return (new ilTestPageGUI('tst', $page_id))->showPage();
-        }
-        return ilRTE::_replaceMediaObjectImageSrc(
-            $this->getMainSettings()->getFinishingSettings()->getConcludingRemarksText(),
-            1
-        );
+        return $page_id !== null
+            ? (new ilTestPageGUI('tst', $page_id))->showPage()
+            : '';
     }
 
     private function cloneConcludingRemarks(): ?int
@@ -3117,30 +3107,23 @@ class ilObjTest extends ilObject
         string $importdir,
         array $mappings
     ): SettingsIntroduction {
-        $text = $material['text'];
-        $mobs = $material['mobs'];
-        if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->replaceMobsInPageImports(
-                $text,
-                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            );
-            $text = $this->replaceFilesInPageImports(
-                $text,
-                $mappings['components/ILIAS/File']['file'] ?? []
-            );
-            $page_object = new ilTestPage();
-            $page_object->setParentId($this->getId());
-            $page_object->setXMLContent($text);
-            $new_page_id = $page_object->createPageWithNextId();
-            return $settings->withIntroductionPageId($new_page_id);
+        if (!str_starts_with($text, '<PageObject>')) {
+            return $settings;
         }
 
-        $text = $this->retrieveMobsFromLegacyImports($text, $mobs, $importdir);
-
-        return new SettingsIntroduction(
-            $text !== '',
-            $text
+        $text = $this->replaceMobsInPageImports(
+            $text,
+            $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
         );
+        $text = $this->replaceFilesInPageImports(
+            $text,
+            $mappings['components/ILIAS/File']['file'] ?? []
+        );
+        $page_object = new ilTestPage();
+        $page_object->setParentId($this->getId());
+        $page_object->setXMLContent($text);
+        $new_page_id = $page_object->createPageWithNextId();
+        return $settings->withIntroductionPageId($new_page_id);
     }
 
     private function addConcludingRemarksToSettingsFromImport(
@@ -3149,35 +3132,23 @@ class ilObjTest extends ilObject
         string $importdir,
         array $mappings
     ): SettingsFinishing {
-        $file_to_import = ilSession::get('path_to_import_file');
-        $text = $material['text'];
-        $mobs = $material['mobs'];
-        if (str_starts_with($text, '<PageObject>')) {
-            $text = $this->replaceMobsInPageImports(
-                $text,
-                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            );
-            $text = $this->replaceFilesInPageImports(
-                $text,
-                $mappings['components/ILIAS/File']['file'] ?? []
-            );
-            $page_object = new ilTestPage();
-            $page_object->setParentId($this->getId());
-            $page_object->setXMLContent($text);
-            $new_page_id = $page_object->createPageWithNextId();
-            return $settings->withConcludingRemarksPageId($new_page_id);
+        if (!str_starts_with($text, '<PageObject>')) {
+            return $settings;
         }
 
-        $text = $this->retrieveMobsFromLegacyImports($text, $mobs, $importdir);
-
-        return new SettingsFinishing(
-            $settings->getShowAnswerOverview(),
-            strlen($text) > 0,
+        $text = $this->replaceMobsInPageImports(
             $text,
-            null,
-            $settings->getRedirectionMode(),
-            $settings->getRedirectionUrl(),
+            $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
         );
+        $text = $this->replaceFilesInPageImports(
+            $text,
+            $mappings['components/ILIAS/File']['file'] ?? []
+        );
+        $page_object = new ilTestPage();
+        $page_object->setParentId($this->getId());
+        $page_object->setXMLContent($text);
+        $new_page_id = $page_object->createPageWithNextId();
+        return $settings->withConcludingRemarksPageId($new_page_id);
     }
 
     private function replaceMobsInPageImports(string $text, array $mappings): string

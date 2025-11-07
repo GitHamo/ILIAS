@@ -49,7 +49,6 @@ use ILIAS\Test\Questions\Properties\Repository as TestQuestionsRepository;
 use ILIAS\Test\Participants\ParticipantRepository;
 use ILIAS\Test\Settings\MainSettings\SettingsMainGUI;
 use ILIAS\Test\Settings\ScoreReporting\SettingsScoringGUI;
-use ILIAS\Test\Scoring\Settings\Settings as SettingsScoring;
 use ILIAS\Test\Scoring\Marks\MarkSchemaGUI;
 use ILIAS\Test\Scoring\Manual\ConsecutiveScoringGUI;
 use ILIAS\Test\Logging\LogTable;
@@ -67,9 +66,6 @@ use ILIAS\TestQuestionPool\RequestDataCollector as QPLRequestDataCollector;
 use ILIAS\TestQuestionPool\Import\TestQuestionsImportTrait;
 use ILIAS\Data\Factory as DataFactory;
 use ILIAS\UI\Component\Modal\Modal;
-use ILIAS\UI\Factory as UIFactory;
-use ILIAS\UI\Renderer as UIRenderer;
-use ILIAS\HTTP\Services as HTTPServices;
 use ILIAS\UI\URLBuilder;
 use ILIAS\UI\Component\Input\Container\Form\Form;
 use ILIAS\UI\Component\Input\Input;
@@ -642,7 +638,6 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
                 $gui = new SettingsMainGUI(
                     $this->tpl,
-                    $this->toolbar,
                     $this->ctrl,
                     $this->access,
                     $this->lng,

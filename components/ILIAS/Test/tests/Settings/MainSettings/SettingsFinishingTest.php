@@ -49,18 +49,6 @@ class SettingsFinishingTest extends ilTestBaseTestCase
         $this->assertEquals($io, $settings_finishing->getConcludingRemarksEnabled());
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('getAndWithConcludingRemarksTextDataProvider')]
-    public function testGetAndWithConcludingRemarksText(?string $io): void
-    {
-        $settings_finishing = new SettingsFinishing(
-            false,
-            false,
-            $io
-        );
-
-        $this->assertEquals($io, $settings_finishing->getConcludingRemarksText());
-    }
-
     public static function getAndWithConcludingRemarksTextDataProvider(): array
     {
         return [
