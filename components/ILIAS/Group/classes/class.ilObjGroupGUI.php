@@ -708,7 +708,6 @@ class ilObjGroupGUI extends ilContainerGUI
                 $this->user->getId(),
                 'update'
             );
-            ilChangeEvent::_catchupWriteEvents($this->object->getId(), $this->user->getId());
             // END PATCH ChangeEvents: Record update Object.
             // Update ecs export settings
             $ecs = new ilECSGroupSettings($this->object);
