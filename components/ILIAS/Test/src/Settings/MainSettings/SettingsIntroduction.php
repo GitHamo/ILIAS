@@ -31,7 +31,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
 {
     public function __construct(
         protected bool $introduction_enabled = false,
-        protected ?string $introduction_text = null,
         protected ?int $introduction_page_id = null,
         protected bool $conditions_checkbox_enabled = false,
     ) {
@@ -86,17 +85,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         $clone = clone $this;
         $clone->introduction_enabled = $introduction_enabled;
-        return $clone;
-    }
-
-    public function getIntroductionText(): string
-    {
-        return $this->introduction_text ?? '';
-    }
-    public function withIntroductionText(?string $introduction_text): self
-    {
-        $clone = clone $this;
-        $clone->introduction_text = $introduction_text;
         return $clone;
     }
 

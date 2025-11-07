@@ -50,7 +50,6 @@ class SettingsFactory
             ),
             new SettingsIntroduction(
                 (bool) $row['intro_enabled'],
-                $row['introduction'],
                 $row['introduction_page_id'],
                 (bool) $row['conditions_checkbox_enabled'],
             ),
@@ -103,7 +102,6 @@ class SettingsFactory
             new SettingsFinishing(
                 (bool) $row['enable_examview'],
                 (bool) $row['showfinalstatement'],
-                $row['finalstatement'],
                 $row['concluding_remarks_page_id'],
                 RedirectionModes::tryFrom($row['redirection_mode']) ?? RedirectionModes::NONE,
                 $row['redirection_url']

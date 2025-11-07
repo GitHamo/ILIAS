@@ -33,7 +33,6 @@ class SettingsFinishing extends TestSettings implements Exportable
     public function __construct(
         protected bool $show_answer_overview = false,
         protected bool $concluding_remarks_enabled = false,
-        protected ?string $concluding_remarks_text = '',
         protected ?int $concluding_remarks_page_id = null,
         protected RedirectionModes $redirection_mode = RedirectionModes::NONE,
         protected ?string $redirection_url = null,
@@ -218,11 +217,6 @@ class SettingsFinishing extends TestSettings implements Exportable
         $clone = clone $this;
         $clone->concluding_remarks_enabled = $concluding_remarks_enabled;
         return $clone;
-    }
-
-    public function getConcludingRemarksText(): string
-    {
-        return $this->concluding_remarks_text ?? '';
     }
 
     public function getConcludingRemarksPageId(): ?int
