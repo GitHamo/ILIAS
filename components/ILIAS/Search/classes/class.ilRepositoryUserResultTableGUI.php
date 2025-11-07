@@ -22,7 +22,6 @@ use ILIAS\DI\UIServices;
 use ILIAS\HTTP\Services as HTTP;
 use ILIAS\Refinery\Factory as Refinery;
 use ILIAS\User\Profile\Profile;
-use ILIAS\User\Profile\Data as ProfileData;
 
 /**
 * TableGUI class user search results
@@ -213,14 +212,6 @@ class ilRepositoryUserResultTableGUI extends ilTable2GUI
                     $a_set['last_login'] = $a_set['last_login'] ? ilDatePresentation::formatDate(new ilDateTime($a_set['last_login'], IL_CAL_DATETIME)) : $this->lng->txt('no_date');
                     $this->tpl->setCurrentBlock('custom_fields');
                     $this->tpl->setVariable('VAL_CUST', $a_set[$field]);
-                    $this->tpl->parseCurrentBlock();
-                    break;
-
-                case 'interests_general':
-                case 'interests_help_offered':
-                case 'interests_help_looking':
-                    $this->tpl->setCurrentBlock('custom_fields');
-                    $this->tpl->setVariable('VAL_CUST', implode(', ', $a_set[$field] ?? []));
                     $this->tpl->parseCurrentBlock();
                     break;
 
