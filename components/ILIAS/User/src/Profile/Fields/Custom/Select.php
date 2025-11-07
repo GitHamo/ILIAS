@@ -90,16 +90,9 @@ class Select implements Type
             $input = [$input];
         }
 
-        return array_reduce(
+        return array_filter(
             $input,
-            function (array $c, string|int $v) use ($options): array {
-                $value = $options[$v] ?? null;
-                if ($value !== null) {
-                    $c[] = $value;
-                }
-                return $c;
-            },
-            []
+            fn(string $v): bool => in_array($v, $options)
         );
     }
 
