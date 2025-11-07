@@ -446,6 +446,8 @@ class ilObjUserGUI extends ilObjectGUI
             return;
         }
 
+        $this->object->setAuthMode($this->form_gui->getInput('auth_mode'));
+
         $this->object = $this->user_profile->addFormValuesToUser(
             $this->form_gui,
             $this->context,
