@@ -129,8 +129,8 @@ class MailGlobalScreenToolProvider extends AbstractDynamicToolProvider
 
                     if ($this->dic->settings()->get('show_mail_settings', '0')) {
                         $sub_items[] = $this->buildItem(
-                            $this->lng->txt("mail_options"),
-                            "adm",
+                            $this->lng->txt('mail_options'),
+                            'adm',
                             $this->buildFolderLink($current_folder_id, ilMailOptionsGUI::class)
                         );
                     }
@@ -170,7 +170,7 @@ class MailGlobalScreenToolProvider extends AbstractDynamicToolProvider
                     $folder->getTitle(),
                     [
                         $this->buildItem(
-                            $this->lng->txt("mail_main_folder"),
+                            $this->lng->txt('mail_main_folder'),
                             $icon_name,
                             $this->buildFolderLink($folder->getFolderId(), ilMailFolderGUI::class)
                         ),
