@@ -36,6 +36,9 @@ class StaticURLHandler extends BaseHandler implements Handler
 {
     public const NAMESPACE = 'usr';
     public const CHANGE_EMAIL_OPERATIONS = 'email';
+    public const REGISTRATION_OPERATIONS = 'registration';
+    public const USERNAME_ASSIST_OPERATIONS = 'nameassist';
+    public const PASSWORD_ASSIST_OPERATIONS = 'pwassist';
 
     public function getNamespace(): string
     {
@@ -53,7 +56,19 @@ class StaticURLHandler extends BaseHandler implements Handler
             self::CHANGE_EMAIL_OPERATIONS => $context->isUserLoggedIn()
                     ? $this->buildChangeEmailUrl($additional_params[1], $context->ctrl())
                     : $this->getLoginUrl($request, $context),
-            default => $this->buildProfileUrl($request->getReferenceId(), $context->ctrl()),
+            self::REGISTRATION_OPERATIONS => $context->ctrl()->redirectByClass(
+                [\ilStartUpGUI::class, \ilAccountRegistrationGUI::class],
+                ''
+            ),
+            self::USERNAME_ASSIST_OPERATIONS => $context->ctrl()->redirectByClass(
+                [\ilStartUpGUI::class, \ilPasswordAssistanceGUI::class],
+                'showUsernameAssistanceForm'
+            ),
+            self::PASSWORD_ASSIST_OPERATIONS => $context->ctrl()->redirectByClass(
+                [\ilStartUpGUI::class, \ilPasswordAssistanceGUI::class],
+                ''
+            ),
+            default => $this->buildProfileUrl($request->getReferenceId(), $context->ctrl())
         };
 
         return $response_factory->can($uri);
