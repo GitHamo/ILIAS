@@ -3071,13 +3071,13 @@ class ilObjUser extends ilObject
     }
 
     public static function _getPersonalPicturePath(
-        int $a_usr_id,
-        string $a_size = 'small',
-        bool $a_force_pic = false
+        int $usr_id,
+        string $size = 'small',
+        bool $force_pic = false
     ): string {
-        $define = new ilUserAvatarResolver($a_usr_id);
-        $define->setForcePicture($a_force_pic);
-        $define->setSize($a_size);
+        $define = new ilUserAvatarResolver($usr_id);
+        $define->setForcePicture($force_pic);
+        $define->setSize($size);
         return $define->getLegacyPictureURL();
     }
 
