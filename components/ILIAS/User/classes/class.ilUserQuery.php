@@ -398,8 +398,8 @@ class ilUserQuery
             $query = $query->withAdditionalWhere(
                 'usr_data.usr_id IN ('
                 . 'SELECT DISTINCT ud.usr_id '
-                - 'FROM usr_data ud join rbac_ua ON (ud.usr_id = rbac_ua.usr_id) '
-                - "WHERE rbac_ua.rol_id = {$this->db->quote($this->role, ilDBConstants::T_INTEGER)})"
+                . 'FROM usr_data ud join rbac_ua ON (ud.usr_id = rbac_ua.usr_id) '
+                . "WHERE rbac_ua.rol_id = {$this->db->quote($this->role, ilDBConstants::T_INTEGER)})"
             );
         }
 
