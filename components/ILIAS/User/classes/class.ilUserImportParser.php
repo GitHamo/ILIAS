@@ -19,6 +19,7 @@
 declare(strict_types=1);
 
 use ILIAS\User\LocalDIC;
+use ILIAS\User\Context;
 use ILIAS\User\UserGUIRequest;
 use ILIAS\User\Profile\Profile;
 use ILIAS\User\Profile\Data as ProfileData;
@@ -1224,7 +1225,7 @@ class ilUserImportParser extends ilSaxParser
                             // update login
                             if ($this->tagContained('Login') && $this->user_id != -1) {
                                 try {
-                                    $update_user->updateLogin($this->user_obj->getLogin());
+                                    $update_user->updateLogin($this->user_obj->getLogin(), Context::UserAdministration);
                                 } catch (ilUserException $e) {
                                 }
                             }

@@ -438,7 +438,7 @@ class ilObjUserGUI extends ilObjectGUI
         }
 
         try {
-            $this->object->updateLogin($this->form_gui->getInput('username'));
+            $this->object->updateLogin($this->form_gui->getInput('username'), $this->context);
         } catch (ilUserException $e) {
             $this->tpl->setOnScreenMessage('failure', $e->getMessage());
             $this->form_gui->setValuesByPost();
