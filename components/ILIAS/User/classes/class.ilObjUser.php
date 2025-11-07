@@ -17,6 +17,7 @@
  *********************************************************************/
 
 use ILIAS\User\LocalDIC;
+use ILIAS\User\Context;
 use ILIAS\User\Profile\Data;
 use ILIAS\User\Profile\DataRepository as ProfileDataRepository;
 use ILIAS\User\Profile\Fields\ConfigurationRepository as ProfileConfigurationRepository;
@@ -320,7 +321,7 @@ class ilObjUser extends ilObject
         ];
     }
 
-    public function updateLogin(string $login): bool
+    public function updateLogin(string $login, Context $context): bool
     {
         if ($login === '' || $login === $this->profile_data->getAlias()) {
             return false;
@@ -328,8 +329,10 @@ class ilObjUser extends ilObject
 
         $last_history_entry = $this->getLastHistoryData();
 
-        if (!$this->profile_configuration_repository
-            ->getByClass(Alias::class)->isChangeableByUser()) {
+        if (!$context->isFieldChangeable(
+            $this->profile_configuration_repository->getByClass(Alias::class),
+            $this
+        )) {
             throw new ilUserException($this->lng->txt('permission_denied'));
         }
 

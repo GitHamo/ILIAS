@@ -436,7 +436,7 @@ class PersonalProfileGUI
         }
 
         try {
-            $this->user->updateLogin($login);
+            $this->user->updateLogin($login, Context::User);
             return true;
         } catch (\ilUserException $e) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('form_input_not_valid'));
