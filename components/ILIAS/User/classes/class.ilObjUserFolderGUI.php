@@ -1865,7 +1865,7 @@ class ilObjUserFolderGUI extends ilObjectGUI
     public function cancelDeleteExportFileObject(): void
     {
         $this->ctrl->redirectByClass(
-            'ilobjuserfoldergui',
+            [self::class, ilExportGUI::class],
             'export'
         );
     }
@@ -1884,7 +1884,7 @@ class ilObjUserFolderGUI extends ilObjectGUI
             }
         }
         $this->ctrl->redirectByClass(
-            'ilobjuserfoldergui',
+            [self::class, ilExportGUI::class],
             'export'
         );
     }
@@ -1898,8 +1898,8 @@ class ilObjUserFolderGUI extends ilObjectGUI
         $this->checkPermission(\ilObjUserFolder::PERM_READ_ALL_AND_WRITE);
 
         $this->object->buildExportFile($this->user_request->getExportType());
-        $this->ctrl->redirect(
-            $this,
+        $this->ctrl->redirectByClass(
+            [self::class, ilExportGUI::class],
             'export'
         );
     }
@@ -2114,8 +2114,8 @@ class ilObjUserFolderGUI extends ilObjectGUI
         $user_ids = $this->getActionUserIds();
         if (!$user_ids) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('select_one'), true);
-            $this->ctrl->redirect(
-                $this,
+            $this->ctrl->redirectByClass(
+                self::class,
                 'view'
             );
         }
@@ -2126,7 +2126,7 @@ class ilObjUserFolderGUI extends ilObjectGUI
                 $user_ids
             );
             $this->ctrl->redirectByClass(
-                'ilobjuserfoldergui',
+                [self::class, ilExportGUI::class],
                 'export'
             );
         } elseif ($this->checkUserManipulationAccessBool()) {
@@ -2186,8 +2186,8 @@ class ilObjUserFolderGUI extends ilObjectGUI
         $user_ids = $this->getActionUserIds();
         if (!$user_ids) {
             $this->tpl->setOnScreenMessage('failure', $this->lng->txt('select_one'), true);
-            $this->ctrl->redirect(
-                $this,
+            $this->ctrl->redirectByClass(
+                self::class,
                 'view'
             );
         }
@@ -2197,7 +2197,7 @@ class ilObjUserFolderGUI extends ilObjectGUI
                 $user_ids
             );
             $this->ctrl->redirectByClass(
-                'ilobjuserfoldergui',
+                [self::class, ilExportGUI::class],
                 'export'
             );
         } elseif ($this->checkUserManipulationAccessBool()) {
