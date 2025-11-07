@@ -39,10 +39,12 @@ final class ErrorHandlerTest extends TestCase
         $this->stream = $this->createMock(StreamInterface::class);
 
         $this->responseFactory->method('createResponse')->willReturn($this->response);
+        $this->response->method('withHeader')->willReturn($this->response);
         $this->response->method('getBody')->willReturn($this->stream);
         $this->webservice->method('handleError')->willReturn(
             new Payload(
                 body: $this->payloadBody,
+                headers: ['foo' => 'bar'],
             ),
         );
 
@@ -98,6 +100,25 @@ final class ErrorHandlerTest extends TestCase
         $this->stream->expects(self::once())
             ->method('write')
             ->with($this->payloadBody);
+
+        ($this->handler)($this->request, $exception);
+    }
+
+    public function testAppendsPayloadHeadersToResponseHeaders(): void
+    {
+        $exception = new Exception('Any Exception', 200);
+
+        $this->responseFactory->expects(self::once())
+            ->method('createResponse')
+            ->willReturn($this->response);
+
+        $this->response->expects(self::once())
+            ->method('withHeader')
+            ->with(
+                self::identicalTo('foo'),
+                self::identicalTo('bar'),
+            )
+            ->willReturn($this->response);
 
         ($this->handler)($this->request, $exception);
     }

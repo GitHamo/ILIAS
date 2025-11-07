@@ -58,11 +58,15 @@ readonly class ErrorHandler
             ? (int) $exception->getCode()
             : 500;
 
-        $responsePayload = $this->service->handleError($exception)->getBody();
+        $responsePayload = $this->service->handleError($exception);
 
         $response = $this->responseFactory->createResponse($statusCode);
+        
+        foreach ($responsePayload->getHeaders() as $name => $value) {
+            $response = $response->withHeader($name, $value);
+        }
 
-        $response->getBody()->write($responsePayload);
+        $response->getBody()->write($responsePayload->getBody());
 
         return $response;
     }

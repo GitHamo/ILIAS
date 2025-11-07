@@ -51,9 +51,13 @@ readonly class RouteDispatcher
         );
 
         $successPayload = new Payload($responseBody);
-        $responsePayload = $this->service->handle($successPayload)->getBody();
+        $responsePayload = $this->service->handle($successPayload);
+        
+        foreach ($responsePayload->getHeaders() as $name => $value) {
+            $response = $response->withHeader($name, $value);
+        }
 
-        $response->getBody()->write($responsePayload);
+        $response->getBody()->write($responsePayload->getBody());
 
         return $response;
     }

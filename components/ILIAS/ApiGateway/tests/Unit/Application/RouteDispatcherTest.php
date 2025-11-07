@@ -56,7 +56,13 @@ class RouteDispatcherTest extends TestCase
             ->willReturn($handlerResponseBody);
 
         $originalPayload = new Payload(data: $handlerResponseBody);
-        $payload = $originalPayload->withBody($serviceResponseBody);
+        $payload = new Payload(
+            data: $handlerResponseBody,
+            headers: [
+                'foo' => 'bar',
+            ],
+            body: $serviceResponseBody,
+        );
 
         $this->webserviceMock->method('handle')
             ->with(
@@ -67,6 +73,16 @@ class RouteDispatcherTest extends TestCase
         $this->streamMock->expects(self::once())
             ->method('write')
             ->with($serviceResponseBody);
+
+        $callCount = 0;
+
+        $this->responseMock
+            ->expects(self::once())
+            ->method('withHeader')
+            ->with(
+                self::identicalTo('foo'),
+                self::identicalTo('bar'),
+            );
 
         $response = ($this->dispatcher)(
             $this->requestMock,
