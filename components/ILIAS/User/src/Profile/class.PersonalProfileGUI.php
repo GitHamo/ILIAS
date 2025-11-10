@@ -633,7 +633,7 @@ class PersonalProfileGUI
             if ($field->isVisibleToUser()) {
                 // #18795 - we should use ilUserProfile
                 switch ($field->getIdentifier()) {
-                    case 'upload':
+                    case 'avatar':
                         $caption = 'personal_picture';
                         break;
 

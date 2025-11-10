@@ -139,11 +139,13 @@ class Avatar implements FieldDefinition
 
     public function retrieveValueFromUser(\ilObjUser $user): string
     {
-        $define = new \ilUserAvatarResolver($user->getId());
-        if (!$define->hasProfilePicture()) {
+
+        if ($user->getAvatarRid() === null) {
             return '';
         }
+        $define = new \ilUserAvatarResolver($user->getId());
         $define->setSize('xsmall');
+        $define->setForcePicture(true);
         return $this->ui_renderer->render($define->getAvatar());
     }
 
