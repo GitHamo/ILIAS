@@ -144,6 +144,10 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
                 $this->db->manipulate(
                     "UPDATE settings SET keyword = 'pumap_udf_{$uuid}' WHERE keyword = 'pumap_udf_{$row->old_field_id}'"
                 );
+                $this->db->manipulate(
+                    "UPDATE badge_badge SET conf = REPLACE(conf, 'udf_{$row->old_field_id}', '{$uuid}') "
+                    . "WHERE type_id='user/profile' AND conf LIKE '%udf_{$row->old_field_id}%'"
+                );
             }
             $this->db->dropTableColumn('udf_definition', 'old_field_id');
             $this->db->addPrimaryKey('udf_definition', ['field_id']);
@@ -410,6 +414,16 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
                 );
             }
         }
+
+        $this->db->manipulate(
+            "UPDATE badge_badge SET conf = REPLACE(conf, 'upload', 'avatar') "
+            . "WHERE type_id='user/profile' AND conf LIKE '%upload%'"
+        );
+
+        $this->db->manipulate(
+            "UPDATE badge_badge SET conf = REPLACE(conf, 'selcountry', 'country') "
+            . "WHERE type_id='user/profile' AND conf LIKE '%selcountry%'"
+        );
     }
 
     public function step_9(): void

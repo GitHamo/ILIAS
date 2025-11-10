@@ -515,7 +515,7 @@ class PublicProfileGUI
             $tpl->setVariable('TXT_LOCATION', $this->lng->txt('location'));
 
             $map_gui = \ilMapUtil::getMapGUI();
-            $map_gui->setMapId('user_map_' . md5($user->login))
+            $map_gui->setMapId('user_map_' . md5($user->getLogin()))
                     ->setWidth('350px')
                     ->setHeight('230px')
                     ->setLatitude($user->getLatitude())
