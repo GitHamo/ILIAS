@@ -137,7 +137,7 @@ class SettingsMainGUI extends TestSettingsGUI
         );
 
         $this->tpl->setContent(
-            ilRTE::_replaceMediaObjectImageSrc(
+            \ilRTE::_replaceMediaObjectImageSrc(
                 $this->main_settings->getIntroductionSettings()->getIntroductionText(),
                 1
             )
@@ -154,7 +154,7 @@ class SettingsMainGUI extends TestSettingsGUI
         );
 
         $this->tpl->setContent(
-            ilRTE::_replaceMediaObjectImageSrc(
+            \ilRTE::_replaceMediaObjectImageSrc(
                 $this->main_settings->getFinishingSettings()->getConcludingRemarksText(),
                 1
             )
