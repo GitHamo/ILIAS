@@ -4601,6 +4601,7 @@ common#:#mail_message_scheduled_info#:#Mails remain in the outbox until the sche
 common#:#mail_not_sent#:#Mail not sent!
 common#:#mail_schedule_error_no_datetime#:#To schedule a mail, a delivery date and time must be specified.
 common#:#mail_schedule_error_past_datetime#:#You cannot schedule emails in the past.
+common#:#mail_schedule_scheduled_datetime#:#Scheduled Send Time
 common#:#mail_scheduled#:#Mail stored in outbox for later delivery.
 common#:#mail_search_no#:#No entries found.
 common#:#mail_select_one#:#You must select one mail
