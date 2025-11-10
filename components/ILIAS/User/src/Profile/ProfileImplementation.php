@@ -70,7 +70,7 @@ class ProfileImplementation implements Profile
         return array_filter(
             $this->user_fields,
             fn(ProfileField $v) => !in_array($v->getSection(), $sections_to_skip)
-                    && !in_array(get_class($v->getDefinition()), $fields_to_skip)
+                    && !in_array($v->getDefinition()::class, $fields_to_skip)
                     && $context->isFieldVisible($v, $user)
                 ? true : false
         );

@@ -29,6 +29,11 @@ use ILIAS\User\Profile\ChangeMail\Status as ChangeMailStatus;
 use ILIAS\User\Profile\ChangeMail\Mail as ChangeMailMail;
 use ILIAS\User\Profile\Prompt\Repository as PromptRepository;
 use ILIAS\User\Profile\Fields\Field as ProfileField;
+use ILIAS\User\Profile\Fields\Standard\FirstName;
+use ILIAS\User\Profile\Fields\Standard\LastName;
+use ILIAS\User\Profile\Fields\Standard\Alias;
+use ILIAS\User\Profile\Fields\Standard\OrganisationalUnits;
+use ILIAS\User\Profile\Fields\Standard\Roles;
 use ILIAS\User\Settings\Settings as UserSettings;
 use ILIAS\Language\Language;
 use ILIAS\FileUpload\FileUpload;
@@ -615,7 +620,7 @@ class PersonalProfileGUI
             Context::User,
             null,
             [],
-            [FirstName::class, LastName::class]
+            [FirstName::class, LastName::class, Alias::class, OrganisationalUnits::class, Roles::class]
         ) as $field) {
             $value = $field->retrieveValueFromUser($this->user);
             if (!$anonymized && ($value === '' || $value === '-')) {
@@ -630,10 +635,6 @@ class PersonalProfileGUI
                 switch ($field->getIdentifier()) {
                     case 'upload':
                         $caption = 'personal_picture';
-                        break;
-
-                    case 'title':
-                        $caption = 'person_title';
                         break;
 
                     default:
