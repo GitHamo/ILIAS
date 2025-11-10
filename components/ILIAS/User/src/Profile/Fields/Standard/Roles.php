@@ -57,12 +57,12 @@ class Roles implements FieldDefinition
 
     public function visibleInCoursesForcedTo(): ?bool
     {
-        return true;
+        return false;
     }
 
     public function visibleInGroupsForcedTo(): ?bool
     {
-        return true;
+        return false;
     }
 
     public function visibleInStudyProgrammesForcedTo(): ?bool
@@ -82,7 +82,7 @@ class Roles implements FieldDefinition
 
     public function requiredForcedTo(): ?bool
     {
-        return true;
+        return false;
     }
 
     public function searchableForcedTo(): ?bool
@@ -168,6 +168,7 @@ class Roles implements FieldDefinition
                 []
             ),
         );
+        $input->setRequired(true);
 
         return $input;
     }
