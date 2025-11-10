@@ -968,8 +968,7 @@ class ilMailFormGUI
         )->withAdditionalFormAction(
             $this->ctrl->getFormAction($this, 'saveDraft'),
             $this->lng->txt('save_message')
-        )->withSubmitLabel($this->lng->txt('send_mail'))
-        ;
+        )->withSubmitLabel($this->lng->txt('send_mail'));
     }
 
     private function getUserSearchConfigurator(): \ILIAS\User\Search\EndpointConfigurator
@@ -1146,22 +1145,18 @@ class ilMailFormGUI
 
         $schedule_date_time_value = null;
         $current_time = $this->clock->local(new DateTimeZone($this->user->getTimeZone()))->now();
-        $schedule_date_time_input = $ff->dateTime('')
-                                       ->withUseTime(true)
-                                       ->withTimezone($this->user->getTimezone())
-                                       ->withAdditionalTransformation(
-                                           $this->refinery->custom()->constraint(
-                                               function (DateTimeImmutable $v) use ($current_time) {
-                                                   return $v > $current_time;
-                                               },
-                                               $this->lng->txt('mail_schedule_error_past_datetime')
-                                           )
-                                       );
-
-        $title_validation_constraint = $this->refinery->custom()->constraint(
-            fn(string $v): bool => preg_match('/^il_.*$/', $v) ? false : true,
-            $this->lng->txt('msg_role_reserved_prefix')
-        );
+        $schedule_date_time_input = $ff
+            ->dateTime($this->lng->txt('mail_schedule_scheduled_datetime'))
+            ->withUseTime(true)
+            ->withTimezone($this->user->getTimezone())
+            ->withAdditionalTransformation(
+                $this->refinery->custom()->constraint(
+                    function (DateTimeImmutable $v) use ($current_time) {
+                        return $v > $current_time;
+                    },
+                    $this->lng->txt('mail_schedule_error_past_datetime')
+                )
+            );
 
         if (isset($mail_data['schedule_datetime'])) {
             $schedule_time = new DateTimeImmutable(

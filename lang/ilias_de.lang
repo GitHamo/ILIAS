@@ -4600,6 +4600,7 @@ common#:#mail_message_scheduled_info#:#Geplante Mails werden bis zum gewählten 
 common#:#mail_not_sent#:#Ihre Mail konnte nicht verschickt werden
 common#:#mail_schedule_error_no_datetime#:#Das Planen einer Mail erfordert ein Datum und eine Uhrzeit.
 common#:#mail_schedule_error_past_datetime#:#Mails können nicht in der Vergangenheit geplant werden.
+common#:#mail_schedule_scheduled_datetime#:#Geplanter Versandzeitpunkt
 common#:#mail_scheduled#:#Mail zur späteren Zustellung im Postausgang abgelegt.
 common#:#mail_search_no#:#Es wurden keine passenden Ergebnisse gefunden
 common#:#mail_select_one#:#Sie müssen mindestens eine Mail auswählen
