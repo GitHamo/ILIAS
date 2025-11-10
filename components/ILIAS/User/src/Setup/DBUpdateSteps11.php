@@ -66,6 +66,38 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
         );
     }
 
+    private function migrateBadges(
+        string $old_value,
+        string $new_value
+    ): void {
+        $query = $this->db->query("SELECT id, conf FROM badge_badge WHERE type_id='user/profile' AND conf LIKE '%$old_value%'");
+        while (($badge = $this->db->fetch($query)) !== null) {
+            $config_array = unserialize($badge['conf'], ['allowed_classes' => false]);
+            if (!array_key_exists('profile', $config_array)) {
+                continue;
+            }
+            $config_array['profile'] = array_map(
+                static function (string $v) use ($old_value, $new_value): string {
+                    if ($v !== "chk_{$old_value}") {
+                        return $v;
+                    }
+
+                    return "chk_{$new_value}";
+                },
+                $config_array['profile']
+            );
+            $this->db->update(
+                'badge_badge',
+                [
+                    'conf' => [\ilDBConstants::T_TEXT, serialize($config_array)]
+                ],
+                [
+                    'id' => [\ilDBConstants::T_INTEGER, $badge['id']]
+                ]
+            );
+        }
+    }
+
     public function step_1(): void
     {
         if (!$this->db->tableColumnExists('mail_template', 'att_rid')) {
@@ -144,10 +176,8 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
                 $this->db->manipulate(
                     "UPDATE settings SET keyword = 'pumap_udf_{$uuid}' WHERE keyword = 'pumap_udf_{$row->old_field_id}'"
                 );
-                $this->db->manipulate(
-                    "UPDATE badge_badge SET conf = REPLACE(conf, 'udf_{$row->old_field_id}', '{$uuid}') "
-                    . "WHERE type_id='user/profile' AND conf LIKE '%udf_{$row->old_field_id}%'"
-                );
+
+                $this->migrateBadges("udf_{$row->old_field_id}", $uuid);
             }
             $this->db->dropTableColumn('udf_definition', 'old_field_id');
             $this->db->addPrimaryKey('udf_definition', ['field_id']);
@@ -415,15 +445,8 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
             }
         }
 
-        $this->db->manipulate(
-            "UPDATE badge_badge SET conf = REPLACE(conf, 'upload', 'avatar') "
-            . "WHERE type_id='user/profile' AND conf LIKE '%upload%'"
-        );
-
-        $this->db->manipulate(
-            "UPDATE badge_badge SET conf = REPLACE(conf, 'selcountry', 'country') "
-            . "WHERE type_id='user/profile' AND conf LIKE '%selcountry%'"
-        );
+        $this->migrateBadges('upload', 'avatar');
+        $this->migrateBadges('selcountry', 'country');
     }
 
     public function step_9(): void
