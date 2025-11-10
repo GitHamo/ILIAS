@@ -390,7 +390,7 @@ class ilUserQuery
                 . 'SELECT DISTINCT ud.usr_id '
                 . 'FROM usr_data ud join rbac_ua ON (ud.usr_id = rbac_ua.usr_id) '
                 . 'JOIN object_data od ON (rbac_ua.rol_id = od.obj_id) '
-                . "WHERE od.title = {$this->db->quote("il_{$cgtype}_member_{$this->crs_grp}", ilDBConstants::T_TEXT)}"
+                . "WHERE od.title = {$this->db->quote("il_{$cgtype}_member_{$this->crs_grp}", ilDBConstants::T_TEXT)})"
             );
         }
 
