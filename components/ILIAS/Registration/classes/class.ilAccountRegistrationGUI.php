@@ -96,7 +96,7 @@ class ilAccountRegistrationGUI
     public function executeCommand(): void
     {
         if ($this->registration_settings->getRegistrationType() === ilRegistrationSettings::IL_REG_DISABLED) {
-            $this->error->raiseError($this->lng->txt('reg_disabled'), $this->error->FATAL);
+            $this->error->raiseError($this->lng->txt('reg_disabled'), $this->error->MESSAGE);
         }
 
         $cmd = $this->ctrl->getCmd();
