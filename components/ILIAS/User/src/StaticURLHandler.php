@@ -35,10 +35,12 @@ use ILIAS\Data\ReferenceId;
 class StaticURLHandler extends BaseHandler implements Handler
 {
     public const NAMESPACE = 'usr';
-    public const CHANGE_EMAIL_OPERATIONS = 'email';
-    public const REGISTRATION_OPERATIONS = 'registration';
-    public const USERNAME_ASSIST_OPERATIONS = 'nameassist';
-    public const PASSWORD_ASSIST_OPERATIONS = 'pwassist';
+    public const CHANGE_EMAIL_OPERATION = 'email';
+    public const REGISTRATION_OPERATION = 'registration';
+    public const USERNAME_ASSIST_OPERATION = 'nameassist';
+    public const PASSWORD_ASSIST_OPERATION = 'pwassist';
+    public const CONTACT_APPROVE_OPERATION = '_contact_approved';
+    public const CONTACT_IGNORE_OPERATION = '_contact_ignored';
 
     public function getNamespace(): string
     {
@@ -53,22 +55,36 @@ class StaticURLHandler extends BaseHandler implements Handler
         $additional_params = $request->getAdditionalParameters();
 
         $uri = match ($additional_params[0] ?? 'default') {
-            self::CHANGE_EMAIL_OPERATIONS => $context->isUserLoggedIn()
+            self::CHANGE_EMAIL_OPERATION => $context->isUserLoggedIn()
                     ? $this->buildChangeEmailUrl($additional_params[1], $context->ctrl())
                     : $this->getLoginUrl($request, $context),
-            self::REGISTRATION_OPERATIONS => $context->ctrl()->redirectByClass(
+            self::REGISTRATION_OPERATION => $context->ctrl()->redirectByClass(
                 [\ilStartUpGUI::class, \ilAccountRegistrationGUI::class],
                 ''
             ),
-            self::USERNAME_ASSIST_OPERATIONS => $context->ctrl()->redirectByClass(
+            self::USERNAME_ASSIST_OPERATION => $context->ctrl()->redirectByClass(
                 [\ilStartUpGUI::class, \ilPasswordAssistanceGUI::class],
                 'showUsernameAssistanceForm'
             ),
-            self::PASSWORD_ASSIST_OPERATIONS => $context->ctrl()->redirectByClass(
+            self::PASSWORD_ASSIST_OPERATION => $context->ctrl()->redirectByClass(
                 [\ilStartUpGUI::class, \ilPasswordAssistanceGUI::class],
                 ''
             ),
-            default => $this->buildProfileUrl($request->getReferenceId(), $context->ctrl())
+            self::CONTACT_APPROVE_OPERATION => $this->buildProfileUrl(
+                $request->getReferenceId(),
+                $context->ctrl(),
+                'approveContactRequest'
+            ),
+            self::CONTACT_IGNORE_OPERATION => $this->buildProfileUrl(
+                $request->getReferenceId(),
+                $context->ctrl(),
+                'ignoreContactRequest'
+            ),
+            default => $this->buildProfileUrl(
+                $request->getReferenceId(),
+                $context->ctrl(),
+                PublicProfileGUI::DEFAULT_CMD
+            )
         };
 
         return $response_factory->can($uri);
@@ -100,9 +116,10 @@ class StaticURLHandler extends BaseHandler implements Handler
 
     private function buildProfileUrl(
         ReferenceId $target_user_id,
-        \ilCtrl $ctrl
+        \ilCtrl $ctrl,
+        string $cmd
     ): string {
         $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id->toInt());
-        return $ctrl->getLinkTargetByClass([\ilPublicProfileBaseClassGUI::class, PublicProfileGUI::class], PublicProfileGUI::DEFAULT_CMD);
+        return $ctrl->getLinkTargetByClass([\ilPublicProfileBaseClassGUI::class, PublicProfileGUI::class], $cmd);
     }
 }

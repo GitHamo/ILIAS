@@ -322,7 +322,7 @@ class Field implements Property
     ): \ilFormPropertyGUI {
         $input = $this->definition->getLegacyInput($lng, $context, $user);
         $input->setPostVar($this->definition->getIdentifier());
-        $input->setRequired($this->required);
+        $input->setRequired($input->getRequired() || $this->isRequired());
         return $input;
     }
 
