@@ -269,7 +269,7 @@ class ProfileImplementation implements Profile
             function (\ilPropertyFormGUI $form, ProfileField $v) use ($context, $user, $do_require): \ilPropertyFormGUI {
                 $input = $v->getLegacyInput($this->lng, $context, $user);
                 $input->setDisabled(!$context->isFieldChangeable($v, $user));
-                $input->setRequired($do_require && $v->isRequired());
+                $input->setRequired($do_require && $input->getRequired());
                 $form->addItem($input);
                 return $form;
             },

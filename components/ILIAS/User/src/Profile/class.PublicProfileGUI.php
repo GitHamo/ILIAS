@@ -681,25 +681,25 @@ class PublicProfileGUI
     /**
      * Check if given user id is valid
      */
-    protected function validateUser(int $usrId): bool
+    protected function validateUser(int $usr_id): bool
     {
-        if (\ilObject::_lookupType($usrId) != 'usr') {
+        if (\ilObject::_lookupType($usr_id) !== 'usr') {
             return false;
         }
 
-        $user = new \ilObjUser($usrId);
+        $user = new \ilObjUser($usr_id);
 
         if ($this->current_user->isAnonymous()) {
             if (strtolower($this->ctrl->getCmd()) == strtolower('approveContactRequest')) {
-                $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usrId . '_contact_approved');
+                $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usr_id . '_contact_approved');
             } elseif (strtolower($this->ctrl->getCmd()) == strtolower('ignoreContactRequest')) {
-                $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usrId . '_contact_ignored');
+                $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usr_id . '_contact_ignored');
             }
 
             if ($user->getPref('public_profile') != 'g') {
                 // #12151
                 if ($user->getPref('public_profile') == 'y') {
-                    $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usrId);
+                    $this->ctrl->redirectToURL('login.php?cmd=force_login&target=usr_' . $usr_id);
                 }
 
                 return false;
