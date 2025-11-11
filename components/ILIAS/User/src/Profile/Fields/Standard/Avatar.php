@@ -146,7 +146,7 @@ class Avatar implements FieldDefinition
         $define = new \ilUserAvatarResolver($user->getId());
         $define->setSize('xsmall');
         $define->setForcePicture(true);
-        return $this->ui_renderer->render($define->getAvatar());
+        return $define->getLegacyPictureURL();
     }
 
     /**

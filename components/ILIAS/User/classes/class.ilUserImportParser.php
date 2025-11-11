@@ -2104,6 +2104,7 @@ class ilUserImportParser extends ilSaxParser
             case 'public_phone_office':
             case 'public_street':
             case 'public_upload':
+            case 'public_avatar':
             case 'public_zip':
             case 'public_interests_general':
             case 'public_interests_help_offered':

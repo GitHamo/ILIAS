@@ -634,7 +634,8 @@ class PersonalProfileGUI
                 // #18795 - we should use ilUserProfile
                 switch ($field->getIdentifier()) {
                     case 'avatar':
-                        $caption = 'personal_picture';
+                        $caption = $this->lng->txt('personal_picture');
+                        $value = "<img src='{$value}' alt='{$this->lng->txt('user_avatar')}' />";
                         break;
 
                     default:

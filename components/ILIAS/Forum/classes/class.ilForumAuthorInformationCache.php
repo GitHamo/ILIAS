@@ -60,7 +60,7 @@ class ilForumAuthorInformationCache
             $res = $ilDB->queryF(
                 $query,
                 ['text', 'text', 'text'],
-                ['public_profile', 'public_gender', 'public_upload']
+                ['public_profile', 'public_gender', 'public_avatar']
             );
 
             while ($row = $ilDB->fetchAssoc($res)) {
@@ -73,7 +73,7 @@ class ilForumAuthorInformationCache
                 $user->setLastname($row['lastname'] ?? '');
                 $user->setPref('public_profile', $row['public_profile']);
                 $user->setPref('public_gender', $row['public_gender']);
-                $user->setPref('public_upload', $row['public_upload']);
+                $user->setPref('public_avatar', $row['public_avatar']);
 
                 self::$user_instances[(int) $row['usr_id']] = $user;
             }

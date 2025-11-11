@@ -542,4 +542,13 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
             $this->insertSetting("usr_settings_export_{$setting}", '1');
         }
     }
+
+    public function step_13(): void
+    {
+        $this->db->update(
+            'usr_pref',
+            ['keyword' => [\ilDBConstants::T_TEXT, 'public_avatar']],
+            ['keyword' => [\ilDBConstants::T_TEXT, 'public_upload']]
+        );
+    }
 }

@@ -415,7 +415,7 @@ class ilUserXMLWriter extends ilXmlWriter
                 'public_phone_office',
                 'public_profile',
                 'public_street',
-                'public_upload',
+                'public_avatar',
                 'public_zip',
                 'send_info_mails',
                 /*'show_users_online',*/
