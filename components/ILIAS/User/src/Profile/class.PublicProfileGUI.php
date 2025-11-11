@@ -348,13 +348,15 @@ class PublicProfileGUI
             $tpl->setVariable('HREF_VCARD', $this->ctrl->getLinkTarget($this, 'deliverVCard'));
         }
 
-        $imagefile = \ilObjUser::_getPersonalPicturePath($user->getId(), 'big', false, true);
-        if ($this->getPublicPref($user, 'public_upload') === 'y' && $imagefile !== ''
+        if ($this->getPublicPref($user, 'public_avatar') === 'y'
             && ($this->current_user->getId() !== ANONYMOUS_USER_ID || $user->getPref('public_profile') === 'g')) {
+            $define = new \ilUserAvatarResolver($user->getId());
+            $define->setForcePicture(false);
+            $define->setSize('big');
 
             $tpl->setCurrentBlock('image');
             $tpl->setVariable('TXT_IMAGE', $this->lng->txt('image'));
-            $tpl->setVariable('IMAGE_PATH', $imagefile);
+            $tpl->setVariable('IMAGE_PATH', $define->getLegacyPictureURL());
             $tpl->setVariable('IMAGE_ALT', $this->lng->txt('personal_picture'));
             $tpl->parseCurrentBlock();
         }
