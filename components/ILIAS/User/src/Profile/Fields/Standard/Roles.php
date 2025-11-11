@@ -57,7 +57,7 @@ class Roles implements FieldDefinition
 
     public function visibleInRegistrationForcedTo(): ?bool
     {
-        return true;
+        return false;
     }
 
     public function visibleInCoursesForcedTo(): ?bool
