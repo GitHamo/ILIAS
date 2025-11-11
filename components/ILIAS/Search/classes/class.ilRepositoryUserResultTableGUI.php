@@ -339,7 +339,7 @@ class ilRepositoryUserResultTableGUI extends ilTable2GUI
                 }
                 $data = $this->profile->getDataFor((int) $set['usr_id']);
                 foreach ($udf_ids as $udf_field) {
-                    $users[$counter]['udf_' . $udf_field] = implode(', ', $data->getAdditionalFieldByIdentifier($udf_field));
+                    $users[$counter]['udf_' . $udf_field] = implode(', ', $data->getAdditionalFieldByIdentifier($udf_field) ?? []);
                 }
                 ++$counter;
             }
