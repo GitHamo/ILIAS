@@ -217,14 +217,10 @@ class ilUserSearchOptions
         $lng = $DIC->language();
         foreach ($DIC['user']->getProfile()->getVisibleUserDefinedFields(Context::Search) as $field) {
             $input = $field->getLegacyInput($lng, Context::Search);
-            if ($input instanceof ilSelectInputGUI) {
-                $fields[$counter]['values'] = ilUserSearchOptions::__prepareValues($input->getOptions());
-                $fields[$counter]['type'] = self::FIELD_TYPE_UDF_SELECT;
-            }
             $fields[$counter]['lang'] = $field->getLabel($lng);
             $fields[$counter]['db'] = "udf_{$field->getIdentifier()}";
 
-            switch (get_class($input)) {
+            switch ($input::class) {
                 case ilTextInputGUI::class:
                     $fields[$counter]['type'] = self::FIELD_TYPE_UDF_TEXT;
                     break;
@@ -233,9 +229,19 @@ class ilUserSearchOptions
                     $fields[$counter]['type'] = self::FIELD_TYPE_UDF_WYSIWYG;
                     break;
 
+                case ilMultiSelectInputGUI::class:
+                    $fields[$counter]['values'] = ilUserSearchOptions::__prepareValues($input->getOptions());
+                    $fields[$counter]['type'] = self::FIELD_TYPE_UDF_SELECT;
+                    break;
+
+                case ilSelectInputGUI::class:
+                    $fields[$counter]['values'] = ilUserSearchOptions::__prepareValues($input->getOptions());
+                    $fields[$counter]['type'] = self::FIELD_TYPE_UDF_SELECT;
+                    break;
+
                 default:
                     // do not throw: udf plugin support
-                    $fields[$counter]['type'] = get_class($input);
+                    $fields[$counter]['type'] = $input::class;
                     break;
             }
             ++$counter;
