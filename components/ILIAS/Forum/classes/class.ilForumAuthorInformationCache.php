@@ -48,7 +48,7 @@ class ilForumAuthorInformationCache
         if ($usr_ids_to_request !== []) {
             $in = $ilDB->in('ud.usr_id', $usr_ids_to_request, false, 'integer');
             $query = "
-				SELECT ud.usr_id, od.create_date, login, firstname, lastname, ud.title, gender, pprof.value public_profile, pgen.value public_gender, pup.value public_upload
+				SELECT ud.usr_id, od.create_date, login, firstname, lastname, ud.title, gender, pprof.value public_profile, pgen.value public_gender, pup.value public_avatar
 				FROM usr_data ud
 				INNER JOIN object_data od ON od.obj_id = ud.usr_id
 				LEFT JOIN usr_pref pprof ON pprof.usr_id = ud.usr_id AND pprof.keyword = %s
