@@ -215,7 +215,7 @@ administration#:#language_merge_local_changes_info#:#Merge all local changes and
 administration#:#language_merged_global#:#The local changes were merged into the standard language file.
 administration#:#language_mode_existing#:#Existing Entries
 administration#:#language_mode_existing_delete#:#Delete existing entries
-administration#:#language_mode_existing_delete_info#:#Delete all entries in the database before importing the file.<br /> WARNING: The imported language file should be complete, otherwise there will be undefined language variables. If that happens, switch to the tab ‘Maintain’ and choose ‘Clear local changes in the database’.
+administration#:#language_mode_existing_delete_info#:#Delete all entries in the database before importing the file.<br /><b>Warning</b>: The imported language file should be complete, otherwise there will be undefined language variables. If that happens, switch to the tab ‘Maintain’ and choose ‘Clear local changes in the database’.
 administration#:#language_mode_existing_keepall#:#Keep all existing entries
 administration#:#language_mode_existing_keepall_info#:#Import only new entries that do not yet exist in the database.
 administration#:#language_mode_existing_keepnew#:#Keep all local changes
@@ -735,7 +735,7 @@ assessment#:#finish_all_user_passes#:#Finish all Test Attempts
 assessment#:#finish_pass_for_all_users#:#Are you sure you want to finish the test attempts for all users?
 assessment#:#finish_pass_for_multiple_users_in_processing_time#:#You cannot finish the passes of the selected users together, because for at least one selected user the processing time is not over yet.
 assessment#:#finish_pass_for_user_confirmation#:#Are you sure you want to finish this test attempt for the participant "%s"?
-assessment#:#finish_pass_for_user_in_processing_time#:#WARNING: the processing time for this user is not over yet! You should only end the test run if there is a compelling reason (e.g. exclusion from the test).
+assessment#:#finish_pass_for_user_in_processing_time#:#<b>Warning</b>: the processing time for this user is not over yet! You should only end the test run if there is a compelling reason (e.g. exclusion from the test).
 assessment#:#finish_test#:#Finish Test
 assessment#:#finish_test_all#:#Are you sure you want to finish the test attempts for all users?
 assessment#:#finish_test_more_than_one_selected#:#Only a single participant may be selected to finish the pass if the test allows only one pass.
@@ -4399,7 +4399,7 @@ common#:#info_available_roles#:#Available Roles
 common#:#info_change_user_view#:#Change User
 common#:#info_deactivate_sure#:#Are you sure that you want to deactivate the following user(s)?
 common#:#info_delete_sure#:#Are you sure that you want to delete the following?
-common#:#info_delete_warning_no_trash#:#(WARNING: The selected object(s) will be irretrievably deleted from the system. The recovery of any such deleted objects will not be possible).
+common#:#info_delete_warning_no_trash#:#<b>Warning</b>: The selected object(s) will be irretrievably deleted from the system. The recovery of any such deleted objects will not be possible.
 common#:#info_deleted#:#Object(s) deleted.
 common#:#info_err_user_not_exist#:#User with that login name or user_id does not exists
 common#:#info_from_role#:#Granted by Role / Ownership
