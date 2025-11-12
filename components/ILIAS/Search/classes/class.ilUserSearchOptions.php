@@ -222,11 +222,8 @@ class ilUserSearchOptions
 
             switch ($input::class) {
                 case ilTextInputGUI::class:
-                    $fields[$counter]['type'] = self::FIELD_TYPE_UDF_TEXT;
-                    break;
-
                 case ilTextAreaInputGUI::class:
-                    $fields[$counter]['type'] = self::FIELD_TYPE_UDF_WYSIWYG;
+                    $fields[$counter]['type'] = self::FIELD_TYPE_UDF_TEXT;
                     break;
 
                 case ilMultiSelectInputGUI::class:
