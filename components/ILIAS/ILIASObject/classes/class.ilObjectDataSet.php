@@ -35,10 +35,11 @@ use ILIAS\ILIASObject\Properties\Translations\CachedRepository as TranslationsRe
  */
 class ilObjectDataSet extends ilDataSet
 {
-    protected LocalDIC $obj_dic;
-    protected ResourceStorage $storage;
-    protected Aggregator $properties_aggregator;
-    protected TranslationsRepository $translations_repository;
+    private ResourceStorage $storage;
+    private Aggregator $properties_aggregator;
+    private TranslationsRepository $translations_repository;
+
+    public static ?string $base_lang = null;
 
     public function __construct()
     {
@@ -297,29 +298,43 @@ class ilObjectDataSet extends ilDataSet
         switch ($entity) {
             case 'transl_entry':
                 $new_id = $this->getNewObjId($mapping, $rec['ObjId']);
-                if ($new_id > 0) {
-                    $transl = $this->translations_repository->getFor($new_id);
-                    $this->translations_repository->store(
-                        $transl->withLanguage(
-                            new Language(
-                                $rec['LangCode'],
-                                $rec['Title'],
-                                $rec['Description'],
-                                (bool) $rec['LangDefault']
-                            )
+                if ($new_id <= 0) {
+                    break;
+                }
+
+                $is_base_lang = $rec['LangCode'] === self::$base_lang;
+
+                $transl = $this->translations_repository->getFor($new_id);
+                $this->translations_repository->store(
+                    $transl->withLanguage(
+                        new Language(
+                            $rec['LangCode'],
+                            $rec['Title'],
+                            $rec['Description'],
+                            (bool) $rec['LangDefault'],
+                            $rec['LangCode'] === self::$base_lang
                         )
-                    );
+                    )
+                );
+                if ($is_base_lang) {
+                    self::$base_lang = null;
                 }
                 break;
 
             case 'transl':
                 $new_id = $this->getNewObjId($mapping, $rec['ObjId']);
-                if ($new_id > 0) {
-                    $transl = $this->translations_repository->getFor($new_id);
-                    $this->translations_repository->store(
-                        $transl->withBaseLanguage($rec['MasterLang'])
-                    );
+                if ($new_id <= 0) {
+                    break;
                 }
+                $transl = $this->translations_repository->getFor($new_id);
+                if ($transl->getLaguageForCode($rec['MasterLang']) === null) {
+                    self::$base_lang = $rec['MasterLang'];
+                    break;
+                }
+
+                $this->translations_repository->store(
+                    $transl->withBaseLanguage($rec['MasterLang'])
+                );
                 break;
 
             case 'service_settings':
