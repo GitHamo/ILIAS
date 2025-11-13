@@ -29,7 +29,7 @@ use ILIAS\User\Profile\PublicProfileGUI;
 /**
 * @author Jens Conze
 * @ingroup ServicesMail
-* @ilCtrl_Calls ilContactGUI: ilMailSearchCoursesGUI, ilMailSearchGroupsGUI, ilMailSearchLearningSequenceGUI, ilMailingListsGUI
+* @ilCtrl_Calls ilContactGUI: ilMailSearchCoursesGUI, ilMailSearchGroupsGUI, ilMailingListsGUI
 * @ilCtrl_Calls ilContactGUI: ilUsersGalleryGUI, ILIAS\User\Profile\PublicProfileGUI
 */
 class ilContactGUI implements ilCtrlSecurityInterface
