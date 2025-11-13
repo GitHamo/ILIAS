@@ -328,7 +328,7 @@ class ilUserQuery
             );
         }
 
-        if ($this->activation !== '') {
+        if ($this->activation === 'active') {
             $query = $query->withAdditionalWhere(
                 "usr_data.active = {$this->db->quote(1, ilDBConstants::T_INTEGER)}"
             );
