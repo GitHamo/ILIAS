@@ -18,9 +18,8 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway;
+namespace ILIAS\ApiGateway\Contracts;
 
-use ILIAS\ApiGateway\Models\Payload;
 use Throwable;
 
 interface Webservice

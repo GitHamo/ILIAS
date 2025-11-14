@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Models;
+namespace Tests\Unit\Contracts;
 
-use ILIAS\ApiGateway\Models\Payload;
+use ILIAS\ApiGateway\Contracts\Payload;
 use PHPUnit\Framework\TestCase;
 
 class PayloadTest extends TestCase

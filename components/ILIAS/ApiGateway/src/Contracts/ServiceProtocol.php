@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway;
+namespace ILIAS\ApiGateway\Contracts;
 
 enum ServiceProtocol: string {
     case REST = 'rest';
