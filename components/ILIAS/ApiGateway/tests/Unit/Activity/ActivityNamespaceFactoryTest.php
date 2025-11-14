@@ -53,39 +53,39 @@ class ActivityNamespaceFactoryTest extends TestCase
         return [
             'standard activity name' => [
                 'Foo\\Bar\\ActivityName',
-                '/foo/bar/ActivityName'
+                '/foo/bar/activityname'
             ],
             'activity name ending with Query' => [
                 'Foo\\Bar\\MyQuery',
-                '/foo/bar/My'
+                '/foo/bar/myquery'
             ],
             'activity name with Query in middle' => [
                 'Foo\\Bar\\QueryActivity',
-                '/foo/bar/Activity'
+                '/foo/bar'
             ],
             'activity name starting with Query' => [
                 'Foo\\Bar\\QueryFoo',
-                '/foo/bar/Foo'
+                '/foo/bar/foo'
             ],
             'activity name is just Query' => [
                 'Foo\\Bar\\Query',
-                '/foo/bar/'
+                '/foo/bar'
             ],
             'activity name with mixed case' => [
                 'Foo\\Bar\\activityName',
-                '/foo/bar/ActivityName'
+                '/foo/bar/activityname'
             ],
             'vendor and component with mixed case' => [
-                'iLiAs\\aPiGaTeWaY\\ActivityName',
-                '/ilias/apigateway/ActivityName'
+                'vEnDoR\\cOmPoNeNt\\ActivityName',
+                '/vendor/component/activityname'
             ],
             'vendor and component with numbers' => [
                 'Vendor1\\Component2\\ActivityName',
-                '/vendor1/component2/ActivityName'
+                '/vendor1/component2/activityname'
             ],
             'class name with more than three parts' => [
                 'Foo\\Bar\\Baz\\FooBarBaz\\SubComponent\\ActivityName',
-                '/foo/bar/ActivityName'
+                '/foo/bar/activityname'
             ],
         ];
     }
