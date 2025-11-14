@@ -60,7 +60,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return [
             'intro_enabled' => ['integer', (int) $this->getIntroductionEnabled()],
-            'introduction' => ['text', $this->getIntroductionText()],
             'introduction_page_id' => ['integer', $this->getIntroductionPageId()],
             'conditions_checkbox_enabled' => ['integer', (int) $this->getExamConditionsCheckboxEnabled()],
         ];
@@ -114,7 +113,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return [
             'intro_enabled' => $this->getIntroductionEnabled(),
-            'introduction' => $this->getIntroductionText(),
             'introduction_page_id' => $this->getIntroductionPageId(),
             'conditions_checkbox_enabled' => $this->getExamConditionsCheckboxEnabled()
         ];
@@ -124,7 +122,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return new self(
             (bool) $data['intro_enabled'],
-            $data['introduction'],
             $data['introduction_page_id'],
             (bool) $data['conditions_checkbox_enabled'],
         );

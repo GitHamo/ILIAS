@@ -159,7 +159,6 @@ class SettingsFinishing extends TestSettings implements Exportable
         return [
             'enable_examview' => ['integer', (int) $this->getShowAnswerOverview()],
             'showfinalstatement' => ['integer', (int) $this->getConcludingRemarksEnabled()],
-            'finalstatement' => ['text', $this->getConcludingRemarksText()],
             'concluding_remarks_page_id' => ['integer', $this->getConcludingRemarksPageId()],
             'redirection_mode' => ['integer', $this->getRedirectionMode()->value],
             'redirection_url' => ['text', $this->getRedirectionUrl()],
@@ -260,7 +259,6 @@ class SettingsFinishing extends TestSettings implements Exportable
         return [
             'enable_examview' => $this->getShowAnswerOverview(),
             'showfinalstatement' => $this->getConcludingRemarksEnabled(),
-            'finalstatement' => $this->getConcludingRemarksText(),
             'concluding_remarks_page_id' => $this->getConcludingRemarksPageId(),
             'redirection_mode' => $this->getRedirectionMode()->value,
             'redirection_url' => $this->getRedirectionUrl()
@@ -272,7 +270,6 @@ class SettingsFinishing extends TestSettings implements Exportable
         return new self(
             (bool) $data['enable_examview'],
             (bool) $data['showfinalstatement'],
-            $data['finalstatement'],
             $data['concluding_remarks_page_id'],
             RedirectionModes::from($data['redirection_mode']),
             $data['redirection_url']
