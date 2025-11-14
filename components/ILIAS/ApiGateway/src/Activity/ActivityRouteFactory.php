@@ -20,23 +20,20 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Activity;
 
-readonly class ActivityNamespace
+use ILIAS\Component\Activities\Activity;
+
+readonly class ActivityRouteFactory
 {
     public function __construct(
-        private string $vendor,
-        private string $component,
-        private string $name,
+        private ActivityNamespaceFactory $namespaceFactory,
     ) {}
 
-    public function getPath(): string
+    public function create(Activity $activity): ActivityRoute
     {
-        // ommit vendor if it is ilias
-        // ommit component if it is setup
-        // ommit name has Activity, Query or QueryActivity
-        $subject = ucfirst($this->name);
-        $path = strtolower("/{$this->vendor}/{$this->component}/");
-        $path .= str_replace('Query', '', $subject);
-
-        return $path;
+        return new ActivityRoute(
+            $activity,
+            new ActivityRouteHandler($activity),
+            $this->namespaceFactory->create(get_class($activity)),
+        );
     }
 }

@@ -28,15 +28,6 @@ use Override;
 
 class ActivityRoute implements Route
 {
-    public static function fromActivity(Activity $activity): self
-    {
-        return new self(
-            $activity,
-            new ActivityRouteHandler($activity),
-            ActivityNamespace::create(get_class($activity)),
-        );
-    }
-
     public function __construct(
         private Activity $activity,
         private ActivityRouteHandler $handler,

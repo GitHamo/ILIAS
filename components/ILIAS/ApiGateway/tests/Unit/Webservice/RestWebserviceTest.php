@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Webservice;
 
-use ILIAS\ApiGateway\Configuration\WebConfig;
-use ILIAS\ApiGateway\Models\Payload;
-use ILIAS\ApiGateway\ServiceProtocol;
+use ILIAS\ApiGateway\Contracts\Payload;
+use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Webservice\RestWebservice;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 
 final class RestWebserviceTest extends TestCase
 {
     private RestWebservice $webservice;
-    private string $baseUrl = 'foo';
-    private string $basePath = 'bar';
-    private bool $isEnabled = true;
-    private bool $debugMode = false;
-    private bool $logErrors = false;
-    private bool $logErrorDetails = false;
+    private WebConfig&MockObject $config;
 
     #[\Override]
     protected function setUp(): void
@@ -27,21 +23,21 @@ final class RestWebserviceTest extends TestCase
         parent::setUp();
 
         $this->webservice = new RestWebservice(
-            new WebConfig(
-                $this->baseUrl,
-                $this->basePath,
-                $this->isEnabled,
-                $this->debugMode,
-                $this->logErrors,
-                $this->logErrorDetails,
-            ),
+            $this->config = $this->createConfiguredMock(WebConfig::class, [
+                'getBaseUrl' => 'foo',
+                'isEnabled' => true,
+            ]),
         );
     }
 
     public function testHasAccessorToProtocol(): void
     {
+        $expected = ServiceProtocol::REST;
+
+        $this->config->method('getProtocol')->willReturn($expected);
+
         self::assertSame(
-            ServiceProtocol::REST,
+            $expected,
             $this->webservice->getProtocol(),
         );
     }
@@ -66,18 +62,9 @@ final class RestWebserviceTest extends TestCase
         $payloadData = ['key' => 'value'];
         $payload = new Payload($payloadData);
 
-        $webservice = new RestWebservice(
-            new WebConfig(
-                $this->baseUrl,
-                $this->basePath,
-                $this->isEnabled,
-                true, // debugMode
-                $this->logErrors,
-                $this->logErrorDetails,
-            ),
-        );
+        $this->config->method('isDebugMode')->willReturn(true);
 
-        $actual = $webservice->handle($payload);
+        $actual = $this->webservice->handle($payload);
 
         $expected = <<<JSON
 {
@@ -168,19 +155,12 @@ JSON;
 
     public function testHandlesErrorWithDetails(): void
     {
-        $webservice = new RestWebservice(
-            new WebConfig(
-                $this->baseUrl,
-                $this->basePath,
-                $this->isEnabled,
-                false, // debugMode
-                $this->logErrors,
-                true,  // logErrorDetails
-            ),
-        );
+        $this->config->method('isDebugMode')->willReturn(true);
+        $this->config->method('isLogErrorDetails')->willReturn(true);
+
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $webservice->handleError($exception);
+        $actual = $this->webservice->handleError($exception);
         /**
          * @var array<string, mixed>
          */
@@ -194,19 +174,12 @@ JSON;
 
     public function testHandlesErrorWithDebug(): void
     {
-        $webservice = new RestWebservice(
-            new WebConfig(
-                $this->baseUrl,
-                $this->basePath,
-                $this->isEnabled,
-                true, // debugMode
-                $this->logErrors,
-                false, // logErrorDetails
-            ),
-        );
+        $this->config->method('isDebugMode')->willReturn(true);
+        $this->config->method('isLogErrorDetails')->willReturn(false);
+
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $webservice->handleError($exception);
+        $actual = $this->webservice->handleError($exception);
 
         $expected = <<<JSON
 {
@@ -223,19 +196,12 @@ JSON;
 
     public function testHandlesErrorWithDetailsAndDebug(): void
     {
-        $webservice = new RestWebservice(
-            new WebConfig(
-                $this->baseUrl,
-                $this->basePath,
-                $this->isEnabled,
-                true, // debugMode
-                $this->logErrors,
-                true,  // logErrorDetails
-            ),
-        );
+        $this->config->method('isDebugMode')->willReturn(true);
+        $this->config->method('isLogErrorDetails')->willReturn(true);
+
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $webservice->handleError($exception);
+        $actual = $this->webservice->handleError($exception);
         /**
          * @var array<string, mixed>
          */
@@ -287,7 +253,7 @@ JSON;
 
         $expectedHeaders = [
             'Content-Type' => 'application/json',
-            'Content-Length' => strlen($actualBody),
+            'Content-Length' => (string) strlen($actualBody),
         ];
 
         self::assertEquals($expectedHeaders, $actualHeaders);
@@ -303,7 +269,7 @@ JSON;
 
         $expectedHeaders = [
             'Content-Type' => 'application/json',
-            'Content-Length' => strlen($actualBody),
+            'Content-Length' => (string) strlen($actualBody),
         ];
 
         self::assertEquals($expectedHeaders, $actualHeaders);

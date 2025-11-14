@@ -5,91 +5,119 @@ declare(strict_types=1);
 namespace Tests\Unit\Activity;
 
 use ILIAS\ApiGateway\Activity\ActivityNamespace;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ActivityNamespaceTest extends TestCase
 {
-    #[DataProvider('classNameToPathProvider')]
-    public function testGetsNamespacePath(
-        string $namespace,
-        string $expected,
+    #[DataProvider('pathProvider')]
+    public function testGeneratesCorrectPath(
+        string $vendor,
+        string $component,
+        string $name,
+        string $expectedPath,
     ): void {
-        $actual = ActivityNamespace::create($namespace);
+        $namespace = new ActivityNamespace($vendor, $component, $name);
 
-        self::assertSame(
-            $expected,
-            $actual->getPath()
-        );
-    }
-
-    #[DataProvider('invalidClassNamesProvider')]
-    public function testThrowsExceptionForInvalidClassName(
-        string $className,
-        string $expected,
-    ): void {
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage(
-            "{$expected} is not a proper name for a dependency."
-        );
-
-        ActivityNamespace::create($className);
+        self::assertEquals($expectedPath, $namespace->getPath());
     }
 
     /**
-     * @return array<string, string[]>
+     * @return array<string, array<string, string>>
      */
-    public static function classNameToPathProvider(): array
+    public static function pathProvider(): array
     {
         return [
-            'standard activity name' => [
-                'Foo\\Bar\\ActivityName',
-                '/foo/bar/ActivityName'
+            'basic_activity_name' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'MyActivity',
+                'expectedPath' => 'myvendor/mycomponent/my',
             ],
-            'activity name ending with Query' => [
-                'Foo\\Bar\\MyQuery',
-                '/foo/bar/My'
+            'name_with_query_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'QueryMy',
+                'expectedPath' => 'myvendor/mycomponent/my',
             ],
-            'activity name with Query in middle' => [
-                'Foo\\Bar\\QueryActivity',
-                '/foo/bar/Activity'
+            'query_in_the_middle_should_stay' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'MyQueryActivity',
+                'expectedPath' => 'myvendor/mycomponent/myquery',
             ],
-            'activity name starting with Query' => [
-                'Foo\\Bar\\QueryFoo',
-                '/foo/bar/Foo'
+            'multiple_query_should_only_remove_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'QueryMyQueryActivity',
+                'expectedPath' => 'myvendor/mycomponent/myquery',
             ],
-            'activity name is just Query' => [
-                'Foo\\Bar\\Query',
-                '/foo/bar/'
+            'activity_prefix_should_stay' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'ActivityMyActivity',
+                'expectedPath' => 'myvendor/mycomponent/activitymy',
             ],
-            'activity name with mixed case' => [
-                'Foo\\Bar\\activityName',
-                '/foo/bar/ActivityName'
+            'multiple_activity_prefix_should_stay' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'MyActivityActivity',
+                'expectedPath' => 'myvendor/mycomponent/myactivity',
             ],
-            'vendor and component with mixed case' => [
-                'iLiAs\\aPiGaTeWaY\\ActivityName',
-                '/ilias/apigateway/ActivityName'
+            'double_activity_should_stay' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'ActivityActivity',
+                'expectedPath' => 'myvendor/mycomponent/activity',
             ],
-            'vendor and component with numbers' => [
-                'Vendor1\\Component2\\ActivityName',
-                '/vendor1/component2/ActivityName'
+            'activity_suffix_should_be_omitted' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'MyQueryActivity',
+                'expectedPath' => 'myvendor/mycomponent/myquery',
             ],
-            'class name with more than three parts' => [
-                'Foo\\Bar\\Baz\\FooBarBaz\\SubComponent\\ActivityName',
-                '/foo/bar/ActivityName'
+            'name_with_lowercase_query_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'queryMyActivity', // ucfirst makes it QueryActivity, then str_replace removes Query
+                'expectedPath' => 'myvendor/mycomponent/my',
             ],
-        ];
-    }
-
-    /**
-     * @return array<string, string[]>
-     */
-    public static function invalidClassNamesProvider(): array
-    {
-        return [
-            'two parts' => ["Foo\\Bar", 'Foo\Bar'],
-            'one part' => ["Foo", 'Foo'],
+            'name_with_uppercase' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'My', // ucfirst, then strtolower
+                'expectedPath' => 'myvendor/mycomponent/my',
+            ],
+            'empty_vendor_and_component' => [
+                'vendor' => '',
+                'component' => '',
+                'name' => 'MyActivity',
+                'expectedPath' => 'my',
+            ],
+            'name_is_just_query' => [
+                'vendor' => 'Vendor',
+                'component' => 'Component',
+                'name' => 'Query',
+                'expectedPath' => 'vendor/component', // ucfirst makes it Query, then str_replace removes Query
+            ],
+            'name_is_empty' => [
+                'vendor' => 'Vendor',
+                'component' => 'Component',
+                'name' => '',
+                'expectedPath' => 'vendor/component', // ucfirst('') is '', str_replace('Query', '', '') is ''
+            ],
+            'vendor_is_ilias_should_be_omitted' => [
+                'vendor' => 'ILIAS',
+                'component' => 'MyComponent',
+                'name' => 'MyActivity',
+                'expectedPath' => 'mycomponent/my',
+            ],
+            'vendor_is_ilias_case_insensitive_should_be_omitted' => [
+                'vendor' => 'ilias',
+                'component' => 'MyComponent',
+                'name' => 'MyActivity',
+                'expectedPath' => 'mycomponent/my',
+            ],
         ];
     }
 }
