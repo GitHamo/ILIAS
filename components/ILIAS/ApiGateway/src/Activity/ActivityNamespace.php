@@ -48,7 +48,7 @@ readonly class ActivityNamespace
 
         $subject = strtolower($subject);
 
-        return implode('/', array_filter([
+        return '/' . implode('/', array_filter([
             $vendor,
             $component,
             $subject,

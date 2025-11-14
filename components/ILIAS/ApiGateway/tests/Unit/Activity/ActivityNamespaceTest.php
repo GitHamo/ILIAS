@@ -32,91 +32,91 @@ final class ActivityNamespaceTest extends TestCase
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'MyActivity',
-                'expectedPath' => 'myvendor/mycomponent/my',
+                'expectedPath' => '/myvendor/mycomponent/my',
             ],
             'name_with_query_prefix' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'QueryMy',
-                'expectedPath' => 'myvendor/mycomponent/my',
+                'expectedPath' => '/myvendor/mycomponent/my',
             ],
             'query_in_the_middle_should_stay' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'MyQueryActivity',
-                'expectedPath' => 'myvendor/mycomponent/myquery',
+                'expectedPath' => '/myvendor/mycomponent/myquery',
             ],
             'multiple_query_should_only_remove_prefix' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'QueryMyQueryActivity',
-                'expectedPath' => 'myvendor/mycomponent/myquery',
+                'expectedPath' => '/myvendor/mycomponent/myquery',
             ],
             'activity_prefix_should_stay' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'ActivityMyActivity',
-                'expectedPath' => 'myvendor/mycomponent/activitymy',
+                'expectedPath' => '/myvendor/mycomponent/activitymy',
             ],
             'multiple_activity_prefix_should_stay' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'MyActivityActivity',
-                'expectedPath' => 'myvendor/mycomponent/myactivity',
+                'expectedPath' => '/myvendor/mycomponent/myactivity',
             ],
             'double_activity_should_stay' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'ActivityActivity',
-                'expectedPath' => 'myvendor/mycomponent/activity',
+                'expectedPath' => '/myvendor/mycomponent/activity',
             ],
             'activity_suffix_should_be_omitted' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'MyQueryActivity',
-                'expectedPath' => 'myvendor/mycomponent/myquery',
+                'expectedPath' => '/myvendor/mycomponent/myquery',
             ],
             'name_with_lowercase_query_prefix' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'queryMyActivity', // ucfirst makes it QueryActivity, then str_replace removes Query
-                'expectedPath' => 'myvendor/mycomponent/my',
+                'expectedPath' => '/myvendor/mycomponent/my',
             ],
             'name_with_uppercase' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
                 'name' => 'My', // ucfirst, then strtolower
-                'expectedPath' => 'myvendor/mycomponent/my',
+                'expectedPath' => '/myvendor/mycomponent/my',
             ],
             'empty_vendor_and_component' => [
                 'vendor' => '',
                 'component' => '',
                 'name' => 'MyActivity',
-                'expectedPath' => 'my',
+                'expectedPath' => '/my',
             ],
             'name_is_just_query' => [
                 'vendor' => 'Vendor',
                 'component' => 'Component',
                 'name' => 'Query',
-                'expectedPath' => 'vendor/component', // ucfirst makes it Query, then str_replace removes Query
+                'expectedPath' => '/vendor/component', // ucfirst makes it Query, then str_replace removes Query
             ],
             'name_is_empty' => [
                 'vendor' => 'Vendor',
                 'component' => 'Component',
                 'name' => '',
-                'expectedPath' => 'vendor/component', // ucfirst('') is '', str_replace('Query', '', '') is ''
+                'expectedPath' => '/vendor/component', // ucfirst('') is '', str_replace('Query', '', '') is ''
             ],
             'vendor_is_ilias_should_be_omitted' => [
                 'vendor' => 'ILIAS',
                 'component' => 'MyComponent',
                 'name' => 'MyActivity',
-                'expectedPath' => 'mycomponent/my',
+                'expectedPath' => '/mycomponent/my',
             ],
             'vendor_is_ilias_case_insensitive_should_be_omitted' => [
                 'vendor' => 'ilias',
                 'component' => 'MyComponent',
                 'name' => 'MyActivity',
-                'expectedPath' => 'mycomponent/my',
+                'expectedPath' => '/mycomponent/my',
             ],
         ];
     }
