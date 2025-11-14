@@ -21,17 +21,21 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Activity;
 
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
-use ILIAS\Component\Activities\Activity;
+use ILIAS\Component\Activities\Repository as ActivityRepository;
 
 final readonly class ActivityRoutesAutoloader
 {
     public function __construct(
         private RoutesRegistry $routesRegistry,
+        private ActivityRepository $activityRepository,
+        private ActivityRouteFactory $activityRouteFactory,
     ) {}
 
-    public function load(Activity ...$activities): void
+    public function load(): void
     {
-        $routes = array_map([ActivityRoute::class, 'fromActivity'], $activities);
+        $activites = $this->activityRepository->getActivitiesByName("/.*/");
+        // @todo: exclude ILIAS\Setup activities
+        $routes = array_map([$this->activityRouteFactory, 'create'], iterator_to_array($activites));
 
         array_walk($routes, [$this->routesRegistry, 'register']);
     }
