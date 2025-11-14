@@ -22,6 +22,9 @@ namespace ILIAS\ApiGateway\Activity;
 
 readonly class ActivityNamespace
 {
+    /** @var string[] */
+    private const array CORE_VENDORS = ['ilias'];
+
     public function __construct(
         private string $vendor,
         private string $component,
@@ -30,13 +33,26 @@ readonly class ActivityNamespace
 
     public function getPath(): string
     {
-        // ommit vendor if it is ilias
-        // ommit component if it is setup
-        // ommit name has Activity, Query or QueryActivity
+        $vendor = strtolower($this->vendor);
+        $vendor = in_array($vendor, self::CORE_VENDORS, true) ? '' : $vendor;
+        $component = strtolower($this->component);
         $subject = ucfirst($this->name);
-        $path = strtolower("/{$this->vendor}/{$this->component}/");
-        $path .= str_replace('Query', '', $subject);
 
-        return $path;
+        if (str_starts_with($subject, 'Query')) {
+            $subject = substr($subject, 5); // 5 is the length of "Query"
+        }
+
+        if (str_ends_with($subject, 'Activity')) {
+            $subject = substr($subject, 0, -8); // 8 is the length of "Activity"
+        }
+
+        $subject = strtolower($subject);
+
+        return implode('/', array_filter([
+            $vendor,
+            $component,
+            $subject,
+            // @todo: append '{id}' in case of ObjectActivity
+        ]));
     }
 }
