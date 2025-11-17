@@ -8339,7 +8339,7 @@ dateplaner#:#cal_crs_timing_start#:#Suggested Start
 dateplaner#:#cal_daily#:#Daily
 dateplaner#:#cal_date_and_time#:#Date and Time
 dateplaner#:#cal_date_booked#:#booked
-dateplaner#:#cal_date_format_info#:#Please choose a format for presentation of dates.
+dateplaner#:#cal_date_format_info#:#Please choose a format for displaying dates.
 dateplaner#:#cal_date_time_title#:#Date and Time
 dateplaner#:#cal_day_end#:#Day End
 dateplaner#:#cal_day_of_month#:#Day of the month
@@ -8521,7 +8521,7 @@ dateplaner#:#cal_sync_enabled#:#Enabled
 dateplaner#:#cal_table_categories#:#Calendar Selection
 dateplaner#:#cal_task_completion#:#Task Completion
 dateplaner#:#cal_third#:#Third
-dateplaner#:#cal_time_format_info#:#Please choose a format for the input and presentation of time.
+dateplaner#:#cal_time_format_info#:#Please choose a format for presentation of time.
 dateplaner#:#cal_timezone_info#:#Please choose the nearest city in your time zone to make sure that appointments within ILIAS are displayed properly in your local time.
 dateplaner#:#cal_type_crs#:#Course Calendar
 dateplaner#:#cal_type_exc#:#Exercise Calendar
