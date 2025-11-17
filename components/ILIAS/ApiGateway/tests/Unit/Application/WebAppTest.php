@@ -7,10 +7,12 @@ namespace Tests\Unit\Application;
 use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\RouteDispatcher;
 use ILIAS\ApiGateway\Application\WebApp;
-use ILIAS\ApiGateway\Configuration\WebConfig;
+use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
+use ILIAS\HTTP\Response\ResponseFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -18,17 +20,16 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App as SlimApp;
 use Slim\Middleware\ErrorMiddleware;
-use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 class WebAppTest extends TestCase
 {
     private MockObject&RoutesRegistry $registry;
     private MockObject&RouteDispatcher $dispatcher;
-    private MockObject&ErrorHandler $errorHandler;
     private MockObject&LoggerInterface $logger;
     /** @var MockObject&SlimApp<\Psr\Container\ContainerInterface> */
-    private MockObject&SlimApp $app;
+    private MockObject&SlimApp $slimApp;
+    private MockObject&ErrorHandler $errorHandler;
     private MockObject&ResponseFactory $responseFactory;
 
     #[\Override]
@@ -40,8 +41,8 @@ class WebAppTest extends TestCase
         $this->dispatcher = $this->createMock(RouteDispatcher::class);
         $this->errorHandler = $this->createMock(ErrorHandler::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->app = $this->createMock(SlimApp::class);
         $this->responseFactory = $this->createMock(ResponseFactory::class);
+        $this->slimApp = $this->createMock(SlimApp::class);
     }
 
     /**
@@ -54,24 +55,26 @@ class WebAppTest extends TestCase
 
         $responseMock = $this->createMock(ResponseInterface::class);
         $streamHandle = fopen('php://memory', 'r+');
-        
+
         if ($streamHandle === false) {
             self::fail('Failed to open memory stream for testing.');
         }
-        
+
         $responseBodyMock = new \Slim\Psr7\Stream($streamHandle);
 
-        $this->responseFactory->method('createResponse')
-            ->with(503, 'Service Unavailable')
+        $this->responseFactory->method('create')
             ->willReturn($responseMock);
 
+        $responseMock->method('withStatus')
+            ->with(503)
+            ->willReturn($responseMock);
         $responseMock->method('withHeader')
             ->with('Content-Type', 'text/plain')
             ->willReturn($responseMock);
 
         $responseMock->method('getBody')->willReturn($responseBodyMock);
 
-        $this->app->expects(self::never())->method('run');
+        $this->slimApp->expects(self::never())->method('run');
 
         ob_start();
         $webApp->run();
@@ -90,7 +93,6 @@ class WebAppTest extends TestCase
     {
         $webApp = $this->createWebApp(
             isEnabled: true,
-            basePath: '/foo',
         );
 
         $routeHandler = $this->createMock(RouteHandler::class);
@@ -106,7 +108,7 @@ class WebAppTest extends TestCase
 
         $groupProxyMock = $this->createMock(RouteCollectorProxy::class);
 
-        $this->app->method('group')
+        $this->slimApp->method('group')
             ->willReturnCallback(function (string $pattern, callable $callable) use ($groupProxyMock) {
                 $callable($groupProxyMock);
 
@@ -145,8 +147,8 @@ class WebAppTest extends TestCase
     {
         $webApp = $this->createWebApp();
 
-        $this->app->expects(self::once())->method('addRoutingMiddleware');
-        $this->app->expects(self::once())->method('run');
+        $this->slimApp->expects(self::once())->method('addRoutingMiddleware');
+        $this->slimApp->expects(self::once())->method('run');
 
         $webApp->run();
     }
@@ -163,7 +165,7 @@ class WebAppTest extends TestCase
             logErrorDetails: $logErrorDetails = true,
         );
 
-        $this->app->expects(self::once())
+        $this->slimApp->expects(self::once())
             ->method('addErrorMiddleware')
             ->with(
                 self::identicalTo($debugMode),
@@ -187,7 +189,6 @@ class WebAppTest extends TestCase
 
     private function createWebApp(
         string $baseUrl = '',
-        string $basePath = '',
         bool $isEnabled = true,
         bool $debugMode = false,
         bool $logErrors = false,
@@ -196,7 +197,7 @@ class WebAppTest extends TestCase
         return new WebApp(
             new WebConfig(
                 $baseUrl,
-                $basePath,
+                ServiceProtocol::REST,
                 $isEnabled,
                 $debugMode,
                 $logErrors,
@@ -206,8 +207,8 @@ class WebAppTest extends TestCase
             $this->dispatcher,
             $this->errorHandler,
             $this->logger,
-            $this->app,
             $this->responseFactory,
+            $this->slimApp,
         );
     }
 }

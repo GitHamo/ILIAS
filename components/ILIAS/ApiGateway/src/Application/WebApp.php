@@ -20,13 +20,13 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
-use ILIAS\ApiGateway\Configuration\WebConfig;
+use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
+use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
-use Slim\App;
-use Slim\Psr7\Factory\ResponseFactory;
+use Slim\App as SlimApp;
 use Slim\ResponseEmitter;
 
 /**
@@ -37,7 +37,7 @@ use Slim\ResponseEmitter;
 final readonly class WebApp
 {
     /**
-     * @param App<\Psr\Container\ContainerInterface> $app
+     * @param SlimApp<\Psr\Container\ContainerInterface> $application
      */
     public function __construct(
         private WebConfig $configuration,
@@ -45,19 +45,19 @@ final readonly class WebApp
         private RouteDispatcher $dispatcher,
         private ErrorHandler $errorHandler,
         private LoggerInterface $logger,
-        private App $app,
         private ResponseFactory $responseFactory,
+        private SlimApp $application,
     ) {}
 
     public function run(): void
     {
-        if (!$this->configuration->isEnabled) {
-            $respone = $this->responseFactory->createResponse(503, 'Service Unavailable')
-                ->withHeader('Content-Type', 'text/plain');
+        if (!$this->configuration->isEnabled()) {
+            $response = $this->responseFactory->create();
 
-            $respone->getBody()->write('API Service is currently disabled.');
+            $response->withStatus(503)->withHeader('Content-Type', 'text/plain');
+            $response->getBody()->write('API Service is currently disabled.');
 
-            (new ResponseEmitter())->emit($respone);
+            (new ResponseEmitter())->emit($response);
 
             return;
         }
@@ -65,7 +65,7 @@ final readonly class WebApp
         $this->registerMiddlewares();
         $this->registerRoutes();
 
-        $this->app->run();
+        $this->application->run();
     }
 
     private function registerMiddlewares(): void
@@ -74,7 +74,7 @@ final readonly class WebApp
          * The routing middleware should be added earlier than the error middleware.
          * Otherwise exceptions thrown from it will not be handled by the middleware.
          */
-        $this->app->addRoutingMiddleware();
+        $this->application->addRoutingMiddleware();
 
         // register default middlewares
         // register service middlewares
@@ -87,10 +87,10 @@ final readonly class WebApp
 
     private function registerErrorHandler(): void
     {
-        $errorMiddleware = $this->app->addErrorMiddleware(
-            $this->configuration->debugMode,
-            $this->configuration->logErrors,
-            $this->configuration->logErrorDetails,
+        $errorMiddleware = $this->application->addErrorMiddleware(
+            $this->configuration->isDebugMode(),
+            $this->configuration->isLogErrors(),
+            $this->configuration->isLogErrorDetails(),
             $this->logger,
         );
 
@@ -100,7 +100,7 @@ final readonly class WebApp
     private function registerRoutes(): void
     {
         // group instead of using $this->app->setBasePath()
-        $this->app->group(
+        $this->application->group(
             $this->getBasePath(),
             function (\Slim\Routing\RouteCollectorProxy $group): void {
                 foreach ($this->registry->all() as $route) {
@@ -124,6 +124,6 @@ final readonly class WebApp
 
     private function getBasePath(): string
     {
-        return '/' . trim($this->configuration->basePath, '/');
+        return '/' . trim($this->configuration->getBasePath(), '/');
     }
 }

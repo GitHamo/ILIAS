@@ -23,7 +23,7 @@ namespace ILIAS\ApiGateway\Activity;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\Component\Activities\Repository as ActivityRepository;
 
-final readonly class ActivityRoutesAutoloader
+readonly class ActivityRoutesAutoloader
 {
     public function __construct(
         private RoutesRegistry $routesRegistry,

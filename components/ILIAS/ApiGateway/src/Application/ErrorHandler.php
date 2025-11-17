@@ -20,10 +20,9 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
-use ILIAS\ApiGateway\Configuration\WebConfig;
-use ILIAS\ApiGateway\Models\Payload;
-use ILIAS\ApiGateway\Webservice;
-use Psr\Http\Message\ResponseFactoryInterface;
+use ILIAS\ApiGateway\Contracts\WebConfig;
+use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -38,16 +37,16 @@ readonly class ErrorHandler
         private Webservice $service,
         private WebConfig $config,
         private LoggerInterface $logger,
-        private ResponseFactoryInterface $responseFactory,
+        private ResponseFactory $responseFactory,
     ) {}
 
     public function __invoke(
         ServerRequestInterface $request,
         Throwable $exception,
     ): ResponseInterface {
-        if ($this->config->logErrors) {
+        if ($this->config->isLogErrors()) {
             $logMessage = $exception->getMessage();
-            if ($this->config->logErrorDetails) {
+            if ($this->config->isLogErrorDetails()) {
                 $logMessage .= "\nStack trace:\n" . (string)$exception;
             }
 
@@ -60,7 +59,9 @@ readonly class ErrorHandler
 
         $responsePayload = $this->service->handleError($exception);
 
-        $response = $this->responseFactory->createResponse($statusCode);
+        $response = $this->responseFactory->create();
+        
+        $response->withStatus($statusCode);
         
         foreach ($responsePayload->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);

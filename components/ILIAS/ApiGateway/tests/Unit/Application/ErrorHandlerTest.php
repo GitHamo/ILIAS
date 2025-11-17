@@ -6,12 +6,13 @@ namespace Tests\Unit\Application;
 
 use Exception;
 use ILIAS\ApiGateway\Application\ErrorHandler;
-use ILIAS\ApiGateway\Configuration\WebConfig;
-use ILIAS\ApiGateway\Models\Payload;
-use ILIAS\ApiGateway\Webservice;
+use ILIAS\ApiGateway\Contracts\Payload;
+use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Contracts\WebConfig;
+use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\HTTP\Response\ResponseFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -23,7 +24,7 @@ final class ErrorHandlerTest extends TestCase
     private string $payloadBody = 'Specific Message';
     private MockObject&Webservice $webservice;
     private MockObject&LoggerInterface $logger;
-    private MockObject&ResponseFactoryInterface $responseFactory;
+    private MockObject&ResponseFactory $responseFactory;
     private MockObject&ServerRequestInterface $request;
     private MockObject&ResponseInterface $response;
     private MockObject&StreamInterface $stream;
@@ -33,12 +34,12 @@ final class ErrorHandlerTest extends TestCase
     {
         $this->webservice = $this->createMock(Webservice::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->responseFactory = $this->createMock(ResponseFactoryInterface::class);
+        $this->responseFactory = $this->createMock(ResponseFactory::class);
         $this->request = $this->createMock(ServerRequestInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->stream = $this->createMock(StreamInterface::class);
 
-        $this->responseFactory->method('createResponse')->willReturn($this->response);
+        $this->responseFactory->method('create')->willReturn($this->response);
         $this->response->method('withHeader')->willReturn($this->response);
         $this->response->method('getBody')->willReturn($this->stream);
         $this->webservice->method('handleError')->willReturn(
@@ -55,8 +56,8 @@ final class ErrorHandlerTest extends TestCase
     {
         $exception = new Exception('Test Exception', 0);
 
-        $this->responseFactory->expects(self::once())
-            ->method('createResponse')
+        $this->response->expects(self::once())
+            ->method('withStatus')
             ->with(500)
             ->willReturn($this->response);
 
@@ -69,8 +70,8 @@ final class ErrorHandlerTest extends TestCase
     {
         $exception = new Exception('Not Found', 404);
 
-        $this->responseFactory->expects(self::once())
-            ->method('createResponse')
+        $this->response->expects(self::once())
+            ->method('withStatus')
             ->with(404)
             ->willReturn($this->response);
 
@@ -83,8 +84,8 @@ final class ErrorHandlerTest extends TestCase
     {
         $exception = new Exception('Service Unavailable', 503);
 
-        $this->responseFactory->expects(self::once())
-            ->method('createResponse')
+        $this->response->expects(self::once())
+            ->method('withStatus')
             ->with(503)
             ->willReturn($this->response);
 
@@ -106,10 +107,11 @@ final class ErrorHandlerTest extends TestCase
 
     public function testAppendsPayloadHeadersToResponseHeaders(): void
     {
-        $exception = new Exception('Any Exception', 200);
+        $exception = new Exception('Any Exception', 500);
 
-        $this->responseFactory->expects(self::once())
-            ->method('createResponse')
+        $this->response->expects(self::once())
+            ->method('withStatus')
+            ->with(500)
             ->willReturn($this->response);
 
         $this->response->expects(self::once())
@@ -174,7 +176,7 @@ final class ErrorHandlerTest extends TestCase
             $this->webservice,
             new WebConfig(
                 'http://localhost',
-                '/api',
+                ServiceProtocol::REST,
                 true,
                 $debugMode,
                 $logErrors,

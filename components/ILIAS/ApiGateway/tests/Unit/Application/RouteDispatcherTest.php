@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\RouteDispatcher;
-use ILIAS\ApiGateway\Models\Payload;
+use ILIAS\ApiGateway\Contracts\Payload;
+use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
-use ILIAS\ApiGateway\Webservice;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -74,15 +74,15 @@ class RouteDispatcherTest extends TestCase
             ->method('write')
             ->with($serviceResponseBody);
 
-        $callCount = 0;
-
         $this->responseMock
             ->expects(self::once())
             ->method('withHeader')
             ->with(
                 self::identicalTo('foo'),
                 self::identicalTo('bar'),
-            );
+            )
+            ->willReturn($this->responseMock)
+        ;
 
         $response = ($this->dispatcher)(
             $this->requestMock,
