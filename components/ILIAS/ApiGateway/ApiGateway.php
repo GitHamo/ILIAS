@@ -32,6 +32,7 @@ use ILIAS\ApiGateway\Routing\RoutesAutoloader;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Routing\RouteStaticRepository;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
+use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\Repository as ActivityRepository;
 
 class ApiGateway implements Component\Component
@@ -112,6 +113,20 @@ class ApiGateway implements Component\Component
             methods: ['GET'],
             description: 'A simple ping pong route for testing purposes.',
             handler: fn(): string => 'Pong!',
+        );
+
+        // example to list all available activities and their corresponding routes
+        $contribute[ApiGateway\Routing\Route::class] = static fn(): Route =>
+        new ApiGateway\Examples\GetActivityListApiAction(
+            $internal['activities_repository'],
+            $internal['activity_route_factory'],
+            '/rest',
+        );
+
+        // example activity autoloaded
+        $contribute[Component\Activities\Activity::class] = static fn(): Activity =>
+        new ApiGateway\Examples\ExampleActivity(
+            $pull[Data\Factory::class],
         );
     }
 }

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Slim\App as SlimApp;
 
-final class HttpFactoryTest extends TestCase
+final class HttpServiceFactoryTest extends TestCase
 {
     private HttpServiceFactory $factory;
 
