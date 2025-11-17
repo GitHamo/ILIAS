@@ -26,7 +26,6 @@ require_once 'vendor/composer/vendor/autoload.php';
 
 require_once 'artifacts/bootstrap_default.php';
 
-entry_point('ILIAS Legacy Initialisation Adapter');
+entry_point(\ILIAS\ApiGateway\RestAppEntryPoint::class);
 
-require_once 'components/ILIAS/ApiGateway/resources/rest/app.php';
-
+exit();
