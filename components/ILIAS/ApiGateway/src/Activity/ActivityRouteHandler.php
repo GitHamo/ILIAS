@@ -22,6 +22,8 @@ namespace ILIAS\ApiGateway\Activity;
 
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\Data\Result;
+use RuntimeException;
 
 class ActivityRouteHandler implements RouteHandler
 {
@@ -32,13 +34,35 @@ class ActivityRouteHandler implements RouteHandler
     ) {}
 
     #[\Override]
-    public function __invoke(array $params): void
+    public function __invoke(array $params): mixed
     {
         $parameters = $this->validate($params);
 
-        if ($this->activity->isAllowedToPerform($this->userId, $parameters)) {
-            $this->activity->perform($parameters);
+        if (false === $this->activity->isAllowedToPerform($this->userId, $parameters)) {
+            // @todo: create own exception
+            throw new RuntimeException('You are not allowed to perform this activity.', 403);
         }
+
+        $result = $this->activity->perform($parameters);
+        
+        if($result instanceof Result) {
+
+            if($result->isError()) {
+                throw $result->error();
+            }
+
+            $factory = new \ILIAS\Data\Description\Factory();
+            $output = $this->activity->getOutputDescription($factory);
+
+            if(!$output->matches($result)) {
+                throw new RuntimeException('Output description does not match result.');
+            }
+
+            return $result->value();
+            return $this->activity->getOutputDescription($factory)->getPrimitiveRepresentation($result);
+        }
+
+        return $result ?? null;
     }
 
     /**

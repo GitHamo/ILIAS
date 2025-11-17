@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Activity;
 
+use Exception;
 use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\Data\Result;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Override;
+use RuntimeException;
 
 final class ActivityRouteHandlerTest extends TestCase
 {
     private ActivityRouteHandler $handler;
-    private MockObject&Activity $activityMock;
+    private Activity&MockObject $activityMock;
 
     #[Override]
     protected function setUp(): void
@@ -56,6 +59,30 @@ final class ActivityRouteHandlerTest extends TestCase
 
         $this->activityMock->expects(self::never())
             ->method('perform');
+
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('You are not allowed to perform this activity.');
+        self::expectExceptionCode(403);
+
+        ($this->handler)([]);
+    }
+
+    public function testThrowsExceptionIfPerformResultHasError(): void
+    {
+        $result = $this->createConfiguredMock(Result::class, [
+            'isError' => true,
+            'error' => new \BadFunctionCallException(),
+        ]);
+
+        $this->activityMock->expects(self::once())
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+            ->method('perform')
+            ->willReturn($result);
+
+        self::expectException(Exception::class);
 
         ($this->handler)([]);
     }
