@@ -8338,7 +8338,7 @@ dateplaner#:#cal_crs_timing_start#:#Bearbeitungsbeginn
 dateplaner#:#cal_daily#:#Täglich
 dateplaner#:#cal_date_and_time#:#Datum und Uhrzeit
 dateplaner#:#cal_date_booked#:#gebucht
-dateplaner#:#cal_date_format_info#:#Bitte wählen Sie ein Format für die Eingabe eines Datums aus.
+dateplaner#:#cal_date_format_info#:#Bitte wählen Sie ein Format für die Darstellung der Zeit aus.
 dateplaner#:#cal_date_time_title#:#Datum und Uhrzeit
 dateplaner#:#cal_day_end#:#Tagesende
 dateplaner#:#cal_day_of_month#:#Tag des Monats
@@ -8520,7 +8520,7 @@ dateplaner#:#cal_sync_enabled#:#Eingeschaltet
 dateplaner#:#cal_table_categories#:#Kalenderauswahl
 dateplaner#:#cal_task_completion#:#Fertigstellung
 dateplaner#:#cal_third#:#Dritten
-dateplaner#:#cal_time_format_info#:#Bitte wählen Sie ein Format für die Eingabe und Darstellung der Zeit.
+dateplaner#:#cal_time_format_info#:#Bitte wählen Sie ein Format für die Darstellung der Zeit.
 dateplaner#:#cal_timezone_info#:#Bitte wählen Sie die nächstgelegene Stadt in Ihrer Zeitzone für die Anzeige von Terminen innerhalb von ILIAS aus.
 dateplaner#:#cal_type_crs#:#Kurskalender
 dateplaner#:#cal_type_exc#:#Übungskalender
