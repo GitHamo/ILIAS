@@ -71,8 +71,8 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
         string $new_value
     ): void {
         $query = $this->db->query("SELECT id, conf FROM badge_badge WHERE type_id='user/profile' AND conf LIKE '%$old_value%'");
-        while (($badge = $this->db->fetch($query)) !== null) {
-            $config_array = unserialize($badge['conf'], ['allowed_classes' => false]);
+        while (($badge = $this->db->fetchObject($query)) !== null) {
+            $config_array = unserialize($badge->conf, ['allowed_classes' => false]);
             if (!array_key_exists('profile', $config_array)) {
                 continue;
             }
@@ -92,7 +92,7 @@ class DBUpdateSteps11 implements \ilDatabaseUpdateSteps
                     'conf' => [\ilDBConstants::T_TEXT, serialize($config_array)]
                 ],
                 [
-                    'id' => [\ilDBConstants::T_INTEGER, $badge['id']]
+                    'id' => [\ilDBConstants::T_INTEGER, $badge->id]
                 ]
             );
         }
