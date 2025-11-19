@@ -958,7 +958,7 @@ class ilOpenIdConnectSettingsGUI
         $text_input = $this->ui
             ->input()
             ->field()
-            ->text($definition->getLabel(), '')
+            ->text($definition->getLabel($this->lng), '')
             ->withAdditionalTransformation($this->trimIfStringTrafo())
             ->withValue($value)
             ->withDedicatedName(self::UDF_STRING . $definition->getIdentifier() . self::VALUE_STRING);
