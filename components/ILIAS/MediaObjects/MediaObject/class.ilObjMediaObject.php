@@ -35,7 +35,8 @@ define("IL_MODE_FULL", 3);
  */
 class ilObjMediaObject extends ilObject
 {
-    public const DEFAULT_PREVIEW_SIZE = 80;
+    public const DEFAULT_THUMB_SIZE = 80;
+    public const DEFAULT_PREVIEW_SIZE = 400;
     protected ThumbsManager $thumbs;
     protected MediaObjectManager $manager;
     protected InternalDomainService $domain;
@@ -348,6 +349,8 @@ class ilObjMediaObject extends ilObject
             }
         }
 
+        $this->manager->updateLastChange($this->getId());
+
         self::handleQuotaUpdate($this);
         $ilAppEventHandler = $this->app_event_handler;
         $ilAppEventHandler->raise(
@@ -532,7 +535,7 @@ class ilObjMediaObject extends ilObject
                             }
                         }
                     } else {
-                        $location = $item->getLocation();
+                        $location = trim($item->getLocation());
                         // irss
                         if ($item->getLocationType() === "LocalFile" &&
                         !is_file($this->getDataDirectory() . "/" . $item->getLocation())) {
@@ -810,7 +813,7 @@ class ilObjMediaObject extends ilObject
     public static function _getMobsOfObject(
         string $a_type,
         int $a_id,
-        int $a_usage_hist_nr = 0,
+        int|false $a_usage_hist_nr = 0,
         string $a_lang = "-"
     ): array {
         global $DIC;
@@ -822,7 +825,7 @@ class ilObjMediaObject extends ilObject
             $lstr = " AND usage_lang = " . $ilDB->quote($a_lang, "text");
         }
         $hist_str = "";
-        if ($a_usage_hist_nr > 0) {
+        if ($a_usage_hist_nr !== false) {   // see #45933, restore ILIAS 7 behaviour
             $hist_str = " AND usage_hist_nr = " . $ilDB->quote($a_usage_hist_nr, "integer");
         }
 
@@ -1583,7 +1586,7 @@ class ilObjMediaObject extends ilObject
         string $thumbname,
     ): void {
         $format = self::getMimeType($source, true);
-        $this->manager->generatePreview(
+        $this->thumbs->createPreview(
             $this->getId(),
             $source,
             true,
@@ -1702,7 +1705,7 @@ class ilObjMediaObject extends ilObject
         $logger->debug("Generate preview pic...");
         $logger->debug("..." . $item->getFormat());
 
-        $this->manager->generatePreview(
+        $this->thumbs->createPreview(
             $this->getId(),
             $item->getLocation(),
             $item->getLocationType() === "LocalFile",
@@ -1876,6 +1879,7 @@ class ilObjMediaObject extends ilObject
                 $thumbnail_url = $meta["thumbnail_url"] ?? "";
                 $url = parse_url($thumbnail_url);
                 if ($thumbnail_url !== "") {
+                    $mob_logger = ilLoggerFactory::getLogger('mob');
                     $file = basename($url["path"]);
                     $this->manager->addPreviewFromUrl(
                         $this->getId(),

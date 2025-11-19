@@ -69,7 +69,8 @@ class ilDataCollectionMailNotification extends ilMailNotification
             $this->initMail();
             $this->setSubject(sprintf($lng->txt('dcl_change_notification_subject'), $title));
 
-            $this->setBody(ilMail::getSalutation($user_id, $lng));
+            $this->setBody('');
+            $this->appendBody(ilMail::getSalutation($user_id, $lng));
             $this->appendBody($this->getAction($lng));
             $this->appendBody($lng->txt('obj_dcl') . ": $title");
             $this->appendBody($lng->txt('dcl_table') . ": $table");
@@ -82,6 +83,7 @@ class ilDataCollectionMailNotification extends ilMailNotification
                         if ($field->isStandardField()) {
                             $value = $this->record->getStandardFieldPlainText($field->getId());
                         } elseif ($record_field = $this->record->getRecordField((int) $field->getId())) {
+                            $record_field->setUser(new ilObjUser($user_id));
                             $value = $record_field->getPlainText();
                         }
                         $message .= $field->getTitle() . ': ' . $value . "\n";

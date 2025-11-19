@@ -404,7 +404,7 @@
 	<xsl:param name="prevent_deletion">n</xsl:param>
 
 	<xsl:if test = "$javascript = 'enable'">
-	<div class="ilOverlay il_editmenu ilNoDisplay">
+	<div class="il_editmenu ilNoDisplay">
 		<xsl:if test = "$droparea = 'n'">
 			<xsl:attribute name="id">contextmenu_<xsl:value-of select="$hier_id"/></xsl:attribute>
 		</xsl:if>
@@ -1931,7 +1931,7 @@
 					<xsl:with-param name="ed_type">edit-flist-item</xsl:with-param>
 				</xsl:call-template>
 				&amp;nbsp;
-				<div class="ilOverlay il_editmenu ilNoDisplay">
+				<div class="il_editmenu ilNoDisplay">
 					<xsl:attribute name="id">contextmenu_i<xsl:value-of select="@HierId"/></xsl:attribute>
 					<xsl:call-template name="ListItemMenu"/>
 				</div>
@@ -2303,7 +2303,7 @@
 
 	<!-- menu -->
 	<xsl:if test="$mode = 'edit' and $javascript='enable'">
-		<div class="ilOverlay il_editmenu ilNoDisplay">
+		<div class="il_editmenu ilNoDisplay">
 			<xsl:attribute name="id">contextmenu_<xsl:value-of select="../../@HierId"/></xsl:attribute>
 			<xsl:call-template name="MOBEditMenu">
 				<xsl:with-param name="hier_id" select="../../@HierId"/>
@@ -2843,15 +2843,15 @@
 		<xsl:when test="$fullscreen_link = 'fullscreen.html'">
 			<a target="_blank">
 			<xsl:attribute name="href">fullscreen_<xsl:value-of select="substring-after($cmobid,'mob_')"/>.html</xsl:attribute>
-			<img style="float: right; width: auto;">
+			<img style="float: right;">
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
 			</img>
 			</a>
 		</xsl:when>
 		<xsl:otherwise>
-			<a target="_blank">
+			<a href="#" style="float: right; width: auto; display:inline-block" target="_blank">
 			<xsl:attribute name="onclick">il.COPagePres.openFullScreenModal('<xsl:value-of select="$fullscreen_link"/>&amp;mob_id=<xsl:value-of select="substring-after($cmobid,'mob_')"/>&amp;pg_id=<xsl:value-of select="$pg_id"/>'); return false;</xsl:attribute>
-			<img style="float: right; width: auto;">
+			<img>
 			<xsl:attribute name="src"><xsl:value-of select="$enlarge_path"/></xsl:attribute>
 			</img>
 			</a>
@@ -3648,6 +3648,8 @@
 
 <!-- Plugged -->
 <xsl:template match="Plugged">
+	<xsl:variable name="lang_var">pc_plugged_<xsl:value-of select="@PluginName"/></xsl:variable>
+	<xsl:call-template name="EditLabel"><xsl:with-param name="text"><xsl:value-of select="//LVs/LV[@name=$lang_var]/@value"/></xsl:with-param></xsl:call-template>
 	<xsl:call-template name="EditReturnAnchors"/>
 		{{{{{Plugged<pl/><xsl:value-of select="@PluginName"/><pl/><xsl:value-of select="@PluginVersion"/><xsl:for-each select="./PluggedProperty"><pl/><xsl:value-of select="@Name"/><pl/><xsl:value-of select="."/></xsl:for-each>}}}}}
 		<xsl:if test="$mode = 'edit'">

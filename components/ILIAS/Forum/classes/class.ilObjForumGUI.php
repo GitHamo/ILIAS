@@ -27,10 +27,11 @@ use ILIAS\UI\Component\Modal\RoundTrip;
 use ILIAS\Data\Factory as DataFactory;
 use ILIAS\Forum\Drafts\ForumDraftsTable;
 use ILIAS\Forum\Notification\NotificationType;
+use ILIAS\User\Profile\PublicProfileGUI;
 
 /**
  * @ilCtrl_Calls ilObjForumGUI: ilPermissionGUI, ilForumExportGUI, ilInfoScreenGUI
- * @ilCtrl_Calls ilObjForumGUI: ilColumnGUI, ilPublicUserProfileGUI, ilForumModeratorsGUI, ilRepositoryObjectSearchGUI
+ * @ilCtrl_Calls ilObjForumGUI: ilColumnGUI, ILIAS\User\Profile\PublicProfileGUI, ilForumModeratorsGUI, ilRepositoryObjectSearchGUI
  * @ilCtrl_Calls ilObjForumGUI: ilObjectCopyGUI, ilExportGUI, ilCommonActionDispatcherGUI, ilRatingGUI
  * @ilCtrl_Calls ilObjForumGUI: ilForumSettingsGUI, ilContainerNewsSettingsGUI, ilLearningProgressGUI, ilForumPageGUI
  * @ilCtrl_Calls ilObjForumGUI: ilObjectContentStyleSettingsGUI
@@ -290,7 +291,6 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
             'askForPostActivation',
             'askForPostDeactivation',
             'toggleThreadNotification',
-            'toggleThreadNotificationTab',
             'toggleStickiness',
             'cancelPost',
             'savePost',
@@ -473,9 +473,9 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
                 $this->showThreadsObject();
                 break;
 
-            case strtolower(ilPublicUserProfileGUI::class):
+            case strtolower(PublicProfileGUI::class):
                 $user = $this->retrieveIntOrZeroFrom($this->http->wrapper()->query(), 'user');
-                $profile_gui = new ilPublicUserProfileGUI($user);
+                $profile_gui = new PublicProfileGUI($user);
                 $add = $this->getUserProfileAdditional($this->object->getRefId(), $user);
                 $profile_gui->setAdditional($add);
                 $ret = $this->ctrl->forwardCommand($profile_gui);
@@ -550,18 +550,8 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
                 if (in_array($cmd, ['close', 'reopen', 'make_topics_non_sticky', 'makesticky', 'editThread', 'move'])) {
                     $cmd = 'performThreadsAction';
                 }
-                if (in_array($cmd, $this->getTableCommands(), true)) {
-                    $notificationCommands = [
-                        'enableAdminForceNoti',
-                        'disableAdminForceNoti',
-                        'enableHideUserToggleNoti',
-                        'disableHideUserToggleNoti'
-                    ];
 
-                    if (!in_array($cmd, $notificationCommands, true)) {
-                        $cmd = 'performThreadsAction';
-                    }
-                } elseif (($cmd === null || $cmd === '') && $this->getTableCommands() === []) {
+                if ($cmd === null || $cmd === '') {
                     $cmd = 'showThreads';
                 }
 
@@ -579,28 +569,6 @@ class ilObjForumGUI extends ilObjectGUI implements ilDesktopItemHandling, ilForu
             )) {
             $this->addHeaderAction();
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getTableCommands(): array
-    {
-        $tableCommands = [];
-        if ($this->http->wrapper()->post()->has('selected_cmd')) {
-            $tableCommands[] = $this->http->wrapper()->post()->retrieve(
-                'selected_cmd',
-                $this->refinery->kindlyTo()->string()
-            );
-        }
-        if ($this->http->wrapper()->post()->has('selected_cmd2')) {
-            $tableCommands[] = $this->http->wrapper()->post()->retrieve(
-                'selected_cmd2',
-                $this->refinery->kindlyTo()->string()
-            );
-        }
-
-        return $tableCommands;
     }
 
     public function infoScreenObject(): void
@@ -3595,7 +3563,7 @@ EOD
             $this->refinery->byTrying([$this->refinery->kindlyTo()->string(), $this->refinery->always('')])
         );
 
-        $profile_gui = new ilPublicUserProfileGUI($user_id);
+        $profile_gui = new PublicProfileGUI($user_id);
         $add = $this->getUserProfileAdditional($this->object->getRefId(), $user_id);
         $profile_gui->setAdditional($add);
         $profile_gui->setBackUrl(ilUtil::stripSlashes($backurl));

@@ -766,7 +766,7 @@ class ilContainerRenderer
     protected function addStandardRow(
         ilTemplate $a_tpl,
         string $a_html,
-        string $a_item_id = null
+        ?string $a_item_id = null
     ): void {
         if ($a_item_id) {
             $a_tpl->setCurrentBlock("row");
@@ -929,6 +929,9 @@ class ilContainerRenderer
                 }
 
                 $item_data = $this->item_presentation->getRawDataByRefId($ref_id);
+                if ($item_data === null) {
+                    continue;
+                }
                 $checkbox = \ILIAS\Containter\Content\ItemRenderer::CHECKBOX_NONE;
                 if ($this->container_gui->isActiveAdministrationPanel()) {
                     $checkbox = \ILIAS\Containter\Content\ItemRenderer::CHECKBOX_ADMIN;
