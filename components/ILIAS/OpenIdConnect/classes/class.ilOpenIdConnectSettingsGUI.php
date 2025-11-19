@@ -61,7 +61,7 @@ class ilOpenIdConnectSettingsGUI
     private readonly Profile $profile;
     private ilToolbarGUI $toolbar;
     /**
-     * @var array<string, ILIAS\User\Profile\Field>|null
+     * @var array<string, ILIAS\User\Profile\Fields\Field>|null
      */
     private ?array $user_defined_fields = null;
     private ilGlobalTemplateInterface $tpl;
@@ -689,8 +689,7 @@ class ilOpenIdConnectSettingsGUI
             }
 
             foreach ($this->user_defined_fields as $field) {
-                $field = self::UDF_STRING . $field->getIdentifier();
-                $this->updateProfileMappingFieldValue($field->getIdentifier());
+                $this->updateProfileMappingFieldValue(self::UDF_STRING . $field->getIdentifier());
             }
         }
 
@@ -946,12 +945,13 @@ class ilOpenIdConnectSettingsGUI
     }
 
     /**
-     * @param array{"field_id": int, "field_name": string} $definition
-     * @param list<FormInput>                              $ui_container
+     * @param list<FormInput> $ui_container
      * @return list<FormInput>
      */
-    private function buildUserMappingInputFormUDF($definition, array $ui_container): array
-    {
+    private function buildUserMappingInputFormUDF(
+        ILIAS\User\Profile\Fields\Field $definition,
+        array $ui_container
+    ): array {
         $value = $this->settings->getProfileMappingFieldValue(self::UDF_STRING . $definition->getIdentifier());
         $update = $this->settings->getProfileMappingFieldUpdate(self::UDF_STRING . $definition->getIdentifier());
 
