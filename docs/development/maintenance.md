@@ -382,7 +382,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [kunkel](https://docu.ilias.de/go/usr/115)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -422,7 +421,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -464,7 +462,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Curate Test Cases: [amstutz](https://docu.ilias.de/go/usr/26468)
       , [yvseiler](https://docu.ilias.de/go/usr/17694)
     * Authority to (De-)Assign Authorities: [yvseiler](https://docu.ilias.de/go/usr/17694)
-	* Tester: [fschmid](https://docu.ilias.de/go/usr/21087)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -495,7 +492,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -589,7 +585,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -681,7 +676,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -774,7 +768,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -802,7 +795,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Authority to Curate Test Cases: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Authority to (De-)Assign Authorities: [mjansen](https://docu.ilias.de/go/usr/8784)
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Assignee for Security Issues: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -894,7 +886,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [mglaubitz](https://docu.ilias.de/go/usr/28309)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1015,7 +1006,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [miriamhoelscher](https://docu.ilias.de/go/usr/25370)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1202,7 +1192,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to Curate Test Cases: [wischniak](https://docu.ilias.de/go/usr/21896)
     * Authority to (De-)Assign Authorities: [MISSING]
-    * Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING] 
 	* Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1295,7 +1284,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Authority to Curate Test Cases: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Authority to (De-)Assign Authorities: [mjansen (Databay AG)](https://docu.ilias.de/go/usr/8784)
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Assignee for Security Issues: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1348,7 +1336,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [kunkel](https://docu.ilias.de/go/usr/115)
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [fwolf](https://docu.ilias.de/go/usr/29018)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1401,7 +1388,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Sign off on Code Changes: [MISSING]
     * Authority to Curate Test Cases: [MISSING]
     * Authority to (De-)Assign Authorities: [MISSING]
-	* Tester: [TESTER MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Assignee for Security Reports: [MISSING]
     * Assignee for Security Issues: [MISSING]
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
@@ -1553,7 +1539,6 @@ of ILIAS. The file contains the following fields:
     * Authority to Curate Test Cases: [Fabian](https://docu.ilias.de/go/usr/27631)
     * Authority to (De-)Assign Authorities: [amstutz](https://docu.ilias.de/go/usr/26468)
 	  , [tfuhrer](https://docu.ilias.de/go/usr/81947)
-	* Tester: [kauerswald](https://docu.ilias.de/go/usr/70029)
     * Assignee for Security Reports: [amstutz](https://docu.ilias.de/go/usr/26468)
     * Assignee for Security Issues: [amstutz](https://docu.ilias.de/go/usr/26468)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
