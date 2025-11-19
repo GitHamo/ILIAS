@@ -88,6 +88,7 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
 
     public function step_5(): void
     {
+<<<<<<< HEAD
         if (!$this->db->tableExists('help_gt_settings')) {
             $this->db->createTable(
                 'help_gt_settings',
@@ -198,4 +199,8 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
         }
     }
 
+=======
+        $this->db->dropPrimaryKey('help_map');
+    }
+>>>>>>> af8af40c7be (fixed 46200: Screen ID mit \ im Namen lassen sich nicht nutzen; 46255: Manche Screen ID funktionieren nicht)
 }
