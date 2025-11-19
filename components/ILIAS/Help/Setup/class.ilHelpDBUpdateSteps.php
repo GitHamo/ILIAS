@@ -88,7 +88,6 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
 
     public function step_5(): void
     {
-<<<<<<< HEAD
         if (!$this->db->tableExists('help_gt_settings')) {
             $this->db->createTable(
                 'help_gt_settings',
@@ -189,6 +188,38 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
 
     public function step_9(): void
     {
+        // step 5 might not be run on ilias 10 systems (see 10 branch)
+        if (!$this->db->tableExists('help_gt_settings')) {
+            $this->db->createTable(
+                'help_gt_settings',
+                [
+                    'obj_id' => [
+                        'type' => 'integer',
+                        'length' => 4,
+                        'notnull' => true
+                    ],
+                    'active' => [
+                        'type' => 'integer',
+                        'length' => 1,
+                        'notnull' => true,
+                        'default' => 0
+                    ],
+                    'screen_ids' => [
+                        'type' => 'text',
+                        'length' => 1000,
+                        'notnull' => true,
+                        'default' => ''
+                    ],
+                    'permission' => [
+                        'type' => 'integer',
+                        'length' => 1,
+                        'notnull' => true,
+                        'default' => 0
+                    ],
+                ]
+            );
+            $this->db->addPrimaryKey('help_gt_settings', ['obj_id']);
+        }
         if (!$this->db->tableColumnExists('help_gt_settings', 'lang')) {
             $this->db->addTableColumn('help_gt_settings', 'lang', array(
                 'type' => 'text',
@@ -199,8 +230,12 @@ class ilHelpDBUpdateSteps implements \ilDatabaseUpdateSteps
         }
     }
 
-=======
-        $this->db->dropPrimaryKey('help_map');
+    public function step_10(): void
+    {
+        if ($this->db->primaryExistsByFields('help_map', array(
+            'chap', 'component', 'screen_id', 'screen_sub_id', 'perm', 'module_id'))) {
+            $this->db->dropPrimaryKey('help_map');
+        }
     }
->>>>>>> af8af40c7be (fixed 46200: Screen ID mit \ im Namen lassen sich nicht nutzen; 46255: Manche Screen ID funktionieren nicht)
+
 }
