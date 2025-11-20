@@ -93,7 +93,7 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
     public function getHTML(): string
     {
         $table = $this->ui_factory->table()
-            ->data("", $this->getColumns(), $this)
+            ->data($this, "", $this->getColumns())
             ->withOrder(new Order("lti_timestamp", Order::DESC))
             ->withRequest($this->request);
 

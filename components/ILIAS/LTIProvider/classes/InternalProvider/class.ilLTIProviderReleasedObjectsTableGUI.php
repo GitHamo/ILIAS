@@ -147,7 +147,7 @@ class ilLTIProviderReleasedObjectsTableGUI implements DataRetrieval
     public function getHtml(): string
     {
         $table = $this->ui_factory->table()
-            ->data($this->lng->txt('lti_released_objects'), $this->getColumns(), $this)
+            ->data($this, $this->lng->txt('lti_released_objects'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
             ->withRequest($this->request);
 

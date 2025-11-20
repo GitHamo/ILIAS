@@ -218,7 +218,7 @@ class ilObjectConsumerTableGUI implements DataRetrieval
     public function getHtml(): string
     {
         $table = $this->ui_factory->table()
-            ->data($this->lng->txt('lti_object_consumer'), $this->getColumns(), $this)
+            ->data($this, $this->lng->txt('lti_object_consumer'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
             ->withActions($this->getActions())
             ->withRequest($this->request);
