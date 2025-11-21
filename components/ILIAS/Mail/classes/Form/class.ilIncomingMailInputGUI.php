@@ -169,7 +169,7 @@ class ilIncomingMailInputGUI extends ilRadioGroupInputGUI
                 $this->setDisabled(true);
             }
 
-            if ($DIC->user()->getEmail() === '') {
+            if (empty($DIC->user()->getEmail())) {
                 $sub_mail_opt1->setInfo($DIC->language()->txt('first_email_missing_info'));
                 $sub_mail_opt3->setInfo($DIC->language()->txt('first_email_missing_info'));
                 $sub_both_opt1->setInfo($DIC->language()->txt('first_email_missing_info'));
@@ -184,7 +184,7 @@ class ilIncomingMailInputGUI extends ilRadioGroupInputGUI
                 $sub_both_opt3->setDisabled(true);
             }
 
-            if ($DIC->user()->getSecondEmail() === '') {
+            if (empty($DIC->user()->getSecondEmail())) {
                 $sub_mail_opt2->setInfo($DIC->language()->txt('second_email_missing_info'));
                 $sub_mail_opt3->setInfo($DIC->language()->txt('second_email_missing_info'));
                 $sub_both_opt2->setInfo($DIC->language()->txt('second_email_missing_info'));
