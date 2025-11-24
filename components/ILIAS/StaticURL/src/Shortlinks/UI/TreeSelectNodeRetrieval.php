@@ -74,14 +74,14 @@ readonly class TreeSelectNodeRetrieval implements Field\Node\NodeRetrieval
         foreach ($node_ids as $node_id) {
             try {
                 $tree_node_data = $this->tree->getNodeData((int) $node_id);
-                [$object_ref_id, $object_type, $object_title] = $this->extractObjectDataOrAbort($tree_node_data);
+                [$object_path, $object_ref_id, $object_type, $object_title] = $this->extractObjectDataOrAbort($tree_node_data);
                 yield $node_factory->leaf(
-                    $object_ref_id,
+                    $object_path,
                     $object_title,
                     $this->getObjectIcon($icon_factory, $object_ref_id, $object_type),
                 );
             } catch (\LogicException) {
-                yield $node_factory->leaf($node_id, $this->language->txt('unknown'));
+                yield $node_factory->leaf([$node_id], $this->language->txt('unknown'));
             }
         }
     }
@@ -102,7 +102,7 @@ readonly class TreeSelectNodeRetrieval implements Field\Node\NodeRetrieval
 
         $nodes = [];
         foreach ($children as $child) {
-            [$object_ref_id, $object_type, $object_title] = $this->extractObjectDataOrAbort($child);
+            [$object_path, $object_ref_id, $object_type, $object_title] = $this->extractObjectDataOrAbort($child);
 
             $is_object_visible = $this->isObjectVisible($object_ref_id, $object_type);
             $is_object_container = $this->isObjectContainer($object_type);
@@ -124,7 +124,7 @@ readonly class TreeSelectNodeRetrieval implements Field\Node\NodeRetrieval
             if ($is_object_visible && $is_object_container) {
                 if ($depth < $this->max_branch_node_depth || in_array($object_ref_id, $max_depth_node_id_whitelist, true)) {
                     $nodes[] = $node_factory->branch(
-                        $object_ref_id,
+                        $object_path,
                         $object_title,
                         $object_icon,
                         ...$this->createNodes(
@@ -138,7 +138,7 @@ readonly class TreeSelectNodeRetrieval implements Field\Node\NodeRetrieval
                 } else {
                     $nodes[] = $node_factory->async(
                         $this->getAsyncRenderUrl($object_ref_id),
-                        $object_ref_id,
+                        $object_path,
                         $object_title,
                         $object_icon,
                     );
@@ -146,22 +146,23 @@ readonly class TreeSelectNodeRetrieval implements Field\Node\NodeRetrieval
                 continue;
             }
             if ($is_object_visible && !$is_object_container) {
-                $nodes[] = $node_factory->leaf($object_ref_id, $object_title, $object_icon);
+                $nodes[] = $node_factory->leaf($object_path, $object_title, $object_icon);
             }
         }
         return $nodes;
     }
 
-    /** @return array{0: int, 1: string, 2: string} (object ref-id, type, title) */
+    /** @return array{0: int[], 1: int, 2: string, 3: string} (object-path, ref-id, type, title) */
     protected function extractObjectDataOrAbort(array $tree_node_data): array
     {
+        $object_path = array_map('intval', explode('.', (string) ($tree_node_data['path'] ?? '')));
         $object_ref_id = $tree_node_data['ref_id'] ?? $tree_node_data['child'] ?? null;
         $object_type = $tree_node_data['type'] ?? null;
         $object_title = $tree_node_data['title'] ?? null;
-        if (null === $object_ref_id || null === $object_type || null === $object_title) {
+        if (empty($object_path) || null === $object_ref_id || null === $object_type || null === $object_title) {
             throw new \LogicException("Object data is invalid");
         }
-        return [$object_ref_id, $object_type, $object_title];
+        return [$object_path, $object_ref_id, $object_type, $object_title];
     }
 
     protected function getAsyncRenderUrl(int $object_ref_id): \ILIAS\Data\URI
