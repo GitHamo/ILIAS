@@ -6736,7 +6736,7 @@ content#:#cont_lpe_openid_login_form#:#OpenID-Login-Maske
 content#:#cont_lpe_registration_link#:#Link zur Neuanmeldung
 content#:#cont_lpe_saml_login#:#SAML-Login
 content#:#cont_lpe_shib_login_form#:#Shibboleth-Login-Maske
-content#:#cont_lpe_user_agreement_link#:#Link zur Benutzervereinbarung
+content#:#cont_lpe_user_agreement_link#:#Link zur Nutzungsvereinbarung
 content#:#cont_lrs_settings#:#Einstellungen
 content#:#cont_lvalue#:#Datenelement
 content#:#cont_maintenance#:#Wartung
