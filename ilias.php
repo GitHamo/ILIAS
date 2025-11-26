@@ -34,7 +34,7 @@ try {
     );
     if ((defined('DEVMODE') && DEVMODE) || $is_base_class_exception) {
         if ($is_base_class_exception) {
-            throw new RuntimeException('ilCtrl could not dispatch HTTP request due to missing/invalid base class ', 0, $e);
+            throw new RuntimeException('ilCtrl could not dispatch HTTP request due missing/invalid base class ', 0, $e);
         }
         throw $e;
     }
