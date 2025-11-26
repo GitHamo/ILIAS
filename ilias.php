@@ -28,15 +28,11 @@ global $DIC;
 try {
     $DIC->ctrl()->callBaseClass();
 } catch (ilCtrlException $e) {
-    $is_base_class_exception = (
+    if ((defined('DEVMODE') && DEVMODE) || (
         !str_contains($e->getMessage(), 'not given a baseclass') &&
         !str_contains($e->getMessage(), 'not a baseclass')
-    );
-    if ((defined('DEVMODE') && DEVMODE) || $is_base_class_exception) {
-        if ($is_base_class_exception) {
-            throw new RuntimeException('ilCtrl could not dispatch HTTP request due missing/invalid base class ', 0, $e);
-        }
-        throw $e;
+    )) {
+        throw new RuntimeException('No ilCtrl baseClass given', 0, $e);
     }
 
     $DIC->logger()->root()->error($e->getMessage());
