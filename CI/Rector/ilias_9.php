@@ -11,11 +11,12 @@ use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->disableParallel();
-    $rectorConfig->phpVersion(PhpVersion::PHP_81);
+    $rectorConfig->phpVersion(PhpVersion::PHP_80);
     $rectorConfig->sets([
+        SetList::PHP_80,
         SetList::PHP_81,
         SetList::PHP_82,
         LevelSetList::UP_TO_PHP_82,
-        DowngradeLevelSetList::DOWN_TO_PHP_81,
+        DowngradeLevelSetList::DOWN_TO_PHP_80,
     ]);
 };
