@@ -1123,6 +1123,9 @@ class ilLPTableBaseGUI extends ilTable2GUI
             )) {
                 // other user profile fields
                 foreach ($ufs as $fd) {
+                    if ($fd->isCustom()) {
+                        continue;
+                    }
                     $f = $fd->getIdentifier();
                     if (!isset($cols[$f]) && $f !== "username" && !$fd->hiddenInLists()) {
                         $cols[$f] = array(
