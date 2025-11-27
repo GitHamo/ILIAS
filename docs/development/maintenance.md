@@ -378,17 +378,12 @@ of ILIAS. The file contains the following fields:
 [//]: # (BEGIN Component)
 
 * **Component**
-    * Authority to Sign off on Conceptual Changes: [fschmid](https://docu.
-      ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
-    * Authority to Sign off on Code Changes: [fschmid](https://docu.ilias.
-      de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
+    * Authority to Sign off on Conceptual Changes: [fschmid](https://docu.ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
+    * Authority to Sign off on Code Changes: [fschmid](https://docu.ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
     * Authority to Curate Test Cases: [MISSING]
-    * Authority to (De-)Assign Authorities: [fschmid](https://docu.ilias.
-      de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
-    * Assignee for Security Reports: [fschmid](https://docu.ilias.
-      de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
-    * Assignee for Security Issues: [fschmid](https://docu.ilias.
-      de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
+    * Authority to (De-)Assign Authorities: [fschmid](https://docu.ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
+    * Assignee for Security Reports: [fschmid](https://docu.ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
+    * Assignee for Security Issues: [fschmid](https://docu.ilias.de/go/usr/21087), [tfuhrer](https://docu.ilias.de/go/usr/81947)
     * Unit-specific Guidelines, Rules, and Regulations: [LINK MISSING]('')
 
 [//]: # (END Component)
@@ -534,8 +529,7 @@ of ILIAS. The file contains the following fields:
 
 * **Database**
     * Authority to Sign off on Conceptual Changes: MISSING
-    * Authority to Sign off on Code Changes: [smeyer](https://docu.ilias.
-      de/go/usr/191)
+    * Authority to Sign off on Code Changes: [smeyer](https://docu.ilias.de/go/usr/191)
     * Authority to Curate Test Cases: MISSING
     * Authority to (De-)Assign Authorities: MISSING
     * Assignee for Security Reports: MISSING
@@ -797,8 +791,7 @@ of ILIAS. The file contains the following fields:
 
 * **Initialisation Service**
     * Authority to Sign off on Conceptual Changes: [mjansen](https://docu.ilias.de/go/usr/8784)
-    * Authority to Sign off on Code Changes: [mjansen](https://docu.ilias.
-      de/go/usr/8784), [tfuhrer](https://docu.ilias.de/go/usr/81947), [fschmid](https://docu.ilias.de/go/usr/21087)
+    * Authority to Sign off on Code Changes: [mjansen](https://docu.ilias.de/go/usr/8784), [tfuhrer](https://docu.ilias.de/go/usr/81947), [fschmid](https://docu.ilias.de/go/usr/21087)
     * Authority to Curate Test Cases: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Authority to (De-)Assign Authorities: [mjansen](https://docu.ilias.de/go/usr/8784)
     * Assignee for Security Reports: [mjansen](https://docu.ilias.de/go/usr/8784)
@@ -1568,8 +1561,7 @@ of ILIAS. The file contains the following fields:
 
 * **Web Access Checker**
     * Authority to Sign off on Conceptual Changes: MISSING 
-    * Authority to Sign off on Code Changes: [ukohnle](https://docu.ilias.
-      de/go/usr/21855)
+    * Authority to Sign off on Code Changes: [ukohnle](https://docu.ilias.de/go/usr/21855)
     * Authority to Curate Test Cases: [AUTHOR MISSING](https://docu.ilias.de/go/pg/64423_4793)
     * Authority to (De-)Assign Authorities: MISSING
     * Assignee for Security Reports: MISSING
