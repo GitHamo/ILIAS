@@ -15,7 +15,7 @@ The UICore component employs the following components, please consult the respec
 
 * AccessControl: for checking permissions
 * Administration: for settings
-* [Data](../Data/PRIVACY.md):: for representing structured data
+* [Data](../Data/PRIVACY.md): for representing structured data
 * DI: for the global dependency injection container
 * [Database](../Database/PRIVACY.md): for storing technical information
 * [HTTP](../HTTP/PRICACY.md): for request information and request handling
