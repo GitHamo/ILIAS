@@ -9789,7 +9789,7 @@ exp#:#export_files_deleted#:#The selected export files have been deleted.
 exp#:#export_options#:#Export Options
 exp#:#export_type#:#Export Type
 export#:#exp_file#:#File Name
-export#:#exp_public_access#:#Public Access
+export#:#exp_public_access#:#Available in ‘Info’-tab
 export#:#exp_size#:#File Size (MB)
 export#:#exp_timestamp#:#Creation Date
 export#:#exp_toggle_public_access#:#Toggle Public Access
@@ -9798,7 +9798,7 @@ export#:#export_create#:#Create
 export#:#export_create_new_file#:#Create New Export File
 export#:#export_existing#:#Reuse
 export#:#export_export_date#:#Export Date
-export#:#export_info_public_access#:#Public Access Export
+export#:#export_info_public_access#:#Public Export
 export#:#export_info_public_access_download#:#Download
 export#:#export_last_export#:#Last Export
 export#:#export_last_export_file#:#Use Last Export File
@@ -12043,7 +12043,7 @@ meta#:#md_import_file_vocab#:#Import File
 meta#:#md_import_vocab#:#Import
 meta#:#md_import_vocab_modal#:#Import From File
 meta#:#md_months#:#Months:
-meta#:#md_oai_contact_mail#:#Contact E-Mail
+meta#:#md_oai_contact_mail#:#Contact e-mail of this organisation
 meta#:#md_oai_identifier_prefix#:#OAI Prefix
 meta#:#md_oai_identifier_prefix_info#:#This prefix is used as a namespace in the identifiers of returned OER records.
 meta#:#md_oai_pmh_enabled#:#Allow Querying via OAI-PMH Interface
