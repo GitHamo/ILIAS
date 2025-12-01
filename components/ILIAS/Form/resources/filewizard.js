@@ -45,6 +45,7 @@ var ilFileWizardInputTemplate = {
 			$(this).find('input:file').each(function () {
 				that.handleId(this, 'id', rowindex);
 				that.handleId(this, 'name', rowindex);
+				that.handleId(this, 'aria-describedby', rowindex);
 			});
 
 			// hidden
@@ -56,6 +57,11 @@ var ilFileWizardInputTemplate = {
 			$(this).find('> span').each(function () {
 				that.handleId(this, 'id', rowindex);
 				that.handleId(this, 'data-name', rowindex);
+			});
+
+			// help text
+			$(this).find('> div.help-blocks').each(function () {
+				that.handleId(this, 'id', rowindex);
 			});
 
 			rowindex++;
