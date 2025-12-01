@@ -492,7 +492,14 @@ class ilObjUser extends ilObject
 
         ilSession::_destroyByUserId($this->getId());
         ilLDAPRoleGroupMapping::_getInstance()->deleteUser($this->getId());
-        $this->rbac_admin->removeUser($this->getId());
+
+        /**
+         * skergomard, 2025-12-01: Ok, this is not right, but we can sadly not change this
+         * as the User is initialized before RbacAdmin, so that the corresponding property
+         * that actually does exist, is never initialized in this class.
+         */
+        global $DIC;
+        $DIC['rbac_admin']->removeUser($this->getId());
         (ilOrgUnitUserAssignmentQueries::getInstance())->deleteAllAssignmentsOfUser($this->getId());
 
         $mailbox = new ilMailbox($this->getId());
