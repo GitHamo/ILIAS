@@ -563,6 +563,7 @@ class ilSoapTestAdministration extends ilSoapAdministration
             );
         }
 
+        /** @var ilObjTest|null $tst */
         if (!$tst = ilObjectFactory::getInstanceByRefId($test_ref_id, false)) {
             return $this->raiseError('No test found for id: ' . $test_ref_id, 'Client');
         }
@@ -580,11 +581,10 @@ class ilSoapTestAdministration extends ilSoapAdministration
 
         include_once './Modules/Test/classes/class.ilObjTest.php';
         include_once './Modules/Test/classes/class.ilTestParticipantData.php';
-        require_once 'Modules/Test/classes/class.ilTestParticipantAccessFilter.php';
+
+        $accessFilter = $this->getAccessResultsUserFilter($test_ref_id);
         $part = new ilTestParticipantData($GLOBALS['DIC']['ilDB'], $GLOBALS['DIC']['lng']);
-        $part->setParticipantAccessFilter(
-            ilTestParticipantAccessFilter::getManageParticipantsUserFilter($test_ref_id)
-        );
+        $part->setParticipantAccessFilter($accessFilter);
         $part->setUserIdsFilter((array) $a_user_ids);
         $part->load($tst->getTestId());
         $tst->removeTestResults($part);
@@ -612,8 +612,9 @@ class ilSoapTestAdministration extends ilSoapAdministration
         global $DIC;
 
         $rbacsystem = $DIC['rbacsystem'];
-        $tree = $DIC['tree'];
-        $ilLog = $DIC['ilLog'];
+        $il_user = $DIC['ilUser'];
+        $il_lng = $DIC['lng'];
+        $il_db = $DIC['ilDB'];
 
         if (ilObject::_isInTrash($test_ref_id)) {
             return $this->raiseError(
@@ -658,13 +659,17 @@ class ilSoapTestAdministration extends ilSoapAdministration
         $xmlResultSet->addColumn("matriculation");
 
         include_once './Modules/Test/classes/class.ilObjTest.php';
+        require_once 'Modules/Test/classes/class.ilTestParticipantList.php';
+
         $test_obj = new ilObjTest($obj_id, false);
         $participants = $test_obj->getTestParticipants();
-
-        require_once 'Modules/Test/classes/class.ilTestParticipantAccessFilter.php';
-        require_once 'Modules/Test/classes/class.ilTestParticipantList.php';
-        $accessFilter = ilTestParticipantAccessFilter::getAccessResultsUserFilter($test_ref_id);
-        $participantList = new ilTestParticipantList($test_obj);
+        $accessFilter = $this->getAccessResultsUserFilter($test_ref_id);
+        $participantList = new ilTestParticipantList(
+            $test_obj,
+            $il_user,
+            $il_lng,
+            $il_db,
+        );
         $participantList->initializeFromDbRows($participants);
         $participantList = $participantList->getAccessFilteredList($accessFilter);
         $participantList = $participantList->getScoredParticipantList();
@@ -742,5 +747,18 @@ class ilSoapTestAdministration extends ilSoapAdministration
 
         $testId = ilObjTestAccess::_getTestIDFromObjectID(ilObject::_lookupObjectId($refId));
         return new ilTestAccess($refId, $testId);
+    }
+
+    private function getAccessResultsUserFilter(int $ref_id): \Closure
+    {
+        require_once 'Modules/Test/classes/class.ilTestParticipantAccessFilter.php';
+
+        global $DIC;
+
+        $ilAccess = $DIC['ilAccess'];
+
+        $factory = new ilTestParticipantAccessFilterFactory($ilAccess);
+
+        return $factory->getAccessResultsUserFilter($ref_id);
     }
 }
