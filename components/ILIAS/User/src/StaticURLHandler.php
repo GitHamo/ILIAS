@@ -22,6 +22,7 @@ namespace ILIAS\User;
 
 use ILIAS\User\Profile\PersonalProfileGUI;
 use ILIAS\User\Profile\PublicProfileGUI;
+use ILIAS\LegalDocuments\Conductor as LegalDocumentsConductor;
 use ILIAS\StaticURL\Handler\Handler;
 use ILIAS\StaticURL\Request\Request;
 use ILIAS\StaticURL\Context;
@@ -30,7 +31,6 @@ use ILIAS\StaticURL\Response\Factory;
 use ILIAS\StaticURL\Handler\BaseHandler;
 use ILIAS\StaticURL\Builder\StandardURIBuilder;
 use ILIAS\StaticURL\StaticURLConfig;
-use ILIAS\Data\ReferenceId;
 
 class StaticURLHandler extends BaseHandler implements Handler
 {
@@ -41,6 +41,14 @@ class StaticURLHandler extends BaseHandler implements Handler
     public const PASSWORD_ASSIST_OPERATION = 'pwassist';
     public const CONTACT_APPROVE_OPERATION = '_contact_approved';
     public const CONTACT_IGNORE_OPERATION = '_contact_ignored';
+
+    private readonly LegalDocumentsConductor $legal_documents;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->legal_documents = $DIC['legalDocuments'];
+    }
 
     public function getNamespace(): string
     {
@@ -80,11 +88,7 @@ class StaticURLHandler extends BaseHandler implements Handler
                 $context->ctrl(),
                 'ignoreContactRequest'
             ),
-            default => $this->buildProfileUrl(
-                $request->getReferenceId(),
-                $context->ctrl(),
-                PublicProfileGUI::DEFAULT_CMD
-            )
+            default => $this->getRedirectToLegalDocumentsOrProfile($request, $context)
         };
 
         return $response_factory->can($uri);
@@ -114,12 +118,50 @@ class StaticURLHandler extends BaseHandler implements Handler
 
     }
 
+    private function getRedirectToLegalDocumentsOrProfile(
+        Request $request,
+        Context $context
+    ): string {
+        $user_id_as_ref_id = $request->getReferenceId();
+
+        if ($user_id_as_ref_id !== null) {
+            return $this->buildProfileUrl(
+                $user_id_as_ref_id->toInt(),
+                $context->ctrl(),
+                PublicProfileGUI::DEFAULT_CMD
+            );
+        }
+
+        $legal_documents_target = $this->legal_documents->findGotoLink(
+            $request->getAdditionalParameters()[0] ?? 'default'
+        );
+        if ($legal_documents_target->isOK()) {
+            $context->ctrl()->setTargetScript('ilias.php');
+            foreach ($legal_documents_target->value()->queryParams() as $key => $value) {
+                $context->ctrl()->setParameterByClass(
+                    $legal_documents_target->value()->guiName(),
+                    (string) $key,
+                    $value
+                );
+            }
+            return $context->ctrl()->getLinkTargetByClass(
+                $legal_documents_target->value()->guiPath(),
+                $legal_documents_target->value()->command()
+            );
+        }
+
+        return $context->ctrl()->getLinkTargetByClass(
+            [\ilDashboardGUI::class],
+            'jumpToProfile'
+        );
+    }
+
     private function buildProfileUrl(
-        ReferenceId $target_user_id,
+        int $target_user_id,
         \ilCtrl $ctrl,
         string $cmd
     ): string {
-        $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id->toInt());
+        $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id);
         return $ctrl->getLinkTargetByClass([\ilPublicProfileBaseClassGUI::class, PublicProfileGUI::class], $cmd);
     }
 }
