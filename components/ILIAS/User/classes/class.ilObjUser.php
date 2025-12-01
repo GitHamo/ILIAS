@@ -498,8 +498,9 @@ class ilObjUser extends ilObject
          * as the User is initialized before RbacAdmin, so that the corresponding property
          * that actually does exist, is never initialized in this class.
          */
+        /** @var ILIAS\DI\Container $DIC */
         global $DIC;
-        $DIC['rbac_admin']->removeUser($this->getId());
+        $DIC['rbacadmin']->removeUser($this->getId());
         (ilOrgUnitUserAssignmentQueries::getInstance())->deleteAllAssignmentsOfUser($this->getId());
 
         $mailbox = new ilMailbox($this->getId());
