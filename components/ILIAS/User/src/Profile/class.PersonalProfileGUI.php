@@ -623,7 +623,7 @@ class PersonalProfileGUI
             [FirstName::class, LastName::class, Alias::class, OrganisationalUnits::class, Roles::class]
         ) as $field) {
             $value = $field->retrieveValueFromUser($this->user);
-            if (!$anonymized && ($value === '' || $value === '-')) {
+            if (!$anonymized && ($value === '' || $value === '-' || $value === null)) {
                 continue;
             }
             if ($anonymized) {
