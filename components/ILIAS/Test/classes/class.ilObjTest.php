@@ -3420,7 +3420,6 @@ class ilObjTest extends ilObject
             'highscore_achieved_ts' => $this->getHighscoreAchievedTS(),
             'highscore_score' => $this->getHighscoreScore(),
             'highscore_percentage' => $this->getHighscorePercentage(),
-            'highscore_hints' => $this->getHighscoreHints(),
             'highscore_wtime' => $this->getHighscoreWTime(),
             'highscore_own_table' => $this->getHighscoreOwnTable(),
             'highscore_top_table' => $this->getHighscoreTopTable(),
