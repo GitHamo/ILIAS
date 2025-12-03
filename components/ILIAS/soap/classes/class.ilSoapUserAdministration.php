@@ -160,9 +160,12 @@ class ilSoapUserAdministration extends ilSoapAdministration
         $doc = new DOMDocument();
         libxml_use_internal_errors(true); // Capture parsing errors
 
-        if (!$doc->loadXML($usr_xml)) {
-            $errors = libxml_get_errors();
-            $msg = array();
+        $is_loadable = $doc->loadXML($usr_xml);
+        $errors = libxml_get_errors();
+        libxml_clear_errors();
+
+        if (!$is_loadable) {
+            $msg = [];
             foreach ($errors as $err) {
                 $msg[] = "(" . $err->line . "," . $err->column . "): " . trim($err->message);
             }
