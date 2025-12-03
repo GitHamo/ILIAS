@@ -31,7 +31,6 @@ final class ilObjEmployeeTalk extends ilObject
 
     private EmployeeTalkRepository $repository;
     private EmployeeTalk $data;
-    private ?ilObjEmployeeTalkSeries $parent_series = null;
 
     /**
      * @param int  $a_id
