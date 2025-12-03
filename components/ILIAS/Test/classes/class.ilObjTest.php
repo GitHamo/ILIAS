@@ -2784,12 +2784,6 @@ class ilObjTest extends ilObject
      */
     public function fromXML(ilQTIAssessment $assessment, array $mappings): void
     {
-        if (($importdir = ilSession::get('path_to_container_import_file')) === null) {
-            $importdir = $this->buildImportDirectoryFromImportFile(ilSession::get('path_to_import_file'));
-        }
-        ilSession::clear('path_to_container_import_file');
-        ilSession::clear('import_mob_xhtml');
-
         $this->saveToDb(true);
 
         $main_settings = $this->getMainSettings();
@@ -2808,7 +2802,6 @@ class ilObjTest extends ilObject
                 $introduction_settings = $this->addIntroductionToSettingsFromImport(
                     $introduction_settings,
                     $this->qtiMaterialToArray($material),
-                    $importdir,
                     $mappings
                 );
             }
@@ -2822,7 +2815,6 @@ class ilObjTest extends ilObject
                 $this->qtiMaterialToArray(
                     $assessment->getPresentationMaterial()->getFlowMat(0)->getMaterial(0)
                 ),
-                $importdir,
                 $mappings
             );
         }
@@ -3114,21 +3106,19 @@ class ilObjTest extends ilObject
     private function addIntroductionToSettingsFromImport(
         SettingsIntroduction $settings,
         array $material,
-        string $importdir,
         array $mappings
     ): SettingsIntroduction {
-        if (!str_starts_with($text, '<PageObject>')) {
+        if (!str_starts_with($material['text'], '<PageObject>')) {
             return $settings;
         }
 
-        $text = $this->replaceMobsInPageImports(
-            $text,
-            $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-        );
         $text = $this->replaceFilesInPageImports(
-            $text,
-            $mappings['components/ILIAS/File']['file'] ?? []
+            $this->replaceMobsInPageImports(
+                $material['text'],
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            )
         );
+
         $page_object = new ilTestPage();
         $page_object->setParentId($this->getId());
         $page_object->setXMLContent($text);
@@ -3139,21 +3129,19 @@ class ilObjTest extends ilObject
     private function addConcludingRemarksToSettingsFromImport(
         SettingsFinishing $settings,
         array $material,
-        string $importdir,
         array $mappings
     ): SettingsFinishing {
-        if (!str_starts_with($text, '<PageObject>')) {
+        if (!str_starts_with($material['text'], '<PageObject>')) {
             return $settings;
         }
 
-        $text = $this->replaceMobsInPageImports(
-            $text,
-            $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-        );
         $text = $this->replaceFilesInPageImports(
-            $text,
-            $mappings['components/ILIAS/File']['file'] ?? []
+            $this->replaceMobsInPageImports(
+                $material['text'],
+                $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
+            )
         );
+
         $page_object = new ilTestPage();
         $page_object->setParentId($this->getId());
         $page_object->setXMLContent($text);
@@ -3182,26 +3170,6 @@ class ilObjTest extends ilObject
                 continue;
             }
             $text = str_replace($match, "il__file_{$mappings[$matches[2][$index]]}", $text);
-        }
-        return $text;
-    }
-
-    private function retrieveMobsFromLegacyImports(string $text, array $mobs, string $importdir): string
-    {
-        foreach ($mobs as $mob) {
-            $importfile = $importdir . DIRECTORY_SEPARATOR . $mob['uri'];
-            if (file_exists($importfile)) {
-                $media_object = ilObjMediaObject::_saveTempFileAsMediaObject(basename($importfile), $importfile, false);
-                ilObjMediaObject::_saveUsage($media_object->getId(), 'tst:html', $this->getId());
-                $text = ilRTE::_replaceMediaObjectImageSrc(
-                    str_replace(
-                        'src="' . $mob['mob'] . '"',
-                        'src="' . 'il_' . IL_INST_ID . '_mob_' . $media_object->getId() . '"',
-                        $text
-                    ),
-                    1
-                );
-            }
         }
         return $text;
     }
@@ -5303,7 +5271,6 @@ class ilObjTest extends ilObject
             $result = $decoded_result;
         }
 
-        $this->logger->info(print_r(ilSession::get('import_mob_xhtml'), true));
         return [
             'text' => $result,
             'mobs' => $mobs
@@ -5893,7 +5860,7 @@ class ilObjTest extends ilObject
             $results['overview']['tst_eval_total_passed_average_points'] = sprintf('%2.2f', $average_passed_reached)
                 . ' ' . strtolower('of') . ' ' . sprintf('%2.2f', $average_passed_max);
             $results['overview']['tst_eval_total_passed_average_time'] =
-                $this->secondsToHoursMinutesSecondsString($average_passed_time);
+                $this->secondsToHoursMinutesSecondsString((int) $average_passed_time);
         }
 
         foreach ($data->getQuestionTitles() as $question_id => $question_title) {
