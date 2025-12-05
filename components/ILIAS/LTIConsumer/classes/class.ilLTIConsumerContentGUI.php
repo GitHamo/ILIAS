@@ -456,7 +456,7 @@ class ilLTIConsumerContentGUI
         }
         if ($ok) {
             list($ref_id, $ilias_client_id) = explode(':', ilSession::get('lti_message_hint'), 2);
-            if ((int)$this->object->getRefId() !== (int) $ref_id) {
+            if ((int) $this->object->getRefId() !== (int) $ref_id) {
                 $ok = false;
                 $error = 'invalid_request';
             }

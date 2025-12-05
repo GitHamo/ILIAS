@@ -85,9 +85,9 @@ if (
     if ($provider->getContentItemUrl() == $redirectUri && isset($hint['deployment_id'])) {
 
         $isDlMode = true;
-        $deploymentId = (int)$hint['deployment_id'];
+        $deploymentId = (int) $hint['deployment_id'];
         $ownerId = ilObjectFactory::getInstanceByRefId(224)->getOwner();
-        $childRefId = ilObjLTIConsumer::getRefIdOfConsumerByDeploymentId((string)$deploymentId);
+        $childRefId = ilObjLTIConsumer::getRefIdOfConsumerByDeploymentId((string) $deploymentId);
         $refId = $DIC->repositoryTree()->getParentId($childRefId);
     }
 
