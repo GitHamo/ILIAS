@@ -2547,7 +2547,7 @@ details[open] > summary::before {
   left: 50%;
   transform: translateX(-50%);
   border: 0.5em solid transparent;
-  border-bottom-color: #757575;
+  border-bottom-color: #4c6586;
   z-index: 9999;
 }
 
@@ -2574,7 +2574,7 @@ details[open] > summary::before {
 }
 
 .c-tooltip__container.c-tooltip--top::before {
-  border-top-color: #757575;
+  border-top-color: #4c6586;
   border-bottom-color: transparent;
 }
 
@@ -2585,10 +2585,10 @@ details[open] > summary::before {
   transform: translateX(-50%);
   margin: 0;
   padding: 9px 15px;
-  border: 2px solid #757575;
+  border: 1px solid #4c6586;
   border-radius: 0.25em;
   color: #161616;
-  background: #f9f9f9;
+  background: #ffffff;
   width: max-content;
   max-width: 50vw;
   max-height: 40vh;
