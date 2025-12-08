@@ -644,6 +644,10 @@ class ilAccountRegistrationGUI
 
     protected function buildRolesInput(): ?ilFormPropertyGUI
     {
+        if (!$this->registration_settings->roleSelectionEnabled()) {
+            return null;
+        }
+
         $options = [];
         foreach (ilObjRole::_lookupRegisterAllowed() as $role) {
             $options[$role['id']] = $role['title'];
