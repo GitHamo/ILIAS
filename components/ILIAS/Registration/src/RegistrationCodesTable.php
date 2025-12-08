@@ -214,8 +214,8 @@ class RegistrationCodesTable implements DataRetrieval
                     case 'absolute':
                         $result[$k]['alimit'] = $this->lng->txt('reg_access_limitation_mode_absolute_target') .
                             ': ' .
-                            $date_format->applyTo(
-                                (new DateTimeImmutable('@' . $code['alimitdt']))->setTimezone(
+                            $this->actor->getDateFormat()->applyTo(
+                                (new DateTimeImmutable($code['alimitdt']))->setTimezone(
                                     new DateTimeZone($this->actor->getTimeZone())
                                 )
                             );
