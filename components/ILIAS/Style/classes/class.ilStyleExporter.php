@@ -36,8 +36,6 @@ class ilStyleExporter extends ilXmlExporter
     {
         ilFileUtils::makeDirParents($this->getAbsoluteExportDirectory());
         $this->ds->initByExporter($this);
-        global $DIC;
-        $DIC->logger()->root()->dump('export version (ilStyleExporter): ' . $a_schema_version);
         return $this->ds->getXmlRepresentation($a_entity, $a_schema_version, [$a_id], "", true, true);
     }
 
