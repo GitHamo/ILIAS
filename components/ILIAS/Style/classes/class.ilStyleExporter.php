@@ -36,6 +36,8 @@ class ilStyleExporter extends ilXmlExporter
     {
         ilFileUtils::makeDirParents($this->getAbsoluteExportDirectory());
         $this->ds->initByExporter($this);
+        global $DIC;
+        $DIC->logger()->root()->dump('export version (ilStyleExporter): ' . $a_schema_version);
         return $this->ds->getXmlRepresentation($a_entity, $a_schema_version, [$a_id], "", true, true);
     }
 
@@ -46,8 +48,7 @@ class ilStyleExporter extends ilXmlExporter
                 "namespace" => "http://www.ilias.de/Services/Style/10_0",
                 "xsd_file" => "ilias_style_10.xsd",
                 "uses_dataset" => true,
-                "min" => "10.0",
-                "max" => "10.99"),
+                "min" => "10.0"),
             "8.0" => array(
                 "namespace" => "http://www.ilias.de/Services/Style/8",
                 "xsd_file" => "ilias_style_8.xsd",
