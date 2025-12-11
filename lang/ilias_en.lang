@@ -10530,9 +10530,11 @@ help#:#gdtr_language#:#Language
 help#:#gdtr_language_info#:#Activates a guided tour only for users with the selected language.
 help#:#gdtr_list_tours_mess#:#To activate the presentation of screen and element IDs as tooltips, switch to ID Settings and enter your account name.
 help#:#gdtr_mainbar#:#Mainbar
-help#:#gdtr_mainbar_info#:#The mainbar ist the main menu on the left side. If element-ID presentation is activated, the IDs will be shown in tooltips for the distinct items.
+help#:#gdtr_mainbar_ID_info#:#ID of the desired entry in the main menu. Move the mouse over the entry to see the ID as a tooltip.
+help#:#gdtr_mainbar_info#:#The mainbar ist the main menu on the left side.
 help#:#gdtr_metabar#:#Metabar
-help#:#gdtr_metabar_info#:#The metabar is the menu on the top, right. If element-ID presentation is activated, the IDs will be shown in tooltips for the distinct items.
+help#:#gdtr_metabar_ID_info#:#ID of the desired element in the metabar. Move your mouse over the element to see the ID as a tooltip.
+help#:#gdtr_metabar_info#:#The metabar is the menu on the top, right.
 help#:#gdtr_next_step#:#Next Step
 help#:#gdtr_permission#:#Permission
 help#:#gdtr_permission_info#:#Activates a guided tour only for users with a certain permission on the current repository object, e.g. only for users with "edit settings" permission for a course. If you "Create" is selected, the tour is active, if the user has any creation permission.
@@ -10548,7 +10550,8 @@ help#:#gdtr_step_type#:#User Interface Element
 help#:#gdtr_table#:#Table
 help#:#gdtr_table_info#:#The first table of the main content area. Usually views should only contain one table.
 help#:#gdtr_tabs#:#Tabs
-help#:#gdtr_tabs_info#:#The tabs are displayed below the main header of the screen. If element-ID presentation is activated, the IDs will be shown in tooltips for the distinct items.
+help#:#gdtr_tabs_ID_info#:#ID of the desired tab. Move your mouse over a tab to see the ID as a tooltip.
+help#:#gdtr_tabs_info#:#The tabs are displayed below the main header of the screen.
 help#:#gdtr_toolbar#:#Toolbar
 help#:#gdtr_toolbar_info#:#The first toolbar of the main content area, usually presented below the tabs. Views should only contain one toolbar.
 help#:#gdtr_tour_has_been_reset#:#Tour has been reset.
