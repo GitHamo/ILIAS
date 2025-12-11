@@ -10515,9 +10515,9 @@ help#:#gdtr_deleted_tour#:#Die Tour wurde gelöscht.
 help#:#gdtr_edit_content#:#Inhalt bearbeiten
 help#:#gdtr_edit_page_info#:#Bearbeiten Sie den Inhalt, der erscheinen soll um das ausgewählte Bedienelement zu beschreiben.
 help#:#gdtr_edit_properties#:#Eigenschaften bearbeiten
-help#:#gdtr_edit_step_info#:#In diesem Formular spezifizieren Sie das Bedienelement auf dem Bildschirm, welches einen Erklärungstext in diesem Schritt der Tour erhalten soll. In der Präsentation wird dann ein Popover mit dem definierten Erklärungstext neben dem angegebenen Element dargestellt.
+help#:#gdtr_edit_step_info#:#Wählen Sie das Bedienelement aus, das mit einem Erklärungstext versehen werden soll.
 help#:#gdtr_edit_steps#:#Schritte bearbeiten
-help#:#gdtr_element_id#:#Element ID
+help#:#gdtr_element_id#:#Element-ID
 help#:#gdtr_form#:#Formular
 help#:#gdtr_form_info#:#Das erste Formular im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. ein Formular enthalten.
 help#:#gdtr_guided_tours#:#Touren
@@ -10529,9 +10529,11 @@ help#:#gdtr_language#:#Nach Sprache
 help#:#gdtr_language_info#:#Nur Personen mit der ausgewählten Sprache sehen die Tour.
 help#:#gdtr_list_tours_mess#:#Um Touren auszuarbeiten, müssen Sie zunächst Ihren Anmeldenamen im Unterreiter „Einstellungen“ eintragen.
 help#:#gdtr_mainbar#:#Mainbar
-help#:#gdtr_mainbar_info#:#Die Mainbar ist das Hauptmenü auf der linken Seite. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltipp dargestellt.
+help#:#gdtr_mainbar_ID_info#:#ID des gewünschten Eintrags im Hauptmenü. Fahren Sie mit der Maus über den Eintrag, um die ID als Tooltipp zu sehen.
+help#:#gdtr_mainbar_info#:#Die Mainbar ist das Hauptmenü, das auf großen Bildschirmen auf der linken Seite angezeigt wird.
 help#:#gdtr_metabar#:#Metabar
-help#:#gdtr_metabar_info#:#Die Metabar ist das Menü im rechten, oberen Bildrand. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltipp dargestellt.
+help#:#gdtr_metabar_ID_info#:#ID des gewünschten Elements in der Metabar. Fahren Sie mit der Maus über das Element, um die ID als Tooltipp zu sehen.
+help#:#gdtr_metabar_info#:#Die Metabar ist das Menü im rechten, oberen Bildrand.
 help#:#gdtr_next_step#:#Nächster Schritt
 help#:#gdtr_permission#:#Nach Rechten
 help#:#gdtr_permission_info#:#Nur Personen mit den ausgewählten Rechten sehen die Tour. Diese Einstellung sollte nur zusammen mit der Einstellung „Nach Screen-ID“ genutzt werden.
@@ -10547,7 +10549,8 @@ help#:#gdtr_step_type#:#Bedienelement
 help#:#gdtr_table#:#Tabelle
 help#:#gdtr_table_info#:#Die erste Tabelle im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. eine Tabelle enthalten.
 help#:#gdtr_tabs#:#Reiter
-help#:#gdtr_tabs_info#:#Die Reiter werden in der Mitte unter dem Haupttitel einer Ansicht dargestellt. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltipp dargestellt.
+help#:#gdtr_tabs_ID_info#:#ID des gewünschten Reiters. Fahren Sie mit der Maus über einen Reiter, um die ID als Tooltipp zu sehen.
+help#:#gdtr_tabs_info#:#Reiter werden unter dem Titel einer Seite dargestellt.
 help#:#gdtr_toolbar#:#Toolbar
 help#:#gdtr_toolbar_info#:#Die erste Toolbar im Hauptbereich der Ansicht. Diese wird normalerweise unterhalb der Reiter dargestellt und kann mehrere Bedienelemente enthalten. Normalerweise sollen Ansichten nur max. eine Toolbar enthalten.
 help#:#gdtr_tour_has_been_reset#:#Die Tour wurde zurückgesetzt.
