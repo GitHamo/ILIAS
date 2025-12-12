@@ -6,7 +6,7 @@ namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\HttpServiceFactory;
-use ILIAS\ApiGateway\Application\RouteDispatcher;
+use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
@@ -26,12 +26,12 @@ final class HttpServiceFactoryTest extends TestCase
         $this->factory = new HttpServiceFactory();
     }
 
-    public function testCreatesInstanceOfRouteDispatcher(): void
+    public function testCreatesInstanceOfRouteExecutor(): void
     {
         $webservice = $this->createMock(Webservice::class);
-        $expected = new RouteDispatcher($webservice);
+        $expected = new RouteExecutor($webservice);
 
-        $actual = $this->factory->createRouteDispatcher($webservice);
+        $actual = $this->factory->createRouteExecutor($webservice);
 
         self::assertEquals($expected, $actual);
     }

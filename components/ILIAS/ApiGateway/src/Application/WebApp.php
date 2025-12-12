@@ -42,7 +42,7 @@ final readonly class WebApp
     public function __construct(
         private WebConfig $configuration,
         private RoutesRegistry $registry,
-        private RouteDispatcher $dispatcher,
+        private RouteExecutor $executor,
         private ErrorHandler $errorHandler,
         private LoggerInterface $logger,
         private ResponseFactory $responseFactory,
@@ -108,7 +108,7 @@ final readonly class WebApp
                         ->map(
                             $route->getMethods(),
                             $route->getPath(),
-                            fn(Request $request, Response $response, array $args): Response => ($this->dispatcher)(
+                            fn(Request $request, Response $response, array $args): Response => ($this->executor)(
                                 $request,
                                 $response,
                                 $args,

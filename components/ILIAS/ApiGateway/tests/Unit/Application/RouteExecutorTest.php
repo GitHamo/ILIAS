@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application;
 
-use ILIAS\ApiGateway\Application\RouteDispatcher;
+use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Contracts\Payload;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
@@ -14,9 +14,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamInterface;
 
-class RouteDispatcherTest extends TestCase
+class RouteExecutorTest extends TestCase
 {
-    private RouteDispatcher $dispatcher;
+    private RouteExecutor $executor;
     private Webservice&MockObject $webserviceMock;
     private Request&MockObject $requestMock;
     private Response&MockObject $responseMock;
@@ -32,7 +32,7 @@ class RouteDispatcherTest extends TestCase
 
         $this->responseMock->method('getBody')->willReturn($this->streamMock);
 
-        $this->dispatcher = new RouteDispatcher($this->webserviceMock);
+        $this->executor = new RouteExecutor($this->webserviceMock);
     }
 
     public function testDispatchSuccessfullyHandlesRequestAndWritesResponse(): void
@@ -84,7 +84,7 @@ class RouteDispatcherTest extends TestCase
             ->willReturn($this->responseMock)
         ;
 
-        $response = ($this->dispatcher)(
+        $response = ($this->executor)(
             $this->requestMock,
             $this->responseMock,
             $routeArgs,

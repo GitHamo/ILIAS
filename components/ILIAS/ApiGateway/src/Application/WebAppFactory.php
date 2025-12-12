@@ -48,7 +48,7 @@ final readonly class WebAppFactory
         $this->registerRoutes();
 
         $webservice = $this->webserviceFactory->create($config);
-        $dispatcher = $this->httpServiceFactory->createRouteDispatcher($webservice);
+        $executor = $this->httpServiceFactory->createRouteExecutor($webservice);
         $logger = $this->loggerFactory->create($config->getProtocol()->value);
         $errorHandler = $this->httpServiceFactory->createErrorHandler(
             $webservice,
@@ -64,7 +64,7 @@ final readonly class WebAppFactory
         return new WebApp(
             $config,
             $this->registry,
-            $dispatcher,
+            $executor,
             $errorHandler,
             $logger,
             $this->responseFactory,

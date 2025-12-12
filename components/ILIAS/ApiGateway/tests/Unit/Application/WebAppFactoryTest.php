@@ -7,7 +7,7 @@ namespace Tests\Unit\Application;
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\HttpServiceFactory;
-use ILIAS\ApiGateway\Application\RouteDispatcher;
+use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Application\WebAppFactory;
 use ILIAS\ApiGateway\Contracts\ServiceProtocol;
@@ -70,7 +70,7 @@ final class WebAppFactoryTest extends TestCase
         );
 
         $webserviceMock = $this->createMock(Webservice::class);
-        $dispatcherMock = $this->createMock(RouteDispatcher::class);
+        $executorMock = $this->createMock(RouteExecutor::class);
         $loggerMock = $this->createMock(LoggerInterface::class);
         $errorHandlerMock = $this->createMock(ErrorHandler::class);
         /** @var SlimApp<\Psr\Container\ContainerInterface>&MockObject */
@@ -82,9 +82,9 @@ final class WebAppFactoryTest extends TestCase
             ->willReturn($webserviceMock);
 
         $this->httpServiceFactory->expects(self::once())
-            ->method('createRouteDispatcher')
+            ->method('createRouteExecutor')
             ->with(self::identicalTo($webserviceMock))
-            ->willReturn($dispatcherMock);
+            ->willReturn($executorMock);
 
         $this->loggerFactory->expects(self::once())
             ->method('create')
@@ -108,7 +108,7 @@ final class WebAppFactoryTest extends TestCase
         $expected = new WebApp(
             $config,
             $this->routesRegistry,
-            $dispatcherMock,
+            $executorMock,
             $errorHandlerMock,
             $loggerMock,
             $this->responseFactory,

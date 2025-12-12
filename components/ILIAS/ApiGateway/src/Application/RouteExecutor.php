@@ -29,7 +29,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 /**
  * This class is responsible for the entire lifecycle of a successfully matched route.
  */
-readonly class RouteDispatcher
+readonly class RouteExecutor
 {
     public function __construct(
         private Webservice $service,
@@ -44,7 +44,21 @@ readonly class RouteDispatcher
         array $args,
         RouteHandler $action,
     ): Response {
-        $params = $request->getQueryParams();
+        $params = array_merge(
+            $request->getQueryParams(),
+            $request->getAttributes()
+        );
+
+        $contentType = $request->getHeaderLine('Content-Type');
+        if (str_contains($contentType, 'application/json')) {
+            $bodyContents = $request->getBody()->getContents();
+            if (!empty($bodyContents)) {
+                $bodyParams = json_decode($bodyContents, true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $params = array_merge($params, $bodyParams);
+                }
+            }
+        }
 
         $responseBody = $action(
             array_merge($params, $args)

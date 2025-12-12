@@ -32,9 +32,9 @@ use Slim\Factory\AppFactory;
  */
 readonly class HttpServiceFactory
 {
-    public function createRouteDispatcher(Webservice $webservice): RouteDispatcher
+    public function createRouteExecutor(Webservice $webservice): RouteExecutor
     {
-        return new RouteDispatcher($webservice);
+        return new RouteExecutor($webservice);
     }
 
     public function createErrorHandler(
