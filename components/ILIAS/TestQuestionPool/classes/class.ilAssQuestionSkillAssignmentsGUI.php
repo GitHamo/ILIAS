@@ -431,9 +431,13 @@ class ilAssQuestionSkillAssignmentsGUI
             }
 
             if ($assignment->hasEvalModeBySolution()) {
+                /** @var ?ilLogicalAnswerComparisonExpressionInputGUI $sol_cmp_expr_input */
                 $sol_cmp_expr_input = $form->getItemByPostVar('solution_compare_expressions');
 
-                if (!$this->checkSolutionCompareExpressionInput($sol_cmp_expr_input, $question_gui->getObject())) {
+                if (
+                    $sol_cmp_expr_input instanceof ilLogicalAnswerComparisonExpressionInputGUI
+                    && !$this->checkSolutionCompareExpressionInput($sol_cmp_expr_input, $question_gui->getObject())
+                ) {
                     $this->tpl->setOnScreenMessage('failure', $this->lng->txt('form_input_not_valid'));
                     $this->showSkillQuestionAssignmentPropertiesFormCmd($question_gui, $assignment, $form);
                     return;
@@ -442,7 +446,7 @@ class ilAssQuestionSkillAssignmentsGUI
                 $assignment->initSolutionComparisonExpressionList();
                 $assignment->getSolutionComparisonExpressionList()->reset();
 
-                foreach ($sol_cmp_expr_input->getValues() as $expression) {
+                foreach ($sol_cmp_expr_input?->getValues() ?? [] as $expression) {
                     $assignment->getSolutionComparisonExpressionList()->add($expression);
                 }
             } else {
@@ -755,8 +759,10 @@ class ilAssQuestionSkillAssignmentsGUI
         return $this->question_list->isInList($questionId);
     }
 
-    private function checkSolutionCompareExpressionInput($input, assQuestion $question): bool
-    {
+    private function checkSolutionCompareExpressionInput(
+        ilLogicalAnswerComparisonExpressionInputGUI $input,
+        assQuestion $question
+    ): bool {
         $errors = [];
 
         foreach ($input->getValues() as $expression) {
@@ -767,10 +773,8 @@ class ilAssQuestionSkillAssignmentsGUI
             }
         }
 
-        if (count($errors)) {
-            $alert = $this->lng->txt('ass_lac_validation_error');
-            $alert .= '<br />' . implode('<br />', $errors);
-            $input->setAlert($alert);
+        if ($errors !== []) {
+            $input->setAlert($this->lng->txt('ass_lac_validation_error') . '<br />' . implode('<br />', $errors));
             return false;
         }
 
@@ -792,8 +796,13 @@ class ilAssQuestionSkillAssignmentsGUI
         return false;
     }
 
-    private function validateSolutionCompareExpression(ilAssQuestionSolutionComparisonExpression $expression, $question): bool
-    {
+    /**
+     * @throws ilAssLacException
+     */
+    private function validateSolutionCompareExpression(
+        ilAssQuestionSolutionComparisonExpression $expression,
+        assQuestion $question
+    ): bool|string {
         try {
             $question_provider = new ilAssLacQuestionProvider();
             $question_provider->setQuestion($question);
@@ -801,11 +810,7 @@ class ilAssQuestionSkillAssignmentsGUI
                 (new ilAssLacConditionParser())->parse($expression->getExpression())
             );
         } catch (ilAssLacException $e) {
-            if ($e instanceof ilAssLacFormAlertProvider) {
-                return $e->getFormAlert($this->lng);
-            }
-
-            throw $e;
+            return $e instanceof ilAssLacFormAlertProvider ? $e->getFormAlert($this->lng) : throw $e;
         }
 
         return true;
