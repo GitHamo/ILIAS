@@ -2297,7 +2297,7 @@ badge#:#badge_notification_badges_goto#:#To your badges
 badge#:#badge_notification_body#:#You have just received one or more new badges.
 badge#:#badge_notification_osd#:#You have received one or more new badges: [BADGE_LIST]
 badge#:#badge_notification_parent_goto#:#To the repository
-badge#:#badge_notification_reason#:#You are receiving this message to be able to add the badges to your profile.
+badge#:#badge_notification_reason#:#If you go to the ‘Badges’ section of your ‘Achievements’ in your ILIAS installation (see link above), you will be able to add any new or existing badges to your profile.
 badge#:#badge_notification_subject#:#New Badge(s)
 badge#:#badge_object_badges#:#Object Badges
 badge#:#badge_personal_badges#:#My Badges
@@ -17137,7 +17137,7 @@ trac#:#trac_current_system_load#:#Current System Load
 trac#:#trac_data_deleted#:#Data has been deleted.
 trac#:#trac_defaults#:#Completion Status
 trac#:#trac_defaults_inactive#:#Inactive
-trac#:#trac_defaults_info#:#Set how the completion status is determined for the following object types when being used as a component of a course. Used by certain badge types and certificates.
+trac#:#trac_defaults_info#:#Set how the completion status is determined for the following object types when being used as a component of a course or group. Used by certain badge types and certificates.
 trac#:#trac_delete_data#:#Delete Data
 trac#:#trac_determines_learning_progress#:#Determines Learning Progress
 trac#:#trac_edit_collection#:#Please assign materials. If the status of all assigned items is ‘Completed’ the overall status is completed by the user.
