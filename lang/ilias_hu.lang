@@ -1740,7 +1740,6 @@ assessment#:#tst_postpone_on_desc#:#A megtekintett, de meg nem válaszolt kérd�
 assessment#:#tst_presentation_properties#:#Teszt kezelése: A kérdés viselkedése
 assessment#:#tst_presentation_settings_section#:#Megjelenítés
 assessment#:#tst_previous_access_code_not_available#:#Egy korábbi kód sem érhető el!
-assessment#:#tst_print#:#Teszt és értékelés nyomtatási nézete
 assessment#:#tst_proceed#:#Folytatás
 assessment#:#tst_processing_time#:#Elhasználható idő korlátja
 assessment#:#tst_processing_time_desc#:#E-vizsgákhoz/távvizsgákhoz hasznos beálltás. A kitöltők csak meghatározott ideig dolgozhatnak a teszten. A visszaszámlálás akkor kezdődik, amikor a felhasználó először indítja a tesztet. A teszt felfüggesztése nem állítja meg az órát. Ha a lehetséges kitöltések száma korlátozott, megjelenik az extra idő biztosítása a kitöltőknek lehetőség a 'Résztvevők' lapon.
