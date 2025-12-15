@@ -1746,8 +1746,7 @@ assessment#:#tst_postpone_on#:#Meg nem válaszolt kérdések sorba állítása
 assessment#:#tst_postpone_on_desc#:#A megtekintett, de meg nem válaszolt kérdések a teszt végén automatikusan, sorba rendezve újra megjelennek.
 assessment#:#tst_presentation_properties#:#Teszt kezelése: A kérdés viselkedése
 assessment#:#tst_presentation_settings_section#:#Megjelenítés
-assessment#:#tst_previous_access_code_not_available#:#No previous code available!###26 08 2024 new variable
-assessment#:#tst_print#:#Teszt és értékelés nyomtatási nézete
+assessment#:#tst_previous_access_code_not_available#:#Egy korábbi kód sem érhető el!
 assessment#:#tst_proceed#:#Folytatás
 assessment#:#tst_processing_time#:#Elhasználható idő korlátja
 assessment#:#tst_processing_time_desc#:#A résztvevők csak meghatározott ideig dolgozhatnak a teszten. A visszaszámlálás akkor kezdődik, amikor a felhasználó először indítja a tesztet. A teszt felfüggesztése nem állítja meg az órát. Ha a lehetséges kitöltések száma korlátozott, megjelenik az extra idő biztosítása a kitöltőknek lehetőség a 'Műszerfal' fül alatt.
