@@ -7,9 +7,10 @@ namespace Tests\Unit\Auth\Domain\Model;
 use DateTimeImmutable;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(TokenSet::class)]
 class TokenSetTest extends TestCase
 {
     private TokenSet $model;

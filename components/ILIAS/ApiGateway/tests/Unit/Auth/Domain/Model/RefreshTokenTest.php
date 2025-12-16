@@ -6,10 +6,11 @@ namespace Tests\Unit\Auth\Domain\Model;
 
 use DateInterval;
 use DateTimeImmutable;
-use DateTimeInterface;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(RefreshToken::class)]
 class RefreshTokenTest extends TestCase
 {
     private RefreshToken $model;

@@ -6,9 +6,11 @@ namespace Tests\Unit\Auth\Domain\Model;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(TokenPayload::class)]
 class TokenPayloadTest extends TestCase
 {
     private TokenPayload $model;

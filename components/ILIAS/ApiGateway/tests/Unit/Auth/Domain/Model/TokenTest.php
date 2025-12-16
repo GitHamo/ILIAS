@@ -6,10 +6,12 @@ namespace Tests\Unit\Auth\Domain\Model;
 
 use DateTimeImmutable;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class AuthTokenTest extends TestCase
+#[CoversClass(Token::class)]
+class TokenTest extends TestCase
 {
     private Token $model;
     private string $token;

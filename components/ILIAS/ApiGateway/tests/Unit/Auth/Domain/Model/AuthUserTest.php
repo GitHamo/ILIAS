@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Auth\Domain\Model;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(AuthUser::class)]
 class AuthUserTest extends TestCase
 {
     private AuthUser $model;
