@@ -70,28 +70,32 @@ final class ErrorHandlerTest extends TestCase
     {
         $exception = new Exception('Not Found', 404);
 
+        $expected = $this->createMock(ResponseInterface::class);
+
         $this->response->expects(self::once())
             ->method('withStatus')
             ->with(404)
-            ->willReturn($this->response);
+            ->willReturn($expected);
 
         $response = ($this->handler)($this->request, $exception);
 
-        self::assertSame($this->response, $response);
+        self::assertSame($expected, $response);
     }
 
     public function testUsesExceptionCodeAsStatusInCaseOfA5xxError(): void
     {
         $exception = new Exception('Service Unavailable', 503);
 
+        $expected = $this->createMock(ResponseInterface::class);
+
         $this->response->expects(self::once())
             ->method('withStatus')
             ->with(503)
-            ->willReturn($this->response);
+            ->willReturn($expected);
 
         $response = ($this->handler)($this->request, $exception);
 
-        self::assertSame($this->response, $response);
+        self::assertSame($expected, $response);
     }
 
     public function testWritesPayloadFromWebserviceToResponseBody(): void

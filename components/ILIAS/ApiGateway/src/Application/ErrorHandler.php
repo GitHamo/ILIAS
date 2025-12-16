@@ -60,9 +60,9 @@ readonly class ErrorHandler
         $responsePayload = $this->service->handleError($exception);
 
         $response = $this->responseFactory->create();
-        
-        $response->withStatus($statusCode);
-        
+
+        $response = $response->withStatus($statusCode);
+
         foreach ($responsePayload->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);
         }

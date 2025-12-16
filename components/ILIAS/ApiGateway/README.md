@@ -98,9 +98,12 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/token/auth' \
 
 ```json
 {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "refresh_token": "def5020023e63064d77170889...",
-    "expires_in": 1701384000
+    "success": true,
+    "data": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "refresh_token": "def5020023e63064d77170889...",
+        "expires_in": 1701384000
+    }
 }
 ```
 
@@ -125,9 +128,12 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/token/refresh' \
 
 ```json
 {
-    "access_token": "abc1234567890...",
-    "refresh_token": "ghi0987654321...",
-    "expires_in": 1701387600
+    "success": true,
+    "data": {
+        "access_token": "abc1234567890...",
+        "refresh_token": "ghi0987654321...",
+        "expires_in": 1701387600
+    }
 }
 ```
 

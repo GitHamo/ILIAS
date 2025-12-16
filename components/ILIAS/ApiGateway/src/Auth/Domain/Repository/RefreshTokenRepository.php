@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Auth\Domaian\Repository;
+namespace ILIAS\ApiGateway\Auth\Domain\Repository;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 
