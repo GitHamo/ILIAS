@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Auth\Domain\Exception;
+namespace ILIAS\ApiGateway\Auth\Application\Exception;
 
 use Exception;
 
