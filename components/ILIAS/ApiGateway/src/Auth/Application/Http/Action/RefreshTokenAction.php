@@ -31,7 +31,7 @@ readonly class RefreshTokenAction extends ApiAction
     ) {
         parent::__construct(
             'RefreshAuthToken',
-            '/token/refresh',
+            '/auth/refresh',
             ['POST'],
             'Refreshes an authentication token.',
             function (array $params): array {

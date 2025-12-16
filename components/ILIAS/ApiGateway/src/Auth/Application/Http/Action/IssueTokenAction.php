@@ -33,9 +33,9 @@ readonly class IssueTokenAction extends ApiAction
     ) {
         parent::__construct(
             'AuthenticateUserCredentials',
-            '/token/auth',
+            '/auth/login',
             ['POST'],
-            'Authenticates a user and returns an access token.',
+            'Authenticates a user and issues an access token.',
             function (array $params): array {
                 $username = $params['username'] ?? '';
                 $password = $params['password'] ?? '';

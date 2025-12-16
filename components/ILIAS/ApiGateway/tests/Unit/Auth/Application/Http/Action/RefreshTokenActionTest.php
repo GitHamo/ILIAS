@@ -32,7 +32,7 @@ class RefreshTokenActionTest extends TestCase
         $actual = $this->action;
 
         $this->assertSame('RefreshAuthToken', $actual->getName());
-        $this->assertSame('/token/refresh', $actual->getPath());
+        $this->assertSame('/auth/refresh', $actual->getPath());
         $this->assertSame(['POST'], $actual->getMethods());
         $this->assertSame('Refreshes an authentication token.', $actual->getDescription());
     }

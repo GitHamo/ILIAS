@@ -29,20 +29,13 @@ readonly class AuthUser
 {
     /**
      * @param int $id The ILIAS user ID.
-     * @param string $login The username.
      */
     public function __construct(
         private int $id,
-        private string $login,
     ) {}
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getLogin(): string
-    {
-        return $this->login;
     }
 }
