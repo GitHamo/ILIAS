@@ -2573,6 +2573,7 @@ blog#:#blog_whole_blog#:#Whole Blog###31 03 2023 new variable
 book#:#X_reservations_of#:#%s prenotazioni di
 book#:#book_add#:#Aggiungi da gruppo di prenotazione
 book#:#book_add_object#:#Aggiungi oggetto
+book#:#book_add_participant#:#Add Participant###16 12 2025 new variable
 book#:#book_add_schedule#:#Aggiungi programma
 book#:#book_additional_info_file#:#Descrizione aggiuntiva
 book#:#book_all#:#Mostra tutto
@@ -2721,6 +2722,7 @@ book#:#book_show_message#:#Show Message###30 04 2024 new variable
 book#:#book_title_description_nr#:#Title; Description; Number of Units###30 04 2024 new variable
 book#:#book_title_description_nr_info#:#Enter title, description and number of units separated by semicolon or TAB character (if importing from spreadsheet software). Use one line per item.###30 04 2024 new variable
 book#:#book_too_many_preferences#:#Sono state selezionate troppe preferenze. Le preferenze non sono state salvate.
+book#:#book_total_individual_bookings_limit#:#Limit the number of bookings that can be carried out by/for individual participants in total, across all available items. Each bookable item can still only be booked once per participant.###16 12 2025 new variable
 book#:#book_type_warning#:#Attualmente non ci sono oggetti di prenotazione disponibili. Per utilizzare il gruppo di prenotazione è necessario creare oggetti di prenotazione.
 book#:#book_week#:#Week###30 04 2024 new variable
 book#:#book_your_bookings#:#Le Sue prenotazioni
@@ -8735,7 +8737,6 @@ dcl#:#dcl_msg_tableview_created#:#Visualizzazioni create
 dcl#:#dcl_msg_tableview_deleted#:#Visualizzazione eliminata
 dcl#:#dcl_msg_tableview_updated#:#Visualizzazione aggiornata
 dcl#:#dcl_msg_tableviews_delete_all#:#Non può essere eliminata: deve esistere almeno una visualizzazione
-dcl#:#dcl_msg_tableviews_order_updated#:#Ordine delle visualizzazioni aggiornate
 dcl#:#dcl_multiple_selection#:#Selezione multipla
 dcl#:#dcl_new#:#Crea nuova raccolta dati
 dcl#:#dcl_new_field#:#Nuovo campo
@@ -8758,7 +8759,6 @@ dcl#:#dcl_notification_activated#:#Notifica attivata
 dcl#:#dcl_notification_deactivate_dcl#:#Disattiva notifica per raccolta dati
 dcl#:#dcl_notification_deactivated#:#Notifica disattivata
 dcl#:#dcl_notification_info#:#Ogni utente può decidere sulla notifica
-dcl#:#dcl_notimage_exception#:#Il file deve essere un’immagine.
 dcl#:#dcl_noturl_exception#:#Devi inserire un collegamento (a partire da http:// o www.)
 dcl#:#dcl_number#:#Numero intero
 dcl#:#dcl_number_desc#:#Campo per valori interni (massimo 9 cifre). Nessun decimale o frazioni.
