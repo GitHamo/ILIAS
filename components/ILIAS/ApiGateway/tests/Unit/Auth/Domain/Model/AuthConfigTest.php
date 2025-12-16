@@ -8,7 +8,7 @@ use ILIAS\ApiGateway\Auth\Domain\Model\AuthConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(AuthenticationMiddleware::class)]
+#[CoversClass(AuthConfig::class)]
 class AuthConfigTest extends TestCase
 {
     private AuthConfig $model;
