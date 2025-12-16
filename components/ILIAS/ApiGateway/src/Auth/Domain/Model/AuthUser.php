@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
+namespace ILIAS\ApiGateway\Auth\Domain\Model;
+
+/**
+ * Represents a user who has been successfully authenticated.
+ *
+ * This is an immutable value object.
+ */
+readonly class AuthUser
+{
+    /**
+     * @param int $id The ILIAS user ID.
+     * @param string $login The username.
+     */
+    public function __construct(
+        private int $id,
+        private string $login,
+    ) {}
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+}
