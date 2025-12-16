@@ -21,7 +21,6 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Auth\Domain\Service;
 
 use DateTimeImmutable;
-use ILIAS\ApiGateway\Auth\Domain\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 
@@ -43,8 +42,6 @@ interface TokenProvider
 
     /**
      * Validates a token string and returns the data it contains.
-     * 
-     * @throws AuthenticationException if the token is invalid.
      */
     public function decode(string $token): TokenPayload;
 }
