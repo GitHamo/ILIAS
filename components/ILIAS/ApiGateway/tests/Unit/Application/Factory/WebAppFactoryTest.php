@@ -6,8 +6,8 @@ namespace Tests\Unit\Application\Factory;
 
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\ErrorHandler;
+use ILIAS\ApiGateway\Application\Factory\HttpServiceFactory;
 use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
-use ILIAS\ApiGateway\Application\HttpServiceFactory;
 use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Contracts\ServiceProtocol;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application;
+namespace Tests\Unit\Application\Factory;
 
 use ILIAS\ApiGateway\Application\ErrorHandler;
-use ILIAS\ApiGateway\Application\HttpServiceFactory;
+use ILIAS\ApiGateway\Application\Factory\HttpServiceFactory;
 use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Contracts\Webservice;
