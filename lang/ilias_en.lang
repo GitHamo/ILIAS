@@ -970,9 +970,9 @@ assessment#:#option_label_not_adequate#:#not adequate
 assessment#:#option_label_not_applicable#:#not applicable
 assessment#:#option_label_plus#:#+
 assessment#:#option_label_plus_minus#:#+ / -
-assessment#:#option_label_right#:#right
+assessment#:#option_label_right#:#Right
 assessment#:#option_label_right_wrong#:#right / wrong
-assessment#:#option_label_wrong#:#wrong
+assessment#:#option_label_wrong#:#Wrong
 assessment#:#oq_btn_define_pictures#:#Switch to picture definition view
 assessment#:#oq_btn_define_terms#:#Switch to term definition view
 assessment#:#oq_btn_nest_pictures#:#Switch to picture nesting view
