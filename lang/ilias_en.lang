@@ -770,7 +770,7 @@ assessment#:#hide_best_solution#:#Hide best solution
 assessment#:#identical_scoring#:#Identical Scoring
 assessment#:#identical_scoring_desc#:#If selected, gaps with identical solutions will be scored, even if the same solution was used twice or more. If not selected, only the first occurrence of the same solution will be scored.
 assessment#:#imagemap#:#Image Map
-assessment#:#imap_line_color#:#Image Map Line Color
+assessment#:#imap_line_color#:#Image Map Line Colour
 assessment#:#import_question#:#Import Question(s)
 assessment#:#in_range#:#Within range
 assessment#:#in_trash#:#In Trash
