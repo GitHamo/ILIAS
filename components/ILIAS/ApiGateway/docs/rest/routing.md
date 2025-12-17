@@ -62,10 +62,10 @@ By doing this, the system automatically creates the endpoint `/myvendor/mymodule
 ### How the Route is Built Automatically
 
 * **Path is Auto-Generated:** The URL path is created automatically from your `Activity`'s class name (e.g., `MyVendor\MyComponent\QueryUserDetailsActivity`).
-    - The system extracts the vendor, component, and the activity's core name.
-    - It then cleans up the name by removing prefixes like "Query" or "Get" and suffixes like "Activity".
-    - All parts are converted to lowercase and joined with slashes.
-    - Additionally, if the `Activity` is an instance of `ObjectActivity`, then `/{id}` will be appended to the generated route path. For example, a `QueryUserActivity` (an `ObjectActivity`) might result in `/myvendor/mymodule/users/{id}`.
+  * The system extracts the vendor, component, and the activity's core name.
+  * It then cleans up the name by removing prefixes like "Query" or "Get" and suffixes like "Activity".
+  * All parts are converted to lowercase and joined with slashes.
+  * Additionally, if the `Activity` is an instance of `ObjectActivity`, then `/{id}` will be appended to the generated route path. For example, a `QueryUserActivity` (an `ObjectActivity`) might result in `/myvendor/mymodule/users/{id}`.
 * **Special Rule for Core:** If the `Activity` is part of the core `ILIAS` vendor, the "ilias" part is left out of the URL to keep it shorter (e.g., `ILIAS\User\GetAllUsersActivity` becomes `/user/getallusers`).
 * **HTTP Method is Inferred:** The system assigns `GET` for a `Query` activity and `POST` for a `Command` activity.
 * **Handler is the Activity:** Your `Activity` class itself contains the logic for the route.
@@ -160,4 +160,4 @@ $contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
     new GetUserByIdAction(
         $pull[\UserRepository::class],
     );
----
+```
