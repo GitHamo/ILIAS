@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Application\Http\Action;
 
-use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Application\Http\Action\RefreshTokenAction;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -63,9 +63,8 @@ class RefreshTokenActionTest extends TestCase
     #[DataProvider('invalidParametersDataProvider')]
     public function testThrowsExceptionInCaseOfInvalidParameters(array $params): void
     {
-        $this->expectException(AuthenticationException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Refresh token is missing or empty.');
-        $this->expectExceptionCode(401);
 
         $this->action->getHandler()($params);
     }

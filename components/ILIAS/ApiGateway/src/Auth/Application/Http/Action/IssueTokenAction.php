@@ -24,6 +24,7 @@ use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Routing\ApiAction;
+use InvalidArgumentException;
 
 readonly class IssueTokenAction extends ApiAction
 {
@@ -32,10 +33,10 @@ readonly class IssueTokenAction extends ApiAction
         private UserRepository $userRepository,
     ) {
         parent::__construct(
-            'AuthenticateUserCredentials',
-            '/auth/login',
+            'Create API Token',
+            '/auth/token',
             ['POST'],
-            'Authenticates a user and issues an access token.',
+            'Authenticates a user and returns a new token set (access and refresh tokens).',
             function (array $params): array {
                 $username = $params['username'] ?? '';
                 $password = $params['password'] ?? '';
@@ -44,7 +45,7 @@ readonly class IssueTokenAction extends ApiAction
                 $password = trim($password);
 
                 if (\in_array('', [$username, $password])) {
-                    throw new AuthenticationException('Username or password is empty.', 401);
+                    throw new InvalidArgumentException('Username or password is empty.');
                 }
 
                 $user = $this->userRepository->get($username, $password);

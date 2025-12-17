@@ -23,6 +23,7 @@ namespace ILIAS\ApiGateway\Auth\Application\Http\Action;
 use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Routing\ApiAction;
+use InvalidArgumentException;
 
 readonly class RefreshTokenAction extends ApiAction
 {
@@ -30,16 +31,16 @@ readonly class RefreshTokenAction extends ApiAction
         private Authentication $authentication,
     ) {
         parent::__construct(
-            'RefreshAuthToken',
+            'Refresh API Token',
             '/auth/refresh',
             ['POST'],
-            'Refreshes an authentication token.',
+            'Exchanges a valid refresh token for a new token set. This should be used when the access token has expired.',
             function (array $params): array {
                 $refreshToken = $params['refresh_token'] ?? '';
                 $refreshToken = trim($refreshToken);
 
                 if ('' === $refreshToken) {
-                    throw new AuthenticationException('Refresh token is missing or empty.', 401);
+                    throw new InvalidArgumentException('Refresh token is missing or empty.');
                 }
 
                 return $this->authentication->refreshToken($refreshToken)->toArray();
