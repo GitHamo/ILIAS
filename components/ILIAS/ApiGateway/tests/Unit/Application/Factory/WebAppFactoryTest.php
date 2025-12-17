@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application;
+namespace Tests\Unit\Application\Factory;
 
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\ErrorHandler;
+use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
 use ILIAS\ApiGateway\Application\HttpServiceFactory;
 use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Application\WebApp;
-use ILIAS\ApiGateway\Application\WebAppFactory;
 use ILIAS\ApiGateway\Contracts\ServiceProtocol;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Contracts\Webservice;

@@ -24,7 +24,7 @@ use ILIAS\ApiGateway\Activity\ActivityNamespaceFactory;
 use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\HttpServiceFactory;
-use ILIAS\ApiGateway\Application\WebAppFactory;
+use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\RestAppEntryPoint;
 use ILIAS\ApiGateway\Routing\Route;

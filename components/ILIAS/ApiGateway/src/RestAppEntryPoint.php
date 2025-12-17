@@ -21,7 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway;
 
 use function defined;
-use ILIAS\ApiGateway\Application\WebAppFactory;
+use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
 use ILIAS\ApiGateway\Contracts\ServiceProtocol;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\Component\EntryPoint;
