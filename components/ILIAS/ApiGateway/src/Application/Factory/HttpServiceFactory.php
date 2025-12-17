@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application\Factory;
 
+use ILIAS\ApiGateway\Application\ErrorHandler;
+use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
