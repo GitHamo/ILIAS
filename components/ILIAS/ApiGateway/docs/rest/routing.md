@@ -6,7 +6,7 @@ Let's break down the three approaches.
 
 ---
 
-## 0. TL;DR
+## TL;DR
 
 ### Register a new endpoint
 

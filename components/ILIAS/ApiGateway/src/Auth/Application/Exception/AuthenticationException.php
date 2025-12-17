@@ -29,6 +29,6 @@ class AuthenticationException extends Exception
         string $message = "",
         Throwable|null $previous = null
     ) {
-        return parent::__construct($message, 401, $previous);
+        parent::__construct($message, 401, $previous);
     }
 }
