@@ -31,10 +31,10 @@ class RefreshTokenActionTest extends TestCase
     {
         $actual = $this->action;
 
-        $this->assertSame('RefreshAuthToken', $actual->getName());
+        $this->assertSame('Refresh API Token', $actual->getName());
         $this->assertSame('/auth/refresh', $actual->getPath());
         $this->assertSame(['POST'], $actual->getMethods());
-        $this->assertSame('Refreshes an authentication token.', $actual->getDescription());
+        $this->assertSame('Exchanges a valid refresh token for a new token set. This should be used when the access token has expired.', $actual->getDescription());
     }
 
     public function testUsesComponentsToIssueToken(): void

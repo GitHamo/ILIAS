@@ -35,10 +35,10 @@ class IssueTokenActionTest extends TestCase
     {
         $actual = $this->action;
 
-        $this->assertSame('AuthenticateUserCredentials', $actual->getName());
-        $this->assertSame('/auth/login', $actual->getPath());
+        $this->assertSame('Create API Token', $actual->getName());
+        $this->assertSame('/auth/token', $actual->getPath());
         $this->assertSame(['POST'], $actual->getMethods());
-        $this->assertSame('Authenticates a user and issues an access token.', $actual->getDescription());
+        $this->assertSame('Authenticates a user and returns a new token set (access and refresh tokens).', $actual->getDescription());
     }
 
     public function testUsesComponentsToIssueToken(): void
