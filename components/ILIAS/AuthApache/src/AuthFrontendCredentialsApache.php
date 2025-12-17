@@ -51,15 +51,6 @@ class AuthFrontendCredentialsApache extends ilAuthFrontendCredentials
      */
     public function tryAuthenticationOnLoginPage(): void
     {
-        $cmd = (string) ($this->http_request->getQueryParams()['cmd'] ?? '');
-        if ($cmd === '') {
-            $cmd = (string) ($this->http_request->getParsedBody()['cmd'] ?? '');
-        }
-
-        if ($cmd === 'force_login') {
-            return;
-        }
-
         if (!$this->getSettings()->get('apache_enable_auth', '0')) {
             return;
         }
