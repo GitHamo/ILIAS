@@ -38,7 +38,7 @@ use ILIAS\UI\Component\Table\Data;
  * If the UI > Table > Data supports some non-responsive/fixed width image column types,
  * this class MUST NOT be used anymore.
  * See: https://mantis.ilias.de/view.php?id=46327, https://mantis.ilias.de/view.php?id=46551
- * @depracated
+ * @deprecated
  */
 final class TableContentWrapper
 {
