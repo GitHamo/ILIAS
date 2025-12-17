@@ -21,6 +21,8 @@ final class ActivityRouteTest extends TestCase
     private MockObject&ActivityRouteHandler $handlerMock;
     private MockObject&ActivityNamespace $namespaceMock;
     private string $routePath = "/foo/bar/baz";
+    /** @var array<\Psr\Http\Server\MiddlewareInterface> */
+    private array $middlewares;
     private ActivityRoute $route;
 
     #[Override]
@@ -31,11 +33,15 @@ final class ActivityRouteTest extends TestCase
         $this->namespaceMock = $this->createConfiguredMock(ActivityNamespace::class, [
             'getPath' => $this->routePath,
         ]);
+        $this->middlewares = [
+            $this->createMock(\Psr\Http\Server\MiddlewareInterface::class),
+        ];
 
         $this->route = new ActivityRoute(
             $this->activity,
             $this->handlerMock,
             $this->namespaceMock,
+            $this->middlewares,
         );
     }
 
@@ -51,6 +57,7 @@ final class ActivityRouteTest extends TestCase
             new FakeTestActivity($type),
             $this->handlerMock,
             $this->namespaceMock,
+            $this->middlewares,
         );
 
         self::assertSame($expected, $actual->getMethods());
@@ -81,6 +88,14 @@ final class ActivityRouteTest extends TestCase
         self::assertSame(
             $this->handlerMock,
             $this->route->getHandler(),
+        );
+    }
+
+    public function testHasAccessorToMiddlewares(): void
+    {
+        self::assertSame(
+            $this->middlewares,
+            $this->route->getMiddlewares(),
         );
     }
 }

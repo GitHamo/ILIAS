@@ -30,4 +30,9 @@ interface Route
     public function getMethods(): array;
 
     public function getHandler(): RouteHandler;
+
+    /**
+     * @return array<\Psr\Http\Server\MiddlewareInterface>
+     */
+    public function getMiddlewares(): array;
 }

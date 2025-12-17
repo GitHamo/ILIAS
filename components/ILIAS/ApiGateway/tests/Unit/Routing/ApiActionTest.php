@@ -65,6 +65,13 @@ final class ApiActionTest extends TestCase
         );
     }
 
+    public function testHasAccessorToMiddlewares(): void
+    {
+        self::assertEmpty(
+            $this->apiAction->getMiddlewares()
+        );
+    }
+
     /**
      * @param string[] $methods
      */

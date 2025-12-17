@@ -28,10 +28,14 @@ use Override;
 
 class ActivityRoute implements Route
 {
+    /**
+     * @param array<\Psr\Http\Server\MiddlewareInterface> $middlewares
+     */
     public function __construct(
         private Activity $activity,
         private ActivityRouteHandler $handler,
         private ActivityNamespace $namespace,
+        private array $middlewares,
     ) {}
 
     #[Override]
@@ -53,5 +57,11 @@ class ActivityRoute implements Route
     public function getHandler(): RouteHandler
     {
         return $this->handler;
+    }
+
+    #[Override]
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
     }
 }
