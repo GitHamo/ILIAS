@@ -1,1 +1,163 @@
 # REST Webservice Routing
+
+In the API Gateway, an endpoint (like `/ping` or `/users/123`) is called a **Route**. The system is flexible, offering three main ways to create routes. No matter which method you choose, the basic process is the same: you define your route and then register it in your `Component.php` file so the system can find it.
+
+Let's break down the three approaches.
+
+---
+
+## 0. TL;DR
+
+### Register a new endpoint
+
+In your `Component.php`, you define the contribution depending on which approach you choose.
+
+| **Approach**    | **When to use?**                                                                                 | **Parent**                            |
+|-----------------|--------------------------------------------------------------------------------------------------|---------------------------------------|
+| `Activity`      | For routes tied to **domain logic**. The path and method are created **automatically**.          | `ILIAS\Component\Activities\Activity` |
+| `ApiAction`     | **Simple endpoints** with basic logic that can be written in a single function.                  | `ILIAS\ApiGateway\Routing\Route`      |
+| `Route`         | **Complex endpoints** that need their own dependencies or detailed setup.                        | `ILIAS\ApiGateway\Routing\Route`      |
+
+---
+
+## An Important Rule: Duplicate Routes
+
+No matter which approach you use, the routing system enforces uniqueness. If you register two routes that have the **exact same path and HTTP method** (e.g., two routes for `GET /users/{id}`), the webservice will fail to start and throw an exception. It will not silently ignore one of the routes.
+
+---
+
+## 1. `Activity`: The Automated Approach
+
+This is a more advanced way to create routes. Instead of defining the route directly, you create an **Activity** class, and the system automatically turns it into a usable API route.
+
+### How It Looks
+
+First, create a simple `Activity` class. Then, register it in your `Component.php` file by "contributing" it to `ILIAS\Component\Activities\Activity::class`.
+
+```php
+## Components/Vendor/MyModule/SaveUserDetailsActivity.php
+
+namespace Vendor\MyModule;
+
+use ILIAS\Component\Activities\Activity;
+use ILIAS\Component\Activities\ActivityType;
+
+class SaveUserDetailsActivity implements Activity
+{
+    public function getType(): ActivityType
+    {
+        return ActivityType::Command;
+    }
+
+    // ... implementation of Activity methods
+}
+
+## Components/Vendor/MyModule/MyModule.php
+
+$contribute[\ILIAS\Component\Activities\Activity::class] = static fn(): Activity => new SaveUserDetailsActivity();
+```
+
+By doing this, the system automatically creates the endpoint `/myvendor/mymodule/saveuserdetails` for you.
+
+### How the Route is Built Automatically
+
+* **Path is Auto-Generated:** The URL path is created automatically from your `Activity`'s class name (e.g., `MyVendor\MyComponent\QueryUserDetailsActivity`).
+    - The system extracts the vendor, component, and the activity's core name.
+    - It then cleans up the name by removing prefixes like "Query" or "Get" and suffixes like "Activity".
+    - All parts are converted to lowercase and joined with slashes.
+    - Additionally, if the `Activity` is an instance of `ObjectActivity`, then `/{id}` will be appended to the generated route path. For example, a `QueryUserActivity` (an `ObjectActivity`) might result in `/myvendor/mymodule/users/{id}`.
+* **Special Rule for Core:** If the `Activity` is part of the core `ILIAS` vendor, the "ilias" part is left out of the URL to keep it shorter (e.g., `ILIAS\User\GetAllUsersActivity` becomes `/user/getallusers`).
+* **HTTP Method is Inferred:** The system assigns `GET` for a `Query` activity and `POST` for a `Command` activity.
+* **Handler is the Activity:** Your `Activity` class itself contains the logic for the route.
+
+---
+
+## 2. `ApiAction`: The Direct Approach
+
+Use `ApiAction` for simple, standalone endpoints. It's perfect for prototyping or when you don't need a lot of complex logic.
+
+You define the path, HTTP methods, and handler function all in one place. You then register it by "contributing" the `ApiAction` to `ApiGateway\Routing\Route::class` within your component's `Component.php` file.
+
+### How It Looks
+
+Here's an example from the `Component.php` file, which creates the `/ping` endpoint:
+
+```php
+## Components/Vendor/MyModule/MyModule.php
+
+use ILIAS\ApiGateway\Routing\ApiAction;
+use ILIAS\ApiGateway\Routing\Route;
+
+$contribute[Route::class] = static fn(): Route =>
+    new ApiAction(
+        name: 'Ping',
+        path: "/ping",
+        methods: ['GET'],
+        description: 'A simple ping pong route for testing purposes.',
+        handler: fn(): string => 'Pong!',
+    );
+```
+
+This approach is straightforward and easy to understand for anyone familiar with modern PHP frameworks.
+
+### What It Means
+
+* **`path: "/ping"`**: This is the URL fragment for the endpoint.
+* **`methods: ['GET']`**: This route will only respond to `GET` requests. You could add `'POST'`, `'PUT'`, etc., to the array.
+* **`handler: fn(): string => 'Pong!'`**: This is the actual code that executes. In this case, it's a simple anonymous function (a `Closure`) that returns the string "Pong!". This is what gets sent back to the user as the response body.
+
+---
+
+## 3. Your Own Route Class: The Advanced Approach
+
+For the most complex scenarios, you can create your own class that implements the `Route` interface. This gives you maximum flexibility and is ideal when your route has its own dependencies or complex logic.
+
+### How It Looks
+
+You create a class that defines all the route's properties and logic. Just like `ApiAction`, you would then register this in your `Component.php` by contributing an instance of your new class to `ApiGateway\Routing\Route::class`.
+
+```php
+## Components/Vendor/MyModule/GetUserByIdAction.php
+
+use ILIAS\ApiGateway\Routing\Route;
+use ILIAS\ApiGateway\Routing\RouteHandler;
+
+class GetUserByIdAction implements Route, RouteHandler
+{
+    private $userRepository;
+
+    // Dependencies can be injected via the constructor
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    // Define the path and any placeholders
+    public function getPath(): string
+    {
+        return '/users/{id}';
+    }
+
+    // Define the allowed methods
+    public function getMethods(): array
+    {
+        return ['GET'];
+    }
+
+    // The __invoke method contains the route's logic
+    public function __invoke(array $params) : User
+    {
+        $userId = (int) $params['id'];
+        return $this->userRepository->getUser($userId);
+    }
+    
+    // ... other methods required by the Route interface
+}
+
+## Components/Vendor/MyModule/MyModule.php
+
+$contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
+    new GetUserByIdAction(
+        $pull[\UserRepository::class],
+    );
+---
