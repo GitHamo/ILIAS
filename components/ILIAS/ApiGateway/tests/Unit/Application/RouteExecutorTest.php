@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\RouteExecutor;
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Contracts\Payload;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
@@ -42,17 +43,35 @@ class RouteExecutorTest extends TestCase
         $mergedParams = array_merge($queryParams, $routeArgs);
         $handlerResponseBody = ['handler' => 'response'];
         $serviceResponseBody = '{"service":"response"}';
+        $userMock = $this->createMock(AuthUser::class);
 
-        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $finalRequest = $this->createConfiguredMock(Request::class, [
+            'getQueryParams' => $queryParams,
+            'getAttributes' => [],
+            'getBody' => $this->streamMock,
+            'getHeaderLine' => ''
+        ]);
+
+        $this->requestMock->expects(self::once())
+            ->method('getAttribute')
+            ->with(self::identicalTo('authenticated_user'))
+            ->willReturn($userMock);
+        $this->requestMock->expects(self::once())
+            ->method('withoutAttribute')
+            ->with(self::identicalTo('authenticated_user'))
+            ->willReturn($finalRequest);
 
         $routeHandlerMock = $this->createMock(RouteHandler::class);
 
         $routeHandlerMock->method('__invoke')
-            ->with($this->callback(function (array $params) use ($mergedParams): bool {
-                self::assertEquals($mergedParams, $params);
+            ->with(
+                $this->callback(function (array $params) use ($mergedParams): bool {
+                    self::assertEquals($mergedParams, $params);
 
-                return true;
-            }))
+                    return true;
+                }),
+                self::identicalTo($userMock)
+            )
             ->willReturn($handlerResponseBody);
 
         $originalPayload = new Payload(data: $handlerResponseBody);
@@ -92,5 +111,101 @@ class RouteExecutorTest extends TestCase
         );
 
         self::assertSame($this->responseMock, $response);
+    }
+
+    public function testHandlesRequestWithJsonObjectBody(): void
+    {
+        $queryParams = ['query' => 'q_val'];
+        $bodyParams = ['body' => 'b_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = array_merge($queryParams, $bodyParams, $routeArgs);
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('getContents')->willReturn(json_encode($bodyParams));
+
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+
+        $routeHandlerMock = $this->createMock(RouteHandler::class);
+        $routeHandlerMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->executor)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $routeHandlerMock
+        );
+    }
+
+    public function testIgnoresJsonScalarBody(): void
+    {
+        // A scalar in the body should be ignored by the array_merge
+        $queryParams = ['query' => 'q_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = array_merge($queryParams, $routeArgs); // Note: body params are NOT merged
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('getContents')->willReturn('"this is a scalar string"'); // A valid JSON scalar
+
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+
+        $routeHandlerMock = $this->createMock(RouteHandler::class);
+        $routeHandlerMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->executor)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $routeHandlerMock
+        );
+    }
+
+    public function testIgnoresMalformedJsonBody(): void
+    {
+        // Malformed JSON should be ignored
+        $queryParams = ['query' => 'q_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = array_merge($queryParams, $routeArgs); // Note: body params are NOT merged
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('getContents')->willReturn('{"malformed": "json"'); // Malformed JSON
+
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+
+        $routeHandlerMock = $this->createMock(RouteHandler::class);
+        $routeHandlerMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->executor)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $routeHandlerMock
+        );
     }
 }

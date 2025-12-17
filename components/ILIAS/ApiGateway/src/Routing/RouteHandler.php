@@ -20,11 +20,14 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Routing;
 
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
+
 interface RouteHandler
 {
     /**
      * @param array<string, mixed> $params
+     *
      * @return mixed|void May return any value or nothing.
      */
-    public function __invoke(array $params);
+    public function __invoke(array $params, ?AuthUser $user);
 }

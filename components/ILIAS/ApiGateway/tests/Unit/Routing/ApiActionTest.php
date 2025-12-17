@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Routing;
 
 use Closure;
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\ApiAction;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use Override;
@@ -155,6 +156,7 @@ final class ApiActionTest extends TestCase
         Closure $handler,
         mixed $expected,
         array $params,
+        ?AuthUser $user,
     ): void {
         $apiAction = new ApiAction(
             $this->name,
@@ -168,41 +170,58 @@ final class ApiActionTest extends TestCase
 
         self::assertInstanceOf(RouteHandler::class, $routeHandler);
 
-        $actual = $routeHandler($params);
+        $actual = $routeHandler($params, $user);
 
         self::assertSame($expected, $actual);
     }
 
     /**
-     * @return array<string, array{handler: Closure, expected: mixed, params: array<string, int|string|bool>}>
+     * @return array<string, array{handler: Closure, expected: mixed, params: array<string, int|string|bool>, user: ?AuthUser}>
      */
     public static function invokableHandlerDataProvider(): array
     {
         return [
             'handler_returns_string_with_params' => [
-                'handler' => fn(array $params) => 'Result: ' . $params['id'],
+                'handler' => fn(array $params, ?AuthUser $_user) => 'Result: ' . $params['id'],
                 'expected' => 'Result: 42',
                 'params' => ['id' => '42'],
+                'user' => null,
             ],
             'handler_returns_integer_no_params' => [
-                'handler' => fn() => 123,
+                'handler' => fn(array $_params, ?AuthUser $_user) => 123,
                 'expected' => 123,
                 'params' => [],
+                'user' => null,
             ],
             'handler_returns_array_with_params' => [
-                'handler' => fn(array $params) => ['status' => 'ok', 'data' => $params],
+                'handler' => fn(array $params, ?AuthUser $_user) => ['status' => 'ok', 'data' => $params],
                 'expected' => ['status' => 'ok', 'data' => ['item' => 'new']],
                 'params' => ['item' => 'new'],
+                'user' => null,
             ],
             'handler_returns_boolean' => [
-                'handler' => fn() => true,
+                'handler' => fn(array $_params, ?AuthUser $_user) => true,
                 'expected' => true,
                 'params' => [],
+                'user' => null,
             ],
             'handler_with_no_params_expected' => [
-                'handler' => fn() => 'OK',
+                'handler' => fn(array $_params, ?AuthUser $_user) => 'OK',
                 'expected' => 'OK',
                 'params' => [],
+                'user' => null,
+            ],
+            'handler_uses_user_id' => [
+                'handler' => fn(array $params, ?AuthUser $user) => $user ? 'User ID: ' . $user->getId() : 'No user',
+                'expected' => 'User ID: 99',
+                'params' => [],
+                'user' => new AuthUser(99),
+            ],
+            'handler_no_user_provided' => [
+                'handler' => fn(array $params, ?AuthUser $user) => $user ? 'User ID: ' . $user->getId() : 'No user',
+                'expected' => 'No user',
+                'params' => [],
+                'user' => null,
             ],
         ];
     }

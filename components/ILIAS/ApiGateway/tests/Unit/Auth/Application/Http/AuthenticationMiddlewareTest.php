@@ -89,7 +89,7 @@ class AuthenticationMiddlewareTest extends TestCase
         $this->authenticationService
             ->method('validateToken')
             ->with('invalid-token')
-            ->willThrowException(new AuthenticationException('Token has expired.', 401));
+            ->willThrowException(new AuthenticationException('Token has expired.'));
 
         $this->handler->expects(self::never())->method('handle');
 
@@ -103,7 +103,7 @@ class AuthenticationMiddlewareTest extends TestCase
     public function testAddsUserToRequestAndCallsNextHandlerOnSuccess(): void
     {
         $token = 'valid-token-string';
-        $user = new AuthUser(1, 'testuser');
+        $user = new AuthUser(1);
         $expected = $this->createMock(ResponseInterface::class);
         $requestWithUser = $this->createMock(ServerRequestInterface::class);
 

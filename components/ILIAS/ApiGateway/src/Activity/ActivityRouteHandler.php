@@ -20,41 +20,49 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Activity;
 
+use DomainException;
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Data\Result;
 use RuntimeException;
+use Throwable;
 
 class ActivityRouteHandler implements RouteHandler
 {
-    private int $userId = 0; // @todo: temp user id
-
     public function __construct(
         private Activity $activity,
     ) {}
 
     #[\Override]
-    public function __invoke(array $params): mixed
+    public function __invoke(array $params, ?AuthUser $user): mixed
     {
+        $userId = $user ? $user->getId() : 0;
         $parameters = $this->validate($params);
 
-        if (false === $this->activity->isAllowedToPerform($this->userId, $parameters)) {
+        if (false === $this->activity->isAllowedToPerform($userId, $parameters)) {
             // @todo: create own exception
             throw new RuntimeException('You are not allowed to perform this activity.', 403);
         }
 
         $result = $this->activity->perform($parameters);
-        
-        if($result instanceof Result) {
 
-            if($result->isError()) {
-                throw $result->error();
+        if ($result instanceof Result) {
+
+            if ($result->isError()) {
+                $error = $result->error();
+
+                if ($error instanceof Throwable) {
+                    throw $error;
+                }
+
+                throw new DomainException($error);
             }
 
             $factory = new \ILIAS\Data\Description\Factory();
             $output = $this->activity->getOutputDescription($factory);
 
-            if(!$output->matches($result)) {
+            if (!$output->matches($result)) {
                 throw new RuntimeException('Output description does not match result.');
             }
 

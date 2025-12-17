@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Activity;
 
+use BadFunctionCallException;
+use DomainException;
 use Exception;
 use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Data\Result;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,6 +20,7 @@ final class ActivityRouteHandlerTest extends TestCase
 {
     private ActivityRouteHandler $handler;
     private Activity&MockObject $activityMock;
+    private AuthUser&MockObject $currentUserMock;
 
     #[Override]
     protected function setUp(): void
@@ -24,15 +28,20 @@ final class ActivityRouteHandlerTest extends TestCase
         $this->handler = new ActivityRouteHandler(
             $this->activityMock = $this->createMock(Activity::class),
         );
+
+        $this->currentUserMock = $this->createMock(AuthUser::class);
     }
 
     public function testValidatesCurrentUserIdBeforePerformActivity(): void
     {
-        $userId = 0;
+        $userId = 123;
         $params = [
-            'foo' => $userId,
-            'bar' => 'baz',
+            'foo' => 'bar',
         ];
+
+        $this->currentUserMock->expects(self::once())
+            ->method('getId')
+            ->willReturn($userId);
 
         $this->activityMock->expects(self::once())
             ->method('isAllowedToPerform')
@@ -48,7 +57,7 @@ final class ActivityRouteHandlerTest extends TestCase
                 self::identicalTo($params),
             );
 
-        ($this->handler)($params);
+        ($this->handler)($params, $this->currentUserMock);
     }
 
     public function testDoesNotPerformActivityIfUserIsNotAuthorized(): void
@@ -64,14 +73,14 @@ final class ActivityRouteHandlerTest extends TestCase
         self::expectExceptionMessage('You are not allowed to perform this activity.');
         self::expectExceptionCode(403);
 
-        ($this->handler)([]);
+        ($this->handler)([], null);
     }
 
     public function testThrowsExceptionIfPerformResultHasError(): void
     {
         $result = $this->createConfiguredMock(Result::class, [
             'isError' => true,
-            'error' => new \BadFunctionCallException(),
+            'error' => new BadFunctionCallException(),
         ]);
 
         $this->activityMock->expects(self::once())
@@ -82,8 +91,29 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('perform')
             ->willReturn($result);
 
-        self::expectException(Exception::class);
+        self::expectException(BadFunctionCallException::class);
 
-        ($this->handler)([]);
+        ($this->handler)([], $this->currentUserMock);
+    }
+
+    public function testThrowsExceptionIfPerformResultHasStringError(): void
+    {
+        $result = $this->createConfiguredMock(Result::class, [
+            'isError' => true,
+            'error' => $errorMessage = 'error-string',
+        ]);
+
+        $this->activityMock->expects(self::once())
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+            ->method('perform')
+            ->willReturn($result);
+
+        self::expectException(DomainException::class);
+        self::expectExceptionMessage($errorMessage);
+
+        ($this->handler)([], $this->currentUserMock);
     }
 }

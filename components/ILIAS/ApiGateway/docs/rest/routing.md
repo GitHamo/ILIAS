@@ -119,23 +119,22 @@ You create a class that defines all the route's properties and logic. Just like 
 ```php
 ## Components/Vendor/MyModule/GetUserByIdAction.php
 
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 
-class GetUserByIdAction implements Route, RouteHandler
+class GetCourseByIdAction implements Route, RouteHandler
 {
-    private $userRepository;
-
     // Dependencies can be injected via the constructor
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private CourseRepository $repository)
     {
-        $this->userRepository = $userRepository;
+        //
     }
 
     // Define the path and any placeholders
     public function getPath(): string
     {
-        return '/users/{id}';
+        return '/courses/{id}';
     }
 
     // Define the allowed methods
@@ -145,10 +144,11 @@ class GetUserByIdAction implements Route, RouteHandler
     }
 
     // The __invoke method contains the route's logic
-    public function __invoke(array $params) : User
+    public function __invoke(array $params, ?AuthUser $user) : Course
     {
-        $userId = (int) $params['id'];
-        return $this->userRepository->getUser($userId);
+        $courseId = (int) $params['id'];
+
+        return $this->repository->get($courseId);
     }
     
     // ... other methods required by the Route interface
@@ -157,7 +157,7 @@ class GetUserByIdAction implements Route, RouteHandler
 ## Components/Vendor/MyModule/MyModule.php
 
 $contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
-    new GetUserByIdAction(
-        $pull[\UserRepository::class],
+    new GetCourseByIdAction(
+        $pull[CourseRepository::class],
     );
 ```

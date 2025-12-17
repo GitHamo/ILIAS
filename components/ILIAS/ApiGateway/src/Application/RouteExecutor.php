@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Contracts\Payload;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
@@ -31,6 +32,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 readonly class RouteExecutor
 {
+    private const string ATTR_KEY_AUTH_USER = 'authenticated_user';
+
     public function __construct(
         private Webservice $service,
     ) {}
@@ -44,6 +47,10 @@ readonly class RouteExecutor
         array $args,
         RouteHandler $action,
     ): Response {
+        /** @var AuthUser|null */
+        $authUser = $request->getAttribute(self::ATTR_KEY_AUTH_USER);
+        $request = $request->withoutAttribute(self::ATTR_KEY_AUTH_USER);
+
         $params = array_merge(
             $request->getQueryParams(),
             $request->getAttributes()
@@ -54,19 +61,20 @@ readonly class RouteExecutor
             $bodyContents = $request->getBody()->getContents();
             if (!empty($bodyContents)) {
                 $bodyParams = json_decode($bodyContents, true);
-                if (json_last_error() === JSON_ERROR_NONE) {
+                if (json_last_error() === JSON_ERROR_NONE && is_array($bodyParams)) {
                     $params = array_merge($params, $bodyParams);
                 }
             }
         }
 
         $responseBody = $action(
-            array_merge($params, $args)
+            array_merge($params, $args),
+            $authUser,
         );
 
         $successPayload = new Payload($responseBody);
         $responsePayload = $this->service->handle($successPayload);
-        
+
         foreach ($responsePayload->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);
         }

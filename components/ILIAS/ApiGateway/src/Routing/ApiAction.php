@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Routing;
 
 use Closure;
+use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use Override;
 
 readonly class ApiAction implements Route
@@ -65,9 +66,9 @@ readonly class ApiAction implements Route
             public function __construct(private Closure $handle) {}
 
             #[Override]
-            public function __invoke(array $params)
+            public function __invoke(array $params, ?AuthUser $user)
             {
-                return ($this->handle)($params);
+                return ($this->handle)($params, $user);
             }
         };
     }
