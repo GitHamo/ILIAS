@@ -1,4 +1,4 @@
-# Organisational Units Privacy
+# OrgUnit Privacy
 
 This documentation does not warrant completeness or correctness. Please report any
 missing or wrong information using the [ILIAS issue tracker](https://mantis.ilias.de)
@@ -6,9 +6,9 @@ or contribute a fix via [Pull Request](../../../docs/development/contributing.md
 
 ### General Information
 
-Org Units themselves provide an access mechanism to certain information according
-to an hierachical, organigram-like structure of actors and their positions within 
-an organisation.
+Organisational Units (OrgUnits) themselves provide an access mechanism to certain 
+information according to an hierachical, organigram-like structure of actors and 
+their positions within an organisation.
 User accounts are assigned to one or many nodes of a tree and are given positions,
 which grant "authority" over other positions within the same or consecutive nodes.
 These authorities may be connected to permissions on object-level, so that e.g.
