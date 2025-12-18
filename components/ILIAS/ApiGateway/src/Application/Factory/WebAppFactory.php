@@ -21,9 +21,11 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
+use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Logging\WebserviceLogger;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
+use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\Routing\RoutesAutoloader;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
@@ -38,6 +40,7 @@ final readonly class WebAppFactory
         private HttpServiceFactory $httpServiceFactory,
         private ResponseFactory $responseFactory,
         private RoutesRegistry $registry,
+        private MiddlewareRepository $middlewareRepository,
         private ActivityRoutesAutoloader $activityRoutesAutoloader,
         private RoutesAutoloader $routesAutoloader,
         private WebserviceLoggerFactory $loggerFactory,
@@ -64,6 +67,7 @@ final readonly class WebAppFactory
         return new WebApp(
             $config,
             $this->registry,
+            $this->middlewareRepository,
             $executor,
             $errorHandler,
             $logger,

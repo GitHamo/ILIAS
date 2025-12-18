@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Application\Http\Action;
 
-use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Routing\ApiAction;

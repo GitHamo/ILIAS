@@ -28,6 +28,7 @@ readonly class ApiAction implements Route
 {
     /**
      * @param string[] $methods
+     * @param string[] $middlewares
      */
     public function __construct(
         private string $name,
@@ -35,6 +36,7 @@ readonly class ApiAction implements Route
         private array $methods,
         private string $description,
         private Closure $handler,
+        private array $middlewares = [],
     ) {}
 
     public function getName(): string
@@ -76,6 +78,6 @@ readonly class ApiAction implements Route
     #[Override]
     public function getMiddlewares(): array
     {
-        return [];
+        return $this->middlewares;
     }
 }

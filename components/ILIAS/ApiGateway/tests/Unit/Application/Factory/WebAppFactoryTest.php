@@ -14,6 +14,7 @@ use ILIAS\ApiGateway\Contracts\ServiceProtocol;
 use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
+use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\Routing\RoutesAutoloader;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
@@ -30,6 +31,7 @@ final class WebAppFactoryTest extends TestCase
     private HttpServiceFactory&MockObject $httpServiceFactory;
     private ResponseFactory&MockObject $responseFactory;
     private RoutesRegistry&MockObject $routesRegistry;
+    private MiddlewareRepository&MockObject $middlewareRepository;
     private ActivityRoutesAutoloader&MockObject $activityRoutesAutoloader;
     private RoutesAutoloader&MockObject $routesAutoloader;
     private WebserviceLoggerFactory&MockObject $loggerFactory;
@@ -43,6 +45,7 @@ final class WebAppFactoryTest extends TestCase
         $this->httpServiceFactory = $this->createMock(HttpServiceFactory::class);
         $this->responseFactory = $this->createMock(ResponseFactory::class);
         $this->routesRegistry = $this->createMock(RoutesRegistry::class);
+        $this->middlewareRepository = $this->createMock(MiddlewareRepository::class);
         $this->activityRoutesAutoloader = $this->createMock(ActivityRoutesAutoloader::class);
         $this->routesAutoloader = $this->createMock(RoutesAutoloader::class);
         $this->loggerFactory = $this->createMock(WebserviceLoggerFactory::class);
@@ -52,6 +55,7 @@ final class WebAppFactoryTest extends TestCase
             $this->httpServiceFactory,
             $this->responseFactory,
             $this->routesRegistry,
+            $this->middlewareRepository,
             $this->activityRoutesAutoloader,
             $this->routesAutoloader,
             $this->loggerFactory
@@ -108,6 +112,7 @@ final class WebAppFactoryTest extends TestCase
         $expected = new WebApp(
             $config,
             $this->routesRegistry,
+            $this->middlewareRepository,
             $executorMock,
             $errorHandlerMock,
             $loggerMock,

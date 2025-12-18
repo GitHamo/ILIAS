@@ -19,6 +19,8 @@ final class ApiActionTest extends TestCase
     private string $path = '/test';
     private string $method = 'testMethod';
     private string $description = 'A test API action';
+    /** @var array<string> */
+    private array $middlewares = ['Middleware1', 'Middleware2'];
 
     #[\Override]
     protected function setUp(): void
@@ -31,6 +33,7 @@ final class ApiActionTest extends TestCase
             [$this->method],
             $this->description,
             fn(): string => 'handled',
+            $this->middlewares,
         );
     }
 
@@ -68,8 +71,24 @@ final class ApiActionTest extends TestCase
 
     public function testHasAccessorToMiddlewares(): void
     {
+        self::assertSame(
+            $this->middlewares,
+            $this->apiAction->getMiddlewares(),
+        );
+    }
+
+    public function testCreatesInstanceWithoutOptionalParameters(): void
+    {
+        $actual = new ApiAction(
+            $this->name,
+            $this->path,
+            [$this->method],
+            $this->description,
+            fn(): string => 'handled',
+        );
+
         self::assertEmpty(
-            $this->apiAction->getMiddlewares()
+            $actual->getMiddlewares()
         );
     }
 

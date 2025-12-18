@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application;
 
 use ILIAS\ApiGateway\Contracts\WebConfig;
+use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -42,6 +43,7 @@ final readonly class WebApp
     public function __construct(
         private WebConfig $configuration,
         private RoutesRegistry $registry,
+        private MiddlewareRepository $middlewareRepository,
         private RouteExecutor $executor,
         private ErrorHandler $errorHandler,
         private LoggerInterface $logger,
@@ -104,7 +106,7 @@ final readonly class WebApp
             $this->getBasePath(),
             function (\Slim\Routing\RouteCollectorProxy $group): void {
                 foreach ($this->registry->all() as $route) {
-                    $group
+                    $slimRoute = $group
                         ->map(
                             $route->getMethods(),
                             $route->getPath(),
@@ -115,11 +117,14 @@ final readonly class WebApp
                                 $route->getHandler(),
                             ),
                         );
+
+                    foreach ($route->getMiddlewares() as $middlewareClassname) {
+                        $middleware = $this->middlewareRepository->get($middlewareClassname);
+                        $slimRoute->add($middleware);
+                    }
                 }
             }
         );
-
-        //->add(new RestAuthenticationMiddleware(...));
     }
 
     private function getBasePath(): string
