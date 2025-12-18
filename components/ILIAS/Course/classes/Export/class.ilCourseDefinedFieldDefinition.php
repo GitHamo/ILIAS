@@ -322,7 +322,7 @@ class ilCourseDefinedFieldDefinition
         $this->setName((string) $row->field_name);
         $this->setType((int) $row->field_type);
         $this->setValues($row->field_values === null ? [] : (unserialize($row->field_values) ?: []));
-        $this->setValueOptions($row->field_values === null ? [] : (unserialize($row->field_values_opt) ?: []));
+        $this->setValueOptions($row->field_values_opt === null ? [] : (unserialize($row->field_values_opt) ?: []));
         $this->enableRequired((bool) $row->field_required);
     }
 }
