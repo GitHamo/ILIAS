@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Auth\Application\Exception;
+namespace ILIAS\ApiGateway\Application\Exception;
 
 use Exception;
 use Throwable;

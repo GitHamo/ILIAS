@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Application\Http;
 
-use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Application\Http\AuthenticationMiddleware;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;

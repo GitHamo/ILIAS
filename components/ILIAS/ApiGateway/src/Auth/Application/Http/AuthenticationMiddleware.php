@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Application\Http;
 
-use ILIAS\ApiGateway\Auth\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,7 +49,7 @@ final readonly class AuthenticationMiddleware implements MiddlewareInterface
         $token = trim(substr($authHeader, 7)); // Length of "Bearer "
 
         if (empty($token)) {
-            throw new AuthenticationException('Authorization token cannot be empty.');
+            throw new \ILIAS\ApiGateway\Application\Exception\AuthorizationException('Authorization token cannot be empty.');
         }
 
         $authenticatedUser = $this->authenticationService->validateToken($token);
