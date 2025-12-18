@@ -21,14 +21,12 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Activity;
 
 use ILIAS\ApiGateway\Auth\Application\Http\AuthenticationMiddleware;
-use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\Component\Activities\Activity;
 
 readonly class ActivityRouteFactory
 {
     public function __construct(
         private ActivityNamespaceFactory $namespaceFactory,
-        private Authentication $authenticationService,
     ) {}
 
     public function create(Activity $activity): ActivityRoute
@@ -38,7 +36,7 @@ readonly class ActivityRouteFactory
             new ActivityRouteHandler($activity),
             $this->namespaceFactory->create(\get_class($activity)),
             [
-                new AuthenticationMiddleware($this->authenticationService),
+                AuthenticationMiddleware::class,
             ],
         );
     }

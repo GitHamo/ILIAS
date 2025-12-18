@@ -21,8 +21,8 @@ final class ActivityRouteTest extends TestCase
     private MockObject&ActivityRouteHandler $handlerMock;
     private MockObject&ActivityNamespace $namespaceMock;
     private string $routePath = "/foo/bar/baz";
-    /** @var array<\Psr\Http\Server\MiddlewareInterface> */
-    private array $middlewares;
+    /** @var array<string> */
+    private array $middlewares = ['FOO::class', 'BAR::class'];
     private ActivityRoute $route;
 
     #[Override]
@@ -33,9 +33,6 @@ final class ActivityRouteTest extends TestCase
         $this->namespaceMock = $this->createConfiguredMock(ActivityNamespace::class, [
             'getPath' => $this->routePath,
         ]);
-        $this->middlewares = [
-            $this->createMock(\Psr\Http\Server\MiddlewareInterface::class),
-        ];
 
         $this->route = new ActivityRoute(
             $this->activity,

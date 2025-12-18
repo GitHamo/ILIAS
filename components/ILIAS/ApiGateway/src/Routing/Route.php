@@ -32,7 +32,7 @@ interface Route
     public function getHandler(): RouteHandler;
 
     /**
-     * @return array<\Psr\Http\Server\MiddlewareInterface>
+     * @return array<string> list of namespaces of middleware classes
      */
     public function getMiddlewares(): array;
 }

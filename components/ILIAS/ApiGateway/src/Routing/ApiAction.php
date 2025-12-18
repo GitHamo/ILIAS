@@ -73,9 +73,6 @@ readonly class ApiAction implements Route
         };
     }
 
-    /**
-     * @return array<\Psr\Http\Server\MiddlewareInterface>
-     */
     #[Override]
     public function getMiddlewares(): array
     {

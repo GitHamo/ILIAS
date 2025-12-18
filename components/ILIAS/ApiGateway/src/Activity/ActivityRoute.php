@@ -29,7 +29,7 @@ use Override;
 class ActivityRoute implements Route
 {
     /**
-     * @param array<\Psr\Http\Server\MiddlewareInterface> $middlewares
+     * @param array<string> $middlewares
      */
     public function __construct(
         private Activity $activity,
