@@ -5,9 +5,9 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 - The WOPI component employs the following services, please consult the respective privacy.mds
   - Cron
   - [FileDelivery](../../ILIAS/FileDelivery/PRIVACY.md)
-  - [Filesystem](../../ILIAS/Filesystem/docs/PRIVACY.md)
-  - [GlobalScreen](../../ILIAS/GlobalScreen/docs/PRIVACY.md)
-  - [IRSS](../../ILIAS/ResourceStorage/docs/PRIVACY.md)
+  - [Filesystem](../../ILIAS/Filesystem/PRIVACY.md)
+  - [GlobalScreen](../../ILIAS/GlobalScreen/PRIVACY.md)
+  - [IRSS](../../ILIAS/ResourceStorage/PRIVACY.md)
 
 ## Data being stored
 - The WOPI component does not store any personal data.

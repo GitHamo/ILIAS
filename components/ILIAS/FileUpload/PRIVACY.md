@@ -7,8 +7,8 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Services
 - The FileUpload employs the following services, please consult the respective PRIVACY.mds:
-  - [FileDelivery](../../../ILIAS/FileDelivery/PRIVACY.md)
-  - [Filesystem](../../../ILIAS/Filesystem/docs/PRIVACY.md)
+  - [FileDelivery](../FileDelivery/PRIVACY.md)
+  - [Filesystem](../Filesystem/PRIVACY.md)
 
 ## Data being stored
 - The FileUpload does not store any personal data.

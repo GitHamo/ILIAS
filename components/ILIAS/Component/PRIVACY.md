@@ -18,7 +18,7 @@ The UICore component employs the following components, please consult the respec
 * [Data](../Data/PRIVACY.md): for representing structured data
 * DI: for the global dependency injection container
 * [Database](../Database/PRIVACY.md): for storing technical information
-* [HTTP](../HTTP/PRICACY.md): for request information and request handling
+* [HTTP](../HTTP/PRIVACY.md): for request information and request handling
 * ILIASObject: to implement settings for components and plugins
 * [Init](../Init/PRIVACY.md):: for ini-files and settings, raising errors
 * Language: for translations

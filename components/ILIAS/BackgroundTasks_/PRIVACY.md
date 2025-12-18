@@ -5,4 +5,4 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 - Due to the new structure from ILIAS 10 onward, components who formerly had parts of them located in "Services" or "Modules" as well as in "src" will be united in a shared folder on an ongoing basis.
 - For the BackgroundTasks component this process is still pending which is why this additional directory named "BackgroundTasks_" exists.
 - The code in this "BackgroundTasks_" directory is part of the overall BackgroundTasks component, the relevant privacy aspects of that component are described in the following privacy file:
-  - [BackgroundTasks Privacy](../../ILIAS/BackgroundTasks/docs/PRIVACY.md)
+  - [BackgroundTasks Privacy](../BackgroundTasks/PRIVACY.md)

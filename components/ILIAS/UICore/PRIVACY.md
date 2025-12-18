@@ -25,9 +25,9 @@ The UICore component employs the following components, please consult the respec
 * [Component](../Component/PRIVACY.md): for plugin information and UI-Hook plugin manipulations
 * DI: for the global dependency injection container
 * [File](../File/PRIVACY.md): for rendering file-upload dropzones
-* [GlobalScreen](../GlobalScreen/docs/PRIVACY.md): for page layout 
+* [GlobalScreen](../GlobalScreen/PRIVACY.md): for page layout 
   modifications, JavaScript and CSS resources
-* [HTTP](../HTTP/docs/PRIVACY.md): for request information and request handling
+* [HTTP](../HTTP/PRIVACY.md): for request information and request handling
 * Language: for translations
 * Notification: for rendering notifications
 * OnScreenChat: for JavaScript resources

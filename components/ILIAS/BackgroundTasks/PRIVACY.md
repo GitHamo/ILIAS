@@ -7,9 +7,9 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Components
 - The BackgroundTasks component employs the following services, please consult the respective privacy.mds:
-    - [Filesystem](../../../ILIAS/Filesystem/docs/PRIVACY.md)
-    - [GlobalScreen](../../../ILIAS/GlobalScreen/docs/PRIVACY.md)
-    - [Setup](../../../ILIAS/Setup/PRIVACY.md)
+    - [Filesystem](../Filesystem/PRIVACY.md)
+    - [GlobalScreen](../GlobalScreen/PRIVACY.md)
+    - [Setup](../Setup/PRIVACY.md)
     - UI
 
 ## Data being stored

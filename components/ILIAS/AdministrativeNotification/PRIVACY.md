@@ -3,7 +3,7 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Services
 - The AdministrativeNotification component employs the following services, please consult the respective privacy.mds:
-    - [GlobalScreen](../../ILIAS/GlobalScreen/docs/PRIVACY.md)
+    - [GlobalScreen](../../ILIAS/GlobalScreen/PRIVACY.md)
 
 ## Data being stored
 - User IDs of the persons that created and last updated the AdministrativeNotification entry as well as the timestamps of the creation and last update of the entry are stored. This data is stored in order to ensure internal traceability regarding timing and authorship in the event of any problems caused by the AdministrativeNotification entry.

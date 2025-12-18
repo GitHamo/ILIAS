@@ -7,8 +7,8 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Services
 - The IRSS employs the following services, please consult the respective PRIVACY.mds:
-	- [Filesystem](../../../ILIAS/Filesystem/docs/PRIVACY.md)
-	- [FileUpload](../../../ILIAS/FileUpload/docs/PRIVACY.md)
+	- [Filesystem](../Filesystem/PRIVACY.md)
+	- [FileUpload](../FileUpload/PRIVACY.md)
 
 ## Data being stored
 - The User ID of the person who created the resource is stored as "owner_id".

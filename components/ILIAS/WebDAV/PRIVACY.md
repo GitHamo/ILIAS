@@ -3,8 +3,8 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Services
 - The WebDAV component employs the following services, please consult the respective privacy.mds
-    - [Filesystem](../../ILIAS/Filesystem/docs/PRIVACY.md)
-    - [FileUpload](../../ILIAS/FileUpload/docs/PRIVACY.md)
+    - [Filesystem](../../ILIAS/Filesystem/PRIVACY.md)
+    - [FileUpload](../../ILIAS/FileUpload/PRIVACY.md)
 
 ## Data being stored
 - Personal data being stored regarding WebDAV locks:

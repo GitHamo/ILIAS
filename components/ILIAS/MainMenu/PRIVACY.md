@@ -3,7 +3,7 @@ Disclaimer: This documentation does not warrant completeness or correctness. Ple
 
 ## Integrated Services
 - The MainMenu component employs the following services, please consult the respective privacy.mds
-    - [GlobalScreen](../../ILIAS/GlobalScreen/docs/PRIVACY.md)
+    - [GlobalScreen](../../ILIAS/GlobalScreen/PRIVACY.md)
 
 ## Data being stored
 - The MainMenu component does not store any personal data.
