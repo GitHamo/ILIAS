@@ -49,7 +49,7 @@ final readonly class AuthenticationMiddleware implements MiddlewareInterface
         $token = trim(substr($authHeader, 7)); // Length of "Bearer "
 
         if (empty($token)) {
-            throw new \ILIAS\ApiGateway\Application\Exception\AuthorizationException('Authorization token cannot be empty.');
+            throw new AuthenticationException('Authorization token cannot be empty.');
         }
 
         $authenticatedUser = $this->authenticationService->validateToken($token);
