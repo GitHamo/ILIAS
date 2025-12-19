@@ -1423,6 +1423,9 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                     $rbacadmin->adjustMovedObjectPermissions($ref_id, $old_parent);
 
                     ilConditionHandler::_adjustMovedObjectConditions($ref_id);
+                    $availability = new ilObjectActivation();
+                    $availability->read($ref_id);
+                    $availability->update($ref_id, $folder_ref_id);
 
                     // BEGIN ChangeEvent: Record cut event.
                     $node_data = $tree->getNodeData($ref_id);
@@ -1739,6 +1742,9 @@ class ilContainerGUI extends ilObjectGUI implements ilDesktopItemHandling
                 $rbacadmin->adjustMovedObjectPermissions($ref_id, $old_parent);
 
                 ilConditionHandler::_adjustMovedObjectConditions($ref_id);
+                $availability = new ilObjectActivation();
+                $availability->read($ref_id);
+                $availability->update($ref_id, $this->object->getRefId());
 
                 // BEGIN ChangeEvent: Record cut event.
                 $node_data = $tree->getNodeData($ref_id);
