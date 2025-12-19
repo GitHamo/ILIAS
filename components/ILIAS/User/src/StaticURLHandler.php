@@ -24,6 +24,7 @@ use ILIAS\User\LocalDIC;
 use ILIAS\User\Profile\PersonalProfileGUI;
 use ILIAS\User\Profile\PublicProfileGUI;
 use ILIAS\User\Settings\StartingPoint\Repository as StartingPointRepository;
+use ILIAS\Data\ReferenceId;
 use ILIAS\LegalDocuments\Conductor as LegalDocumentsConductor;
 use ILIAS\StaticURL\Handler\Handler;
 use ILIAS\StaticURL\Request\Request;
@@ -153,7 +154,7 @@ class StaticURLHandler extends BaseHandler implements Handler
 
     private function getRedirectToOtherComponentsOrProfile(
         \ilCtrl $ctrl,
-        ?int $target_user_id,
+        ?ReferenceId $target_user_id,
         string $cmd
     ): string {
         if (substr($cmd, -4) == '_bdg') {
@@ -177,15 +178,15 @@ class StaticURLHandler extends BaseHandler implements Handler
         }
 
         return $this->buildProfileUrl(
-            $target_user_id->toInt(),
             $ctrl,
+            $target_user_id,
             PublicProfileGUI::DEFAULT_CMD
         );
     }
 
     private function buildProfileUrl(
         \ilCtrl $ctrl,
-        ?int $target_user_id,
+        ?ReferenceId $target_user_id,
         string $cmd
     ): string {
         if ($target_user_id === null) {
@@ -194,7 +195,7 @@ class StaticURLHandler extends BaseHandler implements Handler
                 'jumpToProfile'
             );
         }
-        $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id);
+        $ctrl->setParameterByClass(PublicProfileGUI::class, 'user_id', $target_user_id->toInt());
         return $ctrl->getLinkTargetByClass([\ilPublicProfileBaseClassGUI::class, PublicProfileGUI::class], $cmd);
     }
 }
