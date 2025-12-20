@@ -119,7 +119,7 @@ il.VideoWidget = il.VideoWidget || {};
       t.wrapper_ids.push(wrapper_id);
     };
 
-    const setMeta = (wrapper_id, title, description) => {
+    const setMeta = (wrapper_id, title, description, downloadUrl) => {
       const $wrap = $(`#${wrapper_id}`);
       $wrap.parent().find("[data-elementtype='title']").html(title);
       if (description !== '') {
@@ -130,6 +130,14 @@ il.VideoWidget = il.VideoWidget || {};
       } else {
         $wrap.parent().find("[data-elementtype='description']").html('');
         // $wrap.parent().find("[data-elementtype='description-wrapper']").addClass("ilNoDisplay");
+      }
+      const downEl = $wrap.parent().find("[data-elementtype='download']");
+      if (downloadUrl !== '') {
+        downEl.closest('a').removeClass('ilNoDisplay');
+        downEl.closest('a').attr('href', downloadUrl);
+      } else {
+        downEl.closest('a').addClass('ilNoDisplay');
+        downEl.closest('a').attr('href', '#');
       }
     };
 
@@ -172,7 +180,12 @@ il.VideoWidget = il.VideoWidget || {};
         },
       );
 
-      setMeta(wrapper_id, video_data.title, video_data.description);
+      setMeta(
+        wrapper_id,
+        video_data.title,
+        video_data.description,
+        video_data.download_url
+      );
 
       t.widget[wrapper_id].progress_cb = progress_cb;
     };

@@ -237,6 +237,13 @@ class VideoViewGUI
                 "mob_id",
                 $video->getId()
             );
+            $download_url = "";
+            if ($video->isLocal() && $this->media_cast->getDownloadable()) {
+                $this->ctrl->setParameterByClass("ilobjmediacastgui", "purpose", "Standard");
+                $this->ctrl->setParameterByClass("ilobjmediacastgui", "item_id", $video->getNewsId());
+                $download_url = $this->ctrl->getLinkTargetByClass("ilobjmediacastgui", "downloadItem");
+            }
+
             $items[] = [
                 "id" => $video->getId(),
                 "resource" => $video->getResource(),
@@ -252,7 +259,8 @@ class VideoViewGUI
                 "renderUrl" => $this->ctrl->getLinkTargetByClass(
                     \ilObjMediaCastGUI::class,
                     "renderVideo"
-                )
+                ),
+                "download_url" => $download_url
             ];
         }
 
