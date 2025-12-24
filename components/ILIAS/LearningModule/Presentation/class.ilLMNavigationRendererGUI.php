@@ -269,6 +269,8 @@ class ilLMNavigationRendererGUI
         $nodes = $this->lm_tree->getSubTree($this->lm_tree->getNodeData($this->lm_tree->getRootId()));
         //$nodes = $this->filterNonAccessibleNode($nodes);
 
+        $actions = [];
+
         foreach ($nodes as $node) {
             $disabled = false;
 
@@ -384,7 +386,6 @@ class ilLMNavigationRendererGUI
         }
 
         $title = "<span style='vertical-align: bottom; max-width:60px; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>" . $title . "</span>";
-
 
         $this->toolbar->addStickyItem(
             $this->ui->factory()->dropdown()->standard($actions)->withLabel($title)
