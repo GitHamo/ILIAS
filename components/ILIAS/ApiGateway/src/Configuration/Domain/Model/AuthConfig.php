@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Auth\Domain\Model;
+namespace ILIAS\ApiGateway\Configuration\Domain\Model;
 
 /**
  * Represents the configuration of the auth service
