@@ -6,7 +6,6 @@ namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DomainException;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Auth\Domain\Model\AuthConfig;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
@@ -14,6 +13,7 @@ use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
+use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use Override;
 
 /**
@@ -24,7 +24,7 @@ final readonly class AuthService implements Authentication
     public function __construct(
         private TokenProvider $tokenProvider,
         private RefreshTokenRepository $refreshTokenRepository,
-        private AuthConfig $authConfig,
+        private AuthConfig $config,
     ) {}
 
     #[Override]
@@ -32,13 +32,21 @@ final readonly class AuthService implements Authentication
     {
         $userId = $user->getId();
         $issuedAt = new \DateTimeImmutable();
-        $accessTokenExpiry = $issuedAt->modify('+' . $this->authConfig->getAccessTokenExpiry() . ' seconds');
-        $refreshTokenExpiry = $issuedAt->modify('+' . $this->authConfig->getRefreshTokenExpiry() . ' seconds');
+        $accessTokenExpiry = $issuedAt->modify('+' . $this->config->getAccessTokenExpiry() . ' seconds');
+        $refreshTokenExpiry = $issuedAt->modify('+' . $this->config->getRefreshTokenExpiry() . ' seconds');
 
-        $accessToken = $this->tokenProvider->generate($userId, $issuedAt, $accessTokenExpiry);
-        $refreshToken = $this->tokenProvider->generate($userId, $issuedAt, $refreshTokenExpiry, true);
+        $accessToken = $this->tokenProvider->generate(
+            $userId,
+            $issuedAt,
+            $accessTokenExpiry,
+        );
+        $refreshToken = $this->tokenProvider->generate(
+            $userId,
+            $issuedAt,
+            $refreshTokenExpiry,
+            true,
+        );
 
-        // Hash the refresh token and save it to the database
         $this->saveRefreshToken($user, $refreshToken);
 
         return new TokenSet($accessToken, $refreshToken);
@@ -53,7 +61,6 @@ final readonly class AuthService implements Authentication
             throw new DomainException('Token is not a refresh token.');
         }
 
-        // validate the refresh token against the database
         $tokenHash = $this->hashToken($refreshToken);
         $storedToken = $this->refreshTokenRepository->find($tokenHash);
 
@@ -93,6 +100,6 @@ final readonly class AuthService implements Authentication
 
     private function hashToken(string $token): string
     {
-        return hash($this->authConfig->getHashAlgo(), $token);
+        return hash($this->config->getHashAlgo(), $token);
     }
 }
