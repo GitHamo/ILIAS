@@ -9,11 +9,11 @@ use DomainException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Auth\Domain\Model\AuthConfig;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
+use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use Override;
 use UnexpectedValueException;
 
