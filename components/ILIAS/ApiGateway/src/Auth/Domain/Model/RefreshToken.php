@@ -22,25 +22,15 @@ namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
 use DateTimeImmutable;
 
-/**
- * Represents a refresh token model
- *
- * Some of the fields are immutable, the rest are optional
- */
 class RefreshToken
 {
-    private DateTimeImmutable $createdAt;
-
     public function __construct(
         private readonly int $userId,
         private readonly string $tokenHash,
         private readonly DateTimeImmutable $expiresAt,
         private readonly ?int $id = null,
         private bool $isRevoked = false,
-        ?DateTimeImmutable $createdAt = null,
-    ) {
-        $this->createdAt = $createdAt ?? new DateTimeImmutable();
-    }
+    ) {}
 
     public function getId(): ?int
     {
@@ -57,19 +47,14 @@ class RefreshToken
         return $this->tokenHash;
     }
 
-    public function getExpiresAt(): DateTimeImmutable
-    {
-        return $this->expiresAt;
-    }
-
     public function isRevoked(): bool
     {
         return $this->isRevoked;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getExpiresAt(): DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->expiresAt;
     }
 
     public function revoke(): void

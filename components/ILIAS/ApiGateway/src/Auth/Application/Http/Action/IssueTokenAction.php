@@ -47,7 +47,7 @@ readonly class IssueTokenAction extends ApiAction
                     throw new InvalidArgumentException('Username or password is empty.');
                 }
 
-                $user = $this->userRepository->get($username, $password);
+                $user = $this->userRepository->login($username, $password);
 
                 return $this->authentication->createToken($user)->toArray();
             },

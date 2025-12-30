@@ -19,7 +19,6 @@ class RefreshTokenTest extends TestCase
     private DateTimeImmutable $expiresAt;
     private int $refreshTokenId;
     private bool $isRevoked;
-    private DateTimeImmutable $createdAt;
 
     #[\Override]
     protected function setUp(): void
@@ -30,7 +29,6 @@ class RefreshTokenTest extends TestCase
             $this->expiresAt = new DateTimeImmutable(),
             $this->refreshTokenId = 321,
             $this->isRevoked = true,
-            $this->createdAt = new DateTimeImmutable(),
         );
     }
 
@@ -74,14 +72,6 @@ class RefreshTokenTest extends TestCase
         );
     }
 
-    public function testHasAccessorToCreatedAt(): void
-    {
-        $this->assertSame(
-            $this->createdAt,
-            $this->model->getCreatedAt(),
-        );
-    }
-
     public function testReturnsIsExpired(): void
     {
         $now = new DateTimeImmutable();
@@ -94,7 +84,6 @@ class RefreshTokenTest extends TestCase
             $expiresAtPast,
             $this->refreshTokenId,
             $this->isRevoked,
-            $this->createdAt,
         );
 
         $actualFuture = new RefreshToken(
@@ -103,33 +92,9 @@ class RefreshTokenTest extends TestCase
             $expiresAtFuture,
             $this->refreshTokenId,
             $this->isRevoked,
-            $this->createdAt,
         );
 
         $this->assertTrue($actualPast->isExpired());
         $this->assertFalse($actualFuture->isExpired());
-    }
-
-    public function testCreatesNewInstanceWithDefaultValues(): void
-    {
-        $now = time();
-
-        $actual = new RefreshToken(
-            $this->userId,
-            $this->tokenHash,
-            $this->expiresAt,
-            createdAt: null,
-        );
-
-        $this->assertNull($actual->getId());
-
-        $this->assertFalse($actual->isRevoked());
-
-        $this->assertEqualsWithDelta(
-            $now,
-            $actual->getCreatedAt()->getTimestamp(),
-            2.0,
-            'The createdAt timestamp should be very close to the time of instantiation.'
-        );
     }
 }

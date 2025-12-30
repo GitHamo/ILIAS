@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
+namespace ILIAS\ApiGateway\Configuration\Infrastructure\Repository;
+
+use ILIAS\ApiGateway\ilApiGatewayAdminSettings;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
+use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
+use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
+use ILIAS\ApiGateway\LocalDIC;
+
+/**
+ * @codeCoverageIgnore To be tested when settings are loaded by DI not global
+ */
+final class AdminSettings extends LocalDIC implements SystemSettingRepository
+{
+    private ?ilApiGatewayAdminSettings $settings = null;
+
+    #[\Override]
+    public function get(SystemSetting $settingKey): Setting
+    {
+        $key = $settingKey->value;
+        $value = $this->settings()?->get($key);
+
+        return Setting::create($key, $value);
+    }
+
+    private function settings(): ?ilApiGatewayAdminSettings
+    {
+        if (null === $this->settings) {
+            $database = $this->database();
+
+            if (null === $database) {
+                return null;
+            }
+
+            $this->settings = new ilApiGatewayAdminSettings($database);
+        }
+
+        return $this->settings;
+    }
+}

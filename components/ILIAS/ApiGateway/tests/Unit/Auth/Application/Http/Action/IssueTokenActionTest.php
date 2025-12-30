@@ -54,7 +54,7 @@ class IssueTokenActionTest extends TestCase
 
         $this->userRepository
             ->expects($this->once())
-            ->method('get')
+            ->method('login')
             ->with($username, $password)
             ->willReturn($user);
 
@@ -67,7 +67,7 @@ class IssueTokenActionTest extends TestCase
         $actual = $this->action->getHandler()([
             'username' => $username,
             'password' => $password,
-        ]);
+        ], null);
 
         $this->assertSame($expected, $actual);
     }
@@ -81,7 +81,7 @@ class IssueTokenActionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Username or password is empty.');
 
-        $this->action->getHandler()($params);
+        $this->action->getHandler()($params, null);
     }
 
     /**

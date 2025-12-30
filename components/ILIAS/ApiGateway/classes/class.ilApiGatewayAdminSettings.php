@@ -18,17 +18,13 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Configuration\Domain\Enum;
+namespace ILIAS\ApiGateway;
 
-enum SystemSetting: string
+class ilApiGatewayAdminSettings extends \ilSetting
 {
-    case BASE_URL = 'base_url';
-    case CLIENT_ID = 'client_id';
-    case AUTH_SECRET_KEY = 'auth_secret_key';
-    case AUTH_ALGO_ENCRYPTION = 'auth_algo_encryption';
-    case AUTH_ALGO_HASH = 'auth_algo_hash';
-    case AUTH_TOKEN_EXPIRY_ACCESS = 'auth_token_expiry_access';
-    case AUTH_TOKEN_EXPIRY_REFRESH = 'auth_token_expiry_refresh';
-    case REST_WS_ENABLED = 'rest_ws_enabled';
-    case REST_DOCS_ENABLED = 'rest_docs_enabled';
+    public function __construct(
+        protected \ilDBInterface $db
+    ) {
+        parent::__construct('apigateway', true);
+    }
 }

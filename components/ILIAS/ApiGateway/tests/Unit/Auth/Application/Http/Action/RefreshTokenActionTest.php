@@ -52,7 +52,7 @@ class RefreshTokenActionTest extends TestCase
             ->with($this->identicalTo($refreshToken))
             ->willReturn($tokenSet);
 
-        $actual = $this->action->getHandler()(['refresh_token' => $refreshToken]);
+        $actual = $this->action->getHandler()(['refresh_token' => $refreshToken], null);
 
         $this->assertSame($expected, $actual);
     }
@@ -66,7 +66,7 @@ class RefreshTokenActionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Refresh token is missing or empty.');
 
-        $this->action->getHandler()($params);
+        $this->action->getHandler()($params, null);
     }
 
     /**

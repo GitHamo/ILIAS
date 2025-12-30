@@ -1,30 +1,46 @@
 <?php
 
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
 declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DomainException;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
+use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use Override;
 
-/**
- * Orchestrates the authentication process by coordinating the token provider and refresh token repository.
- */
 final readonly class AuthService implements Authentication
 {
     public function __construct(
         private TokenProvider $tokenProvider,
+        private UserRepository $userRepository,
         private RefreshTokenRepository $refreshTokenRepository,
-        private AuthConfig $config,
+        private WebAppConfigFactory $configFactory,
     ) {}
 
     #[Override]
@@ -32,8 +48,8 @@ final readonly class AuthService implements Authentication
     {
         $userId = $user->getId();
         $issuedAt = new \DateTimeImmutable();
-        $accessTokenExpiry = $issuedAt->modify('+' . $this->config->getAccessTokenExpiry() . ' seconds');
-        $refreshTokenExpiry = $issuedAt->modify('+' . $this->config->getRefreshTokenExpiry() . ' seconds');
+        $accessTokenExpiry = $issuedAt->modify('+' . $this->config()->getAccessTokenExpiry() . ' seconds');
+        $refreshTokenExpiry = $issuedAt->modify('+' . $this->config()->getRefreshTokenExpiry() . ' seconds');
 
         $accessToken = $this->tokenProvider->generate(
             $userId,
@@ -62,18 +78,17 @@ final readonly class AuthService implements Authentication
         }
 
         $tokenHash = $this->hashToken($refreshToken);
-        $storedToken = $this->refreshTokenRepository->find($tokenHash);
+        $storedToken = $this->refreshTokenRepository->findByHash($tokenHash);
 
         if ($storedToken === null || $storedToken->isRevoked() || $storedToken->isExpired()) {
             throw new AuthenticationException('Refresh token is invalid or has been revoked.');
         }
 
         // revoke the old token after use (rotation)
-        $this->refreshTokenRepository->revoke($storedToken);
+        $this->revokeRefreshToken($storedToken);
 
         $user = $payload->getUser();
 
-        // issue a new set of tokens
         return $this->createToken($user);
     }
 
@@ -81,8 +96,11 @@ final readonly class AuthService implements Authentication
     public function validateToken(string $token): AuthUser
     {
         $payload = $this->tokenProvider->decode($token);
+        $payloadUser = $payload->getUser();
 
-        return $payload->getUser();
+        return $this->userRepository->getById(
+            $payloadUser->getId()
+        );
     }
 
     private function saveRefreshToken(AuthUser $user, Token $token): void
@@ -92,14 +110,26 @@ final readonly class AuthService implements Authentication
         $refreshToken = new RefreshToken(
             $user->getId(),
             $hash,
-            $token->getExpiresIn()
+            $token->getExpiresIn(),
         );
 
         $this->refreshTokenRepository->save($refreshToken);
     }
 
+    private function revokeRefreshToken(RefreshToken $token): void
+    {
+        $token->revoke();
+
+        $this->refreshTokenRepository->save($token);
+    }
+
     private function hashToken(string $token): string
     {
-        return hash($this->config->getHashAlgo(), $token);
+        return hash($this->config()->getHashAlgo(), $token);
+    }
+
+    private function config(): AuthConfig
+    {
+        return $this->configFactory->createAuth();
     }
 }

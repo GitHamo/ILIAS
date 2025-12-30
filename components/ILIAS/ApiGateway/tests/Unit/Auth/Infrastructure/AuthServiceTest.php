@@ -7,12 +7,14 @@ namespace Tests\Unit\Auth\Infrastructure;
 use DateTimeImmutable;
 use DomainException;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
+use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
 use ILIAS\ApiGateway\Auth\Infrastructure\AuthService;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
@@ -29,25 +31,30 @@ class AuthServiceTest extends TestCase
     private const string HASH_ALGO = 'sha256';
 
     private MockObject&TokenProvider $tokenProvider;
+    private MockObject&UserRepository $userRepository;
     private MockObject&RefreshTokenRepository $refreshTokenRepository;
-    private MockObject&AuthConfig $authConfig;
+    private MockObject&WebAppConfigFactory $configFactory;
     private AuthService $service;
 
     #[\Override]
     protected function setUp(): void
     {
         $this->tokenProvider = $this->createMock(TokenProvider::class);
+        $this->userRepository = $this->createMock(UserRepository::class);
         $this->refreshTokenRepository = $this->createMock(RefreshTokenRepository::class);
-        $this->authConfig = $this->createConfiguredMock(AuthConfig::class, [
-            'getAccessTokenExpiry' => self::ACCESS_TOKEN_EXPIRY,
-            'getRefreshTokenExpiry' => self::REFRESH_TOKEN_EXPIRY,
-            'getHashAlgo' => self::HASH_ALGO,
+        $this->configFactory = $this->createConfiguredMock(WebAppConfigFactory::class, [
+            'createAuth' => $this->createConfiguredMock(AuthConfig::class, [
+                'getAccessTokenExpiry' => self::ACCESS_TOKEN_EXPIRY,
+                'getRefreshTokenExpiry' => self::REFRESH_TOKEN_EXPIRY,
+                'getHashAlgo' => self::HASH_ALGO,
+            ]),
         ]);
 
         $this->service = new AuthService(
             $this->tokenProvider,
+            $this->userRepository,
             $this->refreshTokenRepository,
-            $this->authConfig
+            $this->configFactory,
         );
     }
 
@@ -98,9 +105,11 @@ class AuthServiceTest extends TestCase
             ->with(hash(self::HASH_ALGO, $oldRefreshTokenString))
             ->willReturn($storedToken);
 
-        $this->refreshTokenRepository->expects($this->once())
-            ->method('revoke')
-            ->with($storedToken);
+        $storedToken->expects($this->once())
+            ->method('revoke');
+
+        $this->refreshTokenRepository->expects($this->exactly(2)) // Once for the revoke, once for the save())
+            ->method('save');
 
         $newAccessToken = new Token('new_access_token', new DateTimeImmutable());
         $newRefreshToken = new Token('new_refresh_token', new DateTimeImmutable());
@@ -114,6 +123,19 @@ class AuthServiceTest extends TestCase
         self::assertSame($newRefreshToken->getToken(), $newTokenSetArray['refresh_token']);
         self::assertSame($newAccessToken->getExpiresIn()->getTimestamp(), $newTokenSetArray['expires_in']);
     }
+
+    // public function testRevokeTokenBeforeIssueNewRefreshToken(): void
+    // {
+    //     $storedToken = $this->createConfiguredMock(RefreshToken::class, [
+    //         'isRevoked' => false,
+    //         'isExpired' => false,
+    //     ]);
+
+    //     $revokedToken = $this->createConfiguredMock(RefreshToken::class, [
+    //         'isRevoked' => true,
+    //         'isExpired' => false,
+    //     ]);
+    // }
 
     public function testRefreshTokenThrowsExceptionForNonRefreshToken(): void
     {
@@ -166,6 +188,10 @@ class AuthServiceTest extends TestCase
             ->method('decode')
             ->with($tokenString)
             ->willReturn($payload);
+        $this->userRepository->expects($this->once())
+            ->method('getById')
+            ->with(self::USER_ID)
+            ->willReturn($user);
 
         $resultUser = $this->service->validateToken($tokenString);
 

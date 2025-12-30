@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Infrastructure\JwtService;
@@ -19,24 +20,25 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JwtService::class)]
 class JwtServiceTest extends TestCase
 {
-    private const string SECRET_KEY = 'super-secret-key-for-testing';
+    private const string SECRET_KEY = 'super-secret-key-for-testing-should-be-log-for-hs256';
     private const string ALGORITHM = 'HS256';
     private const string ISSUER = 'ILIAS';
     private const int USER_ID = 1337;
-
-    private MockObject|AuthConfig $authConfig;
+    private MockObject|WebAppConfigFactory $configFactory;
     private JwtService $service;
 
     #[\Override]
     protected function setUp(): void
     {
-        $this->authConfig = $this->createConfiguredMock(AuthConfig::class, [
-            'getSecretKey' => self::SECRET_KEY,
-            'getEncryptionAlgo' => self::ALGORITHM,
-            'getIssuer' => self::ISSUER,
+        $this->configFactory = $this->createConfiguredMock(WebAppConfigFactory::class, [
+            'createAuth' => $this->createConfiguredMock(AuthConfig::class, [
+                'getSecretKey' => self::SECRET_KEY,
+                'getEncryptionAlgo' => self::ALGORITHM,
+                'getIssuer' => self::ISSUER,
+            ]),
         ]);
 
-        $this->service = new JwtService($this->authConfig);
+        $this->service = new JwtService($this->configFactory);
     }
 
     public function testGeneratesValidAccessToken(): void
@@ -124,7 +126,9 @@ class JwtServiceTest extends TestCase
         self::expectException(AuthenticationException::class);
         self::expectExceptionMessage('The provided token is invalid or expired.');
 
-        $tokenString = JWT::encode($this->getStandardPayload(), 'wrong-secret', self::ALGORITHM);
+        $key = "wrong-secret-key-long-enough-for-hs256";
+
+        $tokenString = JWT::encode($this->getStandardPayload(), $key, self::ALGORITHM);
 
         $this->service->decode($tokenString);
     }

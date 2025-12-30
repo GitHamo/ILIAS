@@ -24,9 +24,7 @@ use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 
 interface RefreshTokenRepository
 {
-    public function find(string $hash): ?RefreshToken;
-    
-    public function save(RefreshToken $token): void;
+    public function findByHash(string $tokenHash): ?RefreshToken;
 
-    public function revoke(RefreshToken $token): void;
+    public function save(RefreshToken $token): void;
 }

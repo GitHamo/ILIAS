@@ -9,6 +9,7 @@ use DomainException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
@@ -20,7 +21,7 @@ use UnexpectedValueException;
 final readonly class JwtService implements TokenProvider
 {
     public function __construct(
-        private AuthConfig $authConfig,
+        private WebAppConfigFactory $configFactory,
     ) {}
 
     #[Override]
@@ -48,7 +49,7 @@ final readonly class JwtService implements TokenProvider
          * 
          */
         $payload = [
-            'iss' => $this->authConfig->getIssuer(),
+            'iss' => $this->config()->getIssuer(),
             'sub' => (string) $userId,
             'iat' => $issuedAt->getTimestamp(),
             'exp' => $expiresIn->getTimestamp(),
@@ -60,8 +61,8 @@ final readonly class JwtService implements TokenProvider
 
         $token = JWT::encode(
             $payload,
-            $this->authConfig->getSecretKey(),
-            $this->authConfig->getEncryptionAlgo(),
+            $this->config()->getSecretKey(),
+            $this->config()->getEncryptionAlgo(),
         );
 
         return new Token($token, $expiresIn);
@@ -88,8 +89,8 @@ final readonly class JwtService implements TokenProvider
             $decoded = JWT::decode(
                 $token,
                 new Key(
-                    $this->authConfig->getSecretKey(),
-                    $this->authConfig->getEncryptionAlgo(),
+                    $this->config()->getSecretKey(),
+                    $this->config()->getEncryptionAlgo(),
                 ),
             );
         } catch (DomainException | UnexpectedValueException $e) {
@@ -102,7 +103,7 @@ final readonly class JwtService implements TokenProvider
 
         $payload = (array) $decoded;
 
-        if (!isset($payload['iss']) || $payload['iss'] !== $this->authConfig->getIssuer()) {
+        if (!isset($payload['iss']) || $payload['iss'] !== $this->config()->getIssuer()) {
             throw new AuthenticationException('Invalid token issuer.');
         }
 
@@ -120,5 +121,10 @@ final readonly class JwtService implements TokenProvider
             new AuthUser($userId),
             $isRefresh,
         );
+    }
+
+    private function config(): AuthConfig
+    {
+        return $this->configFactory->createAuth();
     }
 }
