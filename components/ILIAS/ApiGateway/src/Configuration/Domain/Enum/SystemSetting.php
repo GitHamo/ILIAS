@@ -22,8 +22,6 @@ namespace ILIAS\ApiGateway\Configuration\Domain\Enum;
 
 enum SystemSetting: string
 {
-    case BASE_URL = 'base_url';
-    case CLIENT_ID = 'client_id';
     case AUTH_SECRET_KEY = 'auth_secret_key';
     case AUTH_ALGO_ENCRYPTION = 'auth_algo_encryption';
     case AUTH_ALGO_HASH = 'auth_algo_hash';

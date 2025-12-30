@@ -16,26 +16,26 @@ final class SystemSettingsTest extends TestCase
 {
     public function testFindReturnsSettingWhenKeyExists(): void
     {
-        $expected = 'my_client_id';
+        $expected = 'my_secret_key';
         $systemSettings = SystemSettings::create([
-            SystemSetting::CLIENT_ID->value => $expected,
-            SystemSetting::BASE_URL->value => 'https://ilias.example.com'
+            SystemSetting::AUTH_SECRET_KEY->value => $expected,
+            SystemSetting::AUTH_ALGO_ENCRYPTION->value => 'HS256'
         ]);
 
-        $actual = $systemSettings->find(SystemSetting::CLIENT_ID);
+        $actual = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
 
         self::assertInstanceOf(Setting::class, $actual);
-        self::assertSame(SystemSetting::CLIENT_ID->value, $actual->getKey());
+        self::assertSame(SystemSetting::AUTH_SECRET_KEY->value, $actual->getKey());
         self::assertSame($expected, $actual->asString());
     }
 
     public function testFindReturnsNullWhenKeyDoesNotExist(): void
     {
         $systemSettings = SystemSettings::create([
-            SystemSetting::BASE_URL->value => 'https://ilias.example.com'
+            SystemSetting::AUTH_ALGO_ENCRYPTION->value => 'HS256'
         ]);
 
-        $actual = $systemSettings->find(SystemSetting::CLIENT_ID);
+        $actual = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
 
         self::assertNull($actual);
     }
@@ -44,7 +44,7 @@ final class SystemSettingsTest extends TestCase
     {
         $systemSettings = SystemSettings::create([]);
 
-        $actual = $systemSettings->find(SystemSetting::CLIENT_ID);
+        $actual = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
 
         self::assertNull($actual);
     }
@@ -58,41 +58,41 @@ final class SystemSettingsTest extends TestCase
     public function testCreationWithValidData(): void
     {
         $settingsData = [
-            SystemSetting::CLIENT_ID->value => $clientId = 'test_client',
-            SystemSetting::BASE_URL->value => $baseUrl = 'https://ilias.example.com',
+            SystemSetting::AUTH_SECRET_KEY->value => $secretKey = 'test_secret',
+            SystemSetting::AUTH_ALGO_ENCRYPTION->value => $algo = 'HS256',
         ];
 
         $systemSettings = SystemSettings::create($settingsData);
 
-        $clientIdSetting = $systemSettings->find(SystemSetting::CLIENT_ID);
-        $baseUrlSetting = $systemSettings->find(SystemSetting::BASE_URL);
+        $secretKeySetting = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
+        $algoSetting = $systemSettings->find(SystemSetting::AUTH_ALGO_ENCRYPTION);
 
-        self::assertNotNull($clientIdSetting);
-        self::assertSame($clientId, $clientIdSetting->asString());
-        self::assertNotNull($baseUrlSetting);
-        self::assertSame($baseUrl, $baseUrlSetting->asString());
+        self::assertNotNull($secretKeySetting);
+        self::assertSame($secretKey, $secretKeySetting->asString());
+        self::assertNotNull($algoSetting);
+        self::assertSame($algo, $algoSetting->asString());
     }
 
     public function testCreationWithEmptyArray(): void
     {
         $systemSettings = SystemSettings::create([]);
 
-        $clientIdSetting = $systemSettings->find(SystemSetting::CLIENT_ID);
-        $baseUrlSetting = $systemSettings->find(SystemSetting::BASE_URL);
+        $secretKeySetting = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
+        $algoSetting = $systemSettings->find(SystemSetting::AUTH_ALGO_ENCRYPTION);
 
-        self::assertNull($clientIdSetting);
-        self::assertNull($baseUrlSetting);
+        self::assertNull($secretKeySetting);
+        self::assertNull($algoSetting);
     }
 
     public function testCreationIgnoresInvalidKeys(): void
     {
         $settingsData = [
             'invalid_key' => 'some_value',
-            SystemSetting::CLIENT_ID->value => 'test_client',
+            SystemSetting::AUTH_SECRET_KEY->value => 'test_secret',
         ];
 
         $systemSettings = SystemSettings::create($settingsData);
-        $actual = $systemSettings->find(SystemSetting::CLIENT_ID);
+        $actual = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
 
         self::assertNotNull($actual);
     }
@@ -100,29 +100,29 @@ final class SystemSettingsTest extends TestCase
     public function testCreationIgnoresNullValues(): void
     {
         $settingsData = [
-            SystemSetting::CLIENT_ID->value => null,
-            SystemSetting::BASE_URL->value => $baseUrl = 'https://ilias.example.com',
+            SystemSetting::AUTH_SECRET_KEY->value => null,
+            SystemSetting::AUTH_ALGO_ENCRYPTION->value => $algo = 'HS256',
         ];
 
         $systemSettings = SystemSettings::create($settingsData);
 
-        $clientIdSetting = $systemSettings->find(SystemSetting::CLIENT_ID);
-        $baseUrlSetting = $systemSettings->find(SystemSetting::BASE_URL);
+        $secretKeySetting = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
+        $algoSetting = $systemSettings->find(SystemSetting::AUTH_ALGO_ENCRYPTION);
 
-        self::assertNull($clientIdSetting);
-        self::assertNotNull($baseUrlSetting);
-        self::assertSame($baseUrl, $baseUrlSetting->asString());
+        self::assertNull($secretKeySetting);
+        self::assertNotNull($algoSetting);
+        self::assertSame($algo, $algoSetting->asString());
     }
 
     #[DataProvider('valuesForCastingDataProvider')]
     public function testCreationCastsValuesToString(mixed $value, string $expectedString): void
     {
         $settingsData = [
-            SystemSetting::CLIENT_ID->value => $value,
+            SystemSetting::AUTH_SECRET_KEY->value => $value,
         ];
 
         $systemSettings = SystemSettings::create($settingsData);
-        $actual = $systemSettings->find(SystemSetting::CLIENT_ID);
+        $actual = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
 
         self::assertNotNull($actual);
         self::assertSame($expectedString, $actual->asString());
@@ -131,18 +131,18 @@ final class SystemSettingsTest extends TestCase
     public function testCreationWithMixedData(): void
     {
         $settingsData = [
-            SystemSetting::CLIENT_ID->value => $clientId = 'test_client',
+            SystemSetting::AUTH_SECRET_KEY->value => $secretKey = 'test_secret',
             'invalid_key' => 'some_value',
-            SystemSetting::BASE_URL->value => null,
+            SystemSetting::AUTH_ALGO_ENCRYPTION->value => null,
         ];
 
         $systemSettings = SystemSettings::create($settingsData);
-        $clientIdSetting = $systemSettings->find(SystemSetting::CLIENT_ID);
-        $baseUrlSetting = $systemSettings->find(SystemSetting::BASE_URL);
+        $secretKeySetting = $systemSettings->find(SystemSetting::AUTH_SECRET_KEY);
+        $algoSetting = $systemSettings->find(SystemSetting::AUTH_ALGO_ENCRYPTION);
 
-        self::assertNotNull($clientIdSetting);
-        self::assertSame($clientId, $clientIdSetting->asString());
-        self::assertNull($baseUrlSetting);
+        self::assertNotNull($secretKeySetting);
+        self::assertSame($secretKey, $secretKeySetting->asString());
+        self::assertNull($algoSetting);
     }
 
     /**
