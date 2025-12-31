@@ -837,9 +837,7 @@ class ilSurveyEvaluationGUI
                 $this->lng->loadLanguageModule("content");
                 $toc_tpl->setVariable("TITLE_TOC", $this->lng->txt('cont_toc'));
             }
-
             $finished_ids = $this->evaluation_manager->getFilteredFinishedIds();
-
             // parse answer data in evaluation results
             $listing = $this->gui->listing();
 
@@ -1146,6 +1144,15 @@ class ilSurveyEvaluationGUI
             $this->ctrl->redirectByClass("ilObjSurveyGUI", "infoScreen");
         }
 
+        $this->ui_modifier->setResultsParticipantToolbar(
+            $this->object,
+            $ilToolbar,
+            $this->user->getId()
+        );
+
+        $ilToolbar->setFormAction($this->ctrl->getFormAction($this, "evaluationuser"));
+
+        $modal = "";
         $appr_id = null;
         $data = [];
 
