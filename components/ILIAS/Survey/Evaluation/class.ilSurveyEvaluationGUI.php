@@ -1144,8 +1144,6 @@ class ilSurveyEvaluationGUI
             $this->ctrl->redirectByClass("ilObjSurveyGUI", "infoScreen");
         }
 
-<<<<<<< HEAD:components/ILIAS/Survey/Evaluation/class.ilSurveyEvaluationGUI.php
-=======
         $this->ui_modifier->setResultsParticipantToolbar(
             $this->object,
             $ilToolbar,
@@ -1155,7 +1153,6 @@ class ilSurveyEvaluationGUI
         $ilToolbar->setFormAction($this->ctrl->getFormAction($this, "evaluationuser"));
 
         $modal = "";
->>>>>>> 575db2825ee (44755: 360 Feedback werden für Ersteller alle immer alle Daten angezeigt):Modules/Survey/Evaluation/class.ilSurveyEvaluationGUI.php
         $appr_id = null;
         $data = [];
 
