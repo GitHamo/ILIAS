@@ -24,4 +24,12 @@ enum EncryptionAlgo: string
 {
     case HS256 = 'HS256';
     case HS512 = 'HS512';
+
+    public function getKeyMinimumLength(): int
+    {
+        return match ($this) {
+            self::HS256 => 32,
+            self::HS512 => 64,
+        };
+    }
 }
