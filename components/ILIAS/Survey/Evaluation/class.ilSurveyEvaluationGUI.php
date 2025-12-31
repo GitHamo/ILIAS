@@ -837,9 +837,7 @@ class ilSurveyEvaluationGUI
                 $this->lng->loadLanguageModule("content");
                 $toc_tpl->setVariable("TITLE_TOC", $this->lng->txt('cont_toc'));
             }
-
             $finished_ids = $this->evaluation_manager->getFilteredFinishedIds();
-
             // parse answer data in evaluation results
             $listing = $this->gui->listing();
 
@@ -1146,6 +1144,18 @@ class ilSurveyEvaluationGUI
             $this->ctrl->redirectByClass("ilObjSurveyGUI", "infoScreen");
         }
 
+<<<<<<< HEAD:components/ILIAS/Survey/Evaluation/class.ilSurveyEvaluationGUI.php
+=======
+        $this->ui_modifier->setResultsParticipantToolbar(
+            $this->object,
+            $ilToolbar,
+            $this->user->getId()
+        );
+
+        $ilToolbar->setFormAction($this->ctrl->getFormAction($this, "evaluationuser"));
+
+        $modal = "";
+>>>>>>> 575db2825ee (44755: 360 Feedback werden für Ersteller alle immer alle Daten angezeigt):Modules/Survey/Evaluation/class.ilSurveyEvaluationGUI.php
         $appr_id = null;
         $data = [];
 
