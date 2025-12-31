@@ -20,9 +20,9 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Domain\Model;
 
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 
-readonly class WebConfig extends \ILIAS\ApiGateway\Contracts\WebConfig
+readonly class WebConfig
 {
     public function __construct(
         private string $baseUrl,
@@ -37,6 +37,11 @@ readonly class WebConfig extends \ILIAS\ApiGateway\Contracts\WebConfig
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
+    }
+
+    public function getBasePath(): string
+    {
+        return $this->protocol->value;
     }
 
     public function getProtocol(): ServiceProtocol

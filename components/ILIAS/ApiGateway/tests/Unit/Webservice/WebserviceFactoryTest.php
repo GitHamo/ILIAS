@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Webservice;
 
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
-use ILIAS\ApiGateway\Webservice\RestWebservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
+use ILIAS\ApiGateway\Webservice\Infrastructure\RestWebservice;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +48,7 @@ class WebserviceFactoryTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            sprintf("Unsupported service protocol: %s", $protocol->name)
+            \sprintf("Unsupported service protocol: %s", $protocol->name)
         );
 
         $config = $this->createConfiguredMock(WebConfig::class, [

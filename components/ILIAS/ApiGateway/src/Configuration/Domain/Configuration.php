@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Domain;
 
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 
 interface Configuration
 {

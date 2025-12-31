@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Contracts;
+namespace ILIAS\ApiGateway\Webservice\Domain\Model;
 
 readonly class Payload
 {

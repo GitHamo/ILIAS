@@ -20,10 +20,10 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Webservice;
 
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
-use ILIAS\ApiGateway\Webservice\RestWebservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
+use ILIAS\ApiGateway\Webservice\Infrastructure\RestWebservice;
 use InvalidArgumentException;
 
 readonly class WebserviceFactory

@@ -6,7 +6,7 @@ namespace Tests\Unit\Configuration\Domain\Model;
 
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

@@ -18,9 +18,17 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Contracts;
+namespace ILIAS\ApiGateway\Webservice\Domain;
 
-enum ServiceProtocol: string {
-    case REST = 'rest';
-    case SOAP = 'soap';
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use Throwable;
+
+interface Webservice
+{
+    public function getProtocol(): ServiceProtocol;
+
+    public function handle(Payload $payload): Payload;
+
+    public function handleError(Throwable $exception): Payload;
 }

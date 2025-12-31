@@ -18,15 +18,9 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Contracts;
+namespace ILIAS\ApiGateway\Webservice\Domain\Enum;
 
-use Throwable;
-
-interface Webservice
-{
-    public function getProtocol(): ServiceProtocol;
-
-    public function handle(Payload $payload): Payload;
-
-    public function handleError(Throwable $exception): Payload;
+enum ServiceProtocol: string {
+    case REST = 'rest';
+    case SOAP = 'soap';
 }

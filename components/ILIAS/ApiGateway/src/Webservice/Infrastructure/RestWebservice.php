@@ -18,17 +18,17 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Webservice;
+namespace ILIAS\ApiGateway\Webservice\Infrastructure;
 
-use ILIAS\ApiGateway\Contracts\Payload;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use Override;
 use RuntimeException;
 use Throwable;
 
-readonly class RestWebservice implements Webservice
+final readonly class RestWebservice implements Webservice
 {
     public function __construct(
         private WebConfig $config,
@@ -49,7 +49,7 @@ readonly class RestWebservice implements Webservice
             'data' => $payload->getData(),
         ];
 
-        $jsonFlags = $this->config->isDebugMode() ? JSON_PRETTY_PRINT : 0;
+        $jsonFlags = $this->config->isDebugEnabled() ? JSON_PRETTY_PRINT : 0;
 
         return $this->createPayload($payloadData, $jsonFlags);
     }
@@ -62,11 +62,11 @@ readonly class RestWebservice implements Webservice
             'error' => $exception->getMessage(),
         ];
 
-        if ($this->config->isLogErrorDetails()) {
+        if ($this->config->isLoggingDetailsEnabled()) {
             $payloadData['stack'] = $exception->getTrace();
         }
 
-        $jsonFlags = $this->config->isDebugMode() ? JSON_PRETTY_PRINT : 0;
+        $jsonFlags = $this->config->isDebugEnabled() ? JSON_PRETTY_PRINT : 0;
         $jsonFlags |= JSON_UNESCAPED_SLASHES;
         $jsonFlags |= JSON_UNESCAPED_UNICODE;
 

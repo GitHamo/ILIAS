@@ -8,7 +8,7 @@ use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
 use ILIAS\ApiGateway\Configuration\Infrastructure\ConfigurationService;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;

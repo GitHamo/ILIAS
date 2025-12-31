@@ -25,7 +25,7 @@ use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\HashingAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use Override;
 
 use function defined;

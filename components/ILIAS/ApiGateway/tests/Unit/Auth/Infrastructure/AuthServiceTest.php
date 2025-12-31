@@ -101,7 +101,7 @@ class AuthServiceTest extends TestCase
             'isExpired' => false,
         ]);
         $this->refreshTokenRepository->expects($this->once())
-            ->method('find')
+            ->method('findByHash')
             ->with(hash(self::HASH_ALGO, $oldRefreshTokenString))
             ->willReturn($storedToken);
 
@@ -157,7 +157,7 @@ class AuthServiceTest extends TestCase
         $payload = new TokenPayload(new AuthUser(self::USER_ID), true);
 
         $this->tokenProvider->method('decode')->willReturn($payload);
-        $this->refreshTokenRepository->method('find')->willReturn(null); // Not found in DB
+        $this->refreshTokenRepository->method('findByHash')->willReturn(null); // Not found in DB
 
         $this->service->refreshToken('any_token');
     }
@@ -173,7 +173,7 @@ class AuthServiceTest extends TestCase
 
         $revokedToken = $this->createConfiguredMock(RefreshToken::class, ['isRevoked' => true]);
 
-        $this->refreshTokenRepository->method('find')->willReturn($revokedToken);
+        $this->refreshTokenRepository->method('findByHash')->willReturn($revokedToken);
 
         $this->service->refreshToken('any_token');
     }

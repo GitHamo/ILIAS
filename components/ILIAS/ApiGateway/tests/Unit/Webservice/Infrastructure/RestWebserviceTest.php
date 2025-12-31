@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Webservice;
+namespace Tests\Unit\Webservice\Infrastructure;
 
-use ILIAS\ApiGateway\Contracts\Payload;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Webservice\RestWebservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Webservice\Infrastructure\RestWebservice;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
@@ -62,7 +62,7 @@ final class RestWebserviceTest extends TestCase
         $payloadData = ['key' => 'value'];
         $payload = new Payload($payloadData);
 
-        $this->config->method('isDebugMode')->willReturn(true);
+        $this->config->method('isDebugEnabled')->willReturn(true);
 
         $actual = $this->webservice->handle($payload);
 
@@ -155,8 +155,8 @@ JSON;
 
     public function testHandlesErrorWithDetails(): void
     {
-        $this->config->method('isDebugMode')->willReturn(true);
-        $this->config->method('isLogErrorDetails')->willReturn(true);
+        $this->config->method('isDebugEnabled')->willReturn(true);
+        $this->config->method('isLoggingDetailsEnabled')->willReturn(true);
 
         $exception = new RuntimeException('Something went wrong');
 
@@ -174,8 +174,8 @@ JSON;
 
     public function testHandlesErrorWithDebug(): void
     {
-        $this->config->method('isDebugMode')->willReturn(true);
-        $this->config->method('isLogErrorDetails')->willReturn(false);
+        $this->config->method('isDebugEnabled')->willReturn(true);
+        $this->config->method('isLoggingDetailsEnabled')->willReturn(false);
 
         $exception = new RuntimeException('Something went wrong');
 
@@ -196,8 +196,8 @@ JSON;
 
     public function testHandlesErrorWithDetailsAndDebug(): void
     {
-        $this->config->method('isDebugMode')->willReturn(true);
-        $this->config->method('isLogErrorDetails')->willReturn(true);
+        $this->config->method('isDebugEnabled')->willReturn(true);
+        $this->config->method('isLoggingDetailsEnabled')->willReturn(true);
 
         $exception = new RuntimeException('Something went wrong');
 
