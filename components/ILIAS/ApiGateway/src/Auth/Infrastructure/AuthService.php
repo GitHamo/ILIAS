@@ -31,16 +31,20 @@ use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use Override;
+use RuntimeException;
 
-final readonly class AuthService implements Authentication
+final class AuthService implements Authentication
 {
+    private ?AuthConfig $config = null;
+
     public function __construct(
-        private TokenProvider $tokenProvider,
-        private UserRepository $userRepository,
-        private RefreshTokenRepository $refreshTokenRepository,
-        private HttpConfigFactory $configFactory,
+        private readonly TokenProvider $tokenProvider,
+        private readonly UserRepository $userRepository,
+        private readonly RefreshTokenRepository $refreshTokenRepository,
+        private readonly HttpConfigFactory $configFactory,
     ) {}
 
     #[Override]
@@ -130,6 +134,28 @@ final readonly class AuthService implements Authentication
 
     private function config(): AuthConfig
     {
-        return $this->configFactory->createAuthConfig();
+        if ($this->config === null) {
+            /**
+             * Validation moved from ILIAS/ApiGateway/Application/Factory/HttpConfigFactory
+             * to prevent exceptions on initialization @ ApiGateway.php
+             */
+            $config = $this->configFactory->createAuthConfig();
+
+            $secretKey = $config->getSecretKey();
+            $encryptionAlgo = $config->getEncryptionAlgo();
+
+            $keyLength = \strlen($secretKey);
+            $minLength = EncryptionAlgo::from($encryptionAlgo)->getKeyMinimumLength();
+
+            if ($minLength > 0 && $keyLength < $minLength) {
+                throw new RuntimeException(
+                    "Invalid secret key length. Minimum required is {$minLength} bytes, but key is {$keyLength} bytes long."
+                );
+            }
+
+            $this->config = $config;
+        }
+
+        return $this->config;
     }
 }

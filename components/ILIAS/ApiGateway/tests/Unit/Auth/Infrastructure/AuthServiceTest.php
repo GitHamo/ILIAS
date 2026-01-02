@@ -17,10 +17,12 @@ use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
 use ILIAS\ApiGateway\Auth\Infrastructure\AuthService;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 #[CoversClass(AuthService::class)]
 class AuthServiceTest extends TestCase
@@ -28,6 +30,7 @@ class AuthServiceTest extends TestCase
     private const int USER_ID = 1337;
     private const int ACCESS_TOKEN_EXPIRY = 3600; // 1 hour
     private const int REFRESH_TOKEN_EXPIRY = 86400; // 1 day
+    private const string ENCRYPTION_ALGO = EncryptionAlgo::HS256->value;
     private const string HASH_ALGO = 'sha256';
 
     private MockObject&TokenProvider $tokenProvider;
@@ -44,8 +47,10 @@ class AuthServiceTest extends TestCase
         $this->refreshTokenRepository = $this->createMock(RefreshTokenRepository::class);
         $this->configFactory = $this->createConfiguredMock(HttpConfigFactory::class, [
             'createAuthConfig' => $this->createConfiguredMock(AuthConfig::class, [
+                'getSecretKey' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
                 'getAccessTokenExpiry' => self::ACCESS_TOKEN_EXPIRY,
                 'getRefreshTokenExpiry' => self::REFRESH_TOKEN_EXPIRY,
+                'getEncryptionAlgo' => self::ENCRYPTION_ALGO,
                 'getHashAlgo' => self::HASH_ALGO,
             ]),
         ]);
@@ -56,6 +61,34 @@ class AuthServiceTest extends TestCase
             $this->refreshTokenRepository,
             $this->configFactory,
         );
+    }
+
+    public function testThrowsExceptionIfSecretKeyLengthIsInvalid(): void
+    {
+        self::expectException(RuntimeException::class);
+
+        $configFactory = $this->createConfiguredMock(HttpConfigFactory::class, [
+            'createAuthConfig' => $this->createConfiguredMock(AuthConfig::class, [
+                'getSecretKey' => 'short_key',
+                'getAccessTokenExpiry' => self::ACCESS_TOKEN_EXPIRY,
+                'getRefreshTokenExpiry' => self::REFRESH_TOKEN_EXPIRY,
+                'getEncryptionAlgo' => self::ENCRYPTION_ALGO,
+                'getHashAlgo' => self::HASH_ALGO,
+            ]),
+        ]);
+
+        $this->service = new AuthService(
+            $this->tokenProvider,
+            $this->userRepository,
+            $this->refreshTokenRepository,
+            $configFactory,
+        );
+
+        $user = $this->createConfiguredMock(AuthUser::class, [
+            'getId' => self::USER_ID,
+        ]);
+
+        $this->service->createToken($user);
     }
 
     public function testCreateTokenSuccessfully(): void

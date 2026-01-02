@@ -6,10 +6,10 @@ namespace Tests\Unit\Application;
 
 use Exception;
 use ILIAS\ApiGateway\Application\ErrorHandler;
-use ILIAS\ApiGateway\Contracts\Payload;
-use ILIAS\ApiGateway\Contracts\ServiceProtocol;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -50,6 +50,34 @@ final class ErrorHandlerTest extends TestCase
         );
 
         $this->handler = $this->createErrorHandler();
+    }
+
+    public function testReturnsNumericExceptionCodeCorrectly(): void
+    {
+        $exception = new class extends Exception {
+            protected $code = '503'; // @phpstan-ignore-line
+        };
+
+        $this->response->expects(self::once())
+            ->method('withStatus')
+            ->with(503)
+            ->willReturn($this->response);
+
+        ($this->handler)($this->request, $exception);
+    }
+
+    public function testReturns500IfExceptionCodeIsNotNumeric(): void
+    {
+        $exception = new class extends Exception {
+            protected $code = 'foo'; // @phpstan-ignore-line
+        };
+
+        $this->response->expects(self::once())
+            ->method('withStatus')
+            ->with(500)
+            ->willReturn($this->response);
+
+        ($this->handler)($this->request, $exception);
     }
 
     public function testReturns500IfExceptionCodeIsNotAValidHttpErrorCode(): void
@@ -101,6 +129,11 @@ final class ErrorHandlerTest extends TestCase
     public function testWritesPayloadFromWebserviceToResponseBody(): void
     {
         $exception = new Exception('Any Exception', 200);
+
+        $this->response->expects(self::once())
+            ->method('withStatus')
+            ->with(500)
+            ->willReturn($this->response);
 
         $this->stream->expects(self::once())
             ->method('write')

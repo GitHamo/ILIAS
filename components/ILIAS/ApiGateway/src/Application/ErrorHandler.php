@@ -20,8 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -44,28 +44,29 @@ readonly class ErrorHandler
         ServerRequestInterface $request,
         Throwable $exception,
     ): ResponseInterface {
-        if ($this->config->isLogErrors()) {
+        if ($this->config->isLoggingEnabled()) {
             $logMessage = $exception->getMessage();
-            if ($this->config->isLogErrorDetails()) {
+            if ($this->config->isLoggingDetailsEnabled()) {
                 $logMessage .= "\nStack trace:\n" . (string)$exception;
             }
 
             $this->logger->error($logMessage);
         }
 
-        $statusCode = $exception->getCode() >= 400 && $exception->getCode() < 600
-            ? (int) $exception->getCode()
+        $statusCode = is_numeric($exception->getCode()) ? (int) $exception->getCode() : 500;
+        $statusCode = $statusCode >= 400 && $statusCode < 600
+            ? $statusCode
             : 500;
 
         $responsePayload = $this->service->handleError($exception);
 
         $response = $this->responseFactory->create();
 
-        $response = $response->withStatus($statusCode);
-
         foreach ($responsePayload->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);
         }
+
+        $response = $response->withStatus($statusCode);
 
         $response->getBody()->write($responsePayload->getBody());
 

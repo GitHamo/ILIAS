@@ -6,9 +6,9 @@ namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\RouteExecutor;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Contracts\Payload;
-use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface as Response;

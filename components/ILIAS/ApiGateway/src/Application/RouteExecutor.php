@@ -21,9 +21,9 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Contracts\Payload;
-use ILIAS\ApiGateway\Contracts\Webservice;
 use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 

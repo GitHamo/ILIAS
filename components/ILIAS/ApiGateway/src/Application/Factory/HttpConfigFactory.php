@@ -21,7 +21,6 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Configuration\Domain\Configuration;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
@@ -34,22 +33,10 @@ readonly class HttpConfigFactory
 
     public function createAuthConfig(): AuthConfig
     {
-        $secretKey = $this->configuration->getSecretKey();
-        $encryptionAlgo = $this->configuration->getEncryption();
-
-        $keyLength = \strlen($secretKey);
-        $minLength = EncryptionAlgo::from($encryptionAlgo)->getKeyMinimumLength();
-
-        if ($minLength > 0 && $keyLength < $minLength) {
-            throw new \InvalidArgumentException(
-                "Invalid secret key length. Minimum required is {$minLength} bytes, but key is {$keyLength} bytes long."
-            );
-        }
-
         return new AuthConfig(
             $this->configuration->getClientId(),
-            $secretKey,
-            $encryptionAlgo,
+            $this->configuration->getSecretKey(),
+            $this->configuration->getEncryption(),
             $this->configuration->getHashing(),
             $this->configuration->getAccessTokenExpiry(),
             $this->configuration->getRefreshTokenExpiry(),
