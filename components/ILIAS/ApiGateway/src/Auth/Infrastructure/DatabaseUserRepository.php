@@ -25,6 +25,7 @@ use ilAuthProviderFactory;
 use ilAuthStatus;
 use ilAuthUtils;
 use ilDBConstants;
+use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\LocalDIC;
@@ -77,7 +78,7 @@ final class DatabaseUserRepository extends LocalDIC implements UserRepository
         $authenticated = $provider?->doAuthentication($status);
 
         if (!$authenticated) {
-            throw new InvalidArgumentException('Wrong username or password.', 401);
+            throw new AuthenticationException('Wrong username or password.');
         }
 
         return new AuthUser(
