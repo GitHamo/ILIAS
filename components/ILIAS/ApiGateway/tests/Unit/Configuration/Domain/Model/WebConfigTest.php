@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Configuration\Domain\Model;
 
-use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -19,7 +18,6 @@ final class WebConfigTest extends TestCase
     private bool $isDebugEnabled;
     private bool $isLoggingEnabled;
     private bool $isLoggingDetailsEnabled;
-    private MockObject&AuthConfig $authConfig;
 
     #[\Override]
     protected function setUp(): void
@@ -33,7 +31,6 @@ final class WebConfigTest extends TestCase
             $this->isDebugEnabled = false,
             $this->isLoggingEnabled = true,
             $this->isLoggingDetailsEnabled = false,
-            $this->authConfig = $this->createMock(AuthConfig::class),
         );
     }
 
@@ -84,12 +81,5 @@ final class WebConfigTest extends TestCase
         $actual = $this->model->isLoggingDetailsEnabled();
 
         self::assertSame($this->isLoggingDetailsEnabled, $actual);
-    }
-
-    public function testHasAccessorToAuthConfig(): void
-    {
-        $actual = $this->model->getAuth();
-
-        self::assertSame($this->authConfig, $actual);
     }
 }

@@ -31,7 +31,6 @@ readonly class WebConfig
         private bool $isDebugEnabled,
         private bool $isLoggingEnabled,
         private bool $isLoggingDetailsEnabled,
-        private AuthConfig $auth,
     ) {}
 
     public function getBaseUrl(): string
@@ -67,10 +66,5 @@ readonly class WebConfig
     public function isLoggingDetailsEnabled(): bool
     {
         return $this->isLoggingDetailsEnabled;
-    }
-
-    public function getAuth(): AuthConfig
-    {
-        return $this->auth;
     }
 }
