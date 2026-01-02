@@ -33,21 +33,6 @@ class StaticUrlHandler extends BaseHandler implements Handler
 {
     public const string NAMESPACE = 'contact';
 
-    private readonly \ilCtrlInterface $ctrl;
-    private readonly \ilObjUser $user;
-
-    public function __construct(
-        ?\ilCtrlInterface $ctrl = null,
-        ?\ilObjUser $user = null
-    ) {
-        global $DIC;
-
-        $this->ctrl = $ctrl ?? $DIC->ctrl();
-        $this->user = $user ?? $DIC->user();
-
-        parent::__construct();
-    }
-
     public function getNamespace(): string
     {
         return self::NAMESPACE;
@@ -55,7 +40,7 @@ class StaticUrlHandler extends BaseHandler implements Handler
 
     public function handle(Request $request, Context $context, Factory $response_factory): Response
     {
-        if ($this->user->isAnonymous() || !$this->user->getId()) {
+        if (!$context->isUserLoggedIn()) {
             return $response_factory->loginFirst();
         }
 
