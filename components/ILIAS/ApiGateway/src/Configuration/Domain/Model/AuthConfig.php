@@ -20,11 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Domain\Model;
 
-/**
- * Represents the configuration of the auth service
- *
- * This is an immutable value object.
- */
 readonly class AuthConfig
 {
     public function __construct(

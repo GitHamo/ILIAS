@@ -37,7 +37,7 @@ readonly class WebserviceFactory
             /**
              * As a defensive mechanism for truly unhandled cases, so testing would be hard as
              * this should never be hit. In production ALL ServiceProtocol enum cases are 
-             * translated into exisiting webservices. Therefore, it is ignored from code coverage.
+             * translated into existing webservices. Therefore, it is ignored from code coverage.
              */
             // @codeCoverageIgnoreStart
             default => throw new InvalidArgumentException(

@@ -52,7 +52,7 @@ To enable the REST API, the `rest_ws_enabled` setting must be activated in the I
 <localhost_url>/ilias.php?baseClass=iladministrationgui&cmdNode=48:qn:13u&cmdClass=ilwebservicessettingsgui&cmd=showWebservicesSettings&ref_id=9
 ```
 
-*Note: In a future phase, this settings page will be integrated into the ILIAS UI under `Administration > System settings and maintenance > Webservice`.*
+*Note: In a future phase, this settings page will be integrated into the ILIAS UI under `Administration > System settings and maintenance > Webservices`.*
 
 Once enabled, you can test the setup by accessing the `/ping` endpoint:
 
@@ -84,9 +84,3 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/ping' \
 ## Future Work
 
 - [Roadmap](ROADMAP.md)
-
-Future work will add key features, including:
-
-- I/O validation schemas for request and response data.
-- Enhanced error handling and reporting.
-- A discovery mechanism to automatically find and register all available `Activities` without manual intervention.

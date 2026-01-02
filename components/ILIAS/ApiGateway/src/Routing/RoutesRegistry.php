@@ -34,7 +34,7 @@ class RoutesRegistry
     private function __construct() {}
 
     /**
-     * @codeCoverageIgnore because any test would fail before this line is excecuted
+     * @codeCoverageIgnore because any test would fail before this line is executed
      */
     private function __clone() {}
 

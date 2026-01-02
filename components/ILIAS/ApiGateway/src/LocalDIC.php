@@ -24,8 +24,8 @@ use ilDBInterface;
 use ILIAS\DI\Container;
 
 /**
- * This is a workaround to work with legacy dependncy.
- * When this is used, it is a temporarily adapter
+ * This is a workaround to work with legacy dependency.
+ * When this is used, it is a temporary adapter
  */
 abstract class LocalDIC
 {

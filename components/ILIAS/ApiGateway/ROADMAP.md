@@ -9,3 +9,13 @@
 - **Phase 3:** Swagger & Middlewares
 - **Phase 4:** Activity I/O Validation Schemas
 - **Phase 5:** SOAP Webservice Integration
+
+### Future work will add key features, including
+
+- I/O validation schemas for request and response data.
+- Enhanced error handling and reporting.
+- A discovery mechanism to automatically find and register all available `Activities` without manual intervention.
+
+### Additional Features (optional)
+
+- **Configuration:** Read enviormaent variables and prioritize over dashboard to faciliate CI.

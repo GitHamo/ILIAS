@@ -43,7 +43,6 @@ final readonly class RestWebservice implements Webservice
     #[Override]
     public function handle(Payload $payload): Payload
     {
-        // throw new RuntimeException('Not implemented');
         $payloadData = [
             'success' => true,
             'data' => $payload->getData(),
