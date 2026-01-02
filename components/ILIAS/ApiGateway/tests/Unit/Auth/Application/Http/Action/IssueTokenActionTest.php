@@ -79,6 +79,7 @@ class IssueTokenActionTest extends TestCase
     public function testThrowsExceptionInCaseOfInvalidParameters(array $params): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Username or password is empty.');
 
         $this->action->getHandler()($params, null);

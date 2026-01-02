@@ -44,7 +44,7 @@ readonly class IssueTokenAction extends ApiAction
                 $password = trim($password);
 
                 if (\in_array('', [$username, $password])) {
-                    throw new InvalidArgumentException('Username or password is empty.');
+                    throw new InvalidArgumentException('Username or password is empty.', 400);
                 }
 
                 $user = $this->userRepository->login($username, $password);

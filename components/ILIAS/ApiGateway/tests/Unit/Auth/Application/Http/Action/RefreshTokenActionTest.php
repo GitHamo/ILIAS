@@ -64,6 +64,7 @@ class RefreshTokenActionTest extends TestCase
     public function testThrowsExceptionInCaseOfInvalidParameters(array $params): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Refresh token is missing or empty.');
 
         $this->action->getHandler()($params, null);

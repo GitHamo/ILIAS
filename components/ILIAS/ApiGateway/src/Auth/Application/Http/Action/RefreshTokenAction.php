@@ -40,7 +40,7 @@ readonly class RefreshTokenAction extends ApiAction
                 $refreshToken = trim($refreshToken);
 
                 if ('' === $refreshToken) {
-                    throw new InvalidArgumentException('Refresh token is missing or empty.');
+                    throw new InvalidArgumentException('Refresh token is missing or empty.', 400);
                 }
 
                 return $this->authentication->refreshToken($refreshToken)->toArray();
