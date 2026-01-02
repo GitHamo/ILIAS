@@ -86,7 +86,7 @@ class QuestionsTableActions
             ->withDisabledAction(self::ACTION_EDIT_PAGE, $disable_default_actions)
             ->withDisabledAction(
                 self::ACTION_ADJUST,
-                $this->is_adjusting_questions_with_results_allowed && !$this->is_in_test_with_results
+                !$this->is_adjusting_questions_with_results_allowed || !$this->is_in_test_with_results
             )->withDisabledAction(self::ACTION_FEEDBACK, $disable_default_actions)
             ->withDisabledAction(self::ACTION_PRINT_ANSWERS, !$this->is_in_test_with_results)
             ->withDisabledAction(
