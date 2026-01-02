@@ -22,12 +22,12 @@ namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\WebApp;
-use ILIAS\ApiGateway\Contracts\WebConfig;
 use ILIAS\ApiGateway\Logging\WebserviceLogger;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\Routing\RoutesAutoloader;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
 use ILIAS\HTTP\Response\ResponseFactory;
 use ilLoggerFactory;
@@ -36,8 +36,9 @@ use Psr\Log\LoggerInterface;
 final readonly class WebAppFactory
 {
     public function __construct(
-        private WebserviceFactory $webserviceFactory,
+        private HttpConfigFactory $httpConfigFactory,
         private HttpServiceFactory $httpServiceFactory,
+        private WebserviceFactory $webserviceFactory,
         private ResponseFactory $responseFactory,
         private RoutesRegistry $registry,
         private MiddlewareRepository $middlewareRepository,
@@ -46,13 +47,14 @@ final readonly class WebAppFactory
         private WebserviceLoggerFactory $loggerFactory,
     ) {}
 
-    public function create(WebConfig $config): WebApp
+    public function create(ServiceProtocol $protocol): WebApp
     {
         $this->registerRoutes();
-
+        
+        $config = $this->httpConfigFactory->createWebConfig($protocol);
         $webservice = $this->webserviceFactory->create($config);
         $executor = $this->httpServiceFactory->createRouteExecutor($webservice);
-        $logger = $this->loggerFactory->create($config->getProtocol()->value);
+        $logger = $this->loggerFactory->create($protocol->value);
         $errorHandler = $this->httpServiceFactory->createErrorHandler(
             $webservice,
             $config,

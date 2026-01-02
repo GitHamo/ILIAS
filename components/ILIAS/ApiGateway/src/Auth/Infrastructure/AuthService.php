@@ -22,7 +22,7 @@ namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DomainException;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
+use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
@@ -40,7 +40,7 @@ final readonly class AuthService implements Authentication
         private TokenProvider $tokenProvider,
         private UserRepository $userRepository,
         private RefreshTokenRepository $refreshTokenRepository,
-        private WebAppConfigFactory $configFactory,
+        private HttpConfigFactory $configFactory,
     ) {}
 
     #[Override]
@@ -130,6 +130,6 @@ final readonly class AuthService implements Authentication
 
     private function config(): AuthConfig
     {
-        return $this->configFactory->createAuth();
+        return $this->configFactory->createAuthConfig();
     }
 }

@@ -22,8 +22,8 @@ namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\RouteExecutor;
-use ILIAS\ApiGateway\Contracts\WebConfig;
-use ILIAS\ApiGateway\Contracts\Webservice;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
+use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Log\LoggerInterface;
 use Slim\App as SlimApp;

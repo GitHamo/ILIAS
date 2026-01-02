@@ -9,7 +9,7 @@ use DomainException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
+use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
@@ -21,7 +21,7 @@ use UnexpectedValueException;
 final readonly class JwtService implements TokenProvider
 {
     public function __construct(
-        private WebAppConfigFactory $configFactory,
+        private HttpConfigFactory $configFactory,
     ) {}
 
     #[Override]
@@ -125,6 +125,6 @@ final readonly class JwtService implements TokenProvider
 
     private function config(): AuthConfig
     {
-        return $this->configFactory->createAuth();
+        return $this->configFactory->createAuthConfig();
     }
 }

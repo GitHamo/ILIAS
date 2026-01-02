@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
+use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Infrastructure\JwtService;
@@ -24,14 +24,14 @@ class JwtServiceTest extends TestCase
     private const string ALGORITHM = 'HS256';
     private const string ISSUER = 'ILIAS';
     private const int USER_ID = 1337;
-    private MockObject|WebAppConfigFactory $configFactory;
+    private MockObject|HttpConfigFactory $configFactory;
     private JwtService $service;
 
     #[\Override]
     protected function setUp(): void
     {
-        $this->configFactory = $this->createConfiguredMock(WebAppConfigFactory::class, [
-            'createAuth' => $this->createConfiguredMock(AuthConfig::class, [
+        $this->configFactory = $this->createConfiguredMock(HttpConfigFactory::class, [
+            'createAuthConfig' => $this->createConfiguredMock(AuthConfig::class, [
                 'getSecretKey' => self::SECRET_KEY,
                 'getEncryptionAlgo' => self::ALGORITHM,
                 'getIssuer' => self::ISSUER,

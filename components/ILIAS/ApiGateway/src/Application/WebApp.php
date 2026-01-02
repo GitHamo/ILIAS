@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
-use ILIAS\ApiGateway\Contracts\WebConfig;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\HTTP\Response\ResponseFactory;
@@ -54,6 +54,7 @@ final readonly class WebApp
     public function run(): void
     {
         if (!$this->configuration->isEnabled()) {
+            // @todo: redirect to ILIAS error page instead
             $response = $this->responseFactory->create();
 
             $response->withStatus(503)->withHeader('Content-Type', 'text/plain');
@@ -67,7 +68,11 @@ final readonly class WebApp
         $this->registerMiddlewares();
         $this->registerRoutes();
 
-        $this->application->run();
+        global $DIC;
+
+        $request = $DIC ? $DIC['http']?->raw()?->request() : null;
+        
+        $this->application->run($request);
     }
 
     private function registerMiddlewares(): void
@@ -90,9 +95,9 @@ final readonly class WebApp
     private function registerErrorHandler(): void
     {
         $errorMiddleware = $this->application->addErrorMiddleware(
-            $this->configuration->isDebugMode(),
-            $this->configuration->isLogErrors(),
-            $this->configuration->isLogErrorDetails(),
+            $this->configuration->isDebugEnabled(),
+            $this->configuration->isLoggingEnabled(),
+            $this->configuration->isLoggingDetailsEnabled(),
             $this->logger,
         );
 

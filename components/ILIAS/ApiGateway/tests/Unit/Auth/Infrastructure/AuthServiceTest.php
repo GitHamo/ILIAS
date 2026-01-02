@@ -7,7 +7,7 @@ namespace Tests\Unit\Auth\Infrastructure;
 use DateTimeImmutable;
 use DomainException;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\WebAppConfigFactory;
+use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
@@ -33,7 +33,7 @@ class AuthServiceTest extends TestCase
     private MockObject&TokenProvider $tokenProvider;
     private MockObject&UserRepository $userRepository;
     private MockObject&RefreshTokenRepository $refreshTokenRepository;
-    private MockObject&WebAppConfigFactory $configFactory;
+    private MockObject&HttpConfigFactory $configFactory;
     private AuthService $service;
 
     #[\Override]
@@ -42,8 +42,8 @@ class AuthServiceTest extends TestCase
         $this->tokenProvider = $this->createMock(TokenProvider::class);
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->refreshTokenRepository = $this->createMock(RefreshTokenRepository::class);
-        $this->configFactory = $this->createConfiguredMock(WebAppConfigFactory::class, [
-            'createAuth' => $this->createConfiguredMock(AuthConfig::class, [
+        $this->configFactory = $this->createConfiguredMock(HttpConfigFactory::class, [
+            'createAuthConfig' => $this->createConfiguredMock(AuthConfig::class, [
                 'getAccessTokenExpiry' => self::ACCESS_TOKEN_EXPIRY,
                 'getRefreshTokenExpiry' => self::REFRESH_TOKEN_EXPIRY,
                 'getHashAlgo' => self::HASH_ALGO,
