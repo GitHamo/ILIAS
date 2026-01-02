@@ -31,21 +31,6 @@ class StaticUrlHandler extends BaseHandler implements Handler
 {
     public const string NAMESPACE = 'badge';
 
-    private readonly \ilCtrlInterface $ctrl;
-    private readonly \ilObjUser $user;
-
-    public function __construct(
-        ?\ilCtrlInterface $ctrl = null,
-        ?\ilObjUser $user = null
-    ) {
-        global $DIC;
-
-        $this->ctrl = $ctrl ?? $DIC->ctrl();
-        $this->user = $user ?? $DIC->user();
-
-        parent::__construct();
-    }
-
     public function getNamespace(): string
     {
         return self::NAMESPACE;
@@ -53,7 +38,7 @@ class StaticUrlHandler extends BaseHandler implements Handler
 
     public function handle(Request $request, Context $context, Factory $response_factory): Response
     {
-        if ($this->user->isAnonymous() || !$this->user->getId()) {
+        if (!$context->isUserLoggedIn()) {
             return $response_factory->loginFirst();
         }
 
@@ -65,7 +50,7 @@ class StaticUrlHandler extends BaseHandler implements Handler
         $path = parse_url($params, PHP_URL_PATH);
 
         return match ($path) {
-            'profile' => $response_factory->can($this->ctrl->getLinkTargetByClass(
+            'profile' => $response_factory->can($context->ctrl()->getLinkTargetByClass(
                 [
                     \ilDashboardGUI::class,
                     \ilAchievementsGUI::class,
