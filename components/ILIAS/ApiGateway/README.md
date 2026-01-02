@@ -9,7 +9,7 @@
 - [Components](#components)
 - [Getting Started](#getting-started)
 - [Key Architectural Concepts](#key-architectural-concepts)
-- [Future Work](#future-work)
+- [Future Work](ROADMAP.md)
 
 ## Overview
 
@@ -80,7 +80,3 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/ping' \
 - **Webservice**: An interface responsible for formatting the final output. The `RestWebservice` implementation, for example, serializes data and exceptions into a standardized JSON structure.
 - **Payload**: A data transfer object used for passing data between route handlers and the `Webservice` formatter.
 - **Activity**: A component representing a command or query that can be exposed as an API endpoint. The `ApiGateway` includes an autoloader to discover and register routes from these activities.
-
-## Future Work
-
-- [Roadmap](ROADMAP.md)
