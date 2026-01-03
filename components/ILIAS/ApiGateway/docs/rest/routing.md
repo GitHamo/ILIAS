@@ -15,7 +15,7 @@ In your `Component.php`, you define the contribution depending on which approach
 | **Approach**    | **When to use?**                                                                                 | **Parent**                            |
 |-----------------|--------------------------------------------------------------------------------------------------|---------------------------------------|
 | `Activity`      | For routes tied to **domain logic**. The path and method are created **automatically**.          | `ILIAS\Component\Activities\Activity` |
-| `ApiAction`     | **Simple endpoints** with basic logic that can be written in a single function.                  | `ILIAS\ApiGateway\Routing\Route`      |
+| `ApiRoute`      | **Simple endpoints** with basic logic that can be written in a single function.                  | `ILIAS\ApiGateway\Routing\Route`      |
 | `Route`         | **Complex endpoints** that need their own dependencies or detailed setup.                        | `ILIAS\ApiGateway\Routing\Route`      |
 
 ---
@@ -72,11 +72,11 @@ By doing this, the system automatically creates the endpoint `/myvendor/mymodule
 
 ---
 
-## 2. `ApiAction`: The Direct Approach
+## 2. `ApiRoute`: The Direct Approach
 
-Use `ApiAction` for simple, standalone endpoints. It's perfect for prototyping or when you don't need a lot of complex logic.
+Use `ApiRoute` for simple, standalone endpoints. It's perfect for prototyping or when you don't need a lot of complex logic.
 
-You define the path, HTTP methods, and handler function all in one place. You then register it by "contributing" the `ApiAction` to `ApiGateway\Routing\Route::class` within your component's `Component.php` file.
+You define the path, HTTP methods, and handler function all in one place. You then register it by "contributing" the `ApiRoute` to `ApiGateway\Routing\Route::class` within your component's `Component.php` file.
 
 ### How It Looks
 
@@ -85,11 +85,11 @@ Here's an example from the `Component.php` file, which creates the `/ping` endpo
 ```php
 ## Components/Vendor/MyModule/MyModule.php
 
-use ILIAS\ApiGateway\Routing\ApiAction;
+use ILIAS\ApiGateway\Routes\ApiRoute;
 use ILIAS\ApiGateway\Routing\Route;
 
 $contribute[Route::class] = static fn(): Route =>
-    new ApiAction(
+    new ApiRoute(
         name: 'Ping',
         path: "/ping",
         methods: ['GET'],
@@ -114,16 +114,16 @@ For the most complex scenarios, you can create your own class that implements th
 
 ### How It Looks
 
-You create a class that defines all the route's properties and logic. Just like `ApiAction`, you would then register this in your `Component.php` by contributing an instance of your new class to `ApiGateway\Routing\Route::class`.
+You create a class that defines all the route's properties and logic. Just like `ApiRoute`, you would then register this in your `Component.php` by contributing an instance of your new class to `ApiGateway\Routing\Route::class`.
 
 ```php
-## Components/Vendor/MyModule/GetUserByIdAction.php
+## Components/Vendor/MyModule/GetUserByIdRoute.php
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 
-class GetCourseByIdAction implements Route, RouteHandler
+class GetCourseByIdRoute implements Route, RouteHandler
 {
     // Dependencies can be injected via the constructor
     public function __construct(private CourseRepository $repository)
@@ -158,6 +158,6 @@ class GetCourseByIdAction implements Route, RouteHandler
 
 $contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
     new GetCourseByIdAction(
-        $pull[CourseRepository::class],
+        $pull[GetCourseByIdRoute::class],
     );
 ```

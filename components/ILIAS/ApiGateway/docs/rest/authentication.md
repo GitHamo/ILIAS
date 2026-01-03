@@ -73,7 +73,7 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/auth/refresh' \
 
 Once a request has been successfully authenticated by the system's middleware, the details of the authenticated user are made available to your route handler.
 
-The `__invoke` method of any `RouteHandler` (whether it's an `ApiAction`, `Activity`, or custom `Route` class) receives the authenticated user as its second parameter, an instance of `ILIAS\ApiGateway\Auth\Domain\Model\AuthUser` (or `null` if the route doesn't require authentication, or if the user is not authenticated for some reason).
+The `__invoke` method of any `RouteHandler` (whether it's an `ApiRoute`, `Activity`, or custom `Route` class) receives the authenticated user as its second parameter, an instance of `ILIAS\ApiGateway\Auth\Domain\Model\AuthUser` (or `null` if the route doesn't require authentication, or if the user is not authenticated for some reason).
 
 ```php
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
