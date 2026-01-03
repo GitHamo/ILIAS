@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Auth\Application\Http;
+namespace ILIAS\ApiGateway\Middleware;
 
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
@@ -28,7 +28,8 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * @deprecated to use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware instead
+ * Orchestrates the authentication process by extracting a token from the request
+ * and passing it to a dedicated authentication service.
  */
 final readonly class AuthenticationMiddleware implements MiddlewareInterface
 {

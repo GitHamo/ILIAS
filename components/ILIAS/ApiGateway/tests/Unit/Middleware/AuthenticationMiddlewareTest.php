@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Auth\Application\Http;
+namespace Tests\Unit\Middleware;
 
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Auth\Application\Http\AuthenticationMiddleware;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
+use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
