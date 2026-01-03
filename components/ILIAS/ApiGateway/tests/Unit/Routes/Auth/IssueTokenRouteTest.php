@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Auth\Application\Http\Action;
+namespace Tests\Unit\Routes\Auth;
 
-use ILIAS\ApiGateway\Auth\Application\Http\Action\IssueTokenAction;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
+use ILIAS\ApiGateway\Routes\Auth\IssueTokenRoute;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -16,16 +16,16 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(IssueTokenAction::class)]
-class IssueTokenActionTest extends TestCase
+class IssueTokenRouteTest extends TestCase
 {
-    private IssueTokenAction $action;
+    private IssueTokenRoute $route;
     private Authentication&MockObject $authentication;
     private UserRepository&MockObject $userRepository;
 
     #[\Override]
     protected function setUp(): void
     {
-        $this->action = new IssueTokenAction(
+        $this->route = new IssueTokenRoute(
             $this->authentication = $this->createMock(Authentication::class),
             $this->userRepository = $this->createMock(UserRepository::class),
         );
@@ -33,7 +33,7 @@ class IssueTokenActionTest extends TestCase
 
     public function testCreatesActionWithCorrectRouteInfo(): void
     {
-        $actual = $this->action;
+        $actual = $this->route;
 
         $this->assertSame('Create API Token', $actual->getName());
         $this->assertSame('/auth/token', $actual->getPath());
@@ -64,7 +64,7 @@ class IssueTokenActionTest extends TestCase
             ->with($this->identicalTo($user))
             ->willReturn($tokenSet);
 
-        $actual = $this->action->getHandler()([
+        $actual = $this->route->getHandler()([
             'username' => $username,
             'password' => $password,
         ], null);
@@ -82,7 +82,7 @@ class IssueTokenActionTest extends TestCase
         $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Username or password is empty.');
 
-        $this->action->getHandler()($params, null);
+        $this->route->getHandler()($params, null);
     }
 
     /**

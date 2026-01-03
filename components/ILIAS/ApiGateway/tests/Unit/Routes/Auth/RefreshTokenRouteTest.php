@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Auth\Application\Http\Action;
+namespace Tests\Unit\Routes\Auth;
 
-use ILIAS\ApiGateway\Auth\Application\Http\Action\RefreshTokenAction;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
+use ILIAS\ApiGateway\Routes\Auth\RefreshTokenRoute;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,22 +14,22 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RefreshTokenAction::class)]
-class RefreshTokenActionTest extends TestCase
+class RefreshTokenRouteTest extends TestCase
 {
-    private RefreshTokenAction $action;
+    private RefreshTokenRoute $route;
     private Authentication&MockObject $authentication;
 
     #[\Override]
     protected function setUp(): void
     {
-        $this->action = new RefreshTokenAction(
+        $this->route = new RefreshTokenRoute(
             $this->authentication = $this->createMock(Authentication::class),
         );
     }
 
     public function testCreatesActionWithCorrectRouteInfo(): void
     {
-        $actual = $this->action;
+        $actual = $this->route;
 
         $this->assertSame('Refresh API Token', $actual->getName());
         $this->assertSame('/auth/refresh', $actual->getPath());
@@ -52,7 +52,7 @@ class RefreshTokenActionTest extends TestCase
             ->with($this->identicalTo($refreshToken))
             ->willReturn($tokenSet);
 
-        $actual = $this->action->getHandler()(['refresh_token' => $refreshToken], null);
+        $actual = $this->route->getHandler()(['refresh_token' => $refreshToken], null);
 
         $this->assertSame($expected, $actual);
     }
@@ -67,7 +67,7 @@ class RefreshTokenActionTest extends TestCase
         $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Refresh token is missing or empty.');
 
-        $this->action->getHandler()($params, null);
+        $this->route->getHandler()($params, null);
     }
 
     /**

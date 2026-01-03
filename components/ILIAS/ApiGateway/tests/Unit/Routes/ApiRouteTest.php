@@ -6,15 +6,15 @@ namespace Tests\Unit\Routing;
 
 use Closure;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Routing\ApiAction;
+use ILIAS\ApiGateway\Routes\ApiRoute;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-final class ApiActionTest extends TestCase
+final class ApiRouteTest extends TestCase
 {
-    private ApiAction $apiAction;
+    private ApiRoute $apiRoute;
     private string $name = 'foo';
     private string $path = '/test';
     private string $method = 'testMethod';
@@ -27,7 +27,7 @@ final class ApiActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->apiAction = new ApiAction(
+        $this->apiRoute = new ApiRoute(
             $this->name,
             $this->path,
             [$this->method],
@@ -41,7 +41,7 @@ final class ApiActionTest extends TestCase
     {
         self::assertSame(
             $this->name,
-            $this->apiAction->getName(),
+            $this->apiRoute->getName(),
         );
     }
 
@@ -49,7 +49,7 @@ final class ApiActionTest extends TestCase
     {
         self::assertSame(
             $this->path,
-            $this->apiAction->getPath(),
+            $this->apiRoute->getPath(),
         );
     }
 
@@ -57,7 +57,7 @@ final class ApiActionTest extends TestCase
     {
         self::assertSame(
             [$this->method],
-            $this->apiAction->getMethods(),
+            $this->apiRoute->getMethods(),
         );
     }
 
@@ -65,7 +65,7 @@ final class ApiActionTest extends TestCase
     {
         self::assertSame(
             $this->description,
-            $this->apiAction->getDescription(),
+            $this->apiRoute->getDescription(),
         );
     }
 
@@ -73,13 +73,13 @@ final class ApiActionTest extends TestCase
     {
         self::assertSame(
             $this->middlewares,
-            $this->apiAction->getMiddlewares(),
+            $this->apiRoute->getMiddlewares(),
         );
     }
 
     public function testCreatesInstanceWithoutOptionalParameters(): void
     {
-        $actual = new ApiAction(
+        $actual = new ApiRoute(
             $this->name,
             $this->path,
             [$this->method],
@@ -105,7 +105,7 @@ final class ApiActionTest extends TestCase
         // A simple handler for instantiation, as its execution isn't the focus here
         $handler = fn(): null => null;
 
-        $actual = new ApiAction(
+        $actual = new ApiRoute(
             $name,
             $path,
             $methods,
@@ -177,7 +177,7 @@ final class ApiActionTest extends TestCase
         array $params,
         ?AuthUser $user,
     ): void {
-        $apiAction = new ApiAction(
+        $apiRoute = new ApiRoute(
             $this->name,
             $this->path,
             [$this->method],
@@ -185,7 +185,7 @@ final class ApiActionTest extends TestCase
             $handler,
         );
 
-        $routeHandler = $apiAction->getHandler();
+        $routeHandler = $apiRoute->getHandler();
 
         self::assertInstanceOf(RouteHandler::class, $routeHandler);
 

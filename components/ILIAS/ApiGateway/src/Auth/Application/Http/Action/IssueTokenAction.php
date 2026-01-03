@@ -20,37 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Application\Http\Action;
 
-use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
-use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
-use ILIAS\ApiGateway\Routing\ApiAction;
-use InvalidArgumentException;
-
-readonly class IssueTokenAction extends ApiAction
-{
-    public function __construct(
-        private Authentication $authentication,
-        private UserRepository $userRepository,
-    ) {
-        parent::__construct(
-            'Create API Token',
-            '/auth/token',
-            ['POST'],
-            'Authenticates a user and returns a new token set (access and refresh tokens).',
-            function (array $params): array {
-                $username = $params['username'] ?? '';
-                $password = $params['password'] ?? '';
-
-                $username = trim($username);
-                $password = trim($password);
-
-                if (\in_array('', [$username, $password])) {
-                    throw new InvalidArgumentException('Username or password is empty.', 400);
-                }
-
-                $user = $this->userRepository->login($username, $password);
-
-                return $this->authentication->createToken($user)->toArray();
-            },
-        );
-    }
-}
+/**
+ * @deprecated message
+ */
+readonly class IssueTokenAction extends \ILIAS\ApiGateway\Routes\Auth\IssueTokenRoute
+{}
