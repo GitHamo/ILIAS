@@ -22,11 +22,6 @@ namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
 use DateTimeImmutable;
 
-/**
- * Represents a secure auth token
- *
- * This is an immutable value object.
- */
 readonly class Token
 {
     public function __construct(

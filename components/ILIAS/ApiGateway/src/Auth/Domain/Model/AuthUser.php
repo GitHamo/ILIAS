@@ -20,11 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
-/**
- * Represents a user who has been successfully authenticated.
- *
- * This is an immutable value object.
- */
 readonly class AuthUser
 {
     /**

@@ -20,11 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
-/**
- * Represents a data payload that an authentication token contains
- *
- * This is an immutable value object.
- */
 readonly class TokenPayload
 {
     public function __construct(

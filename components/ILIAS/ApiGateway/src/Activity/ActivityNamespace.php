@@ -34,7 +34,7 @@ readonly class ActivityNamespace
     public function getPath(): string
     {
         $vendor = strtolower($this->vendor);
-        $vendor = in_array($vendor, self::CORE_VENDORS, true) ? '' : $vendor;
+        $vendor = \in_array($vendor, self::CORE_VENDORS, true) ? '' : $vendor;
         $component = strtolower($this->component);
         $subject = ucfirst($this->name);
 

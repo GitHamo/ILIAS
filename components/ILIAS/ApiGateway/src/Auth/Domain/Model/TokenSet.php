@@ -20,11 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
-/**
- * Represents an auth token set that consists of an access token and a refresh token
- *
- * This is an immutable value object.
- */
 readonly class TokenSet
 {
     public function __construct(

@@ -22,6 +22,8 @@ namespace ILIAS\ApiGateway\Routes;
 
 use Closure;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
+use ILIAS\ApiGateway\Routing\Route;
+use ILIAS\ApiGateway\Routing\RouteHandler;
 use Override;
 
 readonly class ApiRoute implements Route

@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Activity;
 
-use ILIAS\ApiGateway\Auth\Application\Http\AuthenticationMiddleware;
+use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware;
 use ILIAS\Component\Activities\Activity;
 
 readonly class ActivityRouteFactory
