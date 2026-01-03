@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application;
 
-use ILIAS\ApiGateway\Application\RouteExecutor;
+use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
@@ -15,9 +15,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamInterface;
 
-class RouteExecutorTest extends TestCase
+class ResponseHanlderTest extends TestCase
 {
-    private RouteExecutor $executor;
+    private ResponseHandler $handler;
     private Webservice&MockObject $webserviceMock;
     private Request&MockObject $requestMock;
     private Response&MockObject $responseMock;
@@ -33,7 +33,7 @@ class RouteExecutorTest extends TestCase
 
         $this->responseMock->method('getBody')->willReturn($this->streamMock);
 
-        $this->executor = new RouteExecutor($this->webserviceMock);
+        $this->handler = new ResponseHandler($this->webserviceMock);
     }
 
     public function testDispatchSuccessfullyHandlesRequestAndWritesResponse(): void
@@ -103,7 +103,7 @@ class RouteExecutorTest extends TestCase
             ->willReturn($this->responseMock)
         ;
 
-        $response = ($this->executor)(
+        $response = ($this->handler)(
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
@@ -137,7 +137,7 @@ class RouteExecutorTest extends TestCase
         $this->webserviceMock->method('handle')->willReturn(new Payload(null));
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
-        ($this->executor)(
+        ($this->handler)(
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
@@ -169,7 +169,7 @@ class RouteExecutorTest extends TestCase
         $this->webserviceMock->method('handle')->willReturn(new Payload(null));
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
-        ($this->executor)(
+        ($this->handler)(
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
@@ -201,7 +201,7 @@ class RouteExecutorTest extends TestCase
         $this->webserviceMock->method('handle')->willReturn(new Payload(null));
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
-        ($this->executor)(
+        ($this->handler)(
             $this->requestMock,
             $this->responseMock,
             $routeArgs,

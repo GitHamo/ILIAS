@@ -44,7 +44,7 @@ final readonly class WebApp
         private WebConfig $configuration,
         private RoutesRegistry $registry,
         private MiddlewareRepository $middlewareRepository,
-        private RouteExecutor $executor,
+        private ResponseHandler $responseHandler,
         private ErrorHandler $errorHandler,
         private LoggerInterface $logger,
         private ResponseFactory $responseFactory,
@@ -115,7 +115,7 @@ final readonly class WebApp
                         ->map(
                             $route->getMethods(),
                             $route->getPath(),
-                            fn(Request $request, Response $response, array $args): Response => ($this->executor)(
+                            fn(Request $request, Response $response, array $args): Response => ($this->responseHandler)(
                                 $request,
                                 $response,
                                 $args,

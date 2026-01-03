@@ -9,7 +9,7 @@ use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Application\Factory\HttpServiceFactory;
 use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
-use ILIAS\ApiGateway\Application\RouteExecutor;
+use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
@@ -71,7 +71,7 @@ final class WebAppFactoryTest extends TestCase
         $protocol = ServiceProtocol::SOAP;
         $webConfigMock = $this->createMock(WebConfig::class);
         $webserviceMock = $this->createMock(Webservice::class);
-        $executorMock = $this->createMock(RouteExecutor::class);
+        $responseHandlerMock = $this->createMock(ResponseHandler::class);
         $loggerMock = $this->createMock(LoggerInterface::class);
         $errorHandlerMock = $this->createMock(ErrorHandler::class);
         /** @var SlimApp<\Psr\Container\ContainerInterface>&MockObject */
@@ -88,9 +88,9 @@ final class WebAppFactoryTest extends TestCase
             ->willReturn($webserviceMock);
 
         $this->httpServiceFactory->expects(self::once())
-            ->method('createRouteExecutor')
+            ->method('createResponseHandler')
             ->with(self::identicalTo($webserviceMock))
-            ->willReturn($executorMock);
+            ->willReturn($responseHandlerMock);
 
         $this->loggerFactory->expects(self::once())
             ->method('create')
@@ -115,7 +115,7 @@ final class WebAppFactoryTest extends TestCase
             $webConfigMock,
             $this->routesRegistry,
             $this->middlewareRepository,
-            $executorMock,
+            $responseHandlerMock,
             $errorHandlerMock,
             $loggerMock,
             $this->responseFactory,

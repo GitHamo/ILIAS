@@ -27,10 +27,12 @@ use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+use function array_merge;
+
 /**
  * This class is responsible for the entire lifecycle of a successfully matched route.
  */
-readonly class RouteExecutor
+readonly class ResponseHandler
 {
     private const string ATTR_KEY_AUTH_USER = 'authenticated_user';
 
@@ -51,10 +53,10 @@ readonly class RouteExecutor
         $authUser = $request->getAttribute(self::ATTR_KEY_AUTH_USER);
         $request = $request->withoutAttribute(self::ATTR_KEY_AUTH_USER);
 
-        $params = array_merge(
-            $request->getQueryParams(),
-            $request->getAttributes()
-        );
+        $params = [
+            ...$request->getQueryParams(),
+            ...$request->getAttributes(),
+        ];
 
         $contentType = $request->getHeaderLine('Content-Type');
         if (str_contains($contentType, 'application/json')) {
@@ -68,7 +70,7 @@ readonly class RouteExecutor
         }
 
         $responseBody = $action(
-            array_merge($params, $args),
+            [...$params, ...$args],
             $authUser,
         );
 

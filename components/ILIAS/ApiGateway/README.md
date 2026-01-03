@@ -23,7 +23,11 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 
 ### REST Webservice
 
+- [Activity](#activity)
 - [Authentication](docs/rest/authentication.md)
+- [Configuration](#configuration)
+- [Logging](#logging)
+- [Middlewares](#middlewares)
 - [Routing](docs/rest/routing.md)
 
 ## Components

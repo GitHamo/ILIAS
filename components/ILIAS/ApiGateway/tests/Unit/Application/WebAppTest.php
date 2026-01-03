@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\ErrorHandler;
-use ILIAS\ApiGateway\Application\RouteExecutor;
+use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
@@ -27,11 +27,11 @@ class WebAppTest extends TestCase
 {
     private MockObject&RoutesRegistry $registry;
     private MockObject&MiddlewareRepository $middlewareRepository;
-    private MockObject&RouteExecutor $executor;
+    private MockObject&ResponseHandler $responseHandler;
+    private MockObject&ErrorHandler $errorHandler;
     private MockObject&LoggerInterface $logger;
     /** @var MockObject&SlimApp<\Psr\Container\ContainerInterface> */
     private MockObject&SlimApp $slimApp;
-    private MockObject&ErrorHandler $errorHandler;
     private MockObject&ResponseFactory $responseFactory;
 
     #[\Override]
@@ -41,7 +41,7 @@ class WebAppTest extends TestCase
 
         $this->registry = $this->createMock(RoutesRegistry::class);
         $this->middlewareRepository = $this->createMock(MiddlewareRepository::class);
-        $this->executor = $this->createMock(RouteExecutor::class);
+        $this->responseHandler = $this->createMock(ResponseHandler::class);
         $this->errorHandler = $this->createMock(ErrorHandler::class);
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->responseFactory = $this->createMock(ResponseFactory::class);
@@ -96,7 +96,7 @@ class WebAppTest extends TestCase
 
     /**
      * Business Case: When a request matches a defined API endpoint, the system should hand it off
-     * to the central request executor to be processed.
+     * to the central response handler to be processed.
      */
     public function testDispatchToTheCorrectHandlerWhenRouteIsMatched(): void
     {
@@ -129,11 +129,11 @@ class WebAppTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $args = ['id' => '42'];
 
-        $this->executor->expects(self::once())
+        $this->responseHandler->expects(self::once())
             ->method('__invoke')
             ->with($request, $response, $args, $routeHandler);
 
-        // Inside the callback, we immediately execute the handler to verify it triggers the executor expectation above.
+        // Inside the callback, we immediately execute the handler to verify it triggers the response handler expectation above.
         $groupProxyMock->expects(self::once())
             ->method('map')
             ->with(
@@ -173,11 +173,11 @@ class WebAppTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $args = ['id' => '42'];
 
-        $this->executor->expects(self::once())
+        $this->responseHandler->expects(self::once())
             ->method('__invoke')
             ->with($request, $response, $args, $routeHandler);
 
-        // Inside the callback, we immediately execute the handler to verify it triggers the executor expectation above.
+        // Inside the callback, we immediately execute the handler to verify it triggers the response handler expectation above.
         $groupProxyMock->expects(self::once())
             ->method('map')
             ->with(
@@ -266,7 +266,7 @@ class WebAppTest extends TestCase
             ),
             $this->registry,
             $this->middlewareRepository,
-            $this->executor,
+            $this->responseHandler,
             $this->errorHandler,
             $this->logger,
             $this->responseFactory,

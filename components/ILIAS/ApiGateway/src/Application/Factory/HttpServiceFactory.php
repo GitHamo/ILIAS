@@ -21,7 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Application\ErrorHandler;
-use ILIAS\ApiGateway\Application\RouteExecutor;
+use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\HTTP\Response\ResponseFactory;
@@ -34,9 +34,9 @@ use Slim\Factory\AppFactory;
  */
 readonly class HttpServiceFactory
 {
-    public function createRouteExecutor(Webservice $webservice): RouteExecutor
+    public function createResponseHandler(Webservice $webservice): ResponseHandler
     {
-        return new RouteExecutor($webservice);
+        return new ResponseHandler($webservice);
     }
 
     public function createErrorHandler(

@@ -53,7 +53,7 @@ final readonly class WebAppFactory
         
         $config = $this->httpConfigFactory->createWebConfig($protocol);
         $webservice = $this->webserviceFactory->create($config);
-        $executor = $this->httpServiceFactory->createRouteExecutor($webservice);
+        $responseHandler = $this->httpServiceFactory->createResponseHandler($webservice);
         $logger = $this->loggerFactory->create($protocol->value);
         $errorHandler = $this->httpServiceFactory->createErrorHandler(
             $webservice,
@@ -70,7 +70,7 @@ final readonly class WebAppFactory
             $config,
             $this->registry,
             $this->middlewareRepository,
-            $executor,
+            $responseHandler,
             $errorHandler,
             $logger,
             $this->responseFactory,
