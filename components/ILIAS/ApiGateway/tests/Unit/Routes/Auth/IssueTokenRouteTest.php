@@ -15,7 +15,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(IssueTokenAction::class)]
+#[CoversClass(IssueTokenRoute::class)]
 class IssueTokenRouteTest extends TestCase
 {
     private IssueTokenRoute $route;

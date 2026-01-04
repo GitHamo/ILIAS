@@ -13,7 +13,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(RefreshTokenAction::class)]
+#[CoversClass(RefreshTokenRoute::class)]
 class RefreshTokenRouteTest extends TestCase
 {
     private RefreshTokenRoute $route;
