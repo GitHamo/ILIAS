@@ -31,21 +31,19 @@ use ilSetting;
 final class ilApiGatewaySettings
 {
     private const string MODULE_NAME = 'apigateway';
-    private const EncryptionAlgo DEFAULT_ENCRYPTION = EncryptionAlgo::HS256;
-    private const HashingAlgo DEFAULT_HASHING = HashingAlgo::SHA256;
-    private const int DEFAULT_TOKEN_EXPIRY_ACCESS = 86400; // 1 day
-    private const int DEFAULT_TOKEN_EXPIRY_REFRESH = 604800; // 7 days
-
     protected static ?ilApiGatewaySettings $instance = null;
     private ilSetting $settings;
 
     /** @var array<string, string> */
     private array $settings_data = [
+        /**
+         * defaults for system settings, load when specific setting is missing or empty
+         */
         SystemSetting::AUTH_SECRET_KEY->value => '', // generate randomly on installation
-        SystemSetting::AUTH_ALGO_ENCRYPTION->value => self::DEFAULT_ENCRYPTION->value,
-        SystemSetting::AUTH_ALGO_HASH->value => self::DEFAULT_HASHING->value,
-        SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS->value => (string) self::DEFAULT_TOKEN_EXPIRY_ACCESS,
-        SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH->value => (string) self::DEFAULT_TOKEN_EXPIRY_REFRESH,
+        SystemSetting::AUTH_ALGO_ENCRYPTION->value => EncryptionAlgo::HS256->value,
+        SystemSetting::AUTH_ALGO_HASH->value => HashingAlgo::SHA256->value,
+        SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS->value => "86400",
+        SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH->value => "604800",
         SystemSetting::REST_WS_ENABLED->value => '0',
         SystemSetting::REST_DOCS_ENABLED->value => '1',
     ];
