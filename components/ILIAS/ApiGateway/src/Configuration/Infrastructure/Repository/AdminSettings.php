@@ -20,18 +20,19 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Infrastructure\Repository;
 
-use ILIAS\ApiGateway\ilApiGatewayAdminSettings;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
 use ILIAS\ApiGateway\LocalDIC;
+use ilSetting;
 
 /**
  * @codeCoverageIgnore To be tested when settings are loaded by DI not global
  */
 final class AdminSettings extends LocalDIC implements SystemSettingRepository
 {
-    private ?ilApiGatewayAdminSettings $settings = null;
+    private const string MODULE_NAME = 'apigateway';
+    private ?ilSetting $settings = null;
 
     #[\Override]
     public function get(SystemSetting $settingKey): Setting
@@ -42,7 +43,7 @@ final class AdminSettings extends LocalDIC implements SystemSettingRepository
         return Setting::create($key, $value);
     }
 
-    private function settings(): ?ilApiGatewayAdminSettings
+    private function settings(): ?ilSetting
     {
         if (null === $this->settings) {
             $database = $this->database();
@@ -51,7 +52,7 @@ final class AdminSettings extends LocalDIC implements SystemSettingRepository
                 return null;
             }
 
-            $this->settings = new ilApiGatewayAdminSettings($database);
+            $this->settings = new ilSetting(self::MODULE_NAME, true);
         }
 
         return $this->settings;
