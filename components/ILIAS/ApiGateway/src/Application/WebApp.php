@@ -54,10 +54,9 @@ final readonly class WebApp
     public function run(): void
     {
         if (!$this->configuration->isEnabled()) {
-            // @todo: redirect to ILIAS error page instead
             $response = $this->responseFactory->create();
 
-            $response->withStatus(503)->withHeader('Content-Type', 'text/plain');
+            $response = $response->withStatus(503)->withHeader('Content-Type', 'text/plain');
             $response->getBody()->write('API Service is currently disabled.');
 
             (new ResponseEmitter())->emit($response);
