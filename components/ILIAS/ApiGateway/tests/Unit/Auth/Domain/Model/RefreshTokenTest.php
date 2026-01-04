@@ -28,7 +28,7 @@ class RefreshTokenTest extends TestCase
             $this->tokenHash = 'foo-bar',
             $this->expiresAt = new DateTimeImmutable(),
             $this->refreshTokenId = 321,
-            $this->isRevoked = true,
+            $this->isRevoked = false,
         );
     }
 
@@ -69,6 +69,19 @@ class RefreshTokenTest extends TestCase
         $this->assertSame(
             $this->isRevoked,
             $this->model->isRevoked(),
+        );
+    }
+
+    public function testRevokesToken(): void
+    {
+        $this->assertFalse(
+            $this->model->isRevoked()
+        );
+
+        $this->model->revoke();
+
+        $this->assertTrue(
+            $this->model->isRevoked()
         );
     }
 

@@ -43,7 +43,12 @@ readonly class Setting
         } elseif (\is_array($value) || \is_object($value)) {
             $finalValue = json_encode($value, JSON_THROW_ON_ERROR);
         } else {
+            // @codeCoverageIgnoreStart
+            /**
+             * This is only to make sure we catch edge cases. I cannot think of one for now
+             */
             throw new InvalidArgumentException('Unsupported type for Setting: ' . \gettype($value));
+            // @codeCoverageIgnoreEnd
         }
 
         return new self($key, $finalValue);
