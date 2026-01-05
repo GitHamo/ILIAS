@@ -20,9 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\Data\Text;
 
-use ILIAS\Data\Text\Shape;
-use ILIAS\Data\Text\Markup;
-
 abstract class TextBase implements Text
 {
     public function __construct(
