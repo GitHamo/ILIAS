@@ -15,7 +15,7 @@ This document outlines the **ApiGateway component**, a foundational service for 
 - [Logging](#logging)
 - [Validation](#validation)
 - [OpenAPI Specification](#openapi-specification)
-- [Maintainer Guidelines](docs/maintaner.md)
+- [Maintainer Guidelines](docs/maintenance.md)
 - [Future Work](ROADMAP.md)
 
 ### Getting Started
