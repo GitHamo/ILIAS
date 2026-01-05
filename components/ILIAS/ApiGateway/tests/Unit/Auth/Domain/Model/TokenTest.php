@@ -34,11 +34,11 @@ class TokenTest extends TestCase
         );
     }
 
-    public function testHasAccessorToGetExpiresIn(): void
+    public function testHasAccessorTogetExpiresAt(): void
     {
         $this->assertSame(
             $this->expiresAt,
-            $this->model->getExpiresIn(),
+            $this->model->getExpiresAt(),
         );
     }
 }

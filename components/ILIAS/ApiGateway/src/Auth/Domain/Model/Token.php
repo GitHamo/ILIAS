@@ -34,7 +34,7 @@ readonly class Token
         return $this->token;
     }
 
-    public function getExpiresIn(): DateTimeImmutable
+    public function getExpiresAt(): DateTimeImmutable
     {
         return $this->expiresAt;
     }

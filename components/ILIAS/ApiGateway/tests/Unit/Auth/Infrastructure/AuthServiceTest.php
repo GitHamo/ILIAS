@@ -115,7 +115,7 @@ class AuthServiceTest extends TestCase
 
         self::assertSame($accessToken->getToken(), $tokenSetArray['access_token']);
         self::assertSame($refreshToken->getToken(), $tokenSetArray['refresh_token']);
-        self::assertSame($accessToken->getExpiresIn()->getTimestamp(), $tokenSetArray['expires_in']);
+        self::assertSame($accessToken->getExpiresAt()->getTimestamp(), $tokenSetArray['expires_at']);
     }
 
     public function testRefreshTokenSuccessfully(): void
@@ -154,7 +154,7 @@ class AuthServiceTest extends TestCase
 
         self::assertSame($newAccessToken->getToken(), $newTokenSetArray['access_token']);
         self::assertSame($newRefreshToken->getToken(), $newTokenSetArray['refresh_token']);
-        self::assertSame($newAccessToken->getExpiresIn()->getTimestamp(), $newTokenSetArray['expires_in']);
+        self::assertSame($newAccessToken->getExpiresAt()->getTimestamp(), $newTokenSetArray['expires_at']);
     }
 
     // public function testRevokeTokenBeforeIssueNewRefreshToken(): void

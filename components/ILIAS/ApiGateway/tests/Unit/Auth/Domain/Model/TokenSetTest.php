@@ -24,7 +24,7 @@ class TokenSetTest extends TestCase
         $this->model = new TokenSet(
             $this->createConfiguredMock(Token::class, [
                 'getToken' => $this->accessToken,
-                'getExpiresIn' => $this->createConfiguredMock(DateTimeImmutable::class, [
+                'getExpiresAt' => $this->createConfiguredMock(DateTimeImmutable::class, [
                     'getTimestamp' => $this->expiresInTimestamp,
                 ]),
             ]),
@@ -39,7 +39,7 @@ class TokenSetTest extends TestCase
         $expected = [
             'access_token' => $this->accessToken,
             'refresh_token' => $this->refreshToken,
-            'expires_in' => $this->expiresInTimestamp,
+            'expires_at' => $this->expiresInTimestamp,
         ];
 
         $actual = $this->model->toArray();

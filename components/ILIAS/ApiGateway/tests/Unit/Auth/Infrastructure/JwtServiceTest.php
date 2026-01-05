@@ -49,7 +49,7 @@ class JwtServiceTest extends TestCase
         $token = $this->service->generate(self::USER_ID, $issuedAt, $expiresIn);
 
         self::assertInstanceOf(Token::class, $token);
-        self::assertSame($expiresIn, $token->getExpiresIn());
+        self::assertSame($expiresIn, $token->getExpiresAt());
 
         $decodedPayload = (array) JWT::decode($token->getToken(), new Key(self::SECRET_KEY, self::ALGORITHM));
         self::assertSame(self::ISSUER, $decodedPayload['iss']);

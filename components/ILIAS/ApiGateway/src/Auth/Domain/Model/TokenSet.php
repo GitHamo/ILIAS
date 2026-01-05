@@ -35,7 +35,7 @@ readonly class TokenSet
         return [
             'access_token' => $this->accessToken->getToken(),
             'refresh_token' => $this->refreshToken->getToken(),
-            'expires_in' => $this->accessToken->getExpiresIn()->getTimestamp(),
+            'expires_at' => $this->accessToken->getExpiresAt()->getTimestamp(),
         ];
     }
 }

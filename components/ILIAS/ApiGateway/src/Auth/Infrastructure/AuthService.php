@@ -114,7 +114,7 @@ final class AuthService implements Authentication
         $refreshToken = new RefreshToken(
             $user->getId(),
             $hash,
-            $token->getExpiresIn(),
+            $token->getExpiresAt(),
         );
 
         $this->refreshTokenRepository->save($refreshToken);
