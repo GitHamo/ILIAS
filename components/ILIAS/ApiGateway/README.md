@@ -2,85 +2,170 @@
 
 *Note: This is a living document that will be updated as the project progresses through each phase.*
 
-## Index
+This document outlines the **ApiGateway component**, a foundational service for creating modern, modular REST APIs within ILIAS. It replaces the previous webservice infrastructure with a flexible system built on the [Slim Framework](https://www.slimframework.com/), designed to be the standard for future API development. This guide covers both usage for API consumers and the internal architecture for maintainers.
 
-- [Overview](#overview)
-- [Documentation](#documentation)
-- [Components](#components)
+## Table of Contents
+
 - [Getting Started](#getting-started)
-- [Key Architectural Concepts](#key-architectural-concepts)
+- [Authentication](#authentication)
+- [Configuration](#configuration)
+- [Creating New API Endpoints](#creating-new-api-endpoints)
+- [Standard Response Format](#standard-response-format)
+- [Middlewares](#middlewares)
+- [Logging](#logging)
+- [Validation](#validation)
+- [OpenAPI Specification](#openapi-specification)
+- [Maintainer Guidelines](docs/maintaner.md)
 - [Future Work](ROADMAP.md)
 
-## Overview
+### Getting Started
 
-The new API uses a modular architecture centered around the `ApiGateway` component, which leverages the [Slim Framework](https://www.slimframework.com/) to handle the request lifecycle. An incoming API request comes through a single entry point, which boots the ILIAS environment and passes the request to the Slim application.
+Before you can use the API, you need to set it up and ensure it's running correctly.
 
-The request lifecycle uses the [Slim Framework](https://www.slimframework.com/). An incoming API request comes through a single entry point, which boots up the ILIAS environment and passes the request to the Slim application to handle.
+#### Installation and Updates
 
-This architecture separates concerns by having a generic `ApiGateway` component. For context on the previous design, which was centered around a more abstract 'Activities' concept, you can read the [previous concept document](https://github.com/jeph864/ILIAS/blob/11/rest/components/ILIAS/rest/README.md).
+- **Fresh Installation:** If you are installing ILIAS for the first time with this component, no special action is needed. The setup process will handle the component automatically.
+- **Updating an Existing ILIAS Instance:** If you are adding this component to an existing ILIAS installation, you must run the update command to apply the necessary database changes:
 
-## Documentation
+    ```bash
+    php cli/setup.php update --yes
+    ```
 
-### REST Webservice
+- **After a Failed Update:** If a previous update failed, you may need to reset the failed steps before running the update command again:
 
-- [Activity](#activity)
-- [Authentication](docs/rest/authentication.md)
-- [Configuration](#configuration)
-- [Logging](#logging)
-- [Middlewares](#middlewares)
-- [Routing](docs/rest/routing.md)
+    ```bash
+    php cli/setup.php achieve database.resetFailedSteps --yes
+    php cli/setup.php update --yes
+    ```
 
-## Components
+1. **Install Dependencies:** From the ILIAS root directory, run `composer install`. This will download the necessary libraries (like the Slim Framework) for the API Gateway.
 
-### 1. ApiGateway (`components/ILIAS/ApiGateway`)
+2. **Enable the API:**
+    To enable the REST API, you must navigate to the ILIAS administration dashboard:
+    `Administration > System settings and maintenance > Webservices`
+    Under the **REST Settings** tab, check the **Active** checkbox and save the changes.
 
-This is a generic, reusable component that provides the tools to build different APIs (e.g., REST, SOAP). It acts as a wrapper and factory for the Slim application, standardizing how routes are registered and how requests and responses are handled. It integrates several core libraries via Composer, including `slim/slim`, `slim/psr7`, and `psr/log`. While it is protocol-agnostic, the primary focus of this phase is REST, with the public `/rest` endpoint serving as the entry point for all REST API routes.
+    *Note: For development purposes, setting `DEVMODE` to "1" in your `client.ini.php` will enable detailed error logging, but it does **not** activate the webservice itself.*
 
-## Getting Started
+3. **Test the Setup:**
+    You can verify that the API is running by sending a request to the `/ping` endpoint.
 
-After checking out the branch, the first step is to install the new dependencies:
+    **Example Request:**
 
-```bash
-composer install
+    ```bash
+    curl --location 'http://<ILIAS_BASE_URL>/rest/ping' \
+    --header 'Accept: application/json'
+    ```
+
+    **Expected Response:**
+
+    ```json
+    {
+        "success": true,
+        "data": "pong"
+    }
+    ```
+
+### Authentication
+
+The REST API uses **Bearer Tokens (JWT)** for authentication. Any request to a protected endpoint must include an `Authorization` header.
+
+```
+Authorization: Bearer <your_access_token>
 ```
 
-This will download the required libraries (like Slim) and trigger the necessary ILIAS build scripts.
+For detailed information on how to obtain and refresh tokens, please refer to the [**REST Webservice Authentication documentation**](docs/rest/authentication.md).
 
-- 🟡 *Admin dashboard control is not compatible with ILIAS 12+ yet so next is only available in ILIAS 11.*
+### Configuration
 
-- 🟡🟡 *To enable REST Webservice for ILIAS 12+, Debug mode has to be enabled. Set `DEVMODE` to "1" in your `client.ini.php` [more info](https://docu.ilias.de/ilias.php?baseClass=illmpresentationgui&ref_id=367&obj_id=42329&srcstring=1)*
+The API Gateway's behavior, particularly authentication, can be configured from the administration dashboard. These settings include the secret key, encryption and hashing algorithms, and token expiry times.
 
-To enable the REST API, the `rest_ws_enabled` setting must be activated in the ILIAS administration. The settings page can currently be accessed directly with this URL (replace `<localhost_url>` with your ILIAS instance URL):
+For a detailed explanation of each setting and the system impact of changing them, please refer to the [**Configuration documentation**](docs/configuration.md).
 
-```
-<localhost_url>/ilias.php?baseClass=iladministrationgui&cmdNode=48:qn:13u&cmdClass=ilwebservicessettingsgui&cmd=showWebservicesSettings&ref_id=9
-```
+### Creating New API Endpoints
 
-*Note: In a future phase, this settings page will be integrated into the ILIAS UI under `Administration > System settings and maintenance > Webservices`.*
+The API Gateway is designed to be extensible, allowing you to expose your own component's functionality. There are three primary ways to create a new route. All routes are registered by contributing them in your component's `Component.php` file.
 
-Once enabled, you can test the setup by accessing the `/ping` endpoint:
+*For a detailed guide, see the [**REST Webservice Routing documentation**](docs/rest/routing.md).*
 
-**Example request:**
-`GET /rest/ping`
+| Approach | When to use? | Parent Class |
+| :--- | :--- | :--- |
+| **`ApiRoute`** | Simple endpoints with logic that fits in a single function. | `ILIAS\ApiGateway\Routing\Route` |
+| **Custom `Route` Class** | Complex endpoints that require their own dependencies or have detailed setup logic. | `ILIAS\ApiGateway\Routing\Route` |
+| **`Activity`** | For routes tied to core domain logic. The path and HTTP method are generated **automatically**. | `ILIAS\Component\Activities\Activity` |
 
-```bash
-curl --location 'http://<ILIAS_BASE_URL>/rest/ping' \
---header 'Accept: application/json' \
-```
+### Standard Response Format
 
-**Expected response:**
+The API returns responses in a standardized JSON format.
+
+#### Successful Response
+
+Successful requests will have `success` as `true` and the result of the operation in the `data` field.
 
 ```json
 {
     "success": true,
-    "data": "Pong!"
+    "data": {
+        "user_id": 1337,
+        "username": "root"
+    }
 }
 ```
 
-## Key Architectural Concepts
+#### Error Response
 
-- **WebApp**: The main application orchestrator that configures and runs the Slim application. It registers routes, adds middleware, and manages the overall request-response flow.
-- **Route**: A definition of an API endpoint, including its path, HTTP methods, and handler. Routes can be created manually or generated automatically from `Activity` components. In the future, the `Route` will also provide the schema for generating an OpenAPI specification.
-- **Webservice**: An interface responsible for formatting the final output. The `RestWebservice` implementation, for example, serializes data and exceptions into a standardized JSON structure.
-- **Payload**: A data transfer object used for passing data between route handlers and the `Webservice` formatter.
-- **Activity**: A component representing a command or query that can be exposed as an API endpoint. The `ApiGateway` includes an autoloader to discover and register routes from these activities.
+Failed requests will have `success` as `false` and include an `error` message.
+
+```json
+{
+    "success": false,
+    "error": "You are not allowed to perform this activity."
+}
+```
+
+If the **Log Error Details** setting is enabled (or `DEVMODE` is active), a `stack` trace may also be included in the payload.
+
+**Example Error Response (with Stack Trace)**
+
+```json
+{
+    "success": false,
+    "error": "Something went wrong.",
+    "stack": [
+        {
+            "file": "/var/www/html/ilias/components/ILIAS/ApiGateway/src/Some/Class.php",
+            "line": 123,
+            "function": "someFunction",
+            "class": "ILIAS\ApiGateway\Some\Class",
+            "type": "->"
+        },
+        {
+            "file": "/var/www/html/ilias/components/ILIAS/ApiGateway/src/Application/WebApp.php",
+            "line": 456,
+            "function": "handleRequest",
+            "class": "ILIAS\ApiGateway\Application\WebApp",
+            "type": "->"
+        }
+    ]
+}
+```
+
+### Middlewares
+
+The system includes a global authentication middleware. The following middlewares are currently available:
+
+- `ILIAS\ApiGateway\Middleware\AuthenticationMiddleware`
+
+*(Further documentation for creating and using custom middlewares will be available in a future update.)*
+
+### Logging
+
+*(Documentation for API logging and how to access logs will be available in a future update.)*
+
+### Validation
+
+*(Documentation for input and output validation schemas will be available in a future update.)*
+
+### OpenAPI Specification
+
+*(An OpenAPI (Swagger) specification for automated API documentation and client generation will be available in a future update.)*

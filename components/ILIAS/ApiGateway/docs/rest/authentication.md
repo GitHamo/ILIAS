@@ -1,5 +1,10 @@
 # REST Webservice Authentication
 
+## Table of Contents
+* [1. Requesting an Authentication Token](#1-requesting-an-authentication-token)
+* [2. Refreshing an Authentication Token](#2-refreshing-an-authentication-token)
+* [3. Using the Authenticated User in Route Handlers](#3-using-the-authenticated-user-in-route-handlers)
+
 The REST API uses bearer tokens for authentication. API requests that require authentication must include an `Authorization` header with a valid access token.
 
 ```
@@ -12,13 +17,13 @@ The following endpoints are available to obtain and refresh tokens.
 
 This endpoint authenticates a user with their username and password and returns a new set of access and refresh tokens.
 
-* **Endpoint:** `POST /rest/auth/login`
+* **Endpoint:** `POST /rest/auth/token`
 * **Request Body:** A JSON object containing the user's `username` and `password`.
 
 **Example Request:**
 
 ```bash
-curl --location 'http://<ILIAS_BASE_URL>/rest/auth/login' \
+curl --location 'http://<ILIAS_BASE_URL>/rest/auth/token' \
 --header 'Content-Type: application/json' \
 --data '{ 
     "username": "your_username",
@@ -34,8 +39,17 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/auth/login' \
     "data": {
         "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
         "refresh_token": "def5020023e63064d77170889...",
-        "expires_in": 1701384000
+        "expires_at": 1701384000
     }
+}
+```
+
+**Example Error Response:**
+
+```json
+{
+    "success": false,
+    "error": "Wrong username or password."
 }
 ```
 
@@ -64,8 +78,17 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/auth/refresh' \
     "data": {
         "access_token": "abc1234567890...",
         "refresh_token": "ghi0987654321...",
-        "expires_in": 1701387600
+        "expires_at": 1701387600
     }
+}
+```
+
+**Example Error Response:**
+
+```json
+{
+    "success": false,
+    "error": "Refresh token is invalid or has been revoked."
 }
 ```
 
