@@ -63,7 +63,7 @@ class BannedUsersTable implements UI\Component\Table\DataRetrieval
         return $this->ui_factory
             ->table()
             ->data($this->lng->txt('ban_table_title'), $columns, $this)
-            ->withId(self::class . '_' . $this->room_id)
+            ->withId(str_replace('\\', '', self::class) . '_' . $this->room_id)
             ->withOrder(new \ILIAS\Data\Order('datetime', \ILIAS\Data\Order::DESC))
             ->withRange(new Range(0, 50))
             ->withActions($actions)
