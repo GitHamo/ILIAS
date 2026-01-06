@@ -45,6 +45,8 @@ Before you can use the API, you need to set it up and ensure it's running correc
     `Administration > System settings and maintenance > Webservices`
     Under the **REST Settings** tab, check the **Active** checkbox and save the changes.
 
+    > **Recommendation:** For security reasons, it is strongly recommended to configure a strong and unique secret key before activating the service. Avoid using empty or weak secrets.
+
     *Note: For development purposes, setting `DEVMODE` to "1" in your `client.ini.php` will enable detailed error logging, but it does **not** activate the webservice itself.*
 
 3. **Test the Setup:**
