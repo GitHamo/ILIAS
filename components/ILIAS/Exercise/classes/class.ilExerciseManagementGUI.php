@@ -745,7 +745,6 @@ class ilExerciseManagementGUI
             $card_tpl->setVariable("ROW_VALUE", $value);
             $card_tpl->parseCurrentBlock();
         }
-
         $main_panel = $this->ui_factory->panel()->sub(
             $a_data['uname'],
             $this->ui_factory->legacy(
@@ -2243,7 +2242,7 @@ class ilExerciseManagementGUI
             "uid" => $user_id,
             "uname" => $uname,
             "udate" => $ts,
-            "utext" => ilRTE::_replaceMediaObjectImageSrc($text, 1) // mob id to mob src
+            "utext" => $this->gui->getUIUtil()->formatTextInput($text) // mob id to mob src
         );
 
         //get data peer and assign it
