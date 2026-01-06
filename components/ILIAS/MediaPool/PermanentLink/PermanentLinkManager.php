@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\MediPool\PermanentLink;
+namespace ILIAS\MediaPool\PermanentLink;
 
 use ILIAS\UICore\PageContentProvider;
 use ILIAS\StaticURL\Services as StaticUrl;

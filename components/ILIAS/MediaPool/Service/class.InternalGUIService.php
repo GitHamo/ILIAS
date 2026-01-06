@@ -23,7 +23,7 @@ namespace ILIAS\MediaPool;
 use ILIAS\DI\Container;
 use ILIAS\Repository\GlobalDICGUIServices;
 use ILIAS\MediaPool\Clipboard\GUIService;
-use ILIAS\MediPool\PermanentLink\PermanentLinkManager;
+use ILIAS\MediaPool\PermanentLink\PermanentLinkManager;
 
 class InternalGUIService
 {
