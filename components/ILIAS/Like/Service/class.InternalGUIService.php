@@ -22,11 +22,6 @@ namespace ILIAS\Like;
 
 use ILIAS\DI\Container;
 use ILIAS\Repository\GlobalDICGUIServices;
-<<<<<<< HEAD:components/ILIAS/Like/Service/class.InternalGUIService.php
-=======
-use ILIAS\MediaPool\Clipboard\GUIService;
-use ILIAS\MediaPool\PermanentLink\PermanentLinkManager;
->>>>>>> e1c9432f6c3 (39294: In Media Pools, the Permalink is only shown in the 'Info' tab.):Modules/MediaPool/Service/class.InternalGUIService.php
 
 class InternalGUIService
 {
@@ -45,34 +40,4 @@ class InternalGUIService
         $this->domain_service = $domain_service;
         $this->initGUIServices($DIC);
     }
-<<<<<<< HEAD:components/ILIAS/Like/Service/class.InternalGUIService.php
-=======
-
-    public function standardRequest(): StandardGUIRequest
-    {
-        return new StandardGUIRequest(
-            $this->http(),
-            $this->domain_service->refinery()
-        );
-    }
-
-    public function clipboard(): GUIService
-    {
-        return new GUIService(
-            $this->domain_service,
-            $this
-        );
-    }
-
-    public function permanentLink(
-        int $ref_id = 0
-    ): PermanentLinkManager {
-        return new PermanentLinkManager(
-            $this->domain_service->staticUrl(),
-            $this,
-            $ref_id
-        );
-    }
-
->>>>>>> e1c9432f6c3 (39294: In Media Pools, the Permalink is only shown in the 'Info' tab.):Modules/MediaPool/Service/class.InternalGUIService.php
 }
