@@ -95,7 +95,7 @@ class MailFolderTableUI implements \ILIAS\UI\Component\Table\DataRetrieval
                 $this->getTableTitle(),
                 $this->getColumnDefinition(),
             )
-            ->withId(self::class)
+            ->withId(str_replace('\\', '', self::class))
             ->withOrder(new Order('date', Order::DESC))
             ->withActions($this->getActions())
             ->withRequest($this->http_request);
