@@ -346,7 +346,7 @@ class ilBadgeTableGUI implements DataRetrieval
         $table = $this->factory
             ->table()
             ->data($this->lng->txt('obj_bdga'), $this->getColumns(), $this)
-            ->withId(self::class . '_' . $this->parent_id)
+            ->withId(str_replace('\\', '', self::class) . '_' . $this->parent_id)
             ->withOrder(new Order('title', Order::ASC))
             ->withRange(new Range(0, 100))
             ->withActions($this->getActions($url_builder, $action_parameter_token, $row_id_token))
