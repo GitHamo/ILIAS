@@ -377,7 +377,7 @@ class ilBadgePersonalTableGUI implements DataRetrieval
                 $this->lng->txt('badge_personal_badges'),
                 $this->getColumns($this->user->getDateTimeFormat()),
             )
-            ->withId(self::class)
+            ->withId(str_replace('\\', '', self::class))
             ->withOrder(new Order('title', Order::ASC))
             ->withActions($this->getActions($url_builder, $action_parameter_token, $row_id_token))
             ->withRequest($this->request);

@@ -215,7 +215,7 @@ class ilBadgeImageTemplateTableGUI implements DataRetrieval
         $table = $this->factory
             ->table()
             ->data($this, $this->lng->txt('badge_image_templates'), $this->getColumns())
-            ->withId(self::class)
+            ->withId(str_replace('\\', '', self::class))
             ->withOrder(new Order('title', Order::ASC))
             ->withActions($this->getActions($url_builder, $action_parameter_token, $row_id_token))
             ->withRequest($this->request);
