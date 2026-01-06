@@ -745,21 +745,11 @@ class ilExerciseManagementGUI
             $card_tpl->setVariable("ROW_VALUE", $value);
             $card_tpl->parseCurrentBlock();
         }
-<<<<<<< HEAD
 
         $main_panel = $this->ui_factory->panel()->sub($a_data['uname'], $this->ui_factory->legacy()->content(
             $this->gui->html()->escapeCurly($a_data['utext'])
         ))
             ->withFurtherInformation($this->ui_factory->card()->standard($this->lng->txt('text_assignment'))->withSections(array($this->ui_factory->legacy()->content($card_tpl->get()))))->withActions($actions_dropdown);
-=======
-        $main_panel = $this->ui_factory->panel()->sub(
-            $a_data['uname'],
-            $this->ui_factory->legacy(
-                $this->gui->html()->escapeCurly($a_data['utext'])
-            )
-        )
-            ->withFurtherInformation($this->ui_factory->card()->standard($this->lng->txt('text_assignment'))->withSections(array($this->ui_factory->legacy($card_tpl->get()))))->withActions($actions_dropdown);
->>>>>>> a9e4318da72 (39069: Failed test: Festes Abgabedatum für ÜE Text > Textansicht komisch)
 
         $feedback_tpl = new ilTemplate("tpl.exc_report_feedback.html", true, true, "components/ILIAS/Exercise");
         //if no feedback filter the feedback is displayed. Can be list submissions or compare submissions.
