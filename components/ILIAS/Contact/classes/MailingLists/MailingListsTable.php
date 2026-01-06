@@ -73,7 +73,7 @@ class MailingListsTable implements UI\Component\Table\DataRetrieval
             )
             ->withOrder(new \ILIAS\Data\Order('title', \ILIAS\Data\Order::ASC))
             ->withRange(new Range(0, 50))
-            ->withId(self::class)
+            ->withId(str_replace('\\', '', self::class))
             ->withActions($actions)
             ->withRequest($this->request);
     }
