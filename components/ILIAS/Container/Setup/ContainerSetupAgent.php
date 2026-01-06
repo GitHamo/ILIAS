@@ -18,12 +18,15 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\Setup;
+namespace ILIAS\Container\Setup;
 
 use ILIAS\Setup\Agent\NullAgent;
 use ILIAS\Setup\Objective\NullObjective;
 use ILIAS\Setup\Agent\HasNoNamedObjective;
 use ILIAS\Refinery\Transformation;
+use ILIAS\Setup\ObjectiveCollection;
+use ILIAS\Setup\Config;
+use ILIAS\Setup\Objective;
 
 class ContainerSetupAgent extends NullAgent
 {

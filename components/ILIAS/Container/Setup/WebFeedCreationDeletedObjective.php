@@ -18,7 +18,9 @@ declare(strict_types=1);
  *
  *********************************************************************/
 
-namespace ILIAS\Setup;
+namespace ILIAS\Container\Setup;
+
+use ILIAS\Setup\Environment;
 
 class WebFeedCreationDeletedObjective extends \ilAccessRBACOperationDeletedObjective
 {
