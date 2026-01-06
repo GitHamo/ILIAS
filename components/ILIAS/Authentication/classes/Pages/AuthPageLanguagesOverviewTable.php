@@ -62,7 +62,7 @@ class AuthPageLanguagesOverviewTable implements UI\Component\Table\DataRetrieval
         return $this->ui_factory
             ->table()
             ->data($this->lng->txt($this->context->pageLanguageIdentifier(true)), $columns, $this)
-            ->withId(self::class . '_' . $this->context->value)
+            ->withId(str_replace('\\', '', self::class) . '_' . $this->context->value)
             ->withOrder(new \ILIAS\Data\Order('language', \ILIAS\Data\Order::ASC))
             ->withRange(new Range(0, 100))
             ->withActions($actions)
