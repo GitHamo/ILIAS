@@ -189,7 +189,7 @@ class ilPageLayoutGUI extends ilPageObjectGUI
     /**
      * Get template selection radio
      */
-    public static function getTemplateSelection(string $module): ?Radio
+    public static function getTemplateSelection(string $module, bool $include_none = false): ?Radio
     {
         global $DIC;
         $ui = $DIC->ui();
@@ -200,14 +200,10 @@ class ilPageLayoutGUI extends ilPageObjectGUI
             return null;
         }
         $radio = $f->input()->field()->radio($lng->txt("cont_page_template"), "");
-<<<<<<< HEAD
-        $first = 0;
-=======
         $first = "0";
         if ($include_none) {
             $radio = $radio->withOption("0", $lng->txt("none"));
         }
->>>>>>> 610f3030f1a (39155: Freie Seite erstellen nur mit Vorlage)
         /** @var ilPageLayout $templ */
         foreach ($arr_templates as $templ) {
             if ($first == "0" && !$include_none) {
