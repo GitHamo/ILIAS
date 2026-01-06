@@ -62,7 +62,7 @@ class MailingListsMembersTable implements UI\Component\Table\DataRetrieval
                 ),
                 $columns,
             )
-            ->withId(self::class . '_' . $this->mailing_list->getId())
+            ->withId(str_replace('\\', '', self::class) . '_' . $this->mailing_list->getId())
             ->withOrder(new \ILIAS\Data\Order('login', \ILIAS\Data\Order::ASC))
             ->withActions($actions)
             ->withRequest($this->request);
