@@ -231,6 +231,7 @@ class ilBadgeTypesTableGUI implements DataRetrieval
             ->data($this->lng->txt('badge_types'), $this->getColumns(), $this)
             ->withId(self::class)
             ->withOrder(new Order('name', Order::ASC))
+            ->withRange(new Range(0, 100))
             ->withActions($this->getActions($url_builder, $action_parameter_token, $row_id_token))
             ->withRequest($this->request);
 
