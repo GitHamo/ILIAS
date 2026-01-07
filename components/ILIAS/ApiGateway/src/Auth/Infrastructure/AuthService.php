@@ -149,7 +149,7 @@ final class AuthService implements Authentication
 
             if ($minLength > 0 && $keyLength < $minLength) {
                 throw new RuntimeException(
-                    "Invalid secret key length. Minimum required is {$minLength} bytes, but key is {$keyLength} bytes long."
+                    "Invalid secret key length. Minimum required is {$minLength} characters, but key is {$keyLength} characters long."
                 );
             }
 

@@ -157,19 +157,6 @@ class AuthServiceTest extends TestCase
         self::assertSame($newAccessToken->getExpiresAt()->getTimestamp(), $newTokenSetArray['expires_at']);
     }
 
-    // public function testRevokeTokenBeforeIssueNewRefreshToken(): void
-    // {
-    //     $storedToken = $this->createConfiguredMock(RefreshToken::class, [
-    //         'isRevoked' => false,
-    //         'isExpired' => false,
-    //     ]);
-
-    //     $revokedToken = $this->createConfiguredMock(RefreshToken::class, [
-    //         'isRevoked' => true,
-    //         'isExpired' => false,
-    //     ]);
-    // }
-
     public function testRefreshTokenThrowsExceptionForNonRefreshToken(): void
     {
         self::expectException(DomainException::class);
