@@ -312,6 +312,6 @@ abstract class ilMailNotification
     public function getBlockBorder(): string
     {
         // Hyphen-only lines were interpreted as Setext-style headings by the Markdown mail renderer, resulting in unintended <h2> output.
-        return "════════════════════════════════════════\n";
+        return "\n---\n";
     }
 }
