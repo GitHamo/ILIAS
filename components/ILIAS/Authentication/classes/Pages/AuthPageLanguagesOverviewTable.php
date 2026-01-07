@@ -27,6 +27,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ilLanguage;
 use ilCtrlInterface;
 use ilAuthPageEditorSettings;
+use ILIAS\Data\Range;
 
 class AuthPageLanguagesOverviewTable implements UI\Component\Table\DataRetrieval
 {
@@ -63,6 +64,7 @@ class AuthPageLanguagesOverviewTable implements UI\Component\Table\DataRetrieval
             ->data($this->lng->txt($this->context->pageLanguageIdentifier(true)), $columns, $this)
             ->withId(self::class . '_' . $this->context->value)
             ->withOrder(new \ILIAS\Data\Order('language', \ILIAS\Data\Order::ASC))
+            ->withRange(new Range(0, 100))
             ->withActions($actions)
             ->withRequest($this->request);
     }
