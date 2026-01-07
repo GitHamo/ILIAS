@@ -122,18 +122,23 @@ class RelationsTable
         $rows = $this->rows($data, array_keys($single_actions));
         $return = [];
         $return[] = $filter;
-        $return[] = $this->create->table()->data(
-            new TableRows($rows),
-            $this->lng->txt('buddy_tbl_title_relations'),
-            [
-                'public_name' => $this->create->table()->column()->text($this->lng->txt('name')),
-                'login' => $this->create->table()->column()->text($this->lng->txt('login')),
-                'state-text' => $this->create->table()->column()
-                    ->text($this->lng->txt('buddy_tbl_state_actions_col_label')),
-            ]
-        )->withRequest($this->http->request())->withActions(
-            array_merge($single_actions, $multi_actions)
-        );
+        $return[] = $this->create
+            ->table()
+            ->data(
+                new TableRows($rows),
+                $this->lng->txt('buddy_tbl_title_relations'),
+                [
+                    'public_name' => $this->create->table()->column()->text($this->lng->txt('name')),
+                    'login' => $this->create->table()->column()->text($this->lng->txt('login')),
+                    'state-text' => $this->create->table()->column()
+                                                 ->text($this->lng->txt('buddy_tbl_state_actions_col_label')),
+                ]
+            )
+            ->withId('buddy_relations_table')
+            ->withRequest($this->http->request())
+            ->withActions(
+                array_merge($single_actions, $multi_actions)
+            );
 
         return $return;
     }
