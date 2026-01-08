@@ -22,8 +22,6 @@ use ILIAS\ApiGateway\Configuration\Admin\ilApiGatewaySettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\GeneralSettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\RestSettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\SettingsForm;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
-use ILIAS\ApiGateway\Configuration\Domain\Model\SystemSettings;
 use ILIAS\UI\Component\Input\Container\Form\Standard as StandardForm;
 
 /**
@@ -82,6 +80,17 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
         $this->has_read_access = $this->access->checkAccess('read', "", $ref_id);
     }
 
+    /**
+     * Set the Title and the description
+     * (Overwritten from ilObjectGUI, called by prepareOutput)
+     */
+    protected function setTitleAndDescription(): void
+    {
+        $this->tpl->setTitle($this->lng->txt('webservices'));
+        $this->tpl->setTitleIcon('assets/images/standard/icon_apig.svg');
+        $this->tpl->setDescription($this->lng->txt('webservices_description'));
+    }
+
     public function executeCommand(): void
     {
         if (!$this->has_read_access) {
@@ -92,10 +101,6 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
         }
 
         $this->prepareOutput();
-
-        $this->tpl->setTitle($this->lng->txt('webservices'));
-        $this->tpl->setTitleIcon('assets/images/standard/icon_wbrs.svg');
-        $this->tpl->setDescription($this->lng->txt('webservices_description'));
 
         $next_class = $this->ctrl->getNextClass($this);
 
