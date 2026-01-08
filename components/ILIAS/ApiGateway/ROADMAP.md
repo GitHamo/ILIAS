@@ -20,11 +20,14 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 - **Phase 4:** Activity I/O Validation Schemas
 - **Phase 5:** SOAP Webservice Integration
 
-## Future work will add key features, including
+## Backlog
 
+- Middlewares & related Exceptions:
+  - `CorsMiddleware`
+  - `JsonContentNegotiationMiddleware` / `NotAcceptableException`
+  - `JsonBodyParserMiddleware` / `InvalidJsonException`
+  - `RateLimitingMiddleware` / `RateLimitExceededException`
+  - `RequestLoggingMiddleware`
 - I/O validation schemas for request and response data.
 - Enhanced error handling and reporting.
-
-### Additional Features (optional)
-
-- **Configuration:** Read enviormaent variables and prioritize over dashboard to faciliate CI.
+- **Configuration:** Read enviormaent variables and prioritize over dashboard to faciliate CI. (optional)

@@ -126,13 +126,13 @@ This approach is straightforward and easy to understand for anyone familiar with
 
 ## 3. Your Own Route Class: The Advanced Approach
 
-For the most complex scenarios, you can create your own class that implements the `Route` interface. This gives you maximum flexibility and is ideal when your route has its own dependencies or complex logic.
+For the most complex scenarios, create a custom class that implements the `Route` interface. This gives maximum flexibility and is ideal when a route has its own dependencies or complex logic.
 
-The primary reason to choose this approach over `ApiRoute` is for **dependency injection**. Because this is a dedicated class, you can inject services (like repositories, factories, etc.) into its constructor, which is not possible with the simple `Closure` handler used by `ApiRoute`.
+The primary reason to choose this approach over `ApiRoute` is for **dependency injection**. Because this is a dedicated class, services (like repositories, factories, etc.) can be injected into its constructor, which is not possible with the simple `Closure` handler used by `ApiRoute`.
 
 ### How It Looks
 
-You create a class that defines all the route's properties and logic. Just like `ApiRoute`, you would then register this in your `Component.php` by contributing an instance of your new class to `ApiGateway\Routing\Route::class`.
+A class is created that defines all the route's properties and logic. Just like `ApiRoute`, it is then registered in the `Component.php` by contributing an instance of the new class to `ApiGateway\Routing\Route::class`.
 
 ```php
 ## Components/Vendor/MyModule/GetUserByIdRoute.php

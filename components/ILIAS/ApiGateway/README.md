@@ -86,7 +86,7 @@ For a detailed explanation of each setting and the system impact of changing the
 
 ### Creating New API Endpoints
 
-The API Gateway is designed to be extensible, allowing you to expose your own component's functionality. There are three primary ways to create a new route. All routes are registered by contributing them in your component's `Component.php` file.
+The API Gateway is extensible, allowing components to expose their functionality. There are three primary ways to create a new route. All routes are registered by contributing them in the component's `Component.php` file.
 
 *For a detailed guide, see the [**REST Webservice Routing documentation**](docs/rest/routing.md).*
 
@@ -157,8 +157,7 @@ If the **Log Error Details** setting is enabled (or `DEVMODE` is active), a `sta
 The system includes a global authentication middleware. The following middlewares are currently available:
 
 - `ILIAS\ApiGateway\Middleware\AuthenticationMiddleware`
-
-*(Further documentation for creating and using custom middlewares will be available in a future update.)*
+- ... more will be available in future phases, check [ROADMAP.md](ROADMAP.md#backlog)
 
 ### Logging
 

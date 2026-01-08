@@ -59,12 +59,12 @@ The `ApiGateway` component provides a modern, modular architecture for building 
 ## How to Extend the ApiGateway Core
 
 * **Adding a New Core Route:**
-    1. Create a new class that implements `ILIAS\ApiGateway\Routing\Route`. For simple cases, you can extend `ILIAS\ApiGateway\Routes\ApiRoute`.
-    2. Instantiate and contribute your new route class within `ApiGateway.php`.
+    1. Create a new class that implements `ILIAS\ApiGateway\Routing\Route`. For simple cases, extend `ILIAS\ApiGateway\Routes\ApiRoute`.
+    2. Instantiate and contribute the new route class within `ApiGateway.php`.
 
 * **Adding a New Global Middleware:**
     1. Create a class that implements `Psr\Http\Server\MiddlewareInterface`.
-    2. Instantiate and contribute your middleware in `ApiGateway.php`.
+    2. Instantiate and contribute the middleware in `ApiGateway.php`.
     3. Add the middleware to the `WebApp`'s middleware stack, typically in `WebApp::registerMiddlewares()`.
 
 * **Adding a New Configuration Option:**

@@ -8,7 +8,7 @@ This is a private key used to sign and verify the authenticity of access and ref
 
 - **Usage:** Used for encryption. **Do NOT share it with anyone.**
 - **On Fresh Installation:** The field will be blank.
-- **Generating a Key:** If you leave the field blank and save the settings, a new, cryptographically secure random key will be generated for you.
+- **Generating a Key:** If the field is left blank and the settings are saved, a new, cryptographically secure random key will be generated.
 - **System Impact:** Changing this key will immediately invalidate **all** previously issued access and refresh tokens. All users and applications will be forced to re-authenticate to get new tokens. This action is irreversible.
 
 ## Encryption Algorithm
