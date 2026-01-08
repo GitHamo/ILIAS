@@ -31,7 +31,8 @@ readonly class WebConfig
         private bool $isDebugEnabled,
         private bool $isLoggingEnabled,
         private bool $isLoggingDetailsEnabled,
-    ) {}
+    ) {
+    }
 
     public function getBaseUrl(): string
     {

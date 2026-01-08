@@ -25,7 +25,8 @@ readonly class RoutesAutoloader
     public function __construct(
         private RoutesRegistry $routesRegistry,
         private RouteStaticRepository $routeRepository,
-    ) {}
+    ) {
+    }
 
     public function load(): void
     {

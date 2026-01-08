@@ -55,7 +55,7 @@ class WebAppTest extends TestCase
     public function testExitIfWebserviceIsDisabled(): void
     {
         /**
-         * Skipped: Direct output emission (Slim\ResponseEmitter) from internally instantiated final class 
+         * Skipped: Direct output emission (Slim\ResponseEmitter) from internally instantiated final class
          * is difficult to unit test reliably without modifying the SUT (WebApp) or relying on fragile output buffering.
          */
         $this->markTestSkipped();

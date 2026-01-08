@@ -38,7 +38,8 @@ readonly class ErrorHandler
         private WebConfig $config,
         private LoggerInterface $logger,
         private ResponseFactory $responseFactory,
-    ) {}
+    ) {
+    }
 
     public function __invoke(
         ServerRequestInterface $request,
@@ -47,7 +48,7 @@ readonly class ErrorHandler
         if ($this->config->isLoggingEnabled()) {
             $logMessage = $exception->getMessage();
             if ($this->config->isLoggingDetailsEnabled()) {
-                $logMessage .= "\nStack trace:\n" . (string)$exception;
+                $logMessage .= "\nStack trace:\n" . (string) $exception;
             }
 
             $this->logger->error($logMessage);

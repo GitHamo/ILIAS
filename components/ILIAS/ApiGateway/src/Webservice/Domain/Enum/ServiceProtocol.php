@@ -20,7 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Webservice\Domain\Enum;
 
-enum ServiceProtocol: string {
+enum ServiceProtocol: string
+{
     case REST = 'rest';
     case SOAP = 'soap';
 }

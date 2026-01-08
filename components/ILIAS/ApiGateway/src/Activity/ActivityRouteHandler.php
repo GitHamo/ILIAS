@@ -32,7 +32,8 @@ class ActivityRouteHandler implements RouteHandler
 {
     public function __construct(
         private Activity $activity,
-    ) {}
+    ) {
+    }
 
     #[\Override]
     public function __invoke(array $params, ?AuthUser $user): mixed

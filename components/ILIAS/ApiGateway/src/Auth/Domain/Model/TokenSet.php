@@ -25,7 +25,8 @@ readonly class TokenSet
     public function __construct(
         private Token $accessToken,
         private Token $refreshToken,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<string, int|string>

@@ -29,7 +29,8 @@ readonly class HttpConfigFactory
 {
     public function __construct(
         private Configuration $configuration,
-    ) {}
+    ) {
+    }
 
     public function createAuthConfig(): AuthConfig
     {

@@ -30,7 +30,8 @@ class RefreshToken
         private readonly DateTimeImmutable $expiresAt,
         private readonly ?int $id = null,
         private bool $isRevoked = false,
-    ) {}
+    ) {
+    }
 
     public function getId(): ?int
     {

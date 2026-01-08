@@ -31,12 +31,16 @@ class RoutesRegistry
     /** @var array<string, \ILIAS\ApiGateway\Routing\Route> */
     private array $routes = [];
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * @codeCoverageIgnore because any test would fail before this line is executed
      */
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 
     public function __wakeup(): void
     {

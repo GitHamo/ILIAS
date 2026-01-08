@@ -39,7 +39,8 @@ readonly class ApiRoute implements Route
         private string $description,
         private Closure $handler,
         private array $middlewares = [],
-    ) {}
+    ) {
+    }
 
     public function getName(): string
     {
@@ -66,8 +67,10 @@ readonly class ApiRoute implements Route
     #[Override]
     public function getHandler(): RouteHandler
     {
-        return new class($this->handler) implements RouteHandler {
-            public function __construct(private Closure $handle) {}
+        return new class ($this->handler) implements RouteHandler {
+            public function __construct(private Closure $handle)
+            {
+            }
 
             #[Override]
             public function __invoke(array $params, ?AuthUser $user)

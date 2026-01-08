@@ -29,7 +29,8 @@ readonly class ActivityNamespace
         private string $vendor,
         private string $component,
         private string $name,
-    ) {}
+    ) {
+    }
 
     public function getPath(): string
     {

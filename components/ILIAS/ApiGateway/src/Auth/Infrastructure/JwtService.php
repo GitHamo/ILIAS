@@ -38,7 +38,8 @@ final readonly class JwtService implements TokenProvider
 {
     public function __construct(
         private HttpConfigFactory $configFactory,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function generate(
@@ -58,11 +59,11 @@ final readonly class JwtService implements TokenProvider
          * iss (Issuer): Identifies the principal that issued the JWT.
          * aud (Audience): Identifies the recipients that the JWT is intended for.
          *
-         * Optional 
+         * Optional
          * nbf (Not Before): Identifies the time before which the JWT MUST NOT be accepted for processing.
          * iat (Issued At): Identifies the time at which the JWT was issued.
          * jti (JWT ID): Provides a unique identifier for the JWT.
-         * 
+         *
          */
         $payload = [
             'iss' => $this->config()->getIssuer(),
@@ -90,9 +91,9 @@ final readonly class JwtService implements TokenProvider
         try {
             /**
              * @see https://github.com/firebase/php-jwt
-             * 
+             *
              * JWT::decode() throws these exceptions
-             * 
+             *
              * \InvalidArgumentException                    Provided key/key-array was empty or malformed
              * \DomainException                             Provided JWT is malformed
              * \UnexpectedValueException                    Provided JWT was invalid

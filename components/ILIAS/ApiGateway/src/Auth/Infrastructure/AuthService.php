@@ -45,7 +45,8 @@ final class AuthService implements Authentication
         private readonly UserRepository $userRepository,
         private readonly RefreshTokenRepository $refreshTokenRepository,
         private readonly HttpConfigFactory $configFactory,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function createToken(AuthUser $user): TokenSet

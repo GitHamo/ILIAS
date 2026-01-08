@@ -29,7 +29,8 @@ readonly class AuthConfig
         private string $hashAlgo,
         private int $accessTokenExpiry,
         private int $refreshTokenExpiry,
-    ) {}
+    ) {
+    }
 
     public function getIssuer(): string
     {

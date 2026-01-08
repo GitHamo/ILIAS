@@ -54,7 +54,7 @@ final class ErrorHandlerTest extends TestCase
 
     public function testReturnsNumericExceptionCodeCorrectly(): void
     {
-        $exception = new class extends Exception {
+        $exception = new class () extends Exception {
             protected $code = '503'; // @phpstan-ignore-line
         };
 
@@ -68,7 +68,7 @@ final class ErrorHandlerTest extends TestCase
 
     public function testReturns500IfExceptionCodeIsNotNumeric(): void
     {
-        $exception = new class extends Exception {
+        $exception = new class () extends Exception {
             protected $code = 'foo'; // @phpstan-ignore-line
         };
 
@@ -195,7 +195,7 @@ final class ErrorHandlerTest extends TestCase
             logErrorDetails: true,
         );
 
-        $expectedLog = "{$message}\nStack trace:\n" . (string)$exception;
+        $expectedLog = "{$message}\nStack trace:\n" . (string) $exception;
 
         $this->logger->expects(self::once())
             ->method('error')

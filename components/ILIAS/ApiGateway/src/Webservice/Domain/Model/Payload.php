@@ -29,7 +29,8 @@ readonly class Payload
         private mixed $data = null,
         private array $headers = [],
         private ?string $body = null,
-    ) {}
+    ) {
+    }
 
     /**
      * raw content of the payload

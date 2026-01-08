@@ -88,25 +88,20 @@ class ApiGateway implements Component\Component
             new WebserviceFactory(),
             $use[HTTP\Response\ResponseFactory::class],
             $internal[RoutesRegistry::class],
-
             new MiddlewareRepository(
                 $seek[MiddlewareInterface::class],
             ),
-
             new ActivityRoutesAutoloader(
                 $internal[RoutesRegistry::class],
                 $use[Component\Activities\Repository::class],
                 $internal[ActivityRouteFactory::class],
             ),
-
             new RoutesAutoloader(
                 $internal[RoutesRegistry::class],
-
                 new RouteStaticRepository(
                     $seek[ApiGateway\Routing\Route::class],
                 ),
             ),
-
             new WebserviceLoggerFactory(),
         );
 

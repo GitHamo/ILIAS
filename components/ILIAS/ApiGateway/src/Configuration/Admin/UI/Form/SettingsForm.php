@@ -33,5 +33,6 @@ abstract readonly class SettingsForm implements FormGUI
         protected ilCtrl $ctrl,
         protected ilLanguage $lng,
         protected UIFactory $ui_factory,
-    ) {}
+    ) {
+    }
 }

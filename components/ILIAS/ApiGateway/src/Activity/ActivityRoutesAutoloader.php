@@ -29,7 +29,8 @@ readonly class ActivityRoutesAutoloader
         private RoutesRegistry $routesRegistry,
         private ActivityRepository $activityRepository,
         private ActivityRouteFactory $activityRouteFactory,
-    ) {}
+    ) {
+    }
 
     public function load(): void
     {

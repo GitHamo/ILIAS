@@ -27,7 +27,8 @@ readonly class ActivityRouteFactory
 {
     public function __construct(
         private ActivityNamespaceFactory $namespaceFactory,
-    ) {}
+    ) {
+    }
 
     public function create(Activity $activity): ActivityRoute
     {

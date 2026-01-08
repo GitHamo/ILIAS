@@ -28,7 +28,6 @@ class SettingTest extends TestCase
         $this->model = Setting::create(
             $this->key = 'foo',
             $this->value = 'bar',
-
         );
     }
 

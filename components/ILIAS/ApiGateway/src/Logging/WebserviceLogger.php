@@ -24,13 +24,14 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use ilLogger;
 use ilLogLevel;
-
 use Override;
 use Stringable;
 
 readonly class WebserviceLogger implements LoggerInterface
 {
-    public function __construct(private ilLogger $logger) {}
+    public function __construct(private ilLogger $logger)
+    {
+    }
 
     #[Override]
     public function emergency(string|Stringable $message, array $context = []): void
@@ -108,14 +109,14 @@ readonly class WebserviceLogger implements LoggerInterface
 
         return match ($levelAsString) {
             LogLevel::EMERGENCY => ilLogLevel::EMERGENCY,
-            LogLevel::ALERT     => ilLogLevel::ALERT,
-            LogLevel::CRITICAL  => ilLogLevel::CRITICAL,
-            LogLevel::ERROR     => ilLogLevel::ERROR,
-            LogLevel::WARNING   => ilLogLevel::WARNING,
-            LogLevel::NOTICE    => ilLogLevel::NOTICE,
-            LogLevel::INFO      => ilLogLevel::INFO,
-            LogLevel::DEBUG     => ilLogLevel::DEBUG,
-            default             => ilLogLevel::INFO, // Fallback for unknown levels
+            LogLevel::ALERT => ilLogLevel::ALERT,
+            LogLevel::CRITICAL => ilLogLevel::CRITICAL,
+            LogLevel::ERROR => ilLogLevel::ERROR,
+            LogLevel::WARNING => ilLogLevel::WARNING,
+            LogLevel::NOTICE => ilLogLevel::NOTICE,
+            LogLevel::INFO => ilLogLevel::INFO,
+            LogLevel::DEBUG => ilLogLevel::DEBUG,
+            default => ilLogLevel::INFO, // Fallback for unknown levels
         };
     }
 }

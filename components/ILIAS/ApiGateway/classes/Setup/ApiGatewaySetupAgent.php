@@ -28,7 +28,7 @@ use ilTreeAdminNodeAddedObjective;
 
 class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
 {
-    public function getUpdateObjective(?Setup\Config $config = null) : Setup\Objective
+    public function getUpdateObjective(?Setup\Config $config = null): Setup\Objective
     {
         return new Setup\ObjectiveCollection(
             'Database is updated for component/ILIAS/Table',
@@ -38,7 +38,7 @@ class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
         );
     }
 
-    public function getStatusObjective(Setup\Metrics\Storage $storage) : Setup\Objective
+    public function getStatusObjective(Setup\Metrics\Storage $storage): Setup\Objective
     {
         return new ilDatabaseUpdateStepsMetricsCollectedObjective($storage, new ApiGatewayDBUpdateSteps());
     }

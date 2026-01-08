@@ -27,7 +27,8 @@ readonly class Token
     public function __construct(
         private string $token,
         private DateTimeImmutable $expiresAt,
-    ) {}
+    ) {
+    }
 
     public function getToken(): string
     {

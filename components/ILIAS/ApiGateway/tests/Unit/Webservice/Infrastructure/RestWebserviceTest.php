@@ -99,7 +99,7 @@ JSON;
     {
         $payloadData = [
             'array' => [1, 2, 3],
-            'object' => (object)['key' => 'value'],
+            'object' => (object) ['key' => 'value'],
         ];
         $payload = new Payload($payloadData);
 

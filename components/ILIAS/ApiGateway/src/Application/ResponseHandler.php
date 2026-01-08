@@ -38,7 +38,8 @@ readonly class ResponseHandler
 
     public function __construct(
         private Webservice $service,
-    ) {}
+    ) {
+    }
 
     /**
      * @param array<mixed, mixed> $args

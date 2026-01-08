@@ -45,12 +45,13 @@ final readonly class WebAppFactory
         private ActivityRoutesAutoloader $activityRoutesAutoloader,
         private RoutesAutoloader $routesAutoloader,
         private WebserviceLoggerFactory $loggerFactory,
-    ) {}
+    ) {
+    }
 
     public function create(ServiceProtocol $protocol): WebApp
     {
         $this->registerRoutes();
-        
+
         $config = $this->httpConfigFactory->createWebConfig($protocol);
         $webservice = $this->webserviceFactory->create($config);
         $responseHandler = $this->httpServiceFactory->createResponseHandler($webservice);

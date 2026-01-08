@@ -57,7 +57,8 @@ readonly class Setting
     private function __construct(
         private string $key,
         private int|bool|string $value,
-    ) {}
+    ) {
+    }
 
     public function getKey(): string
     {

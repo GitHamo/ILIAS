@@ -32,7 +32,8 @@ final readonly class RestWebservice implements Webservice
 {
     public function __construct(
         private WebConfig $config,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function getProtocol(): ServiceProtocol

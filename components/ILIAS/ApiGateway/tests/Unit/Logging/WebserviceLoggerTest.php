@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use ilLogger;
 use ilLogLevel;
-
 use Override;
 
 final class WebserviceLoggerTest extends TestCase
@@ -62,13 +61,13 @@ final class WebserviceLoggerTest extends TestCase
     {
         return [
             'emergency' => ['emergency', LogLevel::EMERGENCY, ilLogLevel::EMERGENCY],
-            'alert'     => ['alert', LogLevel::ALERT, ilLogLevel::ALERT],
-            'critical'  => ['critical', LogLevel::CRITICAL, ilLogLevel::CRITICAL],
-            'error'     => ['error', LogLevel::ERROR, ilLogLevel::ERROR],
-            'warning'   => ['warning', LogLevel::WARNING, ilLogLevel::WARNING],
-            'notice'    => ['notice', LogLevel::NOTICE, ilLogLevel::NOTICE],
-            'info'      => ['info', LogLevel::INFO, ilLogLevel::INFO],
-            'debug'     => ['debug', LogLevel::DEBUG, ilLogLevel::DEBUG],
+            'alert' => ['alert', LogLevel::ALERT, ilLogLevel::ALERT],
+            'critical' => ['critical', LogLevel::CRITICAL, ilLogLevel::CRITICAL],
+            'error' => ['error', LogLevel::ERROR, ilLogLevel::ERROR],
+            'warning' => ['warning', LogLevel::WARNING, ilLogLevel::WARNING],
+            'notice' => ['notice', LogLevel::NOTICE, ilLogLevel::NOTICE],
+            'info' => ['info', LogLevel::INFO, ilLogLevel::INFO],
+            'debug' => ['debug', LogLevel::DEBUG, ilLogLevel::DEBUG],
         ];
     }
 
@@ -94,13 +93,13 @@ final class WebserviceLoggerTest extends TestCase
     {
         return [
             'emergency' => [LogLevel::EMERGENCY, ilLogLevel::EMERGENCY],
-            'alert'     => [LogLevel::ALERT, ilLogLevel::ALERT],
-            'critical'  => [LogLevel::CRITICAL, ilLogLevel::CRITICAL],
-            'error'     => [LogLevel::ERROR, ilLogLevel::ERROR],
-            'warning'   => [LogLevel::WARNING, ilLogLevel::WARNING],
-            'notice'    => [LogLevel::NOTICE, ilLogLevel::NOTICE],
-            'info'      => [LogLevel::INFO, ilLogLevel::INFO],
-            'debug'     => [LogLevel::DEBUG, ilLogLevel::DEBUG],
+            'alert' => [LogLevel::ALERT, ilLogLevel::ALERT],
+            'critical' => [LogLevel::CRITICAL, ilLogLevel::CRITICAL],
+            'error' => [LogLevel::ERROR, ilLogLevel::ERROR],
+            'warning' => [LogLevel::WARNING, ilLogLevel::WARNING],
+            'notice' => [LogLevel::NOTICE, ilLogLevel::NOTICE],
+            'info' => [LogLevel::INFO, ilLogLevel::INFO],
+            'debug' => [LogLevel::DEBUG, ilLogLevel::DEBUG],
         ];
     }
 
@@ -140,17 +139,17 @@ final class WebserviceLoggerTest extends TestCase
     {
         return [
             'string_emergency' => [LogLevel::EMERGENCY, ilLogLevel::EMERGENCY],
-            'string_info'      => [LogLevel::INFO, ilLogLevel::INFO],
-            'scalar_int'       => [123, ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
-            'scalar_float'     => [123.45, ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
+            'string_info' => [LogLevel::INFO, ilLogLevel::INFO],
+            'scalar_int' => [123, ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
+            'scalar_float' => [123.45, ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
             'scalar_bool_true' => [true, ilLogLevel::INFO], // '1', not a known PSR level, falls back to INFO
             'scalar_bool_false' => [false, ilLogLevel::INFO], // '', not a known PSR level, falls back to INFO
             'stringable_object_info' => [new DummyStringableObject(LogLevel::INFO), ilLogLevel::INFO],
             'stringable_object_custom' => [new DummyStringableObject('custom_level'), ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
-            'null_level'       => [null, ilLogLevel::INFO], // Not stringable, falls back to INFO
-            'array_level'      => [['foo' => 'bar'], ilLogLevel::INFO], // Not stringable, falls back to INFO
+            'null_level' => [null, ilLogLevel::INFO], // Not stringable, falls back to INFO
+            'array_level' => [['foo' => 'bar'], ilLogLevel::INFO], // Not stringable, falls back to INFO
             'object_without_tostring' => [new \stdClass(), ilLogLevel::INFO], // Not stringable, falls back to INFO
-            'unknown_string'   => ['non_existent_level', ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
+            'unknown_string' => ['non_existent_level', ilLogLevel::INFO], // Not a known PSR level, falls back to INFO
         ];
     }
 }
@@ -158,7 +157,9 @@ final class WebserviceLoggerTest extends TestCase
 // Dummy Stringable class for testing messages and levels
 class DummyStringableObject implements \Stringable
 {
-    public function __construct(private string $value) {}
+    public function __construct(private string $value)
+    {
+    }
 
     #[Override]
     public function __toString(): string

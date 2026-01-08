@@ -35,7 +35,8 @@ final readonly class AuthenticationMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private Authentication $authenticationService
-    ) {}
+    ) {
+    }
 
     #[\Override]
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

@@ -36,7 +36,8 @@ class ActivityRoute implements Route
         private ActivityRouteHandler $handler,
         private ActivityNamespace $namespace,
         private array $middlewares,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function getPath(): string

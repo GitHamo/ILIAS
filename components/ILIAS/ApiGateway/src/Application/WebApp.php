@@ -49,7 +49,8 @@ final readonly class WebApp
         private LoggerInterface $logger,
         private ResponseFactory $responseFactory,
         private SlimApp $application,
-    ) {}
+    ) {
+    }
 
     public function run(): void
     {

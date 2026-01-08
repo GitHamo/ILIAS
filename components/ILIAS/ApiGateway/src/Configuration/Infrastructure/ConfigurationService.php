@@ -46,7 +46,8 @@ class ConfigurationService implements Configuration
 
     public function __construct(
         private SystemSettingRepository $adminSettings,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function getBaseUrl(): string

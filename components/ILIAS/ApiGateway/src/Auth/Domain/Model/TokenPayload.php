@@ -25,7 +25,8 @@ readonly class TokenPayload
     public function __construct(
         private AuthUser $user,
         private bool $isRefresh,
-    ) {}
+    ) {
+    }
 
     public function getUser(): AuthUser
     {

@@ -11,8 +11,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\MiddlewareInterface;
 
 // Define two distinct interfaces to ensure mocks have unique class names
-interface MiddlewareA extends MiddlewareInterface {}
-interface MiddlewareB extends MiddlewareInterface {}
+interface MiddlewareA extends MiddlewareInterface
+{
+}
+interface MiddlewareB extends MiddlewareInterface
+{
+}
 
 #[CoversClass(MiddlewareRepository::class)]
 class MiddlewareRepositoryTest extends TestCase

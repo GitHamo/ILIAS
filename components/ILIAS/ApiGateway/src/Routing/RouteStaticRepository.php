@@ -29,7 +29,8 @@ readonly class RouteStaticRepository
      */
     public function __construct(
         private array $routes,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Iterator<string, \ILIAS\ApiGateway\Routing\Route>
