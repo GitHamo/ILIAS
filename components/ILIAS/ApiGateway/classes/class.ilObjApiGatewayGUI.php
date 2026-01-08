@@ -18,6 +18,7 @@
 
 declare(strict_types=1);
 
+// use ilApiGatewaySettings;
 use ILIAS\ApiGateway\Configuration\Admin\ilApiGatewaySettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\GeneralSettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\RestSettings;
@@ -87,7 +88,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
     protected function setTitleAndDescription(): void
     {
         $this->tpl->setTitle($this->lng->txt('webservices'));
-        $this->tpl->setTitleIcon('assets/images/standard/icon_apig.svg');
+        $this->tpl->setTitleIcon('assets/images/standard/icon_wbrs.svg');
         $this->tpl->setDescription($this->lng->txt('webservices_description'));
     }
 
