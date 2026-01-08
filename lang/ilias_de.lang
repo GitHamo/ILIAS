@@ -496,13 +496,13 @@ assessment#:#ass_cloze_gap_fb_txt_match_label#:#Lücke %s - Angegebene Antwort: 
 assessment#:#ass_cloze_gap_fb_txt_nomatch_label#:#Lücke %s - Falsche Eingabe
 assessment#:#ass_commented_questions_only#:#Nur kommentierte Fragen
 assessment#:#ass_comments#:#Kommentare
-assessment#:#ass_competence_respect_level_ordering#:#Bitte beachten Sie, dass die Kompetenz-Schwellenwerte gemäß der Reihenfolge der Kompetenzstufen in aufsteigender Reihenfolge definiert werden müssen.
+assessment#:#ass_competence_respect_level_ordering#:#Bitte beachten Sie, dass die Kompetenzschwellenwerte gemäß der Reihenfolge der Kompetenzstufen in aufsteigender Reihenfolge definiert werden müssen.
 assessment#:#ass_completion_by_submission#:#Bestehen durch Abgabe
 assessment#:#ass_completion_by_submission_info#:#Falls aktiviert, führt die Abgabe einer Lösungsdatei zur Vergabe der Maximalpunktzahl für diese Frage. Die Bewertung kann jederzeit manuell angepasst werden. Das Ändern dieser Einstellung hat keine nachträglichen Auswirkungen auf bereits eingereichte Lösungen.
 assessment#:#ass_create_export_file_with_results#:#inkl. Teilnehmerergebnisse
 assessment#:#ass_create_export_test_archive#:#als Archivdatei
 assessment#:#ass_create_question#:#Frage erstellen
-assessment#:#ass_imap_hint#:#Hinweis (angezeigt als Tooltip)
+assessment#:#ass_imap_hint#:#Hinweis (angezeigt als Tooltipp)
 assessment#:#ass_imap_map_file_not_readable#:#Die hochgeladene Imagemap kann nicht gelesen werden.
 assessment#:#ass_imap_no_map_found#:#In der hochgeladenen Imagemap konnte keine unterstützte Form gefunden werden.
 assessment#:#ass_lac_expression#:#Ausdruck
@@ -658,7 +658,7 @@ assessment#:#err_wrong_rating_advanced#:#Bitte stellen Sie sicher, dass die Summ
 assessment#:#error_creating_certificate_zip_empty#:#Keine Daten zu exportieren.
 assessment#:#error_importing_question#:#Beim Importieren der Fragen ist ein Fehler aufgetreten!
 assessment#:#error_open_image_file#:#Fehler beim Öffnen einer Bilddatei!
-assessment#:#error_random_question_generation#:#Bei der Erzeugung von Zufallsfragen ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie Ihre ILIAS-Administration und geben Sie die folgende Information weiter: Das ILIAS-System konnte keine Aktivitäts-ID für die ID des ILIAS-Kontos %s und die Test-ID %s erzeugen.
+assessment#:#error_random_question_generation#:#Bei der Erzeugung von Zufallsfragen ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie die technische Betreuung und geben die folgende Information weiter: Das ILIAS-System konnte keine Aktivitäts-ID für die ID des ILIAS-Kontos %s und die Test-ID %s erzeugen.
 assessment#:#errors#:#Fehler
 assessment#:#errors_section#:#Fehlerdaten
 assessment#:#errortext#:#Fehler/Worte markieren
@@ -684,12 +684,10 @@ assessment#:#examid_in_test_res#:#ILIAS-Test-ID anzeigen
 assessment#:#examid_in_test_res_desc#:#Die ILIAS-Test-ID wird in den Ansichten „Detaillierte Ergebnisse“ und   „Druckbare Liste der Antworten“ angezeigt sowie in den über den Reiter „Teilnehmer“ exportierten Tabellenkalkulationsdateien.
 assessment#:#exp_all_test_runs#:#Alle Durchläufe
 assessment#:#exp_eval_data#:#Daten exportieren
-assessment#:#exp_file_created#:#Exportdatei erzeugt.
 assessment#:#exp_grammar_as#:#als
 assessment#:#exp_scored_test_attempt#:#Bewerteter Durchlauf
 assessment#:#exp_type_certificate#:#Zertifikat (PDF)
 assessment#:#exp_type_excel#:#Microsoft Excel
-assessment#:#exp_type_spss#:#durch Komma getrennte Werte (CSV)
 assessment#:#expected_result_type#:#Erwarteter Ergebnistyp
 assessment#:#export_cert_failed_for_users_p#:#Für die folgenden %s Konten konnte kein Zertifikats-Dokument generiert und in das Archiv gelegt werden: %s. Bitte kontaktieren Sie einen Administrator zur Sichtung der Protokolldateien.
 assessment#:#export_cert_failed_for_users_s#:#Für das folgende Konto konnte kein Zertifikats-Dokument generiert und in das Archiv gelegt werden: %s. Bitte kontaktieren Sie einen Administrator zur Sichtung der Protokolldateien.
@@ -1241,7 +1239,7 @@ assessment#:#saveOrderAndObligations#:#Sortierung und Obligationen abspeichern
 assessment#:#save_and_next#:#Speichern und weiter
 assessment#:#save_on_navigation#:#Navigieren mit Speichern
 assessment#:#save_on_navigation_confirmation#:#Ihre geänderten Antworten werden beim Navigieren automatisch gespeichert.
-assessment#:#save_on_navigation_forced_feedback_hint#:#Vorher erhalten Sie Feedback zu Ihrer Antwort.
+assessment#:#save_on_navigation_forced_feedback_hint#:#Vorher erhalten Sie Rückmeldung zu Ihrer Antwort.
 assessment#:#save_on_navigation_locked_confirmation#:#Ihre geänderten Antworten werden beim Navigieren automatisch gespeichert und festgeschrieben.
 assessment#:#saved_adjustment#:#Veränderung gespeichert.
 assessment#:#score_anon#:#Anonym bewerten
@@ -1453,7 +1451,6 @@ assessment#:#tst_delete_missing_mark#:#Bitte wählen Sie mindestens eine Notenst
 assessment#:#tst_derive_new_pool#:#Neuen Fragenpool ableiten
 assessment#:#tst_derive_new_pools#:#Neue Fragenpools ableiten
 assessment#:#tst_dont_show_msg_again_in_current_session#:#Diese Meldung in meiner aktuellen Sitzung nicht mehr anzeigen.
-assessment#:#tst_dont_use_previous_answers#:#Ihre vorherigen Antworten werden in zukünftigen Testdurchläufen nicht als vorgegebene Werte verwendet
 assessment#:#tst_edit_competence_assign#:#Bearbeite Zuordnungs-Eigenschaften
 assessment#:#tst_edit_scoring#:#Ändere Bewertung
 assessment#:#tst_enable_questionlist#:#Fragenliste
@@ -1509,7 +1506,6 @@ assessment#:#tst_finish_confirm_button#:#Ja, ich will den Test beenden
 assessment#:#tst_finish_confirm_cancel_button#:#Nein, ich will zur letzten Antwort zurückgehen
 assessment#:#tst_finish_confirmation_question#:#Sie sind dabei, diesen Test zu beenden. Danach werden Sie nicht mehr in der Lage sein, den Test erneut aufzurufen, um Ihre Antworten zu ändern. Wollen Sie den Test wirklich beenden?
 assessment#:#tst_finish_confirmation_question_no_attempts_left#:#Sie sind dabei, diesen Test zu beenden und die maximale Anzahl erlaubter Testdurchläufe zu erreichen. Danach werden Sie nicht mehr in der Lage sein, den Test erneut aufzurufen, um Ihre Antworten zu ändern. Wollen Sie den Test wirklich beenden?
-assessment#:#tst_finish_notification_no#:#Keine Benachrichtigung
 assessment#:#tst_finished#:#Beendet
 assessment#:#tst_form_dynamic_question_set_config#:#Fortlaufende Fragenauswahl
 assessment#:#tst_gap_analysis#:#Gap-Analyse
@@ -1521,7 +1517,6 @@ assessment#:#tst_hide_info_tab#:#Info-Tab ausblenden
 assessment#:#tst_hide_info_tab_desc#:#Blendet den Tab „Info“ des Tests aus.
 assessment#:#tst_hide_pagecontents#:#Seiteninhalte ausblenden
 assessment#:#tst_hide_pagecontents_desc#:#Inhalte, die über den Button „Seite bearbeiten" vor und hinter dem eigentlichen Fragentext platziert wurden, werden in den Ergebnisansichten und der Druckausgabe nicht angezeigt.
-assessment#:#tst_hide_side_list#:#Fragenliste aus
 assessment#:#tst_highscore_achieved_ts#:#Datum / Uhrzeit
 assessment#:#tst_highscore_achieved_ts_description#:#Es wird eine zusätzliche Spalte eingeblendet, die anzeigt, wann der Test beendet wurde.
 assessment#:#tst_highscore_all_tables#:#Eigener Rang und Bestenliste
@@ -1539,7 +1534,6 @@ assessment#:#tst_highscore_score#:#Punkte
 assessment#:#tst_highscore_score_description#:#Es wird einen zusätzliche Spalte mit der Angabe der erreichten Punkte eingeblendet.
 assessment#:#tst_highscore_top_num#:#Länge der Bestenliste
 assessment#:#tst_highscore_top_num_description#:#Bestimmt, wie viele Einträge in der Bestenliste angezeigt werden.
-assessment#:#tst_highscore_top_num_unit#:#Platzierungen
 assessment#:#tst_highscore_top_table#:#Bestenliste
 assessment#:#tst_highscore_top_table_description#:#Teilnehmerinnen und Teilnehmern wird eine Tabelle mit den besten Platzierungen angezeigt.
 assessment#:#tst_highscore_wtime#:#Bearbeitungsdauer
@@ -1582,9 +1576,9 @@ assessment#:#tst_instant_feedback_answer_specific_desc#:#Bei Anklicken des 'Rüc
 assessment#:#tst_instant_feedback_contents#:#Inhalte der Rückmeldung
 assessment#:#tst_instant_feedback_desc#:#Sofern Fragen mit Rückmeldungen versehen sind, stehen diese den Teilnehmern während des Tests zur Verfügung.
 assessment#:#tst_instant_feedback_results#:#Erreichte Punkte
-assessment#:#tst_instant_feedback_results_desc#:#Den Teilnehmenden wird angezeigt, wie viele Punkte ihre Antwort wert ist. Bitte wählen Sie unten aus, wie das Feedback ausgelöst werden soll.
+assessment#:#tst_instant_feedback_results_desc#:#Den Teilnehmenden wird angezeigt, wie viele Punkte ihre Antwort wert ist. Bitte wählen Sie unten aus, wie die Rückmeldung ausgelöst werden soll.
 assessment#:#tst_instant_feedback_solution#:#Bestmögliche Lösung anzeigen
-assessment#:#tst_instant_feedback_solution_desc#:#Den Teilnehmenden wird die bestmögliche Antwort auf die Frage angezeigt. Bitte wählen Sie unten aus, wie das Feedback ausgelöst werden soll.
+assessment#:#tst_instant_feedback_solution_desc#:#Den Teilnehmenden wird die bestmögliche Antwort auf die Frage angezeigt. Bitte wählen Sie unten aus, wie die Rückmeldung ausgelöst werden soll.
 assessment#:#tst_instant_feedback_trigger#:#Auslöser der Rückmeldung
 assessment#:#tst_instant_feedback_trigger_forced#:#Eine Frage beantworten
 assessment#:#tst_instant_feedback_trigger_forced_desc#:#Durch Beantwortung einer Frage wird die Rückmeldung automatisch ausgelöst.
@@ -1661,9 +1655,9 @@ assessment#:#tst_msg_rand_quest_set_stage_pool_last_sync#:#Zeitpunkt der letzten
 assessment#:#tst_msg_random_qsc_modified_add_new_rule#:#Die Konfiguration für den Test mit zufälliger Fragenauswahl wurde erfolgreich geändert. Sie können nun eine neue Regel hinzufügen.
 assessment#:#tst_msg_random_question_set_config_modified#:#Die Konfiguration für den Test mit zufälliger Fragenauswahl wurde erfolgreich geändert.
 assessment#:#tst_msg_random_question_set_synced#:#Die Fragen zur aktuellen Konfiguration des Tests mit zufälliger Fragenauswahl wurde erfolgreich synchronisiert.
-assessment#:#tst_msg_skl_lvl_thresholds_saved#:#Die Kompetenz-Schwellenwerte wurden gespeichert.
-assessment#:#tst_msg_skl_qst_assign_points_not_saved#:#Die Kompetenz-Punkte wurden nicht gespeichert. Bitte überprüfen Sie Ihre Eingabe.
-assessment#:#tst_msg_skl_qst_assign_points_saved#:#Die Kompetenz-Punkte wurden gespeichert.
+assessment#:#tst_msg_skl_lvl_thresholds_saved#:#Die Kompetenzschwellenwerte wurden gespeichert.
+assessment#:#tst_msg_skl_qst_assign_points_not_saved#:#Die Kompetenzpunkte wurden nicht gespeichert. Bitte überprüfen Sie Ihre Eingabe.
+assessment#:#tst_msg_skl_qst_assign_points_saved#:#Die Kompetenzpunkte wurden gespeichert.
 assessment#:#tst_msg_source_pool_definitions_deleted#:#Die Regel für die Fragenauswahl wurde erfolgreich gelöscht.
 assessment#:#tst_nav_next_locks_current_answer_confirm#:#Wenn Sie zur nächsten Frage navigieren wird die Antwort zur aktuellen Frage festgeschrieben und kann nicht nochmals verändert werden.
 assessment#:#tst_nav_next_locks_current_answer_header#:#Aktuelle Antwort festschreiben?
@@ -1753,7 +1747,6 @@ assessment#:#tst_postpone_on_desc#:#Fragen, die verworfen oder übersprungen wer
 assessment#:#tst_presentation_properties#:#Durchführung: Verhalten der Frage
 assessment#:#tst_presentation_settings_section#:#Darstellung
 assessment#:#tst_previous_access_code_not_available#:#Kein vorheriger Code verfügbar!
-assessment#:#tst_print#:#Test und Assessment – Druckansicht
 assessment#:#tst_proceed#:#Fortfahren
 assessment#:#tst_processing_time#:#Bearbeitungsdauer begrenzen
 assessment#:#tst_processing_time_desc#:#Teilnehmer dürfen den Test nur während eines vorgegebenen Zeitraums bearbeiten. Die Zeit läuft für jede Person ab dem Moment, an dem der erste Testdurchlauf gestartet wurde. „Test unterbrechen“ stoppt den Ablauf der Bearbeitungsdauer nicht. Wurde die Anzahl möglicher Testdurchläufe eingeschränkt, erscheint im Reiter „Teilnehmer“ eine Funktion, um einzelnen Teilnehmern zusätzliche Bearbeitungszeit zu gewähren.
@@ -1890,10 +1883,6 @@ assessment#:#tst_show_results#:#Testergebnisse
 assessment#:#tst_show_side_list#:#Fragenliste an
 assessment#:#tst_show_solution_answers_only#:#Druckausgabe der Ergebnisse (nur Antworten)
 assessment#:#tst_show_solution_answers_only_desc#:#Wenn „Druckausgabe der Ergebnisse (nur Antworten)“ ausgewählt ist, werden ILIAS-Inhalte, die Sie über den „Inhalt bearbeiten“-Reiter der Fragen vor und hinter dem eigentlichen Fragentext platzieren können, in einem Ausdruck nicht angezeigt.
-assessment#:#tst_show_solution_compare#:#Zeige bestmögliche Lösung in „Tabelle mit detaillierten Testergebnissen“
-assessment#:#tst_show_solution_compare_desc#:#Teilnehmern wird als Teil der Tabelle „Detallierte Testergebnisse“ eine Ansicht präsentiert, welche ihre eigenen Antworten und die bestmögliche Lösung gegenüberstellt. <br> Diese Ansicht wird nicht im Unterreiter „Bewertete Antworten“ des „Meine Ergebnisse“-Reiters angezeigt, auch wenn diese Einstellung hier vorgenommen wird.
-assessment#:#tst_show_solution_details#:#Bewertete Antworten als Liste
-assessment#:#tst_show_solution_details_desc#:#Die Tabelle „Detallierte Testergebnisse“ wird um eine Liste der eigenen Antworten ergänzt.
 assessment#:#tst_show_solution_details_singlepage#:#Bewertete Antworten auf Einzelseiten
 assessment#:#tst_show_solution_details_singlepage_desc#:#Teilnehmerinnen und Teilnehmer können jede Frage einzeln aufrufen und sehen, ob ihre Antworten richtig waren und wie viele Punkte sie damit erreicht haben.
 assessment#:#tst_show_solution_feedback#:#Rückmeldungen
@@ -1914,10 +1903,9 @@ assessment#:#tst_single_answer_details#:#Zeige einzelne Antwort
 assessment#:#tst_skill_triggerings_num_req_answers#:#Benötigte Anzahl Antworten für Kompetenzerhebungen
 assessment#:#tst_skill_triggerings_num_req_answers_desc#:#Kompetenzen werden erst erhoben, wenn mindestens diese Anzahl Antworten zur Berechnung der Kompetenzstufe beitragen.
 assessment#:#tst_skill_triggerings_num_req_answers_not_reached_warn#:#Mindestens eine im Test adressierte Kompetenz ist nicht ausreichend vielen Fragen zugeordnet. Für diese Kompetenzen werden keine Kompetenzeinträge für Teilnehmer erfasst.<br />Die Mindestanzahl für zugewiesene Fragen: %s
-assessment#:#tst_skl_level_thresholds_link#:#Kompetenz-Schwellenwerte konfigurieren
+assessment#:#tst_skl_level_thresholds_link#:#Kompetenzschwellenwerte konfigurieren
 assessment#:#tst_skl_level_thresholds_missing#:#Es sind noch nicht für alle relevanten Kompetenzen Schwellenwerte definiert worden!
-assessment#:#tst_skl_res_interpretation_hint_msg#:#Beachten Sie, dass die Kompetenzergebnisse eines einzelnen Tests nur bedingt aussagekräftig sind. Je mehr Informationen zu den einzelnen Kompetenzen gesammelt werden, desto valider die Aussage. Sollten einzelne Kompetenzen keinen Eintrag erhalten haben, standen für diese Kompetenz zu wenig Informationen zur Verfügung.
-assessment#:#tst_skl_sub_tab_thresholds#:#Kompetenz-Schwellenwerte
+assessment#:#tst_skl_sub_tab_thresholds#:#Kompetenzschwellenwerte
 assessment#:#tst_sol_comp_expressions#:#Vergleichsausdrücke
 assessment#:#tst_solution_compare_cfg#:#Konfiguration für Antwortvergleich
 assessment#:#tst_source_question_pool#:#Fragenpool
@@ -1978,7 +1966,6 @@ assessment#:#tst_unchanged_answer_is_correct#:#Die vorgegebene Antwort ist korre
 assessment#:#tst_unchanged_order_is_correct#:#Die vorgegebene Anordnung ist korrekt.
 assessment#:#tst_use_previous_answers#:#Verwendung vorheriger Lösungen
 assessment#:#tst_use_previous_answers_description#:#Zeigt Teilnehmern die Antworten aus dem vorherigen Testdurchlauf an. Die Übernahme der Lösungen muss vom Teilnehmer vor Beginn des Testdurchlaufs in einem Modal per Checkbox aktiviert werden.
-assessment#:#tst_use_previous_answers_user#:#Meine Lösungen aus einem vorherigen Testdurchlauf als vorgegebene Werte verwenden
 assessment#:#tst_user_finished_test#:#Ein Teilnehmer hat den Test beendet (%s)
 assessment#:#tst_view_competence_assign#:#Zeige Zuordnungs-Eigenschaften
 assessment#:#tst_virtual_pass_header_lo_initial#:#Einstiegsergebnisse zum Lernziel<br />%s
@@ -2058,7 +2045,7 @@ auth#:#auth_auth_settings#:#Einstellungen
 auth#:#auth_cron_destroy_expired_sessions#:#Löschen abgelaufener Benutzer-Sitzungen
 auth#:#auth_cron_destroy_expired_sessions_desc#:#Dieser Cron-Job löscht bereits abgelaufene Benutzer-Sitzungen
 auth#:#auth_err_expired#:#Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.
-auth#:#auth_err_invalid_user_account#:#Die Authentifizierung konnte wegen eines internen Fehlers nicht durchgeführt werden.
+auth#:#auth_err_invalid_user_account#:#Die Anmeldung ist fehlgeschlagen. Bitte überprüfen Sie, ob Sie Ihren Anmeldenamen und Ihr Passwort korrekt eingegeben haben. Wenn das Problem weiterhin besteht, ist Ihr Konto möglicherweise inaktiv oder abgelaufen. Wenden Sie sich in diesem Fall bitte über den Link am unteren Seitenrand an den technischen Support Ihrer ILIAS-Plattform.
 auth#:#auth_err_ldap_exception#:#Die Authentifizierung konnte wegen eines Fehlers im Anmeldungsverfahren (LDAP) nicht durchgeführt werden.
 auth#:#auth_info_add#:#Wählen Sie diese Einstellung, falls Sie sich noch nie für ILIAS registriert haben. In diesem Fall wird ein neues ILIAS-Konto angelegt.
 auth#:#auth_info_migrate#:#Wenn Sie bereits ein ILIAS-Konto besitzen, geben Sie bitte den Anmeldenamen und das Passwort ein, um Ihre persönlichen Daten (Mails, Testergebnisse ...) zu übernehmen.
@@ -2545,6 +2532,7 @@ blog#:#blog_whole_blog#:#Gesamtes Blog
 book#:#X_reservations_of#:#%s Buchungen von
 book#:#book_add#:#Buchungspool anlegen
 book#:#book_add_object#:#Angebot hinzufügen
+book#:#book_add_participant#:#Teilnehmer hinzufügen
 book#:#book_add_schedule#:#Zeitplan hinzufügen
 book#:#book_additional_info_file#:#Zusätzliche Beschreibung
 book#:#book_all#:#Alle anzeigen
@@ -2563,7 +2551,6 @@ book#:#book_booking#:#Buchung
 book#:#book_booking_information#:#Information
 book#:#book_booking_objects#:#Angebote
 book#:#book_booking_reminders#:#Anstehende Buchungen
-book#:#book_bookings_per_user#:#Buchungen je Benutzer
 book#:#book_bulk_confirmation#:#Bitte überprüfen Sie die angegebenen Werte.
 book#:#book_bulk_creation#:#Massenerstellung
 book#:#book_bulk_data#:#Daten zu Angeboten
@@ -2626,7 +2613,7 @@ book#:#book_object_selection#:#Angebotsauswahl
 book#:#book_object_updated#:#Das Angebot wurde geändert.
 book#:#book_objects_available#:#Verfügbare Angebote: %s
 book#:#book_open#:#Buchungspool öffnen
-book#:#book_overall_limit#:#Begrenzung
+book#:#book_overall_limit#:#Gesamtzahl der Buchungen pro Benutzer begrenzen
 book#:#book_overall_limit_warning#:#Sie haben die maximale Anzahl Buchungen erreicht.
 book#:#book_participant_already_assigned#:#Ein oder mehrere Teilnehmer waren bereits zugewiesen.
 book#:#book_participant_assigned#:#Teilnehmer wurde/n hinzugefügt.
@@ -2679,7 +2666,7 @@ book#:#book_schedule_type_fixed#:#Buchung nach festem Zeitplan
 book#:#book_schedule_type_fixed_info#:#Geeignet für Buchungen von Dingen für einen bestimmten Zeitraum, wie Räume, Dienstleistungen oder Geräte.
 book#:#book_schedule_type_none#:#Ohne Zeitplan
 book#:#book_schedule_type_none_direct#:#Buchung ohne Termine
-book#:#book_schedule_type_none_direct_info#:#Teilnehmer können direkt buchen. Der Modus ist geeignet für Referatsthemen oder Seminarplätze, die ohne Termin vergeben werden.
+book#:#book_schedule_type_none_direct_info#:#Dieser Buchungsmodus ist ideal für Präsentationsthemen oder Plätze in Seminaren, die keine festen Zeiten erfordern. Teilnehmende können Elemente direkt nach dem Prinzip „wer zuerst kommt, mahlt zuerst“ buchen. Jedes Element kann nur einmal pro Teilnehmendem gebucht werden.
 book#:#book_schedule_type_none_info#:#Dieser Buchungsmodus ist geeignet für die Vergabe von Referatsthemen, Seminarplätzen oder vergleichbaren Angeboten.
 book#:#book_schedule_type_none_preference#:#Automatisch nach Präferenzen verteilen
 book#:#book_schedule_type_none_preference_info#:#Teilnehmer benennen zunächst Präferenzen. Zu einem gewählten Enddatum werden dann die Buchungen automatisch vorgenommen. Der Buchungsmodus ist geeignet für Referatsthemen oder Seminarplätze, die ohne Termin vergeben werden.
@@ -2693,6 +2680,7 @@ book#:#book_show_message#:#Mitteilung anzeigen
 book#:#book_title_description_nr#:#Titel; Beschreibung; Anzahl
 book#:#book_title_description_nr_info#:#Geben Sie bitte Titel, Beschreibung und Anzahl getrennt durch ein Semikolon oder TAB ein. Nutzen Sie einen Zeile je Buchungsobjekt.
 book#:#book_too_many_preferences#:#Sie haben zu viele Präferenzen ausgewählt. Die Präferenzen wurden nicht gespeichert.
+book#:#book_total_individual_bookings_limit#:#Begrenze die Gesamtanzahl an Buchungen, die von/für einzelne Teilnehmende durchgeführt werden können – über alle verfügbaren Objekte hinweg. Jedes buchbare Objekt kann dabei weiterhin nur einmal pro Teilnehmendem gebucht werden.
 book#:#book_type_warning#:#Es sind momentan keine Angebote vorhanden. Um den Pool nutzen zu können, müssen zuerst Angebote angelegt werden.
 book#:#book_week#:#Wochenansicht
 book#:#book_your_bookings#:#Ihre Buchungen
@@ -2790,7 +2778,7 @@ certificate#:#certificate_a4_landscape#:#A4 Quer (210 mm x 297 mm)
 certificate#:#certificate_a5#:#A5 (210 mm x 148 mm)
 certificate#:#certificate_a5_landscape#:#A5 Quer (148 mm x 210 mm)
 certificate#:#certificate_background_image#:#Hintergrundbild
-certificate#:#certificate_card_thumbnail_image#:#Miniaturbild
+certificate#:#certificate_card_tile_image#:#Miniaturbild
 certificate#:#certificate_change_active_status#:#Der Aktiv-Status des Zertifikats wurde geändert
 certificate#:#certificate_confirm_deletion_text#:#Wollen Sie wirklich die Zertifikat-Vorlage und alle zugehörigen Daten löschen?
 certificate#:#certificate_custom#:#Eigenes Format...
@@ -3835,7 +3823,7 @@ common#:#cron_users_without_login_del_create_date_thr#:#Schwellenwert
 common#:#cron_users_without_login_del_create_date_thr_info#:#Alle Anmeldekonten, deren Erstellung länger her ist als der hier definierte Schwellenwert, werden für eine Löschung berücksichtigt.
 common#:#cron_users_without_login_del_role_whitelist#:#Berücksichtigte Rollen
 common#:#cron_users_without_login_del_role_whitelist_info#:#Nur Benutzer mit einer der ausgewählten globalen Rollen werden gelöscht. Hat ein Benutzer eine der nicht ausgewählten Rollen inne, bleibt das ILIAS-Konto weiter bestehen.
-common#:#cronjob_last_start#:#Letzter Start des Cron-Jobs
+common#:#cronjob_last_start#:#Letzte automatische Ausführung des Cron-Jobs-Scripts
 common#:#cronjob_last_start_unknown#:#Konnte nicht ermittelt werden
 common#:#crs#:#Kurs
 common#:#crs_activation_start_invalid#:#Der Start und der Endtermin sind nicht gültig.
@@ -3956,7 +3944,7 @@ common#:#dpro_accept_usr_agreement#:#Datenschutzerklärung akzeptieren?
 common#:#dpro_accept_usr_agreement_intro#:#Es liegt eine neue Datenschutzerklärung vor. Sie müssen diese akzeptieren, bevor Sie mit der Nutzung von ILIAS fortfahren können. Lesen Sie das folgende Dokument sorgfältig durch und geben Sie unten auf der Seite Ihre Zustimmung oder Ablehnung.
 common#:#dpro_agreed_on#:#DS zugestimmt am
 common#:#dpro_force_accept_usr_agreement#:#Sie müssen die Datenschutzerklärung akzeptieren!
-common#:#dpro_no_agreement_description#:#Aktuell wird in dieser Installation keine Datenschutzerklärung angeboten. Bitte kontaktieren Sie die <a href="%1$s">ILIAS-Administration</a>.
+common#:#dpro_no_agreement_description#:#Aktuell wird in dieser Installation keine Datenschutzerklärung angeboten. Bitte kontaktieren Sie die <a href="%1$s">technische Betreuung</a>.
 common#:#dpro_refuse_acceptance#:#Wiederruf der Akzeptanz der Datenschutzerklärung
 common#:#dpro_usr_agreement#:#Datenschutzerklärung
 common#:#dpro_usr_agreement_footer_intro#:#Zu dieser Datenschutzerklärung haben Sie ihr Einverständnis erklärt.
@@ -4600,6 +4588,7 @@ common#:#mail_message_scheduled_info#:#Geplante Mails werden bis zum gewählten 
 common#:#mail_not_sent#:#Ihre Mail konnte nicht verschickt werden
 common#:#mail_schedule_error_no_datetime#:#Das Planen einer Mail erfordert ein Datum und eine Uhrzeit.
 common#:#mail_schedule_error_past_datetime#:#Mails können nicht in der Vergangenheit geplant werden.
+common#:#mail_schedule_scheduled_datetime#:#Geplanter Versandzeitpunkt
 common#:#mail_scheduled#:#Mail zur späteren Zustellung im Postausgang abgelegt.
 common#:#mail_search_no#:#Es wurden keine passenden Ergebnisse gefunden
 common#:#mail_select_one#:#Sie müssen mindestens eine Mail auswählen
@@ -5567,6 +5556,7 @@ common#:#select#:#Auswählen
 common#:#select_all#:#Alle auswählen
 common#:#select_at_least_one_object#:#Bitte wählen Sie mindestens ein Objekt aus.
 common#:#select_file#:#Datei wählen
+common#:#select_file_from_computer#:#Datei wählen
 common#:#select_files_from_computer#:#Dateien wählen
 common#:#select_max_one_item#:#Bitte wählen Sie nur ein Objekt aus.
 common#:#select_object_to_link#:#Bitte wählen Sie das zu verknüpfende Objekt aus.
@@ -5787,7 +5777,7 @@ common#:#top_of_page#:#Seitenanfang
 common#:#tos_accept_usr_agreement#:#Nutzungsvereinbarung akzeptieren?
 common#:#tos_accept_usr_agreement_intro#:#Es liegen neue Nutzungsbedingungen vor. Sie müssen sie akzeptieren, bevor Sie mit der Nutzung von ILIAS fortfahren können. Lesen Sie das folgende Dokument sorgfältig durch und geben Sie unten auf der Seite Ihre Zustimmung oder Ablehnung.
 common#:#tos_force_accept_usr_agreement#:#Sie müssen die Nutzungsvereinbarung akzeptieren!
-common#:#tos_no_agreement_description#:#Aktuell wird in dieser Installation keine Nutzungsvereinbarung angeboten. Bitte kontaktieren Sie die <a href="%1$s">ILIAS-Administration</a>.
+common#:#tos_no_agreement_description#:#Aktuell wird in dieser Installation keine Nutzungsvereinbarung angeboten. Bitte kontaktieren Sie die <a href="%1$s">technische Betreuung</a>.
 common#:#tos_refuse_acceptance#:#Akzeptanz der Nutzungsvereinbarung ablehnen
 common#:#tos_usr_agreement#:#Nutzungsvereinbarung
 common#:#tos_usr_agreement_footer_intro#:#Zu dieser Nutzungsvereinbarung haben Sie ihr Einverständnis erklärt.
@@ -5863,6 +5853,7 @@ common#:#upload_settings#:#Upload-Einstellungen
 common#:#upload_svg_rejection_message#:#Eine hochgeladene SVG-Datei enthält möglicherweise bösartigen Code und kann nicht verarbeitet werden.
 common#:#upload_svg_rejection_message_base64#:#Die Datei enthält base64 kodierten Inhalt.
 common#:#upload_svg_rejection_message_elements#:#Die Datei enthält Elemente oder Attribute, die nicht erlaubt oder bekannt sind.
+common#:#upload_svg_rejection_message_foreign_object#:#Die Datei bindet externe Objekte ein.
 common#:#upload_svg_rejection_message_script#:#Die Datei enthält Skript-Elemente.
 common#:#uploaded_and_checked#:#Die Datei wurde hochgeladen und überprüft, Sie können sie nun importieren.
 common#:#uploading#:#Hochladen...
@@ -6081,6 +6072,7 @@ cont#:#cont_news_timeline_landing_page#:#Startseite
 cont#:#cont_news_timeline_landing_page_info#:#Timeline als Startseite
 cont#:#cont_news_timeline_tab#:#Timeline
 cont#:#cont_no_title#:#Leerer Titel
+cont#:#cont_only_crs_grp_fold_download#:#Es können nur Dateien, Kurse, Gruppen oder Ordner heruntergeladen werden.
 cont#:#cont_page_type_cont#:#Magazinseite (Kurs, Gruppe, Kategorie, ...)
 cont#:#cont_page_type_cstr#:#Startseite lernzielorientierter Kurs
 cont#:#cont_path#:#Pfad
@@ -6571,7 +6563,7 @@ content#:#cont_hacc_needs_width#:#Bitte geben Sie für horizontale Akkordeons ei
 content#:#cont_has_row_header#:#Kopfzeile
 content#:#cont_header#:#Kopfzeile
 content#:#cont_height#:#Höhe in Pixel
-content#:#cont_help_no_valid_tooltip_id#:#Die eingegebene Tooltip-ID ist nicht gültig.
+content#:#cont_help_no_valid_tooltip_id#:#Die eingegebene Tooltipp-ID ist nicht gültig.
 content#:#cont_hide_adv#:#Vertiefungswissen verbergen
 content#:#cont_hide_head_foot_print#:#Kopf- und Fußzeile im Ausdruck ausblenden.
 content#:#cont_hidenavig#:#Linken Navigationsbaum ausblenden
@@ -6734,7 +6726,7 @@ content#:#cont_lpe_openid_login_form#:#OpenID-Login-Maske
 content#:#cont_lpe_registration_link#:#Link zur Neuanmeldung
 content#:#cont_lpe_saml_login#:#SAML-Login
 content#:#cont_lpe_shib_login_form#:#Shibboleth-Login-Maske
-content#:#cont_lpe_user_agreement_link#:#Link zur Benutzervereinbarung
+content#:#cont_lpe_user_agreement_link#:#Link zur Nutzungsvereinbarung
 content#:#cont_lrs_settings#:#Einstellungen
 content#:#cont_lvalue#:#Datenelement
 content#:#cont_maintenance#:#Wartung
@@ -8333,7 +8325,7 @@ dateplaner#:#cal_crs_timing_start#:#Bearbeitungsbeginn
 dateplaner#:#cal_daily#:#Täglich
 dateplaner#:#cal_date_and_time#:#Datum und Uhrzeit
 dateplaner#:#cal_date_booked#:#gebucht
-dateplaner#:#cal_date_format_info#:#Bitte wählen Sie ein Format für die Eingabe eines Datums aus.
+dateplaner#:#cal_date_format_info#:#Bitte wählen Sie ein Format für die Darstellung der Zeit aus.
 dateplaner#:#cal_date_time_title#:#Datum und Uhrzeit
 dateplaner#:#cal_day_end#:#Tagesende
 dateplaner#:#cal_day_of_month#:#Tag des Monats
@@ -8515,7 +8507,7 @@ dateplaner#:#cal_sync_enabled#:#Eingeschaltet
 dateplaner#:#cal_table_categories#:#Kalenderauswahl
 dateplaner#:#cal_task_completion#:#Fertigstellung
 dateplaner#:#cal_third#:#Dritten
-dateplaner#:#cal_time_format_info#:#Bitte wählen Sie ein Format für die Eingabe und Darstellung der Zeit.
+dateplaner#:#cal_time_format_info#:#Bitte wählen Sie ein Format für die Darstellung der Zeit.
 dateplaner#:#cal_timezone_info#:#Bitte wählen Sie die nächstgelegene Stadt in Ihrer Zeitzone für die Anzeige von Terminen innerhalb von ILIAS aus.
 dateplaner#:#cal_type_crs#:#Kurskalender
 dateplaner#:#cal_type_exc#:#Übungskalender
@@ -8651,7 +8643,7 @@ dcl#:#dcl_detailed_view#:#Einzelansicht
 dcl#:#dcl_display_action_menu#:#Kopieren
 dcl#:#dcl_display_action_menu_desc#:#Das Objekt kann von dem Eintrag aus kopiert werden.
 dcl#:#dcl_display_record_alt#:#Diesen Eintrag anzeigen
-dcl#:#dcl_duplicate_non_unique_entries_exist#:#Dies kann auch existierende Einträge betreffen.
+dcl#:#dcl_duplicate_non_unique_entries_exist#:#Diese Regel ist nicht vereinbar mit den bereits vorhandenen Einträgen.
 dcl#:#dcl_edit#:#Einstellungen der Datensammlung
 dcl#:#dcl_edit_entry_rules#:#Eintragsbearbeitung
 dcl#:#dcl_edit_field#:#Feld bearbeiten
@@ -8734,7 +8726,6 @@ dcl#:#dcl_msg_tableview_created#:#Ansicht hinzugefügt.
 dcl#:#dcl_msg_tableview_deleted#:#Ansicht gelöscht.
 dcl#:#dcl_msg_tableview_updated#:#Ansicht aktualisiert.
 dcl#:#dcl_msg_tableviews_delete_all#:#Löschen nicht möglich: Es muss mindestens eine Ansicht existieren.
-dcl#:#dcl_msg_tableviews_order_updated#:#Anordnung der Ansichten aktualisiert.
 dcl#:#dcl_multiple_selection#:#Mehrfachauswahl
 dcl#:#dcl_new#:#Neue Datensammlung anlegen
 dcl#:#dcl_new_entries#:#Neue Einträge
@@ -8750,6 +8741,7 @@ dcl#:#dcl_no_fields_yet#:#Es wurden noch keine Felder für diese Tabelle erstell
 dcl#:#dcl_no_read_access_on_any_standard_view#:#Sie haben auf keine Standard-Tabellenansicht Lesezugriff.
 dcl#:#dcl_no_search_results_found_for#:#Es wurden keine Module gefunden mit:
 dcl#:#dcl_no_such_reference#:#Der folgende Wert ist in der Referenztabelle nicht vorhanden:
+dcl#:#dcl_no_table_found#:#Keine sichbare Tabelle verfügbar!
 dcl#:#dcl_no_tableview_found#:#Keine sichbare Tabellenansicht verfügbar!
 dcl#:#dcl_not_checked#:#Nicht ausgewählt
 dcl#:#dcl_not_supported_in_import#:#Dieser Feldtyp wird beim Import nicht unterstützt.
@@ -8759,7 +8751,6 @@ dcl#:#dcl_notification_deactivate#:#Benachrichtigung deaktivieren
 dcl#:#dcl_notification_deactivated#:#Benachrichtigung inaktiv
 dcl#:#dcl_notification_info#:#Jede Person kann Benachrichtigungen für sich aktivieren.
 dcl#:#dcl_notification_settings#:#Benachrichtigungseinstellungen
-dcl#:#dcl_notimage_exception#:#Die Datei muss ein Bild sein.
 dcl#:#dcl_noturl_exception#:#Bitte geben Sie einen Link (beginnend mit http:// oder www.) oder eine E-Mail-Adresse ein.
 dcl#:#dcl_number#:#Ganze Zahlen
 dcl#:#dcl_number_desc#:#Eingabe ganzer Zahlen mit bis zu 9 Ziffern. Nicht erlaubt sind Brüche und Dezimalzahlen.
@@ -8769,7 +8760,7 @@ dcl#:#dcl_open_url#:#Link öffen
 dcl#:#dcl_order#:#Sortierung
 dcl#:#dcl_origin_not_found#:#Urprungsfeld konnte nicht gefunden werden!
 dcl#:#dcl_own_entries#:#Nur eigene Einträge
-dcl#:#dcl_owner#:#Eigener Eintrag von
+dcl#:#dcl_owner#:#Eingetragen von
 dcl#:#dcl_owner_description#:#Eigene Einträge bleiben stets sichtbar.
 dcl#:#dcl_owner_name#:#Im Besitz von (Name)
 dcl#:#dcl_page_type_dclf#:#Detailansicht
@@ -8889,6 +8880,8 @@ dcl#:#role_limitation#:#Rollenbasierte Einschränkung
 dcl#:#roles#:#Rollen mit Zugriff
 dcl#:#roles_desc#:#Wählen sie zugriffsberechtigte Rollen für die Ansicht.
 dcl#:#set_as_default#:#Als Standard setzen
+dcl#:#table_not_found#:#Tabelle nicht gefunden!
+dcl#:#tableview_not_found#:#Tabellenansicht nicht gefunden!
 didactic#:#activate_exclusive_template#:#Standard ausgrauen
 didactic#:#activate_exclusive_template_info#:#Die Standard-Vorlage wird überall dort ausgegraut, wo diese didaktische Vorlage aktiv ist.
 didactic#:#activate_local_didactic_template#:#Gültigkeitsbereich
@@ -9487,6 +9480,7 @@ exc#:#exc_passed_status_determination#:#Bewertung als „Bestanden“
 exc#:#exc_passing_exc#:#Bestehen der Übung
 exc#:#exc_past#:#Vergangene
 exc#:#exc_peer_deadline_mismatch#:#Da das Feedback erst nach dem Abgabetermin der Übungseinheit gegeben werden kann, darf die Deadline für das Feedback nicht vor dem Abgabedatum liegen.
+exc#:#exc_peer_feedback_status#:#Status
 exc#:#exc_peer_review#:#Peer-Feedback
 exc#:#exc_peer_review_ass_setting_info#:#Der zusätzliche Reiter „Peer-Feedback“ wird aktiviert. Dort legen Sie fest, wie teilnehmende Personen einander Feedback geben sollen. Feedback kann abgegeben werden, sobald der Abgabetermin und eine etwaige Nachfrist abgelaufen sind.
 exc#:#exc_peer_review_chars_invalid#:#Sie haben noch nicht die erforderliche Länge des Textes von %s Zeichen erreicht.
@@ -9799,7 +9793,7 @@ export#:#export_create#:#Neu erstellen
 export#:#export_create_new_file#:#Neue Exportdatei erstellen
 export#:#export_existing#:#Wiederverwenden
 export#:#export_export_date#:#Exportdatum
-export#:#export_info_public_access#:#Öffentlich zugängliche Exportdatei
+export#:#export_info_public_access#:#Öffentliche Exportdatei
 export#:#export_info_public_access_download#:#Download
 export#:#export_last_export#:#Letzter Export
 export#:#export_last_export_file#:#Letzte Exportdatei benutzen
@@ -9968,7 +9962,7 @@ form#:#form_msg_max_upload#:#Maximale Anzahl von gleichzeitig hochladbaren Datei
 form#:#form_msg_numeric_value_required#:#Bitte geben Sie einen numerischen Wert ein.
 form#:#form_msg_value_too_high#:#Wert ist zu hoch. Bitte geben Sie einen niedrigeren Wert ein.
 form#:#form_msg_value_too_low#:#Wert ist zu niedrig. Bitte geben Sie einen höheren Wert ein.
-form#:#form_msg_wrong_date#:#Falsches Datum. Bitte geben Sie ein gültiges Datum an.
+form#:#form_msg_wrong_date#:#Bitte überprüfen Sie Ihre Datumseingabe. Sowohl ein Startdatum als auch ein Enddatum sind erforderlich und das Startdatum darf nicht später liegen als das Enddatum.
 form#:#form_no_link#:#Kein Link
 form#:#form_open_answer#:#Freitext
 form#:#form_password_not_allowed_for_auth#:#Für die gewählte Authentifizierungmethode können Sie das Passwort nicht ändern
@@ -10510,7 +10504,7 @@ gsfo#:#translate#:#Übersetzen
 gsfo#:#translations#:#Übersetzungen
 help#:#gdtr_active#:#Aktiv
 help#:#gdtr_add_step#:#Schritt hinzufügen
-help#:#gdtr_add_tour#:#Add Tour
+help#:#gdtr_add_tour#:#Tour hinzufügen
 help#:#gdtr_close#:#Tour beenden
 help#:#gdtr_delete_step#:#Schritt löschen
 help#:#gdtr_delete_step_mess#:#Sind Sie sicher, dass dieser Schritt gelöscht werden soll?
@@ -10521,45 +10515,50 @@ help#:#gdtr_deleted_tour#:#Die Tour wurde gelöscht.
 help#:#gdtr_edit_content#:#Inhalt bearbeiten
 help#:#gdtr_edit_page_info#:#Bearbeiten Sie den Inhalt, der erscheinen soll um das ausgewählte Bedienelement zu beschreiben.
 help#:#gdtr_edit_properties#:#Eigenschaften bearbeiten
-help#:#gdtr_edit_step_info#:#In diesem Formular spezifizieren Sie das Bedienelement auf dem Bildschirm, welches einen Erklärungstext in diesem Schritt der Tour erhalten soll. In der Präsentation wird dann ein Popover mit dem definierten Erklärungstext neben dem angegebenen Element dargestellt.
-help#:#gdtr_edit_steps#:#Edit Steps
-help#:#gdtr_element_id#:#Element ID
+help#:#gdtr_edit_step_info#:#Wählen Sie das Bedienelement aus, das mit einem Erklärungstext versehen werden soll.
+help#:#gdtr_edit_steps#:#Schritte bearbeiten
+help#:#gdtr_element_id#:#Element-ID
 help#:#gdtr_form#:#Formular
-help#:#gdtr_form_info#:#Das erste Formular im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. ein Formular enthalten.
-help#:#gdtr_guided_tours#:#Guided Tours
-help#:#gdtr_id_pres_users#:#IDs anzeigen für ILIAS-Konten
-help#:#gdtr_id_pres_users_info#:#ILIAS-Konten, denen die Element IDs angezeigt werden. Mehrere Einträge müssen durch Kommas separiert werden.
-help#:#gdtr_id_settings#:#ID Einstellungen
+help#:#gdtr_form_info#:#Das erste Formular einer Seite
+help#:#gdtr_guided_tours#:#Touren
+help#:#gdtr_id_pres_users#:#IDs anzeigen für
+help#:#gdtr_id_pres_users_info#:#Tragen Sie einen oder mehrere Anmeldenamen ein. Diesen Personen werden auf der Bedienoberfläche Tooltipps mit den IDs der einzelnen Elemente angezeigt. Fahren Sie mit der Maus über die Elemente, um die Tooltipps zu sehen.
+help#:#gdtr_id_settings#:#Einstellungen
 help#:#gdtr_import_tour#:#Tour importieren
-help#:#gdtr_language#:#Sprache
-help#:#gdtr_language_info#:#Aktiviert eine Guided-Tour nur für Personen mit der eingestellten Sprache.
-help#:#gdtr_list_tours_mess#:#Um die Anzeige von Screen- und Element-IDs als Tooltips zu aktivieren, müssen Sie ihren Accountnamen in den ID Einstellungen eintragen.
+help#:#gdtr_language#:#Nach Sprache
+help#:#gdtr_language_info#:#Nur Personen mit der ausgewählten Sprache sehen die Tour.
+help#:#gdtr_list_tours_mess#:#Mit einer interaktiven Tour können Sie die Bedienelemente auf einer Seite in ILIAS erklären. Um Touren überhaupt ausarbeiten zu können, müssen Sie zunächst Ihren Anmeldenamen im Unterreiter „Einstellungen“ eintragen.
 help#:#gdtr_mainbar#:#Mainbar
-help#:#gdtr_mainbar_info#:#Die Mainbar ist das Hauptmenü auf der linken Seite. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
+help#:#gdtr_mainbar_ID_info#:#ID des gewünschten Eintrags im Hauptmenü. Fahren Sie mit der Maus über den Eintrag, um die ID als Tooltipp zu sehen.
+help#:#gdtr_mainbar_info#:#Die Mainbar ist das Hauptmenü, das auf großen Bildschirmen auf der linken Seite angezeigt wird.
 help#:#gdtr_metabar#:#Metabar
-help#:#gdtr_metabar_info#:#Die Metabar ist das Menü im rechten, oberen Bildrand. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
+help#:#gdtr_metabar_ID_info#:#ID des gewünschten Elements in der Metabar. Fahren Sie mit der Maus über das Element, um die ID als Tooltipp zu sehen.
+help#:#gdtr_metabar_info#:#Die Metabar ist das Menü im rechten, oberen Bildrand.
 help#:#gdtr_next_step#:#Nächster Schritt
-help#:#gdtr_permission#:#Berechtigung
-help#:#gdtr_permission_info#:#Aktiviert eine Guided-Tour für Personen mit gegebener Berechtigung, z.B. nur wenn das "Einstellungen bearbeiten" Recht vorhanden ist. Bei der Auswahl von "Erstellen" muss der Nutzende im aktuellen Bereich irgendein Objekt erstellen können.
+help#:#gdtr_permission#:#Nach Rechten
+help#:#gdtr_permission_info#:#Nur Personen mit den ausgewählten Rechten sehen die Tour. Diese Einstellung sollte nur zusammen mit der Einstellung „Nach Screen-ID“ genutzt werden.
+help#:#gdtr_presentation_limitation#:#Anzeige einschränken
 help#:#gdtr_primary_button#:#Primary Button
-help#:#gdtr_primary_button_info#:#Der erste Primary-Button im Hauptbereich der Ansicht. Dieser wird um Gegensatz zu anderen Aktionsknöpfen betont dargestellt. Normalerweise sollen Ansichten nur max. eine Primary-Button enthalten.
+help#:#gdtr_primary_button_info#:#Diese besonderen Buttons gibt es nur auf wenigen Seiten in ILIAS. Sie sind farblich besonders hervorgehoben und kennzeichnen die wichtigste Aktion, die auf der Seite vorgenommen werden kann.
 help#:#gdtr_reset_tour#:#Tour zurücksetzen
 help#:#gdtr_reset_tour_mess#:#Wenn Sie die Tour zurücksetzen, werden alle diejenigen, die zuvor die Tour abgeschlossen haben, die Tour erneut präsentiert bekommen. Möchten Sie fortfahren?
-help#:#gdtr_screen_ids#:#Screen IDs
-help#:#gdtr_screen_ids_info#:#Ermöglicht es, eine Guided-Tour für einzelne Ansichten des Systems zu aktivieren. Wenn die ID-Anzeige aktiviert ist, wird die Screen-ID einer Ansicht ganz oben im Kopfbereich angezeigt. Mehrere IDs müssen durch Kommas separiert werden.
+help#:#gdtr_screen_ids#:#Nach Screen-IDs
+help#:#gdtr_screen_ids_info#:#Tragen Sie hier die Screen-IDs der Seiten ein, auf denen die Tour angezeigt wird – falls diese nicht überall gezeigt werden soll. Mehrere Screen-IDs müssen durch Kommas getrennt werden.
 help#:#gdtr_step#:#Schritt
 help#:#gdtr_step_type#:#Bedienelement
 help#:#gdtr_table#:#Tabelle
-help#:#gdtr_table_info#:#Die erste Tabelle im Hauptbereich der Ansicht. Normalerweise sollen Ansichten nur max. eine Tabelle enthalten.
+help#:#gdtr_table_info#:#Die erste Tabelle einer Seite
 help#:#gdtr_tabs#:#Reiter
-help#:#gdtr_tabs_info#:#Die Reiter werden in der Mitte unter dem Haupttitel einer Ansicht dargestellt. Bei aktivierter ID-Darstellung werden die Element-IDs der einzelnen Einträge als Tooltip dargestellt.
+help#:#gdtr_tabs_ID_info#:#ID des gewünschten Reiters. Fahren Sie mit der Maus über einen Reiter, um die ID als Tooltipp zu sehen.
+help#:#gdtr_tabs_info#:#Reiter werden unter dem Titel einer Seite dargestellt.
 help#:#gdtr_toolbar#:#Toolbar
-help#:#gdtr_toolbar_info#:#Die erste Toolbar im Hauptbereich der Ansicht. Diese wird normalerweise unterhalb der Reiter dargestellt und kann mehrere Bedienelemente enthalten. Normalerweise sollen Ansichten nur max. eine Toolbar enthalten.
+help#:#gdtr_toolbar_info#:#Die Toolbar wird auf einigen Seiten unterhalb der Reiter dargestellt und enthält meistens mehrere Buttons.
 help#:#gdtr_tour_has_been_reset#:#Die Tour wurde zurückgesetzt.
+help#:#gdtr_tour_settings#:#Einstellungen bearbeiten
 help#:#gdtr_tour_steps#:#Schritte
-help#:#gdtr_tours#:#Tours
+help#:#gdtr_tours#:#Touren
 help#:#gdtr_type#:#Typ
-help#:#guided_tour#:#Guided Tour
+help#:#guided_tour#:#Interaktive Touren
 help#:#help_all#:#Alle
 help#:#help_component#:#Komponente
 help#:#help_filter#:#Filter
@@ -10575,12 +10574,12 @@ help#:#help_search_label#:#Suche in Hilfe
 help#:#help_select_a_file#:#Bitte wählen Sie eine Datei.
 help#:#help_set_mode#:#Hilfemodus setzen
 help#:#help_sure_delete_help_modules#:#Wollen Sie diese Pakete wirklich löschen?
-help#:#help_toggle_tooltips#:#Hilfe-Tooltips
-help#:#help_toggle_tooltips_info#:#Hilfe-Tooltips zu Menüs und Reitern anzeigen.
-help#:#help_tooltip_id#:#Tooltip-ID
-help#:#help_tooltips#:#Hilfe-Tooltips
-help#:#help_tooltips_and_help#:#Tooltips und Handlungsanweisungen
-help#:#help_tooltips_only#:#Nur Tooltips
+help#:#help_toggle_tooltips#:#Hilfe-Tooltipps
+help#:#help_toggle_tooltips_info#:#Hilfe-Tooltipps zu Menüs und Reitern anzeigen.
+help#:#help_tooltip_id#:#Tooltipp-ID
+help#:#help_tooltips#:#Hilfe-Tooltipps
+help#:#help_tooltips_and_help#:#Tooltipps und Handlungsanweisungen
+help#:#help_tooltips_only#:#Nur Tooltipps
 help#:#help_topcis#:#Themen
 help#:#help_tt_text#:#Text
 htlm#:#file_import_from_upload_dir_failed#:#Datei aus Uploadverzeichnis nicht importiert
@@ -10963,6 +10962,7 @@ ldoc#:#ldoc_document#:#Dokument
 ldoc#:#ldoc_enabled#:#Aktiviert
 ldoc#:#ldoc_form_attach_criterion_head#:#Vorlagekriterium hinzufügen
 ldoc#:#ldoc_form_criterion#:#Vorlagekriterium
+ldoc#:#ldoc_form_criterion_standard_fields_info_text#:#Überprüfen Sie bitte die Einstellungen der Standardfelder, bevor Sie die Vorlagekriterien definieren.
 ldoc#:#ldoc_form_document#:#Dokument
 ldoc#:#ldoc_form_document_content_changed#:#Der Inhalt der hochgeladenenen Datei wurde durch ILIAS bereinigt. Bitte prüfen Sie das Ergebnis und laden Sie im Zweifel eine neue Datei hoch.
 ldoc#:#ldoc_form_document_info#:#Bitte wählen Sie eine entsprechende Datei von Ihrem lokalen Dateisystem. Sie können eine einfache Text-Datei oder eine HTML-Datei hochladen. Es wird nur ein Teil des HTML-Sprachumfangs unterstützt. Bitte beachten Sie, dass HTML-Dateien beim Hochladen bereinigt werden, und nur der Inhalt des body-Elements übernommen wird.
@@ -11784,7 +11784,7 @@ mail#:#show_mail_settings#:#Einstellungen anzeigen
 mail#:#show_mail_settings_info#:#Aktiviert die Anzeige der Mail-Einstellungen im Bereich 'Einstellungen' oder 'Mail'. Benutzer können die Mail-Einstellungen nur ändern, wenn die Konfiguration des Benutzer-Profils dies erlaubt. Wenn Benutzer nicht berechtigt sind, die Mail-Einstellung ihrer Profils zu ändern, dann gelten die globalen Einstellungen. Dies gilt auch dann, wenn Benutzer in der Vergangenheit die Berechtigung zum Ändern der Mail-Einstellungen hatten und persönliche Einstellungen vorgenommen haben.
 mail#:#system_notification_installation_changed_by#:#Geändert durch
 mail#:#usrFieldChange_second_mail_visible_in_personal_data#:#Sie haben das Attribut „%s“ im Feld „%s“ verändert.<br>Dies führt dazu, dass, für alle bestehenden und künftig angelegten Konten,<br>die bei den Benutzern gewählte Empfangsart und der Standard für neue Anmeldekonten bei externer Zustellung auf die primäre E-Mail-Adresse geändert wird,<br>unter Inkaufnahme der Rücksetzung von bestehenden Benutzer-Einstellungen.
-maps#:#configure_geolocation#:#Um nach Adressen suchen zu können, schließen Sie bitte die Konfiguration für die Geolocation im Administrationsmenü „Software von Drittanbietern“ ab.
+maps#:#configure_geolocation#:#Um nach Adressen suchen zu können, schließen Sie bitte die Konfiguration für die Geolocation im Administrationsmenü „ILIAS erweitern > Karten“ ab.
 maps#:#maps_custom_geolocation_server_info#:#URL des Servers, über den die Geolocation-Daten mithilfe des Nominatim-Dienstes bereitgestellt werden. Der Eintrag muss den Platzhalter [QUERY] enthalten, um die Anfrageposition festzulegen. Beispiel: https://nominatim.example.com/search?q=[QUERY]&format=json
 maps#:#maps_custom_tile_server_info#:#URL des Servers für die Bereitstellung der Kacheln. Mehrere Einträge müssen mit Leerzeichen getrennt werden. Standardeingabe ist „%s“.
 maps#:#maps_enable_maps#:#Karten aktivieren
@@ -11909,6 +11909,7 @@ mep#:#mep_all_mobs#:#Alle Medienobjekte
 mep#:#mep_bulk_upload#:#Massen-Upload
 mep#:#mep_choose_from_folder#:#Aus Ordner auswählen
 mep#:#mep_choose_from_mep#:#Aus Pool auswählen
+mep#:#mep_clipboard_info#:#Hier können Sie Mediendateien hochladen, auf die Sie anschließend von jeder Seite, auf der Sie Zugriff auf den Seiteneditor haben, zugreifen können. Ebenfalls können Sie das Clipboard in Medienpools nutzen. Dieser Speicher ist nur für Sie und kann nicht von anderen Benutzern eingesehen werden.
 mep#:#mep_content#:#Medienobjekte
 mep#:#mep_content_snippet_in_use#:#Inhaltsbaustein „%s“ wird verwendet und kann daher nicht gelöscht werden.
 mep#:#mep_content_snippet_used_in_older_versions#:#Achtung: Der Inhaltsbaustein wurde in älteren Versionen von einigen Seiten genutzt. Wenn so eine Version einer Seite wiederhergestellt wird, wird der Inhaltsbaustein in ihr fehlen.
@@ -12052,12 +12053,12 @@ meta#:#md_import_file_vocab#:#Importdatei
 meta#:#md_import_vocab#:#Vokabular importieren
 meta#:#md_import_vocab_modal#:#Aus Datei importieren
 meta#:#md_months#:#Monate:
-meta#:#md_oai_contact_mail#:#E-Mail-Kontaktadresse
+meta#:#md_oai_contact_mail#:#E-Mail-Kontakt dieser Organisation
 meta#:#md_oai_identifier_prefix#:#OAI Präfix
 meta#:#md_oai_identifier_prefix_info#:#Dieser Präfix wird als Namespace in den Bezeichnern von abgefragten OER-Datensätzen benutzt.
 meta#:#md_oai_pmh_enabled#:#Abfragen über OAI-PMH Schnittstelle erlauben
 meta#:#md_oai_pmh_enabled_info#:#Wenn aktiviert, können vom OER-Harvester gefundene Resourcen von externen Parteien wie OER Repositorien abgefragt werden.
-meta#:#md_oai_repository_name#:#Name des Repositoriums
+meta#:#md_oai_repository_name#:#Name der Installation
 meta#:#md_oai_repository_name_info#:#Bei Anfragen über die Schnittstelle wird dies als Name dieser ILIAS-Installation angegeben.
 meta#:#md_obj_types#:#Zugeordnete Objekte
 meta#:#md_record_export_table#:#Exportdateien
@@ -13058,6 +13059,8 @@ noti#:#noti_deactivate_notification#:#Benachrichtigung deaktivieren
 noti#:#noti_notification_activated#:#Benachrichtigungen sind aktiviert
 noti#:#noti_notification_deactivated#:#Benachrichtigungen sind deaktiviert
 notifications#:#push_notification#:#Push-Benachrichtigungen
+notifications_adm#:#available_providers#:#Verfügbare Provider
+notifications_adm#:#client_settings#:#Browsereinstellungen
 notifications_adm#:#enable_osd#:#Pop-up-Benachrichtigungen aktivieren
 notifications_adm#:#enable_osd_desc#:#Wenn aktiviert, werden Benutzer durch ein Pop-up über neue Benachrichtigungen informiert.
 notifications_adm#:#enable_push#:#Push-Benachrichtigungen aktivieren
@@ -13076,6 +13079,7 @@ notifications_adm#:#push_client_ios_case#:#Wenn sie IOS (IPhone, IPad, IPod) nut
 notifications_adm#:#push_settings#:#Push-Benachrichtigungen
 notifications_adm#:#push_subscription_successfull#:#Aktivierung der Push-Benachrichtigungen erfolgreich
 notifications_adm#:#push_subscription_successfull_desc#:#Dies ist eine Test Benachrichtigungen um die erfolgreiche Aktivierung der Push Benachrichtigungen zu bestätigen.
+notifications_adm#:#user_settings#:#Benutzereinstellungen
 obj#:#activation_visible_when_disabled#:#Sichtbarkeit
 obj#:#activation_visible_when_disabled_info#:#Die gewählten Objekte sind auch außerhalb des gewählten Zeitraums sichtbar, können aber nicht geöffnet werden.
 obj#:#availability_period_changed#:#Die zeitliche Verfügbarkeit wurde für die ausgewählten Objekte erfolgreich angepasst.
@@ -13514,7 +13518,7 @@ prg#:#prg_auto_member_select_grp#:#Gruppen
 prg#:#prg_auto_member_select_role#:#Rollen
 prg#:#prg_autoassignment#:#(automatisch)
 prg#:#prg_availability_action_not_allowed#:#Studienprogramme haben keine zeitliche Verfügbarkeit.
-prg#:#prg_belongs_to#:#Gehört Zu
+prg#:#prg_belongs_to#:#Gehört zu
 prg#:#prg_can_not_manage_in_repo#:#Sie dürfen dieses Studienprogramm nicht verwalten, da Ihm bereits Mitglieder zugeordnet sind.
 prg#:#prg_cancel#:#Abbrechen
 prg#:#prg_cancel_acknowledge_completed_courses#:#Keine Kurse anerkennen
@@ -13568,7 +13572,7 @@ prg#:#prg_manage#:#Verwalten
 prg#:#prg_manage_members#:#Zuweisungen eines Studienprogramms bearbeiten
 prg#:#prg_manage_members_short#:#Zuweisungen verwalten
 prg#:#prg_manual_status#:#Manueller Status
-prg#:#prg_mark_accredited#:#akkreditieren
+prg#:#prg_mark_accredited#:#Akkreditieren
 prg#:#prg_mark_accredited_multi_success#:#Ausgewählte Benutzer akkreditiert.
 prg#:#prg_mark_accredited_success#:#Das Programm wurde für den Benutzer erfolgreich akkreditiert.
 prg#:#prg_mark_not_relevant_multi_success#:#Ausgewählte Benutzer als nicht relevant markiert.
@@ -14239,10 +14243,6 @@ rbac#:#excs_read#:#Lesezugriff auf Übungs-Administration
 rbac#:#excs_visible#:#Übungs-Administration ist sichtbar
 rbac#:#excs_write#:#Einstellungen in Übungs-Administration bearbeiten
 rbac#:#export_member_data#:#Export von Mitgliederdaten
-rbac#:#extt_edit_permission#:#Rechteeinstellungen ändern
-rbac#:#extt_read#:#Lesezugriff auf Administration der Software von Drittanbietern
-rbac#:#extt_visible#:#Administration der Software von Drittanbietern ist sichtbar
-rbac#:#extt_write#:#Software von Drittanbietern konfigurieren
 rbac#:#facs_edit_permission#:#Rechteeinstellung für die Administration ändern
 rbac#:#facs_read#:#Lesezugriff auf Administration für Dateien und Ordner
 rbac#:#facs_upload_blacklisted_files#:#Dateien mit indexierten Endungen hochladen
@@ -17085,7 +17085,7 @@ tagging#:#tag_tags_deleted#:#Tag wurde für Objekte ohne Zugriff entfernt.
 tagging#:#tagging_all_users#:#Alle Benutzer
 tagging#:#tagging_edit_settings#:#Einstellungen
 tagging#:#tagging_enable_all_users#:#Zeige Tags aller Benutzer
-tagging#:#tagging_enable_all_users_info#:#Fügt auf dem Reiter „Info“ einen Bereich "Alle Benutzer" hinzu, im dem die Tags aller Besucher zu einer Ressource angezeigt werden.
+tagging#:#tagging_enable_all_users_info#:#Fügt auf dem Reiter „Info“ einen Bereich "Alle Benutzer" hinzu, in dem die Tags aller Besucher zu einer Ressource angezeigt werden.
 tagging#:#tagging_enable_tagging#:#Tagging aktivieren
 tagging#:#tagging_forbidden_tags#:#Verbotene Tags
 tagging#:#tagging_no_obj_for_tag#:#Es sind keine Inhalte mit „%s“ verschlagwortet.
@@ -17135,7 +17135,7 @@ tbl#:#tbl_export_csv#:#.CSV-Export
 tbl#:#tbl_export_excel#:#Excel-Export
 tos#:#tos_accept_usr_agreement_anonymous#:#Nutzungsvereinbarung
 tos#:#tos_accept_usr_agreement_anonymous_intro#:#Bevor Sie zu ILIAS wechseln, akzeptieren Sie die folgende Nutzungsvereinbarung.
-tos#:#tos_account_reg_not_possible#:#Eine Selbstregistrierung ist aktuell nicht möglich, da keine Nutzungsvereinbarung angeboten wird. Bitte kontaktieren Sie Ihre <a href="%1$s">ILIAS-Administration</a> für weitere Informationen.
+tos#:#tos_account_reg_not_possible#:#Eine Selbstregistrierung ist aktuell nicht möglich, da keine Nutzungsvereinbarung angeboten wird. Bitte kontaktieren Sie die <a href="%1$s">technische Betreuung</a> für weitere Informationen.
 tos#:#tos_agree_date#:#Nutzungsvereinbarung zugestimmt am
 tos#:#tos_agreement#:#Nutzungsvereinbarung
 tos#:#tos_disabled_no_docs_left#:#Die Nutzungsvereinbarung wurde deaktiviert, da alle Dokumente gelöscht wurden. Erstellen Sie mindestens ein Dokument, bevor Sie die Nutzungsvereinbarung wieder aktivieren.
@@ -17405,6 +17405,7 @@ trac#:#trac_view_mode_all#:#Alle Objekte
 trac#:#trac_view_mode_collection#:#Nur Objekte, die Gesamtstatus bestimmen
 trac#:#trac_visits#:#Mindestanzahl Aufrufe
 trac#:#trac_visits_info#:#Ein Aufruf wird erst nach %s Sekunden als neuer Aufruf gezählt.
+trac#:#trac_visits_nr#:#Anzahl Aufrufe
 trac#:#user_total#:#Anzahl Benutzer
 trac#:#view_mode#:#Anzeigemodus
 trac#:#view_mode_all#:#Alle
@@ -17495,6 +17496,7 @@ ui#:#ui_transcription#:#Abschrift
 ui#:#unselect_node#:#Knoten %s von der Auswahl entfernen
 ui#:#vc_sort#:#Sortiert nach:
 ui#:#warning_url_too_long_msg#:#Die Anzahl der ausgewählten Zeilen führt zu einer zu großen Datenmenge, die nicht übertragen werden kann. Wählen Sie weniger Zeilen aus oder führen Sie die Aktion für die gesamte Tabelle durch (Sammelaktionen).
+user#:#account_not_flagged_for_deletion#:#Das Konto ist nicht zum Löschen markiert.
 user#:#activate_in_profile_fields#:#Das Ändern des Anmeldenamens muss unter Profil > Profile aktiviert werden, bevor diese Einstellung angepasst werden kann.
 user#:#administrative_settings#:#Administrative Einstellungen
 user#:#all_roles_has_starting_point#:#Alle Rollen mit definierter Startseite

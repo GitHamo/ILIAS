@@ -149,6 +149,7 @@ class LocalDIC extends PimpleContainer
                     new Standard\Hobby(),
                     new Standard\ReferralComment(),
                     new Standard\Matriculation(),
+                    new Standard\ClientIP(),
                     \ilMapUtil::isActivated() ? new Standard\Location() : null
                 ])
             );

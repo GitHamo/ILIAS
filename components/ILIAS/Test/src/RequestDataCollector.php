@@ -57,13 +57,13 @@ class RequestDataCollector implements RequestDataCollectorInterface
 
     public function getRefId(): int
     {
-        return $this->int("ref_id");
+        return $this->int('ref_id');
     }
 
     /** @return string[] */
     public function getIds(): array
     {
-        return $this->strArray("id");
+        return $this->strArray('id');
     }
 
     public function hasQuestionId(): bool
@@ -182,6 +182,15 @@ class RequestDataCollector implements RequestDataCollectorInterface
                 $this->refinery->always([])
             ])
         );
+    }
+
+    public function getRowIdParameter(string $key): string|int
+    {
+        return $this->get($key, $this->refinery->byTrying([
+            $this->refinery->kindlyTo()->int(),
+            $this->refinery->kindlyTo()->string(),
+            $this->refinery->custom()->transformation(fn(array $v): string|int => $v[0])
+        ]));
     }
 
     /**

@@ -39,15 +39,6 @@ class SettingsIntroductionTest extends ilTestBaseTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('getAndWithIntroductionTextDataProvider')]
-    public function testGetAndWithIntroductionText(string $io): void
-    {
-        $settings_introduction = (new SettingsIntroduction())->withIntroductionText($io);
-
-        $this->assertInstanceOf(SettingsIntroduction::class, $settings_introduction);
-        $this->assertEquals($io, $settings_introduction->getIntroductionText());
-    }
-
     public static function getAndWithIntroductionTextDataProvider(): array
     {
         return [

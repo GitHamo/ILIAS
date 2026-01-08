@@ -843,7 +843,6 @@ class ilObjCourseGUI extends ilContainerGUI
         );
 
         ilChangeEvent::_recordWriteEvent($this->object->getId(), $this->user->getId(), 'update');
-        ilChangeEvent::_catchupWriteEvents($this->object->getId(), $this->user->getId());
 
         // lp sync confirmation required
         if ($show_lp_sync_confirmation) {
@@ -2126,7 +2125,6 @@ class ilObjCourseGUI extends ilContainerGUI
                 break;
 
             case strtolower(PublicProfileGUI::class):
-                $this->tpl->enableDragDropFileUpload(null);
                 $this->setSubTabs('members');
                 $this->tabs_gui->setTabActive('members');
 
@@ -2207,7 +2205,7 @@ class ilObjCourseGUI extends ilContainerGUI
 
             case 'ildidactictemplategui':
                 $this->ctrl->setReturn($this, 'edit');
-                $did = new ilDidacticTemplateGUI($this);
+                $did = new ilDidacticTemplateGUI($this, $this->getDidacticTemplateIdFromQuery());
                 $this->ctrl->forwardCommand($did);
                 break;
 

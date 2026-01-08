@@ -226,8 +226,8 @@ class ilMailFormGUI
     public function saveMessageToOutbox(array $form_values, Form $form): void
     {
         $files = [];
-        if (count($form_values["attachments"]) > 0) {
-            $files = $this->handleAttachments($form_values["attachments"]);
+        if (count($form_values['attachments']) > 0) {
+            $files = $this->handleAttachments($form_values['attachments']);
         }
 
         $rcp_to = '';
@@ -324,8 +324,8 @@ class ilMailFormGUI
         }
 
         $files = [];
-        if (count($value["attachments"]) > 0) {
-            $files = $this->handleAttachments($value["attachments"]);
+        if (count($value['attachments']) > 0) {
+            $files = $this->handleAttachments($value['attachments']);
         }
 
         $mailer = $this->umail
@@ -418,8 +418,8 @@ class ilMailFormGUI
             $value['m_subject'] = $this->lng->txt('mail_no_subject');
         }
         $files = [];
-        if (count($value["attachments"]) > 0) {
-            $files = $this->handleAttachments($value["attachments"]);
+        if (count($value['attachments']) > 0) {
+            $files = $this->handleAttachments($value['attachments']);
         }
 
         $draft_folder_id = $this->mbox->getDraftsFolder();
@@ -655,8 +655,8 @@ class ilMailFormGUI
         $mail_data['rcp_cc'] = '';
         $mail_data['rcp_bcc'] = '';
         $mail_data['attachments'] = [];
-        $mail_data["m_subject"] = '';
-        $mail_data["m_message"] = '';
+        $mail_data['m_subject'] = '';
+        $mail_data['m_message'] = '';
 
         $mail_id = $this->getQueryParam('mail_id', $this->refinery->kindlyTo()->int(), 0);
         $type = $this->getQueryParam('type', $this->refinery->kindlyTo()->string(), '');
@@ -921,9 +921,9 @@ class ilMailFormGUI
             $resource_collection_id = $this->getIdforCollection($files);
         }
 
-        $rcp_to = implode(",", $result['rcp_to']->getValue() ?? []);
-        $rcp_cc = implode(",", $result['rcp_cc']->getValue() ?? []);
-        $rcp_bcc = implode(",", $result['rcp_bcc']->getValue() ?? []);
+        $rcp_to = implode(',', $result['rcp_to']->getValue() ?? []);
+        $rcp_cc = implode(',', $result['rcp_cc']->getValue() ?? []);
+        $rcp_bcc = implode(',', $result['rcp_bcc']->getValue() ?? []);
 
         $this->umail->persistToStage(
             $this->user->getId(),
@@ -968,8 +968,7 @@ class ilMailFormGUI
         )->withAdditionalFormAction(
             $this->ctrl->getFormAction($this, 'saveDraft'),
             $this->lng->txt('save_message')
-        )->withSubmitLabel($this->lng->txt('send_mail'))
-        ;
+        )->withSubmitLabel($this->lng->txt('send_mail'));
     }
 
     private function getUserSearchConfigurator(): \ILIAS\User\Search\EndpointConfigurator
@@ -984,7 +983,12 @@ class ilMailFormGUI
         $rcp_to = $this->user_search->getInput(
             $this->lng->txt('mail_to'),
             $this->getUserSearchConfigurator()
-        )->withRequired(true);
+        )->withRequired(true, $this->refinery->logical()->sequential([
+            $this->refinery->logical()->not($this->refinery->null()),
+            $this->refinery->string()->hasMinLength(1)
+        ])->withProblemBuilder(function ($txt) {
+            return $txt('mail_add_recipient');
+        }));
         $rcp_cc = $this->user_search->getInput(
             $this->lng->txt('mail_cc'),
             $this->getUserSearchConfigurator()
@@ -1006,17 +1010,17 @@ class ilMailFormGUI
             }
         }
 
-        $has_files = !empty($mail_data["attachments"]);
+        $has_files = !empty($mail_data['attachments']);
         $attachments = $ff->file(
             $this->upload_handler,
             $this->lng->txt('attachments')
         )->withMaxFiles(10);
 
-        if (isset($mail_data["attachments"]) && $has_files) {
+        if (isset($mail_data['attachments']) && $has_files) {
             if ($mail_data['attachments'] instanceof \ILIAS\ResourceStorage\Identification\ResourceCollectionIdentification) {
                 $mail_data['attachments'] = $this->FilesFromIRSSToLegacy($mail_data['attachments']);
             }
-            $attachments = $attachments->withValue($mail_data["attachments"] ?? []);
+            $attachments = $attachments->withValue($mail_data['attachments'] ?? []);
         }
 
         $template_chb = null;
@@ -1041,8 +1045,8 @@ class ilMailFormGUI
 
                         if (!isset($mail_data['template_id']) && $template->isDefault()) {
                             $tmpl_value = $template->getTplId();
-                            $mail_data["m_subject"] = $template->getSubject();
-                            $mail_data["m_message"] = $this->umail->appendSignature($template->getMessage());
+                            $mail_data['m_subject'] = $template->getSubject();
+                            $mail_data['m_message'] = $this->umail->appendSignature($template->getMessage());
                         }
                     }
                     if (isset($mail_data['template_id'])) {
@@ -1050,13 +1054,14 @@ class ilMailFormGUI
                     }
                     asort($options);
 
-                    $template_chb = $ff->select(
-                        $this->lng->txt('mail_template_client'),
-                        $options,
-                        $this->lng->txt('mail_template_client_info')
-                    )
-                                       ->withValue($tmpl_value)
-                                       ->withOnUpdate($signal);
+                    $template_chb = $ff
+                        ->select(
+                            $this->lng->txt('mail_template_client'),
+                            $options,
+                            $this->lng->txt('mail_template_client_info')
+                        )
+                        ->withValue($tmpl_value)
+                        ->withOnUpdate($signal);
                 }
             } catch (Exception $e) {
                 ilLoggerFactory::getLogger('mail')->error(sprintf(
@@ -1069,16 +1074,24 @@ class ilMailFormGUI
             $context = new ilMailTemplateGenericContext();
         }
 
-        $m_subject = $ff->text($this->lng->txt('subject'))
-                        ->withRequired(true)
-                        ->withMaxLength(200)
-                        ->withValue($mail_data["m_subject"] ?? '');
+        $m_subject = $ff
+            ->text($this->lng->txt('subject'))
+            ->withRequired(
+                true,
+                $this->refinery->logical()->sequential([
+                    $this->refinery->logical()->not($this->refinery->null()),
+                    $this->refinery->string()->hasMinLength(1)
+                ])->withProblemBuilder(function ($txt) {
+                    return $txt('mail_add_subject');
+                })
+            )
+            ->withMaxLength(200)
+            ->withValue($mail_data['m_subject'] ?? '');
 
         $m_message = $ff->markdown(
             new ilUIMarkdownPreviewGUI(),
             $this->lng->txt('message_content')
-        )
-                        ->withValue($mail_data["m_message"] ?? '');
+        )->withValue($mail_data['m_message'] ?? '');
 
         $use_placeholders = $ff->hidden()->withValue('0');
         $placeholders = [];
@@ -1146,22 +1159,18 @@ class ilMailFormGUI
 
         $schedule_date_time_value = null;
         $current_time = $this->clock->local(new DateTimeZone($this->user->getTimeZone()))->now();
-        $schedule_date_time_input = $ff->dateTime('')
-                                       ->withUseTime(true)
-                                       ->withTimezone($this->user->getTimezone())
-                                       ->withAdditionalTransformation(
-                                           $this->refinery->custom()->constraint(
-                                               function (DateTimeImmutable $v) use ($current_time) {
-                                                   return $v > $current_time;
-                                               },
-                                               $this->lng->txt('mail_schedule_error_past_datetime')
-                                           )
-                                       );
-
-        $title_validation_constraint = $this->refinery->custom()->constraint(
-            fn(string $v): bool => preg_match('/^il_.*$/', $v) ? false : true,
-            $this->lng->txt('msg_role_reserved_prefix')
-        );
+        $schedule_date_time_input = $ff
+            ->dateTime($this->lng->txt('mail_schedule_scheduled_datetime'))
+            ->withUseTime(true)
+            ->withTimezone($this->user->getTimezone())
+            ->withAdditionalTransformation(
+                $this->refinery->custom()->constraint(
+                    function (DateTimeImmutable $v) use ($current_time) {
+                        return $v > $current_time;
+                    },
+                    $this->lng->txt('mail_schedule_error_past_datetime')
+                )
+            );
 
         if (isset($mail_data['schedule_datetime'])) {
             $schedule_time = new DateTimeImmutable(

@@ -227,10 +227,11 @@ class ilVirtualSkillTreeExplorerGUI extends ilExplorerBaseGUI implements \ILIAS\
         return $lng->txt($a_node["type"]);
     }
 
+    /* see #45817, old implementation still needed for selection
     public function getHTML(): string
     {
         return $this->render();
-    }
+    }*/
 
     protected function render(): string
     {

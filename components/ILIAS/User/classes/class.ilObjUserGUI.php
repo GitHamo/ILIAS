@@ -429,7 +429,8 @@ class ilObjUserGUI extends ilObjectGUI
         $profile_maybe_incomplete = $this->retrieveAllowIncompleteProfileFromPost();
         $this->initForm(!$profile_maybe_incomplete, $this->object);
 
-        if (!$this->form_gui->checkInput()) {
+        if (!$this->form_gui->checkInput()
+            || !$this->isAccessRangeInputValid()) {
             $this->form_gui->setValuesByPost();
             $this->tabs_gui->activateTab('properties');
             $this->renderForm();
@@ -437,7 +438,7 @@ class ilObjUserGUI extends ilObjectGUI
         }
 
         try {
-            $this->object->updateLogin($this->form_gui->getInput('username'));
+            $this->object->updateLogin($this->form_gui->getInput('username'), $this->context);
         } catch (ilUserException $e) {
             $this->tpl->setOnScreenMessage('failure', $e->getMessage());
             $this->form_gui->setValuesByPost();
@@ -445,16 +446,20 @@ class ilObjUserGUI extends ilObjectGUI
             return;
         }
 
+        $this->object->setAuthMode($this->form_gui->getInput('auth_mode'));
+
         $this->object = $this->user_profile->addFormValuesToUser(
             $this->form_gui,
             $this->context,
             $this->object
         );
 
-        if ($this->user->getId() === (int) SYSTEM_USER_ID
-            || !in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->object->getId()))
-            || in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->user->getId()))) {
-            $this->object->setPasswd($this->form_gui->getInput('passwd'), ilObjUser::PASSWD_PLAIN);
+        $passwd = $this->form_gui->getInput('passwd');
+        if (($this->user->getId() === (int) SYSTEM_USER_ID
+                || !in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->object->getId()))
+                || in_array(SYSTEM_ROLE_ID, $this->rbac_review->assignedRoles($this->user->getId())))
+            && !empty($passwd)) {
+            $this->object->setPasswd($passwd, ilObjUser::PASSWD_PLAIN);
         }
         if (ilAuthUtils::_isExternalAccountEnabled()) {
             $this->object->setExternalAccount($this->form_gui->getInput('ext_account'));
@@ -643,8 +648,8 @@ class ilObjUserGUI extends ilObjectGUI
             $this->context,
             $user
         );
-        $input->setDisabled(!$this->context->isFieldChangeableInType($field, $user));
-        $input->setRequired($this->context->isFieldChangeableInType($field, $user));
+        $input->setDisabled(!$this->context->isFieldChangeable($field, $user));
+        $input->setRequired($this->context->isFieldChangeable($field, $user));
         return $input;
     }
 
@@ -810,8 +815,11 @@ class ilObjUserGUI extends ilObjectGUI
             $this->form_gui->addItem($input);
         }
 
-        foreach ($this->legal_documents->userManagementFields($this->object) as $input) {
-            $this->form_gui->addItem($input);
+        foreach ($this->legal_documents->userManagementFields($this->object) as $identifier => $value) {
+            if (is_string($value)) {
+                $value = $this->buildNonEditableInput($identifier, $value);
+            }
+            $this->form_gui->addItem($value);
         }
     }
 
@@ -1399,5 +1407,20 @@ class ilObjUserGUI extends ilObjectGUI
         }
 
         $this->redirectToRefId($this->usrf_ref_id);
+    }
+
+    private function isAccessRangeInputValid(): bool
+    {
+        if ($this->form_gui->getInput('time_limit_unlimited') === '1') {
+            return true;
+        }
+        $timefrom = $this->form_gui->getItemByPostVar('time_limit_from');
+        $timeuntil = $this->form_gui->getItemByPostVar('time_limit_until');
+        if ($timeuntil->getDate()->get(IL_CAL_UNIX) <= $timefrom->getDate()->get(IL_CAL_UNIX)) {
+            $this->tpl->setOnScreenMessage('failure', $this->lng->txt('form_input_not_valid'));
+            $timeuntil->setAlert($this->lng->txt('time_limit_not_valid'));
+            return false;
+        }
+        return true;
     }
 }

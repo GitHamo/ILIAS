@@ -91,7 +91,7 @@ class ilLocalUserPasswordSettingsGUI
             );
         } elseif ($this->user->isPasswordExpired()) {
             $msg = $this->lng->txt('password_expired');
-            $password_age = $this->user->getPasswordAge();
+            $password_age = $this->user->getPasswordAgeInDays();
             $this->tpl->setOnScreenMessage($this->tpl::MESSAGE_TYPE_INFO, sprintf($msg, $password_age));
         }
 

@@ -31,7 +31,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
 {
     public function __construct(
         protected bool $introduction_enabled = false,
-        protected ?string $introduction_text = null,
         protected ?int $introduction_page_id = null,
         protected bool $conditions_checkbox_enabled = false,
     ) {
@@ -61,7 +60,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return [
             'intro_enabled' => ['integer', (int) $this->getIntroductionEnabled()],
-            'introduction' => ['text', $this->getIntroductionText()],
             'introduction_page_id' => ['integer', $this->getIntroductionPageId()],
             'conditions_checkbox_enabled' => ['integer', (int) $this->getExamConditionsCheckboxEnabled()],
         ];
@@ -86,17 +84,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         $clone = clone $this;
         $clone->introduction_enabled = $introduction_enabled;
-        return $clone;
-    }
-
-    public function getIntroductionText(): string
-    {
-        return $this->introduction_text ?? '';
-    }
-    public function withIntroductionText(?string $introduction_text): self
-    {
-        $clone = clone $this;
-        $clone->introduction_text = $introduction_text;
         return $clone;
     }
 
@@ -126,7 +113,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return [
             'intro_enabled' => $this->getIntroductionEnabled(),
-            'introduction' => $this->getIntroductionText(),
             'introduction_page_id' => $this->getIntroductionPageId(),
             'conditions_checkbox_enabled' => $this->getExamConditionsCheckboxEnabled()
         ];
@@ -136,7 +122,6 @@ class SettingsIntroduction extends TestSettings implements Exportable
     {
         return new self(
             (bool) $data['intro_enabled'],
-            $data['introduction'],
             $data['introduction_page_id'],
             (bool) $data['conditions_checkbox_enabled'],
         );
