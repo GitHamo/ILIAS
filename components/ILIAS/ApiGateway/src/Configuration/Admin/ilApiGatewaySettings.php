@@ -156,7 +156,7 @@ class ilApiGatewaySettings
             }
 
             /** @var string */
-            $a_value = $this->refinery->to()->string()->transform($a_value);
+            $a_value = $this->refinery->kindlyTo()->string()->transform($a_value);
 
             switch ($key) {
                 case self::AUTH_SECRET_KEY:
