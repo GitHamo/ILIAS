@@ -66,7 +66,7 @@ class ilApiGatewaySettings
         self::AUTH_TOKEN_EXPIRY_ACCESS => "86400",
         self::AUTH_TOKEN_EXPIRY_REFRESH => "604800",
         self::REST_WS_ENABLED => '0',
-        self::REST_DOCS_ENABLED => '1',
+        self::REST_DOCS_ENABLED => '0',
     ];
 
     private function __construct()
@@ -193,6 +193,10 @@ class ilApiGatewaySettings
 
                     break;
                 case self::REST_WS_ENABLED:
+                    if ($a_value == '0') {
+                        // skip check if service is or being disabled
+                        break;
+                    }
                     /** @var string */
                     $secret_key = $this->settings_data[self::AUTH_SECRET_KEY];
                     $secret_key_length = strlen($secret_key);
