@@ -18,7 +18,6 @@
 
 declare(strict_types=1);
 
-// use ilApiGatewaySettings;
 use ILIAS\ApiGateway\Configuration\Admin\ilApiGatewaySettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\GeneralSettings;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\RestSettings;
