@@ -112,10 +112,24 @@ class ilPdfGenerator
         }
 
         $pdf_base64 = $this->rpc->ilFO2PDF('RPCTransformationHandler', $content);
+        if (!is_string($pdf_base64->scalar)) {
+            $this->logger?->error(
+                'ilServer returned invalid PDF content for certificate id {certificate_id} ' .
+                '(user {user_id} and object {object_id})',
+                [
+                    'certificate_id' => $certificate->getCertificateId()->asString(),
+                    'user_id' => $certificate->getUserId(),
+                    'object_id' => $certificate->getObjId()
+                ]
+            );
+
+            throw new ilException('ilServer returned invalid PDF content');
+        }
 
         $size = strlen(base64_decode($pdf_base64->scalar, true));
         $this->logger?->debug(
-            'Received generated PDF with size {size} bytes for certificate id {certificate_id} (user {user_id} and object {object_id}) from ilServer',
+            'Received generated PDF with size {size} bytes for certificate id {certificate_id} (user {user_id} ' .
+            'and object {object_id}) from ilServer',
             [
                 'size' => $size,
                 'certificate_id' => $certificate->getCertificateId()->asString(),
@@ -123,7 +137,6 @@ class ilPdfGenerator
                 'object_id' => $certificate->getObjId()
             ]
         );
-
 
         return $pdf_base64->scalar;
     }
