@@ -1137,7 +1137,7 @@ class ilMailFormGUI
                         let triggerer = signalData.triggerer[0];
                         let tplId = triggerer.querySelector('select').value;
                         if (tplId != '') {
-                            message.value = decodeURIComponent(signalData.options[tplId + '_message'].replace(/\+/g, ' '));
+                            child.value = decodeURIComponent(signalData.options[tplId + '_message'].replace(/\+/g, ' '));
                         }
                     });
                 ";
