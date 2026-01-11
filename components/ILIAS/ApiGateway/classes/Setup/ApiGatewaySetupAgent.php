@@ -24,6 +24,7 @@ use ilDatabaseUpdateStepsExecutedObjective;
 use ilDatabaseUpdateStepsMetricsCollectedObjective;
 use ILIAS\ApiGateway\Setup\Steps\ApiGatewayDBUpdateSteps;
 use ILIAS\Setup;
+use ilObjApiGateway;
 use ilTreeAdminNodeAddedObjective;
 
 class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
@@ -31,10 +32,10 @@ class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
     public function getUpdateObjective(?Setup\Config $config = null): Setup\Objective
     {
         return new Setup\ObjectiveCollection(
-            'Database is updated for component/ILIAS/Table',
+            'Database is updated for component/ILIAS/ApiGateway',
             true,
+            new ilTreeAdminNodeAddedObjective(ilObjApiGateway::TYPE, 'ApiGateway'),
             new ilDatabaseUpdateStepsExecutedObjective(new ApiGatewayDBUpdateSteps()),
-            new ilTreeAdminNodeAddedObjective('apig', 'Webservices'),
         );
     }
 
