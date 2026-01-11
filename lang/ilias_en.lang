@@ -17996,6 +17996,7 @@ wsp#:#wsp_type_tstv#:#Certificate: Test
 wsp#:#wsp_type_webr#:#Weblink
 wsp#:#wsp_type_wfld#:#Folder
 common#:#obj_apig#:#Webservices
+common#:#obj_apig_desc#:#Configuration of API Webservices
 apig#:#webservices#:#Webservices
 apig#:#webservices_description#:#Configuration of API Webservices
 apig#:#settings_general#:#General

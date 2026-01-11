@@ -17980,6 +17980,7 @@ wsp#:#wsp_type_tstv#:#Verification: Test
 wsp#:#wsp_type_webr#:#Weblink
 wsp#:#wsp_type_wfld#:#Folder
 common#:#obj_apig#:#خدمات الويب
+common#:#obj_apig_desc#:#تهيئة خدمات الويب API
 apig#:#webservices#:#خدمات الويب
 apig#:#webservices_description#:#تهيئة خدمات الويب API
 apig#:#settings_general#:#عام
