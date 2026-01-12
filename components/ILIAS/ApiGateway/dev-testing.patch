@@ -1,0 +1,461 @@
+diff --git a/.gitignore b/.gitignore
+index 733cee9c9d6..f687232e10c 100755
+--- a/.gitignore
++++ b/.gitignore
+@@ -39,6 +39,7 @@
+ /Customizing/clients
+ virtual-data
+ /vendor/composer/vendor
++/components/ILIAS/ApiGateway
+ 
+ # Node Modules
+ /node_modules
+diff --git a/components/ILIAS/Administration/GlobalScreen/classes/AdministrationMainBarProvider.php b/components/ILIAS/Administration/GlobalScreen/classes/AdministrationMainBarProvider.php
+index 3f9baaa54ae..801fc66869c 100755
+--- a/components/ILIAS/Administration/GlobalScreen/classes/AdministrationMainBarProvider.php
++++ b/components/ILIAS/Administration/GlobalScreen/classes/AdministrationMainBarProvider.php
+@@ -225,7 +225,7 @@ class AdministrationMainBarProvider extends AbstractStaticMainMenuProvider
+         // admin menu layout
+         $layout = array(
+             "maintenance" =>
+-                array("adma", "serv", "cron", "bnmk", "lngf", "hlps", "wfe", 'fils', 'logs', 'sysc', "recf", "root"),
++                array("adma", "serv", "cron", "bnmk", "lngf", "apig", "hlps", "wfe", 'fils', 'logs', 'sysc', "recf", "root"),
+             "layout_and_navigation" =>
+                 array("mme", "gsfo", "dshs", "stys", "adve", "stus"),
+             "repository_and_objects" =>
+diff --git a/composer.json b/composer.json
+index affe3b87bcd..01d6f24e858 100755
+--- a/composer.json
++++ b/composer.json
+@@ -72,7 +72,8 @@
+ 		"symfony/console" : "^6.4",
+ 		"psr/http-message": "^2.0",
+ 		"jumbojett/openid-connect-php": "dev-master#bc719cc9930990a4a9916cc127b839b4ed1c89ad",
+-		"phpunit/phpunit": "^11.5"
++		"phpunit/phpunit": "^11.5",
++		"slim/slim": "*"
+ 	},
+ 	"require-dev": {
+ 		"captainhook/captainhook": "^5.24",
+diff --git a/composer.lock b/composer.lock
+index 41e6273cb1d..67948d43e74 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "860ee98b9f2ff361d3ed5a3cd0e9dce6",
++    "content-hash": "467f545797ff44f1aeabf10af7094fbc",
+     "packages": [
+         {
+             "name": "brick/math",
+@@ -1962,6 +1962,56 @@
+             },
+             "time": "2025-10-31T00:45:47+00:00"
+         },
++        {
++            "name": "nikic/fast-route",
++            "version": "v1.3.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/nikic/FastRoute.git",
++                "reference": "181d480e08d9476e61381e04a71b34dc0432e812"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/nikic/FastRoute/zipball/181d480e08d9476e61381e04a71b34dc0432e812",
++                "reference": "181d480e08d9476e61381e04a71b34dc0432e812",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=5.4.0"
++            },
++            "require-dev": {
++                "phpunit/phpunit": "^4.8.35|~5.7"
++            },
++            "type": "library",
++            "autoload": {
++                "files": [
++                    "src/functions.php"
++                ],
++                "psr-4": {
++                    "FastRoute\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "BSD-3-Clause"
++            ],
++            "authors": [
++                {
++                    "name": "Nikita Popov",
++                    "email": "nikic@php.net"
++                }
++            ],
++            "description": "Fast request router for PHP",
++            "keywords": [
++                "router",
++                "routing"
++            ],
++            "support": {
++                "issues": "https://github.com/nikic/FastRoute/issues",
++                "source": "https://github.com/nikic/FastRoute/tree/master"
++            },
++            "time": "2018-02-13T20:26:39+00:00"
++        },
+         {
+             "name": "nikic/php-parser",
+             "version": "v5.6.2",
+@@ -3488,6 +3538,119 @@
+             },
+             "time": "2023-04-04T09:54:51+00:00"
+         },
++        {
++            "name": "psr/http-server-handler",
++            "version": "1.0.2",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/php-fig/http-server-handler.git",
++                "reference": "84c4fb66179be4caaf8e97bd239203245302e7d4"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/php-fig/http-server-handler/zipball/84c4fb66179be4caaf8e97bd239203245302e7d4",
++                "reference": "84c4fb66179be4caaf8e97bd239203245302e7d4",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=7.0",
++                "psr/http-message": "^1.0 || ^2.0"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.0.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Psr\\Http\\Server\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "PHP-FIG",
++                    "homepage": "https://www.php-fig.org/"
++                }
++            ],
++            "description": "Common interface for HTTP server-side request handler",
++            "keywords": [
++                "handler",
++                "http",
++                "http-interop",
++                "psr",
++                "psr-15",
++                "psr-7",
++                "request",
++                "response",
++                "server"
++            ],
++            "support": {
++                "source": "https://github.com/php-fig/http-server-handler/tree/1.0.2"
++            },
++            "time": "2023-04-10T20:06:20+00:00"
++        },
++        {
++            "name": "psr/http-server-middleware",
++            "version": "1.0.2",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/php-fig/http-server-middleware.git",
++                "reference": "c1481f747daaa6a0782775cd6a8c26a1bf4a3829"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/php-fig/http-server-middleware/zipball/c1481f747daaa6a0782775cd6a8c26a1bf4a3829",
++                "reference": "c1481f747daaa6a0782775cd6a8c26a1bf4a3829",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=7.0",
++                "psr/http-message": "^1.0 || ^2.0",
++                "psr/http-server-handler": "^1.0"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "1.0.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Psr\\Http\\Server\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "PHP-FIG",
++                    "homepage": "https://www.php-fig.org/"
++                }
++            ],
++            "description": "Common interface for HTTP server-side middleware",
++            "keywords": [
++                "http",
++                "http-interop",
++                "middleware",
++                "psr",
++                "psr-15",
++                "psr-7",
++                "request",
++                "response"
++            ],
++            "support": {
++                "issues": "https://github.com/php-fig/http-server-middleware/issues",
++                "source": "https://github.com/php-fig/http-server-middleware/tree/1.0.2"
++            },
++            "time": "2023-04-11T06:14:47+00:00"
++        },
+         {
+             "name": "psr/log",
+             "version": "3.0.2",
+@@ -5943,6 +6106,122 @@
+             },
+             "time": "2025-06-03T21:07:04+00:00"
+         },
++        {
++            "name": "slim/slim",
++            "version": "4.15.1",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/slimphp/Slim.git",
++                "reference": "887893516557506f254d950425ce7f5387a26970"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/slimphp/Slim/zipball/887893516557506f254d950425ce7f5387a26970",
++                "reference": "887893516557506f254d950425ce7f5387a26970",
++                "shasum": ""
++            },
++            "require": {
++                "ext-json": "*",
++                "nikic/fast-route": "^1.3",
++                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
++                "psr/container": "^1.0 || ^2.0",
++                "psr/http-factory": "^1.1",
++                "psr/http-message": "^1.1 || ^2.0",
++                "psr/http-server-handler": "^1.0",
++                "psr/http-server-middleware": "^1.0",
++                "psr/log": "^1.1 || ^2.0 || ^3.0"
++            },
++            "require-dev": {
++                "adriansuter/php-autoload-override": "^1.4 || ^2",
++                "ext-simplexml": "*",
++                "guzzlehttp/psr7": "^2.6",
++                "httpsoft/http-message": "^1.1",
++                "httpsoft/http-server-request": "^1.1",
++                "laminas/laminas-diactoros": "^2.17 || ^3",
++                "nyholm/psr7": "^1.8",
++                "nyholm/psr7-server": "^1.1",
++                "phpspec/prophecy": "^1.19",
++                "phpspec/prophecy-phpunit": "^2.1",
++                "phpstan/phpstan": "^1 || ^2",
++                "phpunit/phpunit": "^9.6 || ^10 || ^11 || ^12",
++                "slim/http": "^1.3",
++                "slim/psr7": "^1.6",
++                "squizlabs/php_codesniffer": "^3.10",
++                "vimeo/psalm": "^5 || ^6"
++            },
++            "suggest": {
++                "ext-simplexml": "Needed to support XML format in BodyParsingMiddleware",
++                "ext-xml": "Needed to support XML format in BodyParsingMiddleware",
++                "php-di/php-di": "PHP-DI is the recommended container library to be used with Slim",
++                "slim/psr7": "Slim PSR-7 implementation. See https://www.slimframework.com/docs/v4/start/installation.html for more information."
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Slim\\": "Slim"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Josh Lockhart",
++                    "email": "hello@joshlockhart.com",
++                    "homepage": "https://joshlockhart.com"
++                },
++                {
++                    "name": "Andrew Smith",
++                    "email": "a.smith@silentworks.co.uk",
++                    "homepage": "https://silentworks.co.uk"
++                },
++                {
++                    "name": "Rob Allen",
++                    "email": "rob@akrabat.com",
++                    "homepage": "https://akrabat.com"
++                },
++                {
++                    "name": "Pierre Berube",
++                    "email": "pierre@lgse.com",
++                    "homepage": "https://www.lgse.com"
++                },
++                {
++                    "name": "Gabriel Manricks",
++                    "email": "gmanricks@me.com",
++                    "homepage": "http://gabrielmanricks.com"
++                }
++            ],
++            "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs",
++            "homepage": "https://www.slimframework.com",
++            "keywords": [
++                "api",
++                "framework",
++                "micro",
++                "router"
++            ],
++            "support": {
++                "docs": "https://www.slimframework.com/docs/v4/",
++                "forum": "https://discourse.slimframework.com/",
++                "irc": "irc://irc.freenode.net:6667/slimphp",
++                "issues": "https://github.com/slimphp/Slim/issues",
++                "rss": "https://www.slimframework.com/blog/feed.rss",
++                "slack": "https://slimphp.slack.com/",
++                "source": "https://github.com/slimphp/Slim",
++                "wiki": "https://github.com/slimphp/Slim/wiki"
++            },
++            "funding": [
++                {
++                    "url": "https://opencollective.com/slimphp",
++                    "type": "open_collective"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/slim/slim",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2025-11-21T12:23:44+00:00"
++        },
+         {
+             "name": "staabm/side-effects-detector",
+             "version": "1.0.5",
+@@ -10837,5 +11116,5 @@
+         "ext-imagick": "*"
+     },
+     "platform-dev": {},
+-    "plugin-api-version": "2.9.0"
++    "plugin-api-version": "2.6.0"
+ }
+diff --git a/lang/ilias_de.lang b/lang/ilias_de.lang
+index 85a13eb07da..5c88853d09e 100644
+--- a/lang/ilias_de.lang
++++ b/lang/ilias_de.lang
+@@ -17992,4 +17992,26 @@ wsp#:#wsp_type_ltiv#:#Zertifikat: LTI-Konsument
+ wsp#:#wsp_type_scov#:#Zertifikat: SCORM
+ wsp#:#wsp_type_tstv#:#Zertifikat: Test
+ wsp#:#wsp_type_webr#:#Weblink
+-wsp#:#wsp_type_wfld#:#Ordner
+\ No newline at end of file
++wsp#:#wsp_type_wfld#:#Ordner
++common#:#obj_apig#:#Webservices
++common#:#obj_apig_desc#:#Konfiguration der API Webservices
++apig#:#webservices#:#Webservices
++apig#:#webservices_description#:#Konfiguration der API Webservices
++apig#:#settings_general#:#Allgemein
++apig#:#settings_docs#:#Dokumentation
++apig#:#general_settings#:#Allgemeine Einstellungen
++apig#:#rest_settings#:#REST Einstellungen
++apig#:#auth_secret_key_label#:#Geheimschlüssel
++apig#:#auth_secret_key_info#:#Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Geheimschlüssel generiert
++apig#:#auth_algo_encryption_label#:#Verschlüsselungs-Algo
++apig#:#auth_algo_encryption_info#:#Algorithmus zur Erstellung der JWT-Signatur
++apig#:#auth_algo_hash_label#:#Hashing-Algo
++apig#:#auth_algo_hash_info#:#Algorithmus zum sicheren Speichern von Refresh Tokens
++apig#:#auth_token_expiry_access_label#:#Ablaufzeit des Access Tokens
++apig#:#auth_token_expiry_access_info#:#Lebensdauer eines Access Tokens in Sekunden
++apig#:#auth_token_expiry_refresh_label#:#Ablaufzeit des Refresh Tokens
++apig#:#auth_token_expiry_refresh_info#:#Lebensdauer eines Refresh Tokens in Sekunden
++apig#:#rest_ws_enabled_label#:#Webservice aktivieren
++apig#:#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
++apig#:#rest_docs_enabled_label#:#Dokumentation aktivieren
++apig#:#rest_docs_enabled_info#:#Ob die automatische Generierung der
+\ No newline at end of file
+diff --git a/lang/ilias_el.lang b/lang/ilias_el.lang
+index bc1b91d9841..4b6fcaff24c 100644
+--- a/lang/ilias_el.lang
++++ b/lang/ilias_el.lang
+@@ -17979,4 +17979,26 @@ wsp#:#wsp_type_ltiv#:#Certificate: LTI Consumer###07 02 2020 new variable
+ wsp#:#wsp_type_scov#:#Certificate: SCORM###30 12 2013 new variable
+ wsp#:#wsp_type_tstv#:#Verification: Test###12 06 2011 new variable
+ wsp#:#wsp_type_webr#:#Weblink###18 07 2011 new variable
+-wsp#:#wsp_type_wfld#:#Folder###22 03 2011 new variable
+\ No newline at end of file
++wsp#:#wsp_type_wfld#:#Folder###22 03 2011 new variable
++common#:#obj_apig#:#Webservices
++apig#:#obj_apig#:#Webservices
++apig#:#webservices#:#Webservices
++apig#:#webservices_description#:#Configuration of API Webservices
++apig#:#settings_general#:#General
++apig#:#settings_docs#:#Documentation
++apig#:#general_settings#:#General Settings
++apig#:#rest_settings#:#REST Settings
++apig#:#auth_secret_key_label#:#Secret Key
++apig#:#auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
++apig#:#auth_algo_encryption_label#:#Encryption algo
++apig#:#auth_algo_encryption_info#:#Algorithm used for JWT signature creation
++apig#:#auth_algo_hash_label#:#Hashing algo
++apig#:#auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
++apig#:#auth_token_expiry_access_label#:#Access Token Expiry
++apig#:#auth_token_expiry_access_info#:#Lifespan of an access token in seconds
++apig#:#auth_token_expiry_refresh_label#:#Refresh Token Expiry
++apig#:#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
++apig#:#rest_ws_enabled_label#:#Activate Webservice
++apig#:#rest_ws_enabled_info#:#Webservice enabled or not
++apig#:#rest_docs_enabled_label#:#Activate Documentation
++apig#:#rest_docs_enabled_info#:#Auto-generation of webservice documentation enabled or not
+\ No newline at end of file
+diff --git a/lang/ilias_en.lang b/lang/ilias_en.lang
+index d7c60419b0a..2d588566a3e 100644
+--- a/lang/ilias_en.lang
++++ b/lang/ilias_en.lang
+@@ -17994,4 +17994,26 @@ wsp#:#wsp_type_ltiv#:#Certificate: LTI Consumer
+ wsp#:#wsp_type_scov#:#Certificate: SCORM
+ wsp#:#wsp_type_tstv#:#Certificate: Test
+ wsp#:#wsp_type_webr#:#Weblink
+-wsp#:#wsp_type_wfld#:#Folder
+\ No newline at end of file
++wsp#:#wsp_type_wfld#:#Folder
++common#:#obj_apig#:#Webservices
++common#:#obj_apig_desc#:#Configuration of API Webservices
++apig#:#webservices#:#Webservices
++apig#:#webservices_description#:#Configuration of API Webservices
++apig#:#settings_general#:#General
++apig#:#settings_docs#:#Documentation
++apig#:#general_settings#:#General Settings
++apig#:#rest_settings#:#REST Settings
++apig#:#auth_secret_key_label#:#Secret Key
++apig#:#auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
++apig#:#auth_algo_encryption_label#:#Encryption algo
++apig#:#auth_algo_encryption_info#:#Algorithm used for JWT signature creation
++apig#:#auth_algo_hash_label#:#Hashing algo
++apig#:#auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
++apig#:#auth_token_expiry_access_label#:#Access Token Expiry
++apig#:#auth_token_expiry_access_info#:#Lifespan of an access token in seconds
++apig#:#auth_token_expiry_refresh_label#:#Refresh Token Expiry
++apig#:#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
++apig#:#rest_ws_enabled_label#:#Activate Webservice
++apig#:#rest_ws_enabled_info#:#Webservice enabled or not
++apig#:#rest_docs_enabled_label#:#Activate Documentation
++apig#:#rest_docs_enabled_info#:#Auto-generation of webservice documentation enabled or not
+\ No newline at end of file
