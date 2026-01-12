@@ -9,6 +9,7 @@ use ILIAS\ApiGateway\Activity\ActivityRoute;
 use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
+use ILIAS\Component\Activities\ObjectActivity;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -72,11 +73,27 @@ final class ActivityRouteTest extends TestCase
         ];
     }
 
-    public function testHasAccessorToNamespacePath(): void
+    public function testGetPathForNonObjectActivityReturnsBasePath(): void
     {
         self::assertSame(
             $this->routePath,
             $this->route->getPath(),
+        );
+    }
+
+    public function testGetPathForObjectActivityAppendsId(): void
+    {
+        $objectActivity = $this->createMock(ObjectActivity::class);
+        $route = new ActivityRoute(
+            $objectActivity,
+            $this->handlerMock,
+            $this->namespaceMock,
+            $this->middlewares,
+        );
+
+        self::assertSame(
+            $this->routePath . '/{id}',
+            $route->getPath(),
         );
     }
 

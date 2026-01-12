@@ -24,6 +24,7 @@ use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
+use ILIAS\Component\Activities\ObjectActivity;
 use Override;
 
 class ActivityRoute implements Route
@@ -36,13 +37,18 @@ class ActivityRoute implements Route
         private ActivityRouteHandler $handler,
         private ActivityNamespace $namespace,
         private array $middlewares,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function getPath(): string
     {
-        return $this->namespace->getPath();
+        $path = $this->namespace->getPath();
+
+        if ($this->activity instanceof ObjectActivity) {
+            $path .= '/{id}';
+        }
+
+        return $path;
     }
 
     #[Override]

@@ -53,7 +53,6 @@ readonly class ActivityNamespace
             $vendor,
             $component,
             $subject,
-            // @todo: append '{id}' in case of ObjectActivity
         ]));
     }
 }

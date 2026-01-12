@@ -31,6 +31,7 @@
 /ilias.log
 /db_template_writer.php
 /components/ILIAS/setup_/sql/dbupdate_custom.php
+/components/ILIAS/ApiGateway/\.*
 /install_client.php
 
 # Directories
@@ -39,6 +40,7 @@
 /Customizing/clients
 virtual-data
 /vendor/composer/vendor
+/components/ILIAS/ApiGateway
 
 # Node Modules
 /node_modules
