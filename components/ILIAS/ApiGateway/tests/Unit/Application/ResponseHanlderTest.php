@@ -47,7 +47,7 @@ class ResponseHanlderTest extends TestCase
 
         $finalRequest = $this->createConfiguredMock(Request::class, [
             'getQueryParams' => $queryParams,
-            'getAttributes' => [],
+            'getParsedBody' => [],
             'getBody' => $this->streamMock,
             'getHeaderLine' => ''
         ]);
@@ -121,11 +121,8 @@ class ResponseHanlderTest extends TestCase
         $expectedFinalParams = array_merge($queryParams, $bodyParams, $routeArgs);
 
         $this->requestMock->method('getQueryParams')->willReturn($queryParams);
-        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getParsedBody')->willReturn($bodyParams);
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
-        $this->requestMock->method('getBody')->willReturn($this->streamMock);
-        $this->streamMock->method('getContents')->willReturn(json_encode($bodyParams));
-
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
         $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
 
@@ -153,7 +150,7 @@ class ResponseHanlderTest extends TestCase
         $expectedFinalParams = array_merge($queryParams, $routeArgs); // Note: body params are NOT merged
 
         $this->requestMock->method('getQueryParams')->willReturn($queryParams);
-        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getParsedBody')->willReturn([]);
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
         $this->requestMock->method('getBody')->willReturn($this->streamMock);
         $this->streamMock->method('getContents')->willReturn('"this is a scalar string"'); // A valid JSON scalar
@@ -185,7 +182,7 @@ class ResponseHanlderTest extends TestCase
         $expectedFinalParams = array_merge($queryParams, $routeArgs); // Note: body params are NOT merged
 
         $this->requestMock->method('getQueryParams')->willReturn($queryParams);
-        $this->requestMock->method('getAttributes')->willReturn([]);
+        $this->requestMock->method('getParsedBody')->willReturn([]);
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
         $this->requestMock->method('getBody')->willReturn($this->streamMock);
         $this->streamMock->method('getContents')->willReturn('{"malformed": "json"'); // Malformed JSON

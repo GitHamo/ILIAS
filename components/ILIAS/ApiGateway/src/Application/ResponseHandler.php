@@ -56,7 +56,7 @@ readonly class ResponseHandler
 
         $params = [
             ...$request->getQueryParams(),
-            ...$request->getAttributes(),
+            ...$request->getParsedBody(),
         ];
 
         $contentType = $request->getHeaderLine('Content-Type');
