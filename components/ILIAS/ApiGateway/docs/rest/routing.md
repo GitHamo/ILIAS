@@ -2,17 +2,17 @@
 
 ## Table of Contents
 
-*   [TL;DR](#tldr)
-    *   [Register a new endpoint](#register-a-new-endpoint)
-    *   [An Important Rule: Duplicate Routes](#an-important-rule-duplicate-routes)
-*   [1. `Activity`: The Automated Approach](#1-activity-the-automated-approach)
-    *   [How It Looks](#how-it-looks)
-    *   [How the Route is Built Automatically](#how-the-route-is-built-automatically)
-*   [2. `ApiRoute`: The Direct Approach](#2-apiroute-the-direct-approach)
-    *   [How It Looks](#how-it-looks-1)
-    *   [What It Means](#what-it-means)
-*   [3. Your Own Route Class: The Advanced Approach](#3-your-own-route-class-the-advanced-approach)
-    *   [How It Looks](#how-it-looks-2)
+* [TL;DR](#tldr)
+  * [Register a new endpoint](#register-a-new-endpoint)
+  * [An Important Rule: Duplicate Routes](#an-important-rule-duplicate-routes)
+* [1. `Activity`: The Automated Approach](#1-activity-the-automated-approach)
+  * [How It Looks](#how-it-looks)
+  * [How the Route is Built Automatically](#how-the-route-is-built-automatically)
+* [2. `ApiRoute`: The Direct Approach](#2-apiroute-the-direct-approach)
+  * [How It Looks](#how-it-looks-1)
+  * [What It Means](#what-it-means)
+* [3. Your Own Route Class: The Advanced Approach](#3-your-own-route-class-the-advanced-approach)
+  * [How It Looks](#how-it-looks-2)
 
 In the API Gateway, an endpoint (like `/ping` or `/users/123`) is called a **Route**. The system is flexible, offering three main ways to create routes. No matter which method you choose, the basic process is the same: you define your route and then register it so the system can find it.
 
@@ -85,6 +85,20 @@ By doing this, the system automatically creates the endpoint `/myvendor/mymodule
 * **Special Rule for Core:** If the `Activity` is part of the core `ILIAS` vendor, the "ilias" part is left out of the URL to keep it shorter (e.g., `ILIAS\User\GetAllUsersActivity` becomes `/user/allusers`).
 * **HTTP Method is Inferred:** The system assigns `GET` for a `Query` activity and `POST` for a `Command` activity.
 * **Handler is the Activity:** Your `Activity` class itself contains the logic for the route.
+
+#### Handler Parameters and Validation
+
+When implementing the logic for an `Activity`-based route, there are two important considerations:
+
+* **Input and Output Validation:** The API Gateway does not yet provide automatic validation for `Activity` inputs and outputs. You are responsible for implementing any necessary validation and sanitization within your `Activity`'s logic to ensure data integrity and security.
+
+* **Accessing the Authenticated User:** The `perform` method of your `Activity` will receive a parameter array. This array will always contain an `auth_user_id` key with the ID of the authenticated user.
+  * If the user is authenticated, the value will be their integer user ID.
+  * If the request is from an anonymous or unauthenticated user, the value will be `0`.
+
+    This `auth_user_id` value, if present, will override any client-provided input with the same key. It is recommended to use this `auth_user_id` for authorization checks within your `Activity`. You should not rely on it as a direct input for your business logic from the client's request.
+
+* **Accessing Object IDs:** If your `Activity` implements `ObjectActivity`, its route path will automatically include an `/{id}` segment. The integer value of this ID will be provided in the parameter array passed to your `perform` method under the key `'object_id'`. This `object_id` value will override any client-provided input with the same key.
 
 ---
 
