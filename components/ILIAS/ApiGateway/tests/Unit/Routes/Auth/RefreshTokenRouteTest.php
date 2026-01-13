@@ -33,7 +33,7 @@ class RefreshTokenRouteTest extends TestCase
 
         $this->assertSame('Refresh API Token', $actual->getName());
         $this->assertSame('/auth/refresh', $actual->getPath());
-        $this->assertSame(['POST'], $actual->getMethods());
+        $this->assertSame('POST', $actual->getMethod());
         $this->assertSame('Exchanges a valid refresh token for a new token set. This should be used when the access token has expired.', $actual->getDescription());
     }
 

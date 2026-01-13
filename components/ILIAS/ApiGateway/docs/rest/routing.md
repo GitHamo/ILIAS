@@ -108,7 +108,7 @@ $contribute[Route::class] = static fn(): Route =>
     new ApiRoute(
         name: 'Ping',
         path: "/ping",
-        methods: ['GET'],
+        method: 'GET',
         description: 'A simple ping pong route for testing purposes.',
         handler: fn(): string => 'Pong!',
     );
@@ -119,7 +119,7 @@ This approach is straightforward and easy to understand for anyone familiar with
 ### What It Means
 
 * **`path: "/ping"`**: This is the URL fragment for the endpoint.
-* **`methods: ['GET']`**: This route will only respond to `GET` requests. You could add `'POST'`, `'PUT'`, etc., to the array.
+* **`method: 'GET'`**: This route will only respond to `GET` requests.
 * **`handler: fn(): string => 'Pong!'`**: This is the actual code that executes. In this case, it's a simple anonymous function (a `Closure`) that returns the string "Pong!". This is what gets sent back to the user as the response body.
 
 ---
@@ -155,10 +155,10 @@ class GetCourseByIdRoute implements Route, RouteHandler
         return '/courses/{id}';
     }
 
-    // Define the allowed methods
-    public function getMethods(): array
+    // Define the allowed method
+    public function getMethod(): string
     {
-        return ['GET'];
+        return 'GET';
     }
 
     // The __invoke method contains the route's logic

@@ -52,11 +52,11 @@ class ActivityRoute implements Route
     }
 
     #[Override]
-    public function getMethods(): array
+    public function getMethod(): string
     {
         return match ($this->activity->getType()) {
-            ActivityType::Command => ['POST'],
-            ActivityType::Query => ['GET'],
+            ActivityType::Command => 'POST',
+            ActivityType::Query => 'GET',
         };
     }
 

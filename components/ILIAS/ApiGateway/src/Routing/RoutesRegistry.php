@@ -59,21 +59,19 @@ class RoutesRegistry
     public function register(Route $route): void
     {
         $path = $route->getPath();
-        $methods = $route->getMethods();
+        $method = $route->getMethod();
 
-        if (empty($methods)) {
+        $key = $this->getInternalKey($method, $path);
+
+        if (isset($this->routes[$key])) {
+            throw new LogicException("Duplicate route detected: Cannot re-register '{$key}'.");
+        }
+
+        if (empty($method)) {
             throw new InvalidArgumentException("Cannot register a route with no HTTP methods for path '{$path}'.");
         }
-
-        foreach ($methods as $method) {
-            $key = $this->getInternalKey($method, $path);
-
-            if (isset($this->routes[$key])) {
-                throw new LogicException("Duplicate route detected: Cannot re-register '{$key}'.");
-            }
-
-            $this->routes[$key] = $route;
-        }
+        
+        $this->routes[$key] = $route;
     }
 
     public function get(string $method, string $path): ?Route

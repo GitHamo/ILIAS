@@ -30,7 +30,7 @@ final class ApiRouteTest extends TestCase
         $this->apiRoute = new ApiRoute(
             $this->name,
             $this->path,
-            [$this->method],
+            $this->method,
             $this->description,
             fn(): string => 'handled',
             $this->middlewares,
@@ -53,11 +53,11 @@ final class ApiRouteTest extends TestCase
         );
     }
 
-    public function testHasAccessorToMethods(): void
+    public function testHasAccessorToMethod(): void
     {
         self::assertSame(
-            [$this->method],
-            $this->apiRoute->getMethods(),
+            $this->method,
+            $this->apiRoute->getMethod(),
         );
     }
 
@@ -82,7 +82,7 @@ final class ApiRouteTest extends TestCase
         $actual = new ApiRoute(
             $this->name,
             $this->path,
-            [$this->method],
+            $this->method,
             $this->description,
             fn(): string => 'handled',
         );
@@ -92,14 +92,11 @@ final class ApiRouteTest extends TestCase
         );
     }
 
-    /**
-     * @param string[] $methods
-     */
     #[DataProvider('edgeCasesDataProvider')]
     public function testHandlesEdgeCases(
         string $name,
         string $path,
-        array $methods,
+        string $method,
         string $description,
     ): void {
         // A simple handler for instantiation, as its execution isn't the focus here
@@ -108,7 +105,7 @@ final class ApiRouteTest extends TestCase
         $actual = new ApiRoute(
             $name,
             $path,
-            $methods,
+            $method,
             $description,
             $handler,
         );
@@ -124,8 +121,8 @@ final class ApiRouteTest extends TestCase
         );
 
         self::assertSame(
-            $methods,
-            $actual->getMethods(),
+            $method,
+            $actual->getMethod(),
         );
 
         self::assertSame(
@@ -143,25 +140,25 @@ final class ApiRouteTest extends TestCase
             'empty_name_and_description' => [
                 'name' => '', // CASE TESTED
                 'path' => '/empty-name',
-                'methods' => ['GET'],
+                'method' => 'GET',
                 'description' => '', // CASE TESTED
             ],
             'empty_path' => [
                 'name' => 'Root Path',
                 'path' => '', // CASE TESTED
-                'methods' => ['GET'],
+                'method' => 'GET',
                 'description' => 'Route for the root path.',
             ],
-            'multiple_methods' => [
-                'name' => 'Multi Method',
-                'path' => '/multi',
-                'methods' => ['GET', 'POST', 'PUT'], // CASE TESTED
-                'description' => 'Route supporting multiple HTTP methods.',
-            ],
+            // 'multiple_methods' => [
+            //     'name' => 'Multi Method',
+            //     'path' => '/multi',
+            //     'methods' => ['GET', 'POST', 'PUT'], // CASE TESTED
+            //     'description' => 'Route supporting multiple HTTP methods.',
+            // ],
             'single_method' => [
                 'name' => 'Single Method',
                 'path' => '/single',
-                'methods' => ['PATCH'], // CASE TESTED
+                'method' => 'PATCH', // CASE TESTED
                 'description' => 'Route with a single HTTP method.',
             ],
         ];
@@ -180,7 +177,7 @@ final class ApiRouteTest extends TestCase
         $apiRoute = new ApiRoute(
             $this->name,
             $this->path,
-            [$this->method],
+            $this->method,
             $this->description,
             $handler,
         );

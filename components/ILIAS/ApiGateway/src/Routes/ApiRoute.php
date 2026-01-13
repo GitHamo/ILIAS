@@ -29,13 +29,12 @@ use Override;
 readonly class ApiRoute implements Route
 {
     /**
-     * @param string[] $methods
      * @param string[] $middlewares
      */
     public function __construct(
         private string $name,
         private string $path,
-        private array $methods,
+        private string $method,
         private string $description,
         private Closure $handler,
         private array $middlewares = [],
@@ -59,9 +58,9 @@ readonly class ApiRoute implements Route
     }
 
     #[Override]
-    public function getMethods(): array
+    public function getMethod(): string
     {
-        return $this->methods;
+        return $this->method;
     }
 
     #[Override]

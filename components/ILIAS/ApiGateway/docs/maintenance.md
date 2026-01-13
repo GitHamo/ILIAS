@@ -29,7 +29,7 @@ The `ApiGateway` component provides a modern, modular architecture for building 
 * **`Webservice/`**: This is the "View" or "Formatting" layer.
   * `RestWebservice.php` is responsible for serializing data into the final JSON response structure for both successful and failed requests.
 * **`Routing/`**:
-  * `Route.php`: An interface that defines what an API endpoint is (path, methods, handler).
+  * `Route.php`: An interface that defines what an API endpoint is (path, method, handler).
   * `RoutesRegistry.php`: A singleton that collects all `Route` objects contributed by different components and ensures there are no duplicates.
   * `RoutesAutoloader.php`: Discovers and loads all `Route` objects contributed to the component system.
 * **`Activity/`**:

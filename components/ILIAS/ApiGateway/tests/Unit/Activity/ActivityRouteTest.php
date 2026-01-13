@@ -43,13 +43,10 @@ final class ActivityRouteTest extends TestCase
         );
     }
 
-    /**
-     * @param list<string> $expected
-     */
     #[DataProvider('activityTypeProvider')]
-    public function testGetMethodsReturnsCorrectHttpVerbsForActivityType(
+    public function testGetMethodReturnsCorrectHttpVerbsForActivityType(
         ActivityType $type,
-        array $expected,
+        string $expected,
     ): void {
         $actual = new ActivityRoute(
             new FakeTestActivity($type),
@@ -58,18 +55,18 @@ final class ActivityRouteTest extends TestCase
             $this->middlewares,
         );
 
-        self::assertSame($expected, $actual->getMethods());
+        self::assertSame($expected, $actual->getMethod());
     }
 
     /**
      * @return array<string, list<mixed>>
-     * @psalm-return array<string, array{ActivityType, list<string>}>
+     * @psalm-return array<string, array{ActivityType, string}>
      */
     public static function activityTypeProvider(): array
     {
         return [
-            'Command activity returns POST' => [ActivityType::Command, ['POST']],
-            'Query activity returns GET' => [ActivityType::Query, ['GET']],
+            'Command activity returns POST' => [ActivityType::Command, 'POST'],
+            'Query activity returns GET' => [ActivityType::Query, 'GET'],
         ];
     }
 

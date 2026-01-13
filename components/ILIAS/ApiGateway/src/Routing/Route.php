@@ -25,10 +25,15 @@ interface Route
     public function getPath(): string;
 
     /**
-     * @return array<string> list of HTTP methods this route responds to, e.g. ['GET', 'POST']
+     * @return string HTTP method this route responds to, e.g. 'GET' or 'POST'
      */
-    public function getMethods(): array;
+    public function getMethod(): string;
 
+    /**
+     * handler holding the business logic
+     *
+     * @return void
+     */
     public function getHandler(): RouteHandler;
 
     /**

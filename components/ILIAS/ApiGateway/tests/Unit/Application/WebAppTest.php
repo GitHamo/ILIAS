@@ -107,7 +107,7 @@ class WebAppTest extends TestCase
         $routeHandler = $this->createMock(RouteHandler::class);
         $routeMock = $this->createMock(Route::class);
 
-        $routeMock->method('getMethods')->willReturn(['GET']);
+        $routeMock->method('getMethod')->willReturn('GET');
         $routeMock->method('getPath')->willReturn('/test');
         $routeMock->method('getHandler')->willReturn($routeHandler);
 
@@ -153,7 +153,7 @@ class WebAppTest extends TestCase
         $webApp = $this->createWebApp();
 
         $routeMock = $this->createConfiguredMock(Route::class, [
-            'getMethods' => ['GET'],
+            'getMethod' => 'GET',
             'getPath' => '/test',
             'getHandler' => $routeHandler = $this->createMock(RouteHandler::class),
             'getMiddlewares' => ['Middleware1', 'Middleware2'],
@@ -181,7 +181,7 @@ class WebAppTest extends TestCase
         $groupProxyMock->expects(self::once())
             ->method('map')
             ->with(
-                ['GET'],
+                [$routeMock->getMethod()],
                 '/test',
                 $this->callback(function (callable $handler) use ($request, $response, $args) {
                     $handler($request, $response, $args);

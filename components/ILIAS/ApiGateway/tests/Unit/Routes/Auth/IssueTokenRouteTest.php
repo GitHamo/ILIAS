@@ -37,7 +37,7 @@ class IssueTokenRouteTest extends TestCase
 
         $this->assertSame('Create API Token', $actual->getName());
         $this->assertSame('/auth/token', $actual->getPath());
-        $this->assertSame(['POST'], $actual->getMethods());
+        $this->assertSame('POST', $actual->getMethod());
         $this->assertSame('Authenticates a user and returns a new token set (access and refresh tokens).', $actual->getDescription());
     }
 

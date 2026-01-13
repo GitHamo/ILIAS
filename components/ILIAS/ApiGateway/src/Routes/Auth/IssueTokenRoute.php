@@ -34,7 +34,7 @@ readonly class IssueTokenRoute extends ApiRoute
         parent::__construct(
             'Create API Token',
             '/auth/token',
-            ['POST'],
+            'POST',
             'Authenticates a user and returns a new token set (access and refresh tokens).',
             function (array $params): array {
                 $username = $params['username'] ?? '';

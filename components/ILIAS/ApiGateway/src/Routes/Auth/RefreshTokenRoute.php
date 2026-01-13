@@ -32,7 +32,7 @@ readonly class RefreshTokenRoute extends ApiRoute
         parent::__construct(
             'Refresh API Token',
             '/auth/refresh',
-            ['POST'],
+            'POST',
             'Exchanges a valid refresh token for a new token set. This should be used when the access token has expired.',
             function (array $params): array {
                 $refreshToken = $params['refresh_token'] ?? '';

@@ -27,7 +27,7 @@ final readonly class PingRoute extends ApiRoute
         parent::__construct(
             name: 'Ping',
             path: "/ping",
-            methods: ['GET'],
+            method: 'GET',
             description: 'A simple ping pong route for testing purposes.',
             handler: fn(array $params): array => ['pong' => true, ...$params],
         );

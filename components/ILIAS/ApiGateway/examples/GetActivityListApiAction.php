@@ -27,7 +27,7 @@ readonly class GetActivityListApiAction extends ApiRoute
         parent::__construct(
             'GetAllActivities',
             '/activities',
-            ['GET'],
+            'GET',
             'List all available activities in the webservice.',
             fn(): array => $routes,
         );

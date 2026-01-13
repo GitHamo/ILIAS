@@ -26,7 +26,7 @@ final class PingRouteTest extends TestCase
 
         self::assertSame('Ping', $this->route->getName());
         self::assertSame('/ping', $this->route->getPath());
-        self::assertSame(['GET'], $this->route->getMethods());
+        self::assertSame('GET', $this->route->getMethod());
         self::assertArrayHasKey('pong', $actual);
         self::assertTrue($actual['pong']);
     }
