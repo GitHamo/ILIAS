@@ -12770,6 +12770,7 @@ mme#:#item_updated#:#Item stored
 mme#:#main#:#Main Menu
 mme#:#mm_translation_lang#:#Language
 mme#:#mm_translation_trans#:#Translation
+mme#:#mme_lost_items#:#Nowhere assigned
 mme#:#move_to_item#:#Move to Items
 mme#:#move_to_top_item#:#Move to Top Items
 mme#:#msg_languages_added#:#Added languages
