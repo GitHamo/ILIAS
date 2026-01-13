@@ -113,7 +113,7 @@ final readonly class WebApp
                 foreach ($this->registry->all() as $route) {
                     $slimRoute = $group
                         ->map(
-                            $route->getMethod(),
+                            [$route->getMethod()],
                             $route->getPath(),
                             fn(Request $request, Response $response, array $args): Response => ($this->responseHandler)(
                                 $request,
