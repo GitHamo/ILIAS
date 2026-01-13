@@ -24,6 +24,7 @@ use DomainException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\Component\Activities\ObjectActivity;
 use ILIAS\Data\Result;
 use RuntimeException;
 use Throwable;
@@ -32,8 +33,7 @@ class ActivityRouteHandler implements RouteHandler
 {
     public function __construct(
         private Activity $activity,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function __invoke(array $params, ?AuthUser $user): mixed
@@ -45,6 +45,8 @@ class ActivityRouteHandler implements RouteHandler
             // @todo: create own exception
             throw new RuntimeException('You are not allowed to perform this activity.', 403);
         }
+
+        $parameters['auth_user_id'] = $userId;
 
         $result = $this->activity->perform($parameters);
 
@@ -80,6 +82,11 @@ class ActivityRouteHandler implements RouteHandler
      */
     private function validate(array $parameters): array
     {
+        if ($this->activity instanceof ObjectActivity && isset($parameters['id'])) {
+            $parameters['object_id'] = (int) $parameters['id'];
+            unset($parameters['id']);
+        }
+
         return $parameters;
     }
 }

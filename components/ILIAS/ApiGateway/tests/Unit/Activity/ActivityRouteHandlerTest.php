@@ -10,6 +10,9 @@ use Exception;
 use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\Component\Activities\ObjectActivity;
+use ILIAS\Data\Description\Description;
+use ILIAS\Data\Description\Factory as DescriptionFactory;
 use ILIAS\Data\Result;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -54,7 +57,7 @@ final class ActivityRouteHandlerTest extends TestCase
         $this->activityMock->expects(self::once())
             ->method('perform')
             ->with(
-                self::identicalTo($params),
+                self::equalTo(['foo' => 'bar', 'auth_user_id' => $userId]),
             );
 
         ($this->handler)($params, $this->currentUserMock);
@@ -115,5 +118,194 @@ final class ActivityRouteHandlerTest extends TestCase
         self::expectExceptionMessage($errorMessage);
 
         ($this->handler)([], $this->currentUserMock);
+    }
+
+    public function testReturnsResultDirectlyIfNotAResultInstance(): void
+    {
+        $result = 'some-string-result';
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->willReturn($result);
+
+        $actual = ($this->handler)([], null);
+
+        self::assertEquals($result, $actual);
+    }
+
+    public function testReturnsNullIfPerformReturnsNull(): void
+    {
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->willReturn(null);
+
+        $actual = ($this->handler)([], null);
+
+        self::assertNull($actual);
+    }
+
+    public function testReturnsResultValueOnSuccess(): void
+    {
+        $returnValue = 'some-value';
+        $result = $this->createConfiguredMock(Result::class, [
+            'isError' => false,
+            'value' => $returnValue,
+        ]);
+
+        $descriptionMock = $this->createMock(Description::class);
+        $descriptionMock->expects(self::once())
+                        ->method('matches')
+                        ->with($result)
+                        ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->willReturn($result);
+
+        $this->activityMock->expects(self::once())
+                           ->method('getOutputDescription')
+                           ->with(self::isInstanceOf(DescriptionFactory::class))
+                           ->willReturn($descriptionMock);
+
+        $actual = ($this->handler)([], null);
+
+        self::assertEquals($returnValue, $actual);
+    }
+
+    public function testThrowsExceptionIfOutputDescriptionDoesNotMatch(): void
+    {
+        $result = $this->createConfiguredMock(Result::class, [
+            'isError' => false,
+        ]);
+
+        $descriptionMock = $this->createMock(Description::class);
+        $descriptionMock->expects(self::once())
+                        ->method('matches')
+                        ->with($result)
+                        ->willReturn(false);
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->willReturn($result);
+
+        $this->activityMock->expects(self::once())
+                           ->method('getOutputDescription')
+                           ->willReturn($descriptionMock);
+
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('Output description does not match result.');
+
+        ($this->handler)([], null);
+    }
+
+    public function testValidateChangesIdToObjectidForObjectActivity(): void
+    {
+        $this->handler = new ActivityRouteHandler(
+            $this->activityMock = $this->createMock(ObjectActivity::class)
+        );
+
+        $params = [
+            'id' => '123',
+            'other' => 'value'
+        ];
+        $expectedParams = [
+            'other' => 'value',
+            'object_id' => 123,
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->with(
+                               0, // No user
+                               self::equalTo($expectedParams)
+                           )
+                           ->willReturn(true);
+
+        $expectedPerformParams = [
+            'other' => 'value',
+            'object_id' => 123,
+            'auth_user_id' => 0
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->with(self::equalTo($expectedPerformParams));
+
+        ($this->handler)($params, null);
+    }
+
+    public function testValidateDoesNothingForNormalActivity(): void
+    {
+        // setUp already creates a normal Activity mock and sets up handler
+        $params = [
+            'id' => '123',
+            'other' => 'value'
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->with(
+                               0,
+                               self::equalTo($params)
+                           )
+                           ->willReturn(true);
+
+        $expectedPerformParams = [
+            'id' => '123',
+            'other' => 'value',
+            'auth_user_id' => 0
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->with(self::equalTo($expectedPerformParams));
+
+        ($this->handler)($params, null);
+    }
+
+    public function testValidateDoesNothingWhenNoIdForObjectActivity(): void
+    {
+        $this->handler = new ActivityRouteHandler(
+            $this->activityMock = $this->createMock(ObjectActivity::class)
+        );
+
+        $params = [
+            'other' => 'value'
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('isAllowedToPerform')
+                           ->with(
+                               0,
+                               self::equalTo($params)
+                           )
+                           ->willReturn(true);
+
+        $expectedPerformParams = [
+            'other' => 'value',
+            'auth_user_id' => 0
+        ];
+
+        $this->activityMock->expects(self::once())
+                           ->method('perform')
+                           ->with(self::equalTo($expectedPerformParams));
+
+        ($this->handler)($params, null);
     }
 }
