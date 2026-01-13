@@ -45,7 +45,7 @@ class ActivityRoute implements Route
         $path = $this->namespace->getPath();
 
         if ($this->activity instanceof ObjectActivity) {
-            $path .= '/{id}';
+            $path .= '/{ref_id}';
         }
 
         return $path;

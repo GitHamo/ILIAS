@@ -98,7 +98,7 @@ When implementing the logic for an `Activity`-based route, there are two importa
 
     This `auth_user_id` value, if present, will override any client-provided input with the same key. It is recommended to use this `auth_user_id` for authorization checks within your `Activity`. You should not rely on it as a direct input for your business logic from the client's request.
 
-* **Accessing Object IDs:** If your `Activity` implements `ObjectActivity`, its route path will automatically include an `/{id}` segment. The integer value of this ID will be provided in the parameter array passed to your `perform` method under the key `'object_id'`. This `object_id` value will override any client-provided input with the same key.
+* **Accessing Object IDs:** If your `Activity` implements `ObjectActivity`, its route path will automatically include an `/{id}` segment. The integer value of this ID will be provided in the parameter array passed to your `perform` method under the key `'ref_id'`. This `ref_id` value will override any client-provided input with the same key.
 
 ---
 

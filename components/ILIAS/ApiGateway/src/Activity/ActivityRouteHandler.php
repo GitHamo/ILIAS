@@ -82,11 +82,6 @@ class ActivityRouteHandler implements RouteHandler
      */
     private function validate(array $parameters): array
     {
-        if ($this->activity instanceof ObjectActivity && isset($parameters['id'])) {
-            $parameters['object_id'] = (int) $parameters['id'];
-            unset($parameters['id']);
-        }
-
         return $parameters;
     }
 }
