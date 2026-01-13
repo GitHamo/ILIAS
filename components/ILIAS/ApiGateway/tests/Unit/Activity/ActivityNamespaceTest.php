@@ -40,6 +40,30 @@ final class ActivityNamespaceTest extends TestCase
                 'name' => 'QueryMy',
                 'expectedPath' => '/myvendor/mycomponent/my',
             ],
+            'name_with_get_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'GetMy',
+                'expectedPath' => '/myvendor/mycomponent/my',
+            ],
+            'name_with_queryget_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'QueryGetMy',
+                'expectedPath' => '/myvendor/mycomponent/getmy',
+            ],
+            'name_with_getquery_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'GetQueryMy',
+                'expectedPath' => '/myvendor/mycomponent/querymy',
+            ],
+            'get_in_the_middle_should_stay' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'MyGetActivity',
+                'expectedPath' => '/myvendor/mycomponent/myget',
+            ],
             'query_in_the_middle_should_stay' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
@@ -82,6 +106,12 @@ final class ActivityNamespaceTest extends TestCase
                 'name' => 'queryMyActivity', // ucfirst makes it QueryActivity, then str_replace removes Query
                 'expectedPath' => '/myvendor/mycomponent/my',
             ],
+            'name_with_lowercase_get_prefix' => [
+                'vendor' => 'MyVendor',
+                'component' => 'MyComponent',
+                'name' => 'getMyActivity',
+                'expectedPath' => '/myvendor/mycomponent/my',
+            ],
             'name_with_uppercase' => [
                 'vendor' => 'MyVendor',
                 'component' => 'MyComponent',
@@ -99,6 +129,12 @@ final class ActivityNamespaceTest extends TestCase
                 'component' => 'Component',
                 'name' => 'Query',
                 'expectedPath' => '/vendor/component', // ucfirst makes it Query, then str_replace removes Query
+            ],
+            'name_is_just_get' => [
+                'vendor' => 'Vendor',
+                'component' => 'Component',
+                'name' => 'Get',
+                'expectedPath' => '/vendor/component',
             ],
             'name_is_empty' => [
                 'vendor' => 'Vendor',

@@ -41,6 +41,8 @@ readonly class ActivityNamespace
 
         if (str_starts_with($subject, 'Query')) {
             $subject = substr($subject, 5); // 5 is the length of "Query"
+        } elseif (str_starts_with($subject, 'Get')) {
+            $subject = substr($subject, 3); // 3 is the length of "Get"
         }
 
         if (str_ends_with($subject, 'Activity')) {
