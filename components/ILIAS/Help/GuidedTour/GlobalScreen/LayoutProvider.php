@@ -32,6 +32,7 @@ use ILIAS\GlobalScreen\Scope\MainMenu\Collector\Renderer\Hasher;
 use ILIAS\GlobalScreen\Scope\isDecorateable;
 use ILIAS\UI\Component\Component;
 use ILIAS\GlobalScreen\Scope\Layout\Factory\MetaBarModification;
+use ILIAS\GlobalScreen\Scope\MainMenu\Factory\Item\Separator;
 
 class LayoutProvider extends AbstractModificationProvider
 {
@@ -78,7 +79,7 @@ class LayoutProvider extends AbstractModificationProvider
         // add id mapping of all main menu items to gui
         $this->globalScreen()->collector()->metaBar()->collectOnce();
         foreach ($this->globalScreen()->collector()->metaBar()->getRawItems() as $item) {
-            if ($item instanceof isDecorateable) {
+            if ($item instanceof isDecorateable && !$item instanceof Separator) {
                 $name = $item->getProviderIdentification()->getInternalIdentifier();
                 $item->addComponentDecorator(static function (Component $c) use ($name): ?Component {
                     return $c->withAdditionalOnLoadCode(static function (string $id) use ($name): string {
