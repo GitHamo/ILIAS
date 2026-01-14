@@ -78,7 +78,7 @@ final class ActivityRouteTest extends TestCase
         );
     }
 
-    public function testGetPathForObjectActivityAppendsRefId(): void
+    public function testGetPathForObjectActivityAppendsId(): void
     {
         $objectActivity = $this->createMock(ObjectActivity::class);
         $route = new ActivityRoute(
@@ -89,7 +89,7 @@ final class ActivityRouteTest extends TestCase
         );
 
         self::assertSame(
-            $this->routePath . '/{ref_id}',
+            $this->routePath . '/{id}',
             $route->getPath(),
         );
     }
