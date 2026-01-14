@@ -41,12 +41,12 @@ class ActivityRouteHandler implements RouteHandler
         $userId = $user ? $user->getId() : 0;
         $parameters = $this->validate($params);
 
+        $parameters['auth_user_id'] = $userId;
+
         if (false === $this->activity->isAllowedToPerform($userId, $parameters)) {
             // @todo: create own exception
             throw new RuntimeException('You are not allowed to perform this activity.', 403);
         }
-
-        $parameters['auth_user_id'] = $userId;
 
         $result = $this->activity->perform($parameters);
 

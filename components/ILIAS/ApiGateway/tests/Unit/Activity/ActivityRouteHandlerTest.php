@@ -41,6 +41,7 @@ final class ActivityRouteHandlerTest extends TestCase
         $params = [
             'foo' => 'bar',
         ];
+        $paramsWithUserId = array_merge($params, ['auth_user_id' => $userId]);
 
         $this->currentUserMock->expects(self::once())
             ->method('getId')
@@ -50,14 +51,14 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('isAllowedToPerform')
             ->with(
                 self::identicalTo($userId),
-                self::identicalTo($params),
+                self::identicalTo($paramsWithUserId),
             )
             ->willReturn(true);
 
         $this->activityMock->expects(self::once())
             ->method('perform')
             ->with(
-                self::equalTo(['foo' => 'bar', 'auth_user_id' => $userId]),
+                self::equalTo($paramsWithUserId),
             );
 
         ($this->handler)($params, $this->currentUserMock);
