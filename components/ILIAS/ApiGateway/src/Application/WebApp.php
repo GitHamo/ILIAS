@@ -41,14 +41,14 @@ final readonly class WebApp
      * @param SlimApp<\Psr\Container\ContainerInterface> $application
      */
     public function __construct(
+        private SlimApp $application,
         private WebConfig $configuration,
         private RoutesRegistry $registry,
         private MiddlewareRepository $middlewareRepository,
         private ResponseHandler $responseHandler,
         private ErrorHandler $errorHandler,
-        private LoggerInterface $logger,
         private ResponseFactory $responseFactory,
-        private SlimApp $application,
+        private LoggerInterface $logger,
     ) {
     }
 

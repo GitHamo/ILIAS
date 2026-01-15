@@ -256,6 +256,7 @@ class WebAppTest extends TestCase
         bool $logErrorDetails = false,
     ): WebApp {
         return new WebApp(
+            $this->slimApp,
             new WebConfig(
                 $baseUrl,
                 ServiceProtocol::REST,
@@ -268,9 +269,8 @@ class WebAppTest extends TestCase
             $this->middlewareRepository,
             $this->responseHandler,
             $this->errorHandler,
-            $this->logger,
             $this->responseFactory,
-            $this->slimApp,
+            $this->logger,
         );
     }
 }

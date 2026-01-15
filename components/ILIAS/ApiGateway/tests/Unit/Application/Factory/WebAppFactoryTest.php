@@ -62,7 +62,7 @@ final class WebAppFactoryTest extends TestCase
             $this->middlewareRepository,
             $this->activityRoutesAutoloader,
             $this->routesAutoloader,
-            $this->loggerFactory
+            $this->loggerFactory,
         );
     }
 
@@ -112,14 +112,14 @@ final class WebAppFactoryTest extends TestCase
             ->willReturn($applicationMock);
 
         $expected = new WebApp(
+            $applicationMock,
             $webConfigMock,
             $this->routesRegistry,
             $this->middlewareRepository,
             $responseHandlerMock,
             $errorHandlerMock,
-            $loggerMock,
             $this->responseFactory,
-            $applicationMock,
+            $loggerMock,
         );
 
         $actual = $this->factory->create($protocol);

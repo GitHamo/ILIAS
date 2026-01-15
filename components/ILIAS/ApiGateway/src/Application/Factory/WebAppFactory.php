@@ -68,14 +68,14 @@ final readonly class WebAppFactory
         $application = $this->httpServiceFactory->createWebApplication();
 
         return new WebApp(
+            $application, // slim app
             $config,
             $this->registry,
             $this->middlewareRepository,
             $responseHandler,
             $errorHandler,
-            $logger,
             $this->responseFactory,
-            $application, // slim app
+            $logger,
         );
     }
 
