@@ -76,12 +76,17 @@ class ilObjCertificateSettings extends ilObject
      */
     public function uploadBackgroundImage(UploadResult $upload_result): bool
     {
-        $old_identification = $this->getBackgroundImageIdentification() ?: '';
+        $old_identification = $this->getBackgroundImageIdentification();
         $identification = $this->irss->manage()->upload($upload_result, $this->stakeholder);
         $this->certificate_settings->set('cert_bg_image', $identification->serialize());
 
-        $this->certificate_repository->updateDefaultBackgroundImagePaths($identification, $old_identification);
-        $this->resource_handler->handleResourceChange($old_identification);
+        $this->certificate_repository->updateDefaultBackgroundImagePaths(
+            $identification,
+            $old_identification ?: ''
+        );
+        if ($old_identification instanceof ResourceIdentification) {
+            $this->resource_handler->handleResourceChange($old_identification);
+        }
 
         return $identification->serialize() !== '';
     }
