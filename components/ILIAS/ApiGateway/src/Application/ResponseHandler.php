@@ -21,7 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -48,7 +48,7 @@ readonly class ResponseHandler
         Request $request,
         Response $response,
         array $args,
-        RouteHandler $action,
+        Action $action,
     ): Response {
         /** @var AuthUser|null */
         $authUser = $request->getAttribute(self::ATTR_KEY_AUTH_USER);

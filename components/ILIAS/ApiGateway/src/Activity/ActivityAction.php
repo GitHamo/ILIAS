@@ -22,14 +22,14 @@ namespace ILIAS\ApiGateway\Activity;
 
 use DomainException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ObjectActivity;
 use ILIAS\Data\Result;
 use RuntimeException;
 use Throwable;
 
-class ActivityRouteHandler implements RouteHandler
+class ActivityAction implements Action
 {
     public function __construct(
         private Activity $activity,

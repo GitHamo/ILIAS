@@ -7,7 +7,7 @@ namespace Tests\Unit\Activity;
 use BadFunctionCallException;
 use DomainException;
 use Exception;
-use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
+use ILIAS\ApiGateway\Activity\ActivityAction;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ObjectActivity;
@@ -19,16 +19,16 @@ use PHPUnit\Framework\TestCase;
 use Override;
 use RuntimeException;
 
-final class ActivityRouteHandlerTest extends TestCase
+final class ActivityActionTest extends TestCase
 {
-    private ActivityRouteHandler $handler;
+    private ActivityAction $action;
     private Activity&MockObject $activityMock;
     private AuthUser&MockObject $currentUserMock;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->handler = new ActivityRouteHandler(
+        $this->action = new ActivityAction(
             $this->activityMock = $this->createMock(Activity::class),
         );
 
@@ -61,7 +61,7 @@ final class ActivityRouteHandlerTest extends TestCase
                 self::equalTo($paramsWithUserId),
             );
 
-        ($this->handler)($params, $this->currentUserMock);
+        ($this->action)($params, $this->currentUserMock);
     }
 
     public function testIgnoresTransformIdToObjectId(): void
@@ -86,7 +86,7 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('perform')
             ->with(self::equalTo($expectedParams));
 
-        ($this->handler)($params, null);
+        ($this->action)($params, null);
     }
 
     public function testTransformsIdToObjectId(): void
@@ -103,7 +103,7 @@ final class ActivityRouteHandlerTest extends TestCase
         ];
 
         $activityMock = $this->createMock(ObjectActivity::class);
-        $handler = new ActivityRouteHandler($activityMock);
+        $action = new ActivityAction($activityMock);
 
 
         $activityMock->expects(self::once())
@@ -115,7 +115,7 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('perform')
             ->with(self::equalTo($expectedParams));
 
-        ($handler)($params, null);
+        ($action)($params, null);
     }
 
     public function testDoesNotPerformActivityIfUserIsNotAuthorized(): void
@@ -131,7 +131,7 @@ final class ActivityRouteHandlerTest extends TestCase
         self::expectExceptionMessage('You are not allowed to perform this activity.');
         self::expectExceptionCode(403);
 
-        ($this->handler)([], null);
+        ($this->action)([], null);
     }
 
     public function testThrowsExceptionIfPerformResultHasError(): void
@@ -151,7 +151,7 @@ final class ActivityRouteHandlerTest extends TestCase
 
         self::expectException(BadFunctionCallException::class);
 
-        ($this->handler)([], $this->currentUserMock);
+        ($this->action)([], $this->currentUserMock);
     }
 
     public function testThrowsExceptionIfPerformResultHasStringError(): void
@@ -172,7 +172,7 @@ final class ActivityRouteHandlerTest extends TestCase
         self::expectException(DomainException::class);
         self::expectExceptionMessage($errorMessage);
 
-        ($this->handler)([], $this->currentUserMock);
+        ($this->action)([], $this->currentUserMock);
     }
 
     public function testReturnsResultDirectlyIfNotAResultInstance(): void
@@ -187,7 +187,7 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('perform')
             ->willReturn($result);
 
-        $actual = ($this->handler)([], null);
+        $actual = ($this->action)([], null);
 
         self::assertEquals($result, $actual);
     }
@@ -202,7 +202,7 @@ final class ActivityRouteHandlerTest extends TestCase
             ->method('perform')
             ->willReturn(null);
 
-        $actual = ($this->handler)([], null);
+        $actual = ($this->action)([], null);
 
         self::assertNull($actual);
     }
@@ -234,7 +234,7 @@ final class ActivityRouteHandlerTest extends TestCase
             ->with(self::isInstanceOf(DescriptionFactory::class))
             ->willReturn($descriptionMock);
 
-        $actual = ($this->handler)([], null);
+        $actual = ($this->action)([], null);
 
         self::assertEquals($returnValue, $actual);
     }
@@ -266,6 +266,6 @@ final class ActivityRouteHandlerTest extends TestCase
         self::expectException(RuntimeException::class);
         self::expectExceptionMessage('Output description does not match result.');
 
-        ($this->handler)([], null);
+        ($this->action)([], null);
     }
 }

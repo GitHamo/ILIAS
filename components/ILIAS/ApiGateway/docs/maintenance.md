@@ -29,7 +29,7 @@ The `ApiGateway` component provides a modern, modular architecture for building 
 * **`Webservice/`**: This is the "View" or "Formatting" layer.
   * `RestWebservice.php` is responsible for serializing data into the final JSON response structure for both successful and failed requests.
 * **`Routing/`**:
-  * `Route.php`: An interface that defines what an API endpoint is (path, method, handler).
+  * `Route.php`: An interface that defines what an API endpoint is (path, method, action).
   * `RoutesRegistry.php`: A singleton that collects all `Route` objects contributed by different components and ensures there are no duplicates.
   * `RoutesAutoloader.php`: Discovers and loads all `Route` objects contributed to the component system.
 * **`Activity/`**:
@@ -52,8 +52,8 @@ The `ApiGateway` component provides a modern, modular architecture for building 
 4. The `WebApp` configures the Slim application with global middlewares (like the `ErrorMiddleware`) and all the routes from the registry.
 5. The Slim application's routing middleware matches the incoming request to a registered route.
 6. Route-specific middlewares (e.g., `AuthenticationMiddleware`) are executed.
-7. If all middlewares pass, the `ResponseHandler` is invoked. It calls the route's specific handler logic (its `__invoke` method).
-8. The return value from the route handler is wrapped in a `Payload` object and passed to `RestWebservice` to be formatted into a standard JSON response.
+7. If all middlewares pass, the `ResponseHandler` is invoked. It calls the route's specific action (its `__invoke` method).
+8. The return value from the action is wrapped in a `Payload` object and passed to `RestWebservice` to be formatted into a standard JSON response.
 9. If at any point an exception is thrown, the `ErrorHandler` catches it and uses `RestWebservice` to format a standard JSON error response.
 
 ## How to Extend the ApiGateway Core

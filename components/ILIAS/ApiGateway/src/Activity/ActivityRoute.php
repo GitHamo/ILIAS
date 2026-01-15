@@ -20,8 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Activity;
 
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
@@ -34,10 +34,11 @@ class ActivityRoute implements Route
      */
     public function __construct(
         private Activity $activity,
-        private ActivityRouteHandler $handler,
+        private ActivityAction $action,
         private ActivityNamespace $namespace,
         private array $middlewares,
-    ) {}
+    ) {
+    }
 
     #[Override]
     public function getPath(): string
@@ -61,9 +62,9 @@ class ActivityRoute implements Route
     }
 
     #[Override]
-    public function getHandler(): RouteHandler
+    public function getAction(): Action
     {
-        return $this->handler;
+        return $this->action;
     }
 
     #[Override]

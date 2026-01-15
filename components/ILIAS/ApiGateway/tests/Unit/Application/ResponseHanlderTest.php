@@ -6,7 +6,7 @@ namespace Tests\Unit\Application;
 
 use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
-use ILIAS\ApiGateway\Routing\RouteHandler;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -61,9 +61,9 @@ class ResponseHanlderTest extends TestCase
             ->with(self::identicalTo('authenticated_user'))
             ->willReturn($finalRequest);
 
-        $routeHandlerMock = $this->createMock(RouteHandler::class);
+        $actionMock = $this->createMock(Action::class);
 
-        $routeHandlerMock->method('__invoke')
+        $actionMock->method('__invoke')
             ->with(
                 $this->callback(function (array $params) use ($mergedParams): bool {
                     self::assertEquals($mergedParams, $params);
@@ -107,7 +107,7 @@ class ResponseHanlderTest extends TestCase
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
-            $routeHandlerMock,
+            $actionMock,
         );
 
         self::assertSame($this->responseMock, $response);
@@ -126,8 +126,8 @@ class ResponseHanlderTest extends TestCase
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
         $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
 
-        $routeHandlerMock = $this->createMock(RouteHandler::class);
-        $routeHandlerMock->expects(self::once())
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
@@ -138,7 +138,7 @@ class ResponseHanlderTest extends TestCase
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
-            $routeHandlerMock
+            $actionMock
         );
     }
 
@@ -158,8 +158,8 @@ class ResponseHanlderTest extends TestCase
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
         $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
 
-        $routeHandlerMock = $this->createMock(RouteHandler::class);
-        $routeHandlerMock->expects(self::once())
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
@@ -170,7 +170,7 @@ class ResponseHanlderTest extends TestCase
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
-            $routeHandlerMock
+            $actionMock
         );
     }
 
@@ -190,8 +190,8 @@ class ResponseHanlderTest extends TestCase
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
         $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
 
-        $routeHandlerMock = $this->createMock(RouteHandler::class);
-        $routeHandlerMock->expects(self::once())
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
@@ -202,7 +202,7 @@ class ResponseHanlderTest extends TestCase
             $this->requestMock,
             $this->responseMock,
             $routeArgs,
-            $routeHandlerMock
+            $actionMock
         );
     }
 }

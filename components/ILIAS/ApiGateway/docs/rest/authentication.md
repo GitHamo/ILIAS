@@ -92,16 +92,16 @@ curl --location 'http://<ILIAS_BASE_URL>/rest/auth/refresh' \
 }
 ```
 
-## 3. Using the Authenticated User in Route Handlers
+## 3. Using the Authenticated User in Actions
 
 Once a request has been successfully authenticated by the system's middleware, the details of the authenticated user are made available to the route handler.
 
-The `__invoke` method of any `RouteHandler` (whether it's an `ApiRoute`, `Activity`, or custom `Route` class) receives the authenticated user as its second parameter, an instance of `ILIAS\ApiGateway\Auth\Domain\Model\AuthUser` (or `null` if the route doesn't require authentication, or if the user is not authenticated for some reason).
+The `__invoke` method of any `Action` (whether it's from an `ApiRoute`, `Activity`, or custom `Route` class) receives the authenticated user as its second parameter, an instance of `ILIAS\ApiGateway\Auth\Domain\Model\AuthUser` (or `null` if the route doesn't require authentication, or if the user is not authenticated for some reason).
 
 ```php
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 
-// Inside the RouteHandler's __invoke method:
+// Inside the Action's __invoke method:
 public function __invoke(array $params, ?AuthUser $user)
 {
     if ($user !== null) {
@@ -116,4 +116,4 @@ public function __invoke(array $params, ?AuthUser $user)
 }
 ```
 
-This ensures that business logic within route handlers can directly access user context without needing to manually parse tokens or perform authentication checks again. If a route *requires* authentication and it fails, the request will be rejected by the middleware *before* it reaches the `__invoke` method.
+This ensures that business logic within route actions can directly access user context without needing to manually parse tokens or perform authentication checks again. If a route *requires* authentication and it fails, the request will be rejected by the middleware *before* it reaches the `__invoke` method.

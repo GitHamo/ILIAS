@@ -29,7 +29,7 @@ final readonly class PingRoute extends ApiRoute
             path: "/ping",
             method: 'GET',
             description: 'A simple ping pong route for testing purposes.',
-            handler: fn(array $params): array => ['pong' => true, ...$params],
+            action: fn(array $params): array => ['pong' => true, ...$params],
         );
     }
 }

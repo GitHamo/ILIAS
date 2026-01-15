@@ -22,7 +22,7 @@ namespace ILIAS\ApiGateway\Routing;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 
-interface RouteHandler
+interface Action
 {
     /**
      * @param array<string, mixed> $params

@@ -119,7 +119,7 @@ final readonly class WebApp
                                 $request,
                                 $response,
                                 $args,
-                                $route->getHandler(),
+                                $route->getAction(),
                             ),
                         );
 

@@ -52,7 +52,7 @@ class RefreshTokenRouteTest extends TestCase
             ->with($this->identicalTo($refreshToken))
             ->willReturn($tokenSet);
 
-        $actual = $this->route->getHandler()(['refresh_token' => $refreshToken], null);
+        $actual = $this->route->getAction()(['refresh_token' => $refreshToken], null);
 
         $this->assertSame($expected, $actual);
     }
@@ -67,7 +67,7 @@ class RefreshTokenRouteTest extends TestCase
         $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Refresh token is missing or empty.');
 
-        $this->route->getHandler()($params, null);
+        $this->route->getAction()($params, null);
     }
 
     /**

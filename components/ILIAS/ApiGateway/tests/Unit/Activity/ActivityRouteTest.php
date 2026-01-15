@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Activity;
 
+use ILIAS\ApiGateway\Activity\ActivityAction;
 use ILIAS\ApiGateway\Activity\ActivityNamespace;
 use ILIAS\ApiGateway\Activity\ActivityRoute;
-use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Override;
 use Tests\Unit\Fixtures\FakeTestActivity;
 
 final class ActivityRouteTest extends TestCase
 {
     private Activity $activity;
-    private MockObject&ActivityRouteHandler $handlerMock;
+    private MockObject&ActivityAction $actionMock;
     private MockObject&ActivityNamespace $namespaceMock;
     private string $routePath = "/foo/bar/baz";
     /** @var array<string> */
@@ -30,14 +30,14 @@ final class ActivityRouteTest extends TestCase
     protected function setUp(): void
     {
         $this->activity = new FakeTestActivity();
-        $this->handlerMock = $this->createMock(ActivityRouteHandler::class);
+        $this->actionMock = $this->createMock(ActivityAction::class);
         $this->namespaceMock = $this->createConfiguredMock(ActivityNamespace::class, [
             'getPath' => $this->routePath,
         ]);
 
         $this->route = new ActivityRoute(
             $this->activity,
-            $this->handlerMock,
+            $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,
         );
@@ -50,7 +50,7 @@ final class ActivityRouteTest extends TestCase
     ): void {
         $actual = new ActivityRoute(
             new FakeTestActivity($type),
-            $this->handlerMock,
+            $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,
         );
@@ -83,7 +83,7 @@ final class ActivityRouteTest extends TestCase
         $objectActivity = $this->createMock(ObjectActivity::class);
         $route = new ActivityRoute(
             $objectActivity,
-            $this->handlerMock,
+            $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,
         );
@@ -94,11 +94,11 @@ final class ActivityRouteTest extends TestCase
         );
     }
 
-    public function testHasAccessorToRouteHandler(): void
+    public function testHasAccessorToAction(): void
     {
         self::assertSame(
-            $this->handlerMock,
-            $this->route->getHandler(),
+            $this->actionMock,
+            $this->route->getAction(),
         );
     }
 

@@ -64,7 +64,7 @@ class IssueTokenRouteTest extends TestCase
             ->with($this->identicalTo($user))
             ->willReturn($tokenSet);
 
-        $actual = $this->route->getHandler()([
+        $actual = $this->route->getAction()([
             'username' => $username,
             'password' => $password,
         ], null);
@@ -82,7 +82,7 @@ class IssueTokenRouteTest extends TestCase
         $this->expectExceptionCode(400);
         $this->expectExceptionMessage('Username or password is empty.');
 
-        $this->route->getHandler()($params, null);
+        $this->route->getAction()($params, null);
     }
 
     /**

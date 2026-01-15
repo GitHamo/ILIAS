@@ -22,8 +22,8 @@ namespace ILIAS\ApiGateway\Routes;
 
 use Closure;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteHandler;
 use Override;
 
 readonly class ApiRoute implements Route
@@ -36,7 +36,7 @@ readonly class ApiRoute implements Route
         private string $path,
         private string $method,
         private string $description,
-        private Closure $handler,
+        private Closure $action,
         private array $middlewares = [],
     ) {
     }
@@ -64,9 +64,9 @@ readonly class ApiRoute implements Route
     }
 
     #[Override]
-    public function getHandler(): RouteHandler
+    public function getAction(): Action
     {
-        return new class ($this->handler) implements RouteHandler {
+        return new class ($this->action) implements Action {
             public function __construct(private Closure $handle)
             {
             }

@@ -30,11 +30,11 @@ interface Route
     public function getMethod(): string;
 
     /**
-     * handler holding the business logic
+     * action holding the business logic
      *
      * @return void
      */
-    public function getHandler(): RouteHandler;
+    public function getAction(): Action;
 
     /**
      * @return array<string> list of namespaces of middleware classes

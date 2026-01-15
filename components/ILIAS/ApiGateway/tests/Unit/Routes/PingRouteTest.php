@@ -22,7 +22,7 @@ final class PingRouteTest extends TestCase
     public function testCreatesRouteWithResults(): void
     {
         /** @var array<string, mixed> */
-        $actual = $this->route->getHandler()([], null);
+        $actual = $this->route->getAction()([], null);
 
         self::assertSame('Ping', $this->route->getName());
         self::assertSame('/ping', $this->route->getPath());
@@ -34,7 +34,7 @@ final class PingRouteTest extends TestCase
     public function testCreatesRouteWithParameters(): void
     {
         /** @var array<string, mixed> */
-        $actual = $this->route->getHandler()(['foo' => 'bar'], null);
+        $actual = $this->route->getAction()(['foo' => 'bar'], null);
 
         self::assertArrayHasKey('foo', $actual);
         self::assertSame('bar', $actual['foo']);

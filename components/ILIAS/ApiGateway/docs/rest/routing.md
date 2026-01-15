@@ -124,7 +124,7 @@ $contribute[Route::class] = static fn(): Route =>
         path: "/ping",
         method: 'GET',
         description: 'A simple ping pong route for testing purposes.',
-        handler: fn(): string => 'Pong!',
+        action: fn(): string => 'Pong!',
     );
 ```
 
@@ -134,7 +134,7 @@ This approach is straightforward and easy to understand for anyone familiar with
 
 * **`path: "/ping"`**: This is the URL fragment for the endpoint.
 * **`method: 'GET'`**: This route will only respond to `GET` requests.
-* **`handler: fn(): string => 'Pong!'`**: This is the actual code that executes. In this case, it's a simple anonymous function (a `Closure`) that returns the string "Pong!". This is what gets sent back to the user as the response body.
+* **`action: fn(): string => 'Pong!'`**: This is the actual code that executes. In this case, it's a simple anonymous function (a `Closure`) that returns the string "Pong!". This is what gets sent back to the user as the response body.
 
 ---
 
@@ -152,10 +152,10 @@ A class is created that defines all the route's properties and logic. Just like 
 ## Components/Vendor/MyModule/GetUserByIdRoute.php
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteHandler;
 
-class GetCourseByIdRoute implements Route, RouteHandler
+class GetCourseByIdRoute implements Route, Action
 {
     // Dependencies can be injected via the constructor
     public function __construct(private CourseRepository $repository)

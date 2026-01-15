@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Activity;
 
+use ILIAS\ApiGateway\Activity\ActivityAction;
 use ILIAS\ApiGateway\Activity\ActivityNamespace;
 use ILIAS\ApiGateway\Activity\ActivityNamespaceFactory;
 use ILIAS\ApiGateway\Activity\ActivityRoute;
 use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
-use ILIAS\ApiGateway\Activity\ActivityRouteHandler;
 use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware;
 use ILIAS\Component\Activities\Activity;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +28,7 @@ class ActivityRouteFactoryTest extends TestCase
 
         $expected = new ActivityRoute(
             $activity,
-            new ActivityRouteHandler($activity),
+            new ActivityAction($activity),
             $namespace,
             [
                 AuthenticationMiddleware::class,
@@ -44,8 +44,8 @@ class ActivityRouteFactoryTest extends TestCase
         self::assertEquals($expected, $actual);
 
         self::assertInstanceOf(
-            ActivityRouteHandler::class,
-            $actual->getHandler(),
+            ActivityAction::class,
+            $actual->getAction(),
         );
     }
 }

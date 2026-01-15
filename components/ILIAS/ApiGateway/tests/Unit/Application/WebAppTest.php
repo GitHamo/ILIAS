@@ -9,8 +9,8 @@ use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteHandler;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\HTTP\Response\ResponseFactory;
@@ -98,18 +98,18 @@ class WebAppTest extends TestCase
      * Business Case: When a request matches a defined API endpoint, the system should hand it off
      * to the central response handler to be processed.
      */
-    public function testDispatchToTheCorrectHandlerWhenRouteIsMatched(): void
+    public function testDispatchToTheCorrectActionWhenRouteIsMatched(): void
     {
         $webApp = $this->createWebApp(
             isEnabled: true,
         );
 
-        $routeHandler = $this->createMock(RouteHandler::class);
+        $action = $this->createMock(Action::class);
         $routeMock = $this->createMock(Route::class);
 
         $routeMock->method('getMethod')->willReturn('GET');
         $routeMock->method('getPath')->willReturn('/test');
-        $routeMock->method('getHandler')->willReturn($routeHandler);
+        $routeMock->method('getAction')->willReturn($action);
 
         $this->registry->expects(self::once())
             ->method('all')
@@ -131,7 +131,7 @@ class WebAppTest extends TestCase
 
         $this->responseHandler->expects(self::once())
             ->method('__invoke')
-            ->with($request, $response, $args, $routeHandler);
+            ->with($request, $response, $args, $action);
 
         // Inside the callback, we immediately execute the handler to verify it triggers the response handler expectation above.
         $groupProxyMock->expects(self::once())
@@ -155,7 +155,7 @@ class WebAppTest extends TestCase
         $routeMock = $this->createConfiguredMock(Route::class, [
             'getMethod' => 'GET',
             'getPath' => '/test',
-            'getHandler' => $routeHandler = $this->createMock(RouteHandler::class),
+            'getAction' => $action = $this->createMock(Action::class),
             'getMiddlewares' => ['Middleware1', 'Middleware2'],
         ]);
 
@@ -175,7 +175,7 @@ class WebAppTest extends TestCase
 
         $this->responseHandler->expects(self::once())
             ->method('__invoke')
-            ->with($request, $response, $args, $routeHandler);
+            ->with($request, $response, $args, $action);
 
         // Inside the callback, we immediately execute the handler to verify it triggers the response handler expectation above.
         $groupProxyMock->expects(self::once())
