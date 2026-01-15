@@ -39,12 +39,12 @@ final readonly class WebAppFactory
         private HttpConfigFactory $httpConfigFactory,
         private HttpServiceFactory $httpServiceFactory,
         private WebserviceFactory $webserviceFactory,
-        private ResponseFactory $responseFactory,
         private RoutesRegistry $registry,
-        private MiddlewareRepository $middlewareRepository,
-        private ActivityRoutesAutoloader $activityRoutesAutoloader,
         private RoutesAutoloader $routesAutoloader,
-        private WebserviceLoggerFactory $loggerFactory,
+        private ActivityRoutesAutoloader $activityRoutesAutoloader,
+        private MiddlewareRepository $middlewareRepository,
+        private ResponseFactory $responseFactory,
+        private WebserviceLoggerFactory $loggerFactory
     ) {
     }
 
@@ -54,28 +54,22 @@ final readonly class WebAppFactory
 
         $config = $this->httpConfigFactory->createWebConfig($protocol);
         $webservice = $this->webserviceFactory->create($config);
-        $responseHandler = $this->httpServiceFactory->createResponseHandler($webservice);
         $logger = $this->loggerFactory->create($protocol->value);
-        $errorHandler = $this->httpServiceFactory->createErrorHandler(
-            $webservice,
-            $config,
-            $logger,
-            $this->responseFactory,
-        );
-        /**
-         * @var \Slim\App<\Psr\Container\ContainerInterface>
-         */
-        $application = $this->httpServiceFactory->createWebApplication();
 
         return new WebApp(
-            $application, // slim app
+            $this->httpServiceFactory->createWebApplication(),
             $config,
             $this->registry,
             $this->middlewareRepository,
-            $responseHandler,
-            $errorHandler,
+            $this->httpServiceFactory->createResponseHandler($webservice),
+            $this->httpServiceFactory->createErrorHandler(
+                $webservice,
+                $config,
+                $logger,
+                $this->responseFactory
+            ),
             $this->responseFactory,
-            $logger,
+            $logger
         );
     }
 

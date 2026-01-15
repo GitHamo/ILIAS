@@ -86,22 +86,22 @@ class ApiGateway implements Component\Component
             $internal[HttpConfigFactory::class],
             new HttpServiceFactory(),
             new WebserviceFactory(),
-            $use[HTTP\Response\ResponseFactory::class],
             $internal[RoutesRegistry::class],
-            new MiddlewareRepository(
-                $seek[MiddlewareInterface::class],
-            ),
-            new ActivityRoutesAutoloader(
-                $internal[RoutesRegistry::class],
-                $use[Component\Activities\Repository::class],
-                $internal[ActivityRouteFactory::class],
-            ),
             new RoutesAutoloader(
                 $internal[RoutesRegistry::class],
                 new RouteStaticRepository(
                     $seek[ApiGateway\Routing\Route::class],
                 ),
             ),
+            new ActivityRoutesAutoloader(
+                $internal[RoutesRegistry::class],
+                $use[Component\Activities\Repository::class],
+                $internal[ActivityRouteFactory::class],
+            ),
+            new MiddlewareRepository(
+                $seek[MiddlewareInterface::class],
+            ),
+            $use[HTTP\Response\ResponseFactory::class],
             new WebserviceLoggerFactory(),
         );
 
@@ -123,6 +123,13 @@ class ApiGateway implements Component\Component
 
         ## /ping
         $contribute[Route::class] = static fn(): Route => new ApiGateway\Routes\PingRoute();
+
+        ## /activities
+        $contribute[Route::class] = static fn(): Route => new ApiGateway\Examples\GetActivityListApiAction(
+            $use[Component\Activities\Repository::class],
+            $internal[ActivityRouteFactory::class],
+            'rest',
+        );
 
         ## /auth/token
         $contribute[Route::class] = static fn(): Route =>

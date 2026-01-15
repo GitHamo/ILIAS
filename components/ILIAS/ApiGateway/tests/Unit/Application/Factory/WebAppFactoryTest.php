@@ -57,11 +57,11 @@ final class WebAppFactoryTest extends TestCase
             $this->httpConfigFactory,
             $this->httpServiceFactory,
             $this->webserviceFactory,
-            $this->responseFactory,
             $this->routesRegistry,
-            $this->middlewareRepository,
-            $this->activityRoutesAutoloader,
             $this->routesAutoloader,
+            $this->activityRoutesAutoloader,
+            $this->middlewareRepository,
+            $this->responseFactory,
             $this->loggerFactory,
         );
     }
