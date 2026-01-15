@@ -6,8 +6,8 @@ namespace Tests\Unit\Activity;
 
 use BadFunctionCallException;
 use DomainException;
-use Exception;
 use ILIAS\ApiGateway\Activity\ActivityAction;
+use ILIAS\ApiGateway\Application\Exception\AuthorizationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ObjectActivity;
@@ -127,7 +127,7 @@ final class ActivityActionTest extends TestCase
         $this->activityMock->expects(self::never())
             ->method('perform');
 
-        self::expectException(RuntimeException::class);
+        self::expectException(AuthorizationException::class);
         self::expectExceptionMessage('You are not allowed to perform this activity.');
         self::expectExceptionCode(403);
 
