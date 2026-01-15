@@ -1940,9 +1940,9 @@ class ilObjTestGUI extends ilObjectGUI implements ilCtrlBaseClassInterface, ilDe
 
             $message = $this->lng->txt('test_has_datasets_warning_page_view');
             $massage_box = $this->ui_factory->messageBox()->info($message)->withLinks([$link]);
-            $this->tpl->setCurrentBlock('mess');
+            $this->tpl->setCurrentBlock('pax_info_message');
             $this->tpl->setVariable(
-                'MESSAGE',
+                'PAX_INFO_MESSAGE',
                 $this->ui_renderer->render($massage_box)
             );
             $this->tpl->parseCurrentBlock();
