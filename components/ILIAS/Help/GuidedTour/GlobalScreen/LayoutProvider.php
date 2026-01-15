@@ -79,7 +79,7 @@ class LayoutProvider extends AbstractModificationProvider
         // add id mapping of all main menu items to gui
         $this->globalScreen()->collector()->metaBar()->collectOnce();
         foreach ($this->globalScreen()->collector()->metaBar()->getRawItems() as $item) {
-            if ($item instanceof isDecorateable && !$item instanceof Separator) {
+            if ($item instanceof isDecorateable) {
                 $name = $item->getProviderIdentification()->getInternalIdentifier();
                 $item->addComponentDecorator(static function (Component $c) use ($name): ?Component {
                     return $c->withAdditionalOnLoadCode(static function (string $id) use ($name): string {
