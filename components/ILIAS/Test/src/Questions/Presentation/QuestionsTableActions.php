@@ -79,7 +79,8 @@ class QuestionsTableActions
 
         return $row->withDisabledAction(
             self::ACTION_DELETE,
-            $this->is_in_test_with_random_question_set && !$this->is_in_test_with_results
+            $this->is_in_test_with_random_question_set
+                || $this->is_in_test_with_results && !$this->is_adjusting_questions_with_results_allowed
         )->withDisabledAction(self::ACTION_COPY, $disable_default_actions)
             ->withDisabledAction(self::ACTION_ADD_TO_POOL, $this->is_in_test_with_random_question_set)
             ->withDisabledAction(self::ACTION_EDIT_QUESTION, $disable_default_actions)
