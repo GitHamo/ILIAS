@@ -77,11 +77,7 @@ class QuestionsTableActions
         $disable_default_actions = $this->is_in_test_with_random_question_set
             || $this->is_in_test_with_results;
 
-        return $row->withDisabledAction(
-            self::ACTION_DELETE,
-            $this->is_in_test_with_random_question_set
-                || $this->is_in_test_with_results && !$this->is_adjusting_questions_with_results_allowed
-        )->withDisabledAction(self::ACTION_COPY, $disable_default_actions)
+        return $row->withDisabledAction(self::ACTION_COPY, $disable_default_actions)
             ->withDisabledAction(self::ACTION_ADD_TO_POOL, $this->is_in_test_with_random_question_set)
             ->withDisabledAction(self::ACTION_EDIT_QUESTION, $disable_default_actions)
             ->withDisabledAction(self::ACTION_EDIT_PAGE, $disable_default_actions)
@@ -121,7 +117,8 @@ class QuestionsTableActions
             self::ACTION_DOWNLOAD_FILE_QUESTION_ANSWERS => $ag('single', 'download_all_files', self::ACTION_DOWNLOAD_FILE_QUESTION_ANSWERS),
         ];
 
-        if (!$this->test_obj->isRandomTest()) {
+        if (!$this->is_in_test_with_random_question_set
+           && (!$this->is_in_test_with_results || $this->is_adjusting_questions_with_results_allowed)) {
             $actions[self::ACTION_DELETE] = $ag('standard', 'delete', self::ACTION_DELETE)
                 ->withAsync();
         }
