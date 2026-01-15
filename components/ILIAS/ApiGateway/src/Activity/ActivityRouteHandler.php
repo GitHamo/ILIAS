@@ -41,6 +41,11 @@ class ActivityRouteHandler implements RouteHandler
         $userId = $user ? $user->getId() : 0;
         $parameters = $this->validate($params);
 
+        if ($this->activity instanceof ObjectActivity && isset($parameters['id'])) {
+            $parameters['object_id'] = (int) $parameters['id'];
+            unset($parameters['id']);
+        }
+
         $parameters['auth_user_id'] = $userId;
 
         if (false === $this->activity->isAllowedToPerform($userId, $parameters)) {

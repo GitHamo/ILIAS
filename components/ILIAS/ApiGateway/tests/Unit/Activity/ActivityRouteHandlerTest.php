@@ -64,6 +64,60 @@ final class ActivityRouteHandlerTest extends TestCase
         ($this->handler)($params, $this->currentUserMock);
     }
 
+    public function testIgnoresTransformIdToObjectId(): void
+    {
+        $params = [
+            'id' => 456,
+            'foo' => 'bar',
+        ];
+
+        $expectedParams = [
+            'id' => 456,
+            'foo' => 'bar',
+            'auth_user_id' => 0,
+        ];
+
+        $this->activityMock->expects(self::once())
+            ->method('isAllowedToPerform')
+            ->with(0, self::equalTo($expectedParams))
+            ->willReturn(true);
+
+        $this->activityMock->expects(self::once())
+            ->method('perform')
+            ->with(self::equalTo($expectedParams));
+
+        ($this->handler)($params, null);
+    }
+
+    public function testTransformsIdToObjectId(): void
+    {
+        $params = [
+            'id' => 456,
+            'foo' => 'bar',
+        ];
+
+        $expectedParams = [
+            'object_id' => 456,
+            'foo' => 'bar',
+            'auth_user_id' => 0,
+        ];
+
+        $activityMock = $this->createMock(ObjectActivity::class);
+        $handler = new ActivityRouteHandler($activityMock);
+
+
+        $activityMock->expects(self::once())
+            ->method('isAllowedToPerform')
+            ->with(0, self::equalTo($expectedParams))
+            ->willReturn(true);
+
+        $activityMock->expects(self::once())
+            ->method('perform')
+            ->with(self::equalTo($expectedParams));
+
+        ($handler)($params, null);
+    }
+
     public function testDoesNotPerformActivityIfUserIsNotAuthorized(): void
     {
         $this->activityMock->expects(self::once())
@@ -126,12 +180,12 @@ final class ActivityRouteHandlerTest extends TestCase
         $result = 'some-string-result';
 
         $this->activityMock->expects(self::once())
-                           ->method('isAllowedToPerform')
-                           ->willReturn(true);
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
-                           ->method('perform')
-                           ->willReturn($result);
+            ->method('perform')
+            ->willReturn($result);
 
         $actual = ($this->handler)([], null);
 
@@ -141,12 +195,12 @@ final class ActivityRouteHandlerTest extends TestCase
     public function testReturnsNullIfPerformReturnsNull(): void
     {
         $this->activityMock->expects(self::once())
-                           ->method('isAllowedToPerform')
-                           ->willReturn(true);
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
-                           ->method('perform')
-                           ->willReturn(null);
+            ->method('perform')
+            ->willReturn(null);
 
         $actual = ($this->handler)([], null);
 
@@ -163,22 +217,22 @@ final class ActivityRouteHandlerTest extends TestCase
 
         $descriptionMock = $this->createMock(Description::class);
         $descriptionMock->expects(self::once())
-                        ->method('matches')
-                        ->with($result)
-                        ->willReturn(true);
+            ->method('matches')
+            ->with($result)
+            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
-                           ->method('isAllowedToPerform')
-                           ->willReturn(true);
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
-                           ->method('perform')
-                           ->willReturn($result);
+            ->method('perform')
+            ->willReturn($result);
 
         $this->activityMock->expects(self::once())
-                           ->method('getOutputDescription')
-                           ->with(self::isInstanceOf(DescriptionFactory::class))
-                           ->willReturn($descriptionMock);
+            ->method('getOutputDescription')
+            ->with(self::isInstanceOf(DescriptionFactory::class))
+            ->willReturn($descriptionMock);
 
         $actual = ($this->handler)([], null);
 
@@ -193,21 +247,21 @@ final class ActivityRouteHandlerTest extends TestCase
 
         $descriptionMock = $this->createMock(Description::class);
         $descriptionMock->expects(self::once())
-                        ->method('matches')
-                        ->with($result)
-                        ->willReturn(false);
+            ->method('matches')
+            ->with($result)
+            ->willReturn(false);
 
         $this->activityMock->expects(self::once())
-                           ->method('isAllowedToPerform')
-                           ->willReturn(true);
+            ->method('isAllowedToPerform')
+            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
-                           ->method('perform')
-                           ->willReturn($result);
+            ->method('perform')
+            ->willReturn($result);
 
         $this->activityMock->expects(self::once())
-                           ->method('getOutputDescription')
-                           ->willReturn($descriptionMock);
+            ->method('getOutputDescription')
+            ->willReturn($descriptionMock);
 
         self::expectException(RuntimeException::class);
         self::expectExceptionMessage('Output description does not match result.');
