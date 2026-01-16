@@ -664,7 +664,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
     {
         $this->getLogger()->debug('Trying apache authentication');
 
-        $credentials = new ilAuthFrontendCredentialsApache($this->httpRequest, $this->ctrl);
+        $credentials = new AuthFrontendCredentialsApache($this->http, $this->refinery, $this->ctrl);
         $credentials->initFromRequest();
 
         $provider_factory = new ilAuthProviderFactory();
