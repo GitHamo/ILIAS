@@ -62,7 +62,7 @@ class ilAuthFrontendCredentialsApache extends ilAuthFrontendCredentials
             return;
         }
 
-        $redirect_url = ilUtil::getHtmlPath('./public/sso/index.php?force_mode_apache=1');
+        $redirect_url = ilUtil::getHtmlPath('./sso/index.php?force_mode_apache=1');
 
         if ($this->http->wrapper()->query()->has('target')) {
             $url = (string) ($this->http->request()->getServerParams()['REQUEST_URI'] ?? '');
