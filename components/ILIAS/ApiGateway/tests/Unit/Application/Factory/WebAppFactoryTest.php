@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Factory;
 
-use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\ErrorHandler;
 use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Application\Factory\HttpServiceFactory;
+use ILIAS\ApiGateway\Application\Factory\RoutesRegistryFactory;
 use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
 use ILIAS\ApiGateway\Application\ResponseHandler;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
-use ILIAS\ApiGateway\Routing\RoutesAutoloader;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
@@ -31,11 +30,9 @@ final class WebAppFactoryTest extends TestCase
     private HttpConfigFactory&MockObject $httpConfigFactory;
     private HttpServiceFactory&MockObject $httpServiceFactory;
     private WebserviceFactory&MockObject $webserviceFactory;
-    private ResponseFactory&MockObject $responseFactory;
-    private RoutesRegistry&MockObject $routesRegistry;
+    private RoutesRegistryFactory&MockObject $routesRegistryFactory;
     private MiddlewareRepository&MockObject $middlewareRepository;
-    private ActivityRoutesAutoloader&MockObject $activityRoutesAutoloader;
-    private RoutesAutoloader&MockObject $routesAutoloader;
+    private ResponseFactory&MockObject $responseFactory;
     private WebserviceLoggerFactory&MockObject $loggerFactory;
 
     #[\Override]
@@ -46,20 +43,16 @@ final class WebAppFactoryTest extends TestCase
         $this->httpConfigFactory = $this->createMock(HttpConfigFactory::class);
         $this->httpServiceFactory = $this->createMock(HttpServiceFactory::class);
         $this->webserviceFactory = $this->createMock(WebserviceFactory::class);
-        $this->responseFactory = $this->createMock(ResponseFactory::class);
-        $this->routesRegistry = $this->createMock(RoutesRegistry::class);
+        $this->routesRegistryFactory = $this->createMock(RoutesRegistryFactory::class);
         $this->middlewareRepository = $this->createMock(MiddlewareRepository::class);
-        $this->activityRoutesAutoloader = $this->createMock(ActivityRoutesAutoloader::class);
-        $this->routesAutoloader = $this->createMock(RoutesAutoloader::class);
+        $this->responseFactory = $this->createMock(ResponseFactory::class);
         $this->loggerFactory = $this->createMock(WebserviceLoggerFactory::class);
 
         $this->factory = new WebAppFactory(
             $this->httpConfigFactory,
             $this->httpServiceFactory,
             $this->webserviceFactory,
-            $this->routesRegistry,
-            $this->routesAutoloader,
-            $this->activityRoutesAutoloader,
+            $this->routesRegistryFactory,
             $this->middlewareRepository,
             $this->responseFactory,
             $this->loggerFactory,
@@ -71,6 +64,7 @@ final class WebAppFactoryTest extends TestCase
         $protocol = ServiceProtocol::SOAP;
         $webConfigMock = $this->createMock(WebConfig::class);
         $webserviceMock = $this->createMock(Webservice::class);
+        $routesRegistryMock = $this->createMock(RoutesRegistry::class);
         $responseHandlerMock = $this->createMock(ResponseHandler::class);
         $loggerMock = $this->createMock(LoggerInterface::class);
         $errorHandlerMock = $this->createMock(ErrorHandler::class);
@@ -82,15 +76,19 @@ final class WebAppFactoryTest extends TestCase
             ->with(self::identicalTo($protocol))
             ->willReturn($webConfigMock);
 
-        $this->webserviceFactory->expects(self::once())
-            ->method('create')
-            ->with(self::identicalTo($webConfigMock))
-            ->willReturn($webserviceMock);
-
         $this->httpServiceFactory->expects(self::once())
             ->method('createResponseHandler')
             ->with(self::identicalTo($webserviceMock))
             ->willReturn($responseHandlerMock);
+
+        $this->routesRegistryFactory->expects(self::once())
+            ->method('create')
+            ->willReturn($routesRegistryMock);
+
+        $this->webserviceFactory->expects(self::once())
+            ->method('create')
+            ->with(self::identicalTo($webConfigMock))
+            ->willReturn($webserviceMock);
 
         $this->loggerFactory->expects(self::once())
             ->method('create')
@@ -114,7 +112,7 @@ final class WebAppFactoryTest extends TestCase
         $expected = new WebApp(
             $applicationMock,
             $webConfigMock,
-            $this->routesRegistry,
+            $routesRegistryMock,
             $this->middlewareRepository,
             $responseHandlerMock,
             $errorHandlerMock,

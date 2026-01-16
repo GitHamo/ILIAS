@@ -20,13 +20,10 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application\Factory;
 
-use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\WebApp;
 use ILIAS\ApiGateway\Logging\WebserviceLogger;
 use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
-use ILIAS\ApiGateway\Routing\RoutesAutoloader;
-use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
 use ILIAS\HTTP\Response\ResponseFactory;
@@ -39,27 +36,23 @@ final readonly class WebAppFactory
         private HttpConfigFactory $httpConfigFactory,
         private HttpServiceFactory $httpServiceFactory,
         private WebserviceFactory $webserviceFactory,
-        private RoutesRegistry $registry,
-        private RoutesAutoloader $routesAutoloader,
-        private ActivityRoutesAutoloader $activityRoutesAutoloader,
+        private RoutesRegistryFactory $routesRegistryFactory,
         private MiddlewareRepository $middlewareRepository,
         private ResponseFactory $responseFactory,
         private WebserviceLoggerFactory $loggerFactory
-    ) {
-    }
+    ) {}
 
     public function create(ServiceProtocol $protocol): WebApp
     {
-        $this->registerRoutes();
-
         $config = $this->httpConfigFactory->createWebConfig($protocol);
+        $registry = $this->routesRegistryFactory->create();
         $webservice = $this->webserviceFactory->create($config);
         $logger = $this->loggerFactory->create($protocol->value);
 
         return new WebApp(
             $this->httpServiceFactory->createWebApplication(),
             $config,
-            $this->registry,
+            $registry,
             $this->middlewareRepository,
             $this->httpServiceFactory->createResponseHandler($webservice),
             $this->httpServiceFactory->createErrorHandler(
@@ -71,11 +64,5 @@ final readonly class WebAppFactory
             $this->responseFactory,
             $logger
         );
-    }
-
-    private function registerRoutes(): void
-    {
-        $this->activityRoutesAutoloader->load();
-        $this->routesAutoloader->load();
     }
 }
