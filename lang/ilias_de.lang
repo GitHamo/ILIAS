@@ -1150,6 +1150,7 @@ assessment#:#question_summary#:#Übersicht Testdurchlauf
 assessment#:#question_summary_btn#:#Übersicht Testdurchlauf
 assessment#:#question_title#:#Fragentitel
 assessment#:#question_type#:#Fragetyp
+assessment#:#questionlist_cannot_be_altered#:#Die Fragenliste kann nicht verändert werden da der Test Teilnehmerdatensätze enthält.
 assessment#:#questionpool_not_entered#:#Bitte geben Sie einen Namen für den Fragenpool an!
 assessment#:#questionpool_not_selected#:#Bitte wählen Sie einen Fragenpool aus!
 assessment#:#questions#:#Fragen

@@ -1019,10 +1019,6 @@ class ilObjTest extends ilObject
 
     public function removeQuestionsWithResults(array $question_ids): void
     {
-        if (!$this->getGlobalSettings()->isAdjustingQuestionsWithResultsAllowed()) {
-            ilObjTestGUI::accessViolationRedirect();
-        }
-
         $scoring = new TestScoring(
             $this,
             $this->user,
