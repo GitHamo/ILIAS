@@ -22,9 +22,9 @@ namespace ILIAS;
 
 use ILIAS\ApiGateway\Activity\ActivityNamespaceFactory;
 use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
-use ILIAS\ApiGateway\Activity\ActivityRoutesAutoloader;
 use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
 use ILIAS\ApiGateway\Application\Factory\HttpServiceFactory;
+use ILIAS\ApiGateway\Application\Factory\RoutesRegistryFactory;
 use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
 use ILIAS\ApiGateway\Auth;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
@@ -36,11 +36,8 @@ use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\RestAppEntryPoint;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RoutesAutoloader;
-use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Routing\RouteStaticRepository;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
-use ILIAS\Component\Activities\Activity;
 use Psr\Http\Server\MiddlewareInterface;
 
 class ApiGateway implements Component\Component
@@ -56,7 +53,6 @@ class ApiGateway implements Component\Component
         array | \ArrayAccess &$pull,
         array | \ArrayAccess &$internal,
     ): void {
-        // declare component setup (ILIAS install/update)
         $contribute[\ILIAS\Setup\Agent::class] = fn() =>
         new ApiGateway\Setup\ApiGatewaySetupAgent(
             $pull[\ILIAS\Refinery\Factory::class],
@@ -80,24 +76,23 @@ class ApiGateway implements Component\Component
         //////////////////////////////// Application Layer ////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
 
+        $internal[RoutesRegistryFactory::class] = static fn(): RoutesRegistryFactory => new RoutesRegistryFactory(
+            new RouteStaticRepository(
+                $seek[ApiGateway\Routing\Route::class],
+            ),
+            $use[Component\Activities\Repository::class],
+            new ActivityRouteFactory(
+                new ActivityNamespaceFactory(),
+            ),
+        );
+
         $internal[WebAppFactory::class] = static fn(): WebAppFactory =>
 
         new WebAppFactory(
             $internal[HttpConfigFactory::class],
             new HttpServiceFactory(),
             new WebserviceFactory(),
-            $internal[RoutesRegistry::class],
-            new RoutesAutoloader(
-                $internal[RoutesRegistry::class],
-                new RouteStaticRepository(
-                    $seek[ApiGateway\Routing\Route::class],
-                ),
-            ),
-            new ActivityRoutesAutoloader(
-                $internal[RoutesRegistry::class],
-                $use[Component\Activities\Repository::class],
-                $internal[ActivityRouteFactory::class],
-            ),
+            $internal[RoutesRegistryFactory::class],
             new MiddlewareRepository(
                 $seek[MiddlewareInterface::class],
             ),
@@ -127,7 +122,9 @@ class ApiGateway implements Component\Component
         ## /activities
         $contribute[Route::class] = static fn(): Route => new ApiGateway\Examples\GetActivityListApiAction(
             $use[Component\Activities\Repository::class],
-            $internal[ActivityRouteFactory::class],
+            new ActivityRouteFactory(
+                new ActivityNamespaceFactory(),
+            ),
             'rest',
         );
 
@@ -233,14 +230,6 @@ class ApiGateway implements Component\Component
         /////////////////////////////////// SUB-MODULES ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////
 
-
-        // MODULE: Activity
-
-        $internal[ActivityRouteFactory::class] = static fn(): ActivityRouteFactory =>
-        new ActivityRouteFactory(
-            new ActivityNamespaceFactory(),
-        );
-
         // MODULE: Auth
 
         $internal[UserRepository::class] = static fn(): UserRepository => new DatabaseUserRepository();
@@ -260,9 +249,5 @@ class ApiGateway implements Component\Component
         new Configuration\Infrastructure\ConfigurationService(
             new Configuration\Infrastructure\Repository\AdminSettings(),
         );
-
-        // MODULE: Routing
-
-        $internal[RoutesRegistry::class] = fn(): RoutesRegistry => RoutesRegistry::getInstance();
     }
 }
