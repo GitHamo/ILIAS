@@ -319,10 +319,8 @@ class ilMailFormGUI
         $value = $result->value()[0];
 
         $schedule_date = $value['use_schedule']['m_schedule'] ?? null;
-        if (
-            $schedule_date instanceof DateTimeImmutable &&
-            $schedule_date > $this->clock->local(new DateTimeZone($this->user->getTimeZone()))->now()
-        ) {
+        if ($schedule_date instanceof DateTimeImmutable &&
+            $schedule_date > $this->clock->local(new DateTimeZone($this->user->getTimeZone()))->now()) {
             $this->saveMessageToOutbox($value, $form);
             return;
         }
@@ -358,13 +356,15 @@ class ilMailFormGUI
             $rcp_cc,
             $rcp_bcc,
             ilUtil::securePlainString($value['m_subject']),
-            $value['m_message'],
+            (new ilMailBody($value['m_message'], $this->purifier))->getContent(),
             $files,
             $value['use_placeholders']
-        )
-        ) {
+        )) {
+            $mailer->autoresponder()->disableAutoresponder();
+
             $this->showSubmissionErrors($errors);
             $this->showForm($form);
+
             $this->http->close();
         } else {
             $mailer->autoresponder()->disableAutoresponder();
