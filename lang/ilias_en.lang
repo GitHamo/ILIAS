@@ -29,6 +29,9 @@
 // to the corresponding mode!
 // Language file names refer to ISO 639, see: http://www.oasis-open.org/cover/iso639a.html
 <!-- language file start -->
+<<<<<<< HEAD
+=======
+>>>>>>> 952109670fe (copage/style: remove duplicate lang entries (upper/lowercase) to fix language check)
 acc#:#acc_add_document_btn_label#:#Add Document
 acc#:#acc_crit_type_usr_language#:#Profile Language
 acc#:#acc_criterion_assignment_must_be_unique_insert#:#It is not possible to set the language you have selected as the criterion for displaying this document, as it has already been set as the criterion for displaying a different Accessibility document.
@@ -6155,10 +6158,8 @@ content#:#cont_Headline2#:#Headline 2
 content#:#cont_Headline3#:#Headline 3
 content#:#cont_Information#:#Information
 content#:#cont_Interaction#:#Interaction
-content#:#cont_Link#:#Link
 content#:#cont_List#:#List
 content#:#cont_Literature#:#Literature
-content#:#cont_Media#:#Media (Standard)
 content#:#cont_Mnemonic#:#Mnemonic
 content#:#cont_Numbers#:#Numbers
 content#:#cont_Poly#:#Polygon
@@ -6268,6 +6269,8 @@ content#:#cont_chapters_after_pages#:#Please note that pages have to precede all
 content#:#cont_chapters_and_pages#:#Chapters and Pages
 content#:#cont_chapters_only#:#Chapters only
 content#:#cont_char_format#:#Character
+content#:#cont_char_link#:#Link
+content#:#cont_char_media#:#Media (Standard)
 content#:#cont_char_style_acc#:#Accentuated
 content#:#cont_char_style_code#:#Code
 content#:#cont_char_style_com#:#Comment

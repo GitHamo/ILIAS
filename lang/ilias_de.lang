@@ -29,6 +29,9 @@
 // to the corresponding mode!
 // Language file names refer to ISO 639, see: http://www.oasis-open.org/cover/iso639a.html
 <!-- language file start -->
+<<<<<<< HEAD
+=======
+>>>>>>> 952109670fe (copage/style: remove duplicate lang entries (upper/lowercase) to fix language check)
 acc#:#acc_add_document_btn_label#:#Dokument hinzufügen
 acc#:#acc_crit_type_usr_language#:#Benutzersprache
 acc#:#acc_criterion_assignment_must_be_unique_insert#:#Sie können das Vorlagekriterium mit der entsprechenden Konfiguration nicht zuweisen. Es existiert bereits eine identische Zuweisung.
@@ -6154,10 +6157,8 @@ content#:#cont_Headline2#:#Überschrift 2
 content#:#cont_Headline3#:#Überschrift 3
 content#:#cont_Information#:#Information
 content#:#cont_Interaction#:#Interaktion
-content#:#cont_Link#:#Link
 content#:#cont_List#:#Liste
 content#:#cont_Literature#:#Literatur
-content#:#cont_Media#:#Medien (Standard)
 content#:#cont_Mnemonic#:#Merksatz
 content#:#cont_Numbers#:#Zahlen
 content#:#cont_Poly#:#Polygon
@@ -6267,6 +6268,8 @@ content#:#cont_chapters_after_pages#:#Beachten Sie, dass innerhalb einer Ebene z
 content#:#cont_chapters_and_pages#:#Kapitel und Seiten
 content#:#cont_chapters_only#:#Nur Kapitel
 content#:#cont_char_format#:#Zeichenformat
+content#:#cont_char_link#:#Link
+content#:#cont_char_media#:#Medien (Standard)
 content#:#cont_char_style_acc#:#Akzentuiert
 content#:#cont_char_style_code#:#Code
 content#:#cont_char_style_com#:#Kommentar
