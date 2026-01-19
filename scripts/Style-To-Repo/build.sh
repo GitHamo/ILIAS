@@ -41,8 +41,8 @@ function build() {
     cp -r "${DEFAULT_TEMPLATE_FOLDER}"/*.html "${BUILD_BASE_FOLDER}"/"${NAME}" &> /dev/null
   done
 
-  if [ -d ./components/ILIAS/Mail/templates/default/img && -d "${BUILD_BASE_FOLDER}"/Mail ]
-  them
+  if [[ -d ./components/ILIAS/Mail/templates/default/img && -d "${BUILD_BASE_FOLDER}"/Mail ]]
+  then
     cp -r ./components/ILIAS/Mail/templates/default/img "${BUILD_BASE_FOLDER}"/Mail &> /dev/null
   fi
 
