@@ -6153,10 +6153,8 @@ content#:#cont_Headline2#:#Überschrift 2
 content#:#cont_Headline3#:#Überschrift 3
 content#:#cont_Information#:#Information
 content#:#cont_Interaction#:#Interaktion
-content#:#cont_Link#:#Link
 content#:#cont_List#:#Liste
 content#:#cont_Literature#:#Literatur
-content#:#cont_Media#:#Medien (Standard)
 content#:#cont_Mnemonic#:#Merksatz
 content#:#cont_Numbers#:#Zahlen
 content#:#cont_Poly#:#Polygon
@@ -6266,6 +6264,8 @@ content#:#cont_chapters_after_pages#:#Beachten Sie, dass innerhalb einer Ebene z
 content#:#cont_chapters_and_pages#:#Kapitel und Seiten
 content#:#cont_chapters_only#:#Nur Kapitel
 content#:#cont_char_format#:#Zeichenformat
+content#:#cont_char_link#:#Link
+content#:#cont_char_media#:#Medien (Standard)
 content#:#cont_char_style_acc#:#Akzentuiert
 content#:#cont_char_style_code#:#Code
 content#:#cont_char_style_com#:#Kommentar
