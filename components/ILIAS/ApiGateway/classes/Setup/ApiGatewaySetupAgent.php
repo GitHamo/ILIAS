@@ -26,9 +26,11 @@ use ILIAS\ApiGateway\Setup\Steps\ApiGatewayDBUpdateSteps;
 use ILIAS\Setup;
 use ilObjApiGateway;
 use ilTreeAdminNodeAddedObjective;
+use Override;
 
 class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
 {
+    #[Override]
     public function getUpdateObjective(?Setup\Config $config = null): Setup\Objective
     {
         return new Setup\ObjectiveCollection(
@@ -39,6 +41,7 @@ class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
         );
     }
 
+    #[Override]
     public function getStatusObjective(Setup\Metrics\Storage $storage): Setup\Objective
     {
         return new ilDatabaseUpdateStepsMetricsCollectedObjective($storage, new ApiGatewayDBUpdateSteps());
