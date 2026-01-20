@@ -132,7 +132,7 @@ final class ApiRouteTest extends TestCase
     }
 
     /**
-     * @return array<string, array{name: string, path: string, methods: list<string>, description: string}>
+     * @return array<string, array{name: string, path: string, method: string, description: string}>
      */
     public static function edgeCasesDataProvider(): array
     {

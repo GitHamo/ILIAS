@@ -85,7 +85,7 @@ final class HttpConfigFactoryTest extends TestCase
     }
 
     /**
-     * @var array<string, mixed> $config
+     * @param array<string, mixed> $config
      */
     private function mockConfiguration(array $config): void
     {

@@ -14,11 +14,9 @@ use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Tests\Unit\Fixtures\FakeTestActivity;
 
 final class ActivityRouteTest extends TestCase
 {
-    private Activity $activity;
     private MockObject&ActivityAction $actionMock;
     private MockObject&ActivityNamespace $namespaceMock;
     private string $routePath = "/foo/bar/baz";
@@ -29,14 +27,13 @@ final class ActivityRouteTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->activity = new FakeTestActivity();
         $this->actionMock = $this->createMock(ActivityAction::class);
         $this->namespaceMock = $this->createConfiguredMock(ActivityNamespace::class, [
             'getPath' => $this->routePath,
         ]);
 
         $this->route = new ActivityRoute(
-            $this->activity,
+            $this->createMock(Activity::class),
             $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,
@@ -49,7 +46,7 @@ final class ActivityRouteTest extends TestCase
         string $expected,
     ): void {
         $actual = new ActivityRoute(
-            new FakeTestActivity($type),
+            $this->createConfiguredMock(Activity::class, ['getType' => $type]),
             $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,

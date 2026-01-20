@@ -12,9 +12,6 @@ use InvalidArgumentException;
 
 final class RoutesRegistryTest extends TestCase
 {
-    /** @var RoutesRegistry */
-    private $registry;
-
     #[\Override]
     protected function setUp(): void
     {
