@@ -31,6 +31,7 @@ readonly class RandomKeyGenerator
         // A default length of 64 characters (from 32 bytes of randomness) provides 256 bits of entropy,
         // which is recommended for applications like JWT signing keys (e.g., for HS256).
         $bytesLength = ($length + 1) >> 1;
+        /** @psalm-suppress ArgumentTypeCoercion */
         $randomBytes = random_bytes($bytesLength);
 
         return substr(bin2hex($randomBytes), 0, $length);

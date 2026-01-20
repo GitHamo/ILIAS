@@ -27,7 +27,7 @@ use LogicException;
 class RoutesRegistry
 {
     /** @var array<string, \ILIAS\ApiGateway\Routing\Route> */
-    private array $routes;
+    private array $routes = [];
 
     /**
      * @param array<Route> $routes
