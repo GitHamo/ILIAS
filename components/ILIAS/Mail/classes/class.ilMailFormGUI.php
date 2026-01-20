@@ -1232,6 +1232,57 @@ class ilMailFormGUI
     {
         $bf = $this->ui_factory->button();
 
+        $result = $form->getInputGroup()->getInputs()[0]->getInputs();
+        $use_placeholders = (bool) $result['use_placeholders']->getValue();
+        $action = $this->ctrl->getFormAction($this, 'toggleMailMode');
+        $url_builder = new UrlBuilder(new URI(ILIAS_HTTP_PATH . '/' . $action));
+        [$url_builder, $mail_mode_parameter] = $url_builder->acquireParameter(['mail', 'form'], 'mail_mode');
+
+        $btn = $this->ui_factory->viewControl()->mode(
+            [
+                $this->lng->txt(self::MAIL_FORM_MODE_REGULAR_MAIL) => (string) $url_builder->withParameter(
+                    $mail_mode_parameter,
+                    self::MAIL_FORM_MODE_REGULAR_MAIL
+                )->buildURI(),
+                $this->lng->txt(self::MAIL_FORM_MODE_SERIAL_LETTER) => (string) $url_builder->withParameter(
+                    $mail_mode_parameter,
+                    self::MAIL_FORM_MODE_SERIAL_LETTER
+                )->buildURI(),
+            ],
+            'mail_mode_switch_label'
+        )->withActive(
+            $this->lng->txt($use_placeholders ? self::MAIL_FORM_MODE_SERIAL_LETTER : self::MAIL_FORM_MODE_REGULAR_MAIL)
+        );
+
+        $this->toolbar->addComponent($btn);
+        $this->toolbar->addSeparator();
+
+        $this->tpl->addOnLoadCode(
+            "document.getElementById('{$this->toolbar->getId()}')
+            .querySelector('div[aria-label=\"" . $this->lng->txt('mail_mode_switch_label') . "\"]')
+            .querySelectorAll('button[data-action]').forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    
+                    let mailform = document.querySelector('form.c-form');
+                    let action = button.getAttribute('data-action');
+                    if (action && mailform) {
+                        let submitBtn = mailform.querySelector('button[type=\"submit\"]');
+                        if (submitBtn) {
+                            submitBtn.formAction = action;
+                            mailform.requestSubmit(btn);   
+                        } else {
+                            mailform.action = action;
+                            mailform.submit();
+                        }
+                    }
+                    return false;
+                }, true);
+            });"
+        );
+
         $action = $this->ctrl->getFormAction($this, 'searchUsers');
         $btn = $bf->standard(
             $this->lng->txt('search_recipients'),
@@ -1299,6 +1350,8 @@ class ilMailFormGUI
             $this->toolbar->addComponent($btn);
         }
 
+        $this->toolbar->addSeparator();
+
         $action = $this->ctrl->getFormAction($this, 'editAttachments');
         $btn = $bf->standard(
             $this->lng->txt('edit_attachments'),
@@ -1314,55 +1367,6 @@ class ilMailFormGUI
             }
         );
         $this->toolbar->addComponent($btn);
-
-        $result = $form->getInputGroup()->getInputs()[0]->getInputs();
-        $use_placeholders = (bool) $result['use_placeholders']->getValue();
-        $action = $this->ctrl->getFormAction($this, 'toggleMailMode');
-        $url_builder = new UrlBuilder(new URI(ILIAS_HTTP_PATH . '/' . $action));
-        [$url_builder, $mail_mode_parameter] = $url_builder->acquireParameter(['mail', 'form'], 'mail_mode');
-
-        $btn = $this->ui_factory->viewControl()->mode(
-            [
-                $this->lng->txt(self::MAIL_FORM_MODE_REGULAR_MAIL) => (string) $url_builder->withParameter(
-                    $mail_mode_parameter,
-                    self::MAIL_FORM_MODE_REGULAR_MAIL
-                )->buildURI(),
-                $this->lng->txt(self::MAIL_FORM_MODE_SERIAL_LETTER) => (string) $url_builder->withParameter(
-                    $mail_mode_parameter,
-                    self::MAIL_FORM_MODE_SERIAL_LETTER
-                )->buildURI(),
-            ],
-            'mail_mode_switch_label'
-        )->withActive(
-            $this->lng->txt($use_placeholders ? self::MAIL_FORM_MODE_SERIAL_LETTER : self::MAIL_FORM_MODE_REGULAR_MAIL)
-        );
-        $this->toolbar->addSeparator();
-        $this->toolbar->addComponent($btn);
-        $this->tpl->addOnLoadCode(
-            "document.getElementById('{$this->toolbar->getId()}')
-            .querySelector('div[aria-label=\"" . $this->lng->txt('mail_mode_switch_label') . "\"]')
-            .querySelectorAll('button[data-action]').forEach(function(button) {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    event.stopImmediatePropagation();
-                    
-                    let mailform = document.querySelector('form.c-form');
-                    let action = button.getAttribute('data-action');
-                    if (action && mailform) {
-                        let submitBtn = mailform.querySelector('button[type=\"submit\"]');
-                        if (submitBtn) {
-                            submitBtn.formAction = action;
-                            mailform.requestSubmit(btn);   
-                        } else {
-                            mailform.action = action;
-                            mailform.submit();
-                        }
-                    }
-                    return false;
-                }, true);
-            });"
-        );
     }
 
     private function toggleMailMode(): never
