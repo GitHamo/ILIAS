@@ -18016,4 +18016,4 @@ apig#:#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
 apig#:#rest_ws_enabled_label#:#Activate Webservice
 apig#:#rest_ws_enabled_info#:#Webservice enabled or not
 apig#:#rest_docs_enabled_label#:#Activate Documentation
-apig#:#rest_docs_enabled_info#:#Auto-generation of webservice documentation enabled or not
+apig#:#rest_docs_enabled_info#:#للضيوف

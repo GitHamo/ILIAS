@@ -18014,4 +18014,4 @@ apig#:#auth_token_expiry_refresh_info#:#Lebensdauer eines Refresh Tokens in Seku
 apig#:#rest_ws_enabled_label#:#Webservice aktivieren
 apig#:#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
 apig#:#rest_docs_enabled_label#:#Dokumentation aktivieren
-apig#:#rest_docs_enabled_info#:#Ob die automatische Generierung der
+apig#:#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren

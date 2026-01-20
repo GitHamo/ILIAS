@@ -389,41 +389,40 @@ index 85a13eb07da..5c88853d09e 100644
 +apig#:#rest_ws_enabled_label#:#Webservice aktivieren
 +apig#:#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
 +apig#:#rest_docs_enabled_label#:#Dokumentation aktivieren
-+apig#:#rest_docs_enabled_info#:#Ob die automatische Generierung der
++apig#:#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren
 \ No newline at end of file
-diff --git a/lang/ilias_el.lang b/lang/ilias_el.lang
+diff --git a/lang/ilias_ar.lang b/lang/ilias_ar.lang
 index bc1b91d9841..4b6fcaff24c 100644
---- a/lang/ilias_el.lang
-+++ b/lang/ilias_el.lang
+--- a/lang/ilias_ar.lang
++++ b/lang/ilias_ar.lang
 @@ -17979,4 +17979,26 @@ wsp#:#wsp_type_ltiv#:#Certificate: LTI Consumer###07 02 2020 new variable
  wsp#:#wsp_type_scov#:#Certificate: SCORM###30 12 2013 new variable
  wsp#:#wsp_type_tstv#:#Verification: Test###12 06 2011 new variable
  wsp#:#wsp_type_webr#:#Weblink###18 07 2011 new variable
 -wsp#:#wsp_type_wfld#:#Folder###22 03 2011 new variable
 \ No newline at end of file
-+wsp#:#wsp_type_wfld#:#Folder###22 03 2011 new variable
-+common#:#obj_apig#:#Webservices
-+apig#:#obj_apig#:#Webservices
-+apig#:#webservices#:#Webservices
-+apig#:#webservices_description#:#Configuration of API Webservices
-+apig#:#settings_general#:#General
-+apig#:#settings_docs#:#Documentation
-+apig#:#general_settings#:#General Settings
-+apig#:#rest_settings#:#REST Settings
-+apig#:#auth_secret_key_label#:#Secret Key
-+apig#:#auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
-+apig#:#auth_algo_encryption_label#:#Encryption algo
-+apig#:#auth_algo_encryption_info#:#Algorithm used for JWT signature creation
-+apig#:#auth_algo_hash_label#:#Hashing algo
-+apig#:#auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
-+apig#:#auth_token_expiry_access_label#:#Access Token Expiry
-+apig#:#auth_token_expiry_access_info#:#Lifespan of an access token in seconds
-+apig#:#auth_token_expiry_refresh_label#:#Refresh Token Expiry
-+apig#:#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
-+apig#:#rest_ws_enabled_label#:#Activate Webservice
-+apig#:#rest_ws_enabled_info#:#Webservice enabled or not
-+apig#:#rest_docs_enabled_label#:#Activate Documentation
-+apig#:#rest_docs_enabled_info#:#Auto-generation of webservice documentation enabled or not
++common#:#obj_apig#:#خدمات الويب
++common#:#obj_apig_desc#:#تهيئة خدمات الويب API
++apig#:#webservices#:#خدمات الويب
++apig#:#webservices_description#:#تهيئة خدمات الويب API
++apig#:#settings_general#:#عام
++apig#:#settings_docs#:#وثائق المساعدة
++apig#:#general_settings#:#الإعدادات العامة
++apig#:#rest_settings#:#إعدادات REST
++apig#:#auth_secret_key_label#:#المفتاح السري
++apig#:#auth_secret_key_info#:#اتركه فارغًا وسيتم إنشاء مفتاح سري عشوائي جديد.
++apig#:#auth_algo_encryption_label#:#خوارزمية التشفير
++apig#:#auth_algo_encryption_info#:#الخوارزمية المستخدمة لإنشاء توقيع JWT
++apig#:#auth_algo_hash_label#:#خوارزمية التجزئة
++apig#:#auth_algo_hash_info#:#الخوارزمية المستخدمة لتخزين الرموز المميزة للتحديث بأمان
++apig#:#auth_token_expiry_access_label#:#انتهاء صلاحية رمز الوصول
++apig#:#auth_token_expiry_access_info#:#مدة صلاحية رمز الوصول بالثواني
++apig#:#auth_token_expiry_refresh_label#:#انتهاء صلاحية رمز التحديث
++apig#:#auth_token_expiry_refresh_info#:#مدة صلاحية رمز التحديث بالثواني
++apig#:#rest_ws_enabled_label#:#تفعيل خدمة الويب
++apig#:#rest_ws_enabled_info#:#ما إذا كانت خدمة الويب مفعلة أم لا
++apig#:#rest_docs_enabled_label#:#تفعيل وثائق المساعدة
++apig#:#rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا
 \ No newline at end of file
 diff --git a/lang/ilias_en.lang b/lang/ilias_en.lang
 index d7c60419b0a..2d588566a3e 100644
@@ -457,5 +456,5 @@ index d7c60419b0a..2d588566a3e 100644
 +apig#:#rest_ws_enabled_label#:#Activate Webservice
 +apig#:#rest_ws_enabled_info#:#Webservice enabled or not
 +apig#:#rest_docs_enabled_label#:#Activate Documentation
-+apig#:#rest_docs_enabled_info#:#Auto-generation of webservice documentation enabled or not
++apig#:#rest_docs_enabled_info#:#Allow public access to the auto-generated documentation
 \ No newline at end of file
