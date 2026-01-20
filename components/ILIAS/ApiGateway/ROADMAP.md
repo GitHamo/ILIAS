@@ -16,7 +16,7 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 
 - **Phase 1:** REST API: Concepts and Basic Objects \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8205_1357)\]
 - **Phase 2:** REST API: Authentication and Service Control \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8803_1357)\]
-- **Phase 3:** Swagger & Middlewares
+- **Phase 3:** REST API: Middlewares, Documentation and Error Handling \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8825_1357)\]
 - **Phase 4:** Activity I/O Validation Schemas
 - **Phase 5:** SOAP Webservice Integration
 
