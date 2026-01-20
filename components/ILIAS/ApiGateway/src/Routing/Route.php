@@ -31,8 +31,6 @@ interface Route
 
     /**
      * action holding the business logic
-     *
-     * @return void
      */
     public function getAction(): Action;
 

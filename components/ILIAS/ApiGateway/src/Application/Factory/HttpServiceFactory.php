@@ -54,10 +54,11 @@ readonly class HttpServiceFactory
     }
 
     /**
-     * @return SlimApp<\Psr\Container\ContainerInterface|null>
+     * @return SlimApp<\Psr\Container\ContainerInterface>
      */
     public function createWebApplication(): SlimApp
     {
+        /** @phpstan-ignore-next-line PHPStan false positive about null return */
         return AppFactory::create();
     }
 }

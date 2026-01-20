@@ -205,4 +205,64 @@ class ResponseHanlderTest extends TestCase
             $actionMock
         );
     }
+
+    public function testHandlesRequestWithObjectParsedBody(): void
+    {
+        $queryParams = ['query' => 'q_val'];
+        $bodyParams = (object)['body' => 'b_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = array_merge($queryParams, (array)$bodyParams, $routeArgs);
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getParsedBody')->willReturn($bodyParams);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('');
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        // We must mock getBody() because it is used for JSON content type, and without mocking it might be called
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock
+        );
+    }
+
+    public function testHandlesRequestWithNullParsedBody(): void
+    {
+        $queryParams = ['query' => 'q_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = array_merge($queryParams, $routeArgs);
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getParsedBody')->willReturn(null);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('');
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock
+        );
+    }
 }

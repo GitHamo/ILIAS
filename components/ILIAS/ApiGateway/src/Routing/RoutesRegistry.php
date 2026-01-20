@@ -26,8 +26,12 @@ use LogicException;
 
 class RoutesRegistry
 {
+    /** @var array<string, \ILIAS\ApiGateway\Routing\Route> */
     private array $routes;
 
+    /**
+     * @param array<Route> $routes
+     */
     public function __construct(array $routes)
     {
         array_walk($routes, [$this, 'register']);

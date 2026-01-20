@@ -105,6 +105,34 @@ final class ActivityActionTest extends TestCase
         $activityMock = $this->createMock(ObjectActivity::class);
         $action = new ActivityAction($activityMock);
 
+        $activityMock->expects(self::once())
+            ->method('isAllowedToPerform')
+            ->with(0, self::equalTo($expectedParams))
+            ->willReturn(true);
+
+        $activityMock->expects(self::once())
+            ->method('perform')
+            ->with(self::equalTo($expectedParams));
+
+        ($action)($params, null);
+    }
+
+    public function testIgnoresTransformIdToObjectIdIfIdIsNotNumeric(): void
+    {
+        $params = [
+            'id' => 'this-is-not-numeric',
+            'foo' => 'bar',
+        ];
+
+        $expectedParams = [
+            'id' => 'this-is-not-numeric',
+            'foo' => 'bar',
+            'auth_user_id' => 0,
+        ];
+
+        $activityMock = $this->createMock(ObjectActivity::class);
+        $action = new ActivityAction($activityMock);
+
 
         $activityMock->expects(self::once())
             ->method('isAllowedToPerform')

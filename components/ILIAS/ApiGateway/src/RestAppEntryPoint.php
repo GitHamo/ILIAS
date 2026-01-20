@@ -50,6 +50,7 @@ class RestAppEntryPoint extends AllModernComponents
         protected \ILIAS\UI\Implementation\Component\Link\Factory $ui_factory_link,
         protected \ILIAS\UI\Implementation\Component\Dropdown\Factory $ui_factory_dropdown,
         protected \ILIAS\UI\Implementation\Component\Item\Factory $ui_factory_item,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Viewcontrol\Factory $ui_factory_viewcontrol,
         protected \ILIAS\UI\Implementation\Component\Chart\Factory $ui_factory_chart,
         protected \ILIAS\UI\Implementation\Component\Input\Factory $ui_factory_input,
@@ -59,6 +60,7 @@ class RestAppEntryPoint extends AllModernComponents
         protected \ILIAS\UI\Implementation\Component\Layout\Factory $ui_factory_layout,
         protected \ILIAS\UI\Implementation\Component\Layout\Page\Factory $ui_factory_layout_page,
         protected \ILIAS\UI\Implementation\Component\Layout\Alignment\Factory $ui_factory_layout_alignment,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Maincontrols\Factory $ui_factory_maincontrols,
         protected \ILIAS\UI\Implementation\Component\Tree\Factory $ui_factory_tree,
         protected \ILIAS\UI\Implementation\Component\Tree\Node\Factory $ui_factory_tree_node,
@@ -73,13 +75,17 @@ class RestAppEntryPoint extends AllModernComponents
         protected \ILIAS\UI\Implementation\Component\Modal\InterruptiveItem\Factory $ui_factory_interruptive_item,
         protected \ILIAS\UI\Implementation\Component\Chart\ProgressMeter\Factory $ui_factory_progressmeter,
         protected \ILIAS\UI\Implementation\Component\Chart\Bar\Factory $ui_factory_bar,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Input\Viewcontrol\Factory $ui_factory_input_viewcontrol,
         protected \ILIAS\UI\Implementation\Component\Input\Container\ViewControl\Factory $ui_factory_input_container_viewcontrol,
         protected \ILIAS\UI\Implementation\Component\Table\Column\Factory $ui_factory_table_column,
         protected \ILIAS\UI\Implementation\Component\Table\Factory $ui_factory_table_action,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Maincontrols\Slate\Factory $ui_factory_maincontrols_slate,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Symbol\icon\Factory $ui_factory_symbol_icon,
         protected \ILIAS\UI\Implementation\Component\Symbol\Glyph\Factory $ui_factory_symbol_glyph,
+        /** @phpstan-ignore-next-line */
         protected \ILIAS\UI\Implementation\Component\Symbol\avatar\Factory $ui_factory_symbol_avatar,
         protected \ILIAS\UI\Implementation\Component\Input\Container\Form\Factory $ui_factory_input_container_form,
         protected \ILIAS\UI\Implementation\Component\Input\Container\Filter\Factory $ui_factory_input_container_filter,

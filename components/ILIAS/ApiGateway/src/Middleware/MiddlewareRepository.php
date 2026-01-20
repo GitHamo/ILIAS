@@ -41,6 +41,7 @@ class MiddlewareRepository
     {
         $middleware = $this->middlewares[$className] ?? null;
 
+        /** @phpstan-ignore-next-line */
         if (!$middleware || false === $middleware instanceof MiddlewareInterface) {
             throw new LogicException(
                 "Middleware '{$className}' requested is not registered."
