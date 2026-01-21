@@ -27,7 +27,7 @@ use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
 use Override;
 
-class ActivityRoute implements Route
+readonly class ActivityRoute implements Route
 {
     /**
      * @param array<string> $middlewares
