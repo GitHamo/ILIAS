@@ -28,6 +28,8 @@ use Override;
 
 readonly class ApiRoute implements Route
 {
+    private Action $actionInstance;
+
     /**
      * @param string[] $middlewares
      */
@@ -36,9 +38,20 @@ readonly class ApiRoute implements Route
         private string $path,
         private string $method,
         private string $description,
-        private Closure $action,
+        Closure $action,
         private array $middlewares = [],
     ) {
+        $this->actionInstance = new class ($action) implements Action {
+            public function __construct(private Closure $handle)
+            {
+            }
+
+            #[Override]
+            public function __invoke(array $params, ?AuthUser $user)
+            {
+                return ($this->handle)($params, $user);
+            }
+        };
     }
 
     public function getName(): string
@@ -66,17 +79,7 @@ readonly class ApiRoute implements Route
     #[Override]
     public function getAction(): Action
     {
-        return new class ($this->action) implements Action {
-            public function __construct(private Closure $handle)
-            {
-            }
-
-            #[Override]
-            public function __invoke(array $params, ?AuthUser $user)
-            {
-                return ($this->handle)($params, $user);
-            }
-        };
+        return $this->actionInstance;
     }
 
     #[Override]
