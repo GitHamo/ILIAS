@@ -24,16 +24,13 @@ readonly class ActivityNamespace
 {
     /** @var string[] */
     private const array CORE_VENDORS = ['ilias'];
+    private string $path;
 
     public function __construct(
         private string $vendor,
         private string $component,
         private string $name,
     ) {
-    }
-
-    public function getPath(): string
-    {
         $vendor = strtolower($this->vendor);
         $vendor = \in_array($vendor, self::CORE_VENDORS, true) ? '' : $vendor;
         $component = strtolower($this->component);
@@ -51,10 +48,15 @@ readonly class ActivityNamespace
 
         $subject = strtolower($subject);
 
-        return '/' . implode('/', array_filter([
+        $this->path = '/' . implode('/', array_filter([
             $vendor,
             $component,
             $subject,
         ]));
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 }
