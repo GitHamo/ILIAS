@@ -32,7 +32,7 @@ readonly class WebserviceFactory
     {
         $protocol = $config->getProtocol();
 
-        $webservice = match ($protocol) {
+        return match ($protocol) {
             ServiceProtocol::REST => new RestWebservice($config),
             /**
              * As a defensive mechanism for truly unhandled cases, so testing would be hard as
@@ -45,7 +45,5 @@ readonly class WebserviceFactory
             ),
             // @codeCoverageIgnoreEnd
         };
-
-        return $webservice;
     }
 }

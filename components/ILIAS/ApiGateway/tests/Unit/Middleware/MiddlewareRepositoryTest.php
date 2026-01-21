@@ -29,7 +29,7 @@ class MiddlewareRepositoryTest extends TestCase
         $middlewares = [$middleware1, $middleware2];
         $repository = new MiddlewareRepository($middlewares);
 
-        $actual = $repository->get(\get_class($middleware1));
+        $actual = $repository->get($middleware1::class);
 
         self::assertSame($middleware1, $actual);
     }
@@ -44,7 +44,7 @@ class MiddlewareRepositoryTest extends TestCase
 
         self::expectException(LogicException::class);
 
-        $repository->get(\get_class($middleware2));
+        $repository->get($middleware2::class);
     }
 
     public function testGetThrowsExceptionWhenMiddlewareIsNotInstanceOfMiddlewareInterface(): void
@@ -57,7 +57,7 @@ class MiddlewareRepositoryTest extends TestCase
 
         self::expectException(LogicException::class);
 
-        $repository->get(\get_class($middleware2));
+        $repository->get($middleware2::class);
     }
 
     public function testGetAllHandlesMultipleMiddlewareInstancesOfTheSameClassKeepingTheLastOne(): void
@@ -68,7 +68,7 @@ class MiddlewareRepositoryTest extends TestCase
         $middlewares = [$middleware1, $middleware2];
         $repository = new MiddlewareRepository($middlewares);
 
-        $actual = $repository->get(\get_class($middleware1));
+        $actual = $repository->get($middleware1::class);
 
         self::assertSame($middleware2, $actual); // The last instance ($middleware2) should overwrite the first
     }

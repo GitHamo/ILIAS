@@ -35,7 +35,7 @@ readonly class ActivityRouteFactory
         return new ActivityRoute(
             $activity,
             new ActivityAction($activity),
-            $this->namespaceFactory->create(\get_class($activity)),
+            $this->namespaceFactory->create($activity::class),
             [
                 AuthenticationMiddleware::class,
             ],

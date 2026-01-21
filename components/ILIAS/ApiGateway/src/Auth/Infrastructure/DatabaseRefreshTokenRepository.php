@@ -22,6 +22,7 @@ namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DateTimeImmutable;
 use ilDBConstants;
+use ilDBInterface;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
 use ILIAS\ApiGateway\LocalDIC;
@@ -40,7 +41,7 @@ final class DatabaseRefreshTokenRepository extends LocalDIC implements RefreshTo
     {
         $database = $this->database();
 
-        if ($database === null) {
+        if (!$database instanceof ilDBInterface) {
             return;
         }
 
@@ -86,7 +87,7 @@ final class DatabaseRefreshTokenRepository extends LocalDIC implements RefreshTo
     {
         $database = $this->database();
 
-        if (null === $database || empty($tokenHash)) {
+        if (!$database instanceof \ilDBInterface || ($tokenHash === '' || $tokenHash === '0')) {
             return null;
         }
 

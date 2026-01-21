@@ -131,7 +131,7 @@ class ResponseHanlderTest extends TestCase
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
-        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
         ($this->handler)(
@@ -163,7 +163,7 @@ class ResponseHanlderTest extends TestCase
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
-        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
         ($this->handler)(
@@ -195,7 +195,7 @@ class ResponseHanlderTest extends TestCase
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
-        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
         ($this->handler)(
@@ -226,7 +226,7 @@ class ResponseHanlderTest extends TestCase
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
-        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
         ($this->handler)(
@@ -255,7 +255,7 @@ class ResponseHanlderTest extends TestCase
             ->method('__invoke')
             ->with($expectedFinalParams, null);
 
-        $this->webserviceMock->method('handle')->willReturn(new Payload(null));
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
         $this->responseMock->method('withHeader')->willReturn($this->responseMock);
 
         ($this->handler)(

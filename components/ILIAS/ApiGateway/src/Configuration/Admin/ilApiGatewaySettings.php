@@ -52,8 +52,8 @@ class ilApiGatewaySettings
     private const string REST_WS_ENABLED = SystemSetting::REST_WS_ENABLED->value;
     private const string REST_DOCS_ENABLED = SystemSetting::REST_DOCS_ENABLED->value;
     protected static ?ilApiGatewaySettings $instance = null;
-    private Setting $settings;
-    private Factory $refinery;
+    private readonly Setting $settings;
+    private readonly Factory $refinery;
 
     /** @var array<string, mixed> */
     private array $settings_data = [

@@ -62,7 +62,7 @@ readonly class ResponseHandler
         $contentType = $request->getHeaderLine('Content-Type');
         if (str_contains($contentType, 'application/json')) {
             $bodyContents = $request->getBody()->getContents();
-            if (!empty($bodyContents)) {
+            if ($bodyContents !== '' && $bodyContents !== '0') {
                 $bodyParams = json_decode($bodyContents, true);
                 if (json_last_error() === JSON_ERROR_NONE && is_array($bodyParams)) {
                     $params = array_merge($params, $bodyParams);

@@ -33,7 +33,7 @@ use Throwable;
 class ActivityAction implements Action
 {
     public function __construct(
-        private Activity $activity,
+        private readonly Activity $activity,
     ) {}
 
     #[\Override]

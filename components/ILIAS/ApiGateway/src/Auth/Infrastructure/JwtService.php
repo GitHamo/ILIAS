@@ -129,7 +129,7 @@ final readonly class JwtService implements TokenProvider
         }
 
         $userId = (int) $payload['sub'];
-        $isRefresh = \array_key_exists('is_refresh', $payload) ? (bool) $payload['is_refresh'] : false;
+        $isRefresh = \array_key_exists('is_refresh', $payload) && (bool) $payload['is_refresh'];
 
         // The JWT::decode function throws an exception if the token is expired.
         // If we reach this point, the token is valid and not expired.

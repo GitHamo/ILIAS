@@ -26,7 +26,6 @@ class SystemSettings
 {
     /**
      * @param array<string, mixed> $settingsData
-     * @return SystemSettings
      */
     public static function create(array $settingsData): self
     {

@@ -23,7 +23,7 @@ class ActivityRouteFactoryTest extends TestCase
 
         $namespaceFactory->expects(self::once())
             ->method('create')
-            ->with(\get_class($activity))
+            ->with($activity::class)
             ->willReturn($namespace);
 
         $expected = new ActivityRoute(

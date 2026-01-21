@@ -44,8 +44,8 @@ final class ErrorHandlerTest extends TestCase
         $this->response->method('getBody')->willReturn($this->stream);
         $this->webservice->method('handleError')->willReturn(
             new Payload(
-                body: $this->payloadBody,
                 headers: ['foo' => 'bar'],
+                body: $this->payloadBody,
             ),
         );
 

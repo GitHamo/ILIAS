@@ -24,6 +24,7 @@ use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
 use ILIAS\ApiGateway\LocalDIC;
+use ilDBInterface;
 use ilSetting;
 
 /**
@@ -45,10 +46,10 @@ final class AdminSettings extends LocalDIC implements SystemSettingRepository
 
     private function settings(): ?ilSetting
     {
-        if (null === $this->settings) {
+        if (!$this->settings instanceof ilSetting) {
             $database = $this->database();
 
-            if (null === $database) {
+            if (!$database instanceof ilDBInterface) {
                 return null;
             }
 

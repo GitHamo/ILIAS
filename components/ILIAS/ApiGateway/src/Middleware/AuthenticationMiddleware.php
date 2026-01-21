@@ -43,13 +43,13 @@ final readonly class AuthenticationMiddleware implements MiddlewareInterface
     {
         $authHeader = $request->getHeaderLine('Authorization');
 
-        if (empty($authHeader) || !str_starts_with(strtolower($authHeader), 'bearer ')) {
+        if ($authHeader === '' || $authHeader === '0' || !str_starts_with(strtolower($authHeader), 'bearer ')) {
             throw new AuthenticationException('Authorization header missing or invalid.');
         }
 
         $token = trim(substr($authHeader, 7)); // Length of "Bearer "
 
-        if (empty($token)) {
+        if ($token === '' || $token === '0') {
             throw new AuthenticationException('Authorization token cannot be empty.');
         }
 

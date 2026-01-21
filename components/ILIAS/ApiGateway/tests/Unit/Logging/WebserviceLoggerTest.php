@@ -155,7 +155,7 @@ final class WebserviceLoggerTest extends TestCase
 }
 
 // Dummy Stringable class for testing messages and levels
-class DummyStringableObject implements \Stringable
+readonly class DummyStringableObject implements \Stringable
 {
     public function __construct(private string $value)
     {

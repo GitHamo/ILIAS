@@ -130,18 +130,16 @@ final readonly class WebApp
 
     private function createRouteHandler(Action $action): Closure
     {
-        return function (
+        return fn(
             Request $request,
             Response $response,
             array $args,
-        ) use ($action): Response {
-            return ($this->responseHandler)(
-                $request,
-                $response,
-                $args,
-                $action,
-            );
-        };
+        ): Response => ($this->responseHandler)(
+            $request,
+            $response,
+            $args,
+            $action,
+        );
     }
 
     private function getBasePath(): string

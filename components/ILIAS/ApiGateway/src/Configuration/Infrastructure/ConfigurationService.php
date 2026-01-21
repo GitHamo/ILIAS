@@ -45,7 +45,7 @@ class ConfigurationService implements Configuration
     public const bool DEFAULT_IS_LOGGING_DETAILS_ENABLED = false;
 
     public function __construct(
-        private SystemSettingRepository $adminSettings,
+        private readonly SystemSettingRepository $adminSettings,
     ) {
     }
 
@@ -53,10 +53,10 @@ class ConfigurationService implements Configuration
     public function getBaseUrl(): string
     {
         $value = defined('ILIAS_HTTP_PATH')
-            ? trim(rtrim(ILIAS_HTTP_PATH, '/'))
+            ? trim(rtrim((string) ILIAS_HTTP_PATH, '/'))
             : '';
 
-        return empty($value) ? self::DEFAULT_BASE_URL : $value;
+        return $value === '' || $value === '0' ? self::DEFAULT_BASE_URL : $value;
     }
 
     #[Override]

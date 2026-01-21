@@ -25,6 +25,7 @@ use ilAuthProviderFactory;
 use ilAuthStatus;
 use ilAuthUtils;
 use ilDBConstants;
+use ilDBInterface;
 use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
@@ -43,7 +44,7 @@ final class DatabaseUserRepository extends LocalDIC implements UserRepository
     {
         $database = $this->database();
 
-        if (null === $database) {
+        if (!$database instanceof ilDBInterface) {
             throw new RuntimeException('No database connection');
         }
 
