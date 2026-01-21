@@ -20,8 +20,10 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Application;
 
+use Closure;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
+use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\HTTP\Response\ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -49,8 +51,7 @@ final readonly class WebApp
         private ErrorHandler $errorHandler,
         private ResponseFactory $responseFactory,
         private LoggerInterface $logger,
-    ) {
-    }
+    ) {}
 
     public function run(): void
     {
@@ -71,7 +72,7 @@ final readonly class WebApp
         global $DIC;
 
         $request = $DIC ? $DIC['http']?->raw()?->request() : null;
-        
+
         $this->application->run($request);
     }
 
@@ -115,12 +116,7 @@ final readonly class WebApp
                         ->map(
                             [$route->getMethod()],
                             $route->getPath(),
-                            fn(Request $request, Response $response, array $args): Response => ($this->responseHandler)(
-                                $request,
-                                $response,
-                                $args,
-                                $route->getAction(),
-                            ),
+                            $this->createRouteHandler($route->getAction()),
                         );
 
                     foreach ($route->getMiddlewares() as $middlewareClassname) {
@@ -130,6 +126,22 @@ final readonly class WebApp
                 }
             }
         );
+    }
+
+    private function createRouteHandler(Action $action): Closure
+    {
+        return function (
+            Request $request,
+            Response $response,
+            array $args,
+        ) use ($action): Response {
+            return ($this->responseHandler)(
+                $request,
+                $response,
+                $args,
+                $action,
+            );
+        };
     }
 
     private function getBasePath(): string

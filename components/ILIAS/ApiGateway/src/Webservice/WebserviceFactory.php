@@ -41,7 +41,7 @@ readonly class WebserviceFactory
              */
             // @codeCoverageIgnoreStart
             default => throw new InvalidArgumentException(
-                sprintf("Unsupported service protocol: %s", $protocol->name)
+                \sprintf("Unsupported service protocol: %s", $protocol->name)
             ),
             // @codeCoverageIgnoreEnd
         };
