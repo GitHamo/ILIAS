@@ -54,7 +54,7 @@ class RoutesRegistry
         $path = $route->getPath();
         $method = $route->getMethod();
 
-        $key = $this->getInternalKey($method, $path);
+        $key = self::getInternalKey($method, $path);
 
         if (isset($this->routes[$key])) {
             throw new LogicException("Duplicate route detected: Cannot re-register '{$key}'.");
@@ -67,7 +67,7 @@ class RoutesRegistry
         $this->routes[$key] = $route;
     }
 
-    private function getInternalKey(string $method, string $path): string
+    private static function getInternalKey(string $method, string $path): string
     {
         return strtoupper($method) . ' ' . $path;
     }
