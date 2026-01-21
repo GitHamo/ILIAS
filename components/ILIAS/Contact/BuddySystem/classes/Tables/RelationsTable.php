@@ -25,9 +25,7 @@ use ilBuddySystemArrayCollection;
 use ILIAS\UI\Component\Component;
 use ilBuddySystemRelationState;
 use ILIAS\UI\Component\Table\Action\Action;
-use ILIAS\UI\Component\Table\DataRowBuilder;
 use ILIAS\Data\Range;
-use ILIAS\Data\Order;
 use ilObjUser;
 use ilStr;
 use ilUserUtil;
@@ -188,11 +186,11 @@ class RelationsTable
     {
         $actions = [];
         foreach ($data as $row) {
-            foreach ($row['target_states'] as $point) {
-                $actions[$row['state'] . '->' . $point] = $action(
+            foreach ($row['target_states'] as $state) {
+                $actions[$row['state'] . '->' . $state] = $action(
                     'single',
-                    'buddy_bs_act_btn_txt_' . $row['state']->getSnakeName() . '_to_' . $point->getSnakeName(),
-                    $point->getAction()
+                    'buddy_bs_act_btn_txt_' . $row['state']->getSnakeName() . '_to_' . $state->getSnakeName(),
+                    $state->getAction()
                 );
             }
         }
