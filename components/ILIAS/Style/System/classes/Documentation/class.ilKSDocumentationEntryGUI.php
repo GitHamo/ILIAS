@@ -21,6 +21,9 @@ declare(strict_types=1);
 use ILIAS\UI\Implementation\Crawler\Entry as Entry;
 use ILIAS\UI\Implementation\Crawler\Entry\ComponentEntries as Entries;
 use ILIAS\UI\Component\Panel\Report;
+use Phiki\Phiki;
+use Phiki\Grammar\Grammar;
+use Phiki\Theme\Theme;
 
 /**
  * Renders the Overview of one Example in the Administration
