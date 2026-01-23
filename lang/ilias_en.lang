@@ -8086,7 +8086,7 @@ crs#:#mem_cron_min_members_task#:#Please inform the participants if the course w
 crs#:#obj_count_members#:#Number of members
 crs#:#sess_attendance_list#:#Attendance List
 crs#:#sess_gen_attendance_list#:#Generate List
-crs#:#sess_join_info#:#Please click Attend if you want to take part at this session.
+crs#:#sess_join_info#:#Please click on 'Attend' if you want to take part in this session.
 crs#:#sess_limit#:#Limit Number of Sessions Shown
 crs#:#sess_limit_info#:#Participants are not presented with a list of all sessions, but rather a limited number of sessions.
 crs#:#sess_num_next#:#Number of Future Sessions (from tomorrow)
