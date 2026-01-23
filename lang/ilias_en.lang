@@ -8592,7 +8592,7 @@ dateplaner#:#wk_short#:#WK
 dateplaner#:#year#:#Year
 dcl#:#add_value#:#Add New Entry
 dcl#:#dcl_activate_notification#:#Enable Notification
-dcl#:#dcl_activate_view#:#Activate this view
+dcl#:#dcl_activate_view#:#Activate This View
 dcl#:#dcl_add#:#Create Data Collection
 dcl#:#dcl_add_new_field#:#Add New Field
 dcl#:#dcl_add_new_record#:#Add New Entry
@@ -8639,7 +8639,7 @@ dcl#:#dcl_date#:#Date Entry
 dcl#:#dcl_date_desc#:#Users can enter a date of their choice or select one using a calendar.
 dcl#:#dcl_date_selection#:#Date Selection
 dcl#:#dcl_date_selection_desc#:#Allow a date to be chosen from among a predefined selection of date options.
-dcl#:#dcl_deactivate_view#:#Deactivate this view
+dcl#:#dcl_deactivate_view#:#Deactivate This View
 dcl#:#dcl_default_sort_field#:#Default sort field
 dcl#:#dcl_default_sort_field_order#:#Default sort field order
 dcl#:#dcl_default_sort_field_order_desc#:#Arrange the order of the entries in the table based on this field.
@@ -8665,7 +8665,7 @@ dcl#:#dcl_edit_perm#:#Edit Entries
 dcl#:#dcl_edit_record#:#Edit Entry
 dcl#:#dcl_edit_table#:#Settings of the Table ‘%s’
 dcl#:#dcl_editable_in_table_gui#:#Please vote in the table view.
-dcl#:#dcl_empty_detailed_view#:#Delete this detailed view
+dcl#:#dcl_empty_detailed_view#:#Delete This Detailed View
 dcl#:#dcl_empty_detailed_view_success#:#The detailed view definition has been deleted successfully.
 dcl#:#dcl_err_formula_field_not_found#:#Field with title '%s' not found
 dcl#:#dcl_error_parsing_expression#:#Error parsing expression
