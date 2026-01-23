@@ -22,6 +22,7 @@ namespace ILIAS\ApiGateway\Routes\Auth;
 
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Routes\ApiRoute;
+use ILIAS\HTTP\StatusCode;
 use InvalidArgumentException;
 
 readonly class RefreshTokenRoute extends ApiRoute
@@ -39,7 +40,7 @@ readonly class RefreshTokenRoute extends ApiRoute
                 $refreshToken = trim($refreshToken);
 
                 if ('' === $refreshToken) {
-                    throw new InvalidArgumentException('Refresh token is missing or empty.', 400);
+                    throw new InvalidArgumentException('Refresh token is missing or empty.', StatusCode::HTTP_BAD_REQUEST);
                 }
 
                 return $this->authentication->refreshToken($refreshToken)->toArray();

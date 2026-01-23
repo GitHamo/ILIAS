@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Application\Exception;
 
 use Exception;
+use ILIAS\HTTP\StatusCode;
 use Throwable;
 
 class AuthenticationException extends Exception
@@ -29,6 +30,6 @@ class AuthenticationException extends Exception
         string $message = "",
         Throwable|null $previous = null
     ) {
-        parent::__construct($message, 401, $previous);
+        parent::__construct($message, StatusCode::HTTP_UNAUTHORIZED, $previous);
     }
 }

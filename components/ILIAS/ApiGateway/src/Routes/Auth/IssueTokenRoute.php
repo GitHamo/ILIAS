@@ -23,6 +23,7 @@ namespace ILIAS\ApiGateway\Routes\Auth;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Routes\ApiRoute;
+use ILIAS\HTTP\StatusCode;
 use InvalidArgumentException;
 
 readonly class IssueTokenRoute extends ApiRoute
@@ -44,7 +45,7 @@ readonly class IssueTokenRoute extends ApiRoute
                 $password = trim($password);
 
                 if (\in_array('', [$username, $password])) {
-                    throw new InvalidArgumentException('Username or password is empty.', 400);
+                    throw new InvalidArgumentException('Username or password is empty.', StatusCode::HTTP_BAD_REQUEST);
                 }
 
                 $user = $this->userRepository->login($username, $password);

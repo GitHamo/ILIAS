@@ -30,6 +30,7 @@ use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\LocalDIC;
+use ILIAS\HTTP\StatusCode;
 use InvalidArgumentException;
 use Override;
 use RuntimeException;
@@ -57,7 +58,7 @@ final class DatabaseUserRepository extends LocalDIC implements UserRepository
         $result = $userQuery->fetchAssoc();
 
         if (null === $result || empty($result) || !isset($result['usr_id']) || $result['usr_id'] !== $userId) {
-            throw new InvalidArgumentException('User not found', 404);
+            throw new InvalidArgumentException('User not found', StatusCode::HTTP_NOT_FOUND);
         }
 
         return new AuthUser(
