@@ -56,14 +56,7 @@ class ApiGateway implements Component\Component
         $contribute[\ILIAS\Setup\Agent::class] = fn() =>
         new ApiGateway\Setup\ApiGatewaySetupAgent(
             $pull[\ILIAS\Refinery\Factory::class],
-            // new ApiGateway\Documentation\Infrastructure\OpenAPI\GenerateService(
-            //     $internal[HttpConfigFactory::class],
-            // ),
-            // $internal[RoutesRegistryFactory::class],
         );
-
-        // $contribute[Component\Resource\PublicAsset::class] = fn(): Component\Resource\Endpoint =>
-        // new Component\Resource\Endpoint($this, "rest/swagger.php");
 
         $contribute[Component\Resource\PublicAsset::class] = fn(): Component\Resource\OfComponent =>
         new Component\Resource\Endpoint($this, "rest/index.php", "rest");
