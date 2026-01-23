@@ -71,10 +71,6 @@ class ApiGateway implements Component\Component
         $contribute[Component\Resource\PublicAsset::class] = fn(): Component\Resource\OfComponent =>
         new Component\Resource\OfComponent($this, "rest/.htaccess", "rest");
 
-        // @todo: should be fixed in original component
-        $implement[HTTP\Response\ResponseFactory::class] = static fn(): HTTP\Response\ResponseFactory =>
-        new HTTP\Response\ResponseFactoryImpl();
-
         /**
          * Main declarations to be consumed by other components
          */
@@ -104,7 +100,7 @@ class ApiGateway implements Component\Component
             new MiddlewareRepository(
                 $seek[MiddlewareInterface::class],
             ),
-            $use[HTTP\Response\ResponseFactory::class],
+            new HTTP\Response\ResponseFactoryImpl(), // $use[HTTP\Response\ResponseFactory::class],
             new WebserviceLoggerFactory(),
         );
 
