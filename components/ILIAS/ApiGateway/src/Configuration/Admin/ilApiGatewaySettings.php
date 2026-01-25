@@ -125,6 +125,8 @@ class ilApiGatewaySettings
 
     public function save(): void
     {
+        $transformed = [];
+
         foreach ($this->settings_data as $key => $value) {
             $a_value = $value;
 
@@ -213,6 +215,11 @@ class ilApiGatewaySettings
                     break;
             }
 
+            $transformed[$key] = $a_value;
+        }
+
+        // Persist only after all validations pass
+        foreach ($transformed as $key => $a_value) {
             $this->settings->set(
                 $key,
                 $a_value,
