@@ -120,9 +120,15 @@ class ResponseHandlerTest extends TestCase
         $routeArgs = ['route' => 'r_val'];
         $expectedFinalParams = array_merge($queryParams, $bodyParams, $routeArgs);
 
+        $bodyContents = json_encode($bodyParams);
+
         $this->requestMock->method('getQueryParams')->willReturn($queryParams);
-        $this->requestMock->method('getParsedBody')->willReturn($bodyParams);
+        $this->requestMock->method('getParsedBody')->willReturn([]); // parsed body should be empty, as we parse json body manually
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
+        $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('isSeekable')->willReturn(true);
+        $this->streamMock->expects(self::once())->method('rewind');
+        $this->streamMock->method('getContents')->willReturn($bodyContents);
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
         $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
 
@@ -153,6 +159,8 @@ class ResponseHandlerTest extends TestCase
         $this->requestMock->method('getParsedBody')->willReturn([]);
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
         $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('isSeekable')->willReturn(true);
+        $this->streamMock->expects(self::once())->method('rewind');
         $this->streamMock->method('getContents')->willReturn('"this is a scalar string"'); // A valid JSON scalar
 
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
@@ -185,6 +193,8 @@ class ResponseHandlerTest extends TestCase
         $this->requestMock->method('getParsedBody')->willReturn([]);
         $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('application/json');
         $this->requestMock->method('getBody')->willReturn($this->streamMock);
+        $this->streamMock->method('isSeekable')->willReturn(true);
+        $this->streamMock->expects(self::once())->method('rewind');
         $this->streamMock->method('getContents')->willReturn('{"malformed": "json"'); // Malformed JSON
 
         $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
