@@ -41,7 +41,7 @@ readonly class ApiRoute implements Route
         Closure $action,
         private array $middlewares = [],
     ) {
-        $this->actionInstance = new class ($action) implements Action {
+        $this->actionInstance = new readonly class ($action) implements Action {
             public function __construct(private Closure $handle)
             {
             }

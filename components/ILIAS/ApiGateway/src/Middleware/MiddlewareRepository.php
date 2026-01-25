@@ -59,7 +59,7 @@ class MiddlewareRepository
     private function map(array $middlewares): array
     {
         return array_combine(
-            array_map('get_class', $middlewares),
+            array_map(\get_class(...), $middlewares),
             $middlewares
         );
     }

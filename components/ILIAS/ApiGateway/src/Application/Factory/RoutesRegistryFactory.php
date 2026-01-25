@@ -39,7 +39,7 @@ readonly class RoutesRegistryFactory
             ...$this->routeRepository->getAll(),
             // gather all activities and convert to ActivityRoute
             ...array_map(
-                [$this->activityRouteFactory, 'create'],
+                $this->activityRouteFactory->create(...),
                 iterator_to_array(
                     $this->activityRepository->getActivitiesByName("/.*/")
                 )

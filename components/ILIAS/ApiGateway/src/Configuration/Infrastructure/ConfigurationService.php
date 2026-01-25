@@ -62,11 +62,9 @@ class ConfigurationService implements Configuration
     #[Override]
     public function getClientId(): string
     {
-        $value = defined('CLIENT_ID')
+        return defined('CLIENT_ID')
             ? CLIENT_ID
             : self::DEFAULT_CLIENT_ID;
-
-        return $value;
     }
 
     #[Override]
@@ -130,30 +128,24 @@ class ConfigurationService implements Configuration
     #[Override]
     public function isDebugEnabled(): bool
     {
-        $value = defined('DEVMODE')
+        return defined('DEVMODE')
             ? (bool) DEVMODE
             : self::DEFAULT_IS_DEBUG_ENABLED;
-
-        return $value;
     }
 
     #[Override]
     public function isLoggingEnabled(): bool
     {
-        $value = defined('DEVMODE')
+        return defined('DEVMODE')
             ? (bool) DEVMODE
             : self::DEFAULT_IS_LOGGING_ENABLED;
-
-        return $value;
     }
 
     #[Override]
     public function isLoggingDetailsEnabled(): bool
     {
-        $value = defined('DEVMODE')
+        return defined('DEVMODE')
             ? (bool) DEVMODE
             : self::DEFAULT_IS_LOGGING_DETAILS_ENABLED;
-
-        return $value;
     }
 }
