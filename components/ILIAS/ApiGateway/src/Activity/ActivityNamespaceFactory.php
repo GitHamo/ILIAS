@@ -25,7 +25,7 @@ use InvalidArgumentException;
 readonly class ActivityNamespaceFactory
 {
     // requires a namespace to have at least three parts separated by backslashes (e.g., Vendor\Component\ActivityName).
-    private const string PROPER_NAME_REGEXP = "/\w+([\\\\]\w+){2,}/";
+    private const string PROPER_NAME_REGEXP = "/^\w+([\\\\]\w+){2,}$/";
 
     public function create(string $className): ActivityNamespace
     {

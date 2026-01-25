@@ -96,8 +96,15 @@ class ActivityNamespaceFactoryTest extends TestCase
     public static function invalidClassNamesProvider(): array
     {
         return [
-            'two parts' => ["Foo\\Bar", 'Foo\Bar'],
-            'one part' => ["Foo", 'Foo'],
+            'two parts' => ['Foo\\Bar', 'Foo\Bar'],
+            'one part' => ['Foo', 'Foo'],
+            'leading space' => [' Foo\\Bar\\Baz', ' Foo\Bar\Baz'],
+            'trailing space' => ['Foo\\Bar\\Baz ', 'Foo\Bar\Baz '],
+            'leading special char' => ['@Foo\\Bar\\Baz', '@Foo\Bar\Baz'],
+            'trailing special char' => ['Foo\\Bar\\Baz@', 'Foo\Bar\Baz@'],
+            'invalid char in vendor' => ['F@o\\Bar\\Baz', 'F@o\Bar\Baz'],
+            'invalid char in component' => ['Foo\\B@r\\Baz', 'Foo\B@r\Baz'],
+            'invalid char in name' => ['Foo\\Bar\\B@z', 'Foo\Bar\B@z'],
         ];
     }
 }
