@@ -48,7 +48,7 @@ class ConfigurationServiceTest extends TestCase
         $this->assertSame(ConfigurationService::DEFAULT_CLIENT_ID, $this->service->getClientId());
         $this->assertSame('', $this->service->getSecretKey()); // don't generate secret key in order to prevent conflicts
         $this->assertSame(ConfigurationService::DEFAULT_ALGO_ENCRYPT->value, $this->service->getEncryption());
-        $this->assertSame(ConfigurationService::DEFAULT_ALOG_HASH->value, $this->service->getHashing());
+        $this->assertSame(ConfigurationService::DEFAULT_ALGO_HASH->value, $this->service->getHashing());
         $this->assertSame(ConfigurationService::DEFAULT_ACCESS_TOKEN_EXPIRE_IN, $this->service->getAccessTokenExpiry());
         $this->assertSame(ConfigurationService::DEFAULT_REFRESH_TOKEN_EXPIRE_IN, $this->service->getRefreshTokenExpiry());
         $this->assertSame(ConfigurationService::DEFAULT_IS_WEBSERVICE_ENABLED, $this->service->isEnabled(ServiceProtocol::SOAP));
@@ -152,7 +152,7 @@ class ConfigurationServiceTest extends TestCase
 
         $actual = $this->service->getHashing();
 
-        self::assertSame(ConfigurationService::DEFAULT_ALOG_HASH->value, $actual);
+        self::assertSame(ConfigurationService::DEFAULT_ALGO_HASH->value, $actual);
     }
 
     #[Test]

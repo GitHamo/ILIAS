@@ -47,17 +47,17 @@ class MiddlewareRepositoryTest extends TestCase
         $repository->get($middleware2::class);
     }
 
-    public function testGetThrowsExceptionWhenMiddlewareIsNotInstanceOfMiddlewareInterface(): void
+    public function testGetThrowsExceptionWhenRequestedClassIsNotMiddlewareInterface(): void
     {
-        $middleware1 = $this->createMock(MiddlewareInterface::class);
-        $middleware2 = new \stdClass();
+        $validMiddleware = $this->createMock(MiddlewareInterface::class);
+        $invalidMiddleware = new \stdClass();
 
-        $middlewares = [$middleware1];
+        $middlewares = [$validMiddleware];
         $repository = new MiddlewareRepository($middlewares);
 
         self::expectException(LogicException::class);
 
-        $repository->get($middleware2::class);
+        $repository->get($invalidMiddleware::class);
     }
 
     public function testGetAllHandlesMultipleMiddlewareInstancesOfTheSameClassKeepingTheLastOne(): void
