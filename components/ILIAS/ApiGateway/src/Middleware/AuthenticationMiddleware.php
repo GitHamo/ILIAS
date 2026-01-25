@@ -49,7 +49,7 @@ final readonly class AuthenticationMiddleware implements MiddlewareInterface
 
         $token = trim(substr($authHeader, 7)); // Length of "Bearer "
 
-        if ($token === '' || $token === '0') {
+        if ($token === '') {
             throw new AuthenticationException('Authorization token cannot be empty.');
         }
 
