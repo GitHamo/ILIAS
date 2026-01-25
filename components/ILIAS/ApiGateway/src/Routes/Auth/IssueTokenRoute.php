@@ -26,6 +26,8 @@ use ILIAS\ApiGateway\Routes\ApiRoute;
 use ILIAS\HTTP\StatusCode;
 use InvalidArgumentException;
 
+use function is_string;
+
 readonly class IssueTokenRoute extends ApiRoute
 {
     public function __construct(
@@ -41,8 +43,11 @@ readonly class IssueTokenRoute extends ApiRoute
                 $username = $params['username'] ?? '';
                 $password = $params['password'] ?? '';
 
+                if (!is_string($username) || !is_string($password)) {
+                    throw new InvalidArgumentException('Invalid input type.', StatusCode::HTTP_BAD_REQUEST);
+                }
+
                 $username = trim($username);
-                $password = trim($password);
 
                 if (\in_array('', [$username, $password])) {
                     throw new InvalidArgumentException('Username or password is empty.', StatusCode::HTTP_BAD_REQUEST);

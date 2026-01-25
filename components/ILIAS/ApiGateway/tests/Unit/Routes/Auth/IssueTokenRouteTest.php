@@ -44,7 +44,7 @@ class IssueTokenRouteTest extends TestCase
     public function testUsesComponentsToIssueToken(): void
     {
         $username = 'foo';
-        $password = 'bar';
+        $password = ' bar ';
         $expected = ['foo' => 'bar'];
 
         $user = $this->createMock(AuthUser::class);
@@ -91,12 +91,39 @@ class IssueTokenRouteTest extends TestCase
     public static function invalidParametersDataProvider(): array
     {
         return [
+            'username is null' => [['username' => null, 'password' => 'bar']],
+            'password is null' => [['username' => 'foo', 'password' => null]],
             'missing username' => [['password' => 'bar']],
             'missing password' => [['username' => 'foo']],
             'empty username' => [['username' => '', 'password' => 'bar']],
             'empty password' => [['username' => 'foo', 'password' => '']],
             'spaces username' => [['username' => '   ', 'password' => 'bar']],
-            'spaces password' => [['username' => 'foo', 'password' => '   ']],
+        ];
+    }
+
+    /**
+     * @param array<mixed, mixed> $params
+     */
+    #[DataProvider('invalidInputTypeDataProvider')]
+    public function testThrowsExceptionInCaseOfInvalidInputType(array $params): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(400);
+        $this->expectExceptionMessage('Invalid input type.');
+
+        $this->route->getAction()($params, null);
+    }
+
+    /**
+     * @return array<string, array<int, array<mixed, mixed>>>
+     */
+    public static function invalidInputTypeDataProvider(): array
+    {
+        return [
+            'username is int' => [['username' => 123, 'password' => 'bar']],
+            'password is int' => [['username' => 'foo', 'password' => 123]],
+            'username is array' => [['username' => ['user'], 'password' => 'bar']],
+            'password is array' => [['username' => 'foo', 'password' => ['pass']]],
         ];
     }
 }
