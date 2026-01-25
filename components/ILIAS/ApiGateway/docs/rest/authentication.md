@@ -3,7 +3,7 @@
 ## Table of Contents
 * [1. Requesting an Authentication Token](#1-requesting-an-authentication-token)
 * [2. Refreshing an Authentication Token](#2-refreshing-an-authentication-token)
-* [3. Using the Authenticated User in Route Handlers](#3-using-the-authenticated-user-in-route-handlers)
+* [3. Using the Authenticated User in Actions](#3-using-the-authenticated-user-in-actions)
 
 The REST API uses bearer tokens for authentication. API requests that require authentication must include an `Authorization` header with a valid access token.
 

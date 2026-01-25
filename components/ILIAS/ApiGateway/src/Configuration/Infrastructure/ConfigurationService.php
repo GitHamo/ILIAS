@@ -35,7 +35,7 @@ class ConfigurationService implements Configuration
     public const string DEFAULT_BASE_URL = 'http://localhost:8080';
     public const string DEFAULT_CLIENT_ID = 'ILIAS';
     public const EncryptionAlgo DEFAULT_ALGO_ENCRYPT = EncryptionAlgo::HS256;
-    public const HashingAlgo DEFAULT_ALOG_HASH = HashingAlgo::SHA256;
+    public const HashingAlgo DEFAULT_ALGO_HASH = HashingAlgo::SHA256;
     public const int DEFAULT_ACCESS_TOKEN_EXPIRE_IN = 86400; // 1 day
     public const int DEFAULT_REFRESH_TOKEN_EXPIRE_IN = 604800; // 7 days
     public const bool DEFAULT_IS_WEBSERVICE_ENABLED = false;
@@ -86,7 +86,7 @@ class ConfigurationService implements Configuration
     public function getHashing(): string
     {
         $settingValue = $this->adminSettings->get(SystemSetting::AUTH_ALGO_HASH)->asString();
-        $value = HashingAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALOG_HASH;
+        $value = HashingAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALGO_HASH;
 
         return $value->value;
     }

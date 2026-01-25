@@ -21,6 +21,14 @@ declare(strict_types=1);
 namespace ILIAS;
 
 use ILIAS\Component\Component;
+use ILIAS\HTTP\Cookies\CookieFactory;
+use ILIAS\HTTP\Cookies\CookieFactoryImpl;
+use ILIAS\HTTP\Cookies\CookieJarFactory;
+use ILIAS\HTTP\Cookies\CookieJarFactoryImpl;
+use ILIAS\HTTP\Request\RequestFactory;
+use ILIAS\HTTP\Request\RequestFactoryImpl;
+use ILIAS\HTTP\Response\ResponseFactory;
+use ILIAS\HTTP\Response\ResponseFactoryImpl;
 
 class HTTP implements Component
 {
@@ -34,6 +42,9 @@ class HTTP implements Component
         array | \ArrayAccess &$pull,
         array | \ArrayAccess &$internal,
     ): void {
-        // ...
+        $implement[CookieFactory::class] = static fn(): CookieFactory => new CookieFactoryImpl();
+        $implement[CookieJarFactory::class] = static fn(): CookieJarFactory => new CookieJarFactoryImpl();
+        $implement[RequestFactory::class] = static fn(): RequestFactory => new RequestFactoryImpl();
+        $implement[ResponseFactory::class] = static fn(): ResponseFactory => new ResponseFactoryImpl();
     }
 }

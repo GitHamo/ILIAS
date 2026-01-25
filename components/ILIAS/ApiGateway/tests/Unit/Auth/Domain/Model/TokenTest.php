@@ -34,7 +34,7 @@ class TokenTest extends TestCase
         );
     }
 
-    public function testHasAccessorTogetExpiresAt(): void
+    public function testHasAccessorToGetExpiresAt(): void
     {
         $this->assertSame(
             $this->expiresAt,

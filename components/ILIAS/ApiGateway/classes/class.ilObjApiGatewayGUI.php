@@ -215,7 +215,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
             $form = $form->withRequest($this->http->request());
             $data = $form->getData();
 
-            if (null == $data) {
+            if (null === $data) {
                 throw new InvalidArgumentException(
                     $this->lng->txt("EXCEPTION_NO_DATA_PROVIDED")
                 );
@@ -298,11 +298,9 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
         $cmd = $this->ctrl->getCmd(self::DEFAULT_CMD);
 
         if (
-            in_array(strtolower($cmd), [
-                '',
-                'view',
-                str_ends_with($cmd, self::KEYS_SEPARATOR . self::SECTION_SETTINGS),
-            ])
+            $cmd === '' ||
+            strtolower($cmd) === 'view' ||
+            str_ends_with(strtolower($cmd), self::KEYS_SEPARATOR . self::SECTION_SETTINGS)
         ) {
             if ($this->has_read_access) {
                 $this->tabs_gui->addSubTab(

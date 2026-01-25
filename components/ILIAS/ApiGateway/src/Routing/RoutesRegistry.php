@@ -54,14 +54,14 @@ class RoutesRegistry
         $path = $route->getPath();
         $method = $route->getMethod();
 
+        if (empty($method)) {
+            throw new InvalidArgumentException("Cannot register a route with no HTTP methods for path '{$path}'.");
+        }
+
         $key = self::getInternalKey($method, $path);
 
         if (isset($this->routes[$key])) {
             throw new LogicException("Duplicate route detected: Cannot re-register '{$key}'.");
-        }
-
-        if (empty($method)) {
-            throw new InvalidArgumentException("Cannot register a route with no HTTP methods for path '{$path}'.");
         }
 
         $this->routes[$key] = $route;

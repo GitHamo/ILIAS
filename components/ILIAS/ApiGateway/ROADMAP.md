@@ -30,4 +30,4 @@ This architecture separates concerns by having a generic `ApiGateway` component.
   - `RequestLoggingMiddleware`
 - I/O validation schemas for request and response data.
 - Enhanced error handling and reporting.
-- **Configuration:** Read enviormaent variables and prioritize over dashboard to faciliate CI. (optional)
+- **Configuration:** Read environment variables and prioritize over dashboard to facilitate CI. (optional)

@@ -87,7 +87,7 @@ final class DatabaseRefreshTokenRepository extends LocalDIC implements RefreshTo
     {
         $database = $this->database();
 
-        if (!$database instanceof \ilDBInterface || ($tokenHash === '' || $tokenHash === '0')) {
+        if (!$database instanceof ilDBInterface || $tokenHash === '') {
             return null;
         }
 

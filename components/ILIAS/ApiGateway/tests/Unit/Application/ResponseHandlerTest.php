@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamInterface;
 
-class ResponseHanlderTest extends TestCase
+class ResponseHandlerTest extends TestCase
 {
     private ResponseHandler $handler;
     private Webservice&MockObject $webserviceMock;

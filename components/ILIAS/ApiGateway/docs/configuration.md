@@ -6,14 +6,14 @@ The webservice settings can be configured from the administration dashboard. Her
 
 This is a private key used to sign and verify the authenticity of access and refresh tokens. It ensures that tokens were issued by this ILIAS instance and have not been tampered with.
 
-- **Usage:** Used for encryption. **Do NOT share it with anyone.**
+- **Usage:** Used for signing tokens. **Do NOT share it with anyone.**
 - **On Fresh Installation:** The field will be blank.
 - **Generating a Key:** If the field is left blank and the settings are saved, a new, cryptographically secure random key will be generated.
 - **System Impact:** Changing this key will immediately invalidate **all** previously issued access and refresh tokens. All users and applications will be forced to re-authenticate to get new tokens. This action is irreversible.
 
-## Encryption Algorithm
+## Signing Algorithm
 
-This setting determines the cryptographic algorithm used to create the digital signature for the JSON Web Tokens (JWTs) that serve as access and refresh tokens.
+This setting determines the algorithm used to create the digital signature for the JSON Web Tokens (JWTs) that serve as access and refresh tokens.
 
 - **What it is:** A standard method for creating a secure signature.
 - **How it's used:** When a token is issued, this algorithm uses the **Secret Key** to create a unique signature for the token's content. When the token is later used to access the API, the system uses the same key and algorithm to verify that the signature is still valid, proving the token is authentic.

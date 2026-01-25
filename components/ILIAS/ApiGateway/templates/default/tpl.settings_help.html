@@ -21,7 +21,7 @@
                         tokens were issued by this ILIAS instance and have not been tampered with.</p>
 
                     <ul>
-                        <li><strong>Usage:</strong> Used for encryption. <strong>Do NOT share it with anyone.</strong>
+                        <li><strong>Usage:</strong> Used for signing and verifying tokens. <strong>Do NOT share it with anyone.</strong>
                         </li>
                         <li><strong>On Fresh Installation:</strong> The field will be blank.</li>
                         <li><strong>Generating a Key:</strong> If the field is left blank and the settings are saved, a
@@ -34,7 +34,7 @@
                         </li>
                     </ul>
 
-                    <h2 id="encryption-algorithm">Encryption Algorithm</h2>
+                    <h2 id="signing-algorithm">Signing Algorithm</h2>
 
                     <p>This setting determines the cryptographic algorithm used to create the digital signature for the
                         JSON
@@ -65,7 +65,7 @@
                     <ul>
                         <li><strong>What it is:</strong> A one-way function that turns a token into a fixed-size string
                             of
-                            characters,called a hash.</li>
+                            characters, called a hash.</li>
                         <li><strong>How it&#39;s used:</strong> Instead of storing the actual refresh token in the
                             database
                             (which
@@ -161,7 +161,7 @@
                 </div><!-- .panel-body -->
             </div><!-- .panel -->
         </main>
-        <sidebar class="col-md-12 col-lg-3">
+        <aside class="col-md-12 col-lg-3">
             <div class="panel panel-primary il-panel-links panel-flex">
                 <div class="panel-heading ilHeader">
                     <div class="panel-title">
@@ -173,15 +173,15 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="https://github.com/ILIAS-eLearning/ILIAS/tree/trunk/components/ILIAS/ApiGateway/README.md"
-                                target="_blank">Documentation</a></li>
+                                target="_blank" rel="noopener noreferrer">Documentation</a></li>
                         <li><a href="https://mantis.ilias.de/search.php?project_id=1&category_id=SOAP%20%26%20Webservices&status=10&sticky=on&sort=last_updated&dir=DESC&hide_status=90&match_type=0"
-                                target="_blank">Support</a></li>
-                        <li><a href="https://docu.ilias.de/go/grp/16532" target="_blank">SIG Webservice - REST and more</a></li>
-                        <li><a href="https://www.minervis.com" target="_blank">Maintainer</a></li>
+                                target="_blank" rel="noopener noreferrer">Support</a></li>
+                        <li><a href="https://docu.ilias.de/go/grp/16532" target="_blank" rel="noopener noreferrer">SIG Webservice - REST and more</a></li>
+                        <li><a href="https://www.minervis.com" target="_blank" rel="noopener noreferrer">Maintainer</a></li>
                     </ul>
 
                 </div><!-- .panel-body -->
             </div><!-- .panel -->
-        </sidebar>
+        </aside>
     </div><!-- .row -->
 </div><!-- .container -->

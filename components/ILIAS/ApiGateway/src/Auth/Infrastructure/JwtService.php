@@ -31,6 +31,7 @@ use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
+use InvalidArgumentException;
 use Override;
 use UnexpectedValueException;
 
@@ -110,7 +111,7 @@ final readonly class JwtService implements TokenProvider
                     $this->config()->getEncryptionAlgo(),
                 ),
             );
-        } catch (DomainException | UnexpectedValueException $e) {
+        } catch (InvalidArgumentException | DomainException | UnexpectedValueException $e) {
             // catch 'firebase/php-jwt' exceptions in order not to leak third-party exceptions into the application.
             throw new AuthenticationException(
                 'The provided token is invalid or expired.',

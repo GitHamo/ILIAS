@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Auth\Domain\Model;
+namespace Tests\Unit\Configuration\Domain\Model;
 
 use DateTime;
 use DateTimeInterface;

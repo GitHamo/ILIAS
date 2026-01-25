@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JwtService::class)]
 class JwtServiceTest extends TestCase
 {
-    private const string SECRET_KEY = 'super-secret-key-for-testing-should-be-log-for-hs256';
+    private const string SECRET_KEY = 'super-secret-key-for-testing-should-be-long-for-hs256';
     private const string ALGORITHM = 'HS256';
     private const string ISSUER = 'ILIAS';
     private const int USER_ID = 1337;

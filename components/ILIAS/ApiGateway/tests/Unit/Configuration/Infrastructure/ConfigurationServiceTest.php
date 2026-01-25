@@ -158,13 +158,13 @@ class ConfigurationServiceTest extends TestCase
     #[Test]
     public function testReturnsAccessTokenExpirySystemSettingsValue(): void
     {
-        $exepected = 1234;
+        $expected = 1234;
 
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS, 'asInt', $exepected);
+        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS, 'asInt', $expected);
 
         $actual = $this->service->getAccessTokenExpiry();
 
-        self::assertSame($exepected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     #[Test]
@@ -182,13 +182,13 @@ class ConfigurationServiceTest extends TestCase
     #[Test]
     public function testReturnsRefreshTokenExpirySystemSettingsValue(): void
     {
-        $exepected = 1234;
+        $expected = 1234;
 
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH, 'asInt', $exepected);
+        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH, 'asInt', $expected);
 
         $actual = $this->service->getRefreshTokenExpiry();
 
-        self::assertSame($exepected, $actual);
+        self::assertSame($expected, $actual);
     }
 
     #[Test]

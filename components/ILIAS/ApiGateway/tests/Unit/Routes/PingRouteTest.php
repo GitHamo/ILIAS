@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Routing;
+namespace Tests\Unit\Routes;
 
 use ILIAS\ApiGateway\Routes\PingRoute;
 use PHPUnit\Framework\Attributes\CoversClass;

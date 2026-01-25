@@ -149,7 +149,7 @@ The primary reason to choose this approach over `ApiRoute` is for **dependency i
 A class is created that defines all the route's properties and logic. Just like `ApiRoute`, it is then registered in the `Component.php` by contributing an instance of the new class to `ApiGateway\Routing\Route::class`.
 
 ```php
-## Components/Vendor/MyModule/GetUserByIdRoute.php
+## Components/Vendor/MyModule/GetCourseByIdRoute.php
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\Action;
@@ -189,7 +189,7 @@ class GetCourseByIdRoute implements Route, Action
 ## Components/Vendor/MyModule/MyModule.php
 
 $contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
-    new GetCourseByIdAction(
-        $pull[GetCourseByIdRoute::class],
+    new GetCourseByIdRoute(
+        $pull[CourseRepository::class],
     );
 ```

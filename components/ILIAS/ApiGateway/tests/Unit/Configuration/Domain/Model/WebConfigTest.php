@@ -62,7 +62,7 @@ final class WebConfigTest extends TestCase
         self::assertSame($this->isEnabled, $actual);
     }
 
-    public function testHasAccessorToIsisDebugEnabled(): void
+    public function testHasAccessorToIsDebugEnabled(): void
     {
         $actual = $this->model->isDebugEnabled();
 
