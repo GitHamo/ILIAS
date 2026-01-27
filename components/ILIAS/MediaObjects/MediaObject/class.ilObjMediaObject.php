@@ -1704,7 +1704,6 @@ class ilObjMediaObject extends ilObject
 
         $logger->debug("Generate preview pic...");
         $logger->debug("..." . $item->getFormat());
-
         $this->thumbs->createPreview(
             $this->getId(),
             $item->getLocation(),
