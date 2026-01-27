@@ -287,8 +287,7 @@ class ilObjMediaObject extends ilObject
         bool $a_create_meta_data = false,
         bool $a_save_media_items = true,
         int $from_mob_id = 0
-    ): int
-    {
+    ): int {
         $id = parent::create();
 
         if (!$a_create_meta_data) {
@@ -1704,7 +1703,6 @@ class ilObjMediaObject extends ilObject
 
         $logger->debug("Generate preview pic...");
         $logger->debug("..." . $item->getFormat());
-
         $this->thumbs->createPreview(
             $this->getId(),
             $item->getLocation(),
