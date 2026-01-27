@@ -170,4 +170,4 @@ The system includes a global authentication middleware. The following middleware
 
 ### OpenAPI Specification
 
-*(An OpenAPI (Swagger) specification for automated API documentation and client generation will be available in a future update.)*
+*(An OpenAPI (Swagger) specification for interactive API documentation, and automated client generation will be available in a future update.)*

@@ -23,11 +23,14 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 ## Backlog
 
 - Middlewares & related Exceptions:
-  - `CorsMiddleware`
-  - `JsonContentNegotiationMiddleware` / `NotAcceptableException`
-  - `JsonBodyParserMiddleware` / `InvalidJsonException`
-  - `RateLimitingMiddleware` / `RateLimitExceededException`
-  - `RequestLoggingMiddleware`
+  - `ApiServiceStatusMiddleware` (Checks if the API is globally enabled)
+  - `TransportSecurityMiddleware` (Adds HSTS header to enforce HTTPS)
+  - `BrowserSecurityMiddleware` (Adds CSP, X-Frame-Options, etc. to harden browser clients)
+  - `CorsMiddleware` (Manages which other domains are allowed to make requests to this API)
+  - `JsonContentNegotiationMiddleware` / `NotAcceptableException` (Ensures the client is sending and accepting application/json)
+  - `JsonBodyParserMiddleware` / `InvalidJsonException` (Safely parses the request body as JSON)
+  - `RateLimitingMiddleware` / `RateLimitExceededException` (Protects the API from abuse by limiting request frequency)
+  - `RequestLoggingMiddleware` (Logs request/response data for debugging and monitoring)
 - I/O validation schemas for request and response data.
 - Enhanced error handling and reporting.
 - **Configuration:** Read environment variables and prioritize over dashboard to facilitate CI. (optional)
