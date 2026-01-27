@@ -8703,7 +8703,6 @@ dcl#:#dcl_link_detail_page#:#Link to Detailed View
 dcl#:#dcl_link_detail_page_desc#:#Additionally, a detailed view template must have been created and activated within the tab ‘Detailed View’.
 dcl#:#dcl_list_fields#:#Fields
 dcl#:#dcl_list_visibility_and_filter#:#Overview
-dcl#:#dcl_locked#:#Locked
 dcl#:#dcl_manage#:#Manage
 dcl#:#dcl_max_digits#:#Maximum Number of Digits
 dcl#:#dcl_max_import#:#The maximum amount of imported entries is reached.
