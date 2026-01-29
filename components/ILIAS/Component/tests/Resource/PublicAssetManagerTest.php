@@ -82,7 +82,7 @@ class PublicAssetManagerTest extends TestCase
         $this->manager->buildPublicFolder($base_path, '/target');
     }
 
-    protected function provideValidBasePathData(): \Iterator
+    public static function provideValidBasePathData(): \Iterator
     {
         yield ['/var/www/ilias'];
         yield ['/var/www/html'];
