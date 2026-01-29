@@ -232,6 +232,7 @@ class ilObjTaxonomyGUI extends ilObject2GUI
      */
     public function createAssignedTaxonomy(): void
     {
+        $this->requested_new_type = "tax";
         $this->create();
     }
 
