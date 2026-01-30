@@ -162,3 +162,23 @@ public function getXmlExportTailDependencies(
 
 
 ```
+
+To connect an exported style back to your object on import, the style component needs the following mapping being available:
+
+What the style object calls:
+
+```php
+  $obj_id = (int) $a_mapping->getMapping("components/ILIAS/ILIASObject", "obj", $a_rec["ObjId"]);
+```
+
+What you need to call when creating your new main object on import:
+
+```php
+  $a_mapping->addMapping("components/ILIAS/ILIASObject", "obj", $a_rec["Id"], $newObj->getId());
+```
+
+
+
+
+
+
