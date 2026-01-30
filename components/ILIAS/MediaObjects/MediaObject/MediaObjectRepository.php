@@ -197,6 +197,20 @@ class MediaObjectRepository
         );
     }
 
+    public function getLocationContent(
+        int $mob_id,
+        string $location
+    ): string {
+        $content = "";
+        if (str_starts_with($location, "/")) {
+            $location = substr($location, 1);
+        }
+        if ($this->irss->hasContainerEntry($this->getRidForMobId($mob_id), $location)) {
+            $content = stream_get_contents($this->getLocationStream($mob_id, $location)->detach());
+        }
+        return $content;
+    }
+
     public function getInfoOfEntry(
         int $mob_id,
         string $path
