@@ -2725,7 +2725,10 @@
 			<xsl:if test="$mode = 'offline'" >
 				<xsl:for-each select="//MediaObject[@Id=$cmobid]/MediaItem[@Purpose=$curPurpose]/Subtitle">
 					<xsl:if test = "@Default = 'true'">
-						<div class="ilMobSubtitleText" style="display:none;"><xsl:attribute name="name"><xsl:value-of select="$cmobid"/>_<xsl:value-of select="$curPurpose"/></xsl:attribute>[[[[[mobsubtitle;<xsl:value-of select="$cmobid"/>_<xsl:value-of select="$curPurpose"/>]]]]]</div>
+						<script type="text/vtt">
+							<xsl:attribute name="data-mob-path"><xsl:value-of select="@File"/></xsl:attribute>
+							<xsl:attribute name="name"><xsl:value-of select="$cmobid"/>_<xsl:value-of select="$curPurpose"/></xsl:attribute>[[[[[mobsubtitle;<xsl:value-of select="$cmobid"/>_<xsl:value-of select="$curPurpose"/>]]]]]
+						</script>
 					</xsl:if>
 				</xsl:for-each>
 			</xsl:if>

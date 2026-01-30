@@ -62,7 +62,7 @@ class MediaObjectManager
         );
     }
 
-    public function addLocalDirectory(int $mob_id, string $dir) : void
+    public function addLocalDirectory(int $mob_id, string $dir): void
     {
         $this->repo->addLocalDirectory($mob_id, $dir);
     }
@@ -76,8 +76,7 @@ class MediaObjectManager
         int $mob_id,
         UploadResult $result,
         string $path = "/"
-    ): void
-    {
+    ): void {
         $this->repo->addFileFromUpload($mob_id, $result, $path);
     }
 
@@ -100,11 +99,18 @@ class MediaObjectManager
         return $this->repo->getLocationStream($mob_id, $location);
     }
 
+    public function getLocationContent(
+        int $mob_id,
+        string $location
+    ): string {
+        return $this->repo->getLocationContent($mob_id, $location);
+    }
+
     public function addStream(
         int $mob_id,
         string $location,
         FileStream $stream
-    ) : void {
+    ): void {
         $this->repo->addStream($mob_id, $location, $stream);
     }
 
@@ -124,7 +130,7 @@ class MediaObjectManager
         return $src;
     }
 
-    public function hasLocalFile(int $mob_id, string $location) : bool
+    public function hasLocalFile(int $mob_id, string $location): bool
     {
         return $this->repo->hasLocalFile($mob_id, $location);
     }
@@ -151,8 +157,7 @@ class MediaObjectManager
     public function getInfoOfEntry(
         int $mob_id,
         string $path
-    ) : array
-    {
+    ): array {
         return $this->repo->getInfoOfEntry(
             $mob_id,
             $path
@@ -162,8 +167,7 @@ class MediaObjectManager
     public function deliverEntry(
         int $mob_id,
         string $path
-    ) : void
-    {
+    ): void {
         $this->repo->deliverEntry($mob_id, $path);
     }
 
@@ -232,8 +236,7 @@ class MediaObjectManager
         int $mob_id,
         string $url,
         string $target_location
-    ) : void
-    {
+    ): void {
         $log = $this->logger;
         try {
             $log->debug('Trying to fetch thumbnail from URL: {thumbnail_url}', [
@@ -307,34 +310,34 @@ class MediaObjectManager
 
     public function generateMissingVTT(int $mob_id): void
     {
-        $names = array_map(static function(array $i) {
+        $names = array_map(static function (array $i) {
             return $i["file"];
         }, $this->getSrtFiles($mob_id));
         $missing_vtt = [];
         foreach ($names as $name) {
             if (str_ends_with($name, ".srt")) {
-                $vtt = str_replace (".srt", ".vtt", $name);
+                $vtt = str_replace(".srt", ".vtt", $name);
                 if (!in_array($vtt, $names) && !in_array($vtt, $missing_vtt)) {
                     $missing_vtt[] = $vtt;
                 }
             }
         }
-        foreach($missing_vtt as $vtt_name) {
-            $srt_name = str_replace (".vtt", ".srt", $vtt_name);
+        foreach ($missing_vtt as $vtt_name) {
+            $srt_name = str_replace(".vtt", ".srt", $vtt_name);
             $srt_content = stream_get_contents($this->repo->getLocationStream($mob_id, "srt/" . $srt_name)->detach());
             $vtt_content = $this->srtToVtt($srt_content);
             $this->repo->addString($mob_id, "/srt/" . $vtt_name, $vtt_content);
         }
     }
 
-    function srtToVtt(string $srt_text): string
+    public function srtToVtt(string $srt_text): string
     {
         // Remove UTF-8 BOM if present
         $srt_text = preg_replace('/^\xEF\xBB\xBF/', '', $srt_text);
 
         // Normalise line-endings and split cues
         $srt_text = preg_replace('~\r\n?~', "\n", $srt_text);
-        $blocks   = preg_split("/\n{2,}/", trim($srt_text));
+        $blocks = preg_split("/\n{2,}/", trim($srt_text));
 
         $vttLines = ['WEBVTT', ''];          // header + blank line
 
@@ -361,4 +364,5 @@ class MediaObjectManager
         }
 
         return implode("\n", $vttLines);
-    }}
+    }
+}
