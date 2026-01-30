@@ -606,7 +606,10 @@ class ilObjMediaObject extends ilObject
                                 $ilUser->getLanguage() == $srt["language"]) {
                                 $def = ' Default="true" ';
                             }
-                            $xml .= "<Subtitle File=\"" . $srt["src"] .
+                            $src = $offline
+                                ? "mobs/mm_" . $this->getId() . $srt["full_path"]
+                                : $srt["src"];
+                            $xml .= "<Subtitle File=\"" . $src .
                                 "\" Language=\"" . $srt["language"] . "\" " . $def . "/>";
                         }
                     }
