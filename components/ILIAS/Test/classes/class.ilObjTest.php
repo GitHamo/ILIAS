@@ -3116,7 +3116,8 @@ class ilObjTest extends ilObject
             $this->replaceMobsInPageImports(
                 $material['text'],
                 $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            )
+            ),
+            $mappings['components/ILIAS/File']['file'] ?? []
         );
 
         $page_object = new ilTestPage();
@@ -3139,7 +3140,8 @@ class ilObjTest extends ilObject
             $this->replaceMobsInPageImports(
                 $material['text'],
                 $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            )
+            ),
+            $mappings['components/ILIAS/File']['file'] ?? []
         );
 
         $page_object = new ilTestPage();
