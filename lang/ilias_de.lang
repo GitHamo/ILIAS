@@ -6111,7 +6111,7 @@ cont#:#cont_std_filter_title_2#:#Beschreibung
 cont#:#cont_std_filter_title_3#:#Titel/Beschreibung
 cont#:#cont_std_filter_title_4#:#Schlagwort
 cont#:#cont_std_filter_title_5#:#Autor
-cont#:#cont_std_filter_title_6#:#Copyright
+cont#:#cont_std_filter_title_6#:#Lizenz
 cont#:#cont_std_filter_title_7#:#Kontaktperson
 cont#:#cont_std_filter_title_8#:#Objekttyp
 cont#:#cont_std_filter_title_9#:#Online/Offline
@@ -9807,9 +9807,9 @@ file#:#add_icon#:#Icon hinzufügen
 file#:#amount_of_downloads#:#Downloads
 file#:#amount_of_downloads_since#:#%d seit %s
 file#:#copyright_custom#:#Benutzerdefiniert
-file#:#copyright_custom_info#:#Benutzerdefiniertes Copyright auswählen, welches auf alle entpackten Dateien dieses Archivs angewandt wird.
+file#:#copyright_custom_info#:#Lizenz auswählen, welche auf alle entpackten Dateien dieses Archivs angewandt wird.
 file#:#copyright_inherited#:#Vererbt
-file#:#copyright_inherited_info#:#Copyright des Zip-Archivs auf seine entpackten Dateien anwenden. <br \>Copyright des Zip-Archivs: %s.
+file#:#copyright_inherited_info#:#Lizenz des Zip-Archivs auf seine entpackten Dateien anwenden. <br \>Lizenz des Zip-Archivs: %s.
 file#:#could_not_create_file_objs#:#Beim Erstellen der Dateiobjekte ist ein Fehler aufgetreten, wenden Sie sich an die Administrierenden der Plattform.
 file#:#de_activate_icon#:#(De-)Aktivieren
 file#:#download_ascii_filename#:#Nur ASCII-Zeichen im Download
@@ -12024,13 +12024,13 @@ meta#:#md_adv_text_multi_val#:#Mehrsprachige Werte
 meta#:#md_adv_text_multi_val_info#:#Erlauben Sie mehrsprachige Feldwerte für dieses Datenfeld. Für Texte, die keiner Übersetzung bedürfen, wie z.B. Personennamen, empfiehlt sich die Deaktivierung dieser Option.
 meta#:#md_advanced#:#Benutzerdefinierte Metadaten
 meta#:#md_aria_language_selection#:#Sprachauswahl
-meta#:#md_copyright#:#Copyright
-meta#:#md_copyright_add#:#Neue Vorgabe
-meta#:#md_copyright_admin_tab#:#Copyright & OER
+meta#:#md_copyright#:#Lizenz
+meta#:#md_copyright_add#:#Neue Lizenz hinzufügen
+meta#:#md_copyright_admin_tab#:#LOM & OER
 meta#:#md_copyright_alt_text#:#Alternativtext
 meta#:#md_copyright_alt_text_info#:#Wird für das „Alt“-Attribut des Bildes verwendet
 meta#:#md_copyright_default#:#Standard
-meta#:#md_copyright_edit#:#Copyright-Vorgabe bearbeiten
+meta#:#md_copyright_edit#:#Lizenzen bearbeiten
 meta#:#md_copyright_enable_info#:#Im Unterreiter „Lizenzen“ hinterlegte Auswahl wird in Objekten angeboten.
 meta#:#md_copyright_enabled#:#Lizenzen in Objekten
 meta#:#md_copyright_full_name#:#Vollständiger Name
@@ -12041,10 +12041,10 @@ meta#:#md_copyright_image_is_link#:#URL eingeben
 meta#:#md_copyright_image_link#:#URL
 meta#:#md_copyright_link#:#URL
 meta#:#md_copyright_link_info#:#Link zu der Lizenz
-meta#:#md_copyright_preview#:#Copyright (Vorschau)
-meta#:#md_copyright_selection#:#Copyright-Vorgaben
-meta#:#md_copyright_value#:#Copyright
-meta#:#md_copyrights_deleted#:#Die ausgewählten Vorgaben wurden entfernt.
+meta#:#md_copyright_preview#:#Vorschau
+meta#:#md_copyright_selection#:#Lizenzen
+meta#:#md_copyright_value#:#Lizenz
+meta#:#md_copyrights_deleted#:#Die ausgewählten Lizenzen wurden entfernt.
 meta#:#md_days#:#Tage:
 meta#:#md_delete_cp_sure#:#Möchten Sie wirklich die ausgewählten Vorgaben entfernen?
 meta#:#md_delimiter#:#Trennzeichen
@@ -12098,7 +12098,7 @@ meta#:#md_vocab_table_title#:#Metadaten-Elemente mit vordefinierten Werten
 meta#:#md_vocab_type_column#:#Typ
 meta#:#md_vocab_type_controlled_string#:#Kontrollierter Text
 meta#:#md_vocab_type_controlled_vocab_value#:#Kontrollierte Auswahl
-meta#:#md_vocab_type_copyright#:#Copyright
+meta#:#md_vocab_type_copyright#:#Lizenz
 meta#:#md_vocab_type_standard#:#Standard
 meta#:#md_vocab_update_successful#:#Vokabular erfolgreich aktualisiert
 meta#:#md_vocabularies_config#:#LOM-Vokabulare
@@ -12387,8 +12387,8 @@ meta#:#meta_context#:#Kontext
 meta#:#meta_context_plural#:#Kontexte
 meta#:#meta_contribute#:#Beitrag
 meta#:#meta_contribute_plural#:#Beiträge
-meta#:#meta_copyright#:#Copyright
-meta#:#meta_copyright_and_other_restrictions#:#Copyright und andere Einschränkungen
+meta#:#meta_copyright#:#Lizenz
+meta#:#meta_copyright_and_other_restrictions#:#Lizenzen und andere Einschränkungen
 meta#:#meta_copyright_change_info#:#Beachten Sie unbedingt das Urheberrecht, wenn Sie die Lizenz für dieses Objekt ändern. Bitte fahren Sie nur fort, wenn Sie befugt sind, über die Nutzungsrechte an dem Objekt zu entscheiden.
 meta#:#meta_copyright_change_oer_info#:#Die Lizenz, die Sie ausgewählt haben, zeichnet das Object als Open Educational Resource aus. Wenn Sie fortfahren, wird es eventuell als solches mit einer Exportdatei gelistet, und über diese Plattform hinaus veröffentlicht.
 meta#:#meta_copyright_change_warning_title#:#Lizenz ändern
@@ -12850,8 +12850,8 @@ mme#:#type_top_link_item#:#Link
 mme#:#type_top_parent_item#:#Container
 mme#:#unable_to_render#:#Der Eintrag '%s' kann nicht in '%s' angezeigt werden.
 mob#:#mob_choose_from_pool#:#Aus Medienpool
-mob#:#mob_copyright#:#Copyright
-mob#:#mob_copyright_icon#:#Copyright Icon
+mob#:#mob_copyright#:#Lizenz
+mob#:#mob_copyright_icon#:#Lizenz-Icon
 mob#:#mob_external_url#:#Externe URL
 mob#:#mob_extract_preview_image#:#Vorschaubild erzeugen
 mob#:#mob_file#:#Datei
@@ -15505,7 +15505,7 @@ search#:#search_auto_complete_length#:#Anzahl der Einträge in Auto-Complete-Lis
 search#:#search_cdate_filter#:#Erstellungsdatum
 search#:#search_cdate_filter_info#:#In den Suchergebnissen erlaubt ein Filter die Eingabe eines Zeitraums.
 search#:#search_content#:#Seiteninhalt
-search#:#search_copyright#:#Copyright
+search#:#search_copyright#:#Lizenz
 search#:#search_created_after#:#Objekte erstellt nach dem...
 search#:#search_created_before#:#Objekte erstellt vor dem...
 search#:#search_created_on#:#Objekte erstellt am...
@@ -17525,7 +17525,7 @@ user#:#confirm_logout_for_email_change#:#Sie haben Ihre E-Mail-Adresse geändert
 user#:#confirm_logout_for_email_change_with_confirmation#:#Im Anschluss wird Ihnen eine E-Mail auf die neue E-Mail gesendet, um zu bestätigen, dass diese Adresse Ihnen gehört. Erst nachdem Sie den Link in der E-Mail angeklickt haben, wird die Adresse in Ihrem Profil geändert.
 user#:#create_starting_point#:#Regel erstellen
 user#:#criteria#:#Kriterium
-user#:#del_mail_body#:#Hallo %1$s, %2$s Sie haben sich seit längerer Zeit nicht mehr auf %3$s angemeldet. Daher wird ihr ILIAS-Konto %5$s voraussichtlich am %4$s gelöscht. Um Ihr ILIAS-Konto zu behalten, müssen Sie sich vor dem genannten Tag erneut einloggen.
+user#:#del_mail_body#:#Hallo %1$s, %2$s Sie haben sich seit längerer Zeit nicht mehr auf %3$s angemeldet. Daher wird Ihr ILIAS-Konto %5$s voraussichtlich am %4$s gelöscht. Um Ihr ILIAS-Konto zu behalten, müssen Sie sich vor dem genannten Tag erneut einloggen.
 user#:#del_mail_subject#:#Ihr ILIAS-Konto wird bald gelöscht
 user#:#delete_inactive_user_accounts_frequency#:#Intervall
 user#:#delete_inactive_user_accounts_frequency_desc#:#Intervall, mit welchem auf Löschung sowie auf E-Mail-Versand getestet wird.
