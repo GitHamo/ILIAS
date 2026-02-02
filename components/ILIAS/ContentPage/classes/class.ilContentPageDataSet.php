@@ -177,7 +177,9 @@ class ilContentPageDataSet extends ilDataSet implements ilContentPageObjectConst
     ): array {
         if ($a_entity === self::OBJ_TYPE) {
             $style = $this->content_style_domain->styleForObjId((int) $a_set['id']);
-            $a_set['Style'] = $style->getStyleId();
+            if ($style->getExportStyleId() > 0) {
+                $a_set['Style'] = $style->getExportStyleId();
+            }
 
             return $a_set;
         }
