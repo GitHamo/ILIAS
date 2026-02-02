@@ -9,6 +9,7 @@ This guide is for developers maintaining or extending the core functionality of 
 * [Core Components & Concepts](#core-components--concepts)
 * [Request Lifecycle](#request-lifecycle)
 * [How to Extend the ApiGateway Core](#how-to-extend-the-apigateway-core)
+* [Exceptions Handling](#how-to-handle-exceptions)
 
 ## Architecture Overview
 
@@ -71,3 +72,52 @@ The `ApiGateway` component provides a modern, modular architecture for building 
     1. Add the new setting to the `Configuration/Domain/Enum/SystemSetting.php` enum.
     2. Update `Configuration/Infrastructure/ConfigurationService.php` to expose the new setting.
     3. Update `Configuration/ilApiGatewaySettings.php` and `classes/class.ilObjApiGatewayGUI.php` to include the new setting in the administration UI.
+
+## How to Handle Exceptions
+
+The component employs a centralized error handling strategy to ensure API responses are consistent and predictable. A 'safety net' at the application's edge catches any unhandled `Throwable` and formats it into a standard JSON error response.
+
+### Core Principles
+
+When an error occurs, the code that understands the failure should throw a semantically meaningful exception. This provides context to the centralized error handler, which then generates the appropriate HTTP status code.
+
+* **Use Specific Exceptions:** Whenever possible, throw a specific exception from `src/Application/Exception/`, such as `AuthenticationException` (401) or `AuthorizationException` (403).
+* **Avoid Generic Exceptions:** Do not throw generic exceptions like `\Exception` or `ilException` from application logic. This results in a generic "500 Internal Server Error" and loses important context about what failed.
+
+**Example:**
+
+```php
+// From AuthenticationMiddleware.php
+if (empty($authHeader)) {
+    throw new AuthenticationException('Authorization header missing or invalid.');
+}
+```
+
+### Handling External Exceptions
+
+When interacting with external libraries or legacy ILIAS services, catch their exceptions and re-throw a more specific exception from the component. This practice, known as "exception translation," prevents implementation details of dependencies from leaking into the core logic and ensures a consistent error contract for the API.
+
+The original exception should be passed as the "previous" exception to preserve the stack trace for debugging.
+
+**Example:**
+
+```php
+// From JwtService.php
+try {
+    $decoded = JWT::decode(...);
+} catch (DomainException | UnexpectedValueException $e) {
+    // Translate the library's error into our application's error contract
+    throw new AuthenticationException(
+        'The provided token is invalid or expired.',
+        $e // Preserve the original exception
+    );
+}
+```
+
+### Creating Custom Exceptions
+
+If a new, distinct error condition is needed that is not covered by existing exceptions, a new exception class can be created within the `src/Application/Exception/` directory. This ensures the new error type integrates with the centralized handler and can be assigned a specific HTTP status code.
+
+### The Central Error Handler
+
+The `Application/ErrorHandler.php` middleware serves as the centralized "safety net." It is registered globally and is the final handler in the chain. Its sole responsibility is to catch any unhandled `Throwable`, inspect its code to determine the correct HTTP status, and delegate the serialization of the final error. For REST requests, this serialization is handled by the `RestWebservice` to produce the standard JSON format. No manual intervention is typically needed with this component.
