@@ -5920,7 +5920,7 @@ common#:#usr_filter_lastlogin#:#Last login of user
 common#:#usr_filter_role#:#Assigned role
 common#:#usr_inactive_only#:#Inactive Users only
 common#:#usr_limited_access_only#:#Users with limited access only
-common#:#usr_name_undisclosed#:#Undisclosed
+common#:#usr_name_undisclosed#:#Profile not published
 common#:#usr_new#:#New User
 common#:#usr_settings_changeable_lua#:#Changeable in Local User Administration
 common#:#usr_settings_explanation_profile#:#Check ‘Visible’ to show fields in the registration form and personal settings. Check ‘Changeable’ to allow the user to change the values. Please note that visible fields can always be entered in the registration form. Required fields are required in the registration form and the personal settings. All data can be changed in the user administration independent on these settings.
