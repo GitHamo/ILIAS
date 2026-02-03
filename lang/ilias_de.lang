@@ -10695,15 +10695,18 @@ irss#:#creation_date#:#Erstellungsdatum (Diese Revision)
 irss#:#directory_name#:#Verzeichnisname
 irss#:#directory_name_info#:#Name des Verzeichnisses, welches an der aktuellen Stelle eingefügt werden soll.
 irss#:#download_zip#:#Alle Dateien als ZIP herunterladen
+irss#:#entries_target_group#:#Ziel wählen
 irss#:#file_size#:#Dateigröße (Diese Revision)
 irss#:#file_size_bigger_than#:#Dateigröße > MB
 irss#:#full_size#:#Ressourcengröße (Alle Revisionen)
 irss#:#home_directory#:#Stammverzeichnis
+irss#:#item_moved#:#Eintrag verschoben
 irss#:#max_revision#:#Maximale Revision
 irss#:#msg_error_adding_directory#:#Das Verzeichnis konnte nicht angelegt werden.
 irss#:#msg_paths_deleted#:#Pfad(e) gelöscht
 irss#:#msg_success_adding_directory#:#Das Verzeichnis wurde erfolgreich angelegt.
 irss#:#msg_upload#:#Dateien zum Hinzufügen hier ablegen
+irss#:#no_parent_selected#:#Kein Ziel gewählt
 irss#:#resource_id#:#Resource ID
 irss#:#resource_no_stakeholder_uri#:#Kein Stakeholder stellt einen Link zu der Nutzung dieser Resource zur Verfügung.
 irss#:#resource_overview#:#Ressourcen-Übersicht
