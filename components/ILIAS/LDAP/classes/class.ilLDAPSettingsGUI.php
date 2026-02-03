@@ -41,10 +41,6 @@ class ilLDAPSettingsGUI implements ilCtrlSecurityInterface
     private ilToolbarGUI $toolbar;
     private ilGlobalTemplateInterface $main_tpl;
     private ilComponentRepository $component_repository;
-    /**
-     * @var array<string, ILIAS\User\Profile\Field>|null
-     */
-    private ?array $user_defined_fields = null;
     private ?ilLDAPRoleAssignmentRule $role_mapping_rule = null;
     private ?ilLDAPRoleAssignmentRule $rule = null;
     private ?ilLDAPRoleGroupMappingSettings $role_mapping = null;
@@ -276,7 +272,11 @@ class ilLDAPSettingsGUI implements ilCtrlSecurityInterface
         foreach (array_keys($this->getMappingFields()) as $key) {
             $keys[] = $key;
         }
-        foreach ($this->user_defined_fields as $field) {
+        foreach ($this->profile->getFields() as $field) {
+            if (!$field->isCustom()) {
+                continue;
+            }
+
             $keys[] = 'udf_' . $field->getIdentifier();
         }
 
@@ -675,8 +675,11 @@ class ilLDAPSettingsGUI implements ilCtrlSecurityInterface
                 $this->attribute_mappings[$key][1]
             );
         }
-        $this->initUserDefinedFields();
-        foreach ($this->user_defined_fields as $field) {
+        foreach ($this->profile->getFields() as $field) {
+            if (!$field->isCustom()) {
+                continue;
+            }
+
             $key = 'udf_' . $field->getIdentifier();
             $this->mapping->setRule(
                 $key,
@@ -1204,13 +1207,6 @@ class ilLDAPSettingsGUI implements ilCtrlSecurityInterface
         ];
     }
 
-    private function initUserDefinedFields(): void
-    {
-        if ($this->user_defined_fields === null) {
-            $this->user_defined_fields = $this->profile->getAllUserDefinedFields();
-        }
-    }
-
     private function initFormRoleAssignments(string $a_mode): void
     {
         $this->form = new ilPropertyFormGUI();
@@ -1358,8 +1354,11 @@ class ilLDAPSettingsGUI implements ilCtrlSecurityInterface
             $propertie_form->addItem($checkbox_form);
         }
 
-        $this->initUserDefinedFields();
-        foreach ($this->user_defined_fields as $field) {
+        foreach ($this->profile->getFields() as $field) {
+            if (!$field->isCustom()) {
+                continue;
+            }
+
             $text_form = new ilTextInputGUI($field->getLabel());
             $text_form->setPostVar('udf_' . $field->getIdentifier() . '_value');
             $text_form->setValue($this->mapping->getValue('udf_' . $field->getIdentifier()));
