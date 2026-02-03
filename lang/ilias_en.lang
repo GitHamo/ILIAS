@@ -415,7 +415,7 @@ adve#:#adve_minutes_info#:#Minutes of inactivity before an edit lock expires and
 adve#:#adve_page_editor_settings#:#ILIAS Page Editor
 adve#:#adve_pe_general#:#General
 adve#:#adve_rte_settings#:#TinyMCE Editor
-adve#:#adve_text_content_features#:#Text Content Menu
+adve#:#adve_text_content_features#:#Supported Characters
 adve#:#adve_use_physical#:#Use b/i/u instead of str/emp/imp
 adve#:#adve_use_physical_info#:#This setting replaces the semantic style class buttons for ‘strong’, ‘emphatic’ and ‘important’ with physical attribute buttons ‘b’ (bold), ‘i’ (italic) and ‘u’ (underline). Please note, that this may result in inconsistencies if the style editor is used and other physical attributes are assigned to the strong/emphatic/important style classes.
 adve#:#adve_use_tiny_mce#:#Enable TinyMCE Editor for WYSIWYG Editing
