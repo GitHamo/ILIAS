@@ -10667,15 +10667,18 @@ irss#:#creation_date#:#Creation Date (This Revision)
 irss#:#directory_name#:#Directory Name
 irss#:#directory_name_info#:#Name of the directory to be inserted at the current location.
 irss#:#download_zip#:#Download all files as ZIP
+irss#:#entries_target_group#:#Select target group
 irss#:#file_size#:#File Size (This Revision)
 irss#:#file_size_bigger_than#:#File Size > MB
 irss#:#full_size#:#Resource Size (All Revisions)
 irss#:#home_directory#:#Root-Directory
+irss#:#item_moved#:#Entry moved
 irss#:#max_revision#:#Max. Revision
 irss#:#msg_error_adding_directory#:#The directory could not be created.
 irss#:#msg_paths_deleted#:#Path(s) deleted
 irss#:#msg_success_adding_directory#:#The directory was created successfully.
 irss#:#msg_upload#:#Drop Files to upload
+irss#:#no_parent_selected#:#No target group selected
 irss#:#resource_id#:#Resource ID
 irss#:#resource_no_stakeholder_uri#:#No Stakeholder provides a valid Link to the usage of this Resource.
 irss#:#resource_overview#:#Resource Overview
