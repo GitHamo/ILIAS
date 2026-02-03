@@ -10673,6 +10673,7 @@ irss#:#full_size#:#Resource Size (All Revisions)
 irss#:#home_directory#:#Root-Directory
 irss#:#max_revision#:#Max. Revision
 irss#:#msg_error_adding_directory#:#The directory could not be created.
+irss#:#msg_paths_deleted#:#Path(s) deleted
 irss#:#msg_success_adding_directory#:#The directory was created successfully.
 irss#:#msg_upload#:#Drop Files to upload
 irss#:#resource_id#:#Resource ID
