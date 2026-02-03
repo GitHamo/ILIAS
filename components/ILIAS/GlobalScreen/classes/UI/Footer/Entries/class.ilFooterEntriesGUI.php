@@ -361,6 +361,7 @@ final class ilFooterEntriesGUI extends AbstractPonsGUI implements SupportsTransl
             );
         }
 
+        $successful_deletions = 0;
         foreach ($from_request as $id) {
             $item = $this->repository->get($id);
             if ($item === null) {
@@ -370,8 +371,14 @@ final class ilFooterEntriesGUI extends AbstractPonsGUI implements SupportsTransl
                 continue;
             }
             $this->repository->delete($item);
+            $successful_deletions++;
         }
 
+        if ($successful_deletions === 0) {
+            $this->pons->out()->error($this->translator->translate('error'), true);
+            $this->pons->flow()->redirect(self::CMD_DEFAULT);
+            return;
+        }
         $this->pons->out()->success($this->translator->translate('entry_deleted'), true);
         $this->pons->flow()->redirect(self::CMD_DEFAULT);
     }
