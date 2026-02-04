@@ -415,7 +415,7 @@ adve#:#adve_minutes_info#:#Minutes of inactivity before an edit lock expires and
 adve#:#adve_page_editor_settings#:#ILIAS Page Editor
 adve#:#adve_pe_general#:#General
 adve#:#adve_rte_settings#:#TinyMCE Editor
-adve#:#adve_text_content_features#:#Text Content Menu
+adve#:#adve_text_content_features#:#Supported Characters
 adve#:#adve_use_physical#:#Use b/i/u instead of str/emp/imp
 adve#:#adve_use_physical_info#:#This setting replaces the semantic style class buttons for ‘strong’, ‘emphatic’ and ‘important’ with physical attribute buttons ‘b’ (bold), ‘i’ (italic) and ‘u’ (underline). Please note, that this may result in inconsistencies if the style editor is used and other physical attributes are assigned to the strong/emphatic/important style classes.
 adve#:#adve_use_tiny_mce#:#Enable TinyMCE Editor for WYSIWYG Editing
@@ -5920,7 +5920,7 @@ common#:#usr_filter_lastlogin#:#Last login of user
 common#:#usr_filter_role#:#Assigned role
 common#:#usr_inactive_only#:#Inactive Users only
 common#:#usr_limited_access_only#:#Users with limited access only
-common#:#usr_name_undisclosed#:#Undisclosed
+common#:#usr_name_undisclosed#:#Profile not published
 common#:#usr_new#:#New User
 common#:#usr_settings_changeable_lua#:#Changeable in Local User Administration
 common#:#usr_settings_explanation_profile#:#Check ‘Visible’ to show fields in the registration form and personal settings. Check ‘Changeable’ to allow the user to change the values. Please note that visible fields can always be entered in the registration form. Required fields are required in the registration form and the personal settings. All data can be changed in the user administration independent on these settings.
@@ -10667,14 +10667,18 @@ irss#:#creation_date#:#Creation Date (This Revision)
 irss#:#directory_name#:#Directory Name
 irss#:#directory_name_info#:#Name of the directory to be inserted at the current location.
 irss#:#download_zip#:#Download all files as ZIP
+irss#:#entries_target_group#:#Select target group
 irss#:#file_size#:#File Size (This Revision)
 irss#:#file_size_bigger_than#:#File Size > MB
 irss#:#full_size#:#Resource Size (All Revisions)
 irss#:#home_directory#:#Root-Directory
+irss#:#item_moved#:#Entry moved
 irss#:#max_revision#:#Max. Revision
 irss#:#msg_error_adding_directory#:#The directory could not be created.
+irss#:#msg_paths_deleted#:#Path(s) deleted
 irss#:#msg_success_adding_directory#:#The directory was created successfully.
 irss#:#msg_upload#:#Drop Files to upload
+irss#:#no_parent_selected#:#No target group selected
 irss#:#resource_id#:#Resource ID
 irss#:#resource_no_stakeholder_uri#:#No Stakeholder provides a valid Link to the usage of this Resource.
 irss#:#resource_overview#:#Resource Overview
