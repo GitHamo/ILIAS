@@ -88,7 +88,11 @@ class TreeStandardAdapter implements TreeInterface
             if ($tree_id >= 0) {
                 throw new NotInTrashException('Trying to delete node from trash, but node is not in trash: ' . $ref_id);
             }
-            return new self(new \ilTree($tree_id), $this->user_id);
+            return new self(
+                $this->repo,
+                new \ilTree($tree_id),
+                $this->user_id
+            );
         }
         throw new NotInTrashException('Trying to delete node from trash, but no valid tree id found for node id: ' . $ref_id);
     }
