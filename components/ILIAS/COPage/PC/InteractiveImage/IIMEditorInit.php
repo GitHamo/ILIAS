@@ -79,7 +79,7 @@ class IIMEditorInit
 ></span><div id='il-copg-iim-main'></div>
 EOT;
         $debug = "";
-        //$debug = ".";
+        $debug = ".";
         $module_tag = <<<EOT
 <script type="module" src="$debug./components/ILIAS/COPage/PC/InteractiveImage/js/editor/src/editor.js"></script>
 EOT;
