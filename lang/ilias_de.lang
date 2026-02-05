@@ -10696,6 +10696,7 @@ irss#:#directory_name#:#Verzeichnisname
 irss#:#directory_name_info#:#Name des Verzeichnisses, welches an der aktuellen Stelle eingefügt werden soll.
 irss#:#download_zip#:#Alle Dateien als ZIP herunterladen
 irss#:#entries_target_group#:#Ziel wählen
+irss#:#entry_deleted_failed#:#Löschen nicht möglich
 irss#:#file_size#:#Dateigröße (Diese Revision)
 irss#:#file_size_bigger_than#:#Dateigröße > MB
 irss#:#full_size#:#Ressourcengröße (Alle Revisionen)

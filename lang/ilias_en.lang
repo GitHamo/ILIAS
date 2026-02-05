@@ -10668,6 +10668,7 @@ irss#:#directory_name#:#Directory Name
 irss#:#directory_name_info#:#Name of the directory to be inserted at the current location.
 irss#:#download_zip#:#Download all files as ZIP
 irss#:#entries_target_group#:#Select target group
+irss#:#entry_deleted_failed#:#Deletion not possible
 irss#:#file_size#:#File Size (This Revision)
 irss#:#file_size_bigger_than#:#File Size > MB
 irss#:#full_size#:#Resource Size (All Revisions)
