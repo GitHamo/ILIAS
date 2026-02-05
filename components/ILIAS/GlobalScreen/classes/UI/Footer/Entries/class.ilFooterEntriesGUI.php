@@ -381,7 +381,7 @@ final class ilFooterEntriesGUI extends AbstractPonsGUI implements SupportsTransl
         }
 
         if ($successful_deletions === 0) {
-            $this->pons->out()->error($this->translator->translate('error'), true);
+            $this->pons->out()->error($this->translator->translate('entry_deleted_failed'), true);
             $this->pons->flow()->redirect(self::CMD_DEFAULT);
             return;
         }
