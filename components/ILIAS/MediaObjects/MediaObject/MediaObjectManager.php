@@ -98,6 +98,14 @@ class MediaObjectManager
         return $this->repo->getLocationStream($mob_id, $location);
     }
 
+    public function getLocationContent(
+        int $mob_id,
+        string $location
+    ) : string
+    {
+        return $this->repo->getLocationContent($mob_id, $location);
+    }
+
     public function addStream(
         int $mob_id,
         string $location,

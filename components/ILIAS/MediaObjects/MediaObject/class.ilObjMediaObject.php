@@ -606,12 +606,15 @@ class ilObjMediaObject extends ilObject
                                 $ilUser->getLanguage() == $srt["language"]) {
                                 $def = ' Default="true" ';
                             }
-                            $xml .= "<Subtitle File=\"" . $srt["src"] .
+                            $src = $offline
+                                ? "mobs/mm_" . $this->getId() . $srt["full_path"]
+                                : $srt["src"];
+                            $xml .= "<Subtitle File=\"" . $src .
                                 "\" Language=\"" . $srt["language"] . "\" " . $def . "/>";
                         }
                     }
-                    if ($this->getVideoPreviewPic(true)) {
-                        $xml .= "<PreviewPic File=\"" . $this->getVideoPreviewPic(true) .
+                    if ($this->getVideoPreviewPic(false)) {
+                        $xml .= "<PreviewPic File=\"" . $this->getVideoPreviewPic(false) .
                             "\" />";
                     }
                     if ($item->getLocationType() == "LocalFile") {
@@ -1704,7 +1707,6 @@ class ilObjMediaObject extends ilObject
 
         $logger->debug("Generate preview pic...");
         $logger->debug("..." . $item->getFormat());
-
         $this->thumbs->createPreview(
             $this->getId(),
             $item->getLocation(),

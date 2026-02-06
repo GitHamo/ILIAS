@@ -3116,7 +3116,8 @@ class ilObjTest extends ilObject
             $this->replaceMobsInPageImports(
                 $material['text'],
                 $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            )
+            ),
+            $mappings['components/ILIAS/File']['file'] ?? []
         );
 
         $page_object = new ilTestPage();
@@ -3139,7 +3140,8 @@ class ilObjTest extends ilObject
             $this->replaceMobsInPageImports(
                 $material['text'],
                 $mappings['components/ILIAS/MediaObjects']['mob'] ?? []
-            )
+            ),
+            $mappings['components/ILIAS/File']['file'] ?? []
         );
 
         $page_object = new ilTestPage();
@@ -3945,7 +3947,7 @@ class ilObjTest extends ilObject
                 $this->getMainSettings()->getFinishingSettings()->withConcludingRemarksPageId(
                     $this->cloneConcludingRemarks()
                 )
-            );
+            )->withId(0);
 
         $new_main_settings = $this->getMainSettingsRepository()->store($new_main_settings, $new_obj->getTestId());
         $this->getScoreSettingsRepository()->store(

@@ -340,7 +340,6 @@ abstract class ilDashboardBlockGUI extends ilBlockGUI implements ilDesktopItemHa
             }
             $grouped_items[$title][] = $item;
         }
-        ksort($grouped_items);
         $grouped_items = array_map($this->sortByTitle(...), $grouped_items);
         return $grouped_items;
     }
@@ -598,13 +597,17 @@ abstract class ilDashboardBlockGUI extends ilBlockGUI implements ilDesktopItemHa
                 return ['' => $data];
             case ilPDSelectedItemsBlockConstants::SORT_BY_START_DATE:
                 return $this->groupItemsByStartDate();
-            case ilPDSelectedItemsBlockConstants::SORT_BY_TYPE:
-                return $this->groupItemsByType();
             case ilPDSelectedItemsBlockConstants::SORT_MANUALLY:
                 return ['' => $this->sortManually($this->getData())];
+            case ilPDSelectedItemsBlockConstants::SORT_BY_TYPE:
+                $groups = $this->groupItemsByType();
+                ksort($groups, SORT_NATURAL);
+                return $groups;
             case ilPDSelectedItemsBlockConstants::SORT_BY_LOCATION:
             default:
-                return $this->groupItemsByLocation();
+                $groups = $this->groupItemsByLocation();
+                ksort($groups, SORT_NATURAL);
+                return $groups;
         }
     }
 
@@ -686,7 +689,7 @@ abstract class ilDashboardBlockGUI extends ilBlockGUI implements ilDesktopItemHa
     {
         usort(
             $data,
-            static fn(BlockDTO $left, BlockDTO $right): int => strcmp($left->getTitle(), $right->getTitle())
+            static fn(BlockDTO $left, BlockDTO $right): int => strcasecmp($left->getTitle(), $right->getTitle())
         );
         return $data;
     }
