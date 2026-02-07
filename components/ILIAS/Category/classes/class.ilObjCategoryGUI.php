@@ -1024,7 +1024,6 @@ class ilObjCategoryGUI extends ilContainerGUI implements \ILIAS\Taxonomy\Setting
 
         $utab = new ilUserTableGUI($this, 'listUsers', ilUserTableGUI::MODE_LOCAL_USER);
         $utab->setTitle($this->lng->txt('administrate_users_headline'));
-        ;
         $this->tpl->setVariable('USERS_TABLE', $utab->getHTML());
     }
 
