@@ -346,7 +346,9 @@ class ilPCQuestion extends ilPageContent
             }
         }
 
-        $code[] = "ilias.questions.refresh_lang();";
+        if ($this->getPage()->getPageConfig()->getEnableSelfAssessment()) {
+            $code[] = "ilias.questions.refresh_lang();";
+        }
         return $code;
     }
 
