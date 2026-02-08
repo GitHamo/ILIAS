@@ -410,7 +410,7 @@ class EditSubObjectsGUI
         $form = $this
             ->gui
             ->form([self::class], "saveTitle")
-            ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id));
+            ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id), 200);
         if ($ot->getContentTranslationActivated()) {
             foreach ($ot->getLanguages() as $lang) {
                 $code = $lang->getLanguageCode();
@@ -423,7 +423,8 @@ class EditSubObjectsGUI
                     "title_" . $code,
                     $lng->txt('title') . " (" . $lng->txt("meta_l_" . $code) . ")",
                     "",
-                    $title
+                    $title,
+                    200
                 );
             }
         }
