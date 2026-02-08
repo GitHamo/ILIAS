@@ -253,3 +253,12 @@ button.copg-add.dropdown-toggle.btn:focus-visible {
 .il-copg-mob-fullscreen {
 	height: calc(90vh - 160px);
 }
+
+.copg-edit-container:not(.il_editarea) {
+	border: none !important;
+}
+
+
+.copg-edit-container {
+	outline: 1px dashed #d0d0d0;
+}
