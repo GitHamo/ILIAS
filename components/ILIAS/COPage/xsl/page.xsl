@@ -307,7 +307,8 @@
 			<div>
 				<xsl:if test="not(../../../@DataTable) or (../../../@DataTable = 'n')">
 					<xsl:if test="$javascript='enable'">
-						<xsl:attribute name="class">il_editarea</xsl:attribute>
+						<xsl:attribute name="class">il_editarea <xsl:if test="$content_type = 'Grid'"> copg-edit-container</xsl:if>
+						</xsl:attribute>
 						<xsl:attribute name="data-copg-ed-type">pc-area</xsl:attribute>
 					</xsl:if>
 					<xsl:if test="$javascript!='enable'">
@@ -3591,7 +3592,7 @@
 
 <!-- GridCell -->
 <xsl:template match="GridCell">
-	<xsl:variable name="container_edit_class"><xsl:if test="$mode = 'edit'"> copg-edit-container</xsl:if></xsl:variable>
+	<xsl:variable name="container_edit_class"></xsl:variable>
 	<div style="position: relative;">
 		<xsl:attribute name="class">
 			<xsl:if test="@WIDTH_S != ''"> col-sm-<xsl:value-of select="@WIDTH_S"/></xsl:if>
