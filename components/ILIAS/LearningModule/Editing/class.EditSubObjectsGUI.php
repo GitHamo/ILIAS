@@ -403,15 +403,26 @@ class EditSubObjectsGUI
         $this->gui->ctrl()->setParameterByClass(self::class, "edit_id", $id);
         $ot = (new TranslationsRepository($this->domain->database()))->getFor($this->lm->getId());
         $ml = "";
+<<<<<<< HEAD
         if ($ot->getContentTranslationActivated()) {
             $ml = " (" . $lng->txt("meta_l_" . $ot->getBaseLanguage()) . ")";
+=======
+        if ($ot->getContentActivated()) {
+            $ml = " (" . $lng->txt("meta_l_" . $ot->getMasterLanguage()) . ")";
+>>>>>>> 9796661b130 (47012: Error message when entering a title longer than 200 characters)
         }
 
         $form = $this
             ->gui
+<<<<<<< HEAD
             ->form([self::class], "saveTitle")
             ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id));
         if ($ot->getContentTranslationActivated()) {
+=======
+            ->form(self::class, "saveTitle")
+            ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id), 200);
+        if ($ot->getContentActivated()) {
+>>>>>>> 9796661b130 (47012: Error message when entering a title longer than 200 characters)
             foreach ($ot->getLanguages() as $lang) {
                 $code = $lang->getLanguageCode();
                 if ($code === $ot->getBaseLanguage()) {
@@ -423,7 +434,12 @@ class EditSubObjectsGUI
                     "title_" . $code,
                     $lng->txt('title') . " (" . $lng->txt("meta_l_" . $code) . ")",
                     "",
+<<<<<<< HEAD
                     $title
+=======
+                    $title,
+                    200
+>>>>>>> 9796661b130 (47012: Error message when entering a title longer than 200 characters)
                 );
             }
         }
