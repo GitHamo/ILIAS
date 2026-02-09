@@ -68,7 +68,7 @@ class DatabaseDataRepository implements DataRepository
         );
 
         return $this->buildFromData(
-            $this->db->fetchObject($base_query) ?? $this->getDefault()->withId($id),
+            $this->db->fetchObject($base_query),
             $this->db->fetchAll(
                 $additional_query,
                 \ilDBConstants::FETCHMODE_OBJECT
