@@ -477,4 +477,11 @@ class Test10DBUpdateSteps implements \ilDatabaseUpdateSteps
             'DELETE FROM settings WHERE module="assessment" AND keyword="assessment_man_scoring_fix_run"'
         );
     }
+
+    public function step_15(): void
+    {
+        $this->db->manipulate(
+            'DELETE FROM settings WHERE module="assessment" AND keyword="export_essay_qst_with_html"'
+        );
+    }
 }
