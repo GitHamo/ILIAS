@@ -719,14 +719,23 @@ class ilObjectGUI implements ImplementsCreationCallback
     protected function getTitleForCreationFormPage(): string
     {
         if (!$this->obj_definition->isPlugin($this->requested_new_type)) {
-            return $this->lng->txt('obj_' . $this->requested_new_type);
+            return $this->lng->txt("obj_{$this->requested_new_type}");
         }
-        return ilObjectPlugin::lookupTxtById($this->requested_new_type, "obj_{$this->requested_new_type}");
+        return ilObjectPlugin::lookupTxtById(
+            $this->requested_new_type,
+            "obj_{$this->requested_new_type}"
+        );
     }
 
     protected function getCreationFormTitle(): string
     {
-        return $this->lng->txt($this->requested_new_type . '_new');
+        if (!$this->obj_definition->isPlugin($this->requested_new_type)) {
+            return $this->lng->txt("{$this->requested_new_type}_new");
+        }
+        return ilObjectPlugin::lookupTxtById(
+            $this->requested_new_type,
+            "{$this->requested_new_type}_new"
+        );
     }
 
     protected function initCreateForm(string $new_type): StandardForm|ilPropertyFormGUI|array
