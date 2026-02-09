@@ -16489,7 +16489,6 @@ survey#:#err_minvalueganswers#:#The minimum value must equal or be smaller than 
 survey#:#err_no_exact_answers#:#Please select exactly %s answer(s).
 survey#:#err_no_max_answers#:#Please select at most %s answers.
 survey#:#err_no_min_answers#:#Please select at least %s answer(s).
-survey#:#err_no_pool_name#:#Please enter the name of a survey question pool
 survey#:#error_retrieving_anonymous_survey#:#The system could not find your survey data for survey code &quot;%s&quot;. Please check the survey code you have entered!
 survey#:#error_save_code#:#Value not saved properly. <b>The e-mail address: '%s' is not valid</b>. First name: '%s', Last name: '%s'.<br>
 survey#:#evaluation#:#Statistics
