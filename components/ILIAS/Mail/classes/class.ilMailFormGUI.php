@@ -341,13 +341,13 @@ class ilMailFormGUI
         $rcp_to = '';
         $rcp_cc = '';
         $rcp_bcc = '';
-        if ($value['rcp_to'] != []) {
+        if (!empty($value['rcp_to'])) {
             $rcp_to = implode(',', $value['rcp_to']);
         }
-        if ($value['rcp_cc'] != []) {
+        if (!empty($value['rcp_cc'])) {
             $rcp_cc = implode(',', $value['rcp_cc']);
         }
-        if ($value['rcp_bcc'] != []) {
+        if (!empty($value['rcp_bcc'])) {
             $rcp_bcc = implode(',', $value['rcp_bcc']);
         }
 
@@ -428,15 +428,11 @@ class ilMailFormGUI
 
         $draft_folder_id = $this->mbox->getDraftsFolder();
 
-        $rcp_to = implode(',', $value['rcp_to']);
-        $rcp_cc = implode(',', $value['rcp_cc']);
-        $rcp_bcc = implode(',', $value['rcp_bcc']);
+        $rcp_to = !empty($value['rcp_to']) ? implode(',', $value['rcp_to']) : '';
+        $rcp_cc = !empty($value['rcp_cc']) ? implode(',', $value['rcp_cc']) : '';
+        $rcp_bcc = !empty($value['rcp_bcc']) ? implode(',', $value['rcp_bcc']) : '';
 
-        if ($errors = $this->umail->validateRecipients(
-            $rcp_to,
-            $rcp_cc,
-            $rcp_bcc,
-        )) {
+        if ($errors = $this->umail->validateRecipients($rcp_to, $rcp_cc, $rcp_bcc)) {
             $this->request_attachments = $files;
             $this->showSubmissionErrors($errors);
             $this->showForm($form);
