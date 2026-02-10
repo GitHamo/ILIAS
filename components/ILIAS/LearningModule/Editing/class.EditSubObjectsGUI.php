@@ -163,9 +163,18 @@ class EditSubObjectsGUI
         $main_tpl->addOnloadCode("window.setTimeout(() => { il.repository.core.trigger('il-lm-editor-tree'); }, 500);");
     }
 
-    public function insertChapterClipBefore(): void
+    protected function getCurrentParentId(): int
     {
         $parent = $this->sub_obj_id;
+        if ($parent === 0) {
+            $parent = $this->lm_tree->readRootId();
+        }
+        return $parent;
+    }
+
+    public function insertChapterClipBefore(): void
+    {
+        $parent = $this->getCurrentParentId();
         $target_id = $this->request->getTargetId();
         $before_target = \ilTree::POS_FIRST_NODE;
         foreach ($this->lm_tree->getChilds($parent) as $node) {
@@ -354,10 +363,7 @@ class EditSubObjectsGUI
 
     public function insertChapterBefore(): void
     {
-        $parent = $this->sub_obj_id;
-        if ($parent === 0) {
-            $parent = $this->lm_tree->getRootId();
-        }
+        $parent = $this->getCurrentParentId();
         $target_id = $this->request->getTargetId();
         $before_target = \ilTree::POS_FIRST_NODE;
         foreach ($this->lm_tree->getChilds($parent) as $node) {
