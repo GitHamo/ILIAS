@@ -43,11 +43,7 @@ final class DatabaseUserRepository extends LocalDIC implements UserRepository
     #[Override]
     public function getById(int $userId): AuthUser
     {
-        $database = $this->database();
-
-        if (!$database instanceof ilDBInterface) {
-            throw new RuntimeException('No database connection');
-        }
+        $database = $this->getDatabase();
 
         $userQuery = $database->queryF(
             'SELECT * FROM usr_data WHERE usr_id = %s',

@@ -22,6 +22,7 @@ namespace ILIAS\ApiGateway;
 
 use ilDBInterface;
 use ILIAS\DI\Container;
+use RuntimeException;
 
 /**
  * This is a workaround to work with legacy dependency.
@@ -42,6 +43,17 @@ abstract class LocalDIC
 
     protected function database(): ?ilDBInterface
     {
-        return $this->dic()?->database();
+        $database = $this->dic()?->database();
+
+        if ($database && !$database instanceof ilDBInterface) {
+            return null;
+        }
+
+        return $database;
+    }
+
+    protected function getDatabase(): ilDBInterface
+    {
+        return $this->database() ?? throw new RuntimeException('No database connection');
     }
 }
