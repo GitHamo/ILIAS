@@ -16730,9 +16730,7 @@ survey#:#survey_360_edit_raters#:#Manage Raters
 survey#:#survey_360_mode#:#360° Feedback
 survey#:#survey_360_mode_info#:#Allows individuals to be peer-reviewed by multiple sources. Results are aggregated.
 survey#:#survey_360_no_appraisees#:#There are currently no appraisees for you to rate.
-survey#:#survey_360_no_closed_appraisees#:#No appraisee has closed his survey yet.
 survey#:#survey_360_rate_other_appraisee#:#Rate Appraisee
-survey#:#survey_360_rate_other_appraisees#:#Rate Appraisees
 survey#:#survey_360_rater_finished#:#Survey Finished
 survey#:#survey_360_rater_mail_sent#:#Mail Sent
 survey#:#survey_360_rater_message_content_anonymous#:#Message Content (Anonymous)
