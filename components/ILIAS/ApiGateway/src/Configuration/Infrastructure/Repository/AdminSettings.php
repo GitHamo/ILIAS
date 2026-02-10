@@ -30,7 +30,7 @@ use ilSetting;
 /**
  * @codeCoverageIgnore To be tested when settings are loaded by DI not global
  */
-final readonly class AdminSettings implements SystemSettingRepository
+final class AdminSettings implements SystemSettingRepository
 {
     use GlobalDICAccessTrait;
 
