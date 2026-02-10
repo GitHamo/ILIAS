@@ -342,13 +342,13 @@ class ilMailFormGUI
         $rcp_cc = '';
         $rcp_bcc = '';
         if ($value['rcp_to'] != []) {
-            $rcp_to = $value['rcp_to'][0];
+            $rcp_to = implode(',', $value['rcp_to']);
         }
         if ($value['rcp_cc'] != []) {
-            $rcp_cc = $value['rcp_cc'][0];
+            $rcp_cc = implode(',', $value['rcp_cc']);
         }
         if ($value['rcp_bcc'] != []) {
-            $rcp_bcc = $value['rcp_bcc'][0];
+            $rcp_bcc = implode(',', $value['rcp_bcc']);
         }
 
         if ($errors = $mailer->enqueue(
@@ -428,9 +428,9 @@ class ilMailFormGUI
 
         $draft_folder_id = $this->mbox->getDraftsFolder();
 
-        $rcp_to = ilUtil::securePlainString($this->getBodyParam('rcp_to', $this->refinery->kindlyTo()->string(), ''));
-        $rcp_cc = ilUtil::securePlainString($this->getBodyParam('rcp_cc', $this->refinery->kindlyTo()->string(), ''));
-        $rcp_bcc = ilUtil::securePlainString($this->getBodyParam('rcp_bcc', $this->refinery->kindlyTo()->string(), ''));
+        $rcp_to = implode(',', $value['rcp_to']);
+        $rcp_cc = implode(',', $value['rcp_cc']);
+        $rcp_bcc = implode(',', $value['rcp_bcc']);
 
         if ($errors = $this->umail->validateRecipients(
             $rcp_to,
@@ -453,9 +453,9 @@ class ilMailFormGUI
         $this->umail->updateDraft(
             $draft_folder_id,
             $files,
-            implode(',', $value['rcp_to']),
-            implode(',', $value['rcp_cc']),
-            implode(',', $value['rcp_bcc']),
+            $rcp_to,
+            $rcp_cc,
+            $rcp_bcc,
             ilUtil::securePlainString($value['m_subject']),
             $value['m_message'],
             $draft_id,
