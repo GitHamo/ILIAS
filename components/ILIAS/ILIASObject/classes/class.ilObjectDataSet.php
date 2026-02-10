@@ -255,12 +255,18 @@ class ilObjectDataSet extends ilDataSet
 
     private function copyTileToTempFolderForExport(ResourceIdentification $rid): string
     {
-        $resource = $this->storage->manage()->getResource($i);
-        $path_in_container = "/dsDir_" . $this->dircnt . "/" . $resource->getCurrentRevision()->getTitle();
+        $path_in_container = "/dsDir_{$this->dircnt}/"
+            . $this->storage->manage()->getResource($rid)
+                ->getCurrentRevision()->getTitle();
         $path_in_container = $this->export->isContainerExport()
-            ? $this->export->getPathToComponentExpDirInContainerWithLeadingSetNumber() . $path_in_container
-            : $this->export->getPathToComponentExpDirInContainer() . $path_in_container;
-        $this->export->getExportWriter()->writeFilesByResourceId($rid, $path_in_container);
+            ? $this->export->getPathToComponentExpDirInContainerWithLeadingSetNumber()
+                . $path_in_container
+            : $this->export->getPathToComponentExpDirInContainer()
+                . $path_in_container;
+        $this->export->getExportWriter()->writeFilesByResourceId(
+            $rid->serialize(),
+            $path_in_container
+        );
         return $path_in_container;
     }
     /**
