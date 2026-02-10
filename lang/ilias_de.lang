@@ -9609,6 +9609,7 @@ exc#:#exc_settings_feedback_mail_info#:#Rückmeldungen zur jeweiligen Abgabe wer
 exc#:#exc_settings_feedback_text#:#Texteingabe
 exc#:#exc_settings_feedback_text_info#:#Rückmeldungen zur jeweiligen Abgabe werden in ein Textfeld eingegeben und im Reiter „Übungseinheiten“ angezeigt. Zusätzlich erhalten teilnehmende Personen eine Benachrichtigung per Mail.
 exc#:#exc_show_instructions#:#Arbeitsanweisung anzeigen
+exc#:#exc_show_more#:#Mehr anzeigen
 exc#:#exc_show_peer_review#:#Peer-Feedback anzeigen
 exc#:#exc_show_submissions#:#Lösungsabgaben veröffentlichen
 exc#:#exc_show_submissions_info#:#Bei Übungseinheiten mit einem festen Datum können nach dem Abgabetermin alle Personen die Einreichungen der anderen einsehen.
