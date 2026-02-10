@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use ilDBInterface;
-use ILIAS\ApiGateway\LocalDIC;
+use ILIAS\ApiGateway\GlobalDICAccessTrait;
 use ILIAS\DI\Container;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,7 +14,7 @@ use RuntimeException;
 
 #[CoversClass(LocalDIC::class)]
 
-class LocalDICTest extends TestCase
+class GlobalDICAccessTraitTest extends TestCase
 {
     private MockObject&Container $containerMock;
 
@@ -32,8 +32,10 @@ class LocalDICTest extends TestCase
 
         $this->containerMock->expects(self::once())->method('database')->willReturn($expected);
 
-        $actual = (new class extends LocalDIC
+        $actual = (new class
         {
+            use GlobalDICAccessTrait;
+
             public function getValue(): ilDBInterface
             {
                 return $this->getDatabase();
@@ -54,8 +56,10 @@ class LocalDICTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('No database connection');
 
-        new class extends LocalDIC
+        new class
         {
+            use GlobalDICAccessTrait;
+
             public function __construct()
             {
                 $this->getDatabase();

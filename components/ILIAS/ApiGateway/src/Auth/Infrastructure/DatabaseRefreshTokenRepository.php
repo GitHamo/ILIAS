@@ -25,14 +25,16 @@ use ilDBConstants;
 use ilDBInterface;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
-use ILIAS\ApiGateway\LocalDIC;
+use ILIAS\ApiGateway\GlobalDICAccessTrait;
 use Override;
 
 /**
  * @codeCoverageIgnore To be tested when database is loaded by DI not global
  */
-final class DatabaseRefreshTokenRepository extends LocalDIC implements RefreshTokenRepository
+final readonly class DatabaseRefreshTokenRepository implements RefreshTokenRepository
 {
+    use GlobalDICAccessTrait;
+
     private const string TABLE_NAME = 'apig_refresh_tokens';
     private const string TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
 

@@ -25,21 +25,21 @@ use ilAuthProviderFactory;
 use ilAuthStatus;
 use ilAuthUtils;
 use ilDBConstants;
-use ilDBInterface;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Exceptions\AuthenticationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
-use ILIAS\ApiGateway\LocalDIC;
+use ILIAS\ApiGateway\GlobalDICAccessTrait;
 use ILIAS\HTTP\StatusCode;
 use InvalidArgumentException;
 use Override;
-use RuntimeException;
 
 /**
  * @codeCoverageIgnore To be tested when database is loaded by DI not global
  */
-final class DatabaseUserRepository extends LocalDIC implements UserRepository
+final readonly class DatabaseUserRepository implements UserRepository
 {
+    use GlobalDICAccessTrait;
+
     #[Override]
     public function getById(int $userId): AuthUser
     {

@@ -23,15 +23,17 @@ namespace ILIAS\ApiGateway\Configuration\Infrastructure\Repository;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
-use ILIAS\ApiGateway\LocalDIC;
+use ILIAS\ApiGateway\GlobalDICAccessTrait;
 use ilDBInterface;
 use ilSetting;
 
 /**
  * @codeCoverageIgnore To be tested when settings are loaded by DI not global
  */
-final class AdminSettings extends LocalDIC implements SystemSettingRepository
+final readonly class AdminSettings implements SystemSettingRepository
 {
+    use GlobalDICAccessTrait;
+
     private const string MODULE_NAME = 'apigateway';
     private ?ilSetting $settings = null;
 
