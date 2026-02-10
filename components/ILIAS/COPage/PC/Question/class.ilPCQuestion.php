@@ -207,7 +207,6 @@ class ilPCQuestion extends ilPageContent
         $lng = $this->lng;
 
         $qhtml = "";
-
         if ($this->getPage()->getPageConfig()->getEnableSelfAssessment()) {
             // #14154
             $q_ids = $this->getQuestionIds();
@@ -215,7 +214,7 @@ class ilPCQuestion extends ilPageContent
                 foreach ($q_ids as $q_id) {
                     $q_gui = assQuestionGUI::_getQuestionGUI("", $q_id);
                     // object check due to #16557
-                    if (is_object($q_gui->getObject()) && !$q_gui->getObject()->isComplete()) {
+                    if (!is_null($q_gui) && is_object($q_gui->getObject()) && !$q_gui->getObject()->isComplete()) {
                         $a_output = str_replace(
                             "{{{{{Question;il__qst_" . $q_id . "}}}}}",
                             "<i>" . $lng->txt("cont_empty_question") . "</i>",
