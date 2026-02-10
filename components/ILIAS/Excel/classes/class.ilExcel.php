@@ -231,9 +231,7 @@ class ilExcel
             throw new InvalidArgumentException('Invalid UTF-8 passed.');
         }
 
-        return $this->cleanupNonCharachters(
-            $disable_strip_tags ? $value : strip_tags($value)
-        ); // #14542
+        return $this->cleanupNonCharachters(strip_tags($value));
     }
 
     /**
