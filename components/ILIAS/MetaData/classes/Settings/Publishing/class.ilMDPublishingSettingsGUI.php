@@ -75,7 +75,6 @@ class ilMDPublishingSettingsGUI
         $cmd = $this->ctrl->getCmd();
 
         if (
-            !$this->access_service->hasCurrentUserVisibleAccess() ||
             !$this->access_service->hasCurrentUserReadAccess()
         ) {
             throw new ilPermissionException($this->lng->txt('no_permission'));
