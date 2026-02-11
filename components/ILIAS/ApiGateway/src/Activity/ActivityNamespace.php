@@ -20,8 +20,14 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Activity;
 
+use function strlen;
+
 readonly class ActivityNamespace
 {
+    private const string NEEDLE_QUERY = 'Query';
+    private const string NEEDLE_GET = 'Get';
+    private const string NEEDLE_ACTIVITY = 'Activity';
+
     /** @var string[] */
     private const array CORE_VENDORS = ['ilias'];
     private string $path;
@@ -36,14 +42,14 @@ readonly class ActivityNamespace
         $component = strtolower($this->component);
         $subject = ucfirst($this->name);
 
-        if (str_starts_with($subject, 'Query')) {
-            $subject = substr($subject, 5); // 5 is the length of "Query"
-        } elseif (str_starts_with($subject, 'Get')) {
-            $subject = substr($subject, 3); // 3 is the length of "Get"
+        if (str_starts_with($subject, self::NEEDLE_QUERY)) {
+            $subject = substr($subject, strlen(self::NEEDLE_QUERY));
+        } elseif (str_starts_with($subject, self::NEEDLE_GET)) {
+            $subject = substr($subject, strlen(self::NEEDLE_GET));
         }
 
-        if (str_ends_with($subject, 'Activity')) {
-            $subject = substr($subject, 0, -8); // 8 is the length of "Activity"
+        if (str_ends_with($subject, self::NEEDLE_ACTIVITY)) {
+            $subject = substr($subject, 0, -strlen(self::NEEDLE_ACTIVITY));
         }
 
         $subject = strtolower($subject);
