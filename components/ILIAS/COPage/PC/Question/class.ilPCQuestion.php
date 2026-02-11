@@ -279,7 +279,9 @@ class ilPCQuestion extends ilPageContent
 
             foreach ($this->getQuestionIds() as $qId) {
                 $qstGui = assQuestionGUI::_getQuestionGUI('', $qId);
-                $js_files = array_merge($js_files, $qstGui->getPresentationJavascripts());
+                if (!is_null($qstGui)) {
+                    $js_files = array_merge($js_files, $qstGui->getPresentationJavascripts());
+                }
             }
         }
 
