@@ -416,10 +416,6 @@ class FormAdapterGUI
     ): self {
         $this->values[$key] = $value;
         $field = $this->ui->factory()->input()->field()->radio($title, $description);
-        if (!is_null($value)) {
-            $field = $field->withOption($value, "");    // dummy to prevent exception, will be overwritten by radioOption
-            $field = $field->withValue($value);
-        }
         $this->addField(
             $key,
             $field
@@ -431,6 +427,9 @@ class FormAdapterGUI
     {
         if ($field = $this->getLastField()) {
             $field = $field->withOption($value, $title, $description);
+            if (($this->values[$this->last_key] ?? null) === $value) {
+                $field = $field->withValue($value);
+            }
             $this->replaceLastField($field);
         }
         return $this;
