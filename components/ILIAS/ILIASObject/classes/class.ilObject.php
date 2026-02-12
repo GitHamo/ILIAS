@@ -503,7 +503,7 @@ class ilObject
 
         $owner = null;
         if ($owner_id != -1) {
-            if (ilObject::_exists($owner_id)) {
+            if (ilObjUser::userExists([$owner_id])) {
                 $owner = new ilObjUser($owner_id);
             }
         }
