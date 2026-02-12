@@ -2125,7 +2125,8 @@ auth#:#auth_saml_deleted_idp#:#The Identity Provider has been deleted.
 auth#:#auth_saml_enable#:#Enable SAML Support
 auth#:#auth_saml_err_sqlite_driver#:#The SAML authentication requires the SQLite driver for PHP. Please install the SQLite package and try again.
 auth#:#auth_saml_idp#:#IDP
-auth#:#auth_saml_idp_selection_table_desc#:#Bitte wählen Sie den Identity Provider mit dem Sie sich anmelden möchten.
+auth#:#auth_saml_idp_deactivated_auth_failed#:#Authentication failed, the identity provider is disabled.
+auth#:#auth_saml_idp_selection_table_desc#:#Please select the identity provider you want to log in with.
 auth#:#auth_saml_idp_selection_table_title#:#Identity Provider Selection
 auth#:#auth_saml_idp_settings#:#IDP Settings
 auth#:#auth_saml_idps#:#SAML IDP List
@@ -7355,6 +7356,7 @@ copa#:#copa_value_reading_time_f_p#:#%s Minutes
 copa#:#copa_value_reading_time_f_s#:#%s Minute
 copa#:#obj_copa_duplicate#:#Duplicate Content Page
 copg#:#copg_active_to_small#:#This date must be higher than the starting date.
+copg#:#copg_add_content#:#Add Content
 copg#:#copg_allow_html#:#Enable HTML/Javascript
 copg#:#copg_allow_html_info#:#User may use HTML or Javascript page content. This may lead to security issues. Do not activate, if features can be used by users which you consider not being trustworthy. The support to add HTML content this way may be discontinued in a future version.
 copg#:#copg_an_error_occured#:#An error occured.
@@ -9580,6 +9582,7 @@ exc#:#exc_settings_feedback_mail_info#:#Tutors enter their evaluation into a mai
 exc#:#exc_settings_feedback_text#:#Text Input
 exc#:#exc_settings_feedback_text_info#:#Tutors type their evaluation in a text field. The participant receives a notification about it and the text is displayed at the assignment overview.
 exc#:#exc_show_instructions#:#Show Work Instructions
+exc#:#exc_show_more#:#Show More
 exc#:#exc_show_peer_review#:#Show Peer-Feedback
 exc#:#exc_show_submissions#:#Publish Submissions after Deadline
 exc#:#exc_show_submissions_info#:#For assignments with a fixed submission deadline, participants can view all submissions after the submission deadline.
@@ -12039,10 +12042,51 @@ meta#:#md_oai_contact_mail#:#Contact e-mail of this organisation
 meta#:#md_oai_identifier_prefix#:#OAI Prefix
 meta#:#md_oai_identifier_prefix_info#:#This prefix is used as a namespace in the identifiers of returned OER records.
 meta#:#md_oai_pmh_enabled#:#Allow Querying via OAI-PMH Interface
-meta#:#md_oai_pmh_enabled_info#:#If enabled, harvested OER can be queried by external interested parties, e.g. OER repositories.
+meta#:#md_oai_pmh_enabled_info#:#If enabled, published OER can be queried by external interested parties, e.g. OER repositories.
 meta#:#md_oai_repository_name#:#Installation Name
 meta#:#md_oai_repository_name_info#:#This is returned as the name of this ILIAS installation when queried.
 meta#:#md_obj_types#:#Assigned Objects
+meta#:#md_publishing#:#Publishing
+meta#:#md_publishing_action_accept#:#Accept for Publishing
+meta#:#md_publishing_action_block#:#Block From Publishing
+meta#:#md_publishing_action_publish#:#Publish
+meta#:#md_publishing_action_reject#:#Reject
+meta#:#md_publishing_action_submit#:#Submit for Publishing
+meta#:#md_publishing_action_unblock#:#Unblock
+meta#:#md_publishing_action_withdraw#:#Withdraw
+meta#:#md_publishing_center_title#:#OER Publishing
+meta#:#md_publishing_confirmation_accept#:#Accept for Publishing
+meta#:#md_publishing_confirmation_info_accept#:#Are you sure you want to publish this object?
+meta#:#md_publishing_confirmation_info_reject#:#Are you sure you want to reject this object for publishing?
+meta#:#md_publishing_confirmation_info_withdraw#:#Are you sure you want to withdraw this object from publishing?
+meta#:#md_publishing_confirmation_reject#:#Reject for Publishing
+meta#:#md_publishing_confirmation_withdraw#:#Withdraw From Publishing
+meta#:#md_publishing_control_center#:#OER Publishing
+meta#:#md_publishing_current_status#:#Publishing this object as OER: <strong>%s</strong>
+meta#:#md_publishing_info_blocked#:#This object is blocked from being automatically published.
+meta#:#md_publishing_info_published#:#This object has been published as an Open Educational Resource.
+meta#:#md_publishing_info_under_review#:#This object was submitted for publishing, and is currently being reviewed by the editorial team.
+meta#:#md_publishing_info_unpublished#:#This object can be published as an Open Educational Resource.
+meta#:#md_publishing_info_wrong_copyright#:#To publish this object as an Open Educational Resource, please close this dialog and select an eligible licence:%s
+meta#:#md_publishing_last_reference_info#:#Please note that this object will not be removed, because there are no other references to it in the repository.
+meta#:#md_publishing_status_blocked#:#Blocked
+meta#:#md_publishing_status_published#:#Published
+meta#:#md_publishing_status_under_review#:#Under Review
+meta#:#md_publishing_status_unpublished#:#Unpublished
+meta#:#md_publishing_success_accept#:#Object successfully published.
+meta#:#md_publishing_success_block#:#Object successfully blocked from publishing.
+meta#:#md_publishing_success_publish#:#Object successfully published.
+meta#:#md_publishing_success_reject#:#Object successfully rejected.
+meta#:#md_publishing_success_submit#:#Object successfully submitted for review.
+meta#:#md_publishing_success_unblock#:#Object successfully unblocked.
+meta#:#md_publishing_success_withdraw#:#Object successfully withdrawn.
+meta#:#md_publishing_workflow#:#Publishing Workflow
+meta#:#md_publishing_workflow_automatic#:#Automatic
+meta#:#md_publishing_workflow_automatic_info#:#Eligible objects are automatically published by the OER Harvester cron job.
+meta#:#md_publishing_workflow_manual#:#Manual
+meta#:#md_publishing_workflow_manual_info#:#Add an option to the LOM of objects to publish them with the click of a button.
+meta#:#md_publishing_workflow_mode#:#Enable Publishing
+meta#:#md_publishing_workflow_mode_info#:#When an object is published, it is added to a predefined category and an export file is generated for it. Additionally, a record is compiled that (if activated) can be read out via an OAI-PMH interface.
 meta#:#md_record_export_table#:#Export Files
 meta#:#md_record_list_table#:#Custom Metadata Sets
 meta#:#md_separated_by#:#Separated by %s
@@ -12633,18 +12677,17 @@ meta#:#meta_obj_type_active#:#Dataset offered
 meta#:#meta_obj_type_inactive#:#Data set not used
 meta#:#meta_obj_type_mandatory#:#Data set always offered
 meta#:#meta_obj_type_optional#:#Data set needs activation
-meta#:#meta_oer_blocked#:#Ignored by OER Harvester
-meta#:#meta_oer_blocked_info#:#Will not be listed automatically as Open Educational Ressource (OER)
-meta#:#meta_oer_categories#:#Categories for Objects Gathered
 meta#:#meta_oer_copyright_selection#:#Copyright Selection
-meta#:#meta_oer_copyright_selection_info#:#Only objects that have been published with one of the selected copyrights will be linked to the OER Category.
+meta#:#meta_oer_copyright_selection_info#:#Only objects with one of the selected copyrights will be published.
+meta#:#meta_oer_editorial_category#:#Editorial Category
+meta#:#meta_oer_editorial_step_info#:#Add a step in the publishing workflow where objects can be checked by an editorial team before being published. Objects are first submitted to the Editorial Category. Only after being accepted are they moved to the category for published OER content, and records for the OAI-PMH interface are compiled.
+meta#:#meta_oer_editorial_step_toggle#:#Enable Editorial Step
 meta#:#meta_oer_exposed_source#:#Category for Published OER Content
-meta#:#meta_oer_harvested_licences#:#Licences for Harvesting
-meta#:#meta_oer_harvested_types#:#Types of Objects to be Harvested
+meta#:#meta_oer_harvested_licences#:#Licences for Publishing
+meta#:#meta_oer_harvested_types#:#Types of Objects for Publishing
 meta#:#meta_oer_harvester#:#OER Harvester
-meta#:#meta_oer_harvester_desc#:#The OER Harvester collects all resources under selected CC licenses, adds them to a category defined in the cronjob settings, and if necessary generates export files for them. For harvested resource marked for publishing, records are compiled that can then (if enabled) be queried via an OAI-PMH interface. What object types are harvested can be configured. To get results from this cronjob it is necessary to activate and configure the copyright selection in the administration of 'Metadata'.
-meta#:#meta_oer_object_type_selection#:#Harvested Object Types
-meta#:#meta_oer_target#:#Category for Harvested OER Content
+meta#:#meta_oer_harvester_desc#:#The OER Harvester needs to be activated for publishing workflows to function properly, see the 'Publishing' configuration in the 'Metadata' administration.<br/>It updates the records of published objects in the OAI-PMH interface, and withdraws objects that are not eliglible for publishing anymore. If automatic publishing is enabled, the OER Harvester also automatically collect objects with eligible type and copyright, and publishes them (or submits them for review, if an editorial step is enabled).
+meta#:#meta_oer_object_type_selection#:#Eligible Object Types
 meta#:#meta_opera#:#Opera
 meta#:#meta_operating_system#:#Operating System
 meta#:#meta_or_composite#:#Or Composite
@@ -12657,6 +12700,12 @@ meta#:#meta_pointofcontact#:#Point(s) of Contact
 meta#:#meta_prerequisite#:#Prerequisite
 meta#:#meta_problem_statement#:#Problem Statement
 meta#:#meta_publisher#:#Publisher
+meta#:#meta_publishing_config_cp#:#Copyright Selection: <strong>%s</strong>
+meta#:#meta_publishing_config_cron_job_admin#:#Cron Job Administration
+meta#:#meta_publishing_config_disabled#:#Disabled
+meta#:#meta_publishing_config_enabled#:#Enabled
+meta#:#meta_publishing_config_harvester#:#OER Harvester: <strong>%s</strong>
+meta#:#meta_publishing_config_status#:#For publishing to function, copyright selection and the OER Harvester cron job have to be enabled.
 meta#:#meta_purpose#:#Purpose
 meta#:#meta_questionnaire#:#Questionnaire
 meta#:#meta_references#:#References
@@ -12730,6 +12779,7 @@ mmbr#:#mmbr_awrn_my_groups_courses_info#:#All members of groups or courses of th
 mmbr#:#mmbr_btn_mail_selected_users#:#Send Mail
 mmbr#:#mmbr_info_delete_sure_unsubscribe#:#Are you sure you want to unsubscribe from the following objects?
 mmbr#:#mmbr_memberships#:#Memberships
+mmbr#:#mmbr_role_error#:#Members must have at least one role assigned.
 mmbr#:#mmbr_selected_users#:#Selected Participants
 mmbr#:#mmbr_unsubscribed_from_objs#:#You have been unsubscribed from the selected objects.
 mme#:#add_languages#:#Add Language
@@ -16683,9 +16733,7 @@ survey#:#survey_360_edit_raters#:#Manage Raters
 survey#:#survey_360_mode#:#360° Feedback
 survey#:#survey_360_mode_info#:#Allows individuals to be peer-reviewed by multiple sources. Results are aggregated.
 survey#:#survey_360_no_appraisees#:#There are currently no appraisees for you to rate.
-survey#:#survey_360_no_closed_appraisees#:#No appraisee has closed his survey yet.
 survey#:#survey_360_rate_other_appraisee#:#Rate Appraisee
-survey#:#survey_360_rate_other_appraisees#:#Rate Appraisees
 survey#:#survey_360_rater_finished#:#Survey Finished
 survey#:#survey_360_rater_mail_sent#:#Mail Sent
 survey#:#survey_360_rater_message_content_anonymous#:#Message Content (Anonymous)
@@ -17915,7 +17963,6 @@ wopi#:#wopi_url_byline#:#Complete URL of the WOPI Discovery, which must be acces
 wsp#:#element_already_shared#:#This object is already shared with this user.
 wsp#:#element_shared#:#Object shared.
 wsp#:#error_creating_certificate_pdf#:#The certificate could not be created. Please contact the administrator to check the certificate server.
-wsp#:#search_no_match#:#Your search did not match any results.
 wsp#:#share#:#Share
 wsp#:#share_content#:#Share Object
 wsp#:#share_with#:#Username
@@ -17937,6 +17984,7 @@ wsp#:#wsp_permission_registered_info#:#This object is shared with all registered
 wsp#:#wsp_permission_removed#:#Entry has been removed.
 wsp#:#wsp_permissions#:#Share
 wsp#:#wsp_personal_resources_description#:#Here you can manage your private files, blogs and artifacts.
+wsp#:#wsp_search_no_match#:#Your search did not match any results.
 wsp#:#wsp_send_mail#:#Send Mail
 wsp#:#wsp_set_permission_all#:#World Wide Web
 wsp#:#wsp_set_permission_all_password#:#World Wide Web with Password

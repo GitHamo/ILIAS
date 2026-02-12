@@ -165,4 +165,11 @@ class Test11DBUpdateSteps implements \ilDatabaseUpdateSteps
             $this->db->modifyTableColumn($table, $column, ['default' => '', 'notnull' => true]);
         }
     }
+
+    public function step_5(): void
+    {
+        $this->db->manipulate(
+            'DELETE FROM settings WHERE module="assessment" AND keyword="export_essay_qst_with_html"'
+        );
+    }
 }
