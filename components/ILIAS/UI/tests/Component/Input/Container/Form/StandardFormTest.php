@@ -126,12 +126,11 @@ class StandardFormTest extends ILIAS_UI_TestBase
             ]);
 
         $r = $this->getDefaultRenderer();
-        $html = $this->getDefaultRenderer()->render($form);
+        $html = $this->brutallyTrimHTML($this->getDefaultRenderer()->render($form));
 
         $expected = $this->brutallyTrimHTML('
         <form class="c-form c-form--horizontal" enctype="multipart/form-data" action="MY_URL" method="post">
            <div class="c-form__header">
-              <div class="c-form__actions"><button class="btn btn-default" data-action="">save</button></div>
            </div>'
            . $this->getTextFieldHtml() .
           '<div class="c-form__footer">
@@ -176,7 +175,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
         $expected = $this->brutallyTrimHTML('
         <form class="c-form c-form--horizontal" enctype="multipart/form-data" action="MY_URL" method="post">
            <div class="c-form__header">
-              <div class="c-form__actions"><button class="btn btn-default" data-action="">create</button></div>
            </div>'
             . $this->getTextFieldHtml() .
            '<div class="c-form__footer">
@@ -203,9 +201,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
         $expected = $this->brutallyTrimHTML('
         <form class="c-form c-form--horizontal" enctype="multipart/form-data" method="post">
             <div class="c-form__header">
-                <div class="c-form__actions">
-                    <button class="btn btn-default" data-action="">save</button>
-                </div>
             </div>'
            . $this->getTextFieldHtml() .
            '<div class="c-form__footer">
@@ -264,9 +259,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
         $expected = $this->brutallyTrimHTML('
 <form class="c-form c-form--horizontal" enctype="multipart/form-data" method="post">
     <div class="c-form__header">
-        <div class="c-form__actions">
-            <button class="btn btn-default" data-action="">save</button>
-        </div>
     </div>
     <div class="c-form__error-msg alert alert-danger"><span class="sr-only">ui_error:</span>testing error
         message
@@ -341,7 +333,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
         $expected = $this->brutallyTrimHTML('
             <form class="c-form c-form--horizontal" enctype="multipart/form-data" method="post">
                 <div class="c-form__header">
-                    <div class="c-form__actions"><button class="btn btn-default" data-action="">save</button></div>
                 </div>
                 <div class="c-form__error-msg alert alert-danger"><span class="sr-only">ui_error:</span>This is a fail on form.</div>
                 ' . $field_html . '
@@ -377,7 +368,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
         $expected = $this->brutallyTrimHTML('
 <form class="c-form c-form--horizontal" enctype="multipart/form-data" action="MY_URL" method="post">
     <div class="c-form__header">
-        <div class="c-form__actions"><button class="btn btn-default" data-action="">save</button></div>
         <div class="c-form__required">
             <span class="asterisk">*</span><span class="small"> required_field</span>
         </div>
