@@ -69,7 +69,9 @@ class DatabaseDataRepository implements DataRepository
 
         $base_data = $this->db->fetchObject($base_query);
         if ($base_data === null) {
-            return $this->getDefault()->withId($id);
+            throw \InvalidArgumentException(
+                'This user does not exist.'
+            );
         }
 
         return $this->buildFromData(
