@@ -325,17 +325,17 @@ class EditSubObjectsGUI
 
     protected function insertPage(
         int $parent_id = 0,
-        int $target = \ilTree::POS_LAST_NODE
+        int $target = 0
     ): void {
         $lng = $this->domain->lng();
         $ctrl = $this->gui->ctrl();
 
-        $chap = new \ilLMPageObject($this->lm);
-        $chap->setType("pg");
-        $chap->setTitle($lng->txt("cont_new_page"));
-        $chap->setLMId($this->lm_id);
-        $chap->create();
-        \ilLMObject::putInTree($chap, $parent_id, $target);
+        $page = new \ilLMPageObject($this->lm);
+        $page->setType("pg");
+        $page->setTitle($lng->txt("cont_new_page"));
+        $page->setLMId($this->lm_id);
+        $page->create();
+        \ilLMObject::putInTree($page, $parent_id, $target);
 
         /*
         if ($parent_id === $this->lm_tree->readRootId()) {
