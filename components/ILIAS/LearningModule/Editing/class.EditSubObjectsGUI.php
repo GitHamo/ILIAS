@@ -316,13 +316,14 @@ class EditSubObjectsGUI
     }
     public function insertPageAfter(int $id = 0): void
     {
+        $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(
             self::class,
             "target_id",
             $id
         );
         $this->gui->clearAsnyOnloadCode();
-        $modal = $this->gui->modal()->form($this->getAddPageForm("savePageAfter"));
+        $modal = $this->gui->modal($lng->txt("lm_insert_page"))->form($this->getAddPageForm("savePageAfter"));
         $modal->send();
     }
 
@@ -343,13 +344,14 @@ class EditSubObjectsGUI
 
     public function insertPageBefore(int $id): void
     {
+        $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(
             self::class,
             "target_id",
             $id
         );
         $this->gui->clearAsnyOnloadCode();
-        $modal = $this->gui->modal()->form($this->getAddPageForm("savePageBefore"));
+        $modal = $this->gui->modal($lng->txt("lm_insert_page"))->form($this->getAddPageForm("savePageBefore"));
         $modal->send();
     }
 
@@ -420,13 +422,14 @@ class EditSubObjectsGUI
 
     public function insertChapterAfter(int $id = 0): void
     {
+        $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(
             self::class,
             "target_id",
             $id
         );
         $this->gui->clearAsnyOnloadCode();
-        $modal = $this->gui->modal()->form($this->getEditTitleForm(0, "saveChapterAfter"));
+        $modal = $this->gui->modal($lng->txt("lm_insert_chapter"))->form($this->getEditTitleForm(0, "saveChapterAfter"));
         $modal->send();
     }
 
@@ -442,13 +445,14 @@ class EditSubObjectsGUI
 
     public function insertChapterBefore(int $id): void
     {
+        $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(
             self::class,
             "target_id",
             $id
         );
         $this->gui->clearAsnyOnloadCode();
-        $modal = $this->gui->modal()->form($this->getEditTitleForm(0, "saveChapterBefore"));
+        $modal = $this->gui->modal($lng->txt("lm_insert_chapter"))->form($this->getEditTitleForm(0, "saveChapterBefore"));
         $modal->send();
     }
 
@@ -552,8 +556,9 @@ class EditSubObjectsGUI
 
     public function editTitle(int $id): void
     {
+        $lng = $this->domain->lng();
         $this->gui->clearAsnyOnloadCode();
-        $modal = $this->gui->modal()->form($this->getEditTitleForm($id));
+        $modal = $this->gui->modal($lng->txt("cont_edit_title"))->form($this->getEditTitleForm($id));
         $modal->send();
     }
 
