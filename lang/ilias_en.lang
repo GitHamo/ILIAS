@@ -7393,6 +7393,7 @@ copg#:#copg_sec_link_info#:#Select a target for linking the block. Attention: In
 copg#:#copg_snippet_cannot_be_edited#:#This is a predefined content snippet and cannot be edited here.
 copg#:#copg_templates#:#Templates
 copg#:#copg_unsupported_media_type#:#This media object has an unsupported media type.
+copg#:#copg_use_template#:#Use Template
 copg#:#copg_x_minutes#:#%s minute(s)
 cpad#:#cpad_reading_time_status#:#Reading Time
 cpad#:#cpad_reading_time_status_desc#:#If enabled, the estimated reading time for content page objects will be determined and displayed.
@@ -11005,6 +11006,7 @@ lm#:#lm_btn_lp_toggle_state_completed#:#Set Not Completed
 lm#:#lm_btn_lp_toggle_state_not_completed#:#Set Completed
 lm#:#lm_copy#:#Copy Learning Module
 lm#:#lm_edit_chapters#:#Edit Chapters
+lm#:#lm_edit_content#:#Edit Content
 lm#:#lm_edit_lm_settings#:#Edit Learning Module Settings
 lm#:#lm_est_reading_time#:#Estimated Reading Time
 lm#:#lm_est_reading_time_info#:#In Learning Modules in the repository the estimated reading time can be determined and displayed.
@@ -11022,6 +11024,7 @@ lm#:#lm_insert_page_before#:#Insert page before
 lm#:#lm_insert_page_clip#:#Insert page from clipboard
 lm#:#lm_insert_page_clip_after#:#Insert page from clipboard after
 lm#:#lm_insert_page_clip_before#:#Insert page from clipboard before
+lm#:#lm_list_pages#:#Edit Pages
 lm#:#lm_page_added#:#Page has been added.
 lm#:#lm_page_type_lm#:#LM Page
 lm#:#lm_pages_added#:#Pages have been added.

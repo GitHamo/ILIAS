@@ -74,7 +74,9 @@ class EditSubObjectsGUI
                     "insertChapterClip", "insertChapterClipBefore", "insertChapterClipAfter",
                     "activatePages",
                     "insertLayoutBefore", "insertLayoutAfter", "insertPageFromLayout",
-                    "switchToLanguage", "editMasterLanguage"
+                    "switchToLanguage", "editMasterLanguage",
+                    "savePageAfter", "savePageBefore",
+                    "saveChapterAfter", "saveChapterBefore",
                 ])) {
                     $this->$cmd();
                 }
@@ -133,29 +135,46 @@ class EditSubObjectsGUI
 
         $ml_head = \ilObjLearningModuleGUI::getMultiLangHeader($this->lm_id, $this);
 
-        if ($retrieval->count() === 0) {
-            if ($this->sub_type === "st") {
+        if ($this->sub_type === "st") {
+            $modal = $this->gui->modal(
+                $lng->txt("lm_insert_chapter")
+            )->form($this->getAddPageForm("saveChapterAfter"))->getAsyncTriggerButtonComponents(
+                $lng->txt("lm_insert_chapter"),
+                $this->gui->ctrl()->getLinkTargetByClass(self::class, "insertChapterAfter"),
+                false
+            );
+            $this->gui->toolbar()->addComponent($modal["button"]);
+            $this->gui->toolbar()->addComponent($modal["modal"]);
+            /*
+            $this->gui->button(
+                $lng->txt("lm_insert_chapter"),
+                $ctrl->getLinkTargetByClass(self::class, "insertFirstChapter")
+            )->toToolbar();*/
+            if ($user->clipboardHasObjectsOfType("st")) {
                 $this->gui->button(
-                    $lng->txt("lm_insert_chapter"),
-                    $ctrl->getLinkTargetByClass(self::class, "insertFirstChapter")
+                    $lng->txt("lm_insert_chapter_clip"),
+                    $ctrl->getLinkTargetByClass(self::class, "insertChapterClip")
                 )->toToolbar();
-                if ($user->clipboardHasObjectsOfType("st")) {
-                    $this->gui->button(
-                        $lng->txt("lm_insert_chapter_clip"),
-                        $ctrl->getLinkTargetByClass(self::class, "insertChapterClip")
-                    )->toToolbar();
-                }
-            } else {
+            }
+        } else {
+            $modal = $this->gui->modal(
+                $lng->txt("lm_insert_page")
+            )->form($this->getAddPageForm("savePageAfter"))->getAsyncTriggerButtonComponents(
+                $lng->txt("lm_insert_page"),
+                $this->gui->ctrl()->getLinkTargetByClass(self::class, "insertPageAfter"),
+                false
+            );
+            $this->gui->toolbar()->addComponent($modal["button"]);
+            $this->gui->toolbar()->addComponent($modal["modal"]);
+            /*$this->gui->button(
+                $lng->txt("lm_insert_page"),
+                $ctrl->getLinkTargetByClass(self::class, "insertFirstPage")
+            )->toToolbar();*/
+            if ($user->clipboardHasObjectsOfType("pg")) {
                 $this->gui->button(
-                    $lng->txt("lm_insert_page"),
-                    $ctrl->getLinkTargetByClass(self::class, "insertFirstPage")
+                    $lng->txt("lm_insert_page_clip"),
+                    $ctrl->getLinkTargetByClass(self::class, "insertPageClip")
                 )->toToolbar();
-                if ($user->clipboardHasObjectsOfType("pg")) {
-                    $this->gui->button(
-                        $lng->txt("lm_insert_page_clip"),
-                        $ctrl->getLinkTargetByClass(self::class, "insertPageClip")
-                    )->toToolbar();
-                }
             }
         }
         $table = $this->getTable();
@@ -296,17 +315,49 @@ class EditSubObjectsGUI
             $this->sub_obj_id
         );
     }
-    public function insertPageAfter(): void
+    public function insertPageAfter(int $id = 0): void
     {
+        $this->gui->ctrl()->setParameterByClass(
+            self::class,
+            "target_id",
+            $id
+        );
+        $this->gui->clearAsnyOnloadCode();
+        $modal = $this->gui->modal()->form($this->getAddPageForm("savePageAfter"));
+        $modal->send();
+    }
+
+    public function savePageAfter(): void
+    {
+        $mt = $this->gui->ui()->mainTemplate();
+        $lng = $this->domain->lng();
         $target_id = $this->request->getTargetId();
         $this->insertPage(
             $this->sub_obj_id,
-            $target_id
+            $target_id,
+            $this->getTitlesFromForm(),
+            $this->getLayoutIdFromForm()
         );
+        $mt->setOnScreenMessage("success", $lng->txt("msg_obj_modified"), true);
+        $this->gui->ctrl()->redirect($this, "list");
     }
 
-    public function insertPageBefore(): void
+    public function insertPageBefore(int $id): void
     {
+        $this->gui->ctrl()->setParameterByClass(
+            self::class,
+            "target_id",
+            $id
+        );
+        $this->gui->clearAsnyOnloadCode();
+        $modal = $this->gui->modal()->form($this->getAddPageForm("savePageBefore"));
+        $modal->send();
+    }
+
+    public function savePageBefore(): void
+    {
+        $mt = $this->gui->ui()->mainTemplate();
+        $lng = $this->domain->lng();
         $parent = $this->sub_obj_id;
         $target_id = $this->request->getTargetId();
         $before_target = \ilTree::POS_FIRST_NODE;
@@ -319,13 +370,19 @@ class EditSubObjectsGUI
         }
         $this->insertPage(
             $parent,
-            $before_target
+            $before_target,
+            $this->getTitlesFromForm(),
+            $this->getLayoutIdFromForm()
         );
+        $mt->setOnScreenMessage("success", $lng->txt("msg_obj_modified"), true);
+        $this->gui->ctrl()->redirect($this, "list");
     }
 
     protected function insertPage(
         int $parent_id = 0,
-        int $target = 0
+        int $target = 0,
+        array $titles = [],
+        int $layout_id = 0
     ): void {
         $lng = $this->domain->lng();
         $ctrl = $this->gui->ctrl();
@@ -334,15 +391,23 @@ class EditSubObjectsGUI
         $page->setType("pg");
         $page->setTitle($lng->txt("cont_new_page"));
         $page->setLMId($this->lm_id);
-        $page->create();
+        $page->create(false, false, $layout_id);
         \ilLMObject::putInTree($page, $parent_id, $target);
 
-        /*
-        if ($parent_id === $this->lm_tree->readRootId()) {
-            $ctrl->setParameterByClass(static::class, "obj_id", 0);
-        } else {
-            $ctrl->setParameterByClass(static::class, "obj_id", $parent_id);
-        }*/
+        if (count($titles) > 0) {
+            \ilLMObject::saveTitle($page->getId(), $titles["-"]);
+
+            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
+            if ($ot->getContentActivated()) {
+                foreach ($ot->getLanguages() as $lang) {
+                    $code = $lang->getLanguageCode();
+                    if ($code === $ot->getMasterLanguage()) {
+                        continue;
+                    }
+                    \ilLMObject::saveTitle($page->getId(), $titles[$code], $code);
+                }
+            }
+        }
 
         $ctrl->redirect($this, "list");
     }
@@ -353,16 +418,42 @@ class EditSubObjectsGUI
             $this->sub_obj_id
         );
     }
-    public function insertChapterAfter(): void
+
+    public function insertChapterAfter(int $id = 0): void
+    {
+        $this->gui->ctrl()->setParameterByClass(
+            self::class,
+            "target_id",
+            $id
+        );
+        $this->gui->clearAsnyOnloadCode();
+        $modal = $this->gui->modal()->form($this->getEditTitleForm(0, "saveChapterAfter"));
+        $modal->send();
+    }
+
+    public function saveChapterAfter(): void
     {
         $target_id = $this->request->getTargetId();
         $this->insertChapter(
             $this->sub_obj_id,
-            $target_id
+            $target_id,
+            $this->getTitlesFromForm()
         );
     }
 
-    public function insertChapterBefore(): void
+    public function insertChapterBefore(int $id): void
+    {
+        $this->gui->ctrl()->setParameterByClass(
+            self::class,
+            "target_id",
+            $id
+        );
+        $this->gui->clearAsnyOnloadCode();
+        $modal = $this->gui->modal()->form($this->getEditTitleForm(0, "saveChapterBefore"));
+        $modal->send();
+    }
+
+    public function saveChapterBefore(): void
     {
         $parent = $this->getCurrentParentId();
         $target_id = $this->request->getTargetId();
@@ -376,13 +467,15 @@ class EditSubObjectsGUI
         }
         $this->insertChapter(
             $parent,
-            $before_target
+            $before_target,
+            $this->getTitlesFromForm()
         );
     }
 
     protected function insertChapter(
         int $parent_id = 0,
-        int $target = \ilTree::POS_LAST_NODE
+        int $target = \ilTree::POS_LAST_NODE,
+        array $titles = []
     ): void {
         $lng = $this->domain->lng();
         $ctrl = $this->gui->ctrl();
@@ -393,17 +486,38 @@ class EditSubObjectsGUI
         $chap->create();
         \ilLMObject::putInTree($chap, $parent_id, $target);
 
-        /*
-        if ($parent_id === $this->lm_tree->readRootId()) {
-            $ctrl->setParameterByClass(static::class, "obj_id", 0);
-        } else {
-            $ctrl->setParameterByClass(static::class, "obj_id", $parent_id);
-        }*/
+        if (count($titles) > 0) {
+            \ilLMObject::saveTitle($chap->getId(), $titles["-"]);
+
+            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
+            if ($ot->getContentActivated()) {
+                foreach ($ot->getLanguages() as $lang) {
+                    $code = $lang->getLanguageCode();
+                    if ($code === $ot->getMasterLanguage()) {
+                        continue;
+                    }
+                    \ilLMObject::saveTitle($chap->getId(), $titles[$code], $code);
+                }
+            }
+        }
 
         $ctrl->redirect($this, "list");
     }
 
-    protected function getEditTitleForm(int $id): FormAdapterGUI
+    protected function getAddPageForm($cmd): FormAdapterGUI
+    {
+        $this->domain->lng()->loadLanguageModule("copg");
+        $form = $this->getEditTitleForm(0, $cmd);
+        $arr_templates = \ilPageLayout::activeLayouts(\ilPageLayout::MODULE_LM);
+        if (count($arr_templates) > 0) {
+            $form = $form->optional("use_template", $this->domain->lng()->txt("copg_use_template"));
+            $form = \ilPageLayoutGUI::addTemplateSelection((string) \ilPageLayout::MODULE_LM, $form);
+            $form = $form->end();
+        }
+        return $form;
+    }
+
+    protected function getEditTitleForm(int $id, $cmd = "saveTitle"): FormAdapterGUI
     {
         $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(self::class, "edit_id", $id);
@@ -415,7 +529,11 @@ class EditSubObjectsGUI
 
         $form = $this
             ->gui
+<<<<<<< HEAD
             ->form([self::class], "saveTitle")
+=======
+            ->form(self::class, $cmd)
+>>>>>>> 4030bd9d57d (43375: Useability: Hard to find a way to edit a title of chapter or page; 43374: Useability: Chapter / Page title should be clkickable)
             ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id), 200);
         if ($ot->getContentTranslationActivated()) {
             foreach ($ot->getLanguages() as $lang) {
@@ -444,6 +562,38 @@ class EditSubObjectsGUI
         $modal->send();
     }
 
+    public function getTitlesFromForm(): array
+    {
+        $titles = [];
+        $form = $this->getEditTitleForm($this->request->getEditId());
+        if ($form->isValid()) {
+            $titles["-"] = $form->getData("title");
+
+            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
+            if ($ot->getContentActivated()) {
+                foreach ($ot->getLanguages() as $lang) {
+                    $code = $lang->getLanguageCode();
+                    if ($code === $ot->getMasterLanguage()) {
+                        continue;
+                    }
+                    $titles[$code] = $form->getData("title_" . $code);
+                }
+            }
+        }
+        return $titles;
+    }
+
+    public function getLayoutIdFromForm(): int
+    {
+        $form = $this->getAddPageForm("");
+        if ($form->isValid()) {
+            if ($form->getData("use_template")) {
+                return (int) $form->getData("template_id");
+            }
+        }
+        return 0;
+    }
+
     public function saveTitle(): void
     {
         $mt = $this->gui->mainTemplate();
@@ -463,7 +613,7 @@ class EditSubObjectsGUI
                 }
             }
         }
-        $mt->setContent("success", $lng->txt("msg_obj_modified"), true);
+        $mt->setOnScreenMessage("success", $lng->txt("msg_obj_modified"), true);
         $this->gui->ctrl()->redirect($this, "list");
     }
 
@@ -717,6 +867,8 @@ class EditSubObjectsGUI
         $ctrl->redirect($this, "list");
     }
 
+    /*
+
     public function insertLayoutBefore(): void
     {
         $this->insertLayout(true);
@@ -804,4 +956,6 @@ class EditSubObjectsGUI
 
         $ctrl->redirect($this, "list");
     }
+
+    */
 }
