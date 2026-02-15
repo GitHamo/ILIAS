@@ -171,41 +171,6 @@ class ilObjBlog extends ilObject2
             $a_posting_id,
             $a_comment
         );
-<<<<<<< HEAD
-=======
-        if (!count($users)) {
-            return;
-        }
-
-        $ntf = new ilSystemNotification($a_in_wsp);
-        $ntf->setLangModules(array("blog"));
-        $ntf->setRefId($a_blog_node_id);
-        $ntf->setChangedByUserId($ilUser->getId());
-        $ntf->setSubjectLangId('blog_change_notification_subject');
-        $ntf->setIntroductionLangId('blog_change_notification_body_' . $a_action);
-        $ntf->addAdditionalInfo('blog_posting', $posting->getTitle());
-        if ($a_comment) {
-            $ntf->addAdditionalInfo('comment', $a_comment, true);
-        }
-        $ntf->setGotoLangId('blog_change_notification_link');
-        $ntf->setReasonLangId('blog_change_notification_reason');
-
-        $abstract = $posting->getNotificationAbstract();
-        if ($abstract) {
-            $ntf->addAdditionalInfo('content', $abstract, true);
-        }
-
-        $notified = $ntf->sendMailAndReturnRecipients(
-            $users,
-            (string) $a_posting_id,
-            ($admin_only ? "write" : "read")
-        );
-
-        // #14387
-        if (count($notified)) {
-            ilNotification::updateNotificationTime(ilNotification::TYPE_BLOG, $blog_obj_id, $notified, $a_posting_id);
-        }
->>>>>>> 56433621deb (45859: Link to Blog Post in blog post notification is wrong)
     }
 
     /**
