@@ -668,6 +668,10 @@ class FormAdapterGUI
         if ($this->last_key !== "") {
             $this->fields[$this->last_key] = $field;
         }
+        // also replace the field in current optional, if it's in it
+        if (!is_null($this->current_optional) && isset($this->current_optional["fields"][$this->last_key])) {
+            $this->current_optional["fields"][$this->last_key] = $field;
+        }
     }
 
     public function getForm(): Form\Standard
