@@ -22,11 +22,7 @@ namespace ILIAS\LearningModule\Editing;
 
 use ILIAS\Data\Range;
 use ILIAS\Data\Order;
-<<<<<<< HEAD
 use ILIAS\Repository\RetrievalInterface;
-=======
-use ILIAS\LearningModule\Editing\EditSubObjectsGUI;
->>>>>>> 4030bd9d57d (43375: Useability: Hard to find a way to edit a title of chapter or page; 43374: Useability: Chapter / Page title should be clkickable)
 
 class SubObjectRetrieval implements RetrievalInterface
 {
@@ -99,37 +95,14 @@ class SubObjectRetrieval implements RetrievalInterface
             if (!in_array($this->transl, ["-", ""])) {
                 $trans_title = $this->getChildTitle($child);
             }
-            $target = "#";
-            if ($child["type"] === "pg") {
-                global $DIC;
-                $DIC->ctrl()->setParameterByClass(\ilLMPageGUI::class, "obj_id", $child["child"]);
-                $target = $DIC->ctrl()->getLinkTargetByClass([
-                    \ilObjLearningModuleGUI::class,
-                    \ilLMPageObjectGUI::class,
-                    \ilLMPageGUI::class
-                ], "edit");
-            } elseif ($child["type"] === "st") {
-                global $DIC;
-                $DIC->ctrl()->setParameterByClass(\ilStructureObjectGUI::class, "obj_id", $child["child"]);
-                $target = $DIC->ctrl()->getLinkTargetByClass([
-                    \ilObjLearningModuleGUI::class,
-                    \ilStructureObjectGUI::class,
-                    EditSubObjectsGUI::class
-                ], "editPages");
-            }
 
             yield [
                 "id" => $child["child"],
-<<<<<<< HEAD
                 "deactivated_elements" => $deactivated_elements,
                 "active" => $active,
                 "scheduled" => $scheduled,
                 "type" => $child["type"],
                 "title" => $child["title"],
-=======
-                "type" => $this->f->symbol()->icon()->custom(\ilUtil::getImagePath($img), $alt),
-                "title" => $this->f->link()->standard($child["title"], $target),
->>>>>>> 4030bd9d57d (43375: Useability: Hard to find a way to edit a title of chapter or page; 43374: Useability: Chapter / Page title should be clkickable)
                 "trans_title" => $trans_title
             ];
         }

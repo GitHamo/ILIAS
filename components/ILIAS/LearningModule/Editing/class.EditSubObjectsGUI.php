@@ -397,11 +397,11 @@ class EditSubObjectsGUI
         if (count($titles) > 0) {
             \ilLMObject::saveTitle($page->getId(), $titles["-"]);
 
-            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
-            if ($ot->getContentActivated()) {
+            $ot = $this->domain->translation($this->lm->getId());
+            if ($ot->getContentTranslationActivated()) {
                 foreach ($ot->getLanguages() as $lang) {
                     $code = $lang->getLanguageCode();
-                    if ($code === $ot->getMasterLanguage()) {
+                    if ($code === $ot->getBaseLanguage()) {
                         continue;
                     }
                     \ilLMObject::saveTitle($page->getId(), $titles[$code], $code);
@@ -489,11 +489,11 @@ class EditSubObjectsGUI
         if (count($titles) > 0) {
             \ilLMObject::saveTitle($chap->getId(), $titles["-"]);
 
-            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
-            if ($ot->getContentActivated()) {
+            $ot = $this->domain->translation($this->lm->getId());
+            if ($ot->getContentTranslationActivated()) {
                 foreach ($ot->getLanguages() as $lang) {
                     $code = $lang->getLanguageCode();
-                    if ($code === $ot->getMasterLanguage()) {
+                    if ($code === $ot->getBaseLanguage()) {
                         continue;
                     }
                     \ilLMObject::saveTitle($chap->getId(), $titles[$code], $code);
@@ -521,7 +521,7 @@ class EditSubObjectsGUI
     {
         $lng = $this->domain->lng();
         $this->gui->ctrl()->setParameterByClass(self::class, "edit_id", $id);
-        $ot = (new TranslationsRepository($this->domain->database()))->getFor($this->lm->getId());
+        $ot = $this->domain->translation($this->lm->getId());
         $ml = "";
         if ($ot->getContentTranslationActivated()) {
             $ml = " (" . $lng->txt("meta_l_" . $ot->getBaseLanguage()) . ")";
@@ -529,11 +529,7 @@ class EditSubObjectsGUI
 
         $form = $this
             ->gui
-<<<<<<< HEAD
-            ->form([self::class], "saveTitle")
-=======
-            ->form(self::class, $cmd)
->>>>>>> 4030bd9d57d (43375: Useability: Hard to find a way to edit a title of chapter or page; 43374: Useability: Chapter / Page title should be clkickable)
+            ->form([self::class], $cmd)
             ->text("title", $lng->txt('title') . $ml, "", ilLMObject::_lookupTitle($id), 200);
         if ($ot->getContentTranslationActivated()) {
             foreach ($ot->getLanguages() as $lang) {
@@ -569,11 +565,11 @@ class EditSubObjectsGUI
         if ($form->isValid()) {
             $titles["-"] = $form->getData("title");
 
-            $ot = \ilObjectTranslation::getInstance($this->lm->getId());
-            if ($ot->getContentActivated()) {
+            $ot = $this->domain->translation($this->lm->getId());
+            if ($ot->getContentTranslationActivated()) {
                 foreach ($ot->getLanguages() as $lang) {
                     $code = $lang->getLanguageCode();
-                    if ($code === $ot->getMasterLanguage()) {
+                    if ($code === $ot->getBaseLanguage()) {
                         continue;
                     }
                     $titles[$code] = $form->getData("title_" . $code);

@@ -102,16 +102,6 @@ class TableAdapterGUI
         return $this;
     }
 
-    public function linkColumn(
-        string $key,
-        string $title,
-        bool $sortable = false
-    ): self {
-        $column = $this->ui->factory()->table()->column()->link($title)->withIsSortable($sortable);
-        $this->addColumn($key, $column);
-        return $this;
-    }
-
     public function iconColumn(
         string $key,
         string $title,
@@ -166,9 +156,10 @@ class TableAdapterGUI
         string $title,
         array $class_path,
         string $cmd = "",
-        string $id_param = ""
+        string $id_param = "",
+        bool $async = false
     ): self {
-        $this->addAction(self::SINGLE, $action, $title);
+        $this->addAction(self::SINGLE, $action, $title, $async);
         $act = $this->actions[$this->last_action_key] ?? false;
         if ($act && $act["type"] === self::SINGLE) {
             $act["redirect_class_path"] = $class_path;
