@@ -32,6 +32,8 @@ use Throwable;
 
 class ActivityAction implements Action
 {
+    private const int GUEST_USER_ID = 0;
+
     public function __construct(
         private readonly Activity $activity,
     ) {}
@@ -39,7 +41,7 @@ class ActivityAction implements Action
     #[\Override]
     public function __invoke(array $params, ?AuthUser $user): mixed
     {
-        $userId = $user ? $user->getId() : 0;
+        $userId = $user ? $user->getId() : self::GUEST_USER_ID;
         $parameters = $this->validate($params);
 
         if ($this->activity instanceof ObjectActivity && isset($parameters['id']) && is_numeric($parameters['id'])) {
