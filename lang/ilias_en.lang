@@ -9698,6 +9698,7 @@ exc#:#exc_type_upload#:#Upload
 exc#:#exc_type_upload_team#:#Team Upload
 exc#:#exc_value_can_not_set#:#This value can not be set.
 exc#:#exc_view_portfolio#:#View Portfolio
+exc#:#exc_view_wiki#:#View Wiki
 exc#:#exc_wait_for_files#:#Your download should start automatically. If the download doesn't start in 5 secs, please click here
 exc#:#exc_wiki_container#:#Wiki Container
 exc#:#exc_wiki_container_info#:#Location where wikis of participants will be created.
