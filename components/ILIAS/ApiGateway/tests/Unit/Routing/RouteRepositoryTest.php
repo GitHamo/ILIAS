@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Routing;
 
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteStaticRepository;
+use ILIAS\ApiGateway\Routing\RouteRepository;
 use PHPUnit\Framework\TestCase;
 
-final class RouteStaticRepositoryTest extends TestCase
+final class RouteRepositoryTest extends TestCase
 {
     public function testGetsAllRoutes(): void
     {
@@ -19,7 +19,7 @@ final class RouteStaticRepositoryTest extends TestCase
             'getPath' => '/api/route2',
         ]);
 
-        $repository = new RouteStaticRepository([$route1, $route2]);
+        $repository = new RouteRepository([$route1, $route2]);
 
         $expected = [
             '/api/route1' => $route1,
@@ -43,7 +43,7 @@ final class RouteStaticRepositoryTest extends TestCase
 
         /** @psalm-suppress InvalidArgument */
         // @phpstan-ignore-next-line
-        $repository = new RouteStaticRepository([
+        $repository = new RouteRepository([
             $validRoute,
             $invalidObject,
             $invalidString,

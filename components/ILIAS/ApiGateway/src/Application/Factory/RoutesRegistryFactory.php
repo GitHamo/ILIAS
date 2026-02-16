@@ -22,13 +22,13 @@ namespace ILIAS\ApiGateway\Application\Factory;
 
 use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
-use ILIAS\ApiGateway\Routing\RouteStaticRepository;
+use ILIAS\ApiGateway\Routing\RouteRepository;
 use ILIAS\Component\Activities\Repository as ActivityRepository;
 
 readonly class RoutesRegistryFactory
 {
     public function __construct(
-        private RouteStaticRepository $routeRepository,
+        private RouteRepository $routeRepository,
         private ActivityRepository $activityRepository,
         private ActivityRouteFactory $activityRouteFactory,
     ) {}

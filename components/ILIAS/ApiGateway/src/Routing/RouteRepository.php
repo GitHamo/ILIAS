@@ -22,7 +22,7 @@ namespace ILIAS\ApiGateway\Routing;
 
 use Iterator;
 
-readonly class RouteStaticRepository
+readonly class RouteRepository
 {
     /**
      * @param \ILIAS\ApiGateway\Routing\Route[] $routes

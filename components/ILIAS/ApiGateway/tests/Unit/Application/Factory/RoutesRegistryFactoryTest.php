@@ -10,7 +10,7 @@ use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
 use ILIAS\ApiGateway\Application\Factory\RoutesRegistryFactory;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Routing\RoutesRegistry;
-use ILIAS\ApiGateway\Routing\RouteStaticRepository;
+use ILIAS\ApiGateway\Routing\RouteRepository;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\Repository as ActivityRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 class RoutesRegistryFactoryTest extends TestCase
 {
     private RoutesRegistryFactory $factory;
-    private MockObject&RouteStaticRepository $routeRepository;
+    private MockObject&RouteRepository $routeRepository;
     private MockObject&ActivityRepository $activityRepository;
     private MockObject&ActivityRouteFactory $activityRouteFactory;
 
@@ -31,7 +31,7 @@ class RoutesRegistryFactoryTest extends TestCase
     protected function setUp(): void
     {
         $this->factory = new RoutesRegistryFactory(
-            $this->routeRepository = $this->createMock(RouteStaticRepository::class),
+            $this->routeRepository = $this->createMock(RouteRepository::class),
             $this->activityRepository = $this->createMock(ActivityRepository::class),
             $this->activityRouteFactory = $this->createMock(ActivityRouteFactory::class),
         );
