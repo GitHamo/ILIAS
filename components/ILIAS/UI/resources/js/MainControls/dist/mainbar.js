@@ -801,7 +801,10 @@ var persistence = function() {
 
                 element.attr('aria-hidden', false);
                 //https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html
-                element.attr('role', 'region');
+                var currentRole = element.attr('role');
+                if (!currentRole || currentRole === 'region') {
+                    element.attr('role', 'region');
+                }
                 if(isInView && !thrown) {
                     element.trigger('in_view'); //this is most important for async loading of slates,
                                                 //it triggers the GlobalScreen-Service.
@@ -814,8 +817,11 @@ var persistence = function() {
             additional_disengage: function(){
                 var entry_id = dom_ref_to_element[this.html_id];
                 thrown_for[entry_id] = false;
-                this.getElement().attr('aria-hidden', true);
-                this.getElement().removeAttr('role', 'region');
+                var element = this.getElement();
+                element.attr('aria-hidden', true);
+                if (element.attr('role') === 'region') {
+                    element.removeAttr('role');
+                }
             }
         }),
         remover: Object.assign({}, dom_element, {
