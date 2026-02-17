@@ -5007,7 +5007,6 @@ common#:#obj_nots_desc#:#Notes settings
 common#:#obj_nwss#:#News and Web Feeds
 common#:#obj_nwss_desc#:#Settings for internal news and external web feeds.
 common#:#obj_objf#:#Object Definitions
-common#:#obj_objf_desc#:#Manage ILIAS object types and object permissions. (only for experts!)
 common#:#obj_orgu#:#Organisational Unit
 common#:#obj_orgu_description#:#Creating and editing organisational structure
 common#:#obj_page#:#Page
@@ -12738,7 +12737,6 @@ meta#:#meta_source#:#Source
 meta#:#meta_status#:#Status
 meta#:#meta_string#:#Text
 meta#:#meta_structure#:#Structure
-meta#:#meta_subjectmatterexpert#:#Subject matter expert(s)
 meta#:#meta_tab_advmd#:#Custom Metadata
 meta#:#meta_tab_advmd_def#:#Manage Custom Metadata Sets
 meta#:#meta_tab_lom#:#LOM
@@ -12784,7 +12782,6 @@ mmbr#:#mmbr_btn_mail_selected_users#:#Send Mail
 mmbr#:#mmbr_info_delete_sure_unsubscribe#:#Are you sure you want to unsubscribe from the following objects?
 mmbr#:#mmbr_memberships#:#Memberships
 mmbr#:#mmbr_role_error#:#Members must have at least one role assigned.
-mmbr#:#mmbr_selected_users#:#Selected Participants
 mmbr#:#mmbr_unsubscribed_from_objs#:#You have been unsubscribed from the selected objects.
 mme#:#add_languages#:#Add Language
 mme#:#additional_langs#:#Additional Languages
@@ -13257,10 +13254,8 @@ orgu#:#org_op_edit_employee_talk#:#Edit Talk appointments
 orgu#:#org_op_edit_individual_plan#:#Edit Individual Plan
 orgu#:#org_op_edit_submissions_grades#:#Edit submissions of other users
 orgu#:#org_op_manage_members#:#Manage Members
-orgu#:#org_op_manage_participants#:#Manage Participants
 orgu#:#org_op_read_employee_talk#:#Read access talk appointments
 orgu#:#org_op_read_learning_progress#:#View learning progress of other users
-orgu#:#org_op_score_participants#:#Score Participants
 orgu#:#org_op_view_certificates#:#View certificates of other users
 orgu#:#org_op_view_competences#:#View competences of other users
 orgu#:#org_op_view_individual_plan#:#View Individual Plan
@@ -15190,8 +15185,6 @@ rtst#:#rtst_call#:#Call ECS Test
 rwik#:#rwik_call#:#Call ECS Wiki
 sahs#:#cont_insert_after_chap#:#Insert items after chapter
 sahs#:#cont_insert_into_chap#:#Insert items inside chapter
-sahs#:#sahs_activate_expert_mode#:#Activate Sequencing Expert Mode
-sahs#:#sahs_activate_expert_mode_info#:#The sequencing expert mode allows you to directly edit the sequencing information of the package tree. If you are unsure what this means we recommend to use the default sequencing behaviour.
 sahs#:#sahs_add#:#Create SCORM Learning Module
 sahs#:#sahs_authoring_mode#:#Authoring Mode
 sahs#:#sahs_authoring_mode_info#:#The SCORM ZIP package must have been created with the ILIAS SCORM editor and it must have been exported as SCORM 1.2/2004 package.
