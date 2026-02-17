@@ -36,7 +36,7 @@ use ILIAS\ApiGateway\Logging\WebserviceLoggerFactory;
 use ILIAS\ApiGateway\Middleware\MiddlewareRepository;
 use ILIAS\ApiGateway\RestAppEntryPoint;
 use ILIAS\ApiGateway\Routing\Route;
-use ILIAS\ApiGateway\Routing\RouteStaticRepository;
+use ILIAS\ApiGateway\Routing\RouteRepository;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
 use Psr\Http\Server\MiddlewareInterface;
 
@@ -74,7 +74,7 @@ class ApiGateway implements Component\Component
         ///////////////////////////////////////////////////////////////////////////////////
 
         $internal[RoutesRegistryFactory::class] = static fn(): RoutesRegistryFactory => new RoutesRegistryFactory(
-            new RouteStaticRepository(
+            new RouteRepository(
                 $seek[ApiGateway\Routing\Route::class],
             ),
             $use[Component\Activities\Repository::class],
