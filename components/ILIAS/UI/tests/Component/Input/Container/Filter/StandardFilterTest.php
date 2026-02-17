@@ -184,14 +184,14 @@ class StandardFilterTest extends ILIAS_UI_TestBase
                 <button type="button" aria-expanded="false" aria-controls="active_inputs_id_1 section_inputs_id_1" id="opener_id_1">
                     <span>
                         <span data-collapse-glyph-visibility="0">
-                            <a class="glyph" aria-label="collapse_content">
+                            <span class="glyph" aria-label="collapse_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span>
                         <span data-expand-glyph-visibility="1">
-                            <a class="glyph" aria-label="expand_content">
+                            <span class="glyph" aria-label="expand_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span> filter
                     </span>
                 </button>
@@ -322,14 +322,14 @@ EOT;
                 <button type="button" aria-expanded="false" aria-controls="active_inputs_id_1 section_inputs_id_1" id="opener_id_1">
                     <span>
                         <span data-collapse-glyph-visibility="0">
-                            <a class="glyph" aria-label="collapse_content">
+                            <span class="glyph" aria-label="collapse_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span>
                         <span data-expand-glyph-visibility="1">
-                            <a class="glyph" aria-label="expand_content">
+                            <span class="glyph" aria-label="expand_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span> filter
                     </span>
                 </button>
@@ -460,14 +460,14 @@ EOT;
                 <button type="button" aria-expanded="true" aria-controls="active_inputs_id_1 section_inputs_id_1" id="opener_id_1">
                     <span>
                         <span data-collapse-glyph-visibility="1">
-                            <a class="glyph" aria-label="collapse_content">
+                            <span class="glyph" aria-label="collapse_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span>
                         <span data-expand-glyph-visibility="0">
-                            <a class="glyph" aria-label="expand_content">
+                            <span class="glyph" aria-label="expand_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span> filter
                     </span>
                 </button>
@@ -598,14 +598,14 @@ EOT;
                 <button type="button" aria-expanded="true" aria-controls="active_inputs_id_1 section_inputs_id_1" id="opener_id_1">
                     <span>
                         <span data-collapse-glyph-visibility="1">
-                            <a class="glyph" aria-label="collapse_content">
+                            <span class="glyph" aria-label="collapse_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span>
                         <span data-expand-glyph-visibility="0">
-                            <a class="glyph" aria-label="expand_content">
+                            <span class="glyph" aria-label="expand_content" role="img">
                                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                            </a>
+                            </span>
                         </span> filter
                     </span>
                 </button>

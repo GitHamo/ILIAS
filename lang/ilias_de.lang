@@ -7392,6 +7392,7 @@ copg#:#copg_sec_link_info#:#Wählen Sie ein Ziel für die Verlinkung des Blocks.
 copg#:#copg_snippet_cannot_be_edited#:#Dies ist ein vordefinierter Inhaltsbaustein, der an dieser Stelle nicht editiert werden kann.
 copg#:#copg_templates#:#Vorlagen
 copg#:#copg_unsupported_media_type#:#Dieses Medienobjekt hat einen nicht unterstützen Medientyp.
+copg#:#copg_use_template#:#Vorlage nutzen
 copg#:#copg_x_minutes#:#%s Minute(n)
 cpad#:#cpad_reading_time_status#:#Lesezeit
 cpad#:#cpad_reading_time_status_desc#:#Falls aktiviert, wird die geschätzte Lesezeit für Inhaltsseiten ermittelt und angezeigt.
@@ -9725,6 +9726,7 @@ exc#:#exc_type_upload#:#Datei
 exc#:#exc_type_upload_team#:#Datei als Team einreichen
 exc#:#exc_value_can_not_set#:#Dieser Wert kann nicht gesetzt werden
 exc#:#exc_view_portfolio#:#Portfolio anzeigen
+exc#:#exc_view_wiki#:#Wiki anzeigen
 exc#:#exc_wait_for_files#:#Der Download sollte automatisch starten. Bei Problemen klicken Sie bitte hier.
 exc#:#exc_wiki_container#:#Wiki-Container
 exc#:#exc_wiki_container_info#:#An dieser Stelle werden die neuen Team-Wikis angelegt.
@@ -11033,6 +11035,7 @@ lm#:#lm_btn_lp_toggle_state_completed#:#Auf "Nicht bearbeitet" setzen
 lm#:#lm_btn_lp_toggle_state_not_completed#:#Auf "Bearbeitet" setzen
 lm#:#lm_copy#:#ILIAS-Lernmodul kopieren
 lm#:#lm_edit_chapters#:#Kapitel bearbeiten
+lm#:#lm_edit_content#:#Inhalt bearbeiten
 lm#:#lm_edit_lm_settings#:#Lernmoduleinstellungen bearbeiten
 lm#:#lm_est_reading_time#:#Geschätzte Lesedauer
 lm#:#lm_est_reading_time_info#:#In Lernmodulen kann eine geschätzte Lesezeit ermittelt und angezeigt werden.
@@ -11050,6 +11053,7 @@ lm#:#lm_insert_page_before#:#Seite davor einfügen
 lm#:#lm_insert_page_clip#:#Seiten aus Zwischenablage einfügen
 lm#:#lm_insert_page_clip_after#:#Seiten aus Zwischenablage danach einfügen
 lm#:#lm_insert_page_clip_before#:#Seiten aus Zwischenablage davor einfügen
+lm#:#lm_list_pages#:#Seiten bearbeiten
 lm#:#lm_page_added#:#Eine Seite wurde hinzugefügt.
 lm#:#lm_page_type_lm#:#Lernmodulseite
 lm#:#lm_pages_added#:#Die Seiten wurden hinzugefügt.
@@ -16764,7 +16768,7 @@ survey#:#survey_360_sure_appraisee_close#:#Wollen Sie wirklich die Umfrage für 
 survey#:#survey_360_sure_appraisee_close_admin#:#Wollen Sie wirklich die Umfrage für die folgenden Feedback-Nehmer schließen?
 survey#:#survey_360_sure_delete_appraises#:#Wollen Sie wirklich die folgenden Feedback-Nehmer entfernen?
 survey#:#survey_360_sure_delete_raters#:#Wollen Sie wirklich die folgenden Feedback-Geber für %s entfernen?
-survey#:#survey_access_codes#:#Authentifizierung mit Zugangsschlüsseln
+survey#:#survey_access_codes#:#Authentifizierung mit Zugangsschlüssel
 survey#:#survey_access_codes_info#:#Im Reiter „Info“ muss ein Zugangsschlüssel eingegeben werden, um Zugang zur Umfrage zu erhalten. Diese Zugangsschlüssel werden erzeugt im Reiter „Befragte » Zugangsschlüssel“.
 survey#:#survey_activate_skill_service#:#Kompetenz-Service aktivieren
 survey#:#survey_activate_skill_service_info#:#Es wird ein weiterer Reiter „Kompetenzen“ eingeblendet. Hier werden zunächst den Fragen Kompetenzen zugeordnet, danach werden den Schwellenwerte für die Erreichung bestimmter Kompetenzstufen gesetzt.
