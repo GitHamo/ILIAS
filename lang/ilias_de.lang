@@ -16790,7 +16790,7 @@ survey#:#survey_360_sure_appraisee_close#:#Wollen Sie wirklich die Umfrage für 
 survey#:#survey_360_sure_appraisee_close_admin#:#Wollen Sie wirklich die Umfrage für die folgenden Feedback-Nehmer schließen?
 survey#:#survey_360_sure_delete_appraises#:#Wollen Sie wirklich die folgenden Feedback-Nehmer entfernen?
 survey#:#survey_360_sure_delete_raters#:#Wollen Sie wirklich die folgenden Feedback-Geber für %s entfernen?
-survey#:#survey_access_codes#:#Authentifizierung mit Zugangsschlüsseln
+survey#:#survey_access_code#:#Authentifizierung mit Zugangsschlüssel
 survey#:#survey_access_codes_info#:#Im Reiter „Info“ muss ein Zugangsschlüssel eingegeben werden, um Zugang zur Umfrage zu erhalten. Diese Zugangsschlüssel werden erzeugt im Reiter „Befragte » Zugangsschlüssel“.
 survey#:#survey_activate_skill_service#:#Kompetenz-Service aktivieren
 survey#:#survey_activate_skill_service_info#:#Es wird ein weiterer Reiter „Kompetenzen“ eingeblendet. Hier werden zunächst den Fragen Kompetenzen zugeordnet, danach werden den Schwellenwerte für die Erreichung bestimmter Kompetenzstufen gesetzt.
