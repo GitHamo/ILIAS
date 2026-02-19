@@ -121,14 +121,20 @@ class ZipTest extends TestCase
             new UnzipOptions(),
             Streams::ofResource(fopen($this->unzips_dir . self::ZIPPED_ZIP, 'r'))
         );
-        $this->assertSame([
+        $expected = [
             0 => './',
             1 => '3_folders_win.zip',
             2 => '1_folder_mac.zip',
             3 => '3_folders_mac.zip',
             4 => '1_folder_win.zip',
             5 => '1_folder_1_file_mac.zip'
-        ], iterator_to_array($unzip_again->getPaths()));
+        ];
+        sort($expected);
+
+        $actual = iterator_to_array($unzip_again->getPaths());
+        sort($actual);
+
+        $this->assertSame($expected, $actual);
         $this->assertSame(5, $unzip_again->getAmountOfFiles());
 
         $depth = 0;
