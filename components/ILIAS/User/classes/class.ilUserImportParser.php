@@ -1811,6 +1811,9 @@ class ilUserImportParser extends ilSaxParser
                 }
                 break;
             case 'TimeLimitFrom':
+                if ($this->cdata === '') {
+                    break;
+                }
                 // Accept datetime or Unix timestamp
                 if (strtotime($this->cdata) === false && !is_numeric($this->cdata)) {
                     $this->logFailure($this->user_obj->getLogin(), sprintf($this->lng->txt('usrimport_xml_element_content_illegal'), 'TimeLimitFrom', $this->stripTags($this->cdata)));
@@ -1818,6 +1821,9 @@ class ilUserImportParser extends ilSaxParser
                 $this->user_obj->setTimeLimitFrom((int) $this->cdata);
                 break;
             case 'TimeLimitUntil':
+                if ($this->cdata === '') {
+                    break;
+                }
                 // Accept datetime or Unix timestamp
                 if (strtotime($this->cdata) === false && !is_numeric($this->cdata)) {
                     $this->logFailure($this->user_obj->getLogin(), sprintf($this->lng->txt('usrimport_xml_element_content_illegal'), 'TimeLimitUntil', $this->stripTags($this->cdata)));
