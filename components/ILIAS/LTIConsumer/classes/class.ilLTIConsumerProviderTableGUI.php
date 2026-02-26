@@ -170,7 +170,7 @@ class ilLTIConsumerProviderTableGUI implements DataRetrieval
     public function getHTML(bool $hasWriteAccess = false): string
     {
         $table = $this->ui_factory->table()
-            ->data($this->lng->txt('tbl_provider_header'), $this->getColumns(), $this)
+            ->data($this, $this->lng->txt('tbl_provider_header'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
             ->withRequest($this->request);
 
