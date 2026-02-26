@@ -66,7 +66,7 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
         mixed $filter_data,
         mixed $additional_parameters
     ): Generator {
-        $records = $this->applyOrdering($this->records, $order);
+        $records = $this->applyOrdering($this->records, $order, $range);
         foreach ($records as $record) {
             $record['lti_timestamp'] = new DateTimeImmutable($record['lti_timestamp']);
             $record['score_given'] = $record['score_given'] . ' / ' . $record['score_maximum'];
@@ -91,7 +91,7 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
         $this->records = $records;
     }
 
-    protected function applyOrdering(array $records, Order $order): array
+    protected function applyOrdering(array $records, Order $order, ?Range $range = null): array
     {
         [$order_field, $order_direction] = $order->join(
             [],
@@ -116,6 +116,10 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
             $records = array_reverse($records);
         }
 
+        if ($range !== null) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
+        }
+
         return $records;
     }
 
@@ -124,6 +128,7 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
         $table = $this->ui_factory->table()
             ->data($this, "", $this->getColumns())
             ->withOrder(new Order("lti_timestamp", Order::DESC))
+            ->withRange(new Range(0, 20))
             ->withRequest($this->request);
 
         return $this->ui_renderer->render($table);
