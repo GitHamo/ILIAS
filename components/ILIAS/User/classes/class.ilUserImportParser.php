@@ -1495,7 +1495,15 @@ class ilUserImportParser extends ilSaxParser
                     break;
                 }
 
-                $this->udf_data[$field_id] = strip_tags($this->cdata, ilRTESettings::_getUsedHTMLTags('textarea'));
+                $data = json_decode(
+                    strip_tags($this->cdata),
+                    true
+                ) ?? $this->cdata;
+                if ($data === '') {
+                    break;
+                }
+
+                $this->udf_data[$field_id] = $data;
 
                 break;
             case 'AccountInfo':
