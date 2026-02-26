@@ -176,7 +176,7 @@ class ilObjectConsumerTableGUI implements DataRetrieval
         mixed $filter_data,
         mixed $additional_parameters
     ): Generator {
-        $records = $this->applyOrdering($this->records, $order);
+        $records = $this->applyOrdering($this->records, $order, $range);
         foreach ($records as $record) {
             $record["active"] = $this->ui_factory->symbol()->icon()->custom(
                 $record["active"] ?
@@ -221,6 +221,7 @@ class ilObjectConsumerTableGUI implements DataRetrieval
         $table = $this->ui_factory->table()
             ->data($this, $this->lng->txt('lti_object_consumer'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
+            ->withRange(new Range(0, 20))
             ->withActions($this->getActions())
             ->withRequest($this->request);
 
@@ -237,7 +238,7 @@ class ilObjectConsumerTableGUI implements DataRetrieval
         $this->editable = $a_editable;
     }
 
-    protected function applyOrdering(array $records, Order $order): array
+    protected function applyOrdering(array $records, Order $order, ?Range $range = null): array
     {
         [$order_field, $order_direction] = $order->join(
             [],
@@ -252,6 +253,10 @@ class ilObjectConsumerTableGUI implements DataRetrieval
 
         if ($order_direction === Order::DESC) {
             $records = array_reverse($records);
+        }
+
+        if ($range !== null) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
         }
 
         return $records;
