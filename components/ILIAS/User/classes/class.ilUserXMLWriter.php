@@ -230,8 +230,15 @@ class ilUserXMLWriter extends ilXmlWriter
         $this->__addElement('ClientIP', $row['client_ip'], null, 'client_ip');
         $this->__addElement('TimeLimitOwner', (string) $row['time_limit_owner'], null, 'time_limit_owner');
         $this->__addElement('TimeLimitUnlimited', (string) $row['time_limit_unlimited'], null, 'time_limit_unlimited');
-        $this->__addElement('TimeLimitFrom', (string) $row['time_limit_from'], null, 'time_limit_from');
-        $this->__addElement('TimeLimitUntil', (string) $row['time_limit_until'], null, 'time_limit_until');
+
+        if ($row['time_limit_from'] !== null) {
+            $this->__addElement('TimeLimitFrom', (string) $row['time_limit_from'], null, 'time_limit_from');
+        }
+
+        if ($row['time_limit_from'] !== null) {
+            $this->__addElement('TimeLimitUntil', (string) $row['time_limit_until'], null, 'time_limit_until');
+        }
+
         $this->__addElement('ApproveDate', $row['approve_date'], null, 'approve_date');
         $this->__addElement('AgreeDate', $row['agree_date'], null, 'agree_date');
 
