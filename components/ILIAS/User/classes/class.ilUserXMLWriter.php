@@ -97,8 +97,6 @@ class ilUserXMLWriter extends ilXmlWriter
 
         $this->__buildHeader();
 
-        $this->addUDFsToXML();
-
         foreach ($this->users as $user) {
             $this->__handleUser($user);
         }
@@ -270,7 +268,7 @@ class ilUserXMLWriter extends ilXmlWriter
         $this->__addElement('LastUpdate', $row['last_update'], null, 'last_update');
         $this->__addElement('LastLogin', $row['last_login'], null, 'last_login');
 
-        $udf_data = $this->addUDFsToXML();
+        $this->addUDFsToXML($row);
 
         $this->__addElement('AccountInfo', $row['ext_account'], ['Type' => 'external']);
 
@@ -384,8 +382,9 @@ class ilUserXMLWriter extends ilXmlWriter
     /**
      * add user defined field data to xml (using usr dtd)
      */
-    private function addUDFsToXML(): void
-    {
+    private function addUDFsToXML(
+        array $row
+    ): void {
         foreach ($this->user_profile->getVisibleFields(Context::Export) as $field) {
             if (!$field->isCustom()) {
                 continue;
@@ -396,7 +395,7 @@ class ilUserXMLWriter extends ilXmlWriter
                     'Id' => $field->getIdentifier(),
                     'Name' => $field->getLabel($this->lng)
                 ],
-                (string) ($this->user_data['f_' . $field->getIdentifier()] ?? '')
+                json_encode($row[$field->getIdentifier()])
             );
         }
     }
