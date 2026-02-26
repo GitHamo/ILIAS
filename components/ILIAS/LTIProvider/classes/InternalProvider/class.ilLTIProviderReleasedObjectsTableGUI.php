@@ -118,7 +118,7 @@ class ilLTIProviderReleasedObjectsTableGUI implements DataRetrieval
         /** @var Services $static_url */
         $static_url = $DIC["static_url"];
 
-        $records = $this->applyOrdering($this->records, $order);
+        $records = $this->applyOrdering($this->records, $order, $range);
         foreach ($records as $record) {
             $link = (string) $static_url->builder()->build(
                 $record['type'],
@@ -148,8 +148,9 @@ class ilLTIProviderReleasedObjectsTableGUI implements DataRetrieval
     public function getHtml(): string
     {
         $table = $this->ui_factory->table()
-            ->data($this->lng->txt('lti_released_objects'), $this->getColumns(), $this)
+            ->data($this, $this->lng->txt('lti_released_objects'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
+            ->withRange(new Range(0, 20))
             ->withRequest($this->request);
 
         return $this->ui_renderer->render($table);
@@ -160,7 +161,7 @@ class ilLTIProviderReleasedObjectsTableGUI implements DataRetrieval
         return $this->id;
     }
 
-    protected function applyOrdering(array $records, Order $order): array
+    protected function applyOrdering(array $records, Order $order, ?Range $range = null): array
     {
         [$order_field, $order_direction] = $order->join(
             [],
@@ -175,6 +176,10 @@ class ilLTIProviderReleasedObjectsTableGUI implements DataRetrieval
 
         if ($order_direction === Order::DESC) {
             $records = array_reverse($records);
+        }
+
+        if ($range !== null) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
         }
 
         return $records;

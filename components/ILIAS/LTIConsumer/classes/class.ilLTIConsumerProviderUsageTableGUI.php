@@ -67,7 +67,7 @@ class ilLTIConsumerProviderUsageTableGUI implements DataRetrieval
         /** @var Services $static_url */
         $static_url = $DIC["static_url"];
 
-        $records = $this->applyOrdering($this->records, $order);
+        $records = $this->applyOrdering($this->records, $order, $range);
         foreach ($records as $record) {
             $record['icon'] = $record['icon'] ?? "lti";
             $record['icon'] = $this->ui_factory->symbol()->icon()->standard($record['icon'], $record['icon'], Icon::SMALL);
@@ -99,7 +99,7 @@ class ilLTIConsumerProviderUsageTableGUI implements DataRetrieval
         $this->records = $data;
     }
 
-    protected function applyOrdering(array $records, Order $order): array
+    protected function applyOrdering(array $records, Order $order, ?Range $range = null): array
     {
         [$order_field, $order_direction] = $order->join(
             [],
@@ -116,14 +116,19 @@ class ilLTIConsumerProviderUsageTableGUI implements DataRetrieval
             $records = array_reverse($records);
         }
 
+        if ($range !== null) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
+        }
+
         return $records;
     }
 
     public function getHTML(): string
     {
         $table = $this->ui_factory->table()
-            ->data($this->lng->txt('tbl_provider_usage_header'), $this->getColumns(), $this)
+            ->data($this, $this->lng->txt('tbl_provider_usage_header'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
+            ->withRange(new Range(0, 20))
             ->withRequest($this->request);
 
         return $this->ui_renderer->render($table);
