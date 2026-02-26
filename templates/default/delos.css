@@ -19546,6 +19546,13 @@ ul.ilStartupSectionRegistrationLinks li {
   display: inline-block;
 }
 
+ul.ilStartupSectionLoginLinks {
+  list-style: none;
+}
+ul.ilStartupSectionLoginLinks li {
+  display: inline-block;
+}
+
 div.ilStartupSection form.form-horizontal {
   border: 1px solid #dddddd;
   border-radius: 3px;
