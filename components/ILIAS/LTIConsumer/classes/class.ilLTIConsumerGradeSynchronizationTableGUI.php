@@ -98,7 +98,7 @@ class ilLTIConsumerGradeSynchronizationTableGUI implements DataRetrieval
             fn($ret, $key, $value) => [$key, $value]
         );
 
-        usort($records, static function(array $left, array $right) use ($order_field): int {
+        usort($records, static function (array $left, array $right) use ($order_field): int {
             $left_val = $left[$order_field] ?? '';
             $right_val = $right[$order_field] ?? '';
 
