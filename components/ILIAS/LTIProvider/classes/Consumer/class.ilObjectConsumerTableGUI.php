@@ -176,7 +176,8 @@ class ilObjectConsumerTableGUI implements DataRetrieval
         mixed $filter_data,
         mixed $additional_parameters
     ): Generator {
-        foreach ($this->records as $record) {
+        $records = $this->applyOrdering($this->records, $order);
+        foreach ($records as $record) {
             $record["active"] = $this->ui_factory->symbol()->icon()->custom(
                 $record["active"] ?
                     'assets/images/standard/icon_ok.svg' :
@@ -234,5 +235,25 @@ class ilObjectConsumerTableGUI implements DataRetrieval
     public function setEditable(bool $a_editable): void
     {
         $this->editable = $a_editable;
+    }
+
+    protected function applyOrdering(array $records, Order $order): array
+    {
+        [$order_field, $order_direction] = $order->join(
+            [],
+            fn($ret, $key, $value) => [$key, $value]
+        );
+
+        usort($records, static function(array $left, array $right) use ($order_field): int {
+            $left_val = $left[$order_field] ?? '';
+            $right_val = $right[$order_field] ?? '';
+            return ilStr::strCmp($left_val, $right_val);
+        });
+
+        if ($order_direction === Order::DESC) {
+            $records = array_reverse($records);
+        }
+
+        return $records;
     }
 }

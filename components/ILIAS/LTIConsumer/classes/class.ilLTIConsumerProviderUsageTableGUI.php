@@ -67,7 +67,8 @@ class ilLTIConsumerProviderUsageTableGUI implements DataRetrieval
         /** @var Services $static_url */
         $static_url = $DIC["static_url"];
 
-        foreach ($this->records as $record) {
+        $records = $this->applyOrdering($this->records, $order);
+        foreach ($records as $record) {
             $record['icon'] = $record['icon'] ?? "lti";
             $record['icon'] = $this->ui_factory->symbol()->icon()->standard($record['icon'], $record['icon'], Icon::SMALL);
 
@@ -96,6 +97,26 @@ class ilLTIConsumerProviderUsageTableGUI implements DataRetrieval
     public function setData(array $data): void
     {
         $this->records = $data;
+    }
+
+    protected function applyOrdering(array $records, Order $order): array
+    {
+        [$order_field, $order_direction] = $order->join(
+            [],
+            fn($ret, $key, $value) => [$key, $value]
+        );
+
+        usort($records, static function(array $left, array $right) use ($order_field): int {
+            $left_val = $left[$order_field] ?? '';
+            $right_val = $right[$order_field] ?? '';
+            return ilStr::strCmp($left_val, $right_val);
+        });
+
+        if ($order_direction === Order::DESC) {
+            $records = array_reverse($records);
+        }
+
+        return $records;
     }
 
     public function getHTML(): string
