@@ -73,6 +73,10 @@ class StartUp
             case \ilAuthStatus::STATUS_AUTHENTICATED:
                 $this->is_authenticated = true;
                 \ilLoggerFactory::getLogger('auth')->debug('Authentication successful; Redirecting to starting page.');
+
+                // https://mantis.ilias.de/view.php?id=47354
+                \ilInitialisation::initLanguage(true);
+
                 return true;
 
             case \ilAuthStatus::STATUS_AUTHENTICATION_FAILED:
