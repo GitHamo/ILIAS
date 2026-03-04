@@ -8283,7 +8283,7 @@ dateplaner#:#cal_ch_booking_num_available#:#Freie Termine
 dateplaner#:#cal_ch_booking_num_free_short#:#%s frei
 dateplaner#:#cal_ch_booking_other_participants#:#Andere Teilnehmende:
 dateplaner#:#cal_ch_booking_owner#:#Sprechstunde bei
-dateplaner#:#cal_ch_booking_participants#:#Teilnehmer
+dateplaner#:#cal_ch_booking_participants#:#Gebucht von
 dateplaner#:#cal_ch_booking_reminder_body#:#Ihr Termin mit „%s“ findet in wenigen Tagen statt.
 dateplaner#:#cal_ch_booking_reminder_subject#:#Terminerinnerung „%s“
 dateplaner#:#cal_ch_booking_start#:#Start
