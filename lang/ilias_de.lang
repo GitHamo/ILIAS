@@ -15550,6 +15550,7 @@ search#:#search_field#:#Sucheingabefeld
 search#:#search_field_perform#:#Sucheingabe absenden
 search#:#search_filter_by_type#:#Typfilter
 search#:#search_filter_cd#:#Filter nach Erstellungsdatum
+search#:#search_filter_settings_section#:#Filter der Surchergebnisse
 search#:#search_for_crs_members#:#Nach Kursen suchen
 search#:#search_for_grp_members#:#Nach Gruppen suchen
 search#:#search_for_orgu_members#:#Nach Organisationseinheiten suchen

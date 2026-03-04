@@ -15524,6 +15524,7 @@ search#:#search_field#:#Search Input Field
 search#:#search_field_perform#:#Perform Search
 search#:#search_filter_by_type#:#Filter by Type
 search#:#search_filter_cd#:#Filter by Creation Date
+search#:#search_filter_settings_section#:#Filters for the search results
 search#:#search_for_crs_members#:#Search for Courses
 search#:#search_for_grp_members#:#Search for Groups
 search#:#search_for_orgu_members#:#Search for Organisational Units
