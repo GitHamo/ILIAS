@@ -328,14 +328,14 @@ administration#:#svn_revision_current#:#Aktuelle Revision: %s
 administration#:#svn_revision_last_change#:#Zuletzt geänderte Revision: %s
 administration#:#svn_root#:#Root: %s
 administration#:#system_check_no_owner#:#Objekte ohne Angabe zum Besitz
-administration#:#system_folder_info#:#Bitte wählen Sie einen Eintrag im Administrations-Menü.
+administration#:#system_folder_info#:#Wählen Sie einen Eintrag links im Administrationsmenü.
 administration#:#systemcheck#:#Systemcheck
-administration#:#tree_corrupt#:#Baum ist korrumpiert! Siehe Scan-Log für Details
+administration#:#tree_corrupt#:#Baum ist korrumpiert! Weitere Angaben finden Sie im Scan-Log.
 administration#:#user_criteria#:#Eindeutiges Benutzermerkmal
 administration#:#user_criteria_desc#:#Eindeutiges Benutzermerkmal für den Import/Export von Testergebnissen. Das Merkmal wird benötigt, um einen identischen Benutzer auf unterschiedlichen ILIAS-Systemen zu identifizieren.
 administration#:#usr_loginname_history_info#:#Die Person änderte den Anmeldenamen zuletzt am %s. Der vorherige Anmeldename war: %s.
 administration#:#vc_information#:#Zeige Version-Control-Information
-administration#:#vc_information_not_determined#:#Es konnten keine Version Control-Informationen ermittelt werden.
+administration#:#vc_information_not_determined#:#Es konnten keine Informationen ermittelt werden.
 administration#:#view_last_log#:#Zeige letztes Scan-Log
 administration#:#view_log#:#Zeige Details
 adn#:#action_confirm_delete#:#Ankündigung(en) löschen
