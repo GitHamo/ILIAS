@@ -15565,6 +15565,7 @@ search#:#search_any#:#-- Beliebig --
 search#:#search_area#:#Suchbereich
 search#:#search_area_info#:#Bitte wählen Sie einen Bereich aus, innerhalb dem die Suche starten soll.
 search#:#search_auto_complete_length#:#Anzahl der Einträge in Auto-Complete-Liste
+search#:#search_auto_complete_length_info#:#Wählen Sie „0“, um keine Auto-Complete-Liste anzubieten.
 search#:#search_cdate_filter#:#Erstellungsdatum
 search#:#search_cdate_filter_info#:#In den Suchergebnissen erlaubt ein Filter die Eingabe eines Zeitraums.
 search#:#search_content#:#Seiteninhalt

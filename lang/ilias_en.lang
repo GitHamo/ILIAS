@@ -15540,6 +15540,7 @@ search#:#search_any#:#-- Any --
 search#:#search_area#:#Search Area
 search#:#search_area_info#:#Please select an area where the search should start.
 search#:#search_auto_complete_length#:#Number of Auto-Complete List Entries
+search#:#search_auto_complete_length_info#:#Choose ‘0‘ to switch off the auto-complete list.
 search#:#search_cdate_filter#:#Filter by Creation Date
 search#:#search_cdate_filter_info#:#If enabled, the object search can be filtered by an optional creation date filter.
 search#:#search_content#:#Page Content

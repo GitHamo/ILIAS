@@ -244,7 +244,8 @@ class ilObjSearchSettingsFormGUI
         ];
         $auto_complete = $field_factory->select(
             $this->lng->txt('search_auto_complete_length'),
-            $options
+            $options,
+            $this->lng->txt('search_auto_complete_length_info'),
         )->withRequired(true)->withValue($settings->getAutoCompleteLength());
 
         // Show inactive users
