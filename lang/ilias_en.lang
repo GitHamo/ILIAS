@@ -15529,7 +15529,9 @@ search#:#lucene_or#:#OR
 search#:#lucene_port#:#Port
 search#:#lucene_prefix_wildcard#:#Prefix Wildcard Queries
 search#:#lucene_prefix_wildcard_info#:#Supports prefix wildcard queries: ‘*LIAS’ finds ‘ILIAS’
+search#:#lucene_settings_index_section#:#Index Backup
 search#:#lucene_settings_tab#:#Lucene
+search#:#lucene_settings_text_section#:#Presentation of Search Results
 search#:#lucene_settings_title#:#Lucene Settings
 search#:#lucene_size_frag_info#:#Please choose the maximum size of highlighted text fragments. To do this, enter the number of characters including spaces.
 search#:#lucene_size_fragments#:#Size of Text Fragments
@@ -15558,7 +15560,7 @@ search#:#search_field#:#Search Input Field
 search#:#search_field_perform#:#Perform Search
 search#:#search_filter_by_type#:#Filter by Type
 search#:#search_filter_cd#:#Filter by Creation Date
-search#:#search_filter_settings_section#:#Filters for the search results
+search#:#search_filter_settings_section#:#Filters for the Search Results
 search#:#search_for_crs_members#:#Search for Courses
 search#:#search_for_grp_members#:#Search for Groups
 search#:#search_for_orgu_members#:#Search for Organisational Units
