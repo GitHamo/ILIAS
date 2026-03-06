@@ -104,7 +104,8 @@ class ilLTIConsumerProviderTableGUI implements DataRetrieval
         mixed $filter_data,
         mixed $additional_parameters
     ): Generator {
-        foreach ($this->records as $record) {
+        $records = $this->applyOrdering($this->records, $order, $range);
+        foreach ($records as $record) {
             $record["icon"] = $record["icon"] ?? "lti";
             $record["icon"] = $this->ui_factory->symbol()->icon()->standard($record["icon"], $record["icon"], IconAlias::SMALL);
 
@@ -143,6 +144,30 @@ class ilLTIConsumerProviderTableGUI implements DataRetrieval
         $this->records = $data;
     }
 
+    protected function applyOrdering(array $records, Order $order, ?Range $range = null): array
+    {
+        [$order_field, $order_direction] = $order->join(
+            [],
+            fn($ret, $key, $value) => [$key, $value]
+        );
+
+        usort($records, static function (array $left, array $right) use ($order_field): int {
+            $left_val = $left[$order_field] ?? '';
+            $right_val = $right[$order_field] ?? '';
+            return ilStr::strCmp($left_val, $right_val);
+        });
+
+        if ($order_direction === Order::DESC) {
+            $records = array_reverse($records);
+        }
+
+        if ($range !== null) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
+        }
+
+        return $records;
+    }
+
     /**
      * @throws ilCtrlException
      */
@@ -151,6 +176,7 @@ class ilLTIConsumerProviderTableGUI implements DataRetrieval
         $table = $this->ui_factory->table()
             ->data($this, $this->lng->txt('tbl_provider_header'), $this->getColumns())
             ->withOrder(new Order('title', Order::ASC))
+            ->withRange(new Range(0, 20))
             ->withRequest($this->request);
 
         if ($hasWriteAccess) {
