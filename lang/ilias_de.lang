@@ -8938,6 +8938,7 @@ didactic#:#didactic_selected_tpl_option#:#Angewandte didaktische Vorlage:
 didactic#:#didactic_template_applied#:#Die didaktische Vorlage wurde angewandt.
 didactic#:#didactic_template_update_import#:#Aktualisierung Didaktischer Vorlagen
 didactic#:#didactic_template_update_import_info#:#Alle Eigenschaften werden gemäß der Importdatei angepasst. Objekte, die die Einstellungen dieser Vorlage bereits nutzen, werden nicht verändert.
+didactic#:#didactic_translation_add_languages#:#Sprachen hinzufügen
 didactic#:#dtpl_obj_type_info#:#Gibt an, auf welchen Objekttyp diese Didaktische Vorlage angewandt werden kann.
 didactic#:#effective_form#:#Vorlage wirksam ab
 didactic#:#grp_closed#:#Geschlossene Gruppe
