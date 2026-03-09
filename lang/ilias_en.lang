@@ -8912,6 +8912,7 @@ didactic#:#didactic_selected_tpl_option#:#Applied didactic template:
 didactic#:#didactic_template_applied#:#Applied didactic template.
 didactic#:#didactic_template_update_import#:#Update Didactic Template
 didactic#:#didactic_template_update_import_info#:#Properties will be changed according to this import. Objects which already applied this template will not be changed.
+didactic#:#didactic_translation_add_languages#:#Add Languages
 didactic#:#dtpl_obj_type_info#:#This didactic template can be applied on this object type.
 didactic#:#effective_form#:#Template Effective From
 didactic#:#grp_closed#:#Closed Group
