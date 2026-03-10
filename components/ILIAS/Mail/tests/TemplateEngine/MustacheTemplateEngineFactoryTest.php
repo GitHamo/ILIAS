@@ -18,15 +18,23 @@
 
 declare(strict_types=1);
 
+use ILIAS\Mail\TemplateEngine\Mustache\MustacheTemplateEngineFactory;
 use ILIAS\Mail\TemplateEngine\TemplateEngineFactoryInterface;
+use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
+use PHPUnit\Framework\TestCase;
 
-class ilMailMimeSenderUserByEmailAddress extends ilMailMimeSenderUser
+class MustacheTemplateEngineFactoryTest extends TestCase
 {
-    public function __construct(ilSetting $settings, string $email_address, TemplateEngineFactoryInterface $template_engine_factory)
+    public function testFactoryImplementsInterface(): void
     {
-        $user = new ilObjUser();
-        $user->setEmail($email_address);
+        $f = new MustacheTemplateEngineFactory();
+        $this->assertInstanceOf(TemplateEngineFactoryInterface::class, $f);
+    }
 
-        parent::__construct($settings, $user, $template_engine_factory);
+    public function testBasicEngineCanBeRetrieved(): void
+    {
+        $f = new MustacheTemplateEngineFactory();
+        $engine = $f->getBasicEngine();
+        $this->assertInstanceOf(TemplateEngineInterface::class, $engine);
     }
 }
