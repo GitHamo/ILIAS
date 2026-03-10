@@ -18,25 +18,17 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\Mail\Service;
+namespace ILIAS\Mail\TemplateEngine;
 
-use ILIAS\DI\Container;
-use ilMailMimeTransportFactory;
-use ilMailMimeSenderFactory;
-
-class MimeMailService
+/**
+ * Factory interface for creating template engine instances.
+ * Enables dependency inversion: consumers depend on this interface,
+ * not on a concrete implementation like Mustache.
+ */
+interface TemplateEngineFactoryInterface
 {
-    public function __construct(protected Container $dic)
-    {
-    }
-
-    public function transportFactory(): ilMailMimeTransportFactory
-    {
-        return $this->dic['mail.mime.transport.factory'];
-    }
-
-    public function senderFactory(): ilMailMimeSenderFactory
-    {
-        return $this->dic['mail.mime.sender.factory'];
-    }
+    /**
+     * Returns a template engine instance for basic rendering operations.
+     */
+    public function getBasicEngine(): TemplateEngineInterface;
 }
