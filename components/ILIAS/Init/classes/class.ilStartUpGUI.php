@@ -2032,13 +2032,10 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
     {
         global $DIC;
 
+
         $defaults = ['lang' => $DIC->user()->getCurrentLanguage()];
         $parameters = '&' . http_build_query(array_merge($defaults, $parameters));
 
-        $DIC->ctrl()->setTargetScript('logout.php');
-        $url = $DIC->ctrl()->getLinkTargetByClass([self::class], 'doLogout') . $parameters;
-        $DIC->ctrl()->setTargetScript('ilias.php');
-
-        return $url;
+        return $DIC->ctrl()->getLinkTargetByClass([self::class], 'doLogout') . $parameters;
     }
 }
