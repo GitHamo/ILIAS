@@ -8604,13 +8604,13 @@ dcl#:#dcl_add_new_table#:#Add New Table
 dcl#:#dcl_add_new_view#:#Add New View
 dcl#:#dcl_add_perm#:#Add Entries
 dcl#:#dcl_add_perm_desc#:#Users can add entries to this table. If the import of data into this table is allowed, then an Excel import function will also be available.
-dcl#:#dcl_all_entries#:#All entries
+dcl#:#dcl_all_entries#:#All Entries
 dcl#:#dcl_any#:#Any
 dcl#:#dcl_asc#:#Ascending ↑
 dcl#:#dcl_boolean#:#Checkbox
 dcl#:#dcl_boolean_desc#:#A checkbox that can be selected.
-dcl#:#dcl_cant_delete_last_table#:#You can't completely remove this table as it is the only table of this Data Collection. It's content and structure got removed instead.
-dcl#:#dcl_change_notification_dcl_delete_record#:#The following data record has been deleted
+dcl#:#dcl_cant_delete_last_table#:#This table itself cannot be completely deleted, as it is the only table in this data collection. The table’s content and structure have, however, been successfully deleted.
+dcl#:#dcl_change_notification_dcl_delete_record#:#The following data entry has been deleted
 dcl#:#dcl_change_notification_dcl_new_record#:#The following data record has been created
 dcl#:#dcl_change_notification_dcl_update_record#:#The following data record has been updated
 dcl#:#dcl_change_notification_link#:#Link to the Data Collection
