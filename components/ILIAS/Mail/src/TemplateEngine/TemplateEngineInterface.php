@@ -22,7 +22,7 @@ namespace ILIAS\Mail\TemplateEngine;
 
 /**
  * Interface for template engine functionality used in Mail and related components.
- * Abstracts the concrete template engine implementation (e.g. Mustache) to enable
+ * Abstracts the concrete template engine implementation (e.g., Mustache) to enable
  * dependency inversion and easier testing.
  */
 interface TemplateEngineInterface
@@ -30,8 +30,28 @@ interface TemplateEngineInterface
     /**
      * Renders a template string with the given context.
      *
-     * @param string $template The template string (e.g. Mustache syntax)
-     * @param array<string, mixed>|object $context The context data for placeholder replacement
+     * @param string $template The template string.
+     * @param array<string, mixed>|object $context Data for the template. Either an
+     *        associative array of key-value pairs, or an object whose public
+     *        properties and methods the engine uses to resolve values. Exact
+     *        behavior depends on the engine implementation.
+     *
+     * Example context object with properties, a method, and a list for repeated
+     * blocks:
+     * <code>
+     * $context = new class () {
+     *     public string $recipient = 'Jane';
+     *     public int $amount = 100;
+     *     public array $lines = [
+     *         ['title' => 'Item A', 'qty' => 2],
+     *         ['title' => 'Item B', 'qty' => 1],
+     *     ];
+     *     public function net_amount(): float
+     *     {
+     *         return $this->amount * 0.9;
+     *     }
+     * };
+     * </code>
      */
     public function render(string $template, array|object $context): string;
 }

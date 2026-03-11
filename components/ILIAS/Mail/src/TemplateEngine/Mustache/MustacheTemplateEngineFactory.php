@@ -22,12 +22,11 @@ namespace ILIAS\Mail\TemplateEngine\Mustache;
 
 use ILIAS\Mail\TemplateEngine\TemplateEngineFactoryInterface;
 use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
-use Mustache_Engine;
 
 class MustacheTemplateEngineFactory implements TemplateEngineFactoryInterface
 {
     public function getBasicEngine(): TemplateEngineInterface
     {
-        return new MustacheTemplateEngine(new Mustache_Engine());
+        return new MustacheTemplateEngine(new \Mustache\Engine());
     }
 }

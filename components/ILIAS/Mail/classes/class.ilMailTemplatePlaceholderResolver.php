@@ -19,6 +19,7 @@
 declare(strict_types=1);
 
 use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
+use ILIAS\Mail\TemplateEngine\MailTemplateContextAdapter;
 
 class ilMailTemplatePlaceholderResolver
 {
@@ -37,7 +38,7 @@ class ilMailTemplatePlaceholderResolver
     ): string {
         return $this->template_engine->render(
             $message,
-            new ilMailTemplateContextAdapter(
+            new MailTemplateContextAdapter(
                 [$context],
                 $context_parameters,
                 $this->template_engine,

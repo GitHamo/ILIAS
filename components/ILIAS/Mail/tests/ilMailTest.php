@@ -182,7 +182,7 @@ class ilMailTest extends ilMailBaseTestCase
                 };
             });
 
-        $db = $this->getMockBuilder(ilDBInterface::class)->getMock();
+        $db = $this->createMock(ilDBInterface::class);
         $next_id = 0;
         $db->method('nextId')->willReturnCallback(function () use (&$next_id): int {
             ++$next_id;
@@ -201,7 +201,7 @@ class ilMailTest extends ilMailBaseTestCase
         $mail_options = $this->getMockBuilder(ilMailOptions::class)->disableOriginalConstructor()->getMock();
         $mail_box = $this->getMockBuilder(ilMailbox::class)->disableOriginalConstructor()->getMock();
         $actor = $this->getMockBuilder(ilObjUser::class)->disableOriginalConstructor()->getMock();
-        $template_engine_factory = $this->getMockBuilder(TemplateEngineFactoryInterface::class)->getMock();
+        $template_engine_factory = $this->createMock(TemplateEngineFactoryInterface::class);
 
         $mail_service = new ilMail(
             $sender_usr_id,
@@ -221,7 +221,12 @@ class ilMailTest extends ilMailBaseTestCase
             4711,
             $actor,
             new ilMailTemplatePlaceholderResolver(
-                (new class () extends MustacheTemplateEngineFactory {})->getBasicEngine()
+                new class () implements \ILIAS\Mail\TemplateEngine\TemplateEngineInterface {
+                    public function render(string $template, object|array $context): string
+                    {
+                        return 'phpunit';
+                    }
+                }
             )
         );
 
@@ -660,7 +665,7 @@ class ilMailTest extends ilMailBaseTestCase
 
     private function create(int $ref_id = 234, int $usr_id = 123): ilMail
     {
-        $refinery = $this->getMockBuilder(\ILIAS\Refinery\Factory::class)->disableOriginalConstructor()->getMock();
+        $refinery = $this->getMockBuilder(Factory::class)->disableOriginalConstructor()->getMock();
         $this->setGlobalVariable('refinery', $refinery);
 
         $instance = new ilMail(
@@ -669,7 +674,7 @@ class ilMailTest extends ilMailBaseTestCase
             ($this->mock_parser_factory = $this->getMockBuilder(ilMailRfc822AddressParserFactory::class)->disableOriginalConstructor()->getMock()),
             $this->getMockBuilder(ilAppEventHandler::class)->disableOriginalConstructor()->getMock(),
             ($this->mock_log = $this->getMockBuilder(ilLogger::class)->disableOriginalConstructor()->getMock()),
-            ($this->mock_database = $this->getMockBuilder(ilDBInterface::class)->disableOriginalConstructor()->getMock()),
+            ($this->mock_database = $this->createMock(ilDBInterface::class)),
             ($this->mock_language = $this->getMockBuilder(ilLanguage::class)->disableOriginalConstructor()->getMock()),
             $this->getMockBuilder(ilFileDataMail::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(ilMailOptions::class)->disableOriginalConstructor()->getMock(),
