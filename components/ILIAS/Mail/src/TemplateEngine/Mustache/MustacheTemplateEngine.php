@@ -21,16 +21,15 @@ declare(strict_types=1);
 namespace ILIAS\Mail\TemplateEngine\Mustache;
 
 use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
-use Mustache_Engine;
 
 /**
  * Mustache implementation of the template engine interface.
- * Wraps Mustache_Engine to decouple Mail component from the concrete library.
+ * Wraps \Mustache\Engine to decouple Mail component from the concrete library.
  */
 class MustacheTemplateEngine implements TemplateEngineInterface
 {
     public function __construct(
-        private readonly Mustache_Engine $engine
+        private readonly \Mustache\Engine $engine
     ) {
     }
 

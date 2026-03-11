@@ -18,7 +18,10 @@
 
 declare(strict_types=1);
 
-use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
+namespace ILIAS\Mail\TemplateEngine;
+
+use ilMailTemplateContext;
+use ilObjUser;
 
 /**
  * This class forms an interface between the existing ILIAS mail contexts and the requirements of the template engine.
@@ -29,10 +32,10 @@ use ILIAS\Mail\TemplateEngine\TemplateEngineInterface;
  * if the check is successful. This is done in this class using the two magic methods.
  * With the introduction of this interface, the ILIAS mail contexts do not have to be changed for the template engine.
  */
-class ilMailTemplateContextAdapter
+class MailTemplateContextAdapter
 {
     public function __construct(
-        /** @var ilMailTemplateContext[] $contexts */
+        /** @var list<ilMailTemplateContext> $contexts */
         protected array $contexts,
         protected array $context_parameter,
         protected readonly TemplateEngineInterface $template_engine,
@@ -56,7 +59,7 @@ class ilMailTemplateContextAdapter
                 },
                 array_keys($context->getPlaceholders())
             );
-            if (in_array($name, $possible_placeholder, true)) {
+            if (\in_array($name, $possible_placeholder, true)) {
                 return true;
             }
         }
@@ -68,7 +71,7 @@ class ilMailTemplateContextAdapter
     {
         foreach ($this->contexts as $context) {
             $ret = $context->resolvePlaceholder($name, $this->context_parameter, $this->recipient);
-            if (in_array($name, $context->getNestedPlaceholders(), true)) {
+            if (\in_array($name, $context->getNestedPlaceholders(), true)) {
                 $ret = $this->template_engine->render($ret, $this);
             }
             if ($ret !== '') {
