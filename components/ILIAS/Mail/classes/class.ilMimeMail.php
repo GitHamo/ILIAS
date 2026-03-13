@@ -264,15 +264,15 @@ class ilMimeMail
             $this->body = ' ';
         }
 
-        $body = $this->to_html_transformation ? ($this->to_html_transformation)($this->body) : $this->body;
+        $transformed_body = $this->to_html_transformation ? ($this->to_html_transformation)($this->body) : $this->body;
 
-        $contains_html = $this->containsHtmlBlockElementsOrLineBreaks($body);
+        $contains_html = $this->containsHtmlBlockElementsOrLineBreaks($transformed_body);
         if ($contains_html) {
-            $this->final_body_alt = strip_tags(str_ireplace(['<br />', '<br>', '<br/>'], "\n", $body));
-            $this->body = $body;
+            $this->final_body_alt = strip_tags(str_ireplace(['<br />', '<br>', '<br/>'], "\n", $this->body));
+            $this->body = $transformed_body;
         } else {
-            $this->final_body_alt = strip_tags($body);
-            $this->body = nl2br($body);
+            $this->final_body_alt = strip_tags($this->body);
+            $this->body = nl2br($transformed_body);
         }
 
         $body_with_clickable_urls = $this->refinery->string()->makeClickable()->transform($this->body);
