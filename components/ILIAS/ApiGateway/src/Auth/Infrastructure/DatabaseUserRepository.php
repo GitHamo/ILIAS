@@ -46,7 +46,7 @@ final readonly class DatabaseUserRepository implements UserRepository
         $database = $this->getDatabase();
 
         $userQuery = $database->queryF(
-            'SELECT * FROM usr_data WHERE usr_id = %s',
+            'SELECT usr_id FROM usr_data WHERE usr_id = %s',
             [ilDBConstants::T_INTEGER],
             [$userId],
         );
