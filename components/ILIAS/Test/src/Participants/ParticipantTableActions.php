@@ -210,7 +210,7 @@ class ParticipantTableActions
 
         return array_filter(
             array_map(
-                function (string $ids_string): Participant {
+                function (string $ids_string): ?Participant {
                     [$user_id, $active_id] = array_map(
                         'intval',
                         explode('_', $ids_string)
