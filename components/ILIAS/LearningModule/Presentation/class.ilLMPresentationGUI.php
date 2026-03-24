@@ -1082,10 +1082,16 @@ class ilLMPresentationGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInt
     protected function setContentStyles(): void
     {
         // content style
-        $this->content_style_gui->addCss(
-            $this->tpl,
-            $this->lm->getRefId()
-        );
+        if ($this->offlineMode()) {
+            $this->content_style_gui->addExportCss(
+                $this->tpl
+            );
+        } else {
+            $this->content_style_gui->addCss(
+                $this->tpl,
+                $this->lm->getRefId()
+            );
+        }
         $this->tpl->addCss(ilObjStyleSheet::getSyntaxStylePath());
     }
 
