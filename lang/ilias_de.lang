@@ -8622,7 +8622,7 @@ dcl#:#dcl_confirm_delete_record#:#Möchten Sie diesen Datensatz wirklich lösche
 dcl#:#dcl_confirm_delete_records#:#Möchten Sie die folgenden Datensätze wirklich löschen?
 dcl#:#dcl_confirm_delete_table#:#Wollen Sie diese Tabelle einschließlich Inhalt und Struktur wirklich löschen?
 dcl#:#dcl_confirm_storing_records#:#Bitte überprüfen Sie die Angaben vor dem Speichern.
-dcl#:#dcl_confirm_storing_records_no_permission#:#Achtung: Wegen der gegewärtigen Einstellungen werden Sie ihren Eintrag nicht mehr bearbeiten können, nach dem Speichern.
+dcl#:#dcl_confirm_storing_records_no_permission#:#Achtung: Wegen der gegenwärtigen Einstellungen werden Sie ihren Eintrag nach dem Speichern nicht mehr bearbeiten können.
 dcl#:#dcl_copy#:#Datensammlung kopieren
 dcl#:#dcl_copy_field#:#Kopie
 dcl#:#dcl_copy_field_desc#:#Ein Feld, in dem eine Kopie eines Eintrags oder von Einträgen aus einem anderen Feld erstellt werden kann. Dieses andere Feld kann sich in einer anderen Tabelle befinden. Änderungen am Originaleintrag wirken sich nicht auf die Kopie aus.
@@ -8798,7 +8798,7 @@ dcl#:#dcl_record_deleted#:#Eintrag gelöscht.
 dcl#:#dcl_record_from_total#:#%d von %d
 dcl#:#dcl_record_settings#:#Eintragseinstellungen
 dcl#:#dcl_reference#:#Referenz
-dcl#:#dcl_reference_desc#:#Ein Feld, das ausgewählte Einträge aus einem anderen Feld anzeigt. Dieses andere Feld kann sich in einer anderen Tabelle befinden. Änderungen, die am ursprünglichen Eintrag vorgenommen wurden, wirken sich auf die in diesem Feld angezeigte Version aus.
+dcl#:#dcl_reference_desc#:#Ein Feld, das ausgewählte Einträge aus einem anderen Feld anzeigt. Dieses andere Feld kann sich in einer anderen Tabelle befinden. Änderungen, die am ursprünglichen Eintrag vorgenommen wurden, wirken sich auf die in diesem Feld angezeigten Werte aus.
 dcl#:#dcl_reference_link#:#Referenzierten Eintrag verlinken
 dcl#:#dcl_reference_link_info#:#Achtung: Sie müssen in der Tabelle, in der sich der referenzierte Eintrag befindet, die Vorlage der Einzelansicht eingerichtet und aktiviert haben.
 dcl#:#dcl_reference_title#:#Referenziertes Feld
