@@ -9377,6 +9377,7 @@ exc#:#exc_late_submission_warning#:#Submissions after %s are marked as late.
 exc#:#exc_lead_request_idl#:#Request Deadline
 exc#:#exc_lead_wait_for_idl#:#Waiting For Individual Deadline
 exc#:#exc_limit_characters#:#Limit of characters
+exc#:#exc_link_to_assignment#:#Link to assignment
 exc#:#exc_list_submission#:#List All Submissions
 exc#:#exc_list_text_assignment#:#List All Submissions
 exc#:#exc_mail_context_grade_reminder_info#:#Reminder Tutors/Teachers to Grade an Assignment
@@ -16896,7 +16897,7 @@ survey#:#svy_back#:#Back
 survey#:#svy_categories#:#Answers
 survey#:#svy_check_evaluation_access_introduction#:#Since this survey evaluation is only accessible by survey participants you need to enter your survey access code to open the evaluation.
 survey#:#svy_check_evaluation_authentication_needed#:#Authentication needed
-survey#:#svy_check_evaluation_wrong_key#:#You entered a wrong survey access code or you have not participated the survey. Your access to the survey evaluation is denied.
+survey#:#svy_check_evaluation_wrong_key#:#You have either entered an incorrect survey access code or did not take part in the survey. Unfortunately therefore, it is not possible for you to access the survey results.
 survey#:#svy_compress_view#:#Compressed View
 survey#:#svy_compress_view_info#:#Present all single choice questions that have the same answer scales in the manner of a matrix question.
 survey#:#svy_copy#:#Copy Survey
