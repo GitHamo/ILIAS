@@ -15612,10 +15612,10 @@ search#:#search_user_search_info_form#:#Anmeldekonten werden in der Suche gefund
 search#:#seas_search_type#:#Art der Suche
 search#:#select_orgu#:#Organisationseinheiten auswählen
 search#:#until#:#bis
-search#:#user_search_settings_section#:#Suche im Reiter 'Mitglieder'
+search#:#user_search_settings_section#:#Personensuche im Reiter „Mitglieder“
 sess#:#il_sess_participant#:#Teilnahme an Sitzung
 sess#:#il_sess_status_open#:#Offene Sitzung
-sess#:#mail_sess_roles#:#alle Personen mit folgenden lokalen Rollen. Label is now generalised for all components that support ‘mail to members‘
+sess#:#mail_sess_roles#:#alle Personen mit folgenden lokalen Rollen ###Label is now generalised for all components that support ‘mail to members‘
 sess#:#notification#:#Benachrichtigung
 sess#:#objs_crs_role#:#Kursrollen
 sess#:#objs_grp_role#:#Gruppenrollen
