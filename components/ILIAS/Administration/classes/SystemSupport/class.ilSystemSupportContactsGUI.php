@@ -173,6 +173,6 @@ class ilSystemSupportContactsGUI implements ilCtrlBaseClassInterface
     private static function globalProfilesEnabled(): bool
     {
         global $DIC;
-        return $DIC->settings()->get('enable_global_profiles');
+        return $DIC->settings()->get('enable_global_profiles') ?? false;
     }
 }
