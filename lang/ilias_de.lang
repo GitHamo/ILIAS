@@ -10820,6 +10820,13 @@ itgr#:#itgr_assignment_to_other_itgr#:#Bereits einem anderen Objekteblock zugeor
 itgr#:#itgr_behaviour#:#Verhalten
 itgr#:#itgr_behaviour_info#:#Das System merkt sich den Zustand (geöffnet/geschlossen) je Benutzer bis zur Abmeldung (Logout).
 itgr#:#itgr_desc_info#:#Die Beschreibung wird bei der Anzeige des Objekteblocks nicht mit ausgegeben.
+itgr#:#itgr_display#:#Anzeige
+itgr#:#itgr_display_with_title#:#Mit Titel
+itgr#:#itgr_display_with_title_and_toggleable#:#Mit Titel, Objekteblock ein- und ausklappbar
+itgr#:#itgr_display_with_title_and_toggleable_initially#:#Ausgangszustand
+itgr#:#itgr_display_with_title_and_toggleable_initially_closed#:#zunächst geschlossen
+itgr#:#itgr_display_with_title_and_toggleable_initially_open#:#zunächst geöffnet
+itgr#:#itgr_display_without_title#:#Ohne Titel
 itgr#:#itgr_edit#:#Einstellungen des Objekteblocks
 itgr#:#itgr_expandable_closed#:#Ausklappbar (zunächst geschlossen)
 itgr#:#itgr_expandable_open#:#Ausklappbar (zunächst geöffnet)
