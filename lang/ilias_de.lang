@@ -5081,7 +5081,7 @@ common#:#obj_sahs_duplicate#:#Lernmodule kopieren
 common#:#obj_sco#:#SCO
 common#:#obj_scov#:#SCORM-Zertifikat
 common#:#obj_seas#:#Suche
-common#:#obj_seas_desc#:#Konfigurieren Sie hier die Suche.
+common#:#obj_seas_desc#:#Einstellungen zur systemweiten Suche, Personensuche und Volltextsuche (Lucene)
 common#:#obj_serv#:#Server
 common#:#obj_serv_desc#:#Einstellungen des Severs
 common#:#obj_sess#:#Sitzung
@@ -15511,13 +15511,13 @@ search#:#lucene_host_info#:#Bitte tragen Sie hier den Rechnernamen bzw. die IP-A
 search#:#lucene_index_path#:#Verzeichnis für Indexdateien
 search#:#lucene_index_path_info#:#Bitte geben Sie ein Verzeichnis an, in dem die Indexdateien der Lucene-suche abgelegt werden.
 search#:#lucene_last_index_time#:#Letzte Indexerstellung
-search#:#lucene_last_index_time_info#:#Bitte ändern Sie diese Einstellung nur dann, wenn Sie das Backup einer Lucene-Indexdatei eingespielt haben.
+search#:#lucene_last_index_time_info#:#Ändern Sie diese Einstellung nur, wenn Sie das Backup einer Lucene-Indexdatei eingespielt haben. Andernfalls können Änderungen die Indexierung beeinträchtigen.
 search#:#lucene_level#:#Log-Level
 search#:#lucene_log#:#Pfad zur Logdatei
 search#:#lucene_log_info#:#Bitte tragen Sie hier den absoluten Pfad zu einer Datei ein, in die Log-Nachrichten geschrieben werden. Wenn die Datei noch nicht existiert, wird sie automatisch erzeugt.
 search#:#lucene_max_fs#:#Maximale Dateigröße (in MB)
 search#:#lucene_max_fs_info#:#Definiert das Dateigrößenlimit, bis zu dem Dateien indexiert werden. Der Inhalt größerer Dateien wird nicht in den Index aufgenommen.
-search#:#lucene_num_frag_info#:#Bitte geben Sie die Maximalanzahl von Textabschnitten ein, die zur Hervorhebung der Suchtreffer ausgegeben werden sollen.
+search#:#lucene_num_frag_info#:#Maximale Anzahl von Textabschnitten, die in den Suchergebnissen angezeigt werden und den Suchbegriff enthalten
 search#:#lucene_num_fragments#:#Anzahl Textabschnitte
 search#:#lucene_offline_filter#:#Online-Status
 search#:#lucene_or#:#ODER
@@ -15527,8 +15527,8 @@ search#:#lucene_prefix_wildcard_info#:#Erlaubt die Nutzung von Platzhaltern auch
 search#:#lucene_settings_index_section#:#Index-Backup einspielen
 search#:#lucene_settings_tab#:#Lucene
 search#:#lucene_settings_text_section#:#Präsentation der Suchergebnisse
-search#:#lucene_settings_title#:#Einstellungen zur Lucene-Suche
-search#:#lucene_size_frag_info#:#Bitte bestimmen Sie die maximale Länge der Textabschnitte, die zur Hervorhebung der Suchtreffer ausgegeben werden. Geben Sie dazu die Anzahl der Zeichen einschließlich Leerzeichen ein.
+search#:#lucene_settings_title#:#Volltextsuche mit Lucene
+search#:#lucene_size_frag_info#:#Maximale Anzahl der Zeichen je Textabschnitt, der zur Hervorhebung des Suchbegriffs ausgegeben wird
 search#:#lucene_size_fragments#:#Länge der Textabschnitte
 search#:#lucene_tbl_create_ini#:#Java-Server Konfigurationsdatei erstellen
 search#:#search_add_members_from_container_crs#:#Benutzer aus aktuellem Kurs hinzufügen
@@ -15567,10 +15567,10 @@ search#:#search_item_filter_form#:#Suche nach Typ
 search#:#search_item_filter_form_info#:#Im Suchfilter werden nur die ausgewählten Arten von Inhalten angeboten.
 search#:#search_like_info#:#Es wird nur in der ILIAS-Datenbank gesucht. Zusatzsoftware ist nicht notwendig. Der Inhalt von Dateien oder Metadaten wird nicht erfasst. Nur Treffer in Titel und Beschreibung werden als Suchergebnis angezeigt.
 search#:#search_limit_reached#:#Ihre Suche ergab mehr als %s Treffer. Sie können die Abfrage weiter einschränken, um detailliertere Treffer zu erhalten.
-search#:#search_lucene#:#Lucene-Suche
+search#:#search_lucene#:#Volltext durchsuchen (Lucene)
 search#:#search_mime_excel#:#Excel-Dateien
-search#:#search_mime_filter_form#:#Dateitypen-Filter
-search#:#search_mime_filter_form_info#:#Beschränkt die Suche auf die ausgewählten Dateitypen.
+search#:#search_mime_filter_form#:#Filtern nach Dateitypen
+search#:#search_mime_filter_form_info#:#Im Suchfilter werden die ausgewählten Dateitypen angeboten.
 search#:#search_mime_image#:#Bilder
 search#:#search_mime_pdf#:#PDF-Dateien
 search#:#search_mime_powerpoint#:#Powerpoint-Dateien
@@ -15607,8 +15607,8 @@ search#:#search_tst_svy#:#Tests/Umfragen
 search#:#search_type#:#Suchart
 search#:#search_user#:#Benutzer
 search#:#search_user_extended#:#Erweiterte Benutzersuche
-search#:#search_user_search_form#:#Globale Benutzersuche
-search#:#search_user_search_info_form#:#Anmeldekonten können in der globalen Suche gefunden werden. Sofern die Lucene-Volltextsuche aktiviert ist, werden auch Profildaten in den Index aufgenommen.
+search#:#search_user_search_form#:#Systemweite Personensuche
+search#:#search_user_search_info_form#:#Anmeldekonten werden in der Suche gefunden. Die Lucene-Volltextsuche indexiert auch freigegebene Profildaten.
 search#:#seas_search_type#:#Art der Suche
 search#:#select_orgu#:#Organisationseinheiten auswählen
 search#:#until#:#bis
