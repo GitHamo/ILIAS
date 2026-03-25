@@ -9404,6 +9404,7 @@ exc#:#exc_late_submission_warning#:#Abgaben nach %s werden als verspätet gekenn
 exc#:#exc_lead_request_idl#:#Abgabefrist anfragen
 exc#:#exc_lead_wait_for_idl#:#Wartet auf individuelle Abgabefrist
 exc#:#exc_limit_characters#:#Anzahl der Zeichen beschränken
+exc#:#exc_link_to_assignment#:#Link zur Übungseinheit
 exc#:#exc_list_submission#:#Alle Lösungsabgaben
 exc#:#exc_list_text_assignment#:#Liste aller Abgaben
 exc#:#exc_mail_context_grade_reminder_info#:#Personen, welche in einer Übungseinheit die Erinnerungen aktiviert haben, werden an die Bewertung der Einreichungen erinnert.

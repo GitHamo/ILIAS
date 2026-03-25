@@ -9377,6 +9377,7 @@ exc#:#exc_late_submission_warning#:#Submissions after %s are marked as late.
 exc#:#exc_lead_request_idl#:#Request Deadline
 exc#:#exc_lead_wait_for_idl#:#Waiting For Individual Deadline
 exc#:#exc_limit_characters#:#Limit of characters
+exc#:#exc_link_to_assignment#:#Link to assignment
 exc#:#exc_list_submission#:#List All Submissions
 exc#:#exc_list_text_assignment#:#List All Submissions
 exc#:#exc_mail_context_grade_reminder_info#:#Reminder Tutors/Teachers to Grade an Assignment
