@@ -645,7 +645,6 @@ assessment#:#errFormulaQuestion#:#¡Una fórmula de pregunta  contiene informaci
 assessment#:#errRecursionInResult#:#La fórmula contiene una recursividad infinita.
 assessment#:#err_category_in_use#:#Al menos una categoría no se puede eliminar. Una o más unidades de la categoría ya están en uso.
 assessment#:#err_divider_too_big#:#The divider of one of the variables in this question is too big.###29 07 2022 new variable
-assessment#:#err_divider_too_big_specific#:#The divider of this variable is too big.###29 10 2025 new variable
 assessment#:#err_division#:#The value you chose would make it impossible to generate a valid value for the variable.###29 07 2022 new variable
 assessment#:#err_duplicate_results#:#Ha utilizado una variable de resultado más de una vez. Esto no está permitido en el texto de la pregunta.
 assessment#:#err_no_formula#:#Debe introducir introducir una formula
@@ -16721,7 +16720,7 @@ survey#:#survey_360_sure_appraisee_close#:#¿Está seguro que desea cerrar la en
 survey#:#survey_360_sure_appraisee_close_admin#:#¿Está seguro de que quiere cerrar las encuestas para los siguientes evaluadores?
 survey#:#survey_360_sure_delete_appraises#:#¿Está seguro que desea eliminar a los siguientes evaluados?
 survey#:#survey_360_sure_delete_raters#:#¿Está seguro que desea eliminar los siguientes calificadores para %s?
-survey#:#survey_access_codes#:#Autenticación por Código de Acceso
+survey#:#survey_access_code#:#Autenticación por Código de Acceso
 survey#:#survey_access_codes_info#:#Los usuarios consiguen acceder a la encuesta mediante la introducción de un código en la pestaña 'Info'. Estos códigos de acceso se generan en "Códigos de acceso" una subpestaña en la pestaña 'participantes'.
 survey#:#survey_activate_skill_service#:#Activar el Servicio de Competencias
 survey#:#survey_activate_skill_service_info#:#Se mostrará una nueva pestaña llamada "competencias". En esta pestaña las preguntas se asignan a competencias y se pueden establecer umbrales para alcanzar un determinado nivel de competencia.

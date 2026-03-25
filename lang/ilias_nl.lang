@@ -643,7 +643,6 @@ assessment#:#errFormulaQuestion#:#Een Formula-vraag bavt incorrect informatie!!
 assessment#:#errRecursionInResult#:#De formule bevat een oneindige recursie.
 assessment#:#err_category_in_use#:#Tenminste een categorie kon niet worden verwijderd. Een of meer eenheden van de categorie zijn in gebruikt.
 assessment#:#err_divider_too_big#:#The divider of one of the variables in this question is too big.###29 07 2022 new variable
-assessment#:#err_divider_too_big_specific#:#The divider of this variable is too big.###29 10 2025 new variable
 assessment#:#err_division#:#The value you chose would make it impossible to generate a valid value for the variable.###29 07 2022 new variable
 assessment#:#err_duplicate_results#:#Je gebruikt een resultaatvariabele meerdere malen. Dit is niet toegestaan in de vraagtekst.
 assessment#:#err_no_formula#:#Je moet een formule invoeren
@@ -16719,7 +16718,7 @@ survey#:#survey_360_sure_appraisee_close#:#Weet je zeker dat je de enqûete wilt
 survey#:#survey_360_sure_appraisee_close_admin#:#Weet je zeker dat je de 360° Feedback wilt sluiten voor de volgende gebruikers?
 survey#:#survey_360_sure_delete_appraises#:#Weet je zeker dat je de volgende beoordelingen wilt verwijderen?
 survey#:#survey_360_sure_delete_raters#:#Weet je zeker dat je de volgende feedbackgevers voor %s wilt verwijderen?
-survey#:#survey_access_codes#:#Authentication by Access Codes###06 02 2015 new variable
+survey#:#survey_access_code#:#Authentication by Access Codes###06 02 2015 new variable
 survey#:#survey_access_codes_info#:#Users get access to the survey by entering a code on the ‘Info’-tab. These access codes are generated in a sub-tab ‘Access Codes’ in the tab ‘Participants’.###06 02 2015 new variable
 survey#:#survey_activate_skill_service#:#Inschakelen van Competentie Service
 survey#:#survey_activate_skill_service_info#:#todo12

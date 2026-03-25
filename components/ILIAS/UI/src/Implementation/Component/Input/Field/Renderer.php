@@ -488,17 +488,18 @@ class Renderer extends AbstractComponentRenderer
         $this->applyName($component, $tpl);
 
         $value = $component->getValue();
+        $value_is_empty = $value === null || $value === '';
         //disable first option if required.
         $tpl->setCurrentBlock("options");
-        if (!$value) {
+        if ($value_is_empty) {
             $tpl->setVariable("SELECTED", 'selected="selected"');
         }
-        if ($component->isRequired() && !$value) {
+        if ($value_is_empty && $component->isRequired()) {
             $tpl->setVariable("DISABLED_OPTION", "disabled");
             $tpl->setVariable("HIDDEN", "hidden");
         }
 
-        if (!($value && $component->isRequired())) {
+        if ($value_is_empty || !$component->isRequired()) {
             $tpl->setVariable("VALUE", null);
             $tpl->setVariable("VALUE_STR", $component->isRequired() ? $this->txt('ui_select_dropdown_label') : '-');
             $tpl->parseCurrentBlock();
@@ -506,7 +507,7 @@ class Renderer extends AbstractComponentRenderer
 
         foreach ($component->getOptions() as $option_key => $option_value) {
             $tpl->setCurrentBlock("options");
-            if ($value == $option_key) {
+            if (!$value_is_empty && $value == $option_key) {
                 $tpl->setVariable("SELECTED", 'selected="selected"');
             }
             $tpl->setVariable("VALUE", $option_key);
@@ -973,12 +974,12 @@ class Renderer extends AbstractComponentRenderer
         if ($signals !== null) {
             $signals = json_encode($signals);
 
-            $input = $input->withAdditionalOnLoadCode(function ($id) use ($signals) {
+            $input = $input->withAdditionalOnLoadCode($input->getUpdateOnLoadCode());
+
+            $input = $input->withAdditionalOnLoadCode(static function ($id) use ($signals) {
                 $code = "il.UI.input.setSignalsForId('$id', $signals);";
                 return $code;
             });
-
-            $input = $input->withAdditionalOnLoadCode($input->getUpdateOnLoadCode());
         }
         return $input;
     }

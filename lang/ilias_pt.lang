@@ -643,7 +643,6 @@ assessment#:#errFormulaQuestion#:#Uma pergunta de fórmula contém informação 
 assessment#:#errRecursionInResult#:#A fórmula contém um recurso infinito.
 assessment#:#err_category_in_use#:#Pelo menos uma categoria não pode ser apagada. Uma ou mais unidades da categoria já estão a ser usadas.
 assessment#:#err_divider_too_big#:#The divider of one of the variables in this question is too big.###29 07 2022 new variable
-assessment#:#err_divider_too_big_specific#:#The divider of this variable is too big.###29 10 2025 new variable
 assessment#:#err_division#:#The value you chose would make it impossible to generate a valid value for the variable.###29 07 2022 new variable
 assessment#:#err_duplicate_results#:#Usou uma variável do resultado mais do que uma vez. Isso não é permitido no texto da pergunta.
 assessment#:#err_no_formula#:#Tem de introduzir uma fórmula
@@ -16719,7 +16718,7 @@ survey#:#survey_360_sure_appraisee_close#:#Tem a certeza que quer fechar o inqu�
 survey#:#survey_360_sure_appraisee_close_admin#:#Tem a certeza que quer fechar os inquéritos para os seguintes avaliados?
 survey#:#survey_360_sure_delete_appraises#:#Tem a certeza que quer remover os seguintes avaliados?
 survey#:#survey_360_sure_delete_raters#:#Tem a certeza que quer remover os seguintes examinadores para %s?
-survey#:#survey_access_codes#:#Autenticação por códigos de acesso
+survey#:#survey_access_code#:#Autenticação por códigos de acesso
 survey#:#survey_access_codes_info#:#Users get access to the survey by entering a code on the 'Info'-tab. These access codes are generated in a sub-tab 'Access Codes' in the tab 'Participants'.
 survey#:#survey_activate_skill_service#:#Ativar serviço de competência
 survey#:#survey_activate_skill_service_info#:#todo12
