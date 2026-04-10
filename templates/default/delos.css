@@ -11873,7 +11873,7 @@ div.alert ul {
   font-size: 1rem;
   font-weight: 400;
   padding: 0;
-  margin: 0;
+  margin-top: 0;
   cursor: pointer;
 }
 @media screen and (max-width: 768px) {
@@ -11892,7 +11892,7 @@ div.alert ul {
   content: ": ";
 }
 .il-table-presentation-row .il-table-presentation-row-expanded {
-  margin-top: 6px;
+  margin-top: 0;
 }
 @media screen and (max-width: 768px) {
   .il-table-presentation-row .il-table-presentation-row-expanded {
