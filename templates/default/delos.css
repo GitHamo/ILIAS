@@ -944,7 +944,7 @@ th {
   margin-top: var(--bs-gutter-y);
 }
 
-@media (min-width: 480px) {
+@media (min-width: 0px) {
   .col-xs {
     flex: 1 0 0%;
   }
@@ -2506,8 +2506,11 @@ details[open] > summary::before {
 */
 /* UI Framework */
 .c-tooltip__container {
-  position: relative;
   display: inline-block;
+}
+
+.c-tooltip__container.c-tooltip--visible {
+  position: relative;
 }
 
 .c-tooltip__container::before {
@@ -6345,10 +6348,10 @@ a[aria-disabled].il-link.link-bulky:hover {
 .il-mainbar-tool-trigger-item .btn-bulky .bulky-label,
 .il-mainbar-tool-trigger-item .il-link.link-bulky .bulky-label {
   word-break: break-word;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+  -ms-hyphens: manual;
+  -moz-hyphens: manual;
+  -webkit-hyphens: manual;
+  hyphens: manual;
 }
 
 .il-mainbar-triggers .il-mainbar-entries {
@@ -8093,7 +8096,7 @@ button .minimize, button .close {
 
 .c-field-password__revelation-glyph {
   float: right;
-  margin-top: -21px;
+  margin-top: -26px;
   margin-right: 5px;
 }
 .c-field-password__revelation-glyph--reveal {
@@ -8195,11 +8198,12 @@ button .minimize, button .close {
   padding: 6px;
 }
 .il-filter .input-group .btn-bulky {
-  border: none;
   background-color: #f0f0f0;
 }
 .il-filter .btn-bulky {
   min-height: 0;
+}
+.il-filter .btn-bulky:not(:focus-visible) {
   border: none;
 }
 .il-filter .leftaddon {
@@ -11993,7 +11997,7 @@ div.alert ul {
   font-size: 1rem;
   font-weight: 400;
   padding: 0;
-  margin: 0;
+  margin-top: 0;
   cursor: pointer;
 }
 @media screen and (max-width: 768px) {
@@ -12012,7 +12016,7 @@ div.alert ul {
   content: ": ";
 }
 .il-table-presentation-row .il-table-presentation-row-expanded {
-  margin-top: 6px;
+  margin-top: 0;
 }
 @media screen and (max-width: 768px) {
   .il-table-presentation-row .il-table-presentation-row-expanded {
@@ -13210,7 +13214,12 @@ div.ilHeadAction .prop {
   padding-right: 10px;
 }
 
-div.ilHeadAction a:hover {
+div.ilHeadAction .btn.btn-link {
+  padding-right: 10px;
+}
+
+div.ilHeadAction a:hover,
+div.ilHeadAction button.btn-link:hover {
   text-decoration: none;
 }
 
@@ -17917,6 +17926,12 @@ div.ilContainerListItemOuter .subitem {
   margin-right: -15px;
 }
 
+.ilContainerItemsContainer {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 div.tblfooter.ilContainerListFooter {
   font-size: 0.875rem;
   padding: 9px 15px;
@@ -21894,7 +21909,7 @@ a.ilMediaLightboxClose:hover {
   padding: 0;
   margin: 3px 0;
   border: 0 none;
-  border-bottom: 2px solid #161616;
+  border-bottom: 1px solid #dddddd;
 }
 #ilTab > li {
   float: left;
@@ -21907,12 +21922,14 @@ a.ilMediaLightboxClose:hover {
   font-size: 0.875rem;
   line-height: 1.428571429;
   padding: 6px 15px 3px;
-  border: 0 none;
+  border-bottom: 2px solid;
+  border-color: transparent;
   border-radius: 0px 0px 0 0;
 }
-#ilTab > li > a:hover,
-#ilTab > li > .c-tooltip__container > a:hover {
-  border-color: white white white;
+#ilTab > li > a:hover, #ilTab > li > a:focus,
+#ilTab > li > .c-tooltip__container > a:hover,
+#ilTab > li > .c-tooltip__container > a:focus {
+  border-bottom-color: #161616;
 }
 #ilTab > li > a:focus,
 #ilTab > li > .c-tooltip__container > a:focus {
@@ -21962,12 +21979,15 @@ a.ilMediaLightboxClose:hover {
   color: white;
   cursor: default;
   background-color: #161616;
-  border: 0 none;
-  border-bottom-color: transparent;
+  border-bottom-color: #161616;
 }
 
 #ilTab a:focus-visible {
   z-index: 3;
+}
+
+#ilTab > li > a:focus {
+  border-bottom: 2px solid #161616;
 }
 
 /* Sub Tabs */
@@ -22069,7 +22089,6 @@ a.ilMediaLightboxClose:hover {
 }
 .nav > li > a:hover, .nav > li > a:focus, .nav > li > .c-tooltip__container > a:hover, .nav > li > .c-tooltip__container > a:focus {
   text-decoration: none;
-  background-color: #f0f0f0;
 }
 .nav > li.disabled > a, .nav > li.disabled > .c-tooltip__container > a {
   color: #f9f9f9;
@@ -22092,6 +22111,11 @@ a.ilMediaLightboxClose:hover {
 }
 .nav > li > a > img {
   max-width: none;
+}
+
+.ilToolbarContainer {
+  position: relative;
+  z-index: 50;
 }
 
 .nav-tabs .dropdown-menu {

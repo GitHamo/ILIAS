@@ -65,9 +65,9 @@ current configuration of the [ILIAS test server](https://test11.ilias.de), which
 |--------------|--------------------------------------------------------|------------------|
 | Distribution | current version of Debian GNU Linux, Ubuntu or RHEL    | Ubuntu 22.04 LTS |
 | Database     | MySQL 8.4 - 9.7 or MariaDB 11.4 - 12.3                 | MariaDB 11.8     |
-| PHP          | 8.3, 8.4                                               | 8.4              |
+| PHP          | 8.4, 8.5                                               | 8.5              |
 | Webserver    | nginx: 1.12.x – 1.18.x, Apache: ≥ 2.4.x                | Apache 2.4.52    |
-| JDK          | Open JDK Runtime 11, 17 or 21 LTS                      | OpenJDK 17       |
+| JDK          | Open JDK Runtime 17, 21 or 25 LTS                      | OpenJDK 21       |
 | Node.js      | 22 (LTS), 24 Recommended: 24                           | v24.10.0         |
 | Ghostscript  | 10.x                                                   | 9.55             |
 | Imagemagick  | 6.9.x                                                  | 6.9.11           |
@@ -94,7 +94,7 @@ PHP version later on.
 <a name="install-dependencies"></a>
 ## Install Dependencies
 
-`openjdk-17-jdk` and `maven` are optional and are used for the ILIAS RPC server for search indexing and certificate generation. 
+`openjdk-21-jdk` and `maven` are optional and are used for the ILIAS RPC server for search indexing and certificate generation. 
 `git` is required if the source code is obtained directly from GitHub.
 `nodejs` and `npm` are required as well if you get the source directly to download the javascript dependencies in the installation process.
 Alternatively, they can be obtained directly from the distribution package at [Nodesource](https://deb.nodesource.com/) to select appropriate nodejs versions according to the [Recommended Setup for Running ILIAS](#recommended-setup-for-running-ilias).
@@ -102,7 +102,7 @@ Alternatively, they can be obtained directly from the distribution package at [N
 
 ```shell
 apt update
-apt update zip unzip openjdk-17-jdk maven ffmpeg git ghostscript nodejs npm
+apt update zip unzip openjdk-21-jdk maven ffmpeg git ghostscript nodejs npm
 ```
 
 <a name="install-webserver"></a>
@@ -665,14 +665,15 @@ each ILIAS release.
 
 **PHP:**
 
-| ILIAS Version  | PHP Version                 |
-|----------------|-----------------------------|
-| 11.x           | 8.3.x, 8.4.x                |
-| 10.x           | 8.2.x, 8.3.x                |
-| 9.x            | 8.1.x, 8.2.x                |
-| 8.x            | 7.4.x, 8.0.x                |
-| 7.x            | 7.3.x, 7.4.x                |
-| 6.x            | 7.2.x, 7.3.x, 7.4.x         |
+| ILIAS Version | PHP Version         |
+|---------------|---------------------|
+| 12.x          | 8.4.x, 8.5.x        |
+| 11.x          | 8.3.x, 8.4.x        |
+| 10.x          | 8.2.x, 8.3.x        |
+| 9.x           | 8.1.x, 8.2.x        |
+| 8.x           | 7.4.x, 8.0.x        |
+| 7.x           | 7.3.x, 7.4.x        |
+| 6.x           | 7.2.x, 7.3.x, 7.4.x |
 
 **DBMS:**
 
