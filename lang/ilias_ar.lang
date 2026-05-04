@@ -17978,25 +17978,3 @@ wsp#:#wsp_type_scov#:#Certificate: SCORM###30 12 2013 new variable
 wsp#:#wsp_type_tstv#:#Verification: Test
 wsp#:#wsp_type_webr#:#Weblink
 wsp#:#wsp_type_wfld#:#Folder
-common#:#obj_apig#:#خدمات الويب
-common#:#obj_apig_desc#:#تهيئة خدمات الويب API
-apig#:#webservices#:#خدمات الويب
-apig#:#webservices_description#:#تهيئة خدمات الويب API
-apig#:#settings_general#:#عام
-apig#:#settings_docs#:#وثائق المساعدة
-apig#:#general_settings#:#الإعدادات العامة
-apig#:#rest_settings#:#إعدادات REST
-apig#:#auth_secret_key_label#:#المفتاح السري
-apig#:#auth_secret_key_info#:#اتركه فارغًا وسيتم إنشاء مفتاح سري عشوائي جديد.
-apig#:#auth_algo_encryption_label#:#خوارزمية التشفير
-apig#:#auth_algo_encryption_info#:#الخوارزمية المستخدمة لإنشاء توقيع JWT
-apig#:#auth_algo_hash_label#:#خوارزمية التجزئة
-apig#:#auth_algo_hash_info#:#الخوارزمية المستخدمة لتخزين الرموز المميزة للتحديث بأمان
-apig#:#auth_token_expiry_access_label#:#انتهاء صلاحية رمز الوصول
-apig#:#auth_token_expiry_access_info#:#مدة صلاحية رمز الوصول بالثواني
-apig#:#auth_token_expiry_refresh_label#:#انتهاء صلاحية رمز التحديث
-apig#:#auth_token_expiry_refresh_info#:#مدة صلاحية رمز التحديث بالثواني
-apig#:#rest_ws_enabled_label#:#تفعيل خدمة الويب
-apig#:#rest_ws_enabled_info#:#ما إذا كانت خدمة الويب مفعلة أم لا
-apig#:#rest_docs_enabled_label#:#تفعيل وثائق المساعدة
-apig#:#rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا

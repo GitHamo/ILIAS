@@ -18035,25 +18035,3 @@ wsp#:#wsp_type_scov#:#Certificate: SCORM
 wsp#:#wsp_type_tstv#:#Certificate: Test
 wsp#:#wsp_type_webr#:#Weblink
 wsp#:#wsp_type_wfld#:#Folder
-common#:#obj_apig#:#Webservices
-common#:#obj_apig_desc#:#Configuration of API Webservices
-apig#:#webservices#:#Webservices
-apig#:#webservices_description#:#Configuration of API Webservices
-apig#:#settings_general#:#General
-apig#:#settings_docs#:#Documentation
-apig#:#general_settings#:#General Settings
-apig#:#rest_settings#:#REST Settings
-apig#:#auth_secret_key_label#:#Secret Key
-apig#:#auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
-apig#:#auth_algo_encryption_label#:#Encryption algo
-apig#:#auth_algo_encryption_info#:#Algorithm used for JWT signature creation
-apig#:#auth_algo_hash_label#:#Hashing algo
-apig#:#auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
-apig#:#auth_token_expiry_access_label#:#Access Token Expiry
-apig#:#auth_token_expiry_access_info#:#Lifespan of an access token in seconds
-apig#:#auth_token_expiry_refresh_label#:#Refresh Token Expiry
-apig#:#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
-apig#:#rest_ws_enabled_label#:#Activate Webservice
-apig#:#rest_ws_enabled_info#:#Webservice enabled or not
-apig#:#rest_docs_enabled_label#:#Activate Documentation
-apig#:#rest_docs_enabled_info#:#Allow guest access to the auto-generated documentation

@@ -18083,25 +18083,3 @@ wsp#:#wsp_type_scov#:#Zertifikat: SCORM
 wsp#:#wsp_type_tstv#:#Zertifikat: Test
 wsp#:#wsp_type_webr#:#Weblink
 wsp#:#wsp_type_wfld#:#Ordner
-common#:#obj_apig#:#Webservices
-common#:#obj_apig_desc#:#Konfiguration der API Webservices
-apig#:#webservices#:#Webservices
-apig#:#webservices_description#:#Konfiguration der API Webservices
-apig#:#settings_general#:#Allgemein
-apig#:#settings_docs#:#Dokumentation
-apig#:#general_settings#:#Allgemeine Einstellungen
-apig#:#rest_settings#:#REST Einstellungen
-apig#:#auth_secret_key_label#:#Geheimschlüssel
-apig#:#auth_secret_key_info#:#Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Geheimschlüssel generiert
-apig#:#auth_algo_encryption_label#:#Verschlüsselungs-Algo
-apig#:#auth_algo_encryption_info#:#Algorithmus zur Erstellung der JWT-Signatur
-apig#:#auth_algo_hash_label#:#Hashing-Algo
-apig#:#auth_algo_hash_info#:#Algorithmus zum sicheren Speichern von Refresh Tokens
-apig#:#auth_token_expiry_access_label#:#Ablaufzeit des Access Tokens
-apig#:#auth_token_expiry_access_info#:#Lebensdauer eines Access Tokens in Sekunden
-apig#:#auth_token_expiry_refresh_label#:#Ablaufzeit des Refresh Tokens
-apig#:#auth_token_expiry_refresh_info#:#Lebensdauer eines Refresh Tokens in Sekunden
-apig#:#rest_ws_enabled_label#:#Webservice aktivieren
-apig#:#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
-apig#:#rest_docs_enabled_label#:#Dokumentation aktivieren
-apig#:#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren
