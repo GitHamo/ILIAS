@@ -55,7 +55,7 @@ class ActivityAction implements Action
             throw new AuthorizationException('You are not allowed to perform this activity.');
         }
 
-        $result = $this->activity->perform($parameters);
+        $result = $this->activity->maybePerformAs($userId, $parameters);
 
         if ($result instanceof Result) {
 
