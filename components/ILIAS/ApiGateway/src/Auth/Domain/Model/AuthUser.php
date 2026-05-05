@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Model;
 
+use function defined;
+
 readonly class AuthUser
 {
     /**
@@ -33,5 +35,12 @@ readonly class AuthUser
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public static function anonymous(): self
+    {
+        return new self(
+            defined('ANONYMOUS_USER_ID') ? ANONYMOUS_USER_ID : 0
+        );
     }
 }

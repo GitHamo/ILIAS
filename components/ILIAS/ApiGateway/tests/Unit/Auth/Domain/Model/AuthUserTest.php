@@ -29,4 +29,22 @@ class AuthUserTest extends TestCase
             $this->model->getId(),
         );
     }
+
+    public function testCreatesAnonymousUser(): void
+    {
+        define('ANONYMOUS_USER_ID', $annonymousUserId = 123);
+
+        $this->assertEquals(
+            new AuthUser($annonymousUserId),
+            AuthUser::anonymous(),
+        );
+    }
+
+    public function testCreatesAnnonymousUserWithDefaultId(): void
+    {
+        $this->assertEquals(
+            new AuthUser(0),
+            AuthUser::anonymous(),
+        );
+    }
 }
