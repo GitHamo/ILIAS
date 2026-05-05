@@ -2641,7 +2641,7 @@ class ilPageObjectGUI
     {
         ilPageQuestionProcessor::saveQuestionAnswer(
             $this->request->getString("type"),
-            $this->request->getString("id"),
+            $this->request->getInt("id"),
             $this->request->getString("answer")
         );
     }
