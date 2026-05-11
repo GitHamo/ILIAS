@@ -60,10 +60,10 @@ class HistoryRetrieval implements RetrievalInterface
 
         // Current version (nr=0)
         $q = "SELECT page_id, last_change hdate, parent_type, parent_id, last_change_user user_id, content, lang " .
-            "FROM page_object WHERE page_id = " . $this->db->quote($this->page_id, "integer") .
-            " AND parent_type = " . $this->db->quote($this->parent_type, "text") .
-            " AND lang = " . $this->db->quote($this->lang, "text");
-        $res = $this->db->query($q);
+            "FROM page_object WHERE page_id = %s" .
+            " AND parent_type = %s" .
+            " AND lang = %s";
+        $res = $this->db->queryF($q, ["integer", "text", "text"], [$this->page_id, $this->parent_type, $this->lang]);
         if ($row = $this->db->fetchAssoc($res)) {
             $row["nr"] = 0;
             $row["sortkey"] = 999999999;
@@ -73,11 +73,11 @@ class HistoryRetrieval implements RetrievalInterface
         }
 
         // History entries
-        $q = "SELECT * FROM page_history WHERE page_id = " . $this->db->quote($this->page_id, "integer") .
-            " AND parent_type = " . $this->db->quote($this->parent_type, "text") .
-            " AND lang = " . $this->db->quote($this->lang, "text");
+        $q = "SELECT * FROM page_history WHERE page_id = %s" .
+            " AND parent_type = %s" .
+            " AND lang = %s";
 
-        $res = $this->db->query($q);
+        $res = $this->db->queryF($q, ["integer", "text", "text"], [$this->page_id, $this->parent_type, $this->lang]);
         while ($row = $this->db->fetchAssoc($res)) {
             $row["sortkey"] = (int) $row["nr"];
             $row["user"] = (int) $row["user_id"];
@@ -103,10 +103,10 @@ class HistoryRetrieval implements RetrievalInterface
         array $filter,
         array $parameters
     ): int {
-        $q = "SELECT count(*) cnt FROM page_history WHERE page_id = " . $this->db->quote($this->page_id, "integer") .
-            " AND parent_type = " . $this->db->quote($this->parent_type, "text") .
-            " AND lang = " . $this->db->quote($this->lang, "text");
-        $res = $this->db->query($q);
+        $q = "SELECT count(*) cnt FROM page_history WHERE page_id = %s" .
+            " AND parent_type = %s" .
+            " AND lang = %s";
+        $res = $this->db->queryF($q, ["integer", "text", "text"], [$this->page_id, $this->parent_type, $this->lang]);
         $row = $this->db->fetchAssoc($res);
         return (int) $row["cnt"] + 1;
     }
