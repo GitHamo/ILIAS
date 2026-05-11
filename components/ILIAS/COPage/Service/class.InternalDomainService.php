@@ -144,6 +144,11 @@ class InternalDomainService
         return null;
     }
 
+    public function layoutRetrieval(): Layout\PageLayoutRetrieval
+    {
+        return new Layout\PageLayoutRetrieval();
+    }
+
     public function testQuestion():\ILIAS\TestQuestionPool\Questions\PublicInterface
     {
         return $this->DIC->testQuestion();
