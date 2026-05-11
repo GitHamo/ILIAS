@@ -90,6 +90,15 @@ class DomainService
         return new QuestionManager();
     }
 
+    public function selfAssQuestionRetrieval(int $pool_ref_id, int $pool_obj_id): Question\SelfAssQuestionRetrieval
+    {
+        return new Question\SelfAssQuestionRetrieval(
+            $this->domain_service,
+            $pool_ref_id,
+            $pool_obj_id
+        );
+    }
+
     public function interactiveImage(): InteractiveImage\IIMManager
     {
         return new InteractiveImage\IIMManager(

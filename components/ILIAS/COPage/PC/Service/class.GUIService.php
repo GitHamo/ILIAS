@@ -63,4 +63,20 @@ class GUIService
         );
     }
 
+    public function copySelfAssQuestionTableBuilder(
+        int $pool_ref_id,
+        int $pool_obj_id,
+        object $parent_gui,
+        string $parent_cmd
+    ): Question\CopySelfAssQuestionTableBuilder {
+        return new Question\CopySelfAssQuestionTableBuilder(
+            $this->domain_service,
+            $this->gui_service,
+            $pool_ref_id,
+            $pool_obj_id,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
+
 }

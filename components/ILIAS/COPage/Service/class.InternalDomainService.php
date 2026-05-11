@@ -132,4 +132,9 @@ class InternalDomainService
         }
         return null;
     }
+
+    public function testQuestion():\ILIAS\TestQuestionPool\Questions\PublicInterface
+    {
+        return $this->DIC->testQuestion();
+    }
 }
