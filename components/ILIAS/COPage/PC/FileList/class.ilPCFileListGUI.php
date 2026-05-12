@@ -586,7 +586,6 @@ class ilPCFileListGUI extends ilPageContentGUI
         $ilCtrl = $this->ctrl;
         $table = $this->getFileListTable();
         $pos = $table->getData();
-        //$pos = $this->request->getIntArray("position");
         if (is_array($pos) && count($pos) > 0) {
             $this->content_obj->savePositions($pos);
         }
