@@ -93,4 +93,18 @@ class GUIService
         );
     }
 
+    public function gridCellTableBuilder(
+        \ilPCGrid $grid,
+        object $parent_gui,
+        string $parent_cmd
+    ): Grid\GridCellTableBuilder {
+        return new Grid\GridCellTableBuilder(
+            $this->domain_service,
+            $this->gui_service,
+            $grid,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
+
 }

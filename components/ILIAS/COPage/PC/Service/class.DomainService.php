@@ -31,6 +31,7 @@ use ILIAS\COPage\PC\MediaObject\MediaObjectManager;
 use ILIAS\COPage\PC\Question\QuestionManager;
 use ILIAS\COPage\PC\Resources\ResourcesManager;
 use ILIAS\COPage\PC\Plugged\PluggedManager;
+use ILIAS\COPage\PC\Grid\GridCellRetrieval;
 
 /**
  * @author Alexander Killing <killing@leifos.de>
@@ -122,6 +123,13 @@ class DomainService
     public function plugged(): PluggedManager
     {
         return new PluggedManager();
+    }
+
+    public function gridCellRetrieval(\ilPCGrid $grid): GridCellRetrieval
+    {
+        return new GridCellRetrieval(
+            $grid
+        );
     }
 
 }
