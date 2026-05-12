@@ -80,6 +80,14 @@ class DomainService
         return new FileListManager();
     }
 
+    public function fileListRetrieval(\ilPCFileList $file_list): FileList\FileListRetrieval
+    {
+        return new FileList\FileListRetrieval(
+            $this->domain_service,
+            $file_list
+        );
+    }
+
     public function mediaObject(): MediaObjectManager
     {
         return new MediaObjectManager();

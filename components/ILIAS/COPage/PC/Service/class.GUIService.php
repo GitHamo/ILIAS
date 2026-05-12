@@ -63,6 +63,20 @@ class GUIService
         );
     }
 
+    public function fileListTableBuilder(
+        \ilPCFileList $file_list,
+        object $parent_gui,
+        string $parent_cmd
+    ): FileList\FileListTableBuilder {
+        return new FileList\FileListTableBuilder(
+            $this->domain_service,
+            $this->gui_service,
+            $file_list,
+            $parent_gui,
+            $parent_cmd
+        );
+    }
+
     public function copySelfAssQuestionTableBuilder(
         int $pool_ref_id,
         int $pool_obj_id,
