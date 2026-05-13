@@ -53,14 +53,6 @@ final class ActivityActionTest extends TestCase
             ->willReturn($userId);
 
         $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->with(
-                self::identicalTo($userId),
-                self::identicalTo($paramsWithUserId),
-            )
-            ->willReturn(true);
-
-        $this->activityMock->expects(self::once())
             ->method('maybePerformAs')
             ->with(
                 self::equalTo($userId),
@@ -91,11 +83,6 @@ final class ActivityActionTest extends TestCase
         $this->dataDescriptionMock->method('matches')->willReturn(true);
 
         $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->with(0, self::equalTo($expectedParams))
-            ->willReturn(true);
-
-        $this->activityMock->expects(self::once())
             ->method('maybePerformAs')
             ->with(self::equalTo(0), self::equalTo($expectedParams));
 
@@ -122,11 +109,6 @@ final class ActivityActionTest extends TestCase
             'getOutputDescription' => $this->dataDescriptionMock,
         ]);
         $action = new ActivityAction($activityMock);
-
-        $activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->with(0, self::equalTo($expectedParams))
-            ->willReturn(true);
 
         $activityMock->expects(self::once())
             ->method('maybePerformAs')
@@ -156,38 +138,17 @@ final class ActivityActionTest extends TestCase
         $action = new ActivityAction($activityMock);
 
         $activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->with(0, self::equalTo($expectedParams))
-            ->willReturn(true);
-
-        $activityMock->expects(self::once())
             ->method('maybePerformAs')
             ->with(self::equalTo(0), self::equalTo($expectedParams));
 
         ($action)($params, null);
     }
 
-    public function testDoesNotPerformActivityIfUserIsNotAuthorized(): void
-    {
-        $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(false);
-
-        $this->activityMock->expects(self::never())
-            ->method('maybePerformAs');
-
-        self::expectException(AuthorizationException::class);
-        self::expectExceptionMessage('You are not allowed to perform this activity.');
-        self::expectExceptionCode(403);
-
-        ($this->action)([], null);
-    }
-
     public function testThrowsExceptionIfPerformResultHasError(): void
     {
         $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
+            ->method('maybePerformAs')
+            ->willReturn($this->dataResultMock);
 
         $this->dataResultMock->expects(self::once())
             ->method('isError')
@@ -205,10 +166,6 @@ final class ActivityActionTest extends TestCase
     public function testThrowsExceptionIfPerformResultHasStringError(): void
     {
         $errorMessage = 'error-string';
-
-        $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
 
         $this->dataResultMock->expects(self::once())
             ->method('isError')
@@ -231,10 +188,6 @@ final class ActivityActionTest extends TestCase
         $result = 'some-string-result';
 
         $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
-
-        $this->activityMock->expects(self::once())
             ->method('perform')
             ->willReturn($result);
 
@@ -246,10 +199,6 @@ final class ActivityActionTest extends TestCase
     public function testReturnsNullIfPerformReturnsNull(): void
     {
         $this->markTestSkipped('This is not possible anymore');
-
-        $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
 
         $this->activityMock->expects(self::once())
             ->method('perform')
@@ -265,10 +214,6 @@ final class ActivityActionTest extends TestCase
         $returnValue = 'some-value';
 
         $this->dataDescriptionMock->method('matches')->willReturn(true);
-
-        $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
 
         $this->dataResultMock->expects(self::once())
             ->method('isError')
@@ -290,10 +235,6 @@ final class ActivityActionTest extends TestCase
     public function testThrowsExceptionIfOutputDescriptionDoesNotMatch(): void
     {
         $this->dataDescriptionMock->method('matches')->willReturn(false);
-
-        $this->activityMock->expects(self::once())
-            ->method('isAllowedToPerform')
-            ->willReturn(true);
 
         $this->dataResultMock->expects(self::once())
             ->method('isError')

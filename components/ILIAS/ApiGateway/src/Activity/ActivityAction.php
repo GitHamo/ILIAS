@@ -21,7 +21,6 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Activity;
 
 use DomainException;
-use ILIAS\ApiGateway\Application\Exception\AuthorizationException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\Component\Activities\Activity;
@@ -36,7 +35,8 @@ class ActivityAction implements Action
 
     public function __construct(
         private readonly Activity $activity,
-    ) {}
+    ) {
+    }
 
     #[\Override]
     public function __invoke(array $params, ?AuthUser $user): mixed
@@ -51,9 +51,6 @@ class ActivityAction implements Action
 
         $parameters['auth_user_id'] = $userId;
 
-        if (false === $this->activity->isAllowedToPerform($userId, $parameters)) {
-            throw new AuthorizationException('You are not allowed to perform this activity.');
-        }
 
         $result = $this->activity->maybePerformAs($userId, $parameters);
 
