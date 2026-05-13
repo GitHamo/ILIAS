@@ -31,23 +31,23 @@
 <!-- language file start -->
 common#:#obj_apig#:#Webservices
 common#:#obj_apig_desc#:#Konfiguration der API Webservices
-#webservices#:#Webservices
-#webservices_description#:#Konfiguration der API Webservices
-#settings_general#:#Allgemein
-#settings_docs#:#Dokumentation
-#general_settings#:#Allgemeine Einstellungen
-#rest_settings#:#REST Einstellungen
-#auth_secret_key_label#:#Geheimschlüssel
-#auth_secret_key_info#:#Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Geheimschlüssel generiert
-#auth_algo_encryption_label#:#Verschlüsselungs-Algo
-#auth_algo_encryption_info#:#Algorithmus zur Erstellung der JWT-Signatur
-#auth_algo_hash_label#:#Hashing-Algo
-#auth_algo_hash_info#:#Algorithmus zum sicheren Speichern von Refresh Tokens
-#auth_token_expiry_access_label#:#Ablaufzeit des Access Tokens
-#auth_token_expiry_access_info#:#Lebensdauer eines Access Tokens in Sekunden
-#auth_token_expiry_refresh_label#:#Ablaufzeit des Refresh Tokens
-#auth_token_expiry_refresh_info#:#Lebensdauer eines Refresh Tokens in Sekunden
-#rest_ws_enabled_label#:#Webservice aktivieren
-#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
-#rest_docs_enabled_label#:#Dokumentation aktivieren
-#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren
+webservices#:#Webservices
+webservices_description#:#Konfiguration der API Webservices
+settings_general#:#Allgemein
+settings_docs#:#Dokumentation
+general_settings#:#Allgemeine Einstellungen
+rest_settings#:#REST Einstellungen
+auth_secret_key_label#:#Geheimschlüssel
+auth_secret_key_info#:#Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Geheimschlüssel generiert
+auth_algo_encryption_label#:#Verschlüsselungs-Algo
+auth_algo_encryption_info#:#Algorithmus zur Erstellung der JWT-Signatur
+auth_algo_hash_label#:#Hashing-Algo
+auth_algo_hash_info#:#Algorithmus zum sicheren Speichern von Refresh Tokens
+auth_token_expiry_access_label#:#Ablaufzeit des Access Tokens
+auth_token_expiry_access_info#:#Lebensdauer eines Access Tokens in Sekunden
+auth_token_expiry_refresh_label#:#Ablaufzeit des Refresh Tokens
+auth_token_expiry_refresh_info#:#Lebensdauer eines Refresh Tokens in Sekunden
+rest_ws_enabled_label#:#Webservice aktivieren
+rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
+rest_docs_enabled_label#:#Dokumentation aktivieren
+rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren

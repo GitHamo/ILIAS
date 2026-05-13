@@ -31,23 +31,23 @@
 <!-- language file start -->
 common#:#obj_apig#:#خدمات الويب
 common#:#obj_apig_desc#:#تهيئة خدمات الويب API
-#webservices#:#خدمات الويب
-#webservices_description#:#تهيئة خدمات الويب API
-#settings_general#:#عام
-#settings_docs#:#وثائق المساعدة
-#general_settings#:#الإعدادات العامة
-#rest_settings#:#إعدادات REST
-#auth_secret_key_label#:#المفتاح السري
-#auth_secret_key_info#:#اتركه فارغًا وسيتم إنشاء مفتاح سري عشوائي جديد.
-#auth_algo_encryption_label#:#خوارزمية التشفير
-#auth_algo_encryption_info#:#الخوارزمية المستخدمة لإنشاء توقيع JWT
-#auth_algo_hash_label#:#خوارزمية التجزئة
-#auth_algo_hash_info#:#الخوارزمية المستخدمة لتخزين الرموز المميزة للتحديث بأمان
-#auth_token_expiry_access_label#:#انتهاء صلاحية رمز الوصول
-#auth_token_expiry_access_info#:#مدة صلاحية رمز الوصول بالثواني
-#auth_token_expiry_refresh_label#:#انتهاء صلاحية رمز التحديث
-#auth_token_expiry_refresh_info#:#مدة صلاحية رمز التحديث بالثواني
-#rest_ws_enabled_label#:#تفعيل خدمة الويب
-#rest_ws_enabled_info#:#ما إذا كانت خدمة الويب مفعلة أم لا
-#rest_docs_enabled_label#:#تفعيل وثائق المساعدة
-#rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا
+webservices#:#خدمات الويب
+webservices_description#:#تهيئة خدمات الويب API
+settings_general#:#عام
+settings_docs#:#وثائق المساعدة
+general_settings#:#الإعدادات العامة
+rest_settings#:#إعدادات REST
+auth_secret_key_label#:#المفتاح السري
+auth_secret_key_info#:#اتركه فارغًا وسيتم إنشاء مفتاح سري عشوائي جديد.
+auth_algo_encryption_label#:#خوارزمية التشفير
+auth_algo_encryption_info#:#الخوارزمية المستخدمة لإنشاء توقيع JWT
+auth_algo_hash_label#:#خوارزمية التجزئة
+auth_algo_hash_info#:#الخوارزمية المستخدمة لتخزين الرموز المميزة للتحديث بأمان
+auth_token_expiry_access_label#:#انتهاء صلاحية رمز الوصول
+auth_token_expiry_access_info#:#مدة صلاحية رمز الوصول بالثواني
+auth_token_expiry_refresh_label#:#انتهاء صلاحية رمز التحديث
+auth_token_expiry_refresh_info#:#مدة صلاحية رمز التحديث بالثواني
+rest_ws_enabled_label#:#تفعيل خدمة الويب
+rest_ws_enabled_info#:#ما إذا كانت خدمة الويب مفعلة أم لا
+rest_docs_enabled_label#:#تفعيل وثائق المساعدة
+rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا

@@ -30,24 +30,24 @@
 // Language file names refer to ISO 639, see: http://www.oasis-open.org/cover/iso639a.html
 <!-- language file start -->
 common#:#obj_apig#:#Webservices
-common#:#obj_apig_desc#:#Konfiguration der API Webservices
-#webservices#:#Webservices
-#webservices_description#:#Configuration of API Webservices
-#settings_general#:#General
-#settings_docs#:#Documentation
-#general_settings#:#General Settings
-#rest_settings#:#REST Settings
-#auth_secret_key_label#:#Secret Key
-#auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
-#auth_algo_encryption_label#:#Encryption algo
-#auth_algo_encryption_info#:#Algorithm used for JWT signature creation
-#auth_algo_hash_label#:#Hashing algo
-#auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
-#auth_token_expiry_access_label#:#Access Token Expiry
-#auth_token_expiry_access_info#:#Lifespan of an access token in seconds
-#auth_token_expiry_refresh_label#:#Refresh Token Expiry
-#auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
-#rest_ws_enabled_label#:#Activate Webservice
-#rest_ws_enabled_info#:#Webservice enabled or not
-#rest_docs_enabled_label#:#Activate Documentation
-#rest_docs_enabled_info#:#Allow guest access to the auto-generated documentation
+common#:#obj_apig_desc#:#Configuration of API Webservices
+webservices#:#Webservices
+webservices_description#:#Configuration of API Webservices
+settings_general#:#General
+settings_docs#:#Documentation
+general_settings#:#General Settings
+rest_settings#:#REST Settings
+auth_secret_key_label#:#Secret Key
+auth_secret_key_info#:#Leave it blank and a new random secret key will be generated.
+auth_algo_encryption_label#:#Encryption algo
+auth_algo_encryption_info#:#Algorithm used for JWT signature creation
+auth_algo_hash_label#:#Hashing algo
+auth_algo_hash_info#:#Algorithm used to securely store refresh tokens
+auth_token_expiry_access_label#:#Access Token Expiry
+auth_token_expiry_access_info#:#Lifespan of an access token in seconds
+auth_token_expiry_refresh_label#:#Refresh Token Expiry
+auth_token_expiry_refresh_info#:#Lifespan of a refresh token in seconds
+rest_ws_enabled_label#:#Activate Webservice
+rest_ws_enabled_info#:#Webservice enabled or not
+rest_docs_enabled_label#:#Activate Documentation
+rest_docs_enabled_info#:#Allow guest access to the auto-generated documentation
