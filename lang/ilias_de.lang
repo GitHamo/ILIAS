@@ -13438,7 +13438,6 @@ poll#:#poll_delete_votes_sure#:#Sind Sie sicher, dass Sie alle Stimmabgaben lös
 poll#:#poll_edit#:#Abstimmung editieren
 poll#:#poll_edit_question#:#Frage bearbeiten
 poll#:#poll_image#:#Bild
-poll#:#poll_import#:#Abstimmung importieren
 poll#:#poll_limit_not_below_answer_count#:#Die begrenzte Anzahl muss kleiner sein als die Anzahl der möglichen Antworten.
 poll#:#poll_limit_number_of_answers#:#Anzahl Antworten begrenzen
 poll#:#poll_max_number_of_answers#:#Maximale Anzahl pro Person
