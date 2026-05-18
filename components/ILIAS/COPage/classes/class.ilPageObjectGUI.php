@@ -2400,10 +2400,10 @@ class ilPageObjectGUI
         if ($ids[0] == 0) {
             $left = $ids[1];
             $right = $ids[0];
-        } else if ($ids[1] == 0) {
+        } elseif ($ids[1] == 0) {
             $left = $ids[0];
             $right = $ids[1];
-        } else if ($ids[0] > $ids[1]) {
+        } elseif ($ids[0] > $ids[1]) {
             $left = $ids[1];
             $right = $ids[0];
         } else {

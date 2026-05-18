@@ -445,7 +445,7 @@ class ilPCFileListGUI extends ilPageContentGUI
         $tpl->setContent($table->render());
     }
 
-    protected function getFileListTable() : TableAdapterGUI
+    protected function getFileListTable(): TableAdapterGUI
     {
         /** @var ilPCFileList $fl */
         $fl = $this->content_obj;
@@ -623,7 +623,7 @@ class ilPCFileListGUI extends ilPageContentGUI
             ->required();
     }
 
-    protected function saveStyleClass() : void
+    protected function saveStyleClass(): void
     {
         $file_item_id = $this->request->getString("file_item_id");
         $form = $this->getEditStyleForm($file_item_id);

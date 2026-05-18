@@ -149,7 +149,7 @@ class InternalDomainService
         return new Layout\PageLayoutRetrieval();
     }
 
-    public function testQuestion():\ILIAS\TestQuestionPool\Questions\PublicInterface
+    public function testQuestion(): \ILIAS\TestQuestionPool\Questions\PublicInterface
     {
         return $this->DIC->testQuestion();
     }

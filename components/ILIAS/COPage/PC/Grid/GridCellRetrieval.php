@@ -1,4 +1,5 @@
 <?php
+
 /* Copyright (c) 1998-2024 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 declare(strict_types=1);

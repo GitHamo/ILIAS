@@ -223,7 +223,7 @@ class ilPCGridGUI extends ilPageContentGUI
         $this->tpl->setContent($table->render());
     }
 
-    protected function getGridTable() : TableAdapterGUI
+    protected function getGridTable(): TableAdapterGUI
     {
         return $this->gui->pc()->gridCellTableBuilder(
             $this->content_obj,
