@@ -49,7 +49,10 @@ class ilLDAPServerTest extends TestCase
             $this->getMockBuilder(ilErrorHandling::class)->disableOriginalConstructor()->getMock()
         );
 
-        $logger = $this->getMockBuilder(ilLogger::class)->disableOriginalConstructor();
+        $logger = $this
+            ->getMockBuilder(ilLogger::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $logger_factory = $this->getMockBuilder(ilLoggerFactory::class)->disableOriginalConstructor()->getMock();
         $logger_factory->method('getComponentLogger')->willReturn($logger);
         $this->setGlobalVariable(
@@ -95,7 +98,7 @@ class ilLDAPServerTest extends TestCase
         global $DIC;
 
         //setup some method calls
-        /** @var $setting MockObject */
+        /** @var MockObject&ilSetting $setting */
         $setting = $DIC['ilSetting'];
         $setting->method('get')->willReturnCallback(
             function ($arg) {
@@ -106,7 +109,7 @@ class ilLDAPServerTest extends TestCase
                 throw new RuntimeException($arg);
             }
         );
-        /** @var $ilDB MockObject */
+        /** @var MockObject&ilDBInterface $ilDB */
         $data = null;
         $ilDB = $DIC['ilDB'];
         $ilDB->expects($this->never())->method('quote');
