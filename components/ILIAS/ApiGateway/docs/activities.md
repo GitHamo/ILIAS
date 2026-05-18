@@ -135,6 +135,36 @@ To allow the Service Facade to return correct status codes, Activities should re
 
 ### The Error Pattern
 Return a `Result\Error` object wrapping a classification instance. Use string identifiers (e.g., `NOT_FOUND`, `FORBIDDEN`) and standard HTTP status codes for mapping.
+> **Note**: The `ResultError` class used in the examples below **does not currently exist** in the ILIAS core, and there is no current plan to include it. It is provided here as a **conceptual example** to demonstrate the recommended pattern for structured error classification. If you implement a similar mechanism in your component, it should follow this idea:
+
+```php
+// CONCEPTUAL EXAMPLE ONLY (This class does not exist in core)
+namespace ILIAS\Component\Activities;
+
+use Exception;
+
+/**
+ * Conceptual example of a standardized error classification.
+ */
+final class ResultError extends Exception
+{
+...
+    public function __construct(
+        private readonly string $type,
+        private readonly int $code,
+        private readonly string $message,
+    ) {
+        parent::__construct($message, $code);
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+}
+```
+
+#### Usage Example
 
 ```php
 use ILIAS\Component\Activities\ResultError;
