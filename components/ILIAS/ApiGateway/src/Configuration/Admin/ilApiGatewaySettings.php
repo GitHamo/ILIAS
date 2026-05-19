@@ -81,7 +81,7 @@ class ilApiGatewaySettings
 
     public static function getInstance(): ilApiGatewaySettings
     {
-        if (!self::$instance) {
+        if (!self::$instance instanceof ilApiGatewaySettings) {
             self::$instance = new self();
         }
 
@@ -215,7 +215,7 @@ class ilApiGatewaySettings
                     break;
             }
 
-            $transformed[$key] = $a_value;
+            $transformed[$key] = $this->settings_data[$key] = $a_value;
         }
 
         // Persist only after all validations pass
