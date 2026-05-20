@@ -22,6 +22,14 @@ Let's break down the three approaches.
 
 ---
 
+## Security Warning
+The `ApiGateway` does not perform automatic input sanitization for routes. Every Route is responsible for its own data integrity. Note that each new endpoint inherently increases the attack surface, introducing risks such as injection attacks and unauthorized access.
+
+- **Validation & Sanitization**: Developers must perform robust input validation and output sanitization within the `Route` action or the dependencies it uses. 
+- **Layered Defense**: Middleware handles protocol-level authentication (tokens/scopes), but this is not a replacement for proper validation within the `Route` logic.
+
+---
+
 ## TL;DR
 
 ### Register a new endpoint

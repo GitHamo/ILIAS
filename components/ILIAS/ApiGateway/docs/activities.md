@@ -14,6 +14,15 @@
 
 This guide defines the standards for implementing `ILIAS\Component\Activities\Activity` classes that are fully compatible with the **ApiGateway component** (The Service Facade). Following these patterns ensures your component automatically benefits from schema generation and structured error handling, regardless of the underlying protocol (e.g., REST, GraphQL).
 
+## Security Warning
+The `ApiGateway` does not perform automatic input sanitization for Activities. Every Activity is responsible for its own data integrity. Note that each new Activity inherently increases the attack surface, introducing risks such as injection attacks and unauthorized access.
+
+- **Validation & Sanitization**: Developers must perform robust input validation and output sanitization within the `Activity` logic or the dependencies it uses. 
+- **Layered Defense**: Middleware handles protocol-level authentication (tokens/scopes), but this is not a replacement for proper validation within the `Activity`.
+- **Principle of Least Privilege**: Ensure `isAllowedToPerform()` correctly enforces business-level authorization to prevent unauthorized object access.
+
+---
+
 ## The Main Service Contract
 
 The Gateway uses your Activity as the **primary source** for the service contract.
