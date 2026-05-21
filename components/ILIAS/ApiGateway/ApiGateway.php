@@ -54,7 +54,7 @@ class ApiGateway implements Component\Component
         array | \ArrayAccess &$internal,
     ): void {
         $contribute[\ILIAS\Setup\Agent::class] = fn() =>
-        new ApiGateway\Setup\ApiGatewaySetupAgent(
+        new ApiGateway\Setup\ilApiGatewaySetupAgent(
             $pull[\ILIAS\Refinery\Factory::class],
         );
 

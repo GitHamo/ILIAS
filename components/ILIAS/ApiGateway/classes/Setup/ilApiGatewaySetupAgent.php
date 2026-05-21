@@ -28,7 +28,7 @@ use ilObjApiGateway;
 use ilTreeAdminNodeAddedObjective;
 use Override;
 
-class ApiGatewaySetupAgent extends Setup\Agent\NullAgent
+class ilApiGatewaySetupAgent extends Setup\Agent\NullAgent
 {
     #[Override]
     public function getUpdateObjective(?Setup\Config $config = null): Setup\Objective
