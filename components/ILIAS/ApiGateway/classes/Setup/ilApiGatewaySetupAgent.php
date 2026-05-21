@@ -44,6 +44,18 @@ class ilApiGatewaySetupAgent extends Setup\Agent\NullAgent
     #[Override]
     public function getStatusObjective(Setup\Metrics\Storage $storage): Setup\Objective
     {
-        return new ilDatabaseUpdateStepsMetricsCollectedObjective($storage, new ApiGatewayDBUpdateSteps());
+        return new Setup\ObjectiveCollection(
+            'Component ApiGateway',
+            true,
+            // component info & settings
+            new ApiGatewayMetricsCollectedObjective(
+                $storage,
+            ),
+            // database migrations
+            new ilDatabaseUpdateStepsMetricsCollectedObjective(
+                $storage,
+                new ApiGatewayDBUpdateSteps(),
+            ),
+        );
     }
 }
