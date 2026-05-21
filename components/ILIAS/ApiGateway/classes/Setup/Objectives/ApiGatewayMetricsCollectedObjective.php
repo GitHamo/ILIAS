@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Setup;
+namespace ILIAS\ApiGateway\Setup\Objectives;
 
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\Setup;

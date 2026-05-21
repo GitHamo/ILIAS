@@ -22,7 +22,7 @@ namespace ILIAS\ApiGateway\Setup;
 
 use ilDatabaseUpdateStepsExecutedObjective;
 use ilDatabaseUpdateStepsMetricsCollectedObjective;
-use ILIAS\ApiGateway\Setup\Steps\ApiGatewayDBUpdateSteps;
+use ILIAS\ApiGateway\Setup\Steps\Objectives\ApiGatewayDBUpdateSteps;
 use ILIAS\Setup;
 use ilObjApiGateway;
 use ilTreeAdminNodeAddedObjective;
