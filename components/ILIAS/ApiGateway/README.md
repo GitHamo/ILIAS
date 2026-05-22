@@ -10,6 +10,7 @@ This document outlines the **ApiGateway component**, a foundational service for 
 - [Authentication](#authentication)
 - [Configuration](#configuration)
 - [Creating New API Endpoints](#creating-new-api-endpoints)
+    - [Developing Gateway-Compliant Activities](docs/activities.md)
 - [Standard Response Format](#standard-response-format)
 - [Middlewares](#middlewares)
 - [Logging](#logging)
@@ -68,6 +69,10 @@ Before you can use the API, you need to set it up and ensure it's running correc
         "data": "pong"
     }
     ```
+
+#### Postman Collection
+
+For a more interactive testing experience, you can import our pre-configured [Postman Collection](docs/rest/ILIAS-postman_collection.json). It includes automated scripts for token management and examples for all core routes.
 
 ### Authentication
 
