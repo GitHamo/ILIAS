@@ -75,6 +75,8 @@ final readonly class JwtService implements TokenProvider
 
         if ($isRefresh) {
             $payload['is_refresh'] = true;
+            // jti ensures refresh tokens are unique even when generated in the same second
+            $payload['jti'] = bin2hex(random_bytes(16));
         }
 
         $token = JWT::encode(

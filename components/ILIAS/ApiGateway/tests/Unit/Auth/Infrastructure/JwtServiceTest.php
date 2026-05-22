@@ -165,6 +165,43 @@ class JwtServiceTest extends TestCase
         $this->service->decode($tokenString);
     }
 
+    public function testAccessTokenDoesNotContainJti(): void
+    {
+        $issuedAt = new DateTimeImmutable();
+        $expiresIn = $issuedAt->modify('+1 hour');
+
+        $token = $this->service->generate(self::USER_ID, $issuedAt, $expiresIn);
+
+        $decodedPayload = $this->parsePayloadFromJwt($token->getToken());
+        self::assertArrayNotHasKey('jti', $decodedPayload);
+    }
+
+    public function testRefreshTokenContainsJti(): void
+    {
+        $issuedAt = new DateTimeImmutable();
+        $expiresIn = $issuedAt->modify('+1 day');
+
+        $token = $this->service->generate(self::USER_ID, $issuedAt, $expiresIn, true);
+
+        $decodedPayload = $this->parsePayloadFromJwt($token->getToken());
+        self::assertArrayHasKey('jti', $decodedPayload);
+    }
+
+    public function testRefreshTokenJtiIsUniqueAcrossGenerations(): void
+    {
+        $issuedAt = new DateTimeImmutable();
+        $expiresIn = $issuedAt->modify('+1 day');
+
+        $token1 = $this->service->generate(self::USER_ID, $issuedAt, $expiresIn, true);
+        $token2 = $this->service->generate(self::USER_ID, $issuedAt, $expiresIn, true);
+
+        $payload1 = $this->parsePayloadFromJwt($token1->getToken());
+        $payload2 = $this->parsePayloadFromJwt($token2->getToken());
+
+        self::assertArrayHasKey('jti', $payload1);
+        self::assertArrayHasKey('jti', $payload2);
+    }
+
     /**
      * @param array<string, string|int|bool> $overridePayload
      */
