@@ -203,6 +203,14 @@ class JwtServiceTest extends TestCase
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function parsePayloadFromJwt(string $tokenString): array
+    {
+        return (array) JWT::decode($tokenString, new Key(self::SECRET_KEY, self::ALGORITHM));
+    }
+
+    /**
      * @param array<string, string|int|bool> $overridePayload
      */
     private function generateTestToken(array $overridePayload = []): string
