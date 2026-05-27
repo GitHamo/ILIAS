@@ -27,8 +27,8 @@ use Throwable;
 class AuthorizationException extends Exception
 {
     public function __construct(
-        string $message = "",
-        Throwable|null $previous = null
+        string $message = "Authorization failed.",
+        Throwable|null $previous = null,
     ) {
         parent::__construct($message, StatusCode::HTTP_FORBIDDEN, $previous);
     }

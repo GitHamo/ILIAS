@@ -24,11 +24,17 @@ use Exception;
 use ILIAS\HTTP\StatusCode;
 use Throwable;
 
+/**
+ * Base exception for authentication failures (HTTP 401 Unauthorized).
+ *
+ * This exception and its subclasses are used to indicate issues with client authentication,
+ * such as invalid credentials, missing tokens, or expired tokens.
+ */
 class AuthenticationException extends Exception
 {
     public function __construct(
-        string $message = "",
-        Throwable|null $previous = null
+        string $message = "Authentication failed.",
+        Throwable|null $previous = null,
     ) {
         parent::__construct($message, StatusCode::HTTP_UNAUTHORIZED, $previous);
     }
