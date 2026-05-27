@@ -7,6 +7,7 @@ namespace Tests\Unit\Activity;
 use ILIAS\ApiGateway\Activity\ActivityAction;
 use ILIAS\ApiGateway\Activity\ActivityNamespace;
 use ILIAS\ApiGateway\Activity\ActivityRoute;
+use ILIAS\ApiGateway\Routing\HttpMethod;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
@@ -43,7 +44,7 @@ final class ActivityRouteTest extends TestCase
     #[DataProvider('activityTypeProvider')]
     public function testGetMethodReturnsCorrectHttpVerbsForActivityType(
         ActivityType $type,
-        string $expected,
+        HttpMethod $expected,
     ): void {
         $actual = new ActivityRoute(
             $this->createConfiguredMock(Activity::class, ['getType' => $type]),
@@ -52,18 +53,21 @@ final class ActivityRouteTest extends TestCase
             $this->middlewares,
         );
 
-        self::assertSame($expected, $actual->getMethod());
+        self::assertSame(
+            $expected->value,
+            $actual->getMethod(),
+        );
     }
 
     /**
      * @return array<string, list<mixed>>
-     * @psalm-return array<string, array{ActivityType, string}>
+     * @psalm-return array<string, array{ActivityType, HttpMethod}>
      */
     public static function activityTypeProvider(): array
     {
         return [
-            'Command activity returns POST' => [ActivityType::Command, 'POST'],
-            'Query activity returns GET' => [ActivityType::Query, 'GET'],
+            'Command activity returns POST' => [ActivityType::Command, HttpMethod::POST],
+            'Query activity returns GET' => [ActivityType::Query, HttpMethod::GET],
         ];
     }
 

@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Activity;
 
 use ILIAS\ApiGateway\Routing\Action;
+use ILIAS\ApiGateway\Routing\HttpMethod;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
@@ -56,8 +57,8 @@ readonly class ActivityRoute implements Route
     public function getMethod(): string
     {
         return match ($this->activity->getType()) {
-            ActivityType::Command => 'POST',
-            ActivityType::Query => 'GET',
+            ActivityType::Command => HttpMethod::POST->value,
+            ActivityType::Query => HttpMethod::GET->value,
         };
     }
 
