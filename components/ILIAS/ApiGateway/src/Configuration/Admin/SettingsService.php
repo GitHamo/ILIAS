@@ -18,21 +18,22 @@
 
 declare(strict_types=1);
 
-namespace ILIAS\ApiGateway\Configuration\Admin\UI\Form;
+namespace ILIAS\ApiGateway\Configuration\Admin;
 
-use ilCtrl;
-use ILIAS\ApiGateway\Configuration\Admin\SettingsService;
-use ILIAS\ApiGateway\Configuration\Admin\UI\FormGUI;
-use ILIAS\UI\Factory as UIFactory;
-use ilLanguage;
-
-abstract readonly class SettingsForm implements FormGUI
+/**
+ * Interface for administration settings service.
+ */
+interface SettingsService
 {
-    public function __construct(
-        protected SettingsService $settings_service,
-        protected ilCtrl $ctrl,
-        protected ilLanguage $lng,
-        protected UIFactory $ui_factory,
-    ) {
-    }
+    /**
+     * @return null|mixed|array<string, mixed>
+     */
+    public function getData(?string $key = null): mixed;
+
+    /**
+     * @param array<mixed, mixed> $data
+     */
+    public function setData(array $data): void;
+
+    public function save(): void;
 }

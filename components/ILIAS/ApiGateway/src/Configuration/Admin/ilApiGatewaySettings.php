@@ -30,6 +30,7 @@ use ilSetting;
 use InvalidArgumentException;
 use JsonException;
 use LogicException;
+use Override;
 use RuntimeException;
 
 use function is_array;
@@ -41,7 +42,7 @@ use function strlen;
 /**
  * @codeCoverageIgnore To be tested when settings are loaded by DI not global
  */
-class ilApiGatewaySettings
+final class ilApiGatewaySettings implements SettingsService
 {
     private const string MODULE_NAME = 'apigateway';
     private const string AUTH_SECRET_KEY = SystemSetting::AUTH_SECRET_KEY->value;
@@ -88,9 +89,7 @@ class ilApiGatewaySettings
         return self::$instance;
     }
 
-    /**
-     * @return null|mixed|array<string, mixed>
-     */
+    #[Override]
     public function getData(?string $key = null): mixed
     {
         if ($key === null) {
@@ -104,9 +103,7 @@ class ilApiGatewaySettings
         return $this->settings_data[$key];
     }
 
-    /**
-     * @param array<mixed, mixed> $data
-     */
+    #[Override]
     public function setData(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -123,6 +120,7 @@ class ilApiGatewaySettings
         }
     }
 
+    #[Override]
     public function save(): void
     {
         $transformed = [];
