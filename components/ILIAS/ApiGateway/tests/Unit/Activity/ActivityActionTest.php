@@ -90,60 +90,6 @@ final class ActivityActionTest extends TestCase
         ($this->action)($params, null);
     }
 
-    public function testTransformsIdToObjectId(): void
-    {
-        $params = [
-            'id' => 456,
-            'foo' => 'bar',
-        ];
-
-        $expectedParams = [
-            'object_id' => 456,
-            'foo' => 'bar',
-            'auth_user_id' => 0,
-        ];
-
-        $this->dataDescriptionMock->method('matches')->willReturn(true);
-
-        $activityMock = $this->createConfiguredMock(ObjectActivity::class, [
-            'getOutputDescription' => $this->dataDescriptionMock,
-        ]);
-        $action = new ActivityAction($activityMock);
-
-        $activityMock->expects(self::once())
-            ->method('maybePerformAs')
-            ->with(self::equalTo(0), self::equalTo($expectedParams));
-
-        ($action)($params, null);
-    }
-
-    public function testIgnoresTransformIdToObjectIdIfIdIsNotNumeric(): void
-    {
-        $params = [
-            'id' => 'this-is-not-numeric',
-            'foo' => 'bar',
-        ];
-
-        $expectedParams = [
-            'id' => 'this-is-not-numeric',
-            'foo' => 'bar',
-            'auth_user_id' => 0,
-        ];
-
-        $this->dataDescriptionMock->method('matches')->willReturn(true);
-
-        $activityMock = $this->createConfiguredMock(ObjectActivity::class, [
-            'getOutputDescription' => $this->dataDescriptionMock,
-        ]);
-        $action = new ActivityAction($activityMock);
-
-        $activityMock->expects(self::once())
-            ->method('maybePerformAs')
-            ->with(self::equalTo(0), self::equalTo($expectedParams));
-
-        ($action)($params, null);
-    }
-
     public function testThrowsExceptionIfPerformResultHasError(): void
     {
         $this->activityMock->expects(self::once())

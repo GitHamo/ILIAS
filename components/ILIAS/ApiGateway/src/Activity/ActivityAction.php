@@ -44,11 +44,6 @@ class ActivityAction implements Action
         $userId = $user ? $user->getId() : self::GUEST_USER_ID;
         $parameters = $this->validate($params);
 
-        if ($this->activity instanceof ObjectActivity && isset($parameters['id']) && is_numeric($parameters['id'])) {
-            $parameters['object_id'] = (int) $parameters['id'];
-            unset($parameters['id']);
-        }
-
         $parameters['auth_user_id'] = $userId;
 
 
