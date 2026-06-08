@@ -88,7 +88,8 @@ To keep URLs concise, the Gateway automatically trims prefixes and suffixes:
 If your Activity refers to a specific object (repository object or internal component entity), it should implement **`ILIAS\Component\Activities\ObjectActivity`**.
 
 - **Automatic Routing**: The Gateway automatically appends **`/{id}`** to the URL path.
-- **Fixed Input**: `getInputDescription()` must include a field named `id` (usually as a string/numeric accepting the object identifier).
+- **Accessing the ID**: The value of this `{id}` will be provided in the parameter array passed to your `perform` method under the key `'id'`. This `'id'` value will override any client-provided input with the same key.
+- **Fixed Input**: You should include this `'id'` in your `Activity`'s `getInputDescription()` method so it is included in the automated validation as a required field (typically an integer or a string/UUID).
 - **Metadata**: You must implement `getTargetType()`, returning a short alphanumeric string representing the object type (e.g., `crs`, `usr`).
 
 ## Authorization Responsibility
