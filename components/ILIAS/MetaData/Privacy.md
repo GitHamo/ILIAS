@@ -1,4 +1,4 @@
-# Meta Data Service Privacy
+# Meta Data Privacy
 
 This documentation does not warrant completeness or correctness. Please report any
 missing or wrong information using the [ILIAS issue tracker](https://mantis.ilias.de)
@@ -7,6 +7,10 @@ or contribute a fix via [Pull Request](docs/development/contributing.md#pull-req
 Profile data is only stored in metadata-supporting objects and can therefore be viewed via the "Metadata" tab. 
 The Lifecycle and Meta-Metadata LOM metadata sections provide input fields for maintaining contributor data.
 With the exception of "Survey" and "Test" objects, no personal data is stored automatically.
+
+## Integrated Components
+The Meta Data component employs the following components, please consult the respective PRIVACY.md files:
+- Advanced Metadata
 
 ## Data being stored
 
