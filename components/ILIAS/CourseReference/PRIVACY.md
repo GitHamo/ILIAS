@@ -10,10 +10,10 @@ A course link makes it possible to call up an existing course from a different p
 
 ## Data being stored
 The course reference itself does not store any personal data.
-If changes have been made in the ‘Learning Progress tab in the course reference (e.g. adding ‘Mark’, ‘Remark’ or activating the ‘Completed’ checkbox if the learning progress settings are set accordingly), these are saved but not passed on to the corresponding course and vice versa.
+If changes have been made in the ‘Learning Progress‘ tab in the course reference (e.g. adding ‘Mark’, ‘Remark’ or activating the ‘Completed’ checkbox if the learning progress settings are set accordingly), these are saved but not passed on to the corresponding course and vice versa.
 
 ## Data being presented
-If  the setting “Adopted from Course “ is selected, the learning progress from the corresponding course, including first name, last name, login name, first and last access are presented. 
+If  the setting “Adopted from Course“ is selected, the learning progress from the corresponding course, including first name, last name, login name, first and last access are presented. 
 ## Data being deleted
 The course reference itself does not store or delete any personal data.
 ## Data being exported
