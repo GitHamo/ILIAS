@@ -64,8 +64,7 @@ final class ilFooterStandardGroupsProvider extends AbstractStaticFooterProvider
 
     private function buildURI(string $from_path): URI
     {
-        $request = $this->dic->http()->request()->getUri();
-        return new URI($request->getScheme() . '://' . $request->getHost() . '/' . ltrim($from_path, '/'));
+        return new URI(rtrim(ILIAS_HTTP_PATH, '/') . '/' . ltrim($from_path, '/'));
     }
 
     public function getEntries(): array
@@ -89,19 +88,16 @@ final class ilFooterStandardGroupsProvider extends AbstractStaticFooterProvider
             ->withParent($this->getIdentificationFor(ilFooterStandardGroups::LEGAL_INFORMATION));
 
         // system support contacts
-
-        $system_support_url = \ilSystemSupportContactsGUI::getFooterLink();
-        $system_support_title = \ilSystemSupportContactsGUI::getFooterText();
-        $entries[] = $this->item_factory
-            ->link(
-                $this->id_factory->identifier('system_support'),
-                $system_support_title
-            )
-            ->withAvailableCallable(
-                fn() => !empty($system_support_url)
-            )
-            ->withAction($this->buildURI($system_support_url))
-            ->withParent($this->getIdentificationFor(ilFooterStandardGroups::SUPPORT));
+        if (($system_support_url = \ilSystemSupportContactsGUI::getFooterLink()) !== null) {
+            $system_support_title = \ilSystemSupportContactsGUI::getFooterText();
+            $entries[] = $this->item_factory
+                ->link(
+                    $this->id_factory->identifier('system_support'),
+                    $system_support_title
+                )
+                ->withAction($system_support_url)
+                ->withParent($this->getIdentificationFor(ilFooterStandardGroups::SUPPORT));
+        }
 
         // output translation link
         $translation_url = \ilObjLanguageAccess::_getTranslationLink();

@@ -31,6 +31,7 @@ interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 * [Business Rules](#business-rules)
   * [Permission Handling in Recipient Validation](#permission-handling-in-recipient-validation)
   * [Mail Delivery Rules](#mail-delivery-rules)
+  * [Serial Letter and CC/BCC Recipients](#serial-letter-and-ccbcc-recipients)
 
 ## General
 
@@ -119,7 +120,7 @@ This feature does not apply for ILIAS-internal messages at all.
 some kind of reduced and **medium level** notification system
 dealing only with internal and external emails.
 It does neither care about low-level transport of messages
-(e.g. like sending external emails via SMTP), nor does it
+(e.g., like sending external emails via SMTP), nor does it
 act like a centralized notification system dealing with
 any kind/type of notification in ILIAS.
 
@@ -287,32 +288,75 @@ The consumer MUST ensure that the message does
 not contain any HTML.
 Line breaks MUST be provided by a line feed (LF) character.
 Violations against this rule may raise exceptions in
-future ILIAS releases.
+future ILIAS releases or lead to undesired and undefined behavior.
 
-Currently the mail system tries to magically detect
-whether or not the message body passed by consumers
+Starting with ILIAS 11, the message body is always
+interpreted as Markdown when using `ilMail` or the facades
+of it (see: [ilMailNotification](#ilmailnotification)
+and [ilSystemNotification](#ilsystemnotification)).
+
+This means, that if a message body is passed to `ilMail`,
+it is unconditionally processed by the Markdown parser
+(`ILIAS\Refinery\String\MarkdownFormattingToHTML`) when
+presenting it in ILIAS views, or if activated in the global
+administration, it is used within the HTML frame of an external
+email (see: [External Emails: HTML Frame](#external-emails-html-frame)).
+
+This has several important implications:
+
+* Markdown syntax is supported
+  Consumers may use standard Markdown features such as
+  paragraphs, lists, emphasis, etc.. This also means,
+  consumers must be aware that certain character sequences
+  (e.g. *, _, #, or indentation) may be interpreted as Markdown
+  and can therefore affect the resulting HTML output.
+  Input should be authored or validated accordingly to avoid
+  unintended formatting.
+* Raw HTML is not supported
+  As outlined above, HTML tags contained in the message body
+  are not supported and stripped during Markdown processing
+  for security reasons. This behavior is intentional and
+  enforced by the Markdown parser configuration.
+* No additional escaping is performed 
+  Message bodies are not escaped using `htmlencodePlainString`
+  anymore when presenting them in ILIAS. Instead, all escaping is
+  delegated to the Markdown parser.
+* Consistent rendering in the UI
+  When displaying messages in ILIAS, the stored message body
+  is rendered from its Markdown representation, ensuring
+  consistent formatting and security guarantees across all mail views.
+
+Summary:
+
+* Always assume that the message body will be
+  parsed/presented as Markdown.
+* Do not rely on embedded HTML for formatting.
+  The rule is: You MUST NOT pass any HTML
+* Provide Markdown-compatible plain text input.
+
+When directly sending external emails by using the
+low-level [ilMimeMail](#ilmimemail) class, consumers have to
+manually prepare the HTML body if Markdown/HTML formatting is
+desired.
+
+`ilMimeMail` still tries to magically detect
+whether the message body passed by consumers
 contains any HTML when sending **external**
-[emails with an HTML frame and a plain/text alternative](#external-emails:-html-frame).
-This is done in `\ilMimeMail::buildBodyParts`.
-If no HTML is included at all, or only a few inline
-elements (\<b\>, \<u\>, \<i\>, \<a\>) are given, a
-[`nl2br()`](http://php.net/manual/en/function.nl2br.php)
-is applied on the body and used for the HTML version
-of the email. The originally passed body is used as
-plain/text alternative.
+[emails with an HTML frame and a plain/text alternative](#external-emails-html-frame).
+This is done in `\ilMimeMail::buildBodyMultiParts`.
+If `ilMimeMail` detects HTML block elements or line breaks
+typically supported by Markdown, it treats the message body
+as HTML and strips all HTML tags for the plain/text alternative.
+If only a few inline elements (\<b\>, \<u\>, \<i\>, \<a\>) are
+given, a [`nl2br()`](http://php.net/manual/en/function.nl2br.php) is applied to a copy of the message
+body, which is then used for the HTML version of the email.
+The originally passed body is used as plain/text alternative.
 If HTML is detected in the body string passed by the
 consumer, the original body is used for the HTML email.
 For the plain/text alternative, `<br>` elements are replaced
 with a `\n` (LF) character and
 [`strip_tags'](http://php.net/manual/en/function.strip-tags.php)
 is applied afterwards on the originally passed message body.
-
-This behaviour is not specified at all and also tries
-to handle/fix misusage by consumers.
-The rule is: You MUST NOT pass any HTML.
-
-For **internal** messages HTML is completely escaped
-on the UI endpoint via `\ilUtil::htmlencodePlainString`.
 
 ### Attachments
 
@@ -876,11 +920,13 @@ For **system mails**:
 For each recipient account, delivery is decided as follows:
 
 - **Not active OR expired**  
-  → Mail is sent **internally only** (no external).
+  → Mail is sent **internally only** (no external), even if the check
+    in [paragraph 1](#1-internal-mail-eligibility) evaluates to `false`.
 
 - **Active AND not expired**
     - **Has not accepted all legal documents**  
-      → Mail is always sent **externally**, optionally **internally**.
+      → Mail is always sent **externally**, optionally **internally** (even if
+        the check in [paragraph 1](#1-internal-mail-eligibility) evaluates to `false`).
     - **Wants both internal and external**  
       → Mail is sent **internally and externally**.
     - **Configured for external only**  
@@ -896,4 +942,49 @@ For each recipient account, delivery is decided as follows:
     - “Only external” → Debug log (external only)
     - “Additionally external” → Debug log (internal + external)
     - “No external” → Debug log (internal only)
-    - “Inactive/expired” → Debug log (internal only)  
+    - “Inactive/expired” → Debug log (internal only)
+
+### Serial Letter and CC/BCC Recipients
+
+In serial letter mode (per-recipient placeholder replacement), placeholders in CC and BCC
+messages are **not** replaced. This is frequently reported as a bug but is **intentional
+behaviour**, documented since at least [Mantis #6469](https://mantis.ilias.de/view.php?id=6469)
+(2010; follow-up discussion in 2018). [Mantis #47843](https://mantis.ilias.de/view.php?id=47843)
+revisits the same topic with a fuller analysis of the underlying design conflict. Current ILIAS
+versions have **not** introduced a different default: the underlying conflict between carbon-copy
+semantics and serial-letter semantics has not changed, even though mail infrastructure could
+theoretically support other approaches.
+
+In software engineering we model domains from the real world. Email defines three recipient
+types: TO, CC, and BCC. What the email specification (and the ILIAS mail client) models is the
+concept of a **carbon copy**: one original message, with identical copies for observers—familiar
+from paper workflows where text on the top sheet was transferred to sheets underneath. A
+**serial letter** is the opposite: N individualized originals, one per TO recipient. These two
+concepts are orthogonal.
+
+When serial letter mode is combined with CC/BCC, only a few options are logically consistent:
+
+1. **Status quo (current behaviour):** CC/BCC receive a single, non-personalized message.
+   Placeholders are cleared because there is no single correct set of values to fill them with.
+   This is intentional, not a bug.
+2. **Full semantics:** Each CC/BCC recipient receives a 1:1 copy of every individualized TO
+   mail. With **M** TO recipients and **K** CC/BCC recipients (combined), this yields
+   **M × (1 + K)** messages. CC recipients face the same volume; for BCC this is particularly
+   problematic, as recipients would receive a flood of messages and could infer the size of the
+   distribution list—arguably a privacy regression relative to blind-copy semantics.
+3. **Strict UX:** Disallow CC/BCC in serial letter mode in the UI, since the two concepts do
+   not combine in a meaningful way.
+
+ILIAS **currently implements option 1**, as decided at a Jour Fixe. Option 3 remains a viable
+direction if the community prefers clearer constraints over the current compromise; clearer
+in-UI guidance would complement it.
+
+Option 2 would require substantial infrastructure that ILIAS does not currently have: an internal
+mail queue, asynchronous workers, throttling and retry logic, rate-limiting against the SMTP
+backend, and monitoring. None of that is impossible, but it is a significant investment for a
+feature whose semantics remain debatable.
+
+Newer ILIAS versions have not changed this—not because the technology
+has stood still, but because the underlying conceptual conflict has not. [Mantis #6469](https://mantis.ilias.de/view.php?id=6469)
+(2010) and its 2018 follow-up, as well as [Mantis #47843](https://mantis.ilias.de/view.php?id=47843), reflect
+exactly this reasoning.

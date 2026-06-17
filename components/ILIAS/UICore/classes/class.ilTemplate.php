@@ -356,10 +356,17 @@ class ilTemplate extends HTML_Template_ITX
         if (str_starts_with($a_tplname, $ilias_root)) {
             $a_tplname = str_replace($ilias_root, '', $a_tplname);
         }
-        if (strpos($a_tplname, 'public/Customizing/global/plugins')) {
+
+        // Special Cases for plugins
+        if (str_starts_with($a_tplname, 'Customizing/global/plugins/')) {
+            $a_tplname = "public/$a_tplname";
+        }
+
+        if (str_contains($a_tplname, 'public/Customizing/global/plugins')) {
             $tpl_sub_path = '';
         }
 
+        // Proceed with skin lookup
         $base_path = $ilias_root;
         $default = $base_path . $a_in_module . $tpl_sub_path . $a_tplname;
 
@@ -369,15 +376,23 @@ class ilTemplate extends HTML_Template_ITX
         }
 
         $style = $this->getCurrentStyle();
-        $base_path .= 'public/Customizing/skin/' . $skin . '/' . $style;
+        $base_path = $ilias_root . 'public/Customizing/skin/' . $skin;
 
         if ($a_in_module === 'components/ILIAS/UI/src') {
             $a_in_module = 'UI';
         }
 
-        $from_skin = $base_path . '/' . $a_in_module . '/' . $a_tplname;
+        $from_style = $base_path . '/' . $style . '/' . $a_in_module . '/' . $a_tplname;
+        if ($this->fileexistsinskin($from_style)) {
+            return $from_style;
+        }
 
-        return $this->fileExistsInSkin($from_skin) ? $from_skin : $default;
+        $from_skin = $base_path . '/' . $a_in_module . '/' . $a_tplname;
+        if ($this->fileexistsinskin($from_skin)) {
+            return $from_skin;
+        }
+
+        return $default;
     }
 
     /**

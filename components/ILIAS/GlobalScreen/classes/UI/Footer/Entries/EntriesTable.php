@@ -45,6 +45,8 @@ class EntriesTable implements OrderingRetrieval
     private URLBuilderToken $id_token;
     private Translator $translator;
     private TranslationsRepository $translations_repository;
+    private \ILIAS\GlobalScreen\Scope\Footer\Collector\FooterMainCollector $collector;
+    private \ILIAS\GlobalScreen\Identification\IdentificationFactory $identification;
 
     public function __construct(
         private Pons $pons,
@@ -52,12 +54,16 @@ class EntriesTable implements OrderingRetrieval
         private readonly EntriesRepository $repository,
         private readonly TokenContainer $token_container,
     ) {
+        global $DIC;
+
         $this->translator = $pons->i18n();
         $this->ui_factory = $pons->out()->ui()->factory();
         $this->url_builder = $this->token_container->builder();
         $this->id_token = $this->token_container->token();
         $this->request = $pons->in()->request();
         $this->translations_repository = $pons->i18n()->ml()->repository();
+        $this->collector = $DIC->globalScreen()->collector()->footer();
+        $this->identification = $DIC->globalScreen()->identification();
     }
 
 
@@ -67,7 +73,15 @@ class EntriesTable implements OrderingRetrieval
         $nok = $this->pons->out()->nok();
 
         foreach ($this->repository->allForParent($this->group->getId()) as $entry) {
-            $title = $this->translations_repository->get($entry)->getDefault()?->getTranslation() ?? $entry->getTitle();
+            if ($entry->isCore()) {
+                $title = $this->collector->getSingleItemFromRaw(
+                    $this->identification->fromSerializedIdentification($entry->getId()),
+                )?->getTitle() ?? 'Unknown';
+            } else {
+                $title = $this->translations_repository->get($entry)->getDefault()?->getTranslation(
+                ) ?? $entry->getTitle();
+            }
+
             $row = $row_builder->buildOrderingRow(
                 $this->hash($entry->getId()),
                 [
@@ -110,25 +124,25 @@ class EntriesTable implements OrderingRetrieval
                 [
                     'edit' => $this->ui_factory->table()->action()->single(
                         $this->translator->translate('edit', 'entry'),
-                        $this->url_builder->withURI($flow->getHereAsURI('edit')),
+                        $this->url_builder->withURI($flow->getHereAsURI(\ilFooterEntriesGUI::CMD_EDIT)),
                         $this->id_token
                     )->withAsync(true),
 
                     'toggle_activation' => $this->ui_factory->table()->action()->standard(
                         $this->translator->translate('toggle_activation', 'entry'),
-                        $this->url_builder->withURI($flow->getHereAsURI('toggleActivation')),
+                        $this->url_builder->withURI($flow->getHereAsURI(\ilFooterEntriesGUI::CMD_TOGGLE_ACTIVATION)),
                         $this->id_token
                     )->withAsync(false),
 
                     'delete' => $this->ui_factory->table()->action()->standard(
                         $this->translator->translate('delete', 'entry'),
-                        $this->url_builder->withURI($flow->getHereAsURI('confirmDelete')),
+                        $this->url_builder->withURI($flow->getHereAsURI(\ilFooterEntriesGUI::CMD_CONFIRM_DELETE)),
                         $this->id_token
                     )->withAsync(true),
 
                     'move' => $this->ui_factory->table()->action()->standard(
                         $this->translator->translate('move', 'entry'),
-                        $this->url_builder->withURI($flow->getHereAsURI('selectMove')),
+                        $this->url_builder->withURI($flow->getHereAsURI(\ilFooterEntriesGUI::CMD_SELECT_MOVE)),
                         $this->id_token
                     )->withAsync(true),
 

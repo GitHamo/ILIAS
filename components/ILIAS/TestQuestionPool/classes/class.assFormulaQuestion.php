@@ -451,7 +451,7 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
                     $user_value = '';
                     if (is_array($userdata) && is_array($userdata[$result])) {
                         if (isset($userdata[$result]["unit"]) && $userdata[$result]["unit"] > 0) {
-                            $resunit = $this->getUnitrepository()->getUnit($userdata[$result]["unit"]);
+                            $resunit = $this->getUnitrepository()->getUnit((int) $userdata[$result]["unit"]);
                         }
 
                         if (isset($userdata[$result]["value"])) {
@@ -834,8 +834,7 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
                 $this->getVariables(),
                 $this->getResults(),
                 $user_solution[$result->getResult()]['value'] ?? '',
-                $user_solution[$result->getResult()]['unit'] ?? null,
-                $this->unitrepository->getUnits()
+                $user_solution[$result->getResult()]['unit'] ?? null
             );
         }
 
@@ -848,8 +847,8 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
 
         $points = 0;
         foreach ($this->getResults() as $result) {
-            $result_unit = $result->getResult() . '_unit';
-            $unit_id = isset($user_solution[$result_unit]) && is_numeric($user_solution[$result_unit])
+            $result_unit = "{$result->getResult()}_unit";
+            $answer_unit_id = isset($user_solution[$result_unit]) && is_numeric($user_solution[$result_unit])
                 ? (int) $user_solution[$result_unit]
                 : null;
 
@@ -857,8 +856,7 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
                 $this->getVariables(),
                 $this->getResults(),
                 $user_solution[$result->getResult()] ?? '',
-                $unit_id !== null ? $this->unitrepository->getUnit($unit_id) : null,
-                $this->unitrepository->getUnits()
+                $answer_unit_id !== null ? $this->unitrepository->getUnit($answer_unit_id) : null
             );
         }
         return $this->ensureNonNegativePoints($points);
@@ -893,7 +891,7 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
             function () use ($answer, $active_id, $pass, $authorized) {
                 foreach ($answer as $key => $value) {
                     $matches = null;
-                    if (preg_match('/^result_(\$r\d+)$/', $key, $matches) !== false) {
+                    if (preg_match('/^result_(\$r\d+)$/', $key, $matches) !== false && $matches !== []) {
                         $queryResult = "SELECT solution_id FROM tst_solutions WHERE active_fi = %s AND pass = %s AND question_fi = %s AND authorized = %s  AND " . $this->db->like('value1', 'clob', $matches[1]);
 
                         if ($this->getStep() !== null) {
@@ -1097,30 +1095,27 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
                 if (!array_key_exists($matches[1], $user_solution)) {
                     $user_solution[$matches[1]] = [];
                 }
-                $user_solution[$matches[1]]['unit'] = $solution_value['value2'];
+                $user_solution[$matches[1]]['unit'] = (int) $solution_value['value2'];
             }
         }
         foreach ($this->getResults() as $result) {
             $resVal = $result->calculateFormula($this->getVariables(), $this->getResults(), $this->getId(), false);
 
-            if (is_object($result->getUnit())) {
-                $user_solution[$result->getResult()]['unit'] = $result->getUnit()->getId();
+            $unit = $result->getUnit();
+            if ($unit instanceof assFormulaQuestionUnit) {
+                $user_solution[$result->getResult()]['unit'] = $unit->getId();
                 $user_solution[$result->getResult()]['value'] = $resVal;
-            } elseif ($result->getUnit() === null) {
+            } elseif ($unit === null) {
                 $unit_factor = 1;
                 // there is no fix result_unit, any "available unit" is accepted
 
-                $available_units = $result->getAvailableResultUnits(parent::getId());
+                $available_units = $result->getAvailableResultUnits($this->getId());
                 $result_name = $result->getResult();
 
-                $check_unit = false;
-                if (array_key_exists($result_name, $available_units) &&
-                    $available_units[$result_name] !== null) {
-                    $check_unit = in_array($user_solution[$result_name]['unit'] ?? null, $available_units[$result_name]);
-                }
-
-                if ($check_unit == true) {
-                    //get unit-factor
+                if (
+                    isset($available_units[$result_name])
+                    && in_array($user_solution[$result_name]['unit'] ?? null, $available_units[$result_name])
+                ) {
                     $unit_factor = assFormulaQuestionUnit::lookupUnitFactor($user_solution[$result_name]['unit']);
                 }
 
@@ -1403,11 +1398,18 @@ class assFormulaQuestion extends assQuestion implements iQuestionCondition, Ques
         $best_solution = $this->getBestSolution($this->getSolutionValues($active_id, $pass));
         return array_map(
             function (string $v) use ($best_solution): string {
-                $solution = "{$v} = {$best_solution[$v]['value']}";
-                if (isset($best_solution['unit'])) {
-                    $solution .= "{$this->unitrepository->getUnit($best_solution['unit'])->getUnit()}";
+                $placeholder_definition = $best_solution[$v];
+                $solution = "{$v} = " . ($placeholder_definition['value'] ?? $placeholder_definition);
+                if (!isset($placeholder_definition['unit'])) {
+                    return $solution;
                 }
-                return $solution;
+
+                $unit = $this->unitrepository->getUnit($placeholder_definition['unit']);
+                if ($unit === null) {
+                    return $unit;
+                }
+
+                return "{$solution}{$unit->getUnit()}";
             },
             array_keys($best_solution)
         );

@@ -614,11 +614,12 @@ class assFormulaQuestionGUI extends assQuestionGUI
 
                 $decimal_spots = $form->getItemByPostVar('precision_' . $variable->getVariable());
                 $int_precision = $form->getItemByPostVar('intprecision_' . $variable->getVariable());
-                if ($decimal_spots instanceof ilFormPropertyGUI && $decimal_spots->getValue() === 0) {
-                    $txt = !$variable->isIntPrecisionValid($int_precision?->getValue(), $min_range_value, $max_range_value)
-                        ? 'err_divider_too_big_specific'
-                        : 'err_division';
-                    $int_precision?->setAlert($this->lng->txt($txt));
+                if (
+                    $decimal_spots instanceof ilFormPropertyGUI
+                    && $decimal_spots->getValue() === 0.0
+                    && !$variable->isIntPrecisionValid($int_precision?->getValue(), $min_range_value, $max_range_value)
+                ) {
+                    $int_precision?->setAlert($this->lng->txt('err_division'));
                     $custom_errors = true;
                 }
             }
@@ -979,7 +980,7 @@ class assFormulaQuestionGUI extends assQuestionGUI
                     if (!array_key_exists($matches[1], $user_solution)) {
                         $user_solution[$matches[1]] = [];
                     }
-                    $user_solution[$matches[1]][['unit']] = $solution_value['value2'];
+                    $user_solution[$matches[1]]['unit'] = $solution_value['value2'];
                 }
                 if (preg_match('/^(\$r\d+)/', $solution_value['value1'], $matches) && !isset($user_solution[$matches[1]]['result_type'])) {
                     $user_solution[$matches[1]]['result_type'] = assFormulaQuestionResult::getResultTypeByQstId($this->object->getId(), $solution_value['value1']);

@@ -50,7 +50,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
     {
         $this->lng = $this->createMock(Language::class);
         $this->lng->method("txt")
-            ->will($this->returnArgument(0));
+            ->willReturnCallback(fn($x) => $x);
 
         return $this->lng;
     }
@@ -199,7 +199,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
             '<div class="c-field-duration">' . $f1 . $f2 . '</div>',
             'byline',
         );
-        $this->assertEquals($expected, $this->render($duration));
+        $this->assertEquals($expected, $this->renderInsideContainer($duration));
         return $duration;
     }
 
@@ -242,7 +242,7 @@ class DurationInputTest extends ILIAS_UI_TestBase
             '<div class="c-field-duration">' . $f1 . $f2 . '</div>',
             'byline'
         );
-        $this->assertEquals($expected, $this->render($duration));
+        $this->assertEquals($expected, $this->renderInsideContainer($duration));
     }
 
     public function testCommonRendering(): void

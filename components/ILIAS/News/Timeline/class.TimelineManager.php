@@ -59,8 +59,9 @@ class TimelineManager
 
         if ($ref_id > 0) {
             return $this->domain->collection()->getNewsForContext(
-                new NewsContext($ref_id),
-                $criteria
+                new NewsContext($ref_id, $context_obj_id, $context_type),
+                $criteria,
+                $this->domain->user()->getId()
             );
         } else {
             return $this->domain->collection()->getNewsForUser(

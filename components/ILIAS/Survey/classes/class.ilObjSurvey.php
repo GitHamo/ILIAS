@@ -553,7 +553,6 @@ class ilObjSurvey extends ilObject
         $ilDB = $this->db;
 
         $this->svy_log->debug("insert question, id:" . $question_id);
-
         if (!SurveyQuestion::_isComplete($question_id)) {
             $this->svy_log->debug("question is not complete");
             return false;
@@ -758,7 +757,7 @@ class ilObjSurvey extends ilObject
             $this->setSurveyId($next_id);
         } else {
             $affectedRows = $ilDB->update("svy_svy", array(
-                "author" => array("text", $this->getAuthor()),
+                "author" => array("text", ilStr::subStr($this->getAuthor(), 0, 50)),
                 "introduction" => array("clob", ilRTE::_replaceMediaObjectImageSrc($this->getIntroduction(), 0)),
                 "outro" => array("clob", ilRTE::_replaceMediaObjectImageSrc($this->getOutro(), 0)),
                 "startdate" => array("text", $this->getStartDate()),
@@ -3018,7 +3017,8 @@ class ilObjSurvey extends ilObject
         $custom_properties = array();
         $custom_properties["evaluation_access"] = $this->getEvaluationAccess();
         $custom_properties["status"] = !$this->getOfflineStatus();
-        $custom_properties["display_question_titles"] = $this->getShowQuestionTitles();
+        $custom_properties["display_question_titles"] = (int) $this->getShowQuestionTitles();
+        $custom_properties["calculate_sum_score"] = (int) $this->getCalculateSumScore();
 
         $custom_properties["own_results_view"] = (int) $this->hasViewOwnResults();
         $custom_properties["own_results_mail"] = (int) $this->hasMailOwnResults();
@@ -3032,7 +3032,6 @@ class ilObjSurvey extends ilObject
         $custom_properties["mode_360_results"] = $this->get360Results();
         $custom_properties["mode_skill_service"] = (int) $this->getSkillService();
         $custom_properties["mode_self_eval_results"] = $this->getSelfEvaluationResults();
-
 
         // :TODO: skills?
 

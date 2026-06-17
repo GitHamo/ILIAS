@@ -28,13 +28,12 @@ The Course employs the following services, please consult the respective PRIVACY
 - Settings > Course information> Contact offers storing personal information of the person responsible for offering and running the course.  
 - Course > Settings > Startobject stores userID and ObjectID and Timestamp.
 - If Administration > Users and Roles > Privacy and Security> Protection of User Profile Data > User Confirmation when Entering Courses is activated, then data fields added to Course > Settings > Course-Specific User Data have to be filled in by users before entering a new course. Input into fields is stored along with userID and ObjectID and Timestamp.
-- In Course > Settings > Presentation Type different Course Types can be selected: Timings View, Learning Objective Driven Course, Simple View and Session View. Simple View and Session View do not store any personal data. 
-- Timings View does store personal data   
-- Changeable Timings with Absolute Dates stores userID and ObjectID and Timestamp.
-- All Timings with Relative Dates always stores userID and ObjectID and Timestamp. 
-- Learning Objective Driven Course does store personal data. 
-- Each Learning Objective stores userID and ObjectiveID and Timestamp, for initial test and achievement test the required minimum and the achieved percentage. 
-
+- In Course > Settings > Presentation Type different Course Types can be selected: Timings View, Learning Objective Driven Course Simple View and Session View. Simple View and Session View do not store any personal data. 
+- Timings View does store personal data:
+  - Changeable Timings with Absolute Dates stores userID and ReferenceID and Timestamps for start and end dates.
+  - All Timings with Relative Dates always stores userID and ReferenceID and Timestamps for start and end dates. 
+- Learning Objective Driven Course does store personal data:
+  - Each Learning Objective stores userID and ObjectiveID and Timestamp, for initial test and achievement test the required minimum and the achieved percentage.
 ## Data being presented
 If it has been entered under Settings > Course information> Contact, the e-mail(s), first and  last name are presented.
 Timings Data is presented in the Member tab for each user. This is a mix of Membership service and course from long ago. 

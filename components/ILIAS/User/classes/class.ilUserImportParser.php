@@ -413,7 +413,9 @@ class ilUserImportParser extends ilSaxParser
                 }
                 $this->user_obj->setLanguage($a_attribs['Language'] ?? '');
                 $this->user_obj->setImportId($a_attribs['Id'] ?? '');
-                $this->action = (is_null($a_attribs['Action'])) ? 'Insert' : $a_attribs['Action'];
+                $this->action = isset($a_attribs['Action'])
+                    ? $a_attribs['Action']
+                    : 'Insert';
                 $this->current_user_password = null;
                 $this->current_user_password_type = null;
                 $this->currActive = null;
@@ -1483,7 +1485,12 @@ class ilUserImportParser extends ilSaxParser
                 break;
 
             case 'UserDefinedField':
-                $field_id = $this->fetchFieldIdFromImportId($this->tmp_udf_id);
+                $field_id = null;
+                if ($this->user_profile->getFieldByIdentifier(
+                    $this->tmp_udf_id
+                ) !== null) {
+                    $field_id = $this->tmp_udf_id;
+                }
 
                 if ($field_id === null) {
                     $field_id = $this->fetchFieldIdFromName($this->tmp_udf_name);
@@ -1493,7 +1500,19 @@ class ilUserImportParser extends ilSaxParser
                     break;
                 }
 
-                $this->udf_data[$field_id] = strip_tags($this->cdata, ilRTESettings::_getUsedHTMLTags('textarea'));
+                $data = json_decode(
+                    strip_tags($this->cdata),
+                    true
+                ) ?? $this->cdata;
+                if ($data === '') {
+                    break;
+                }
+
+                if (!is_array($data)) {
+                    $data = [$data];
+                }
+
+                $this->udf_data[$field_id] = $data;
 
                 break;
             case 'AccountInfo':
@@ -1809,6 +1828,9 @@ class ilUserImportParser extends ilSaxParser
                 }
                 break;
             case 'TimeLimitFrom':
+                if ($this->cdata === '') {
+                    break;
+                }
                 // Accept datetime or Unix timestamp
                 if (strtotime($this->cdata) === false && !is_numeric($this->cdata)) {
                     $this->logFailure($this->user_obj->getLogin(), sprintf($this->lng->txt('usrimport_xml_element_content_illegal'), 'TimeLimitFrom', $this->stripTags($this->cdata)));
@@ -1816,6 +1838,9 @@ class ilUserImportParser extends ilSaxParser
                 $this->user_obj->setTimeLimitFrom((int) $this->cdata);
                 break;
             case 'TimeLimitUntil':
+                if ($this->cdata === '') {
+                    break;
+                }
                 // Accept datetime or Unix timestamp
                 if (strtotime($this->cdata) === false && !is_numeric($this->cdata)) {
                     $this->logFailure($this->user_obj->getLogin(), sprintf($this->lng->txt('usrimport_xml_element_content_illegal'), 'TimeLimitUntil', $this->stripTags($this->cdata)));
@@ -2151,8 +2176,9 @@ class ilUserImportParser extends ilSaxParser
         }
     }
 
-    private function addUDFDataToUser(\ilObjUser $user): \ilObjUser
-    {
+    private function addUDFDataToUser(
+        \ilObjUser $user
+    ): \ilObjUser {
         return $user->withProfileData(
             array_reduce(
                 array_keys($this->udf_data),
@@ -2161,7 +2187,7 @@ class ilUserImportParser extends ilSaxParser
                         $v,
                         $this->udf_data[$v]
                     ),
-                $this->user_obj->getProfileData()
+                $user->getProfileData()
             )
         );
     }
@@ -2178,22 +2204,6 @@ class ilUserImportParser extends ilSaxParser
             $mailOptions->setIncomingType(array_key_exists('mail_incoming_type', $this->prefs) ? (int) $this->prefs['mail_incoming_type'] : $mailOptions->getIncomingType());
             $mailOptions->updateOptions();
         }
-    }
-
-    private function fetchFieldIdFromImportId(string $import_id): ?string
-    {
-        if ($import_id === '') {
-            return null;
-        }
-
-        $parts = explode('_', $import_id);
-        if (($parts[0] ?? '') !== 'il'
-            || ($parts[1] ?? '') !== 'udf'
-            || ($parts[2] ?? '') === ''
-            || $this->user_profile->getFieldByIdentifier($parts[2]) === null) {
-            return null;
-        }
-        return $parts[2];
     }
 
     private function fetchFieldIdFromName(string $name): ?string

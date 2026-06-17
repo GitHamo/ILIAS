@@ -291,6 +291,76 @@ Storage of paramters in DataTable and SequenceNavigation look very much alike;
 in favor of those and further/future components the implementation should be
 realized as a trait to be used by several components.
 
+### Replace unmaintained file-upload library (expert, ~12d)
+
+We are using the `dropzone` npm package as a file-upload library, which is not actively
+maintained anymore. Its last update is now almost 5 years ago and because this is a production
+dependency this becomes a growing security risk.
+
+There have already been some investigations which has led us to the `@uppy/core` and 
+`@uppy/tus-client` npm packages. These dependencies were already approved by JF once, but we
+never managed to integrate them. The first package is responsible for file-uploads, whereas
+the second package takes care of the client-side implementation of the [TUS protocol](https://tus.io/).
+Both of these packages are necessary in order to keep the functionality of chunked-uploading
+alive. The TUS protocol can be used to implement this behaviour in a more structure manner than
+we currently do. To fully integrate this our `Field\UploadHandler` need to be adjusted however.
+To prevent ending up in a similar situation again, we need to abstract the package more clearly
+this time.
+
+Replacing the current package is not simple though, because it is a center-piece of four UI
+components: `Input\Field\File`, `Input\Field\Image`, `Dropzone\File\Standard` and
+`Dropzone\File\Wrapper`. A refactoring of the client-side logic of all these components is
+necessary, ideally in a way where no or only minimal interface changes are caused, so this
+improvement can be backported to earlier versions too.
+
+### Replace `@yaireo/tagify` library (advanced, ~5d)
+
+We are using `@yaireo/tagify` for our `Input\Field\Tag` input functionality. The library is
+increasingly unfit for our needs around accessibility and usability, and working around its
+limitations becomes increasingly hacky. The root cause is that the library renders its DOM
+elements purely on the client at initialisation time, making the HTML output unpredictable and
+server-side rendering impossible. Binding custom logic requires reaching into library internals
+via JS, since elements don't exist until an instance is live. A custom implementation would
+give us full control over the rendered markup, allowing us to bind logic directly to elements,
+and make the component behave like any other input in our system. We ran into the same problem
+with the file upload library, where working around these constraints made maintenance significantly
+more expensive than it needed to be. To avoid the same fate here, we should replace the library 
+with a custom implementation sometime soon.
+
+### Persistent `UI\Component\Table\Data` user preferences (advanced, ~3d)
+
+The `Table\Data` component does not persist user preferenceses across different sessions. Preferences
+include things like selected row-count per page, column visibility, or column sortation. There already
+is a mechanism to store these preferences, however, they are transient and not stored accross sessions.
+
+Our goal is to persist these preferences in a structured manner accross different sessions. What
+preferences are stored for how long needs to be defined and documented. Its possible that there should
+be different durations (transient, persistent, none) for different preferences, and that this depends
+on context. This is why this task probably also benefits from semantic defaults (see below).
+
+We should also revise how the table ID is provided. Making them mandatory would also enforce persistent
+user preferences across all table usages.
+
+**This task is blocked until ILIAS implements a key-value storage component.** The UI framework should
+only be the consumer of such a storage mechanism, as is currently abstracted by `UI\Storage`.
+
+### Implement semantic defaults (advanced, ~3d)
+
+The UI framework currently defines various default values for the look and feel of components and/or
+lets consumers define them. A good example for this is the current `UI\Component\Table\Data` component,
+which needs to define a great amount of values and usually forces the consumer to define them, because
+they are not appropriate for their use-case. This leads to much inconsistency between these values for
+the same components, making them seemingly unpredictable to our end-users.
+
+We realised this flexiblity needs to be structured by defining a shared vocabulary of the categorised
+and grouped factors that may affect the chosen values. This way, we can derive values from clear
+semantic descriptions rather than accepting different values from each consumer.
+
+Our goal is to define semantic descriptions as enumerations which can be used to speak about the target
+audience and/or user-intents, rather than concrete values. E.g. a table should probably look and feel
+different to system administrators, who want to find specific data fast, than for students, who need to
+browse the data slowly. There could be such enumerations that are viable for all components, but also
+enumerations which are specific to a component. Appropriate namespaces should be chosen.
 
 ## Long Term
 
