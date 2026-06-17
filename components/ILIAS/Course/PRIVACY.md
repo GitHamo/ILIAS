@@ -33,8 +33,7 @@ The Course employs the following services, please consult the respective PRIVACY
   - Changeable Timings with Absolute Dates stores userID and ReferenceID and Timestamps for start and end dates.
   - All Timings with Relative Dates always stores userID and ReferenceID and Timestamps for start and end dates. 
 - Learning Objective Driven Course does store personal data:
-  - Each Learning Objective stores userID and ObjectiveID and Timestamp, for initial test and achievement test the required minimum and the achieved percentage. 
-
+  - Each Learning Objective stores userID and ObjectiveID and Timestamp, for initial test and achievement test the required minimum and the achieved percentage.
 ## Data being presented
 If it has been entered under Settings > Course information> Contact, the e-mail(s), first and  last name are presented.
 Timings Data is presented in the Member tab for each user. This is a mix of Membership service and course from long ago. 
