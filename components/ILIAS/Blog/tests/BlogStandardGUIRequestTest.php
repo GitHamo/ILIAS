@@ -25,8 +25,6 @@ use PHPUnit\Framework\TestCase;
  */
 class BlogStandardGUIRequestTest extends TestCase
 {
-    //protected $backupGlobals = false;
-
     protected function tearDown(): void
     {
     }
