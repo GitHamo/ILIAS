@@ -231,7 +231,7 @@ class ToolbarNavigationRenderer
     }
 
     protected function getNextMonth(
-        $current_month
+        string $current_month
     ): string {
         reset($this->items);
         $found = "";
@@ -244,7 +244,7 @@ class ToolbarNavigationRenderer
     }
 
     protected function getPreviousMonth(
-        $current_month
+        string $current_month
     ): string {
         reset($this->items);
         $found = "";

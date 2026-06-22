@@ -29,7 +29,7 @@ class PermissionManager
     protected int $user_id;
 
     public function __construct(
-        $access_handler,
+        \ilWorkspaceAccessHandler|\ilAccessHandler $access_handler,
         ?int $node_id,
         int $id_type,
         int $user_id,
