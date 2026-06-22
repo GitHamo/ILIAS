@@ -72,15 +72,19 @@ class ilObjBlogListGUI extends ilObjectListGUI
         global $DIC;
 
         $tpl = $this->ui->mainTemplate();
-        $ctrl = $this->ctrl;
+        $export_possible = $DIC->blog()
+                               ->internal()
+                               ->domain()
+                               ->export()
+                               ->isCommentsExportPossible($this->obj_id);
         if ($cmd === "export"
-            && ilObjBlogAccess::isCommentsExportPossible($this->obj_id)
+            && $export_possible
             && (bool) $this->settings->get('item_cmd_asynch')) {
             $href = $this->getCommandLink("forwardExport");
             $cmd = "forwardExport";
             $onclick = "";
         }
-        if ($cmd !== "export" || !ilObjBlogAccess::isCommentsExportPossible($this->obj_id)) {
+        if ($cmd !== "export" || !$export_possible) {
             parent::insertCommand($href, $text, $frame, $img, $cmd, $onclick);
             return;
         }
@@ -95,7 +99,7 @@ class ilObjBlogListGUI extends ilObjectListGUI
 
             $prevent_background_click = false;
 
-            if (ilObjBlogAccess::isCommentsExportPossible($this->obj_id)) {
+            if ($export_possible) {
 
                 $modal = $this->getModalTemplate();
                 $signal = $modal["show"];

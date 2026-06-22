@@ -30,6 +30,7 @@ use ILIAS\Blog\Posting\PostingManager;
 use ILIAS\Notes;
 use ILIAS\Blog\News\NewsManager;
 use ILIAS\Blog\Notification\NotificationManager;
+use ILIAS\Blog\Export\ExportManager;
 
 /**
  * @author Alexander Killing <killing@leifos.de>
@@ -48,6 +49,15 @@ class InternalDomainService
     ) {
         $this->initDomainServices($DIC);
         $this->dic = $DIC;
+    }
+
+    public function export(): ExportManager
+    {
+        return self::$instance["export"] ??= new ExportManager(
+            $this->data,
+            $this->repo,
+            $this
+        );
     }
 
     public function exercise(int $a_node_id): BlogExercise
