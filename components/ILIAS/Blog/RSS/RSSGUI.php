@@ -65,7 +65,7 @@ class RSSGUI
         $feed->setChannelDescription(str_replace("&", "&amp;", $blog->getDescription()));
         $feed->setChannelLink($url);
 
-        foreach (\ilBlogPosting::getAllPostings($obj_id) as $item) {
+        foreach ($this->domain->posting()->getAllPostings($obj_id) as $item) {
             $id = $item["id"];
 
             // only published items

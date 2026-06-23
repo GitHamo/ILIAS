@@ -25,6 +25,7 @@ use ILIAS\components\Export\HTML\Util;
 
 class BlogHtmlExport
 {
+    protected \ILIAS\Blog\Posting\PostingManager $posting_manager;
     protected \ILIAS\components\Export\HTML\ExportCollector $collector;
     protected \ilObjBlog $blog;
     protected \ilObjBlogGUI $blog_gui;
@@ -85,6 +86,7 @@ class BlogHtmlExport
         } else {
             $this->content_style_domain = $cs->domain()->styleForObjId($this->blog->getId());
         }
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
     }
     protected function init(): void
     {
@@ -222,7 +224,7 @@ class BlogHtmlExport
 
         // single postings
 
-        $pages = \ilBlogPosting::getAllPostings($this->blog->getId(), 0);
+        $pages = $this->posting_manager->getAllPostings($this->blog->getId(), 0);
         foreach ($pages as $page) {
             if (\ilBlogPosting::_exists("blp", $page["id"])) {
                 $blp_gui = new \ilBlogPostingGUI(0, null, $page["id"]);
@@ -292,7 +294,7 @@ class BlogHtmlExport
 
     public function collectAllPagesPageElements(\ilCOPageHTMLExport $co_page_html_export): void
     {
-        $pages = \ilBlogPosting::getAllPostings($this->blog->getId(), 0);
+        $pages = $this->posting_manager->getAllPostings($this->blog->getId(), 0);
         foreach ($pages as $page) {
             if (\ilBlogPosting::_exists("blp", $page["id"])) {
                 $co_page_html_export->collectPageElements("blp:pg", $page["id"]);

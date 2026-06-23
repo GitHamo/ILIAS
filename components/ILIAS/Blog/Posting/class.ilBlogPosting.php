@@ -279,43 +279,6 @@ class ilBlogPosting extends ilPageObject
     }
 
     /**
-     * Get all postings of blog
-     */
-    public static function getAllPostings(
-        int $a_blog_id,
-        int $a_limit = 1000,
-        int $a_offset = 0
-    ): array {
-        global $DIC;
-
-        $pages = parent::getAllPages("blp", $a_blog_id);
-        $posts = [];
-        foreach ($DIC->blog()->internal()->domain()->posting()->getAllByBlog(
-            $a_blog_id,
-            $a_limit,
-            $a_offset
-        ) as $posting) {
-            $id = $posting->getId();
-            if (isset($pages[$id])) {
-                $posts[$id] = $pages[$id];
-                $posts[$id]["title"] = $posting->getTitle();
-                $posts[$id]["created"] = $posting->getCreated();
-                $posts[$id]["author"] = $posting->getAuthor();
-                $posts[$id]["approved"] = $posting->isApproved();
-                $posts[$id]["last_withdrawn"] = $posting->getLastWithdrawn();
-
-                foreach (self::getPageContributors("blp", $id) as $editor) {
-                    if ($editor["user_id"] != $posting->getAuthor()) {
-                        $posts[$id]["editors"][] = $editor["user_id"];
-                    }
-                }
-            }
-        }
-
-        return $posts;
-    }
-
-    /**
      * Checks whether a posting exists
      */
     public static function exists(

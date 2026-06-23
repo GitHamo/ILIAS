@@ -62,6 +62,38 @@ class PostingManager
         return $this->repo->posting()->getAllByBlog($blog_id, $limit, $offset);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getAllPostings(int $a_blog_id, int $a_limit = 1000, int $a_offset = 0): array
+    {
+        $pages = \ilPageObject::getAllPages("blp", $a_blog_id);
+        $posts = [];
+        foreach ($this->repo->posting()->getAllByBlog(
+            $a_blog_id,
+            $a_limit,
+            $a_offset
+        ) as $posting) {
+            $id = $posting->getId();
+            if (isset($pages[$id])) {
+                $posts[$id] = $pages[$id];
+                $posts[$id]["title"] = $posting->getTitle();
+                $posts[$id]["created"] = $posting->getCreated();
+                $posts[$id]["author"] = $posting->getAuthor();
+                $posts[$id]["approved"] = $posting->isApproved();
+                $posts[$id]["last_withdrawn"] = $posting->getLastWithdrawn();
+
+                foreach (\ilPageObject::getPageContributors("blp", $id) as $editor) {
+                    if ($editor["user_id"] != $posting->getAuthor()) {
+                        $posts[$id]["editors"][] = $editor["user_id"];
+                    }
+                }
+            }
+        }
+
+        return $posts;
+    }
+
     public function exists(int $blog_id, int $posting_id): bool
     {
         return $this->repo->posting()->exists($blog_id, $posting_id);

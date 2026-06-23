@@ -29,6 +29,7 @@ use ILIAS\Repository\Profile\ProfileAdapter;
 use ILIAS\Repository\Profile\ProfileGUI;
 use ILIAS\Blog\Settings\Settings;
 use ILIAS\Blog\ReadingTime\ReadingTimeManager;
+use ILIAS\Blog\Posting\PostingManager;
 
 /**
  * @ilCtrl_Calls ilObjBlogGUI: ilBlogPostingGUI, ilWorkspaceAccessGUI
@@ -41,6 +42,7 @@ use ILIAS\Blog\ReadingTime\ReadingTimeManager;
  */
 class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
 {
+    protected PostingManager $posting_manager;
     protected ?Settings $blog_settings = null;
     protected ProfileGUI $profile_gui;
     protected ProfileAdapter $profile;
@@ -135,6 +137,8 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
             ilBlogPosting::lookupBlogId($blog_page) !== $this->object->getId()) {
             throw new ilException("Posting ID does not match blog.");
         }
+
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
 
         $blog_id = 0;
         if ($this->object) {
@@ -1029,7 +1033,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         $author_found = false;
 
         $items = array();
-        foreach (ilBlogPosting::getAllPostings($a_obj_id) as $posting) {
+        foreach ($this->posting_manager->getAllPostings($a_obj_id) as $posting) {
             if ($this->author &&
                 ($posting["author"] == $this->author ||
                 (is_array($posting["editors"] ?? false) && in_array($this->author, $posting["editors"])))) {

@@ -24,11 +24,9 @@ use ILIAS\COPage;
 use ILIAS\Export;
 use ilPropertyFormGUI;
 
-/**
- * @author Alexander Killing <killing@leifos.de>
- */
 class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
 {
+    protected Posting\PostingManager $posting_manager;
     protected \ilLanguage $lng;
     protected ?array $selected_pages = null;
     protected \ilObjBlog $blog;
@@ -46,6 +44,7 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
         int $style_id,
         ?array $selected_pages = null
     ) {
+        global $DIC;
         $this->lng = $lng;
         $this->ctrl = $ctrl;
         $this->blog = $blog;
@@ -54,6 +53,7 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
         $this->style_sheet_id = $style_id;
 
         $this->selected_pages = $selected_pages;
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
     }
 
     public function getTemplateInjectors(): array
@@ -79,7 +79,9 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
             ? $this->selected_pages
             : array_map(static function ($i) {
                 return $i["id"];
-            }, \ilBlogPosting::getAllPostings($this->blog->getId()));
+            }, (function () {
+                return $this->posting_manager->getAllPostings($this->blog->getId());
+            })());
 
         foreach ($selected_pages as $p_id) {
             $page_gui = new \ilBlogPostingGUI(
@@ -102,7 +104,7 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
     {
         $lng = $this->lng;
         $ilCtrl = $this->ctrl;
-        $postings = \ilBlogPosting::getAllPostings($this->blog->getId());
+        $postings = $this->posting_manager->getAllPostings($this->blog->getId());
         $lng->loadLanguageModule("content");
         $lng->loadLanguageModule("blog");
         $form = new \ilPropertyFormGUI();

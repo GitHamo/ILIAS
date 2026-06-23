@@ -24,6 +24,7 @@ declare(strict_types=1);
  */
 class ilBlogExporter extends ilXmlExporter
 {
+    protected \ILIAS\Blog\Posting\PostingManager $posting_manager;
     protected ilBlogDataSet $ds;
     protected \ILIAS\Style\Content\DomainService $content_style_domain;
 
@@ -36,6 +37,7 @@ class ilBlogExporter extends ilXmlExporter
         $this->content_style_domain = $DIC
             ->contentStyle()
             ->domain();
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
     }
 
     public function getXmlExportTailDependencies(
@@ -48,7 +50,7 @@ class ilBlogExporter extends ilXmlExporter
         // postings
         $pg_ids = array();
         foreach ($a_ids as $id) {
-            $pages = ilBlogPosting::getAllPostings($id);
+            $pages = $this->posting_manager->getAllPostings((int) $id);
             foreach (array_keys($pages) as $p) {
                 $pg_ids[] = "blp:" . $p;
             }

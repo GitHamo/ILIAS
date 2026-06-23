@@ -250,7 +250,7 @@ class ilPCBlogGUI extends ilPageContentGUI
         }
 
         $options = array();
-        $postings = ilBlogPosting::getAllPostings($a_blog_id);
+        $postings = $this->posting_manger->getAllPostings($a_blog_id);
         if ($postings) {
             foreach ($postings as $post) {
                 // could be posting from someone else
