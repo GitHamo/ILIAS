@@ -656,7 +656,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
 
         $ui_factory = $DIC->ui()->factory();
 
-        $keywords = ilBlogPosting::getKeywords(
+        $keywords = $this->posting_manager->getKeywords(
             $this->getBlogPosting()->getBlogId(),
             $this->getBlogPosting()->getId()
         );
@@ -668,7 +668,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
             if ($pid !== $this->getBlogPosting()->getId()) {
                 $other = array_merge(
                     $other,
-                    ilBlogPosting::getKeywords($this->getBlogPosting()->getBlogId(), $pid)
+                    $this->posting_manager->getKeywords($this->getBlogPosting()->getBlogId(), $pid)
                 );
             }
         }

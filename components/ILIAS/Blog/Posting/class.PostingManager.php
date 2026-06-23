@@ -131,4 +131,20 @@ class PostingManager
     {
         return $this->repo->posting()->searchBlogsByAuthor($user_id);
     }
+
+    public function getKeywords(int $blog_id, int $posting_id): array
+    {
+        $lom_services = $this->domain->lom();
+
+        $result = [];
+        $keywords = $lom_services->read($blog_id, $posting_id, "blp")
+                                 ->allData($lom_services->paths()->keywords());
+        foreach ($keywords as $keyword) {
+            if ($keyword->value() !== "") {
+                $result[] = $keyword->value();
+            }
+        }
+
+        return $result;
+    }
 }

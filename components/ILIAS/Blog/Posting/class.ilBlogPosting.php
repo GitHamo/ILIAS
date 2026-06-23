@@ -276,16 +276,6 @@ class ilBlogPosting extends ilPageObject
     }
 
     /**
-     * Get newest posting for blog
-     */
-    public static function getLastPost(
-        int $a_blog_id
-    ): int {
-        global $DIC;
-        return $DIC->blog()->internal()->domain()->posting()->getLastPost($a_blog_id);
-    }
-
-    /**
      * Set blog node id (needed for notification)
      */
     public function setBlogNodeId(
@@ -314,25 +304,5 @@ class ilBlogPosting extends ilPageObject
                            ->prepareDelete($this->lom_services->paths()->keywords())
                            ->prepareCreateOrUpdate($this->lom_services->paths()->keywords(), ...$keywords)
                            ->execute();
-    }
-
-    public static function getKeywords(
-        int $a_obj_id,
-        int $a_posting_id
-    ): array {
-        global $DIC;
-
-        $lom_services = $DIC->learningObjectMetadata();
-
-        $result = [];
-        $keywords = $lom_services->read($a_obj_id, $a_posting_id, "blp")
-                                 ->allData($lom_services->paths()->keywords());
-        foreach ($keywords as $keyword) {
-            if ($keyword->value() !== "") {
-                $result[] = $keyword->value();
-            }
-        }
-
-        return $result;
     }
 }

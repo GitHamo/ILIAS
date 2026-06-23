@@ -1326,7 +1326,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
             $wtpl->setVariable("URL_TITLE", $preview);
             $wtpl->setVariable("TITLE", $item->getTitle());
 
-            $kw = ilBlogPosting::getKeywords($this->obj_id, $item_id);
+            $kw = $this->posting_manager->getKeywords($this->obj_id, $item_id);
             natcasesort($kw);
             $keywords = (count($kw) > 0)
                 ? "<br>" . $this->lng->txt("keywords") . ": " . implode(", ", $kw)
@@ -1847,7 +1847,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
     ): array {
         $keywords = array();
         if ($a_posting_id) {
-            foreach (ilBlogPosting::getKeywords($this->obj_id, $a_posting_id) as $keyword) {
+            foreach ($this->posting_manager->getKeywords($this->obj_id, $a_posting_id) as $keyword) {
                 if (isset($keywords[$keyword])) {
                     $keywords[$keyword]++;
                 } else {
@@ -1860,7 +1860,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                     /** @var \ILIAS\Blog\Posting\Posting $item */
                     $item_id = $item->getId();
                     if ($a_show_inactive || ilBlogPosting::_lookupActive($item_id, "blp")) {
-                        foreach (ilBlogPosting::getKeywords($this->obj_id, $item_id) as $keyword) {
+                        foreach ($this->posting_manager->getKeywords($this->obj_id, $item_id) as $keyword) {
                             if (isset($keywords[$keyword])) {
                                 $keywords[$keyword]++;
                             } else {
@@ -2097,7 +2097,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
             foreach ($items as $item) {
                 if (in_array(
                     $a_keyword,
-                    ilBlogPosting::getKeywords($this->obj_id, $item->getId())
+                    $this->posting_manager->getKeywords($this->obj_id, $item->getId())
                 )) {
                     $res[] = $item;
                 }
