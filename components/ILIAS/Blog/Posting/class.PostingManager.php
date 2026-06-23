@@ -63,7 +63,27 @@ class PostingManager
     }
 
     /**
-     * @return array<int, array<string, mixed>>
+     * @return int[] posting ids
+     */
+    public function getAllPostingIds(int $blog_id, int $limit = 1000, int $offset = 0): array
+    {
+        $pages = \ilPageObject::getAllPages("blp", $blog_id);
+        $ids = [];
+        foreach ($this->repo->posting()->getAllByBlog($blog_id, $limit, $offset) as $posting) {
+            $id = $posting->getId();
+            if (isset($pages[$id])) {
+                $ids[] = $id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Return all postings of a blog as data objects (Posting[]),
+     * filtered to those that have an associated page.
+     *
+     * @return Posting[]
      */
     public function getAllPostings(int $a_blog_id, int $a_limit = 1000, int $a_offset = 0): array
     {
@@ -76,18 +96,7 @@ class PostingManager
         ) as $posting) {
             $id = $posting->getId();
             if (isset($pages[$id])) {
-                $posts[$id] = $pages[$id];
-                $posts[$id]["title"] = $posting->getTitle();
-                $posts[$id]["created"] = $posting->getCreated();
-                $posts[$id]["author"] = $posting->getAuthor();
-                $posts[$id]["approved"] = $posting->isApproved();
-                $posts[$id]["last_withdrawn"] = $posting->getLastWithdrawn();
-
-                foreach (\ilPageObject::getPageContributors("blp", $id) as $editor) {
-                    if ($editor["user_id"] != $posting->getAuthor()) {
-                        $posts[$id]["editors"][] = $editor["user_id"];
-                    }
-                }
+                $posts[] = $posting;
             }
         }
 

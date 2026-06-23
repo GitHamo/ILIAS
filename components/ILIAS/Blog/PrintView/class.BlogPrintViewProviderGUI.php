@@ -77,11 +77,7 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
 
         $selected_pages = (count($this->selected_pages) > 0)
             ? $this->selected_pages
-            : array_map(static function ($i) {
-                return $i["id"];
-            }, (function () {
-                return $this->posting_manager->getAllPostings($this->blog->getId());
-            })());
+            : $this->posting_manager->getAllPostingIds($this->blog->getId());
 
         foreach ($selected_pages as $p_id) {
             $page_gui = new \ilBlogPostingGUI(
@@ -124,8 +120,8 @@ class BlogPrintViewProviderGUI extends Export\AbstractPrintViewProvider
 
         foreach ($postings as $p) {
             $nl->addListNode(
-                (string) $p["id"],
-                $p["title"],
+                (string) $p->getId(),
+                $p->getTitle(),
                 "0",
                 false,
                 false,

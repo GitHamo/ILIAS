@@ -50,8 +50,8 @@ class ilBlogExporter extends ilXmlExporter
         // postings
         $pg_ids = array();
         foreach ($a_ids as $id) {
-            $pages = $this->posting_manager->getAllPostings((int) $id);
-            foreach (array_keys($pages) as $p) {
+            $posting_ids = $this->posting_manager->getAllPostingIds((int) $id);
+            foreach ($posting_ids as $p) {
                 $pg_ids[] = "blp:" . $p;
             }
         }

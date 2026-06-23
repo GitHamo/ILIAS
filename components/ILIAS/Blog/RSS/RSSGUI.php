@@ -66,7 +66,7 @@ class RSSGUI
         $feed->setChannelLink($url);
 
         foreach ($this->domain->posting()->getAllPostings($obj_id) as $item) {
-            $id = $item["id"];
+            $id = $item->getId();
 
             // only published items
             $is_active = \ilBlogPosting::_lookupActive($id, "blp");
@@ -83,8 +83,8 @@ class RSSGUI
             $url = str_replace("&", "&amp;", $url);
 
             $feed_item = new \ilFeedItem();
-            $feed_item->setTitle(str_replace("&", "&amp;", $item["title"])); // #16022
-            $feed_item->setDate($item["created"]->get(IL_CAL_DATETIME));
+            $feed_item->setTitle(str_replace("&", "&amp;", $item->getTitle())); // #16022
+            $feed_item->setDate($item->getCreated()->get(IL_CAL_DATETIME));
             $feed_item->setDescription($snippet);
             $feed_item->setLink($url);
             $feed_item->setAbout($url);

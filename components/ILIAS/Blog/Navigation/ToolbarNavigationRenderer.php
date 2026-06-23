@@ -23,6 +23,7 @@ namespace ILIAS\Blog\Navigation;
 use ILIAS\Blog\InternalDomainService;
 use ILIAS\Blog\InternalGUIService;
 use ILIAS\Blog\Permission\PermissionManager;
+use ILIAS\Blog\Posting\Posting;
 
 class ToolbarNavigationRenderer
 {
@@ -147,7 +148,10 @@ class ToolbarNavigationRenderer
         reset($this->items);
         $month = current($this->items);
         if (is_array($month)) {
-            return (int) current($month)["id"];
+            $first = current($month);
+            if ($first instanceof \ILIAS\Blog\Posting\Posting) {
+                return (int) $first->getId();
+            }
         }
         return 0;
     }
@@ -160,14 +164,16 @@ class ToolbarNavigationRenderer
         $next_blpg = 0;
         foreach ($this->items as $month => $items) {
             foreach ($items as $item) {
-                if (!$this->blog_access->isActive((int) $item["id"])) {
+                /** @var \ILIAS\Blog\Posting\Posting $item */
+                $item_id = (int) $item->getId();
+                if (!$this->blog_access->isActive($item_id)) {
                     continue;
                 }
-                if ($item["id"] == $blog_page) {
+                if ($item_id == $blog_page) {
                     $found = true;
                 }
                 if (!$found) {
-                    $next_blpg = (int) $item["id"];
+                    $next_blpg = $item_id;
                 }
             }
         }
@@ -182,13 +188,15 @@ class ToolbarNavigationRenderer
         $prev_blpg = 0;
         foreach ($this->items as $month => $items) {
             foreach ($items as $item) {
-                if (!$this->blog_access->isActive((int) $item["id"])) {
+                /** @var \ILIAS\Blog\Posting\Posting $item */
+                $item_id = (int) $item->getId();
+                if (!$this->blog_access->isActive($item_id)) {
                     continue;
                 }
                 if ($found && $prev_blpg === 0) {
-                    $prev_blpg = (int) $item["id"];
+                    $prev_blpg = $item_id;
                 }
-                if ((int) $item["id"] === $blog_page) {
+                if ($item_id === $blog_page) {
                     $found = true;
                 }
             }
@@ -300,19 +308,20 @@ class ToolbarNavigationRenderer
                 $label,
                 $this->getMonthTarget($month)
             )->withUnavailableAction();
+            /** @var Posting $item */
             foreach ($items as $item) {
-                if (!$this->blog_access->isActive((int) $item["id"])) {
+                if (!$this->blog_access->isActive((int) $item->getId())) {
                     continue;
                 }
-                $label = $item["title"];
-                if ((int) $item["id"] === $this->blog_page) {
+                $label = $item->getTitle();
+                if ((int) $item->getId() === $this->blog_page) {
                     $label = "» " . $label;
-                    $dd_title = $item["title"];
+                    $dd_title = $item->getTitle();
                 }
                 $label = str_pad("", 12, "&nbsp;") . $label;
                 $m[] = $f->link()->standard(
                     $label,
-                    $this->getPostingTarget((int) $item["id"], $cmd)
+                    $this->getPostingTarget((int) $item->getId(), $cmd)
                 );
             }
         }

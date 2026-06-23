@@ -226,8 +226,9 @@ class BlogHtmlExport
 
         $pages = $this->posting_manager->getAllPostings($this->blog->getId(), 0);
         foreach ($pages as $page) {
-            if (\ilBlogPosting::_exists("blp", $page["id"])) {
-                $blp_gui = new \ilBlogPostingGUI(0, null, $page["id"]);
+            $page_id = $page->getId();
+            if (\ilBlogPosting::_exists("blp", $page_id)) {
+                $blp_gui = new \ilBlogPostingGUI(0, null, $page_id);
                 $blp_gui->setOutputMode("offline");
                 $blp_gui->setFullscreenLink("fullscreen.html"); // #12930 - see page.xsl
                 $blp_gui->add_date = true;
@@ -236,11 +237,11 @@ class BlogHtmlExport
                 $back = $this->buildExportLink(
                     $a_link_template,
                     "list",
-                    substr($page["created"]->get(IL_CAL_DATE), 0, 7),
+                    substr($page->getCreated()->get(IL_CAL_DATE), 0, 7),
                     $this->keywords
                 );
 
-                $file = $this->buildExportLink($a_link_template, "posting", (string) $page["id"], $this->keywords);
+                $file = $this->buildExportLink($a_link_template, "posting", (string) $page_id, $this->keywords);
 
                 if (!$a_tpl_callback) {
                     $tpl = $this->getInitialisedTemplate();
@@ -258,12 +259,12 @@ class BlogHtmlExport
                     "",
                     $a_link_template,
                     false,
-                    $page["id"]
+                    $page_id
                 );
 
                 $this->writeExportFile($file, $tpl, $page_content, $nav, (bool) $back, $comments);
 
-                $this->co_page_html_export->collectPageElements("blp:pg", $page["id"]);
+                $this->co_page_html_export->collectPageElements("blp:pg", $page_id);
             }
         }
 
@@ -294,10 +295,10 @@ class BlogHtmlExport
 
     public function collectAllPagesPageElements(\ilCOPageHTMLExport $co_page_html_export): void
     {
-        $pages = $this->posting_manager->getAllPostings($this->blog->getId(), 0);
-        foreach ($pages as $page) {
-            if (\ilBlogPosting::_exists("blp", $page["id"])) {
-                $co_page_html_export->collectPageElements("blp:pg", $page["id"]);
+        $page_ids = $this->posting_manager->getAllPostingIds($this->blog->getId(), 0);
+        foreach ($page_ids as $page_id) {
+            if (\ilBlogPosting::_exists("blp", $page_id)) {
+                $co_page_html_export->collectPageElements("blp:pg", $page_id);
             }
         }
     }
