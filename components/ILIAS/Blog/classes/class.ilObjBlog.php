@@ -155,23 +155,6 @@ class ilObjBlog extends ilObject2
         $this->notes = $a_status;
     }
 
-    public static function sendNotification(
-        string $a_action,
-        bool $a_in_wsp,
-        int $a_blog_node_id,
-        int $a_posting_id,
-        ?string $a_comment = null
-    ): void {
-        global $DIC;
-
-        $DIC->blog()->internal()->domain()->notification()->sendNotification(
-            $a_action,
-            $a_in_wsp,
-            $a_blog_node_id,
-            $a_posting_id,
-            $a_comment
-        );
-    }
 
     /**
      * Deliver blog as rss feed

@@ -571,7 +571,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         // #10040 - get note text
         $note = $this->notes->domain()->getById($a_note_id);
         $text = $note->getText();
-        ilObjBlog::sendNotification("comment", $this->isInWorkspace(), $this->node_id, $a_posting_id, $text);
+        $this->domain->notification()->sendNotification("comment", $this->isInWorkspace(), $this->node_id, $a_posting_id, $text);
     }
 
     public function getActivationCaptions(): array
@@ -609,7 +609,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     public function activatePage(bool $a_to_list = false): void
     {
         // send notifications
-        ilObjBlog::sendNotification("new", $this->isInWorkspace(), $this->node_id, $this->getBlogPosting()->getId());
+        $this->domain->notification()->sendNotification("new", $this->isInWorkspace(), $this->node_id, $this->getBlogPosting()->getId());
 
         if ($this->checkAccess("write") || $this->checkAccess("contribute")) {
             $this->getBlogPosting()->setActive(true);

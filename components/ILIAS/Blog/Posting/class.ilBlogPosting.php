@@ -37,12 +37,14 @@ class ilBlogPosting extends ilPageObject
     protected ?ilDateTime $withdrawn = null;
     protected InternalDataService $internal_data;
     protected PostingManager $posting_manager;
+    protected InternalDomainService $blog_domain;
 
     public function afterConstructor(): void
     {
         global $DIC;
         $this->internal_data = $DIC->blog()->internal()->data();
         $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+        $this->blog_domain = $DIC->blog()->internal()->domain();
     }
 
     public function getParentType(): string
@@ -169,7 +171,7 @@ class ilBlogPosting extends ilPageObject
         $ret = parent::update($a_validate, $a_no_history);
 
         if ($a_notify && $this->getActive()) {
-            ilObjBlog::sendNotification(
+            $this->blog_domain->notification()->sendNotification(
                 $a_notify_action,
                 $this->blog_node_is_wsp,
                 $this->blog_node_id,
