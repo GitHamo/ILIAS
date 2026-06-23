@@ -37,7 +37,7 @@ class ilBlogPosting extends ilPageObject
     protected ?ilDateTime $withdrawn = null;
     protected InternalDataService $internal_data;
     protected PostingManager $posting_manager;
-    protected InternalDomainService $blog_domain;
+    protected \ILIAS\Blog\InternalDomainService $blog_domain;
 
     public function afterConstructor(): void
     {
