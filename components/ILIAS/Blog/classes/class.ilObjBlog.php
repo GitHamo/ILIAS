@@ -29,6 +29,7 @@ class ilObjBlog extends ilObject2
     public const ABSTRACT_DEFAULT_IMAGE_WIDTH = 144;
     public const ABSTRACT_DEFAULT_IMAGE_HEIGHT = 144;
     public const NAV_MODE_LIST_DEFAULT_POSTINGS = 10;
+    protected \ILIAS\Blog\Posting\PostingManager $posting_manager;
     protected ?Settings $blog_settings = null;
     protected SettingsManager $settings_manager;
     protected \ILIAS\Style\Content\DomainService $content_style_domain;
@@ -56,6 +57,7 @@ class ilObjBlog extends ilObject2
         if ($this->getId() > 0) {
             $this->blog_settings = $this->settings_manager->getByObjId($this->getId());
         }
+        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
     }
 
     protected function initType(): void
@@ -108,7 +110,7 @@ class ilObjBlog extends ilObject2
 
         $this->deleteMetaData();
 
-        ilBlogPosting::deleteAllBlogPostings($this->id);
+        $this->posting_manager->deleteAllByBlog($this->id);
 
         // remove all notifications
         ilNotification::removeForObject(ilNotification::TYPE_BLOG, $this->id);

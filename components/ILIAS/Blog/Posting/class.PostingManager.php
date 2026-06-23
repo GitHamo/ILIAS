@@ -115,6 +115,10 @@ class PostingManager
 
     public function deleteAllByBlog(int $blog_id): void
     {
+        $lom = $this->domain->lom();
+        foreach ($this->getAllPostingIds($blog_id) as $posting_id) {
+            $lom->deleteAll($blog_id, $posting_id, "blp");
+        }
         $this->repo->posting()->deleteAllBlogPostings($blog_id);
     }
 

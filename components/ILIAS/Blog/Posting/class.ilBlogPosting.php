@@ -254,23 +254,6 @@ class ilBlogPosting extends ilPageObject
         );
     }
 
-    /**
-     * Delete all postings for blog
-     */
-    public static function deleteAllBlogPostings(
-        int $a_blog_id
-    ): void {
-        global $DIC;
-
-        $lom_services = $DIC->learningObjectMetadata();
-        $mgr = $DIC->blog()->internal()->domain()->posting();
-        foreach ($mgr->getAllByBlog($a_blog_id, 0) as $posting) {
-            $lom_services->deleteAll($a_blog_id, $posting->getId(), "blp");
-            $post = new ilBlogPosting($posting->getId());
-            $post->delete();
-        }
-    }
-
     public static function lookupBlogId(
         int $a_posting_id
     ): ?int {
