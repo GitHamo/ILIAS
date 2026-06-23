@@ -1340,7 +1340,8 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         string $a_type,
         string $a_id
     ): string {
-        return BlogHtmlExport::buildExportLink($a_template, $a_type, $a_id, $this->getKeywords(false));
+        $blog_export = new BlogHtmlExport($this, "", "");
+        return $blog_export->buildExportLink($a_template, $a_type, $a_id, $this->getKeywords(false));
     }
 
 

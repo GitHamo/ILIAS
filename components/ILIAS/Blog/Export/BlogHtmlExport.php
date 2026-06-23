@@ -191,7 +191,7 @@ class BlogHtmlExport
                 $tpl = $a_tpl_callback();
             }
 
-            $file = self::buildExportLink($a_link_template, "list", $month, $this->keywords);
+            $file = $this->buildExportLink($a_link_template, "list", $month, $this->keywords);
             $file = $this->writeExportFile($file, $tpl, $list, $nav);
 
             if (!$has_index) {
@@ -215,7 +215,7 @@ class BlogHtmlExport
                 $tpl = $a_tpl_callback();
             }
 
-            $file = self::buildExportLink($a_link_template, "keyword", $keyword, $this->keywords);
+            $file = $this->buildExportLink($a_link_template, "keyword", $keyword, $this->keywords);
             $file = $this->writeExportFile($file, $tpl, $list, $nav);
         }
 
@@ -231,14 +231,14 @@ class BlogHtmlExport
                 $blp_gui->add_date = true;
                 $page_content = $blp_gui->showPage();
 
-                $back = self::buildExportLink(
+                $back = $this->buildExportLink(
                     $a_link_template,
                     "list",
                     substr($page["created"]->get(IL_CAL_DATE), 0, 7),
                     $this->keywords
                 );
 
-                $file = self::buildExportLink($a_link_template, "posting", (string) $page["id"], $this->keywords);
+                $file = $this->buildExportLink($a_link_template, "posting", (string) $page["id"], $this->keywords);
 
                 if (!$a_tpl_callback) {
                     $tpl = $this->getInitialisedTemplate();
@@ -303,7 +303,7 @@ class BlogHtmlExport
     /**
      * Build static export link
      */
-    public static function buildExportLink(
+    public function buildExportLink(
         string $a_template,
         string $a_type,
         string $a_id,
