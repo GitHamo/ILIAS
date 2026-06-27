@@ -1254,7 +1254,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                 $wtpl->parseCurrentBlock();
             }
 
-            $snippet = ilBlogPostingGUI::getSnippet(
+            $snippet = $this->gui->posting()->getSnippet(
                 $item_id,
                 $this->blog_settings->getAbstractShorten(),
                 $this->blog_settings->getAbstractShortenLength(),

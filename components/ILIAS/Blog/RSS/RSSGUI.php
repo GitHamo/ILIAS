@@ -75,7 +75,7 @@ class RSSGUI
             }
 
             // #16434
-            $snippet = strip_tags(\ilBlogPostingGUI::getSnippet($id), "<br><div><p>");
+            $snippet = strip_tags($this->gui->posting()->getSnippet($id), "<br><div><p>");
             $snippet = str_replace("&", "&amp;", $snippet);
             $snippet = "<![CDATA[" . $snippet . "]]>";
 

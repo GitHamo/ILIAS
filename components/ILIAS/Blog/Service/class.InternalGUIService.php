@@ -25,6 +25,7 @@ use ILIAS\Repository\GlobalDICGUIServices;
 use ILIAS\PermanentLink\PermanentLinkManager;
 use ILIAS\Blog\ReadingTime\GUIService;
 use ILIAS\Blog\RSS\RSSGUI;
+use ILIAS\Blog\Posting\Service\GUIService as PostingGUIService;
 
 class InternalGUIService
 {
@@ -112,6 +113,15 @@ class InternalGUIService
                 $this->domain_service,
                 $this
             );
+    }
+
+    public function posting(): PostingGUIService
+    {
+        return self::$instance["posting"] ??= new PostingGUIService(
+            $this->data_service,
+            $this->domain_service,
+            $this
+        );
     }
 
     public function rss(): RSSGUI

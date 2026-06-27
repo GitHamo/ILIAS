@@ -735,8 +735,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     /**
      * Get first text paragraph of page
      */
-    public static function getSnippet(
-        int $a_id,
+    public function getSnippet(
         bool $a_truncate = false,
         int $a_truncate_length = 500,
         string $a_truncate_sign = "...",
@@ -745,25 +744,23 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         int $a_picture_height = 144,
         ?string $a_export_directory = null
     ): string {
-        $bpgui = new self(0, null, $a_id);
-
         // scan the full page for media objects
         $img = "";
         if ($a_include_picture) {
-            $img = $bpgui->getFirstMediaObjectAsTag($a_picture_width, $a_picture_height, $a_export_directory);
+            $img = $this->getFirstMediaObjectAsTag($a_picture_width, $a_picture_height, $a_export_directory);
         }
 
-        $bpgui->setRawPageContent(true);
-        $bpgui->setAbstractOnly(true);
+        $this->setRawPageContent(true);
+        $this->setAbstractOnly(true);
 
         // #8627: export won't work - should we set offline mode?
-        $bpgui->setFileDownloadLink(".");
-        $bpgui->setFullscreenLink(".");
-        $bpgui->setSourcecodeDownloadScript(".");
-        $bpgui->setProfileBackUrl(".");
+        $this->setFileDownloadLink(".");
+        $this->setFullscreenLink(".");
+        $this->setSourcecodeDownloadScript(".");
+        $this->setProfileBackUrl(".");
 
         // render without title
-        $page = $bpgui->showPage();
+        $page = $this->showPage();
 
         if ($a_truncate) {
             $page = ilPageObject::truncateHTML($page, $a_truncate_length, $a_truncate_sign);
