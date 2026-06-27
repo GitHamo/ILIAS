@@ -805,7 +805,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
                             // see ilCOPageHTMLExport::exportHTMLMOB()
                             $mob_dir = "./mobs/mm_" . $mob_obj->getId();
                         }
-                        $mob_res = self::parseImage(
+                        $mob_res = $this->parseImage(
                             $mob_size["width"],
                             $mob_size["height"],
                             $a_width,
@@ -828,7 +828,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         return "";
     }
 
-    protected static function parseImage(
+    protected function parseImage(
         int $src_width,
         int $src_height,
         int $tgt_width,
