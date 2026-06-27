@@ -103,6 +103,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         $this->rbac_review = $domain->rbac()->review();
         $this->rbacadmin = $domain->rbac()->admin();
         $this->lng = $domain->lng();
+        $this->posting_manager = $domain->posting();
 
         $gui = $service->gui();
         $this->gui = $gui;
@@ -134,11 +135,9 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
 
         $blog_page = $this->blog_request->getBlogPage();
         if ($blog_page > 0 &&
-            ilBlogPosting::lookupBlogId($blog_page) !== $this->object->getId()) {
+            $this->posting_manager->lookupBlogId($blog_page) !== $this->object->getId()) {
             throw new ilException("Posting ID does not match blog.");
         }
-
-        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
 
         $blog_id = 0;
         if ($this->object) {

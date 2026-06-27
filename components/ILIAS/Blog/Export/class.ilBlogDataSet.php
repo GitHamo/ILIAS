@@ -285,7 +285,7 @@ class ilBlogDataSet extends ilDataSet
 
             // keywords
             foreach ($this->data as $idx => $item) {
-                $blog_id = ilBlogPosting::lookupBlogId($item["Id"]);
+                $blog_id = $this->service->domain()->posting()->lookupBlogId((int) $item["Id"]);
                 $keywords = $this->service->domain()->posting()->getKeywords((int) $blog_id, (int) $item["Id"]);
                 if ($keywords) {
                     foreach ($keywords as $kidx => $keyword) {

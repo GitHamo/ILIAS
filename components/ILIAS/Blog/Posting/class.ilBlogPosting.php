@@ -254,27 +254,6 @@ class ilBlogPosting extends ilPageObject
         );
     }
 
-    public static function lookupBlogId(
-        int $a_posting_id
-    ): ?int {
-        global $DIC;
-        return $DIC->blog()->internal()->domain()->posting()->lookupBlogId($a_posting_id);
-    }
-
-    /**
-     * Checks whether a posting exists
-     */
-    public static function exists(
-        int $a_blog_id,
-        int $a_posting_id
-    ): bool {
-        global $DIC;
-        return $DIC->blog()->internal()->domain()->posting()->exists(
-            $a_blog_id,
-            $a_posting_id
-        );
-    }
-
     /**
      * Set blog node id (needed for notification)
      */
