@@ -44,6 +44,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     protected ilLocatorGUI $locator;
     protected ilSetting $settings;
     protected LOMServices $lom_services;
+    protected ilToolbarGUI $toolbar;
     protected int $node_id;
     protected PostingManager $posting_manager;
     protected ?object $access_handler = null;
@@ -114,6 +115,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         $this->notes = $DIC->notes();
         $this->profile_gui = $DIC->blog()->internal()->gui()->profile();
         $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+        $this->toolbar = $DIC->toolbar();
     }
 
     public function executeCommand(): string
@@ -179,12 +181,11 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     public function preview(
         ?string $a_mode = null
     ): string {
-        global $DIC;
         $ilCtrl = $this->ctrl;
         $tpl = $this->tpl;
         $ilSetting = $this->settings;
 
-        $toolbar = $DIC->toolbar();
+        $toolbar = $this->toolbar;
         $append = "";
 
         $this->getBlogPosting()->increaseViewCnt();
@@ -628,9 +629,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
      */
     public function editKeywords(): void
     {
-        global $DIC;
-
-        $renderer = $DIC->ui()->renderer();
+        $renderer = $this->blog_gui->ui()->renderer();
 
         $ilTabs = $this->tabs;
         $tpl = $this->tpl;
@@ -652,9 +651,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
      */
     protected function initKeywordsForm(): \ILIAS\UI\Component\Input\Container\Form\Standard
     {
-        global $DIC;
-
-        $ui_factory = $DIC->ui()->factory();
+        $ui_factory = $this->blog_gui->ui()->factory();
 
         $keywords = $this->posting_manager->getKeywords(
             $this->getBlogPosting()->getBlogId(),
@@ -681,7 +678,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
             $input_tag = $input_tag->withValue($keywords);
         }
 
-        $DIC->ctrl()->setParameter(
+        $this->ctrl->setParameter(
             $this,
             'tags',
             'tags_processing'
@@ -689,7 +686,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
 
         $section = $ui_factory->input()->field()->section([$input_tag], $this->lng->txt("blog_edit_keywords"), "");
 
-        $form_action = $DIC->ctrl()->getFormAction($this, "saveKeywordsForm");
+        $form_action = $this->ctrl->getFormAction($this, "saveKeywordsForm");
         return $ui_factory->input()->container()->form()->standard($form_action, ["tags" => $section]);
     }
 
@@ -707,9 +704,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
 
     public function saveKeywordsForm(): void
     {
-        global $DIC;
-
-        $request = $DIC->http()->request();
+        $request = $this->blog_gui->http()->request();
         $form = $this->initKeywordsForm();
 
         if ($request->getMethod() === "POST"

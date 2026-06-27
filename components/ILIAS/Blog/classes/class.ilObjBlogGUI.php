@@ -1810,10 +1810,8 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         }
 
         if (count($blocks)) {
-            global $DIC;
-
-            $ui_factory = $DIC->ui()->factory();
-            $ui_renderer = $DIC->ui()->renderer();
+            $ui_factory = $this->ui->factory();
+            $ui_renderer = $this->ui->renderer();
 
             ksort($blocks);
             foreach ($blocks as $block) {
