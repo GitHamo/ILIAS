@@ -27,6 +27,14 @@ use ILIAS\UI\Component\Modal\Modal;
 class ilObjBlogListGUI extends ilObjectListGUI
 {
     private ?Modal $comment_modal = null;
+    protected \ILIAS\Blog\InternalService $blog_service;
+
+    public function __construct(int $context = self::CONTEXT_REPOSITORY)
+    {
+        global $DIC;
+        parent::__construct($context);
+        $this->blog_service = $DIC->blog()->internal();
+    }
 
     public function init(): void
     {
@@ -69,8 +77,7 @@ class ilObjBlogListGUI extends ilObjectListGUI
         string $cmd = "",
         string $onclick = ""
     ): void {
-        global $DIC;
-        $blog_service = $DIC->blog()->internal();
+        $blog_service = $this->blog_service;
 
         $tpl = $this->ui->mainTemplate();
         $export_possible = $blog_service->domain()
