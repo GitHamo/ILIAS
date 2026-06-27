@@ -67,11 +67,12 @@ class InternalGUIService
 
     public function contributor(): Contributor\GUIService
     {
-        return new Contributor\GUIService(
-            $this->data_service,
-            $this->domain_service,
-            $this
-        );
+        return self::$instance["contributor"] ??
+            self::$instance["contributor"] = new Contributor\GUIService(
+                $this->data_service,
+                $this->domain_service,
+                $this
+            );
     }
 
     public function exercise(): Exercise\GUIService

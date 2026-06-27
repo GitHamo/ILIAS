@@ -30,15 +30,17 @@ use ILIAS\Repository\Profile\ProfileGUI;
 use ILIAS\Blog\Settings\Settings;
 use ILIAS\Blog\ReadingTime\ReadingTimeManager;
 use ILIAS\Blog\Posting\PostingManager;
+use ILIAS\Blog\Contributor\ContributorGUI;
 
 /**
  * @ilCtrl_Calls ilObjBlogGUI: ilBlogPostingGUI, ilWorkspaceAccessGUI
  * @ilCtrl_Calls ilObjBlogGUI: ilInfoScreenGUI, ilNoteGUI, ilCommonActionDispatcherGUI
- * @ilCtrl_Calls ilObjBlogGUI: ilPermissionGUI, ilObjectCopyGUI, ilRepositorySearchGUI
+ * @ilCtrl_Calls ilObjBlogGUI: ilPermissionGUI, ilObjectCopyGUI
  * @ilCtrl_Calls ilObjBlogGUI: ilExportGUI, ilObjectContentStyleSettingsGUI, ilBlogExerciseGUI, ilObjNotificationSettingsGUI
  * @ilCtrl_Calls ilObjBlogGUI: ilObjectMetaDataGUI
  * @ilCtrl_Calls ilObjBlogGUI: ILIAS\Blog\Settings\SettingsGUI
  * @ilCtrl_Calls ilObjBlogGUI: ILIAS\Blog\Settings\BlockSettingsGUI
+ * @ilCtrl_Calls ilObjBlogGUI: ILIAS\Blog\Contributor\ContributorGUI
  */
 class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
 {
@@ -295,7 +297,7 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                 $this->tabs_gui->addTab(
                     "contributors",
                     $lng->txt("blog_contributors"),
-                    $this->ctrl->getLinkTarget($this, "contributors")
+                    $this->ctrl->getLinkTargetByClass(ContributorGUI::class, "contributors")
                 );
             }
 
@@ -508,14 +510,11 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                 $this->ctrl->forwardCommand($cp);
                 break;
 
-            case 'ilrepositorysearchgui':
+            case strtolower(\ilRepositorySearchGUI::class):
+                $this->checkPermission("write");
                 $this->prepareOutput();
                 $ilTabs->activateTab("contributors");
-                $rep_search = new ilRepositorySearchGUI();
-                $rep_search->setTitle($this->lng->txt("blog_add_contributor"));
-                $rep_search->setCallback($this, 'addContributor', $this->object->getAllLocalRoles($this->node_id));
-                $this->ctrl->setReturn($this, 'contributors');
-                $this->ctrl->forwardCommand($rep_search);
+                $this->ctrl->forwardCommand($this->gui->contributor()->contributorGUI($this->node_id, $this->object));
                 break;
 
             case 'ilexportgui':
@@ -577,6 +576,17 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
                 $gui = $this->gui->settings()->settingsGUI(
                     $this->obj_id,
                     $this->id_type === self::REPOSITORY_NODE_ID
+                );
+                $this->ctrl->forwardCommand($gui);
+                break;
+
+            case strtolower(ContributorGUI::class):
+                $this->checkPermission("write");
+                $this->prepareOutput();
+                $ilTabs->activateTab("contributors");
+                $gui = $this->gui->contributor()->contributorGUI(
+                    $this->node_id,
+                    $this->object
                 );
                 $this->ctrl->forwardCommand($gui);
                 break;
@@ -2126,209 +2136,6 @@ class ilObjBlogGUI extends ilObject2GUI implements ilDesktopItemHandling
         $this->ctrl->redirect($this, "render");
     }
 
-
-    //
-    // contributors
-    //
-
-    public function contributors(): void
-    {
-        $ilTabs = $this->tabs;
-        $ilToolbar = $this->toolbar;
-        $ilCtrl = $this->ctrl;
-        $lng = $this->lng;
-        $tpl = $this->tpl;
-
-        if (!$this->checkPermissionBool("write")) {
-            return;
-        }
-
-        $ilTabs->activateTab("contributors");
-
-        $local_roles = $this->object->getAllLocalRoles($this->node_id);
-
-        // add member
-        ilRepositorySearchGUI::fillAutoCompleteToolbar(
-            $this,
-            $ilToolbar,
-            array(
-                'auto_complete_name' => $lng->txt('user'),
-                'submit_name' => $lng->txt('add'),
-                'add_search' => true,
-                'add_from_container' => $this->node_id,
-                'user_type' => $local_roles
-            ),
-            true
-        );
-
-        $other_roles = $this->object->getRolesWithContributeOrRedact($this->node_id);
-        if ($other_roles) {
-            $this->tpl->setOnScreenMessage('info', sprintf($lng->txt("blog_contribute_other_roles"), implode(", ", $other_roles)));
-        }
-
-        $table = $this->gui->contributor()->contributorTableBuilder(
-            $this->object->getAllLocalRoles($this->node_id),
-            $this,
-            "contributors"
-        )->getTable();
-
-        if ($table->handleCommand()) {
-            return;
-        }
-
-        $tpl->setContent($table->render());
-    }
-
-    /**
-     * Autocomplete submit
-     */
-    public function addUserFromAutoComplete(): void
-    {
-        $lng = $this->lng;
-
-        $user_login = $this->blog_request->getUserLogin();
-        $user_type = $this->blog_request->getUserType();
-
-        if (trim($user_login) === '') {
-            $this->tpl->setOnScreenMessage('failure', $lng->txt('msg_no_search_string'));
-            $this->contributors();
-            return;
-        }
-        $users = explode(',', $user_login);
-
-        $user_ids = array();
-        foreach ($users as $user) {
-            $user_id = ilObjUser::_lookupId($user);
-
-            if (!$user_id) {
-                $this->tpl->setOnScreenMessage('failure', $lng->txt('user_not_known'));
-                $this->contributors();
-                return;
-            }
-
-            $user_ids[] = (int) $user_id;
-        }
-
-        $this->addContributor($user_ids, $user_type);
-    }
-
-    /**
-     * Centralized method to add contributors
-     */
-    public function addContributor(
-        array $a_user_ids = array(),
-        ?string $a_user_type = null
-    ): void {
-        $ilCtrl = $this->ctrl;
-        $lng = $this->lng;
-        $rbacreview = $this->rbac_review;
-        $rbacadmin = $this->rbacadmin;
-        $a_user_type = (int) $a_user_type;
-
-        if (!$this->checkPermissionBool("write")) {
-            return;
-        }
-
-        if (!count($a_user_ids) || !$a_user_type) {
-            $this->tpl->setOnScreenMessage('failure', $lng->txt("no_checkbox"));
-            $this->contributors();
-            return;
-        }
-
-        // get contributor role
-        $local_roles = array_keys($this->object->getAllLocalRoles($this->node_id));
-        if (!in_array($a_user_type, $local_roles)) {
-            $this->tpl->setOnScreenMessage('failure', $lng->txt("missing_perm"));
-            $this->contributors();
-            return;
-        }
-
-        foreach ($a_user_ids as $user_id) {
-            $user_id = (int) $user_id;
-            $a_user_type = (int) $a_user_type;
-            if (!$rbacreview->isAssigned($user_id, $a_user_type)) {
-                $rbacadmin->assignUser($a_user_type, $user_id);
-            }
-        }
-
-        $this->tpl->setOnScreenMessage('success', $lng->txt("settings_saved"), true);
-        $ilCtrl->redirect($this, "contributors");
-    }
-
-    /**
-     * Used in ContributorTableBuilder
-     */
-    public function confirmRemoveContributor(array $ids = []): void
-    {
-        if (empty($ids)) {
-            $ids = $this->blog_request->getIds();
-        }
-        if (count($ids) === 0) {
-            $this->tpl->setOnScreenMessage('failure', $this->lng->txt("select_one"), true);
-            $this->ctrl->redirect($this, "contributors");
-        }
-
-        $confirm = new ilConfirmationGUI();
-        $confirm->setHeaderText($this->lng->txt('blog_confirm_delete_contributors'));
-        $confirm->setFormAction($this->ctrl->getFormAction($this, 'removeContributor'));
-        $confirm->setConfirm($this->lng->txt('delete'), 'removeContributor');
-        $confirm->setCancel($this->lng->txt('cancel'), 'contributors');
-
-        foreach ($ids as $user_id) {
-            $confirm->addItem(
-                'id[]',
-                (string) $user_id,
-                $this->profile_gui->getNamePresentation($user_id, false, "", true)
-            );
-        }
-
-        $this->tpl->setContent($confirm->getHTML());
-    }
-
-    public function removeContributor(): void
-    {
-        $ilCtrl = $this->ctrl;
-        $lng = $this->lng;
-        $rbacadmin = $this->rbacadmin;
-
-        $ids = $this->blog_request->getIds();
-
-        if (count($ids) === 0) {
-            $this->tpl->setOnScreenMessage('failure', $lng->txt("select_one"), true);
-            $ilCtrl->redirect($this, "contributors");
-        }
-
-        // get contributor role
-        $local_roles = array_keys($this->object->getAllLocalRoles($this->node_id));
-        if (!$local_roles) {
-            $this->tpl->setOnScreenMessage('failure', $lng->txt("missing_perm"));
-            $this->contributors();
-            return;
-        }
-
-        foreach ($ids as $user_id) {
-            foreach ($local_roles as $role_id) {
-                $rbacadmin->deassignUser($role_id, $user_id);
-            }
-        }
-
-        $this->tpl->setOnScreenMessage('success', $lng->txt("settings_saved"), true);
-        $this->ctrl->redirect($this, "contributors");
-    }
-
-    /**
-     * Used in ContributorTableBuilder
-     */
-    public function addContributorContainerAction(array $ids = []): void
-    {
-        if (empty($ids)) {
-            $ids = $this->blog_request->getIds();
-        }
-
-        // This would typically add contributors from a container
-        // For now, redirecting back to contributors as this seems to be a placeholder action
-        $this->ctrl->redirect($this, "contributors");
-    }
 
     public function deactivateAdmin(): void
     {
