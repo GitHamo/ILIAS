@@ -62,11 +62,12 @@ class ilBlogImporter extends ilXmlImporter
         ilImportMapping $a_mapping
     ): void {
         global $DIC;
+        $blog_service = $DIC->blog()->internal();
 
         $blp_map = $a_mapping->getMappingsOfEntity("components/ILIAS/COPage", "pg");
         foreach ($blp_map as $blp_id) {
             $blp_id = (int) substr($blp_id, 4);
-            $blog_id = $DIC->blog()->internal()->domain()->posting()->lookupBlogId($blp_id);
+            $blog_id = $blog_service->domain()->posting()->lookupBlogId($blp_id);
             ilBlogPosting::_writeParentId("blp", $blp_id, (int) $blog_id);
         }
 

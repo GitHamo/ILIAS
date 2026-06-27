@@ -56,11 +56,13 @@ class BlogHtmlExport
         $this->blog_gui = $blog_gui;
         /** @var \ilObjBlog $blog */
         $blog = $blog_gui->getObject();
+        $this->blog = $blog;
+
+        $blog_service = $DIC->blog()->internal();
+
         $this->collector = $DIC->export()->domain()->html()->collector($blog->getId());
         $this->collector->init();
 
-        $this->blog = $blog;
-        //$this->export_dir = $exp_dir;
         $this->sub_dir = $sub_dir;
         $this->target_dir = $exp_dir . "/" . $sub_dir;
 
@@ -86,7 +88,7 @@ class BlogHtmlExport
         } else {
             $this->content_style_domain = $cs->domain()->styleForObjId($this->blog->getId());
         }
-        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+        $this->posting_manager = $blog_service->domain()->posting();
     }
     protected function init(): void
     {
@@ -339,8 +341,6 @@ class BlogHtmlExport
     protected function getInitialisedTemplate(
         string $a_back_url = ""
     ): \ilGlobalPageTemplate {
-        global $DIC;
-
         $this->export_util->resetGlobalScreen();
 
         $location_stylesheet = \ilUtil::getStyleSheetLocation();
@@ -350,13 +350,16 @@ class BlogHtmlExport
         );
         \ilPCQuestion::resetInitialState();
 
-        $tabs = $DIC->tabs();
+        $tabs = $this->tabs;
         $tabs->clearTargets();
         $tabs->clearSubTabs();
         if ($a_back_url) {
             $tabs->setBackTarget($this->lng->txt("back"), $a_back_url);
         }
-        $tpl = new \ilGlobalPageTemplate($DIC->globalScreen(), $DIC->ui(), $DIC->http());
+
+        /** @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+        $tpl = new \ilGlobalPageTemplate($this->global_screen, $DIC->ui(), $DIC->http());
 
         $this->co_page_html_export->getPreparedMainTemplate($tpl);
 

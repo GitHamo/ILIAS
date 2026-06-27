@@ -119,7 +119,8 @@ class InternalDomainService
         return self::$instance["news"] ??= new NewsManager(
             $this->data,
             $this->repo,
-            $this
+            $this,
+            $this->dic->blog()->internal()->gui()
         );
     }
 

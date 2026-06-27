@@ -70,11 +70,10 @@ class ilObjBlogListGUI extends ilObjectListGUI
         string $onclick = ""
     ): void {
         global $DIC;
+        $blog_service = $DIC->blog()->internal();
 
         $tpl = $this->ui->mainTemplate();
-        $export_possible = $DIC->blog()
-                               ->internal()
-                               ->domain()
+        $export_possible = $blog_service->domain()
                                ->export()
                                ->isCommentsExportPossible($this->obj_id);
         if ($cmd === "export"

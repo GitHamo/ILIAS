@@ -34,10 +34,10 @@ class NewsManager
     public function __construct(
         protected InternalDataService $data,
         protected InternalRepoService $repo,
-        protected InternalDomainService $domain
+        protected InternalDomainService $domain,
+        \ILIAS\Blog\InternalGUIService $gui
     ) {
-        global $DIC;
-        $this->posting_gui = $DIC->blog()->internal()->gui()->posting();
+        $this->posting_gui = $gui->posting();
     }
 
     /**

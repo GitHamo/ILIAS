@@ -34,10 +34,13 @@ class ilBlogExporter extends ilXmlExporter
 
         $this->ds = new ilBlogDataSet();
         $this->ds->setDSPrefix("ds");
+
+        $blog_service = $DIC->blog()->internal();
+
         $this->content_style_domain = $DIC
             ->contentStyle()
             ->domain();
-        $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+        $this->posting_manager = $blog_service->domain()->posting();
     }
 
     public function getXmlExportTailDependencies(

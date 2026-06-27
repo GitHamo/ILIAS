@@ -37,11 +37,12 @@ class StaticURLHandler extends BaseHandler implements Handler
     public function handle(Request $request, Context $context, Factory $response_factory): Response
     {
         global $DIC;
+        $blog_service = $DIC->blog()->internal();
 
         $ctrl = $DIC->ctrl();
         $access = $DIC->access();
         $uri = null;
-        $blog_domain = $DIC->blog()->internal()->domain();
+        $blog_domain = $blog_service->domain();
 
         $id = $request->getReferenceId()?->toInt() ?? 0;
         $additional_params = $request->getAdditionalParameters() ?? [];
