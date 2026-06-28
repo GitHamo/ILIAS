@@ -43,4 +43,28 @@ class GUIService
             $this->gui
         );
     }
+
+    public function monthBlock(): MonthBlockGUI
+    {
+        return new MonthBlockGUI(
+            $this->domain,
+            $this->gui
+        );
+    }
+
+    public function authorBlock(): AuthorBlockGUI
+    {
+        return new AuthorBlockGUI(
+            $this->domain,
+            $this->gui
+        );
+    }
+
+    public function keywordBlock(): KeywordBlockGUI
+    {
+        return new KeywordBlockGUI(
+            $this->domain,
+            $this->gui
+        );
+    }
 }

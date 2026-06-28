@@ -43,10 +43,11 @@ class InternalGUIService
 
     public function navigation(): Navigation\GUIService
     {
-        return new Navigation\GUIService(
-            $this->domain_service,
-            $this
-        );
+        return self::$instance["navigation"] ??
+            self::$instance["navigation"] = new Navigation\GUIService(
+                $this->domain_service,
+                $this
+            );
     }
 
     public function presentation(): Presentation\GUIService
