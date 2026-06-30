@@ -810,7 +810,7 @@ class ilObjectListGUI
             global $DIC;
             /** @var ILIAS\WebDAV\Environment $webdav */
             $webdav = $DIC[ILIAS\WebDAV\Environment::class];
-            if ($webdav->isActive()) {
+            if ($cmd == 'mount_webfolder' && $webdav->isActive()) {
                 return $webdav->getUriToMountInstructionModalByRef($this->ref_id);
             }
             // END WebDAV Get mount webfolder link.
@@ -1904,6 +1904,11 @@ class ilObjectListGUI
         ) {
             $this->ctrl->setParameterByClass(
                 get_class($this->container_obj),
+                'ref_id',
+                $this->container_obj->getObject()->getRefId()
+            );
+            $this->ctrl->setParameterByClass(
+                get_class($this->container_obj),
                 'tl_id',
                 $this->ref_id
             );
@@ -1915,6 +1920,11 @@ class ilObjectListGUI
             $this->ctrl->clearParameterByClass(
                 get_class($this->container_obj),
                 'tl_id',
+            );
+            $this->ctrl->setParameterByClass(
+                get_class($this->container_obj),
+                'ref_id',
+                $this->ref_id
             );
 
             $this->ctrl->setParameterByClass(

@@ -27,6 +27,14 @@ use ILIAS\UI\Component\Modal\Modal;
 class ilObjBlogListGUI extends ilObjectListGUI
 {
     private ?Modal $comment_modal = null;
+    protected \ILIAS\Blog\InternalService $blog_service;
+
+    public function __construct(int $context = self::CONTEXT_REPOSITORY)
+    {
+        global $DIC;
+        parent::__construct($context);
+        $this->blog_service = $DIC->blog()->internal();
+    }
 
     public function init(): void
     {
@@ -69,18 +77,20 @@ class ilObjBlogListGUI extends ilObjectListGUI
         string $cmd = "",
         string $onclick = ""
     ): void {
-        global $DIC;
+        $blog_service = $this->blog_service;
 
         $tpl = $this->ui->mainTemplate();
-        $ctrl = $this->ctrl;
+        $export_possible = $blog_service->domain()
+                               ->export()
+                               ->isCommentsExportPossible($this->obj_id);
         if ($cmd === "export"
-            && ilObjBlogAccess::isCommentsExportPossible($this->obj_id)
+            && $export_possible
             && (bool) $this->settings->get('item_cmd_asynch')) {
             $href = $this->getCommandLink("forwardExport");
             $cmd = "forwardExport";
             $onclick = "";
         }
-        if ($cmd !== "export" || !ilObjBlogAccess::isCommentsExportPossible($this->obj_id)) {
+        if ($cmd !== "export" || !$export_possible) {
             parent::insertCommand($href, $text, $frame, $img, $cmd, $onclick);
             return;
         }
@@ -95,7 +105,7 @@ class ilObjBlogListGUI extends ilObjectListGUI
 
             $prevent_background_click = false;
 
-            if (ilObjBlogAccess::isCommentsExportPossible($this->obj_id)) {
+            if ($export_possible) {
 
                 $modal = $this->getModalTemplate();
                 $signal = $modal["show"];

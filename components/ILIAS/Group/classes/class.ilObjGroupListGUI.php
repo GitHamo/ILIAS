@@ -79,7 +79,6 @@ class ilObjGroupListGUI extends ilObjectListGUI
                 // fall through if plugin is not active
                 // END Mount Webfolder.
 
-                // no break
             case "edit":
             default:
                 $this->ctrl->setParameterByClass("ilrepositorygui", "ref_id", $this->ref_id);

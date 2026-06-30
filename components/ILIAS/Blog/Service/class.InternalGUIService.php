@@ -24,6 +24,8 @@ use ILIAS\DI\Container;
 use ILIAS\Repository\GlobalDICGUIServices;
 use ILIAS\PermanentLink\PermanentLinkManager;
 use ILIAS\Blog\ReadingTime\GUIService;
+use ILIAS\Blog\RSS\RSSGUI;
+use ILIAS\Blog\Posting\Service\GUIService as PostingGUIService;
 
 class InternalGUIService
 {
@@ -41,10 +43,11 @@ class InternalGUIService
 
     public function navigation(): Navigation\GUIService
     {
-        return new Navigation\GUIService(
-            $this->domain_service,
-            $this
-        );
+        return self::$instance["navigation"] ??
+            self::$instance["navigation"] = new Navigation\GUIService(
+                $this->domain_service,
+                $this
+            );
     }
 
     public function presentation(): Presentation\GUIService
@@ -65,11 +68,12 @@ class InternalGUIService
 
     public function contributor(): Contributor\GUIService
     {
-        return new Contributor\GUIService(
-            $this->data_service,
-            $this->domain_service,
-            $this
-        );
+        return self::$instance["contributor"] ??
+            self::$instance["contributor"] = new Contributor\GUIService(
+                $this->data_service,
+                $this->domain_service,
+                $this
+            );
     }
 
     public function exercise(): Exercise\GUIService
@@ -111,5 +115,23 @@ class InternalGUIService
                 $this->domain_service,
                 $this
             );
+    }
+
+    public function posting(): PostingGUIService
+    {
+        return self::$instance["posting"] ??= new PostingGUIService(
+            $this->data_service,
+            $this->domain_service,
+            $this
+        );
+    }
+
+    public function rss(): RSSGUI
+    {
+        return self::$instance["rss"] ??= new RSSGUI(
+            $this->data_service,
+            $this->domain_service,
+            $this
+        );
     }
 }
