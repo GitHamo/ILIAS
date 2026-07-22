@@ -20,6 +20,7 @@ class ActivityRouteFactoryTest extends TestCase
         $activity = $this->createMock(Activity::class);
         $namespaceFactory = $this->createMock(ActivityNamespaceFactory::class);
         $namespace = $this->createMock(ActivityNamespace::class);
+        $inputFactory = $this->createMock(\ILIAS\UI\Component\Input\Factory::class);
 
         $namespaceFactory->expects(self::once())
             ->method('create')
@@ -28,7 +29,7 @@ class ActivityRouteFactoryTest extends TestCase
 
         $expected = new ActivityRoute(
             $activity,
-            new ActivityAction($activity),
+            new ActivityAction($activity, $inputFactory),
             $namespace,
             [
                 AuthenticationMiddleware::class,
@@ -37,6 +38,7 @@ class ActivityRouteFactoryTest extends TestCase
 
         $factory = new ActivityRouteFactory(
             $namespaceFactory,
+            $inputFactory,
         );
 
         $actual = $factory->create($activity);

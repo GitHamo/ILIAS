@@ -80,6 +80,7 @@ class ApiGateway implements Component\Component
             $use[Component\Activities\Repository::class],
             new ActivityRouteFactory(
                 new ActivityNamespaceFactory(),
+                $use[\ILIAS\UI\Factory::class]->input(),
             ),
         );
 
@@ -121,6 +122,7 @@ class ApiGateway implements Component\Component
             $use[Component\Activities\Repository::class],
             new ActivityRouteFactory(
                 new ActivityNamespaceFactory(),
+                $use[\ILIAS\UI\Factory::class]->input(),
             ),
             'rest',
         );

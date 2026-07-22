@@ -26,6 +26,7 @@ use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ObjectActivity;
 use ILIAS\Data\Result;
+use ILIAS\UI\Component\Input\Factory as InputFactory;
 use RuntimeException;
 use Throwable;
 
@@ -35,6 +36,7 @@ class ActivityAction implements Action
 
     public function __construct(
         private readonly Activity $activity,
+        private readonly InputFactory $inputFactory,
     ) {
     }
 
@@ -47,7 +49,7 @@ class ActivityAction implements Action
         $parameters['auth_user_id'] = $userId;
 
 
-        $result = $this->activity->maybePerformAs($userId, $parameters);
+        $result = $this->activity->maybePerformAs($this->inputFactory, $userId, $parameters);
 
         if ($result instanceof Result) {
 

@@ -14,6 +14,7 @@ use ILIAS\Component\Activities\ObjectActivity;
 use ILIAS\Data\Description\Description;
 use ILIAS\Data\Description\Factory as DescriptionFactory;
 use ILIAS\Data\Result;
+use ILIAS\UI\Component\Input\Factory as InputFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Override;
@@ -23,6 +24,7 @@ final class ActivityActionTest extends TestCase
 {
     private ActivityAction $action;
     private Activity&MockObject $activityMock;
+    private InputFactory&MockObject $inputFactoryMock;
     private Result&MockObject $dataResultMock;
     private Description&MockObject $dataDescriptionMock;
     private AuthUser&MockObject $currentUserMock;
@@ -35,6 +37,7 @@ final class ActivityActionTest extends TestCase
                 'maybePerformAs' => $this->dataResultMock = $this->createMock(Result::class),
                 'getOutputDescription' => $this->dataDescriptionMock = $this->createMock(Description::class),
             ]),
+            $this->inputFactoryMock = $this->createMock(InputFactory::class),
         );
 
         $this->currentUserMock = $this->createMock(AuthUser::class);
@@ -55,6 +58,7 @@ final class ActivityActionTest extends TestCase
         $this->activityMock->expects(self::once())
             ->method('maybePerformAs')
             ->with(
+                self::identicalTo($this->inputFactoryMock),
                 self::equalTo($userId),
                 self::equalTo($paramsWithUserId),
             );
@@ -84,7 +88,11 @@ final class ActivityActionTest extends TestCase
 
         $this->activityMock->expects(self::once())
             ->method('maybePerformAs')
-            ->with(self::equalTo(0), self::equalTo($expectedParams));
+            ->with(
+                self::identicalTo($this->inputFactoryMock),
+                self::equalTo(0),
+                self::equalTo($expectedParams)
+            );
 
 
         ($this->action)($params, null);

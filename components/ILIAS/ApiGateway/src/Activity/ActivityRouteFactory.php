@@ -22,11 +22,13 @@ namespace ILIAS\ApiGateway\Activity;
 
 use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware;
 use ILIAS\Component\Activities\Activity;
+use ILIAS\UI\Component\Input\Factory;
 
 readonly class ActivityRouteFactory
 {
     public function __construct(
         private ActivityNamespaceFactory $namespaceFactory,
+        private Factory  $inputFactory,
     ) {
     }
 
@@ -34,7 +36,7 @@ readonly class ActivityRouteFactory
     {
         return new ActivityRoute(
             $activity,
-            new ActivityAction($activity),
+            new ActivityAction($activity, $this->inputFactory),
             $this->namespaceFactory->create($activity::class),
             [
                 AuthenticationMiddleware::class,
