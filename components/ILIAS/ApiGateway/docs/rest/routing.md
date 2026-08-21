@@ -13,6 +13,7 @@
   * [What It Means](#what-it-means)
 * [3. Your Own Route Class: The Advanced Approach](#3-your-own-route-class-the-advanced-approach)
   * [How It Looks](#how-it-looks-2)
+* [Web Server Configuration](#web-server-configuration)
 
 In the API Gateway, an endpoint (like `/ping` or `/users/123`) is called a **Route**. The system is flexible, offering three main ways to create routes. No matter which method you choose, the basic process is the same: you define your route and then register it so the system can find it.
 
@@ -201,3 +202,24 @@ $contribute[\ILIAS\ApiGateway\Routing\Route::class] = static fn(): Route =>
         $pull[CourseRepository::class],
     );
 ```
+
+## Web Server Configuration
+
+### Nginx REST front-controller routing
+
+The REST API uses `public/rest/index.php` as its front controller. Apache
+installations use the `.htaccess` file shipped with the REST entry point to
+route REST requests to this front controller.
+
+Nginx does not process `.htaccess` files. When ILIAS is served through Nginx,
+an equivalent server-level rule is required so that clean REST URLs reach the
+REST front controller.
+
+For an ILIAS installation served at `/ilias11`, add the following inside the
+corresponding Nginx `server` block:
+
+```nginx
+# ILIAS REST front-controller routing
+location ~ ^/ilias11/rest/(?!index\.php$) {
+    rewrite ^ /ilias11/rest/index.php last;
+}
