@@ -38,7 +38,8 @@ readonly class ResponseHandler
 
     public function __construct(
         private Webservice $service,
-    ) {}
+    ) {
+    }
 
     /**
      * @param array<mixed, mixed> $args
@@ -52,13 +53,25 @@ readonly class ResponseHandler
         /** @var AuthUser|null */
         $authUser = $request->getAttribute(self::ATTR_KEY_AUTH_USER);
         $request = $request->withoutAttribute(self::ATTR_KEY_AUTH_USER);
+        $contentType = $request->getHeaderLine('Content-Type');
 
         $params = [
             ...$request->getQueryParams(),
             ...(array) $request->getParsedBody(),
         ];
 
-        $contentType = $request->getHeaderLine('Content-Type');
+        $isMultiPart = str_starts_with(
+            strtolower($contentType),
+            'multipart/form-data',
+        );
+
+        if ($isMultiPart) {
+            $params = [
+                ...$params,
+                ...$request->getUploadedFiles(),
+            ];
+        }
+
         if (str_contains($contentType, 'application/json')) {
             $body = $request->getBody();
             if ($body->isSeekable()) {

@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
 class ResponseHandlerTest extends TestCase
 {
@@ -148,6 +149,149 @@ class ResponseHandlerTest extends TestCase
         );
     }
 
+    public function testHandlesMultipartRequestWithUploadedFiles(): void
+    {
+        $queryParams = ['query' => 'q_val', 'file' => 'query_file'];
+        $parsedBody = ['body' => 'b_val'];
+        $uploadedFile = $this->createMock(UploadedFileInterface::class);
+        $uploadedFiles = ['file' => $uploadedFile];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = [
+            'query' => 'q_val',
+            'file' => $uploadedFile,
+            'body' => 'b_val',
+            'route' => 'r_val',
+        ];
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getParsedBody')->willReturn($parsedBody);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn(
+            'Multipart/Form-Data; boundary=test-boundary',
+        );
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        $this->requestMock->expects(self::once())
+            ->method('getUploadedFiles')
+            ->willReturn($uploadedFiles);
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock,
+        );
+    }
+
+    public function testDoesNotReadUploadedFilesForNonMultipartRequest(): void
+    {
+        $queryParams = ['query' => 'q_val'];
+        $parsedBody = ['body' => 'b_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = [
+            'query' => 'q_val',
+            'body' => 'b_val',
+            'route' => 'r_val',
+        ];
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getParsedBody')->willReturn($parsedBody);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn(
+            'application/x-www-form-urlencoded',
+        );
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        $this->requestMock->expects(self::never())->method('getUploadedFiles');
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock,
+        );
+    }
+
+    public function testHandlesMultipartRequestWithoutUploadedFiles(): void
+    {
+        $queryParams = ['query' => 'q_val'];
+        $parsedBody = ['body' => 'b_val'];
+        $routeArgs = ['route' => 'r_val'];
+        $expectedFinalParams = [
+            'query' => 'q_val',
+            'body' => 'b_val',
+            'route' => 'r_val',
+        ];
+
+        $this->requestMock->method('getQueryParams')->willReturn($queryParams);
+        $this->requestMock->method('getParsedBody')->willReturn($parsedBody);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('multipart/form-data');
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        $this->requestMock->expects(self::once())
+            ->method('getUploadedFiles')
+            ->willReturn([]);
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($expectedFinalParams, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock,
+        );
+    }
+
+    public function testRouteArgumentsOverrideUploadedFiles(): void
+    {
+        $uploadedFile = $this->createMock(UploadedFileInterface::class);
+        $routeArgs = ['file' => 'route_file'];
+
+        $this->requestMock->method('getQueryParams')->willReturn([]);
+        $this->requestMock->method('getParsedBody')->willReturn([]);
+        $this->requestMock->method('getHeaderLine')->with('Content-Type')->willReturn('multipart/form-data');
+        $this->requestMock->method('getAttribute')->with('authenticated_user')->willReturn(null);
+        $this->requestMock->method('withoutAttribute')->with('authenticated_user')->willReturn($this->requestMock);
+        $this->requestMock->expects(self::once())
+            ->method('getUploadedFiles')
+            ->willReturn(['file' => $uploadedFile]);
+
+        $actionMock = $this->createMock(Action::class);
+        $actionMock->expects(self::once())
+            ->method('__invoke')
+            ->with($routeArgs, null);
+
+        $this->webserviceMock->method('handle')->willReturn(new Payload());
+        $this->responseMock->method('withHeader')->willReturn($this->responseMock);
+
+        ($this->handler)(
+            $this->requestMock,
+            $this->responseMock,
+            $routeArgs,
+            $actionMock,
+        );
+    }
+
     public function testIgnoresJsonScalarBody(): void
     {
         // A scalar in the body should be ignored by the array_merge
@@ -219,9 +363,9 @@ class ResponseHandlerTest extends TestCase
     public function testHandlesRequestWithObjectParsedBody(): void
     {
         $queryParams = ['query' => 'q_val'];
-        $bodyParams = (object)['body' => 'b_val'];
+        $bodyParams = (object) ['body' => 'b_val'];
         $routeArgs = ['route' => 'r_val'];
-        $expectedFinalParams = array_merge($queryParams, (array)$bodyParams, $routeArgs);
+        $expectedFinalParams = array_merge($queryParams, (array) $bodyParams, $routeArgs);
 
         $this->requestMock->method('getQueryParams')->willReturn($queryParams);
         $this->requestMock->method('getParsedBody')->willReturn($bodyParams);
