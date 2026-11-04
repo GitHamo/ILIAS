@@ -79,7 +79,10 @@ The URL path is derived from your Activity's namespace and class name:
 
 #### Clean Naming Rules:
 To keep URLs concise, the Gateway automatically trims prefixes and suffixes:
-- **Trimming**: Prefixes like "Query" or "Get" and suffixes like "Query" or "Activity" are removed.
+- **Trimming**: 
+    1. **Prefixes**: "Query" or "Get" are removed from the start.
+    2. **Suffixes**: "Query" or "Activity" are removed from the end (only one suffix is removed).
+    - *Example*: `QueryUserDetailsActivity` becomes `userdetails`.
 - **Casing**: All generated path segments are converted to **lowercase**.
 - **Core Exception**: If the vendor is `ILIAS`, it is omitted from the path (e.g., `ILIAS\User\GetAllUsersActivity` → `/user/allusers`).
 

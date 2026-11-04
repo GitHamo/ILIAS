@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Webservice;
 
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceAccess;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceIdentity;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceMonitoring;
 use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
@@ -26,14 +29,14 @@ class WebserviceFactoryTest extends TestCase
 
     public function testCreatesRestWebservice(): void
     {
-        $config = $this->createConfiguredMock(WebConfig::class, [
-            'getProtocol' => ServiceProtocol::REST,
-        ]);
+        $identity = new ServiceIdentity(ServiceProtocol::REST, 'http://localhost', ServiceProtocol::REST->value);
+        $access = new ServiceAccess(true, true, 1, 100, 60);
+        $monitoring = new ServiceMonitoring(true, true, true);
+        $config = new WebConfig($identity, $access, $monitoring);
 
-        $expected = new RestWebservice($config);
+        $expected = new RestWebservice($monitoring);
         $actual = $this->factory->create($config);
 
-        $this->assertInstanceOf(Webservice::class, $actual);
         $this->assertInstanceOf(RestWebservice::class, $actual);
 
         $this->assertEquals($expected, $actual);
@@ -51,9 +54,10 @@ class WebserviceFactoryTest extends TestCase
             \sprintf("Unsupported service protocol: %s", $protocol->name)
         );
 
-        $config = $this->createConfiguredMock(WebConfig::class, [
-            'getProtocol' => $protocol,
-        ]);
+        $identity = new ServiceIdentity($protocol, 'http://localhost', $protocol->value);
+        $access = new ServiceAccess(true, true, 1, 100, 60);
+        $monitoring = new ServiceMonitoring(true, true, true);
+        $config = new WebConfig($identity, $access, $monitoring);
 
         $this->factory->create($config);
     }

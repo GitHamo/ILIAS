@@ -22,15 +22,37 @@ namespace ILIAS\ApiGateway\Setup;
 
 use ilDatabaseUpdateStepsExecutedObjective;
 use ilDatabaseUpdateStepsMetricsCollectedObjective;
+use ILIAS\ApiGateway\Application\Factories\HttpConfigFactory;
+use ILIAS\ApiGateway\Application\Factories\RoutesRegistryFactory;
+use ILIAS\ApiGateway\Application\Factories\ServiceSpecFactory;
+use ILIAS\ApiGateway\ServiceContract\Registry\RepresentationService;
+use ILIAS\ApiGateway\ServiceContract\Representations\OpenApi;
 use ILIAS\ApiGateway\Setup\Objectives\ApiGatewayMetricsCollectedObjective;
+use ILIAS\ApiGateway\Setup\Objectives\BuildOpenAPISpecObjective;
 use ILIAS\ApiGateway\Setup\Steps\ApiGatewayDBUpdateSteps;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\Refinery\Factory;
 use ILIAS\Setup;
+use ILIAS\Setup\Objective;
 use ilObjApiGateway;
 use ilTreeAdminNodeAddedObjective;
 use Override;
 
 class ilApiGatewaySetupAgent extends Setup\Agent\NullAgent
 {
+    private const string SCHEMA_VERSION = '3.0.3';
+    private const string SCHEMA_TITLE = 'ILIAS API Gateway';
+    private const string SCHEMA_DESCRIPTION = 'Service Contract for the ILIAS API Gateway';
+    private const string SCHEMA_API_VERSION = '1.0.0';
+
+    public function __construct(
+        Factory $refinery,
+        private readonly HttpConfigFactory $configFactory,
+        private readonly RoutesRegistryFactory $routesRegistryFactory,
+    ) {
+        parent::__construct($refinery);
+    }
+
     #[Override]
     public function getUpdateObjective(?Setup\Config $config = null): Setup\Objective
     {
@@ -58,5 +80,35 @@ class ilApiGatewaySetupAgent extends Setup\Agent\NullAgent
                 new ApiGatewayDBUpdateSteps(),
             ),
         );
+    }
+
+    #[Override]
+    public function getBuildObjective(): Objective
+    {
+        $registry = $this->routesRegistryFactory->create();
+        $factory = new ServiceSpecFactory();
+        $specMetadata = new OpenApi\Model\SpecMetadata(
+            $this->getBasePath(),
+            self::SCHEMA_VERSION,
+            self::SCHEMA_TITLE,
+            self::SCHEMA_DESCRIPTION,
+            self::SCHEMA_API_VERSION,
+        );
+        $serializer = new OpenApi\OpenApiSchemaSerializer();
+        $generator = new OpenApi\OpenApiGenerator($specMetadata, $serializer);
+        $service = new RepresentationService([
+            $generator,
+        ]);
+
+        return new BuildOpenAPISpecObjective(
+            $registry,
+            $factory,
+            $service,
+        );
+    }
+
+    private function getBasePath(): string
+    {
+        return $this->configFactory->createWebConfig(ServiceProtocol::REST)->identity->basePath;
     }
 }

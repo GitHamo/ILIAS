@@ -22,20 +22,24 @@ namespace ILIAS\ApiGateway\Configuration\Infrastructure;
 
 use ILIAS\ApiGateway\Configuration\Domain\Configuration;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\HashingAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
+use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceAccess;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceIdentity;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceMonitoring;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
+use ILIAS\ApiGateway\Configuration\Infrastructure\Repository\IniSettings;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use Override;
 
-use function defined;
-
-class ConfigurationService implements Configuration
+final readonly class ConfigurationService implements Configuration
 {
-    public const string DEFAULT_BASE_URL = 'http://localhost:8080';
+    public const string DEFAULT_BASE_URL = '/';
     public const string DEFAULT_CLIENT_ID = 'ILIAS';
     public const EncryptionAlgo DEFAULT_ALGO_ENCRYPT = EncryptionAlgo::HS256;
-    public const HashingAlgo DEFAULT_ALGO_HASH = HashingAlgo::SHA256;
+    public const HashAlgo DEFAULT_ALGO_HASH = HashAlgo::SHA256;
     public const int DEFAULT_ACCESS_TOKEN_EXPIRE_IN = 86400; // 1 day
     public const int DEFAULT_REFRESH_TOKEN_EXPIRE_IN = 604800; // 7 days
     public const bool DEFAULT_IS_WEBSERVICE_ENABLED = false;
@@ -45,70 +49,95 @@ class ConfigurationService implements Configuration
     public const bool DEFAULT_IS_LOGGING_DETAILS_ENABLED = false;
 
     public function __construct(
-        private readonly SystemSettingRepository $adminSettings,
+        private SystemSettingRepository $adminSettings,
+        private IniSettings $iniSettings,
     ) {
     }
 
     #[Override]
-    public function getBaseUrl(): string
+    public function getAuthConfig(): AuthConfig
     {
-        $value = defined('ILIAS_HTTP_PATH')
-            ? trim(rtrim((string) ILIAS_HTTP_PATH, '/'))
-            : '';
+        return new AuthConfig(
+            issuer: $this->getClientId(),
+            secretKey: $this->getSecretKey(),
+            encryptionAlgo: $this->getEncryptionAlgo(),
+            hashAlgo: $this->getHashAlgo(),
+            accessTokenExpiry: $this->getAccessTokenExpiry(),
+            refreshTokenExpiry: $this->getRefreshTokenExpiry(),
+        );
+    }
+
+    #[Override]
+    public function getWebConfig(ServiceProtocol $protocol): WebConfig
+    {
+        return new WebConfig(
+            identity: new ServiceIdentity(
+                protocol: $protocol,
+                baseUrl: $this->getBaseUrl(),
+                basePath: $protocol->value,
+            ),
+            access: new ServiceAccess(
+                isEnabled: $this->isEnabled($protocol),
+                isDocsEnabled: $this->isDocsEnabled($protocol),
+                rateLimitUnits: $protocol->getRateLimitUnitsPerRequest(),
+                rateLimitQuota: $this->getRateLimitQuotaLimit($protocol),
+                rateLimitWindow: $protocol->getRateLimitWindow(),
+            ),
+            monitoring: new ServiceMonitoring(
+                isDebugEnabled: $this->isDebugEnabled(),
+                isLoggingEnabled: $this->isLoggingEnabled(),
+                isLoggingDetailsEnabled: $this->isLoggingDetailsEnabled(),
+            ),
+        );
+    }
+
+    private function getBaseUrl(): string
+    {
+        $value = $this->iniSettings->getHttpPath();
+        $value = trim($value);
 
         return $value === '' || $value === '0' ? self::DEFAULT_BASE_URL : $value;
     }
 
-    #[Override]
-    public function getClientId(): string
+    private function getClientId(): string
     {
-        return defined('CLIENT_ID')
-            ? CLIENT_ID
-            : self::DEFAULT_CLIENT_ID;
+        return $this->iniSettings->getClientId();
     }
 
-    #[Override]
-    public function getSecretKey(): string
+    private function getSecretKey(): string
     {
         return $this->adminSettings->get(SystemSetting::AUTH_SECRET_KEY)->asString();
     }
 
-    #[Override]
-    public function getEncryption(): string
+    private function getEncryptionAlgo(): EncryptionAlgo
     {
         $settingValue = $this->adminSettings->get(SystemSetting::AUTH_ALGO_ENCRYPTION)->asString();
-        $value = EncryptionAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALGO_ENCRYPT;
 
-        return $value->value;
+        return EncryptionAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALGO_ENCRYPT;
     }
 
-    #[Override]
-    public function getHashing(): string
+    private function getHashAlgo(): HashAlgo
     {
         $settingValue = $this->adminSettings->get(SystemSetting::AUTH_ALGO_HASH)->asString();
-        $value = HashingAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALGO_HASH;
 
-        return $value->value;
+        return HashAlgo::tryFrom($settingValue) ?? self::DEFAULT_ALGO_HASH;
     }
 
-    #[Override]
-    public function getAccessTokenExpiry(): int
+    private function getAccessTokenExpiry(): int
     {
         $value = $this->adminSettings->get(SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS)->asInt();
 
         return $value > 0 ? $value : self::DEFAULT_ACCESS_TOKEN_EXPIRE_IN;
     }
 
-    #[Override]
-    public function getRefreshTokenExpiry(): int
+    private function getRefreshTokenExpiry(): int
     {
         $value = $this->adminSettings->get(SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH)->asInt();
 
         return $value > 0 ? $value : self::DEFAULT_REFRESH_TOKEN_EXPIRE_IN;
     }
 
-    #[Override]
-    public function isEnabled(ServiceProtocol $protocol): bool
+    private function isEnabled(ServiceProtocol $protocol): bool
     {
         return match ($protocol) {
             ServiceProtocol::REST => $this->adminSettings->get(SystemSetting::REST_WS_ENABLED)->asBool(),
@@ -116,8 +145,7 @@ class ConfigurationService implements Configuration
         };
     }
 
-    #[Override]
-    public function isDocsEnabled(ServiceProtocol $protocol): bool
+    private function isDocsEnabled(ServiceProtocol $protocol): bool
     {
         return match ($protocol) {
             ServiceProtocol::REST => $this->adminSettings->get(SystemSetting::REST_DOCS_ENABLED)->asBool(),
@@ -125,27 +153,26 @@ class ConfigurationService implements Configuration
         };
     }
 
-    #[Override]
-    public function isDebugEnabled(): bool
+    private function getRateLimitQuotaLimit(ServiceProtocol $protocol): int
     {
-        return defined('DEVMODE')
-            ? (bool) DEVMODE
-            : self::DEFAULT_IS_DEBUG_ENABLED;
+        return match ($protocol) {
+            ServiceProtocol::REST => $this->adminSettings->get(SystemSetting::REST_RATE_LIMIT_MAX_QUOTA)->asInt(),
+            default => $protocol->getRateLimitMaxQuota(),
+        };
     }
 
-    #[Override]
-    public function isLoggingEnabled(): bool
+    private function isDebugEnabled(): bool
     {
-        return defined('DEVMODE')
-            ? (bool) DEVMODE
-            : self::DEFAULT_IS_LOGGING_ENABLED;
+        return $this->iniSettings->isDebugEnabled();
     }
 
-    #[Override]
-    public function isLoggingDetailsEnabled(): bool
+    private function isLoggingEnabled(): bool
     {
-        return defined('DEVMODE')
-            ? (bool) DEVMODE
-            : self::DEFAULT_IS_LOGGING_DETAILS_ENABLED;
+        return $this->iniSettings->isLoggingEnabled();
+    }
+
+    private function isLoggingDetailsEnabled(): bool
+    {
+        return $this->isLoggingEnabled() && $this->isDebugEnabled();
     }
 }

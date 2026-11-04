@@ -4,50 +4,37 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Webservice\Infrastructure;
 
-use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
-use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
-use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
+use ILIAS\ApiGateway\Application\Middlewares;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceMonitoring;
 use ILIAS\ApiGateway\Webservice\Infrastructure\RestWebservice;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 
 final class RestWebserviceTest extends TestCase
 {
-    private RestWebservice $webservice;
-    private WebConfig&MockObject $config;
-
-    #[\Override]
-    protected function setUp(): void
+    public function testHasAccessorToMiddlewares(): void
     {
-        parent::setUp();
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
 
-        $this->webservice = new RestWebservice(
-            $this->config = $this->createConfiguredMock(WebConfig::class, [
-                'getBaseUrl' => 'foo',
-                'isEnabled' => true,
-            ]),
-        );
-    }
-
-    public function testHasAccessorToProtocol(): void
-    {
-        $expected = ServiceProtocol::REST;
-
-        $this->config->method('getProtocol')->willReturn($expected);
+        $expected = [
+            Middlewares\RequestParameterMiddleware::class,
+            Middlewares\JsonBodyParserMiddleware::class,
+            Middlewares\JsonContentNegotiationMiddleware::class,
+        ];
 
         self::assertSame(
             $expected,
-            $this->webservice->getProtocol(),
+            $webservice->getMiddlewares(),
         );
     }
 
     public function testHandlesPayloadWithoutDebug(): void
     {
-        $payloadData = ['key' => 'value'];
-        $payload = new Payload($payloadData);
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
 
-        $actual = $this->webservice->handle($payload);
+        $actual = $webservice->transform(['key' => 'value']);
 
         $expected = '{"success":true,"data":{"key":"value"}}';
 
@@ -59,12 +46,10 @@ final class RestWebserviceTest extends TestCase
 
     public function testHandlesPayloadWithDebug(): void
     {
-        $payloadData = ['key' => 'value'];
-        $payload = new Payload($payloadData);
+        $monitoring = new ServiceMonitoring(true, false, false);
+        $webservice = new RestWebservice($monitoring);
 
-        $this->config->method('isDebugEnabled')->willReturn(true);
-
-        $actual = $this->webservice->handle($payload);
+        $actual = $webservice->transform(['key' => 'value']);
 
         $expected = <<<JSON
 {
@@ -83,11 +68,12 @@ JSON;
 
     public function testHandlesEmptyPayload(): void
     {
-        $payload = new Payload();
-
-        $actual = $this->webservice->handle($payload);
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
 
         $expected = '{"success":true,"data":null}';
+
+        $actual = $webservice->transform(null);
 
         self::assertSame(
             $expected,
@@ -97,13 +83,13 @@ JSON;
 
     public function testHandlesPayloadWithComplexData(): void
     {
-        $payloadData = [
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
+        $actual = $webservice->transform([
             'array' => [1, 2, 3],
             'object' => (object) ['key' => 'value'],
-        ];
-        $payload = new Payload($payloadData);
-
-        $actual = $this->webservice->handle($payload);
+        ]);
 
         $expected = '{"success":true,"data":{"array":[1,2,3],"object":{"key":"value"}}}';
 
@@ -115,10 +101,12 @@ JSON;
 
     public function testHandlesPayloadWithSpecialCharacters(): void
     {
-        $payloadData = ['text' => 'Special characters: ñ, ü, 漢字'];
-        $payload = new Payload($payloadData);
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
 
-        $actual = $this->webservice->handle($payload);
+        $data = ['text' => 'Special characters: ñ, ü, 漢字'];
+
+        $actual = $webservice->transform($data);
 
         $expected = '{"success":true,"data":{"text":"Special characters: \u00f1, \u00fc, \u6f22\u5b57"}}';
 
@@ -130,20 +118,26 @@ JSON;
 
     public function testThrowsExceptionOnInvalidPayload(): void
     {
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
         // We use a malformed UTF-8 string, which cannot be encoded by json_encode.
-        $payload = new Payload("\xB1\x31");
+        $data = "\xB1\x31";
 
         self::expectException(RuntimeException::class);
         self::expectExceptionMessage('Failed to encode payload data');
 
-        $this->webservice->handle($payload);
+        $webservice->transform($data);
     }
 
     public function testHandlesErrorWithoutDetailsOrDebug(): void
     {
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
 
         $expected = '{"success":false,"error":"Something went wrong"}';
 
@@ -155,12 +149,12 @@ JSON;
 
     public function testHandlesErrorWithDetails(): void
     {
-        $this->config->method('isDebugEnabled')->willReturn(true);
-        $this->config->method('isLoggingDetailsEnabled')->willReturn(true);
+        $monitoring = new ServiceMonitoring(true, true, true);
+        $webservice = new RestWebservice($monitoring);
 
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
         /**
          * @var array<string, mixed>
          */
@@ -174,12 +168,12 @@ JSON;
 
     public function testHandlesErrorWithDebug(): void
     {
-        $this->config->method('isDebugEnabled')->willReturn(true);
-        $this->config->method('isLoggingDetailsEnabled')->willReturn(false);
+        $monitoring = new ServiceMonitoring(true, true, false);
+        $webservice = new RestWebservice($monitoring);
 
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
 
         $expected = <<<JSON
 {
@@ -196,12 +190,12 @@ JSON;
 
     public function testHandlesErrorWithDetailsAndDebug(): void
     {
-        $this->config->method('isDebugEnabled')->willReturn(true);
-        $this->config->method('isLoggingDetailsEnabled')->willReturn(true);
+        $monitoring = new ServiceMonitoring(true, true, true);
+        $webservice = new RestWebservice($monitoring);
 
         $exception = new RuntimeException('Something went wrong');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
         /**
          * @var array<string, mixed>
          */
@@ -216,9 +210,12 @@ JSON;
 
     public function testHandlesErrorWithSpecialCharacters(): void
     {
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
         $exception = new RuntimeException('Error: ñ, ü, 漢字');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
 
         $expected = '{"success":false,"error":"Error: ñ, ü, 漢字"}';
 
@@ -230,9 +227,12 @@ JSON;
 
     public function testHandlesErrorWithSlashes(): void
     {
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
         $exception = new RuntimeException('Error: path/to/file');
 
-        $actual = $this->webservice->handleError($exception);
+        $actual = $webservice->transformError($exception);
 
         $expected = '{"success":false,"error":"Error: path/to/file"}';
 
@@ -244,34 +244,33 @@ JSON;
 
     public function testHandleReturnsCorrectHeaders(): void
     {
-        $payloadData = ['key' => 'value'];
-        $payload = new Payload($payloadData);
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
 
-        $actualPayload = $this->webservice->handle($payload);
-        $actualBody = $actualPayload->getBody();
-        $actualHeaders = $actualPayload->getHeaders();
+        $payload = $webservice->transform([]);
+        $actual = $payload->getHeaders();
 
-        $expectedHeaders = [
+        $expected = [
             'Content-Type' => 'application/json',
-            'Content-Length' => (string) strlen($actualBody),
         ];
 
-        self::assertEquals($expectedHeaders, $actualHeaders);
+        self::assertSame($expected, $actual);
     }
 
     public function testHandleErrorReturnsCorrectHeaders(): void
     {
+        $monitoring = new ServiceMonitoring(false, false, false);
+        $webservice = new RestWebservice($monitoring);
+
         $exception = new RuntimeException('Something went wrong');
 
-        $actualPayload = $this->webservice->handleError($exception);
-        $actualBody = $actualPayload->getBody();
-        $actualHeaders = $actualPayload->getHeaders();
+        $payload = $webservice->transformError($exception);
+        $actual = $payload->getHeaders();
 
-        $expectedHeaders = [
+        $expected = [
             'Content-Type' => 'application/json',
-            'Content-Length' => (string) strlen($actualBody),
         ];
 
-        self::assertEquals($expectedHeaders, $actualHeaders);
+        self::assertSame($expected, $actual);
     }
 }

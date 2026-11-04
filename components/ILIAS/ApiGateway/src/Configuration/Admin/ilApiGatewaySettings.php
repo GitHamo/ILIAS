@@ -22,9 +22,10 @@ namespace ILIAS\ApiGateway\Configuration\Admin;
 
 use ILIAS\Administration\Setting;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\HashingAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Infrastructure\RandomKeyGenerator;
+use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\Refinery\Factory;
 use ilSetting;
 use InvalidArgumentException;
@@ -52,22 +53,22 @@ final class ilApiGatewaySettings implements SettingsService
     private const string AUTH_TOKEN_EXPIRY_REFRESH = SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH->value;
     private const string REST_WS_ENABLED = SystemSetting::REST_WS_ENABLED->value;
     private const string REST_DOCS_ENABLED = SystemSetting::REST_DOCS_ENABLED->value;
+    private const string REST_RATE_LIMIT_MAX_QUOTA = SystemSetting::REST_RATE_LIMIT_MAX_QUOTA->value;
+
     protected static ?ilApiGatewaySettings $instance = null;
     private readonly Setting $settings;
     private readonly Factory $refinery;
 
     /** @var array<string, mixed> */
     private array $settings_data = [
-        /**
-         * defaults for system settings, load when specific setting is missing or empty
-         */
-        self::AUTH_SECRET_KEY => '', // generate randomly on installation
-        self::AUTH_ALGO_ENCRYPTION => EncryptionAlgo::HS256->value,
-        self::AUTH_ALGO_HASH => HashingAlgo::SHA256->value,
-        self::AUTH_TOKEN_EXPIRY_ACCESS => "86400",
-        self::AUTH_TOKEN_EXPIRY_REFRESH => "604800",
-        self::REST_WS_ENABLED => '0',
-        self::REST_DOCS_ENABLED => '0',
+        self::AUTH_SECRET_KEY => '',
+        self::AUTH_ALGO_ENCRYPTION => '',
+        self::AUTH_ALGO_HASH => '',
+        self::AUTH_TOKEN_EXPIRY_ACCESS => '',
+        self::AUTH_TOKEN_EXPIRY_REFRESH => '',
+        self::REST_WS_ENABLED => '',
+        self::REST_DOCS_ENABLED => '',
+        self::REST_RATE_LIMIT_MAX_QUOTA => '',
     ];
 
     private function __construct()
@@ -174,7 +175,7 @@ final class ilApiGatewaySettings implements SettingsService
 
                     break;
                 case self::AUTH_ALGO_HASH:
-                    $a_value = HashingAlgo::tryFrom($a_value)?->value;
+                    $a_value = HashAlgo::tryFrom($a_value)?->value;
 
                     if (null === $a_value) {
                         throw new RuntimeException("Invalid value for hashing algorithm.");
@@ -211,6 +212,16 @@ final class ilApiGatewaySettings implements SettingsService
                     }
 
                     break;
+                case self::REST_RATE_LIMIT_MAX_QUOTA:
+                    if (!is_numeric($a_value)) {
+                        throw new InvalidArgumentException("Invalid value for rate limit. Must be numeric.");
+                    }
+
+                    if ((int) $a_value < 1) {
+                        throw new InvalidArgumentException("Invalid value for rate limit. Must be greater than 0.");
+                    }
+
+                    break;
             }
 
             $transformed[$key] = $this->settings_data[$key] = $a_value;
@@ -225,8 +236,27 @@ final class ilApiGatewaySettings implements SettingsService
         }
     }
 
+    private function reset(): void
+    {
+        /**
+         * defaults for system settings, load when specific setting is missing or empty
+         */
+        $this->settings_data = [
+            self::AUTH_SECRET_KEY => '', // generate randomly on installation
+            self::AUTH_ALGO_ENCRYPTION => EncryptionAlgo::HS256->value,
+            self::AUTH_ALGO_HASH => HashAlgo::SHA256->value,
+            self::AUTH_TOKEN_EXPIRY_ACCESS => "86400",
+            self::AUTH_TOKEN_EXPIRY_REFRESH => "604800",
+            self::REST_WS_ENABLED => '0',
+            self::REST_DOCS_ENABLED => '0',
+            self::REST_RATE_LIMIT_MAX_QUOTA => (string) (ServiceProtocol::REST->getRateLimitMaxQuota()),
+        ];
+    }
+
     private function read(): void
     {
+        $this->reset();
+
         foreach ($this->settings_data as $key => $default_value) {
             $value = $this->settings->get($key) ?? $default_value;
 

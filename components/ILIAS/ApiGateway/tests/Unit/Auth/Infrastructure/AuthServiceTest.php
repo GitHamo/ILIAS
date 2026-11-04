@@ -6,8 +6,8 @@ namespace Tests\Unit\Auth\Infrastructure;
 
 use DateTimeImmutable;
 use DomainException;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
+use ILIAS\ApiGateway\Application\Exceptions\InvalidTokenException;
+use ILIAS\ApiGateway\Application\Factories\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
@@ -18,6 +18,7 @@ use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
 use ILIAS\ApiGateway\Auth\Infrastructure\AuthService;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -30,8 +31,8 @@ class AuthServiceTest extends TestCase
     private const int USER_ID = 1337;
     private const int ACCESS_TOKEN_EXPIRY = 3600; // 1 hour
     private const int REFRESH_TOKEN_EXPIRY = 86400; // 1 day
-    private const string ENCRYPTION_ALGO = EncryptionAlgo::HS256->value;
-    private const string HASH_ALGO = 'sha256';
+    private const EncryptionAlgo ENCRYPTION_ALGO = EncryptionAlgo::HS256;
+    private const HashAlgo HASH_ALGO = HashAlgo::SHA256;
 
     private MockObject&TokenProvider $tokenProvider;
     private MockObject&UserRepository $userRepository;
@@ -135,7 +136,7 @@ class AuthServiceTest extends TestCase
         ]);
         $this->refreshTokenRepository->expects($this->once())
             ->method('findByHash')
-            ->with(hash(self::HASH_ALGO, $oldRefreshTokenString))
+            ->with(hash(self::HASH_ALGO->value, $oldRefreshTokenString))
             ->willReturn($storedToken);
 
         $storedToken->expects($this->once())
@@ -171,7 +172,7 @@ class AuthServiceTest extends TestCase
 
     public function testRefreshTokenThrowsExceptionForInvalidToken(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('Refresh token is invalid or has been revoked.');
 
         $payload = new TokenPayload(new AuthUser(self::USER_ID), true);
@@ -184,7 +185,7 @@ class AuthServiceTest extends TestCase
 
     public function testRefreshTokenThrowsExceptionForRevokedToken(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('Refresh token is invalid or has been revoked.');
 
         $payload = new TokenPayload(new AuthUser(self::USER_ID), true);
@@ -220,13 +221,13 @@ class AuthServiceTest extends TestCase
 
     public function testValidateTokenThrowsExceptionOnProviderError(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
 
         $tokenString = 'invalid_token_string';
 
         $this->tokenProvider->method('decode')
             ->with($tokenString)
-            ->willThrowException(new AuthenticationException('Provider error'));
+            ->willThrowException(new InvalidTokenException('Provider error'));
 
         $this->service->validateToken($tokenString);
     }

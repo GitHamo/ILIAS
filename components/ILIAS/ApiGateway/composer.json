@@ -38,13 +38,17 @@
     "autoload": {
         "psr-4": {
             "ILIAS\\ApiGateway\\": "src"
-        }
+        },
+        "classmap": [
+            "classes"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
         },
 		"classmap": [
+            "classes",
 			"../../../components"
 		],
 		"exclude-from-classmap": [

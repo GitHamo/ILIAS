@@ -154,6 +154,60 @@ final class ActivityNamespaceTest extends TestCase
                 'name' => 'MyActivity',
                 'expectedPath' => '/mycomponent/my',
             ],
+            'suffix_removal_standard_activity_name' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'ActivityName',
+                'expectedPath' => '/foo/bar/activityname',
+            ],
+            'suffix_removal_activity_name_ending_with_query' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'MyQuery',
+                'expectedPath' => '/foo/bar/my',
+            ],
+            'suffix_removal_activity_name_with_query_in_middle' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'QueryActivity',
+                'expectedPath' => '/foo/bar',
+            ],
+            'suffix_removal_activity_name_starting_with_query' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'QueryFoo',
+                'expectedPath' => '/foo/bar/foo',
+            ],
+            'suffix_removal_activity_name_is_just_query' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'Query',
+                'expectedPath' => '/foo/bar',
+            ],
+            'suffix_removal_activity_name_ending_with_query_after_activity' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'MyActivityQuery',
+                'expectedPath' => '/foo/bar/myactivity',
+            ],
+            'suffix_removal_activity_name_with_both_start_and_end_query' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'QueryMyQuery',
+                'expectedPath' => '/foo/bar/my',
+            ],
+            'suffix_removal_activity_name_with_get_at_start_and_query_at_end' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'GetMyQuery',
+                'expectedPath' => '/foo/bar/my',
+            ],
+            'suffix_removal_activity_name_with_double_activity_suffix' => [
+                'vendor' => 'Foo',
+                'component' => 'Bar',
+                'name' => 'MyActivityActivity',
+                'expectedPath' => '/foo/bar/myactivity',
+            ],
         ];
     }
 }

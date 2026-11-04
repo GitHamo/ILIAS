@@ -24,4 +24,48 @@ enum ServiceProtocol: string
 {
     case REST = 'rest';
     case SOAP = 'soap';
+    case GraphQL = 'graphql';
+    case gRPC = 'grpc';
+
+    private const int REST_RATE_LIMIT_MAX_QUOTA = 100;
+    private const int SOAP_RATE_LIMIT_MAX_QUOTA = 300;
+    private const int GRAPHQL_RATE_LIMIT_MAX_QUOTA = 1000;
+    private const int GRPC_RATE_LIMIT_MAX_QUOTA = 500;
+    private const int GRAPHQL_RATE_LIMIT_UNITS_PER_REQUEST = 10; // GraphQL requests are typically more expensive, so we can assign more units per request
+    private const int DEFAULT_RATE_LIMIT_UNITS_PER_REQUEST = 1;
+    private const int DEFAULT_RATE_LIMIT_WINDOW_SECONDS = 60; // 1 minute
+
+    /**
+     * @return int recommended number of units consumed per request, used for rate limiting calculations
+     */
+    public function getRateLimitUnitsPerRequest(): int
+    {
+        return match ($this) {
+            self::GraphQL => self::GRAPHQL_RATE_LIMIT_UNITS_PER_REQUEST,
+            default => self::DEFAULT_RATE_LIMIT_UNITS_PER_REQUEST,
+        };
+    }
+
+    /**
+     * @return int recommended rate limit request quota per minute
+     */
+    public function getRateLimitMaxQuota(): int
+    {
+        return match ($this) {
+            self::REST => self::REST_RATE_LIMIT_MAX_QUOTA, // req/min
+            self::SOAP => self::SOAP_RATE_LIMIT_MAX_QUOTA, // req/min
+            self::GraphQL => self::GRAPHQL_RATE_LIMIT_MAX_QUOTA, // cost/min (not requests)
+            self::gRPC => self::GRPC_RATE_LIMIT_MAX_QUOTA, // req/min
+        };
+    }
+
+    /**
+     * @return int recommended time window for rate limiting in seconds
+     */
+    public function getRateLimitWindow(): int
+    {
+        return match ($this) {
+            default => self::DEFAULT_RATE_LIMIT_WINDOW_SECONDS,
+        };
+    }
 }

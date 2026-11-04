@@ -30,10 +30,10 @@ readonly class WebserviceFactory
 {
     public function create(WebConfig $config): Webservice
     {
-        $protocol = $config->getProtocol();
+        $protocol = $config->identity->protocol;
 
         return match ($protocol) {
-            ServiceProtocol::REST => new RestWebservice($config),
+            ServiceProtocol::REST => new RestWebservice($config->monitoring),
             /**
              * As a defensive mechanism for truly unhandled cases, so testing would be hard as
              * this should never be hit. In production ALL ServiceProtocol enum cases are

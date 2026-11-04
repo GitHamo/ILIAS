@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Configuration\Infrastructure;
 
-use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceAccess;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceIdentity;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceMonitoring;
 use ILIAS\ApiGateway\Configuration\Domain\Model\Setting;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Configuration\Domain\SystemSettingRepository;
 use ILIAS\ApiGateway\Configuration\Infrastructure\ConfigurationService;
+use ILIAS\ApiGateway\Configuration\Infrastructure\Repository\IniSettings;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -20,308 +24,212 @@ use PHPUnit\Framework\TestCase;
 class ConfigurationServiceTest extends TestCase
 {
     private MockObject&SystemSettingRepository $systemSettingRepositoryMock;
+    private MockObject&IniSettings $iniSettingsMock;
     private ConfigurationService $service;
 
     #[\Override]
     protected function setUp(): void
     {
         $this->systemSettingRepositoryMock = $this->createMock(SystemSettingRepository::class);
-        $this->service = new ConfigurationService($this->systemSettingRepositoryMock);
+        $this->iniSettingsMock = $this->createMock(IniSettings::class);
+        $this->service = new ConfigurationService(
+            $this->systemSettingRepositoryMock,
+            $this->iniSettingsMock
+        );
     }
 
-    /**
-     * Test is to always make sure configuration is present with safe input
-     */
-    #[Test]
-    #[RunInSeparateProcess]
-    public function testReturnsDefaultValues(): void
+    public function testCreatesInstanceOfAuthConfig(): void
     {
-        $settingMock = $this->createConfiguredMock(Setting::class, [
-            'asString' => '',
-            'asInt' => 0,
-            'asBool' => false,
-        ]);
+        $clientId = 'foo';
+        $this->iniSettingsMock->method('getClientId')->willReturn($clientId);
 
-        $this->systemSettingRepositoryMock->method('get')->willReturn($settingMock);
+        $expected = new AuthConfig(
+            issuer: $clientId,
+            secretKey: $secretKey = 'foo',
+            encryptionAlgo: $encryptionAlgo = EncryptionAlgo::HS256,
+            hashAlgo: $hashAlgo = HashAlgo::SHA256,
+            accessTokenExpiry: $accessTokenExpiry = 1234,
+            refreshTokenExpiry: $refreshTokenExpiry = 5678,
+        );
 
-        $this->assertSame(ConfigurationService::DEFAULT_BASE_URL, $this->service->getBaseUrl());
-        $this->assertSame(ConfigurationService::DEFAULT_CLIENT_ID, $this->service->getClientId());
-        $this->assertSame('', $this->service->getSecretKey()); // don't generate secret key in order to prevent conflicts
-        $this->assertSame(ConfigurationService::DEFAULT_ALGO_ENCRYPT->value, $this->service->getEncryption());
-        $this->assertSame(ConfigurationService::DEFAULT_ALGO_HASH->value, $this->service->getHashing());
-        $this->assertSame(ConfigurationService::DEFAULT_ACCESS_TOKEN_EXPIRE_IN, $this->service->getAccessTokenExpiry());
-        $this->assertSame(ConfigurationService::DEFAULT_REFRESH_TOKEN_EXPIRE_IN, $this->service->getRefreshTokenExpiry());
-        $this->assertSame(ConfigurationService::DEFAULT_IS_WEBSERVICE_ENABLED, $this->service->isEnabled(ServiceProtocol::SOAP));
-        $this->assertSame(ConfigurationService::DEFAULT_IS_WEBSERVICE_DOCS_ENABLED, $this->service->isDocsEnabled(ServiceProtocol::SOAP));
-        $this->assertSame(ConfigurationService::DEFAULT_IS_DEBUG_ENABLED, $this->service->isDebugEnabled());
-        $this->assertSame(ConfigurationService::DEFAULT_IS_LOGGING_ENABLED, $this->service->isLoggingEnabled());
-        $this->assertSame(ConfigurationService::DEFAULT_IS_LOGGING_DETAILS_ENABLED, $this->service->isLoggingDetailsEnabled());
+        $this->systemSettingRepositoryMock->expects($this->exactly(5))
+            ->method('get')->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asString' => $secretKey]),
+                $this->createConfiguredMock(Setting::class, ['asString' => $encryptionAlgo->value]),
+                $this->createConfiguredMock(Setting::class, ['asString' => $hashAlgo->value]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => $accessTokenExpiry]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => $refreshTokenExpiry]),
+            );
+
+        $actual = $this->service->getAuthConfig();
+
+        self::assertEquals($expected, $actual);
     }
 
-    #[Test]
-    #[DataProvider('baseUrlDataProvider')]
-    #[RunInSeparateProcess]
-    public function testReturnsBaseUrlConstantValue(string $value, string $expected): void
+    public function testCreatesInstanceOfAuthConfigWithInvalidAccessTokenExpiry(): void
     {
-        define('ILIAS_HTTP_PATH', $value);
+        $this->iniSettingsMock->method('getClientId')->willReturn('foo');
 
-        $this->systemSettingRepositoryMock->expects($this->never())->method('get');
+        $this->systemSettingRepositoryMock->expects($this->exactly(5))
+            ->method('get')->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asString' => 'foo']),
+                $this->createConfiguredMock(Setting::class, ['asString' => EncryptionAlgo::HS256->value]),
+                $this->createConfiguredMock(Setting::class, ['asString' => HashAlgo::SHA256->value]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => -1]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => 5678]),
+            );
 
-        $actual = $this->service->getBaseUrl();
+        $actual = $this->service->getAuthConfig()->getAccessTokenExpiry();
 
-        self::assertSame($expected, $actual);
+        self::assertEquals(ConfigurationService::DEFAULT_ACCESS_TOKEN_EXPIRE_IN, $actual);
     }
 
-    /**
-     * @return array<string, array{string, string}>
-     */
-    public static function baseUrlDataProvider(): array
+    public function testCreatesInstanceOfAuthConfigWithInvalidRefreshTokenExpiry(): void
     {
-        return [
-            'valid' => ['http://my-ilias.com/path', 'http://my-ilias.com/path'],
-            'trim trailing slash' => ['http://my-ilias.com/path/', 'http://my-ilias.com/path'],
-            'trim trailing slashes' => ['http://my-ilias.com/path////', 'http://my-ilias.com/path'],
-            'trim spaces' => [' http://my-ilias.com/path ', 'http://my-ilias.com/path'],
-            'just slash' => ['/', ConfigurationService::DEFAULT_BASE_URL],
-        ];
+        $this->iniSettingsMock->method('getClientId')->willReturn('foo');
+
+        $this->systemSettingRepositoryMock->expects($this->exactly(5))
+            ->method('get')->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asString' => 'foo']),
+                $this->createConfiguredMock(Setting::class, ['asString' => EncryptionAlgo::HS256->value]),
+                $this->createConfiguredMock(Setting::class, ['asString' => HashAlgo::SHA256->value]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => 5678]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => -1]),
+            );
+
+        $actual = $this->service->getAuthConfig()->getRefreshTokenExpiry();
+
+        self::assertEquals(ConfigurationService::DEFAULT_REFRESH_TOKEN_EXPIRE_IN, $actual);
     }
 
-    #[Test]
-    #[RunInSeparateProcess]
-    public function testReturnsClientIdConstantValue(): void
+    public function testCreatesInstanceOfAuthConfigWithDefaultValues(): void
     {
-        $expected = 'MY_CLIENT';
-        define('CLIENT_ID', $expected);
+        $this->iniSettingsMock->method('getClientId')->willReturn(ConfigurationService::DEFAULT_CLIENT_ID);
 
-        $this->systemSettingRepositoryMock->expects($this->never())->method('get');
+        $expected = new AuthConfig(
+            issuer: ConfigurationService::DEFAULT_CLIENT_ID,
+            secretKey: $secretKey = 'foo',
+            encryptionAlgo: $encryptionAlgo = ConfigurationService::DEFAULT_ALGO_ENCRYPT,
+            hashAlgo: $hashAlgo = ConfigurationService::DEFAULT_ALGO_HASH,
+            accessTokenExpiry: $accessTokenExpiry = ConfigurationService::DEFAULT_ACCESS_TOKEN_EXPIRE_IN,
+            refreshTokenExpiry: $refreshTokenExpiry = ConfigurationService::DEFAULT_REFRESH_TOKEN_EXPIRE_IN,
+        );
 
-        $actual = $this->service->getClientId();
+        $this->systemSettingRepositoryMock->expects($this->exactly(5))
+            ->method('get')->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asString' => $secretKey]),
+                $this->createConfiguredMock(Setting::class, ['asString' => $encryptionAlgo->value]),
+                $this->createConfiguredMock(Setting::class, ['asString' => $hashAlgo->value]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => $accessTokenExpiry]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => $refreshTokenExpiry]),
+            );
 
-        self::assertSame($expected, $actual);
+        $actual = $this->service->getAuthConfig();
+
+        self::assertEquals($expected, $actual);
     }
 
-    #[Test]
-    public function testReturnsSecretKeySystemSettingsValue(): void
+    public function testCreatesInstanceOfWebConfig(): void
     {
-        $expected = 'my-secret';
-        $this->mockSystemSetting(SystemSetting::AUTH_SECRET_KEY, 'asString', $expected);
+        $protocol = ServiceProtocol::REST;
+        $baseUrl = 'https://example.com/api';
 
-        $actual = $this->service->getSecretKey();
+        $this->iniSettingsMock->method('getHttpPath')->willReturn($baseUrl);
+        $this->iniSettingsMock->method('isDebugEnabled')->willReturn(true);
+        $this->iniSettingsMock->method('isLoggingEnabled')->willReturn(true);
 
-        self::assertSame($expected, $actual);
-    }
-
-    #[Test]
-    public function testReturnsEncryptionAlgoSystemSettingsValue(): void
-    {
-        $expected = 'HS512';
-
-        $this->mockSystemSetting(SystemSetting::AUTH_ALGO_ENCRYPTION, 'asString', $expected);
-
-        $actual = $this->service->getEncryption();
-
-        self::assertSame($expected, $actual);
-    }
-
-    #[Test]
-    public function testReturnsDefaultEncryptionAlgoInCaseOfSystemSettingsInvalidValue(): void
-    {
-        $this->mockSystemSetting(SystemSetting::AUTH_ALGO_ENCRYPTION, 'asString', 'invalid-algo');
-
-        $actual = $this->service->getEncryption();
-
-        self::assertSame(ConfigurationService::DEFAULT_ALGO_ENCRYPT->value, $actual);
-    }
-
-    #[Test]
-    public function testReturnsHashingAlgoSystemSettingsValue(): void
-    {
-        $expected = 'sha512';
-
-        $this->mockSystemSetting(SystemSetting::AUTH_ALGO_HASH, 'asString', $expected);
-
-        $actual = $this->service->getHashing();
-
-        self::assertSame($expected, $actual);
-    }
-
-    #[Test]
-    public function testReturnsDefaultHashingAlgoInCaseOfSystemSettingsInvalidValue(): void
-    {
-        $this->mockSystemSetting(SystemSetting::AUTH_ALGO_HASH, 'asString', 'invalid-algo');
-
-        $actual = $this->service->getHashing();
-
-        self::assertSame(ConfigurationService::DEFAULT_ALGO_HASH->value, $actual);
-    }
-
-    #[Test]
-    public function testReturnsAccessTokenExpirySystemSettingsValue(): void
-    {
-        $expected = 1234;
-
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS, 'asInt', $expected);
-
-        $actual = $this->service->getAccessTokenExpiry();
-
-        self::assertSame($expected, $actual);
-    }
-
-    #[Test]
-    public function testReturnsDefaultAccessTokenExpiryInCaseOfSystemSettingsInvalidValue(): void
-    {
-        $value = -1234;
-
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_ACCESS, 'asInt', $value);
-
-        $actual = $this->service->getAccessTokenExpiry();
-
-        self::assertSame(ConfigurationService::DEFAULT_ACCESS_TOKEN_EXPIRE_IN, $actual);
-    }
-
-    #[Test]
-    public function testReturnsRefreshTokenExpirySystemSettingsValue(): void
-    {
-        $expected = 1234;
-
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH, 'asInt', $expected);
-
-        $actual = $this->service->getRefreshTokenExpiry();
-
-        self::assertSame($expected, $actual);
-    }
-
-    #[Test]
-    public function testReturnsDefaultRefreshTokenExpiryInCaseOfSystemSettingsInvalidValue(): void
-    {
-        $value = -1234;
-
-        $this->mockSystemSetting(SystemSetting::AUTH_TOKEN_EXPIRY_REFRESH, 'asInt', $value);
-
-        $actual = $this->service->getRefreshTokenExpiry();
-
-        self::assertSame(ConfigurationService::DEFAULT_REFRESH_TOKEN_EXPIRE_IN, $actual);
-    }
-
-    #[Test]
-    #[DataProvider('serviceProtocolProvider')]
-    public function testReturnsWebserviceIsEnabled(bool $expected): void
-    {
-        $this->mockSystemSetting(SystemSetting::REST_WS_ENABLED, 'asBool', $expected);
-
-        $isEnabled = $this->service->isEnabled(ServiceProtocol::REST);
-
-        self::assertSame($expected, $isEnabled);
-    }
-
-    #[Test]
-    public function testReturnsWebserviceIsEnabledFalseInCaseOfUnsupportedProtocol(): void
-    {
-        $this->systemSettingRepositoryMock->expects($this->never())->method('get');
-
-        $isEnabled = $this->service->isEnabled(ServiceProtocol::SOAP);
-
-        self::assertFalse($isEnabled);
-    }
-
-
-    #[Test]
-    #[DataProvider('serviceProtocolProvider')]
-    public function testReturnsWebserviceDocsIsEnabled(bool $expected): void
-    {
-        $this->mockSystemSetting(SystemSetting::REST_DOCS_ENABLED, 'asBool', $expected);
-
-        $isDocsEnabled = $this->service->isDocsEnabled(ServiceProtocol::REST);
-
-        self::assertSame($expected, $isDocsEnabled);
-    }
-
-    #[Test]
-    public function testReturnsWebserviceDocsIsEnabledFalseInCaseOfUnsupportedProtocol(): void
-    {
-        $this->systemSettingRepositoryMock->expects($this->never())->method('get');
-
-        $isDocsEnabled = $this->service->isDocsEnabled(ServiceProtocol::SOAP);
-
-        self::assertFalse($isDocsEnabled);
-    }
-
-    /**
-     * @return array<string, array<array-key, bool>>
-     */
-    public static function serviceProtocolProvider(): array
-    {
-        return [
-            'enabled' => [true],
-            'disabled' => [false],
-        ];
-    }
-
-    #[Test]
-    #[DataProvider('trueDevModeDataProvider')]
-    #[RunInSeparateProcess]
-    public function testReactsOnDevModeConstantWhenTrue(int|bool|string $value): void
-    {
-        define('DEVMODE', $value);
-
-        self::assertTrue($this->service->isDebugEnabled());
-        self::assertTrue($this->service->isLoggingEnabled());
-        self::assertTrue($this->service->isLoggingDetailsEnabled());
-    }
-
-    /**
-     * @return array<string, array{int|bool|string}>
-     */
-    public static function trueDevModeDataProvider(): array
-    {
-        return [
-            'bool' => [true],
-            'signed int' => [-123],
-            'unsigned int' => [1],
-            'unsigned int as string' => ['1'],
-            'unsigned numeric as string' => ['123'],
-            'signed numeric as string' => ['-123'],
-            'bool true as string' => ['true'],
-            'bool false as string' => ['false'],
-            'string' => ['foo'],
-        ];
-    }
-
-    #[Test]
-    #[DataProvider('falseDevModeDataProvider')]
-    #[RunInSeparateProcess]
-    public function testReactsOnDevModeConstantWhenFalse(int|bool|string $value): void
-    {
-        define('DEVMODE', $value);
-
-        self::assertFalse($this->service->isDebugEnabled());
-        self::assertFalse($this->service->isLoggingEnabled());
-        self::assertFalse($this->service->isLoggingDetailsEnabled());
-    }
-
-    /**
-     * @return array<string, array{int|bool|string}>
-     */
-    public static function falseDevModeDataProvider(): array
-    {
-        return [
-            'bool' => [false],
-            'unsigned int' => [0],
-            'unsigned int as string' => ['0'],
-            'empty string' => [''],
-        ];
-    }
-
-    /**
-     * @param non-empty-string $method
-     */
-    private function mockSystemSetting(SystemSetting $setting, string $method, mixed $value): void
-    {
-        $mockValue = $this->createConfiguredMock(Setting::class, [$method => $value]);
-
-        $this->systemSettingRepositoryMock
+        $this->systemSettingRepositoryMock->expects($this->exactly(3))
             ->method('get')
-            ->with($setting)
-            ->willReturn($mockValue);
+            ->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asBool' => $isEnabled = false]),
+                $this->createConfiguredMock(Setting::class, ['asBool' => $isDocsEnabled = true]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => $quotaLimit = 123]),
+            );
+
+        $expected = new WebConfig(
+            identity: new ServiceIdentity($protocol, $baseUrl, $protocol->value),
+            access: new ServiceAccess(
+                isEnabled: $isEnabled,
+                isDocsEnabled: $isDocsEnabled,
+                rateLimitUnits: $protocol->getRateLimitUnitsPerRequest(),
+                rateLimitQuota: $quotaLimit,
+                rateLimitWindow: $protocol->getRateLimitWindow(),
+            ),
+            monitoring: new ServiceMonitoring(
+                isDebugEnabled: true,
+                isLoggingEnabled: true,
+                isLoggingDetailsEnabled: true,
+            ),
+        );
+
+        $actual = $this->service->getWebConfig($protocol);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testCreatesInstanceOfWebConfigWithDevModeDisabled(): void
+    {
+        $protocol = ServiceProtocol::REST;
+
+        $this->iniSettingsMock->method('getHttpPath')->willReturn('0');
+        $this->iniSettingsMock->method('isDebugEnabled')->willReturn(false);
+        $this->iniSettingsMock->method('isLoggingEnabled')->willReturn(false);
+
+        $this->systemSettingRepositoryMock->expects($this->exactly(3))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $this->createConfiguredMock(Setting::class, ['asBool' => false]),
+                $this->createConfiguredMock(Setting::class, ['asBool' => false]),
+                $this->createConfiguredMock(Setting::class, ['asInt' => 0]),
+            );
+
+        $expected = new WebConfig(
+            identity: new ServiceIdentity($protocol, ConfigurationService::DEFAULT_BASE_URL, $protocol->value),
+            access: new ServiceAccess(
+                isEnabled: false,
+                isDocsEnabled: false,
+                rateLimitUnits: $protocol->getRateLimitUnitsPerRequest(),
+                rateLimitQuota: 0,
+                rateLimitWindow: $protocol->getRateLimitWindow(),
+            ),
+            monitoring: new ServiceMonitoring(
+                isDebugEnabled: false,
+                isLoggingEnabled: false,
+                isLoggingDetailsEnabled: false,
+            ),
+        );
+
+        $actual = $this->service->getWebConfig($protocol);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testCreatesInstanceOfWebConfigWithDefaultValues(): void
+    {
+        $protocol = ServiceProtocol::SOAP;
+
+        $this->iniSettingsMock->method('getHttpPath')->willReturn('0');
+        $this->iniSettingsMock->method('isDebugEnabled')->willReturn(false);
+        $this->iniSettingsMock->method('isLoggingEnabled')->willReturn(ConfigurationService::DEFAULT_IS_LOGGING_ENABLED);
+
+        $expected = new WebConfig(
+            identity: new ServiceIdentity($protocol, ConfigurationService::DEFAULT_BASE_URL, $protocol->value),
+            access: new ServiceAccess(
+                isEnabled: ConfigurationService::DEFAULT_IS_WEBSERVICE_ENABLED,
+                isDocsEnabled: ConfigurationService::DEFAULT_IS_WEBSERVICE_DOCS_ENABLED,
+                rateLimitUnits: $protocol->getRateLimitUnitsPerRequest(),
+                rateLimitQuota: $protocol->getRateLimitMaxQuota(),
+                rateLimitWindow: $protocol->getRateLimitWindow(),
+            ),
+            monitoring: new ServiceMonitoring(
+                isDebugEnabled: ConfigurationService::DEFAULT_IS_DEBUG_ENABLED,
+                isLoggingEnabled: ConfigurationService::DEFAULT_IS_LOGGING_ENABLED,
+                isLoggingDetailsEnabled: ConfigurationService::DEFAULT_IS_LOGGING_DETAILS_ENABLED,
+            ),
+        );
+
+        $actual = $this->service->getWebConfig($protocol);
+
+        self::assertEquals($expected, $actual);
     }
 }

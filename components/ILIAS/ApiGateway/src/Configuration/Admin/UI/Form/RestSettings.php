@@ -31,9 +31,12 @@ final readonly class RestSettings extends SettingsForm
     {
         $rest_ws_enabled = SystemSetting::REST_WS_ENABLED->value;
         $rest_docs_enabled = SystemSetting::REST_DOCS_ENABLED->value;
+        $rest_rate_limit_max_quota = SystemSetting::REST_RATE_LIMIT_MAX_QUOTA->value;
 
         $rest_ws_enabled_value = $this->settings_service->getData($rest_ws_enabled);
         $rest_docs_enabled_value = $this->settings_service->getData($rest_docs_enabled);
+        $rest_rate_limit_max_quota_value = $this->settings_service->getData($rest_rate_limit_max_quota);
+        $rest_rate_limit_max_quota_value = is_numeric($rest_rate_limit_max_quota_value) ? (int) $rest_rate_limit_max_quota_value : 0;
 
         $inputs = [
             $rest_ws_enabled => $this->ui_factory->input()->field()->checkbox(
@@ -43,8 +46,13 @@ final readonly class RestSettings extends SettingsForm
 
             $rest_docs_enabled => $this->ui_factory->input()->field()->checkbox(
                 $this->lng->txt("{$rest_docs_enabled}_label"),
-                $this->lng->txt("{$rest_docs_enabled}_info")
+                $this->getDocsFieldByline($rest_docs_enabled),
             )->withValue((bool) $rest_docs_enabled_value),
+
+            $rest_rate_limit_max_quota => $this->ui_factory->input()->field()->numeric(
+                $this->lng->txt("webservice_rate_limit_max_quota_label"),
+                $this->lng->txt("webservice_rate_limit_max_quota_info"),
+            )->withValue($rest_rate_limit_max_quota_value),
         ];
 
         $ff = $this->ui_factory->input()->field();
@@ -61,5 +69,23 @@ final readonly class RestSettings extends SettingsForm
                 $form_action,
                 [$settings],
             );
+    }
+
+    private function getDocsFieldByline(string $key): string
+    {
+        $docs_base_url = $this->getSwaggerUrl();
+
+        return \sprintf(
+            $this->lng->txt("{$key}_info"),
+            $docs_base_url,
+            $docs_base_url,
+        );
+    }
+
+    private function getSwaggerUrl(): string
+    {
+        $base_url = \defined('ILIAS_HTTP_PATH') ? ILIAS_HTTP_PATH : 'http://YOUR_ILIAS_BASE_URL';
+
+        return "$base_url/swagger.php";
     }
 }

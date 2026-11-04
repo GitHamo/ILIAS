@@ -29,4 +29,5 @@ enum SystemSetting: string
     case AUTH_TOKEN_EXPIRY_REFRESH = 'auth_token_expiry_refresh';
     case REST_WS_ENABLED = 'rest_ws_enabled';
     case REST_DOCS_ENABLED = 'rest_docs_enabled';
+    case REST_RATE_LIMIT_MAX_QUOTA = 'rest_rate_limit_max_quota';
 }

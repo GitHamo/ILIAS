@@ -20,13 +20,16 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Domain\Model;
 
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
+
 readonly class AuthConfig
 {
     public function __construct(
         private string $issuer,
         private string $secretKey,
-        private string $encryptionAlgo,
-        private string $hashAlgo,
+        private EncryptionAlgo $encryptionAlgo,
+        private HashAlgo $hashAlgo,
         private int $accessTokenExpiry,
         private int $refreshTokenExpiry,
     ) {
@@ -42,12 +45,12 @@ readonly class AuthConfig
         return $this->secretKey;
     }
 
-    public function getEncryptionAlgo(): string
+    public function getEncryptionAlgo(): EncryptionAlgo
     {
         return $this->encryptionAlgo;
     }
 
-    public function getHashAlgo(): string
+    public function getHashAlgo(): HashAlgo
     {
         return $this->hashAlgo;
     }

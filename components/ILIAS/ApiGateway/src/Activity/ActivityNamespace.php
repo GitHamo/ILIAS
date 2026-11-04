@@ -48,7 +48,9 @@ readonly class ActivityNamespace
             $subject = substr($subject, strlen(self::NEEDLE_GET));
         }
 
-        if (str_ends_with($subject, self::NEEDLE_ACTIVITY)) {
+        if (str_ends_with($subject, self::NEEDLE_QUERY)) {
+            $subject = substr($subject, 0, -strlen(self::NEEDLE_QUERY));
+        } elseif (str_ends_with($subject, self::NEEDLE_ACTIVITY)) {
             $subject = substr($subject, 0, -strlen(self::NEEDLE_ACTIVITY));
         }
 

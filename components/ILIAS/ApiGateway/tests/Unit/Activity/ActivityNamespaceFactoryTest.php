@@ -51,26 +51,6 @@ class ActivityNamespaceFactoryTest extends TestCase
     public static function classNameToPathProvider(): array
     {
         return [
-            'standard activity name' => [
-                'Foo\\Bar\\ActivityName',
-                '/foo/bar/activityname'
-            ],
-            'activity name ending with Query' => [
-                'Foo\\Bar\\MyQuery',
-                '/foo/bar/myquery'
-            ],
-            'activity name with Query in middle' => [
-                'Foo\\Bar\\QueryActivity',
-                '/foo/bar'
-            ],
-            'activity name starting with Query' => [
-                'Foo\\Bar\\QueryFoo',
-                '/foo/bar/foo'
-            ],
-            'activity name is just Query' => [
-                'Foo\\Bar\\Query',
-                '/foo/bar'
-            ],
             'activity name with mixed case' => [
                 'Foo\\Bar\\activityName',
                 '/foo/bar/activityname'

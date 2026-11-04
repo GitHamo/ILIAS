@@ -11,6 +11,9 @@ use ILIAS\ApiGateway\Routing\HttpMethod;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
+use ILIAS\Component\Dependencies\Name;
+use ILIAS\Data\Text\PlainText;
+use ILIAS\Data\Text\SimpleDocumentMarkdown;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -20,6 +23,8 @@ final class ActivityRouteTest extends TestCase
 {
     private MockObject&ActivityAction $actionMock;
     private MockObject&ActivityNamespace $namespaceMock;
+    private string $routeName = "fooBarBaz";
+    private string $routeDescription = "Foo Bar Baz";
     private string $routePath = "/foo/bar/baz";
     /** @var array<string> */
     private array $middlewares = ['FOO::class', 'BAR::class'];
@@ -34,10 +39,35 @@ final class ActivityRouteTest extends TestCase
         ]);
 
         $this->route = new ActivityRoute(
-            $this->createMock(Activity::class),
+            $this->createConfiguredMock(Activity::class, [
+                'getName' => $this->createConfiguredMock(Name::class, [
+                    '__toString' => $this->routeName,
+                ]),
+                'getDescription' => $this->createConfiguredMock(SimpleDocumentMarkdown::class, [
+                    'toPlainText' => $this->createConfiguredMock(PlainText::class, [
+                        '__toString' => $this->routeDescription,
+                    ])
+                ]),
+            ]),
             $this->actionMock,
             $this->namespaceMock,
             $this->middlewares,
+        );
+    }
+
+    public function testHasAccessorToActivityName(): void
+    {
+        self::assertSame(
+            $this->routeName,
+            $this->route->getName(),
+        );
+    }
+
+    public function testHasAccessorToActivityDescription(): void
+    {
+        self::assertSame(
+            $this->routeDescription,
+            $this->route->getDescription(),
         );
     }
 
@@ -54,7 +84,7 @@ final class ActivityRouteTest extends TestCase
         );
 
         self::assertSame(
-            $expected->value,
+            $expected,
             $actual->getMethod(),
         );
     }
@@ -100,6 +130,20 @@ final class ActivityRouteTest extends TestCase
         self::assertSame(
             $this->actionMock,
             $this->route->getAction(),
+        );
+    }
+
+    public function testHasAccessorToActivityInputDescription(): void
+    {
+        self::assertNull(
+            $this->route->getInput(),
+        );
+    }
+
+    public function testHasAccessorToActivityOutputDescription(): void
+    {
+        self::assertNull(
+            $this->route->getOutput(),
         );
     }
 

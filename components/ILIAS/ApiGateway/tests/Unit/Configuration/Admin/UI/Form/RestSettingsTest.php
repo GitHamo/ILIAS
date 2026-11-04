@@ -18,6 +18,7 @@ use ILIAS\UI\Component\Input\Container\Form\Standard;
 use ilCtrl;
 use ilLanguage;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -79,5 +80,71 @@ final class RestSettingsTest extends TestCase
         $actual = $this->form->get($action);
 
         self::assertSame($formMock, $actual);
+    }
+
+    #[DataProvider('quotaProvider')]
+    public function testQuotaNormalization(mixed $input, int $expected): void
+    {
+        $this->settings
+            ->method('getData')
+            ->willReturn($input);
+
+        $inputFactory = $this->createMock(InputFactory::class);
+        $fieldFactory = $this->createMock(FieldFactory::class);
+        $containerFactory = $this->createMock(ContainerFactory::class);
+        $formFactory = $this->createMock(FormFactory::class);
+
+        $this->ui_factory->method('input')->willReturn($inputFactory);
+        $inputFactory->method('field')->willReturn($fieldFactory);
+        $inputFactory->method('container')->willReturn($containerFactory);
+        $containerFactory->method('form')->willReturn($formFactory);
+
+        $checkbox = $this->createMock(Checkbox::class);
+        $numeric = $this->createMock(Numeric::class);
+        $section = $this->createMock(Section::class);
+        $form = $this->createMock(Standard::class);
+
+        $fieldFactory->method('checkbox')->willReturn($checkbox);
+        $fieldFactory->method('numeric')->willReturn($numeric);
+        $fieldFactory->method('section')->willReturn($section);
+        $formFactory->method('standard')->willReturn($form);
+
+        $numeric->expects(self::once())
+            ->method('withValue')
+            ->with($expected)
+            ->willReturn($numeric);
+
+        $this->form->get('http://example.com');
+    }
+
+    /**
+     * @return array<string, array{mixed, int}>
+     */
+    public static function quotaProvider(): array
+    {
+        return [
+            'numeric string' => ['10', 10],
+            'int string' => ['42', 42],
+
+            'int' => [5, 5],
+
+            'float string' => ['7.9', 7],
+            'float' => [3.2, 3],
+
+            'scientific notation' => ['1e3', 1000],
+
+            'positive signed string' => ['+10', 10],
+            'negative string' => ['-5', -5],
+
+            'null' => [null, 0],
+            'non numeric string' => ['abc', 0],
+            'empty string' => ['', 0],
+
+            'bool true' => [true, 0],
+            'bool false' => [false, 0],
+
+            'empty array' => [[], 0],
+            'non empty array' => [['1', 2], 0],
+        ];
     }
 }

@@ -158,6 +158,31 @@
                             </ul>
                         </li>
                     </ul>
+
+                    <h2 id="rate-limit">Rate Limit Max Quota</h2>
+
+                    <p>This setting controls the maximum quota (number of requests or cost units) a user or client can consume. It's a crucial protection against abuse and ensures the webservice remains stable for everyone.</p>
+                    <ul>
+                        <li><strong>What it is:</strong> A cap on the total units allowed within a specific time window.</li>
+                        <li><strong>How it&#39;s used:</strong> Every time an API call is made, the system checks if the user has exceeded this quota. If the quota is exhausted, further requests will be blocked until the window resets. Currently, this is measured against a fixed 1-minute interval.</li>
+                        <li>
+                            <strong>Defaults:</strong> The ideal quota depends on the webservice protocol being used. The recommended default quotas per minute are:
+                            <ul>
+                                <li><strong>REST:</strong> 100 units (requests)/minute</li>
+                                <li><strong>SOAP:</strong> 300 units (requests)/minute</li>
+                                <li><strong>gRPC:</strong> 500 units (requests)/minute</li>
+                                <li><strong>GraphQL:</strong> 1000 units (cost)/minute.</li>
+                            </ul>
+                        </li>
+                        <li><strong>No Setting Provided:</strong> If this field is left empty or not set in the administration dashboard, the system will automatically apply these protocol-specific defaults.</li>
+                        <li>
+                            <strong>System Impact:</strong>
+                            <ul>
+                                <li><strong>Lower quota:</strong> More restrictive. Protects the server from aggressive clients but might block legitimate applications that need to make many requests.</li>
+                                <li><strong>Higher quota:</strong> More permissive. Allows for high-traffic applications but increases the risk of server overload from misbehaving or malicious clients.</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div><!-- .panel-body -->
             </div><!-- .panel -->
         </main>

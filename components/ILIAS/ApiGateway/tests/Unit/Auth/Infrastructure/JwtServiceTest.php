@@ -7,11 +7,12 @@ namespace Tests\Unit\Auth\Infrastructure;
 use DateTimeImmutable;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
+use ILIAS\ApiGateway\Application\Exceptions\InvalidTokenException;
+use ILIAS\ApiGateway\Application\Factories\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
 use ILIAS\ApiGateway\Auth\Infrastructure\JwtService;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -21,10 +22,10 @@ use PHPUnit\Framework\TestCase;
 class JwtServiceTest extends TestCase
 {
     private const string SECRET_KEY = 'super-secret-key-for-testing-should-be-long-for-hs256';
-    private const string ALGORITHM = 'HS256';
+    private const EncryptionAlgo ALGORITHM = EncryptionAlgo::HS256;
     private const string ISSUER = 'ILIAS';
     private const int USER_ID = 1337;
-    private MockObject|HttpConfigFactory $configFactory;
+    private MockObject&HttpConfigFactory $configFactory;
     private JwtService $service;
 
     #[\Override]
@@ -51,7 +52,7 @@ class JwtServiceTest extends TestCase
         self::assertInstanceOf(Token::class, $token);
         self::assertSame($expiresIn, $token->getExpiresAt());
 
-        $decodedPayload = (array) JWT::decode($token->getToken(), new Key(self::SECRET_KEY, self::ALGORITHM));
+        $decodedPayload = (array) JWT::decode($token->getToken(), new Key(self::SECRET_KEY, self::ALGORITHM->value));
         self::assertSame(self::ISSUER, $decodedPayload['iss']);
         self::assertSame((string) self::USER_ID, $decodedPayload['sub']);
         self::assertSame($issuedAt->getTimestamp(), $decodedPayload['iat']);
@@ -68,7 +69,7 @@ class JwtServiceTest extends TestCase
 
         self::assertInstanceOf(Token::class, $token);
 
-        $decodedPayload = (array) JWT::decode($token->getToken(), new Key(self::SECRET_KEY, self::ALGORITHM));
+        $decodedPayload = (array) JWT::decode($token->getToken(), new Key(self::SECRET_KEY, self::ALGORITHM->value));
         self::assertTrue($decodedPayload['is_refresh']);
     }
 
@@ -101,7 +102,7 @@ class JwtServiceTest extends TestCase
 
     public function testThrowsExceptionWhenDecodingExpiredToken(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('The provided token is invalid or expired.');
 
         $issuedAt = new DateTimeImmutable();
@@ -113,7 +114,7 @@ class JwtServiceTest extends TestCase
 
     public function testThrowsExceptionWhenDecodingMalformedToken(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('The provided token is invalid or expired.');
 
         $malformedToken = 'this.is.not.a.jwt';
@@ -123,19 +124,19 @@ class JwtServiceTest extends TestCase
 
     public function testThrowsExceptionWhenDecodingTokenWithInvalidSignature(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('The provided token is invalid or expired.');
 
         $key = "wrong-secret-key-long-enough-for-hs256";
 
-        $tokenString = JWT::encode($this->getStandardPayload(), $key, self::ALGORITHM);
+        $tokenString = JWT::encode($this->getStandardPayload(), $key, self::ALGORITHM->value);
 
         $this->service->decode($tokenString);
     }
 
     public function testThrowsExceptionWhenDecodingTokenWithInvalidIssuer(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('Invalid token issuer.');
 
         $tokenString = $this->generateTestToken(['iss' => 'invalid-issuer']);
@@ -145,19 +146,19 @@ class JwtServiceTest extends TestCase
 
     public function testThrowsExceptionWhenDecodingTokenWithMissingSubject(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('Token subject (sub) claim is missing, empty, or not numeric.');
 
         $payload = $this->getStandardPayload();
         unset($payload['sub']);
-        $tokenString = JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM);
+        $tokenString = JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM->value);
 
         $this->service->decode($tokenString);
     }
 
     public function testThrowsExceptionWhenDecodingTokenWithNonNumericSubject(): void
     {
-        self::expectException(AuthenticationException::class);
+        self::expectException(InvalidTokenException::class);
         self::expectExceptionMessage('Token subject (sub) claim is missing, empty, or not numeric.');
 
         $tokenString = $this->generateTestToken(['sub' => 'not-a-number']);
@@ -207,7 +208,7 @@ class JwtServiceTest extends TestCase
      */
     private function parsePayloadFromJwt(string $tokenString): array
     {
-        return (array) JWT::decode($tokenString, new Key(self::SECRET_KEY, self::ALGORITHM));
+        return (array) JWT::decode($tokenString, new Key(self::SECRET_KEY, self::ALGORITHM->value));
     }
 
     /**
@@ -218,7 +219,7 @@ class JwtServiceTest extends TestCase
         return JWT::encode(
             [...$this->getStandardPayload(), ...$overridePayload],
             self::SECRET_KEY,
-            self::ALGORITHM
+            self::ALGORITHM->value
         );
     }
 

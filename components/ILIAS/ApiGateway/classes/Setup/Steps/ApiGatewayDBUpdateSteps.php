@@ -20,20 +20,26 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Setup\Steps;
 
-class ApiGatewayDBUpdateSteps implements \ilDatabaseUpdateSteps
-{
-    private const string TABLE_NAME_REFRESH = 'apig_refresh_tokens';
-    /** @var \ilDBPdo */
-    protected \ilDBInterface $db;
+use ilDatabaseUpdateSteps;
+use ilDBInterface;
+use ilDBPdo;
 
-    public function prepare(\ilDBInterface $db): void
+class ApiGatewayDBUpdateSteps implements ilDatabaseUpdateSteps
+{
+    private const string TABLE_PREFIX = 'apig_';
+    private const string TABLE_NAME_REFRESH_TOKENS = self::TABLE_PREFIX . 'refresh_tokens';
+    private const string TABLE_NAME_RATE_LIMITS = self::TABLE_PREFIX . 'rate_limits';
+    /** @var ilDBPdo */
+    protected ilDBInterface $db;
+
+    public function prepare(ilDBInterface $db): void
     {
         $this->db = $db;
     }
 
     public function step_1(): void
     {
-        if ($this->db->tableExists(self::TABLE_NAME_REFRESH)) {
+        if ($this->db->tableExists(self::TABLE_NAME_REFRESH_TOKENS)) {
             return;
         }
 
@@ -78,13 +84,81 @@ class ApiGatewayDBUpdateSteps implements \ilDatabaseUpdateSteps
             ],
         ];
 
-        $this->db->createTable(self::TABLE_NAME_REFRESH, $fields);
-        $this->db->addPrimaryKey(self::TABLE_NAME_REFRESH, ['id']);
-        $this->db->createSequence(self::TABLE_NAME_REFRESH);
-        $this->db->addUniqueConstraint(self::TABLE_NAME_REFRESH, ['token_hash'], 'th1');
-        $this->db->addIndex(self::TABLE_NAME_REFRESH, ['user_id'], 'usr');
-        $this->db->addIndex(self::TABLE_NAME_REFRESH, ['expires_at'], 'exp');
+        $this->db->createTable(self::TABLE_NAME_REFRESH_TOKENS, $fields);
+        $this->db->addPrimaryKey(self::TABLE_NAME_REFRESH_TOKENS, ['id']);
+        $this->db->createSequence(self::TABLE_NAME_REFRESH_TOKENS);
+        $this->db->addUniqueConstraint(self::TABLE_NAME_REFRESH_TOKENS, ['token_hash'], 'th1');
+        $this->db->addIndex(self::TABLE_NAME_REFRESH_TOKENS, ['user_id'], 'usr');
+        $this->db->addIndex(self::TABLE_NAME_REFRESH_TOKENS, ['expires_at'], 'exp');
+    }
 
-        return;
+    public function step_2(): void
+    {
+        if ($this->db->tableExists(self::TABLE_NAME_RATE_LIMITS)) {
+            return;
+        }
+
+        $fields = [
+            'id' => [
+                'type' => 'integer',
+                'length' => 4,
+                'notnull' => true,
+                'default' => 0,
+            ],
+            'fingerprint' => [
+                'type' => 'text',
+                'length' => 255,
+                'notnull' => true,
+            ],
+            'scope' => [
+                'type' => 'text',
+                'length' => 255,
+                'notnull' => true,
+            ],
+            'units' => [
+                'type' => 'integer',
+                'length' => 4,
+                'notnull' => true,
+                'default' => 0,
+            ],
+            'created_at' => [
+                'type' => 'timestamp',
+                'notnull' => true,
+                'default' => '',
+            ],
+        ];
+
+        $this->db->createTable(self::TABLE_NAME_RATE_LIMITS, $fields);
+        $this->db->addPrimaryKey(self::TABLE_NAME_RATE_LIMITS, ['id']);
+        $this->db->createSequence(self::TABLE_NAME_RATE_LIMITS);
+    }
+
+    public function step_3(): void
+    {
+        $fsc_idx_fields = [
+            'fingerprint',
+            'scope',
+            'created_at',
+        ];
+        $ca_idx_fields = [
+            'created_at',
+        ];
+        if (!$this->db->indexExistsByFields(self::TABLE_NAME_RATE_LIMITS, $fsc_idx_fields)) {
+            // Optimizes the sumUnits query.
+            $this->db->addIndex(
+                self::TABLE_NAME_RATE_LIMITS,
+                $fsc_idx_fields,
+                'fsc'
+            );
+        }
+
+        if (!$this->db->indexExistsByFields(self::TABLE_NAME_RATE_LIMITS, $ca_idx_fields)) {
+            // Crucial optimization for the deleteExpired query.
+            $this->db->addIndex(
+                self::TABLE_NAME_RATE_LIMITS,
+                $ca_idx_fields,
+                'ca'
+            );
+        }
     }
 }

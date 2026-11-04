@@ -20,8 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Webservice\Infrastructure;
 
-use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
-use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
+use ILIAS\ApiGateway\Application\Middlewares;
+use ILIAS\ApiGateway\Configuration\Domain\Model\ServiceMonitoring;
 use ILIAS\ApiGateway\Webservice\Domain\Model\Payload;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use Override;
@@ -31,42 +31,47 @@ use Throwable;
 final readonly class RestWebservice implements Webservice
 {
     public function __construct(
-        private WebConfig $config,
+        private ServiceMonitoring $monitoring,
     ) {
     }
 
     #[Override]
-    public function getProtocol(): ServiceProtocol
+    public function getMiddlewares(): array
     {
-        return $this->config->getProtocol();
+        return [
+            // Added in LIFO order to fail-fast on headers before expensive body parsing (resource protection).
+            Middlewares\RequestParameterMiddleware::class,
+            Middlewares\JsonBodyParserMiddleware::class,
+            Middlewares\JsonContentNegotiationMiddleware::class,
+        ];
     }
 
     #[Override]
-    public function handle(Payload $payload): Payload
+    public function transform(mixed $data): Payload
     {
         $payloadData = [
             'success' => true,
-            'data' => $payload->getData(),
+            'data' => $data,
         ];
 
-        $jsonFlags = $this->config->isDebugEnabled() ? JSON_PRETTY_PRINT : 0;
+        $jsonFlags = $this->monitoring->isDebugEnabled ? JSON_PRETTY_PRINT : 0;
 
         return $this->createPayload($payloadData, $jsonFlags);
     }
 
     #[Override]
-    public function handleError(Throwable $exception): Payload
+    public function transformError(Throwable $exception): Payload
     {
         $payloadData = [
             'success' => false,
             'error' => $exception->getMessage(),
         ];
 
-        if ($this->config->isLoggingDetailsEnabled()) {
+        if ($this->monitoring->isLoggingDetailsEnabled) {
             $payloadData['stack'] = $exception->getTrace();
         }
 
-        $jsonFlags = $this->config->isDebugEnabled() ? JSON_PRETTY_PRINT : 0;
+        $jsonFlags = $this->monitoring->isDebugEnabled ? JSON_PRETTY_PRINT : 0;
         $jsonFlags |= JSON_UNESCAPED_SLASHES;
         $jsonFlags |= JSON_UNESCAPED_UNICODE;
 
@@ -85,7 +90,6 @@ final readonly class RestWebservice implements Webservice
             $data,
             [
                 'Content-Type' => 'application/json',
-                'Content-Length' => (string) strlen($body),
             ],
             $body,
         );

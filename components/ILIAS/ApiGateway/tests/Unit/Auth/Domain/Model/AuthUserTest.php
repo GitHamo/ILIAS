@@ -6,6 +6,8 @@ namespace Tests\Unit\Auth\Domain\Model;
 
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AuthUser::class)]
@@ -30,6 +32,8 @@ class AuthUserTest extends TestCase
         );
     }
 
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testCreatesAnonymousUser(): void
     {
         define('ANONYMOUS_USER_ID', $annonymousUserId = 123);

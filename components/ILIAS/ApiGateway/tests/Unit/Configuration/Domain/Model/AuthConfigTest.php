@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Configuration\Domain\Model;
 
+use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -11,22 +13,22 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(AuthConfig::class)]
 final class AuthConfigTest extends TestCase
 {
-    private AuthConfig $model;
+    private AuthConfig $config;
     private string $issuer;
     private string $secretKey;
-    private string $encryptionAlgo;
-    private string $hashAlgo;
+    private EncryptionAlgo $encryptionAlgo;
+    private HashAlgo $hashAlgo;
     private int $accessTokenExpiry;
     private int $refreshTokenExpiry;
 
     #[\Override]
     protected function setUp(): void
     {
-        $this->model = new AuthConfig(
+        $this->config = new AuthConfig(
             $this->issuer = 'http://localhost:1234',
             $this->secretKey = 'super-secret-key',
-            $this->encryptionAlgo = 'foo',
-            $this->hashAlgo = 'bar',
+            $this->encryptionAlgo = EncryptionAlgo::HS256,
+            $this->hashAlgo = HashAlgo::SHA256,
             $this->accessTokenExpiry = 1234567890,
             $this->refreshTokenExpiry = 9876543210,
         );
@@ -36,7 +38,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->issuer,
-            $this->model->getIssuer(),
+            $this->config->getIssuer(),
         );
     }
 
@@ -44,7 +46,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->secretKey,
-            $this->model->getSecretKey(),
+            $this->config->getSecretKey(),
         );
     }
 
@@ -52,7 +54,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->encryptionAlgo,
-            $this->model->getEncryptionAlgo(),
+            $this->config->getEncryptionAlgo(),
         );
     }
 
@@ -60,7 +62,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->hashAlgo,
-            $this->model->getHashAlgo(),
+            $this->config->getHashAlgo(),
         );
     }
 
@@ -68,7 +70,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->accessTokenExpiry,
-            $this->model->getAccessTokenExpiry(),
+            $this->config->getAccessTokenExpiry(),
         );
     }
 
@@ -76,7 +78,7 @@ final class AuthConfigTest extends TestCase
     {
         $this->assertSame(
             $this->refreshTokenExpiry,
-            $this->model->getRefreshTokenExpiry(),
+            $this->config->getRefreshTokenExpiry(),
         );
     }
 }

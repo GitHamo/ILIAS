@@ -389,7 +389,11 @@ index 85a13eb07da..5c88853d09e 100644
 +apig#:#rest_ws_enabled_label#:#Webservice aktivieren
 +apig#:#rest_ws_enabled_info#:#Ob der Webservice aktiviert ist oder nicht
 +apig#:#rest_docs_enabled_label#:#Dokumentation aktivieren
-+apig#:#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren
++apig#:#rest_docs_enabled_info#:#Gästen Zugriff auf die automatisch generierte Dokumentation gewähren <a href="%s" target="blank">%s</a>
++apig#:#webservice_rate_limit_max_quota_label#:#Anfragelimit
++apig#:#webservice_rate_limit_max_quota_info#:#Maximales Kontingent (Anfragen oder Kosteneinheiten), das innerhalb eines 1-Minuten-Intervalls zulässig ist. Weitere Anfragen werden blockiert, bis das Zeitfenster zurückgesetzt wird.
++apig#:#cron_delete_expired_rate_limits_title#:#Abgelaufene Anfragelimits löschen
++apig#:#cron_delete_expired_rate_limits_desc#:#Entfernt abgelaufene Anfragelimit-Einträge aus dem System, um eine unnötige Datenansammlung zu vermeiden.
 \ No newline at end of file
 diff --git a/lang/ilias_ar.lang b/lang/ilias_ar.lang
 index bc1b91d9841..4b6fcaff24c 100644
@@ -422,7 +426,11 @@ index bc1b91d9841..4b6fcaff24c 100644
 +apig#:#rest_ws_enabled_label#:#تفعيل خدمة الويب
 +apig#:#rest_ws_enabled_info#:#ما إذا كانت خدمة الويب مفعلة أم لا
 +apig#:#rest_docs_enabled_label#:#تفعيل وثائق المساعدة
-+apig#:#rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا
++apig#:#rest_docs_enabled_info#:#السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا <a href="%s" target="blank">%s</a>
++apig#:#webservice_rate_limit_max_quota_label#:#حدّ الطلبات
++apig#:#webservice_rate_limit_max_quota_info#:#الحد الأقصى لعدد الطلبات المسموح بها خلال فترة دقيقة واحدة. يتم حظر الطلبات الإضافية حتى تتم إعادة تعيين الحد.
++apig#:#cron_delete_expired_rate_limits_title#:#حذف حدود الطلبات المنتهية
++apig#:#cron_delete_expired_rate_limits_desc#:#يزيل إدخالات حدود الطلبات المنتهية من النظام لمنع تراكم البيانات غير الضرورية.
 \ No newline at end of file
 diff --git a/lang/ilias_en.lang b/lang/ilias_en.lang
 index d7c60419b0a..2d588566a3e 100644
@@ -456,5 +464,9 @@ index d7c60419b0a..2d588566a3e 100644
 +apig#:#rest_ws_enabled_label#:#Activate Webservice
 +apig#:#rest_ws_enabled_info#:#Webservice enabled or not
 +apig#:#rest_docs_enabled_label#:#Activate Documentation
-+apig#:#rest_docs_enabled_info#:#Allow public access to the auto-generated documentation
++apig#:#rest_docs_enabled_info#:#Allow guest access to the auto-generated documentation <a href="%s" target="blank">%s</a>
++apig#:#webservice_rate_limit_max_quota_label#:#Rate Limit
++apig#:#webservice_rate_limit_max_quota_info#:#Maximum number of requests allowed within a 1-minute interval. Additional requests are blocked until the limit resets.
++apig#:#cron_delete_expired_rate_limits_title#:#Delete expired rate limits
++apig#:#cron_delete_expired_rate_limits_desc#:#Cleans up expired rate limit entries from the system to prevent unnecessary data accumulation.
 \ No newline at end of file

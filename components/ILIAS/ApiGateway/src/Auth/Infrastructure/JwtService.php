@@ -24,8 +24,8 @@ use DateTimeImmutable;
 use DomainException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
+use ILIAS\ApiGateway\Application\Exceptions\InvalidTokenException;
+use ILIAS\ApiGateway\Application\Factories\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenPayload;
@@ -82,7 +82,7 @@ final readonly class JwtService implements TokenProvider
         $token = JWT::encode(
             $payload,
             $this->config()->getSecretKey(),
-            $this->config()->getEncryptionAlgo(),
+            $this->config()->getEncryptionAlgo()->value,
         );
 
         return new Token($token, $expiresIn);
@@ -110,12 +110,12 @@ final readonly class JwtService implements TokenProvider
                 $token,
                 new Key(
                     $this->config()->getSecretKey(),
-                    $this->config()->getEncryptionAlgo(),
+                    $this->config()->getEncryptionAlgo()->value,
                 ),
             );
         } catch (InvalidArgumentException | DomainException | UnexpectedValueException $e) {
             // catch 'firebase/php-jwt' exceptions in order not to leak third-party exceptions into the application.
-            throw new AuthenticationException(
+            throw new InvalidTokenException(
                 'The provided token is invalid or expired.',
                 $e,
             );
@@ -124,11 +124,11 @@ final readonly class JwtService implements TokenProvider
         $payload = (array) $decoded;
 
         if (!isset($payload['iss']) || $payload['iss'] !== $this->config()->getIssuer()) {
-            throw new AuthenticationException('Invalid token issuer.');
+            throw new InvalidTokenException('Invalid token issuer.');
         }
 
         if (!isset($payload['sub']) || !is_numeric($payload['sub'])) {
-            throw new AuthenticationException('Token subject (sub) claim is missing, empty, or not numeric.');
+            throw new InvalidTokenException('Token subject (sub) claim is missing, empty, or not numeric.');
         }
 
         $userId = (int) $payload['sub'];

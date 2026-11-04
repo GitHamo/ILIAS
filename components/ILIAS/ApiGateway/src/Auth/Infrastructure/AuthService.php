@@ -21,8 +21,8 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DomainException;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
-use ILIAS\ApiGateway\Application\Factory\HttpConfigFactory;
+use ILIAS\ApiGateway\Application\Exceptions\InvalidTokenException;
+use ILIAS\ApiGateway\Application\Factories\HttpConfigFactory;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Model\Token;
@@ -31,7 +31,6 @@ use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Auth\Domain\Service\TokenProvider;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
 use Override;
 use RuntimeException;
@@ -85,8 +84,8 @@ final class AuthService implements Authentication
         $tokenHash = $this->hashToken($refreshToken);
         $storedToken = $this->refreshTokenRepository->findByHash($tokenHash);
 
-        if ($storedToken === null || $storedToken->isRevoked() || $storedToken->isExpired()) {
-            throw new AuthenticationException('Refresh token is invalid or has been revoked.');
+        if (!$storedToken instanceof RefreshToken || $storedToken->isRevoked() || $storedToken->isExpired()) {
+            throw new InvalidTokenException('Refresh token is invalid or has been revoked.');
         }
 
         // revoke the old token after use (rotation)
@@ -130,14 +129,14 @@ final class AuthService implements Authentication
 
     private function hashToken(string $token): string
     {
-        return hash($this->config()->getHashAlgo(), $token);
+        return hash($this->config()->getHashAlgo()->value, $token);
     }
 
     private function config(): AuthConfig
     {
-        if ($this->config === null) {
+        if (!$this->config instanceof AuthConfig) {
             /**
-             * Validation moved from ILIAS/ApiGateway/Application/Factory/HttpConfigFactory
+             * Validation moved from ILIAS/ApiGateway/Application/Factories/HttpConfigFactory
              * to prevent exceptions on initialization @ ApiGateway.php
              */
             $config = $this->configFactory->createAuthConfig();
@@ -146,7 +145,7 @@ final class AuthService implements Authentication
             $encryptionAlgo = $config->getEncryptionAlgo();
 
             $keyLength = \strlen($secretKey);
-            $minLength = EncryptionAlgo::from($encryptionAlgo)->getKeyMinimumLength();
+            $minLength = $encryptionAlgo->getKeyMinimumLength();
 
             if ($minLength > 0 && $keyLength < $minLength) {
                 throw new RuntimeException(

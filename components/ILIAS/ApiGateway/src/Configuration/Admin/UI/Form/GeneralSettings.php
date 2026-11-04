@@ -21,7 +21,7 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway\Configuration\Admin\UI\Form;
 
 use ILIAS\ApiGateway\Configuration\Domain\Enum\EncryptionAlgo;
-use ILIAS\ApiGateway\Configuration\Domain\Enum\HashingAlgo;
+use ILIAS\ApiGateway\Configuration\Domain\Enum\HashAlgo;
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 use ILIAS\ApiGateway\Configuration\Admin\UI\Form\SettingsForm;
 use ILIAS\UI\Component\Input\Container\Form\Standard as StandardForm;
@@ -43,7 +43,7 @@ final readonly class GeneralSettings extends SettingsForm
             $encryptionOptions[$algo->value] = $algo->value;
         }
 
-        foreach (HashingAlgo::cases() as $algo) {
+        foreach (HashAlgo::cases() as $algo) {
             $hashingOptions[$algo->value] = strtoupper($algo->value);
         }
 

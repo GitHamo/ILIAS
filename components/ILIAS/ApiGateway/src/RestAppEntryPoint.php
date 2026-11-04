@@ -21,17 +21,16 @@ declare(strict_types=1);
 namespace ILIAS\ApiGateway;
 
 use ilContext;
-use ILIAS\ApiGateway\Application\Factory\WebAppFactory;
+use ILIAS\ApiGateway\Application\Factories\WebAppFactory;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\Component\EntryPoint;
 use Override;
 
-class RestAppEntryPoint implements EntryPoint
+final class RestAppEntryPoint implements EntryPoint
 {
     public function __construct(
         protected WebAppFactory $webAppFactory,
     ) {
-        //
     }
 
     #[Override]
@@ -40,6 +39,9 @@ class RestAppEntryPoint implements EntryPoint
         return self::class;
     }
 
+    /**
+     * @psalm-suppress UndefinedFunction
+     */
     #[Override]
     public function enter(): int
     {
@@ -47,7 +49,11 @@ class RestAppEntryPoint implements EntryPoint
 
         entry_point('ILIAS Legacy Initialisation Adapter'); // to initialize legacy dependencies
 
-        $this->webAppFactory->create(ServiceProtocol::REST)->run();
+        global $DIC;
+
+        $request = $DIC ? $DIC['http']?->raw()?->request() : null;
+
+        $this->webAppFactory->create(ServiceProtocol::REST)->run($request);
 
         return 0;
     }

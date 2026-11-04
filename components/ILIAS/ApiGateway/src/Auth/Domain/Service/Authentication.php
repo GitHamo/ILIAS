@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Service;
 
+use ILIAS\ApiGateway\Application\Exceptions\InvalidTokenException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Model\TokenSet;
 
@@ -27,7 +28,13 @@ interface Authentication
 {
     public function createToken(AuthUser $user): TokenSet;
 
+    /**
+     * @throws InvalidTokenException
+     */
     public function refreshToken(string $refreshToken): TokenSet;
 
+    /**
+     * @throws InvalidTokenException
+     */
     public function validateToken(string $token): AuthUser;
 }

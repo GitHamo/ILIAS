@@ -20,9 +20,6 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Routing;
 
-use InvalidArgumentException;
-use ValueError;
-
 enum HttpMethod: string
 {
     case GET = 'GET';
@@ -31,20 +28,4 @@ enum HttpMethod: string
     case PUT = 'PUT';
     case PATCH = 'PATCH';
     case DELETE = 'DELETE';
-
-    public static function fromAny(mixed $method): self
-    {
-        if (!\is_scalar($method) && (!\is_object($method) || !method_exists($method, '__toString'))) {
-            throw new InvalidArgumentException("Invalid HTTP method type provided. Must be scalar or an object with __toString().");
-        }
-
-        try {
-            $method = (string) $method;
-            $method = strtoupper($method);
-
-            return self::from($method);
-        } catch (ValueError $e) {
-            throw new InvalidArgumentException("Invalid HTTP method: $method", 0, $e);
-        }
-    }
 }

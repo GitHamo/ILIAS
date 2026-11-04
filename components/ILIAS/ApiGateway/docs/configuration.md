@@ -48,3 +48,20 @@ This is the lifespan of a refresh token, in seconds. A refresh token's only purp
 - **System Impact:**
   - **Shorter expiry (e.g., 1 day):** More secure. If a user's refresh token is compromised, the attacker only has a day to use it. This forces users to log in with their password more frequently.
   - **Longer expiry (e.g., 30 days):** More convenient for users, as they can stay logged in for a month. However, it increases the security risk if a refresh token is stolen.
+
+## Rate Limit Max Quota
+
+This setting controls the maximum quota (number of requests or cost units) a user or client can consume. It's a crucial protection against abuse and ensures the webservice remains stable for everyone.
+
+- **What it is:** A cap on the total units allowed within a specific time window.
+- **How it's used:** Every time an API call is made, the system checks if the user has exceeded this quota. If the quota is exhausted, further requests will be blocked until the window resets. Currently, this is measured against a fixed 1-minute interval.
+- **Granularity:** The quota is enforced per **client fingerprint**, which is derived from the client's IP address and User-Agent. This ensures protection even for unauthenticated requests.
+- **Defaults:** The ideal quota depends on the webservice protocol being used. The recommended default quotas per minute are:
+  - **REST:** 100 units (requests)/minute
+  - **SOAP:** 300 units (requests)/minute
+  - **gRPC:** 500 units (requests)/minute
+  - **GraphQL:** 1000 units (cost)/minute. Note: GraphQL uses cost-based rate limiting where each query is assigned a complexity score, unlike the other protocols which count individual requests.
+- **No Setting Provided:** If this field is left empty or not set in the administration dashboard, the system will automatically apply these protocol-specific defaults.
+- **System Impact:**
+  - **Lower quota:** More restrictive. Protects the server from aggressive clients but might block legitimate applications that need to make many requests.
+  - **Higher quota:** More permissive. Allows for high-traffic applications but increases the risk of server overload from misbehaving or malicious clients.

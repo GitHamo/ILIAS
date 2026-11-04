@@ -20,32 +20,13 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Domain;
 
+use ILIAS\ApiGateway\Configuration\Domain\Model\AuthConfig;
+use ILIAS\ApiGateway\Configuration\Domain\Model\WebConfig;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 
 interface Configuration
 {
-    public function getBaseUrl(): string;
+    public function getAuthConfig(): AuthConfig;
 
-    public function getClientId(): string;
-
-    public function getSecretKey(): string;
-
-    public function getEncryption(): string;
-
-    public function getHashing(): string;
-
-    public function getAccessTokenExpiry(): int;
-
-    public function getRefreshTokenExpiry(): int;
-
-    public function isEnabled(ServiceProtocol $protocol): bool;
-
-    public function isDocsEnabled(ServiceProtocol $protocol): bool;
-
-    public function isDebugEnabled(): bool;
-
-    public function isLoggingEnabled(): bool;
-
-    public function isLoggingDetailsEnabled(): bool;
-
+    public function getWebConfig(ServiceProtocol $protocol): WebConfig;
 }

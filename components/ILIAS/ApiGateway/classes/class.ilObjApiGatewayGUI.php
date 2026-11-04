@@ -62,7 +62,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
     private const string CMD_SETTINGS_REST_SAVE = self::ACTION_SAVE . self::KEYS_SEPARATOR . self::SECTION_TAB_REST . self::KEYS_SEPARATOR . self::SECTION_SETTINGS;
     private const string DEFAULT_CMD = self::CMD_SETTINGS_GENERAL_VIEW;
 
-    private ilApiGatewaySettings $settings_service;
+    private readonly ilApiGatewaySettings $settings_service;
     private bool $has_read_access = false;
     private bool $has_write_access = false;
 
@@ -84,6 +84,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
      * Set the Title and the description
      * (Overwritten from ilObjectGUI, called by prepareOutput)
      */
+    #[\Override]
     protected function setTitleAndDescription(): void
     {
         $this->tpl->setTitle($this->lng->txt('webservices'));
@@ -91,6 +92,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
         $this->tpl->setDescription($this->lng->txt('webservices_description'));
     }
 
+    #[\Override]
     public function executeCommand(): void
     {
         if (!$this->has_read_access) {
@@ -116,7 +118,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
                 $tab = self::TAB_SETTINGS_GENERAL;
 
                 $cmd = $this->ctrl->getCmd(self::DEFAULT_CMD);
-                $cmd = strtolower($cmd);
+                $cmd = strtolower((string) $cmd);
 
                 switch ($cmd) {
                     case self::CMD_SETTINGS_HELP_VIEW:
@@ -261,6 +263,7 @@ final class ilObjApiGatewayGUI extends ilObjectGUI
         return $form->get($form_action);
     }
 
+    #[\Override]
     public function getAdminTabs(): void
     {
         $this->getTabs();

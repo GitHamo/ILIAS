@@ -25,7 +25,7 @@ use ilAuthProviderFactory;
 use ilAuthStatus;
 use ilAuthUtils;
 use ilDBConstants;
-use ILIAS\ApiGateway\Application\Exception\AuthenticationException;
+use ILIAS\ApiGateway\Application\Exceptions\InvalidCredentialsException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 use ILIAS\ApiGateway\Auth\Domain\Repository\UserRepository;
 use ILIAS\ApiGateway\GlobalDICAccessTrait;
@@ -53,7 +53,12 @@ final readonly class DatabaseUserRepository implements UserRepository
 
         $result = $userQuery->fetchAssoc();
 
-        if (null === $result || empty($result) || !isset($result['usr_id']) || $result['usr_id'] !== $userId) {
+        if (
+            null === $result
+            || $result === []
+            || !isset($result['usr_id'])
+            || (int) $result['usr_id'] !== $userId
+        ) {
             throw new InvalidArgumentException('User not found', StatusCode::HTTP_NOT_FOUND);
         }
 
@@ -76,7 +81,7 @@ final readonly class DatabaseUserRepository implements UserRepository
         $authenticated = $provider?->doAuthentication($status);
 
         if (!$authenticated) {
-            throw new AuthenticationException('Wrong username or password.');
+            throw new InvalidCredentialsException();
         }
 
         return new AuthUser(

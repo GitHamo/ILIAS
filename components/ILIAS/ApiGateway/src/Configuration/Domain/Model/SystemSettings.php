@@ -22,7 +22,7 @@ namespace ILIAS\ApiGateway\Configuration\Domain\Model;
 
 use ILIAS\ApiGateway\Configuration\Domain\Enum\SystemSetting;
 
-class SystemSettings
+final readonly class SystemSettings
 {
     /**
      * @param array<string, mixed> $settingsData
@@ -52,7 +52,7 @@ class SystemSettings
     /**
      * @var Setting[] $settings
      */
-    private array $settings = [];
+    private array $settings;
 
     public function __construct(
         Setting ...$settings,

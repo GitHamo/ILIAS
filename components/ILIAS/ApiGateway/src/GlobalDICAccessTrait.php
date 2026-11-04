@@ -44,13 +44,7 @@ trait GlobalDICAccessTrait
 
     protected function database(): ?ilDBInterface
     {
-        $database = $this->dic()?->database();
-
-        if ($database && !$database instanceof ilDBInterface) {
-            return null;
-        }
-
-        return $database;
+        return $this->dic()?->database();
     }
 
     protected function getDatabase(): ilDBInterface
@@ -70,12 +64,6 @@ trait GlobalDICAccessTrait
             return $logging->root();
         }
 
-        $logger = $logging->$name();
-
-        if ($logger !== null && $logger instanceof ilLogger) {
-            return $logger;
-        }
-
-        return null;
+        return $logging->$name();
     }
 }

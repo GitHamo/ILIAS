@@ -23,6 +23,7 @@ namespace ILIAS\ApiGateway\Activity;
 use ILIAS\ApiGateway\Routing\Action;
 use ILIAS\ApiGateway\Routing\HttpMethod;
 use ILIAS\ApiGateway\Routing\Route;
+use ILIAS\ApiGateway\ServiceContract\Model\Schema;
 use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ActivityType;
 use ILIAS\Component\Activities\ObjectActivity;
@@ -42,6 +43,18 @@ readonly class ActivityRoute implements Route
     }
 
     #[Override]
+    public function getName(): string
+    {
+        return (string) $this->activity->getName();
+    }
+
+    #[Override]
+    public function getDescription(): string
+    {
+        return (string) $this->activity->getDescription()->toPlainText();
+    }
+
+    #[Override]
     public function getPath(): string
     {
         $path = $this->namespace->getPath();
@@ -54,11 +67,11 @@ readonly class ActivityRoute implements Route
     }
 
     #[Override]
-    public function getMethod(): string
+    public function getMethod(): HttpMethod
     {
         return match ($this->activity->getType()) {
-            ActivityType::Command => HttpMethod::POST->value,
-            ActivityType::Query => HttpMethod::GET->value,
+            ActivityType::Command => HttpMethod::POST,
+            ActivityType::Query => HttpMethod::GET,
         };
     }
 
@@ -66,6 +79,18 @@ readonly class ActivityRoute implements Route
     public function getAction(): Action
     {
         return $this->action;
+    }
+
+    #[Override]
+    public function getInput(): ?Schema
+    {
+        return null;
+    }
+
+    #[Override]
+    public function getOutput(): ?Schema
+    {
+        return null;
     }
 
     #[Override]

@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Configuration\Infrastructure;
 
-readonly class RandomKeyGenerator
+final readonly class RandomKeyGenerator
 {
     public static function generate(int $length = 64): string
     {

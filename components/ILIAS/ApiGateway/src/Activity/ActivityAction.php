@@ -27,10 +27,11 @@ use ILIAS\Component\Activities\Activity;
 use ILIAS\Component\Activities\ObjectActivity;
 use ILIAS\Data\Result;
 use ILIAS\UI\Component\Input\Factory as InputFactory;
+use Override;
 use RuntimeException;
 use Throwable;
 
-class ActivityAction implements Action
+readonly class ActivityAction implements Action
 {
     private const int GUEST_USER_ID = 0;
 
@@ -40,14 +41,13 @@ class ActivityAction implements Action
     ) {
     }
 
-    #[\Override]
+    #[Override]
     public function __invoke(array $params, ?AuthUser $user): mixed
     {
-        $userId = $user ? $user->getId() : self::GUEST_USER_ID;
+        $userId = $user instanceof AuthUser ? $user->getId() : self::GUEST_USER_ID;
         $parameters = $this->validate($params);
 
         $parameters['auth_user_id'] = $userId;
-
 
         $result = $this->activity->maybePerformAs($this->inputFactory, $userId, $parameters);
 
@@ -71,6 +71,10 @@ class ActivityAction implements Action
             }
 
             return $result->value();
+            /**
+             * @psalm-suppress UnevaluatedCode
+             * @phpstan-ignore deadCode.unreachable
+             */
             return $this->activity->getOutputDescription($factory)->getPrimitiveRepresentation($result);
         }
 

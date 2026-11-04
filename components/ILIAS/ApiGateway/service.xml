@@ -5,5 +5,8 @@
             <parent id="adm" max="1">adm</parent>
         </object>
     </objects>
+	<crons>
+		<cron id="apig_delete_expired_rate_limits" class="ilApiGatewayCronDeleteExpiredRateLimits" />
+    </crons>
     <logging />
 </service>

@@ -20,11 +20,15 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Auth\Domain\Repository;
 
+use ILIAS\ApiGateway\Application\Exceptions\InvalidCredentialsException;
 use ILIAS\ApiGateway\Auth\Domain\Model\AuthUser;
 
 interface UserRepository
 {
     public function getById(int $userId): AuthUser;
 
+    /**
+     * @throws InvalidCredentialsException
+     */
     public function login(string $username, string $password): AuthUser;
 }

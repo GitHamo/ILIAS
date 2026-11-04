@@ -20,19 +20,44 @@ declare(strict_types=1);
 
 namespace ILIAS\ApiGateway\Routing;
 
+use ILIAS\ApiGateway\ServiceContract\Model\Schema;
+
 interface Route
 {
+    /**
+     * @return string Unique business identifier for the route
+     */
+    public function getName(): string;
+
+    /**
+     * @return string Human readable description
+     */
+    public function getDescription(): string;
+
+    /**
+     * @return string URL path this route responds to, e.g. '/users/{id}'
+     */
     public function getPath(): string;
 
     /**
-     * @return string HTTP method this route responds to, e.g. 'GET' or 'POST'
+     * @return HttpMethod HTTP method this route responds to, e.g. HttpMethod::GET or HttpMethod::POST
      */
-    public function getMethod(): string;
+    public function getMethod(): HttpMethod;
 
     /**
-     * action holding the business logic
+     * @return Action action holding the business logic
      */
     public function getAction(): Action;
+
+    /**
+     * @return Schema|null The input schema or null if none
+     */
+    public function getInput(): ?Schema;
+
+    /**
+     * @return Schema|null The output schema or null if none
+     */
+    public function getOutput(): ?Schema;
 
     /**
      * @return array<string> list of namespaces of middleware classes

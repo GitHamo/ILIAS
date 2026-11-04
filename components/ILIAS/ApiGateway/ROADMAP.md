@@ -17,20 +17,26 @@ This architecture separates concerns by having a generic `ApiGateway` component.
 - **Phase 1:** REST API: Concepts and Basic Objects \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8205_1357)\]
 - **Phase 2:** REST API: Authentication and Service Control \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8803_1357)\]
 - **Phase 3:** REST API: Middlewares, Documentation and Error Handling \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8825_1357)\]
-- **Phase 4:** Activity I/O Validation Schemas
+- **Phase 4:** Activity I/O Validation Schemas \[[WIKI](https://docu.ilias.de/go/wiki/wpage_8860_1357)\]
 - **Phase 5:** SOAP Webservice Integration
+
+## Known Issues
+
+- ...
 
 ## Backlog
 
-- Middlewares & related Exceptions:
-  - `ApiServiceStatusMiddleware` (Checks if the API is globally enabled)
-  - `TransportSecurityMiddleware` (Adds HSTS header to enforce HTTPS)
-  - `BrowserSecurityMiddleware` (Adds CSP, X-Frame-Options, etc. to harden browser clients)
-  - `CorsMiddleware` (Manages which other domains are allowed to make requests to this API)
-  - `JsonContentNegotiationMiddleware` / `NotAcceptableException` (Ensures the client is sending and accepting application/json)
-  - `JsonBodyParserMiddleware` / `InvalidJsonException` (Safely parses the request body as JSON)
-  - `RateLimitingMiddleware` / `RateLimitExceededException` (Protects the API from abuse by limiting request frequency)
-  - `RequestLoggingMiddleware` (Logs request/response data for debugging and monitoring)
-- I/O validation schemas for request and response data.
-- Enhanced error handling and reporting.
+- **Implementation Note:** Use a `ClientIdentifier` (pseudonymized hash of IP + UserAgent) to track clients consistently across logging and rate limiting without storing PII.
+  ```php
+  // Example logic for ClientIdentifier:
+  $fingerprint = hash_hmac(
+      algo: $authConfig->getHashAlgo(),
+      data: $ip . '|' . $userAgent,
+      key: $authConfig->getSecretKey()
+  );
+  ```
 - **Configuration:** Read environment variables and prioritize over dashboard to facilitate CI. (optional)
+- **Decouple from Slim Framework:** Move framework-specific code to its own area (`Http/Infrastructure/Slim`). This makes it easier to update the framework or swap it out entirely without breaking our core logic.
+  - Create a generic base `HttpException`.
+  - Use "adapters" for the `WebApp` and `RouteBootstrapper` so they don't depend directly on Slim.
+- ...

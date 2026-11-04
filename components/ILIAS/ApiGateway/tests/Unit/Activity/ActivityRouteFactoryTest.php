@@ -9,7 +9,7 @@ use ILIAS\ApiGateway\Activity\ActivityNamespace;
 use ILIAS\ApiGateway\Activity\ActivityNamespaceFactory;
 use ILIAS\ApiGateway\Activity\ActivityRoute;
 use ILIAS\ApiGateway\Activity\ActivityRouteFactory;
-use ILIAS\ApiGateway\Middleware\AuthenticationMiddleware;
+use ILIAS\ApiGateway\Application\Middlewares\AuthenticationMiddleware;
 use ILIAS\Component\Activities\Activity;
 use PHPUnit\Framework\TestCase;
 

@@ -69,6 +69,8 @@ class ApiGatewayMetricsCollectedObjective extends Metrics\CollectedObjective
             if ($protocol_enabled) {
 
                 $docs_enabled = (bool) $getProtocolConfigValue($protocol_key, 'docs_enabled', '0');
+                $rate_limit = (int) $getProtocolConfigValue($protocol_key, 'rate_limit_max_quota', '0');
+                $rate_limit = $rate_limit ?: $protocol->getRateLimitMaxQuota();
 
                 $storage->storeConfigBool(
                     "{$protocol_key}_docs_enabled",
@@ -78,6 +80,18 @@ class ApiGatewayMetricsCollectedObjective extends Metrics\CollectedObjective
                         $protocol_name,
                         $docs_enabled ? 'Yes' : 'No',
                     )
+                );
+                $storage->storeConfigText(
+                    "{$protocol_key}_rate_limit_max_quota",
+                    sprintf(
+                        '%s %s',
+                        (string) $rate_limit,
+                        match ($protocol) {
+                            ServiceProtocol::GraphQL => 'cost/min',
+                            default => 'req/min',
+                        },
+                    ),
+                    "{$protocol_name} rate limit max quota",
                 );
             }
         }

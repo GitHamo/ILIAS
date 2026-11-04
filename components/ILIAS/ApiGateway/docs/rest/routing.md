@@ -88,7 +88,13 @@ By doing this, the system automatically creates the endpoint `/myvendor/mymodule
 
 * **Path is Auto-Generated:** The URL path is created automatically from your `Activity`'s class name (e.g., `MyVendor\MyComponent\QueryUserDetailsActivity`).
   * The system extracts the vendor, component, and the activity's core name.
-  * It then cleans up the name by removing prefixes like "Query" or "Get" and suffixes like "Activity".
+  * It then cleans up the name by removing prefixes and suffixes in two steps:
+    1. **Prefix Removal**: If the name starts with "Query" or "Get", that prefix is removed.
+    2. **Suffix Removal**: If the remaining name ends with "Query", that suffix is removed. If it doesn't end with "Query" but ends with "Activity", then "Activity" is removed. This ensures only one suffix is removed.
+  * **Example**: `MyVendor\MyComponent\QueryUserDetailsActivity`
+    1. Prefix "Query" removed -> `UserDetailsActivity`
+    2. Suffix "Activity" removed -> `UserDetails`
+    3. Resulting path: `/myvendor/mycomponent/userdetails`
   * All parts are converted to lowercase and joined with slashes.
   * Additionally, if the `Activity` is an instance of `ObjectActivity`, then `/{id}` will be appended to the generated route path. For example, a `QueryUserActivity` (an `ObjectActivity`) might result in `/myvendor/mymodule/user/{id}`.
 * **Special Rule for Core:** If the `Activity` is part of the core `ILIAS` vendor, the "ilias" part is left out of the URL to keep it shorter (e.g., `ILIAS\User\GetAllUsersActivity` becomes `/user/allusers`).
@@ -124,7 +130,7 @@ Here's an example from the `Component.php` file, which creates the `/ping` endpo
 ```php
 ## Components/Vendor/MyModule/MyModule.php
 
-use ILIAS\ApiGateway\Routes\ApiRoute;
+use ILIAS\ApiGateway\Application\Routes\ApiRoute;
 use ILIAS\ApiGateway\Routing\Route;
 
 $contribute[Route::class] = static fn(): Route =>
