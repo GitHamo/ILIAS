@@ -453,6 +453,11 @@ class ilObjGroupGUI extends ilContainerGUI
      */
     public function viewObject(): void
     {
+        if (strtolower($this->std_request->getBaseClass()) === "iladministrationgui") {
+            parent::viewObject();
+            return;
+        }
+
         ilLearningProgress::_tracProgress(
             $this->user->getId(),
             $this->object->getId(),
@@ -558,6 +563,8 @@ class ilObjGroupGUI extends ilContainerGUI
 
     public function updateGroupTypeObject(): void
     {
+        $this->checkPermission("write");
+
         ilDidacticTemplateUtils::switchTemplate(
             $this->object->getRefId(),
             (int) $_REQUEST['grp_type']
@@ -827,6 +834,13 @@ class ilObjGroupGUI extends ilContainerGUI
      */
     public function saveMapSettingsObject(): void
     {
+        if (
+            !ilMapUtil::isActivated() ||
+            !$this->access->checkAccess("write", "", $this->object->getRefId())
+        ) {
+            return;
+        }
+
         $location = [];
         if ($this->http->wrapper()->post()->has('location')) {
             $custom_transformer = $this->refinery->custom()->transformation(
@@ -977,9 +991,11 @@ class ilObjGroupGUI extends ilContainerGUI
                     $tmp_data['access_time_unix'] = 0;
                 }
             }
-            $tmp_data['prtf'] = [];
+            $tmp_data['prtf_data'] = [];
+            $tmp_data['prtf'] = '';
             if ($do_prtf) {
-                $tmp_data['prtf'] = ($all_prtf[$usr_id] ?? []);
+                $tmp_data['prtf_data'] = ($all_prtf[$usr_id] ?? []);
+                $tmp_data['prtf'] = implode(', ', $all_prtf[$usr_id] ?? []); // just for sorting
             }
             $members[$usr_id] = $tmp_data;
         }

@@ -182,59 +182,23 @@
 					</xsl:call-template>
 				</xsl:attribute>
 			</xsl:if>
+			<!-- CSS text-align wins over a stale HTML align attribute. TinyMCE updates
+			     the style and leaves align behind after fo2xhtml loaded the editor. -->
+			<xsl:variable name="styleAlign" select="normalize-space(substring-before(concat(substring-after(@style, 'text-align:'), ';'), ';'))"/>
 			<xsl:choose>
-				<xsl:when test="@align='left'">
+				<xsl:when test="$styleAlign='left' or $styleAlign='right' or $styleAlign='center' or $styleAlign='justify'">
 					<xsl:attribute name="text-align">
-						<xsl:text>left</xsl:text>
+						<xsl:value-of select="$styleAlign"/>
 					</xsl:attribute>
 				</xsl:when>
-				<xsl:when test="contains(@style, 'text-align') and contains(@style, 'left')">
+				<xsl:when test="@align='left' or @align='right' or @align='center' or @align='justify'">
 					<xsl:attribute name="text-align">
-						<xsl:text>left</xsl:text>
+						<xsl:value-of select="@align"/>
 					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@align='right'">
-					<xsl:attribute name="text-align">
-						<xsl:text>right</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="contains(@style, 'text-align') and contains(@style, 'right')">
-					<xsl:attribute name="text-align">
-						<xsl:text>right</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@align='center'">
-					<xsl:attribute name="text-align">
-						<xsl:text>center</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="contains(@style, 'text-align') and contains(@style, 'center')">
-					<xsl:attribute name="text-align">
-						<xsl:text>center</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@align='justify'">
-					<xsl:attribute name="text-align">
-						<xsl:text>justify</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="contains(@style, 'text-align') and contains(@style, 'justify')">
-					<xsl:attribute name="text-align">
-						<xsl:text>justify</xsl:text>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@class='emptyrow'">
-					<xsl:text disable-output-escaping="yes">&amp;#160;</xsl:text>
 				</xsl:when>
 			</xsl:choose>
-			<xsl:choose>
-				<xsl:when test="not(@class='emptyrow') and not(text()) and count(./node()) = 0">
-					<xsl:text disable-output-escaping="yes">&amp;#160;</xsl:text>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:apply-templates select="node()"/>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:apply-templates select="node()"/>
+			<xsl:call-template name="ensureNonEmptyParagraph"/>
 		</fo:block>
 	</xsl:template>
 
@@ -767,6 +731,16 @@
 	<xsl:template name="element">
 		<xsl:param name="s" />
 		<xsl:value-of select="$s" />
+	</xsl:template>
+
+	<!-- A paragraph without any filled descendant text node still needs a
+	     glyph so FOP keeps the line. TinyMCE empty lines often wrap nothing
+	     in span/strong; those wrappers stay, the block gets the spacer.
+	     ilXlsFoParser::parse also marks bare empty paragraphs as emptyrow. -->
+	<xsl:template name="ensureNonEmptyParagraph">
+		<xsl:if test="@class='emptyrow' or not(normalize-space(.))">
+			<xsl:text disable-output-escaping="yes">&amp;#160;</xsl:text>
+		</xsl:if>
 	</xsl:template>
 
 </xsl:stylesheet>

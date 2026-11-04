@@ -20,6 +20,9 @@ declare(strict_types=1);
 
 namespace ILIAS;
 
+use ILIAS\Language\ComponentTranslation\LanguageFileDirectory;
+use ILIAS\Language\ComponentTranslation\ComponentLanguageFileDirectory;
+
 class Logging implements Component\Component
 {
     public function init(
@@ -32,20 +35,20 @@ class Logging implements Component\Component
         array | \ArrayAccess &$pull,
         array | \ArrayAccess &$internal,
     ): void {
-        /*$define[] = Logging\Logger\LoggerFactoryInterface::class;
+        $define[] = Logging\Logger\LoggerFactoryInterface::class;
         $define[] = Logging\Logger\DefaultConfigLoggerFactoryInterface::class;
         $define[] = Logging\Config\ConfigInterface::class;
 
         $internal[Logging\Config\Basic\ConfigInterface::class] = static fn() =>
             new Logging\Config\Basic\Config(
                 new Logging\Config\Basic\IniReader(
-                    $use[\ilIniFile::class] // TODO change to whatever this is now called
+                    $use[Environment\Configuration\Installation\IliasIni::class]
                 )
             );
         $internal[Logging\Config\ByComponent\ConfigInterface::class] = static fn() =>
             new Logging\Config\ByComponent\Config(
                 new Logging\Config\ByComponent\DBRepository(
-                    $use[\ilDBInterface::class] // TODO change to whatever this is now called
+                    $pull[Database\Connection::class]
                 ),
                 $internal[Logging\Config\Basic\ConfigInterface::class]
             );
@@ -54,7 +57,8 @@ class Logging implements Component\Component
         $internal[Logging\Logger\LazyInternalFactoryInterface::class] = static fn() =>
             new Logging\Logger\LazyInternalFactory(
                 new Logging\Logger\Monolog\Factory(),
-                $internal[Logging\Config\Basic\ConfigInterface::class]
+                $internal[Logging\Config\Basic\ConfigInterface::class],
+                $seek[Logging\Logger\Monolog\Handler\ProviderInterface::class]
             );
 
         $implement[Logging\Logger\LoggerFactoryInterface::class] = static fn() =>
@@ -73,11 +77,24 @@ class Logging implements Component\Component
             new Logging\Config\Config(
                 $internal[Logging\Config\Basic\ConfigInterface::class],
                 $internal[Logging\Config\ByComponent\ConfigInterface::class]
-            );*/
+            );
+
+        $contribute[Logging\Logger\Monolog\Handler\ProviderInterface::class] = static fn() =>
+        new Logging\Logger\Monolog\Handler\StandardFileHandlerProvider(
+            $internal[Logging\Config\Basic\ConfigInterface::class]
+        );
 
         $contribute[Setup\Agent::class] = static fn() =>
             new Logging\Setup\Agent(
                 $pull[Refinery\Factory::class]
             );
+        $contribute[LanguageFileDirectory::class] = fn() => new ComponentLanguageFileDirectory(
+            $this,
+            'logging'
+        );
+        $contribute[LanguageFileDirectory::class] = fn() => new ComponentLanguageFileDirectory(
+            $this,
+            'log'
+        );
     }
 }

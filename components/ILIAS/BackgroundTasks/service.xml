@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<service xmlns="http://www.w3.org" version="$Id$"
+	id="bgtk">
+	<baseclasses>
+		<baseclass name="ILIAS\BackgroundTasks\Implementation\UI\ControllerGUI" dir="src/Implementation/UI" />
+	</baseclasses>
+	<gsproviders>
+		<gsprovider class_name="ilBTGSProvider" purpose="meta_bar_static"/>
+	</gsproviders>
+
+	<crons>
+		<cron id="background_task_garbage_collection" class="ilBackgroundTaskGarbageCollection" />
+	</crons>
+	<logging />
+</service>

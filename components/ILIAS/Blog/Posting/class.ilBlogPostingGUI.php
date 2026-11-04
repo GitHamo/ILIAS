@@ -47,6 +47,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     protected ilToolbarGUI $toolbar;
     protected int $node_id;
     protected PostingManager $posting_manager;
+    protected \ILIAS\COPage\Page\PageManagerInterface $page_manager;
     protected ?object $access_handler = null;
     protected bool $enable_public_notes = false;
     protected bool $may_contribute = false;
@@ -115,6 +116,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         $this->notes = $DIC->notes();
         $this->profile_gui = $DIC->blog()->internal()->gui()->profile();
         $this->posting_manager = $DIC->blog()->internal()->domain()->posting();
+        $this->page_manager = $this->domain->pageManager();
         $this->toolbar = $DIC->toolbar();
     }
 
@@ -217,7 +219,9 @@ class ilBlogPostingGUI extends ilPageObjectGUI
                 false,
                 $this->enable_public_notes,
                 $may_delete_comments,
-                $callback
+                $callback,
+                false,
+                !$this->isInWorkspace()
             ));
         }
         // permanent link
@@ -316,7 +320,7 @@ class ilBlogPostingGUI extends ilPageObjectGUI
                 $authors[] = $this->profile_gui->getNamePresentation($author_id);
             }
 
-            foreach (ilBlogPosting::getPageContributors("blp", $this->getBlogPosting()->getId()) as $editor) {
+            foreach ($this->page_manager->getPageContributors("blp", $this->getBlogPosting()->getId()) as $editor) {
                 if ($editor["user_id"] != $author_id) {
                     $authors[] = $this->profile_gui->getNamePresentation($editor["user_id"]);
                 }
@@ -869,7 +873,8 @@ class ilBlogPostingGUI extends ilPageObjectGUI
             $this->enable_public_notes,
             false,
             null,
-            true
+            true,
+            !$this->isInWorkspace()
         );
     }
 

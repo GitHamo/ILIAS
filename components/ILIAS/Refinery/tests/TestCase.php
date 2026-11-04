@@ -22,26 +22,26 @@ namespace ILIAS\Tests\Refinery;
 
 use ilGlobalTemplateInterface;
 use ILIAS\Language\Language;
+use ILIAS\Language\LanguageIdentifier;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 class ilLanguageMock implements Language
 {
     /** @var string[] */
     public array $requested = [];
-    public string $lang_module = 'common';
     public string $lang_key = 'en';
 
     public function __construct()
     {
     }
 
-    public function txt(string $a_topic, string $a_default_lang_fallback_mod = ''): string
+    public function txt(string|LanguageIdentifier $a_topic, ?int $n = null): string
     {
         $this->requested[] = $a_topic;
-        return $a_topic;
+        return \is_string($a_topic) ? $a_topic : (string) $a_topic->value;
     }
 
-    public function toJS($a_lang_key, ?ilGlobalTemplateInterface $a_tpl = null): void
+    public function toJS($key, ?ilGlobalTemplateInterface $a_tpl = null): void
     {
     }
 

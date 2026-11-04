@@ -377,7 +377,12 @@ class ilExSubmissionObjectGUI extends ilExSubmissionBaseGUI
         $this->tpl->setOnScreenMessage('success', $this->lng->txt("exc_blog_created"), true);
         $this->ctrl->setParameterByClass(ilObjBlogGUI::class, "wsp_id", $node_id);
         $this->ctrl->redirectByClass(
-            [ilDashboardGUI::class, ilPersonalWorkspaceGUI::class, ilObjBlogGUI::class],
+            [
+                ilDashboardGUI::class,
+                ilPersonalWorkspaceGUI::class,
+                ilObjBlogGUI::class,
+                \ILIAS\Blog\Editing\EditingGUI::class,
+            ],
             ""
         );
     }
@@ -627,7 +632,7 @@ class ilExSubmissionObjectGUI extends ilExSubmissionBaseGUI
 
         $conf = new ilConfirmationGUI();
         $conf->setFormAction($this->ctrl->getFormAction($this, "unlinkPortfolio"));
-        $conf->setHeaderText($this->lng->txt("exc_sure_unlink_portfolio", "sure_unlink_portfolio"));
+        $conf->setHeaderText($this->lng->txt("exc_sure_unlink_portfolio"));
         $conf->setConfirm($this->lng->txt("confirm"), "unlinkPortfolio");
         $conf->setCancel($this->lng->txt("cancel"), "returnToParent");
 

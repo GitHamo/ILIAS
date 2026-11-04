@@ -22,6 +22,7 @@ use ILIAS\Data;
 use ILIAS\HTTP\Wrapper\ArrayBasedRequestWrapper;
 use ILIAS\User\Profile\Profile;
 use ILIAS\User\Profile\Data as ProfileData;
+use ILIAS\UI\Component\Input\Container\Form\Standard as StandardForm;
 
 /**
  * Class ilObjLearningSequenceGUI
@@ -35,6 +36,7 @@ use ILIAS\User\Profile\Data as ProfileData;
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilExportGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjLearningSequenceSettingsGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjLearningSequenceContentGUI
+ * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjLearningSequenceConditionsGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjLearningSequenceLearnerGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjLearningSequenceLPPollingGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilLearningSequenceMembershipGUI
@@ -51,11 +53,10 @@ use ILIAS\User\Profile\Data as ProfileData;
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjSurveyGUI
  * @ilCtrl_Calls      ilObjLearningSequenceGUI: ilObjFileUploadHandlerGUI
  * @ilCtrl_Calls ilObjLearningSequenceGUI: ilObjLearningSequenceEditIntroGUI, ilObjLearningSequenceEditExtroGUI
- * @ilCtrl_Calls ilObjLearningSequenceGUI: ilObjectMetaDataGUI, ilTaxonomySettingsGUI, ilObjTaxonomyGUI
+ * @ilCtrl_Calls ilObjLearningSequenceGUI: ilObjectMetaDataGUI
  */
-class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClassInterface, \ILIAS\Taxonomy\Settings\ModifierGUIInterface
+class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClassInterface
 {
-    protected \ILIAS\Taxonomy\Service $taxonomy;
     public const CMD_VIEW = "view";
     public const CMD_LEARNER_VIEW = "learnerView";
     public const CMD_CONTENT = "manageContent";
@@ -79,6 +80,7 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
     public const CMD_LINK = "link";
     public const CMD_CANCEL_LINK = "cancelMoveLink";
     public const CMD_CUT = "cut";
+    public const CMD_COPY = "copy";
     public const CMD_CANCEL_CUT = "cancelCut";
     public const CMD_CUT_SHOWTREE = "showPasteTree";
     public const CMD_CUT_CLIPBOARD = "keepObjectsInClipboard";
@@ -120,6 +122,7 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
     protected ILIAS\UI\Renderer $ui_renderer;
     protected Data\Factory $data_factory;
     protected ILIAS\HTTP\Wrapper\RequestWrapper $request_wrapper;
+    protected ArrayBasedRequestWrapper $query_wrapper;
     protected ArrayBasedRequestWrapper $post_wrapper;
     protected ILIAS\Refinery\Factory $refinery;
     protected Psr\Http\Message\ServerRequestInterface $request;
@@ -230,7 +233,6 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         $this->post_wrapper = $DIC->http()->wrapper()->post();
         $this->refinery = $DIC->refinery();
         $this->content_style = $DIC->contentStyle();
-        $this->taxonomy = $DIC->taxonomy();
 
         $this->help->setScreenIdComponent($this->type);
         $this->lng->loadLanguageModule($this->type);
@@ -257,6 +259,8 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         $cmd = $this->ctrl->getCmd();
         $tpl = $this->tpl;
 
+        $this->redirectForeignItemToRepository($next_class, $cmd);
+
         parent::prepareOutput();
         $this->addToNavigationHistory();
         //showRepTree is from containerGUI;
@@ -269,6 +273,7 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         );
 
         $tpl->setPermanentLink("lso", $this->ref_id);
+        $this->guardForwardAccess($next_class);
 
         switch ($next_class) {
             case "ilcommonactiondispatchergui":
@@ -284,35 +289,19 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
                 $this->ctrl->forwardCommand($this->getGUIPermissions());
                 break;
             case "ilobjlearningsequencesettingsgui":
-
-                if (!$this->checkAccess("write", '', $this->ref_id)) {
-                    $this->tpl->setOnScreenMessage('failure', sprintf(
-                        $this->lng->txt('msg_no_perm_read_item'),
-                        $this->object->getTitle()
-                    ), true);
-
-                    $this->ctrl->redirect($this, 'view');
-                }
-
                 $this->tabs->activateTab(self::TAB_SETTINGS);
                 $this->setEditTabs();
                 $this->ctrl->forwardCommand($this->getGUISettings());
                 break;
             case "ilobjlearningsequencecontentgui":
-
-                if (!$this->checkAccess("read", '', $this->ref_id)) {
-                    $this->tpl->setOnScreenMessage('failure', sprintf(
-                        $this->lng->txt('msg_no_perm_read_item'),
-                        $this->object->getTitle()
-                    ), true);
-
-                    $this->ctrl->redirect($this, 'view');
-                }
-
-
                 $this->tabs->activateTab(self::TAB_CONTENT_MAIN);
                 $this->addSubTabsForContent(self::TAB_MANAGE);
                 $this->ctrl->forwardCommand($this->getGUIManageContent());
+                break;
+            case "ilobjlearningsequenceconditionsgui":
+                $this->tabs->activateTab(self::TAB_CONTENT_MAIN);
+                $this->addSubTabsForContent(self::TAB_MANAGE);
+                $this->ctrl->forwardCommand($this->getGUIConditions());
                 break;
             case "ilobjlearningsequencelearnergui":
                 $this->addContentStyleCss();
@@ -339,17 +328,6 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
                 $gui->setType('lso');
                 $this->ctrl->forwardCommand($gui);
                 break;
-            case 'ilobjindividualassessmentgui':
-                $struct = ['ilrepositorygui', 'ilobjindividualassessmentgui'];
-                if ($cmd === 'edit') {
-                    $struct[] = 'ilindividualassessmentsettingsgui';
-                }
-                $this->ctrl->redirectByClass($struct, $cmd);
-                // no break
-            case 'ilobjtestgui':
-                $struct = ['ilrepositorygui', 'ilobjtestgui'];
-                $this->ctrl->redirectByClass($struct, $cmd);
-                // no break
             case 'ilobjlearningsequencelppollinggui':
                 $gui = $this->object->getLocalDI()["gui.learner.lp"];
                 $this->ctrl->forwardCommand($gui);
@@ -358,18 +336,6 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
                 $this->tabs->activateTab("meta_data");
                 $mdgui = new ilObjectMetaDataGUI($this->object);
                 $this->ctrl->forwardCommand($mdgui);
-                break;
-            case "iltaxonomysettingsgui":
-            case "ilobjtaxonomygui":
-                $this->tabs->activateTab(self::TAB_SETTINGS);
-                $this->setEditTabs("taxonomy");
-                $tax_gui = $this->taxonomy->gui()->getSettingsGUI(
-                    $this->object->getId(),
-                    $this->lng->txt("cntr_tax_settings_info"),
-                    true,
-                    $this
-                );
-                $this->ctrl->forwardCommand($tax_gui);
                 break;
             case "ilobjlearningsequenceeditintrogui":
                 $which_page = LSOPageType::INTRO;
@@ -452,6 +418,9 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
                         break;
                     case self::CMD_CUT:
                         $this->cutObject();
+                        break;
+                    case self::CMD_COPY:
+                        $this->copyObject();
                         break;
                     case self::CMD_CUT_SHOWTREE:
                         $this->showPasteTreeObject();
@@ -542,7 +511,23 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
     {
         $info = new ilInfoScreenGUI($this);
         $info->addMetaDataSections($this->object->getId(), 0, 'lso');
+        $this->addAdvancedMetaDataToInfo($info);
+
         return $info;
+    }
+
+    protected function addAdvancedMetaDataToInfo(ilInfoScreenGUI $info): void
+    {
+        $record_gui = new ilAdvancedMDRecordGUI(
+            ilAdvancedMDRecordGUI::MODE_INFO,
+            'lso',
+            $this->object->getId(),
+            '',
+            0,
+            $this->call_by_reference
+        );
+        $record_gui->setInfoObject($info);
+        $record_gui->parse();
     }
 
     protected function getGUIPermissions(): ilPermissionGUI
@@ -591,10 +576,32 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
             $this->access,
             new ilConfirmationGUI(),
             new LSItemOnlineStatus(),
+            $this->request_wrapper,
             $this->post_wrapper,
             $this->refinery,
             $this->ui_factory,
-            $this->ui_renderer
+            $this->ui_renderer,
+            $this->request,
+            $this->refinery,
+        );
+    }
+
+    protected function getGUIConditions(): ilObjLearningSequenceConditionsGUI
+    {
+        return new ilObjLearningSequenceConditionsGUI(
+            $this,
+            $this->ctrl,
+            $this->tpl,
+            $this->lng,
+            $this->access,
+            $this->request_wrapper,
+            $this->post_wrapper,
+            $this->ui_factory,
+            $this->ui_renderer,
+            $this->request,
+            $this->refinery,
+            $this->object->getDI()["conditions.factory"],
+            $this->object->getDI()["conditions.handler"],
         );
     }
 
@@ -638,6 +645,39 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         return $form;
     }
 
+    protected function initCreateForm(string $new_type): StandardForm|ilPropertyFormGUI|array
+    {
+        $form = parent::initCreateForm($new_type);
+
+        if ($form instanceof StandardForm) {
+            global $DIC;
+            $if = $DIC->ui()->factory()->input();
+            $lso_mode = $if->field()->radio($this->lng->txt('lso_mode'), $this->lng->txt('lso_mode_info'))
+                ->withOption(
+                    (string) ilLearningSequenceSettings::MODE_LINEAR,
+                    $this->lng->txt('lso_mode_linear'),
+                    $this->lng->txt('lso_mode_linear_info')
+                )
+                ->withOption(
+                    (string) ilLearningSequenceSettings::MODE_ADAPTIVE,
+                    $this->lng->txt('lso_mode_adaptive'),
+                    $this->lng->txt('lso_mode_adaptive_info')
+                )
+                ->withByline($this->lng->txt('lso_mode_byline'))
+                ->withValue((string) ilLearningSequenceSettings::MODE_LINEAR);
+
+            $inputs = $form->getInputs();
+            $inputs[ilObjLearningSequenceSettingsGUI::PROP_LSO_MODE] = $lso_mode;
+
+            return $DIC->ui()->factory()->input()->container()->form()->standard(
+                $form->getPostURL(),
+                $inputs
+            );
+        }
+
+        return $form;
+    }
+
     protected function create(): void
     {
         parent::createObject();
@@ -650,6 +690,17 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
 
     protected function afterSave(ilObject $new_object): void
     {
+        global $DIC;
+        $form = $this->initCreateForm('lso')->withRequest($DIC->http()->request());
+        $data = $form->getData();
+
+        if (isset($data[ilObjLearningSequenceSettingsGUI::PROP_LSO_MODE])) {
+            $lso = ilObjLearningSequence::getInstanceByRefId($new_object->getRefId());
+            $settings = $lso->getLSSettings();
+            $settings = $settings->withLSOMod((int) $data[ilObjLearningSequenceSettingsGUI::PROP_LSO_MODE]);
+            $lso->updateSettings($settings);
+        }
+
         $participant = new ilLearningSequenceParticipants(
             $new_object->getId(),
             $this->log,
@@ -695,7 +746,6 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
     {
         $subs = [
             ilObjectServiceSettingsGUI::CUSTOM_METADATA,
-            ilObjectServiceSettingsGUI::TAXONOMIES,
             ilObjectServiceSettingsGUI::CALENDAR_CONFIGURATION,
             ilObjectServiceSettingsGUI::TAG_CLOUD,
             ilObjectServiceSettingsGUI::BADGES,
@@ -730,14 +780,6 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
             $this->lng->txt("general"),
             $this->ctrl->getLinkTargetByClass("ilobjlearningsequencesettingsgui", "settings")
         );
-
-        if (ilContainer::_lookupContainerSetting(
-            $this->object->getId(),
-            ilObjectServiceSettingsGUI::TAXONOMIES,
-            '0'
-        )) {
-            $this->taxonomy->gui()->addSettingsSubTab($this->object->getId());
-        }
 
         $this->tabs->activateTab(self::TAB_SETTINGS);
         $this->tabs->activateSubTab($active_tab);
@@ -805,7 +847,7 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
             $this->tabs->addTab(
                 self::TAB_LP,
                 $this->lng->txt(self::TAB_LP),
-                $this->ctrl->getLinkTargetByClass(array('ilobjlearningsequencegui', 'illearningprogressgui'), '')
+                $this->ctrl->getLinkTargetByClass(ilLearningProgressGUI::class, '')
             );
         }
 
@@ -861,19 +903,69 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         $this->tabs->activateSubTab($active);
     }
 
-    public function getProperties(int $tax_id): array
-    {
-        return [];
-    }
-
-    public function getActions(int $tax_id): array
-    {
-        return [];
-    }
-
     protected function checkAccess(string $which): bool
     {
         return $this->access->checkAccess($which, "", $this->ref_id);
+    }
+
+    /**
+     * Links to items of the sequence may be routed through this class, while ref_id
+     * already points to the item. Redirect before any output is prepared, since
+     * $this->object is not a learning sequence then.
+     * Handles the @ilCtrl_Calls targets ilObjIndividualAssessmentGUI and ilObjTestGUI,
+     * which therefore have no case in executeCommand().
+     */
+    protected function redirectForeignItemToRepository(?string $next_class, ?string $cmd): void
+    {
+        $struct = match ($next_class) {
+            'ilobjindividualassessmentgui' => $cmd === 'edit'
+                ? ['ilrepositorygui', 'ilobjindividualassessmentgui', 'ilindividualassessmentsettingsgui']
+                : ['ilrepositorygui', 'ilobjindividualassessmentgui'],
+            'ilobjtestgui' => ['ilrepositorygui', 'ilobjtestgui'],
+            default => null,
+        };
+        if ($struct !== null) {
+            $this->ctrl->redirectByClass($struct, $cmd);
+        }
+    }
+
+    protected function guardForwardAccess(string|false $next_class): void
+    {
+        if ($next_class === false) {
+            return;
+        }
+
+        switch ($next_class) {
+            case 'ilpermissiongui':
+                $this->assertAccessOrRedirect('edit_permission');
+                break;
+
+            case 'ilobjlearningsequencesettingsgui':
+            case 'ilobjlearningsequencecontentgui':
+            case 'ilobjlearningsequenceconditionsgui':
+            case 'ilexportgui':
+            case 'ilobjectmetadatagui':
+            case 'iltaxonomysettingsgui':
+            case 'ilobjtaxonomygui':
+            case 'ilobjlearningsequenceeditintrogui':
+            case 'ilobjlearningsequenceeditextrogui':
+                $this->assertAccessOrRedirect('write');
+                break;
+        }
+    }
+
+    protected function assertAccessOrRedirect(string $permission): void
+    {
+        if ($this->checkAccess($permission)) {
+            return;
+        }
+
+        $message = $permission === 'edit_permission'
+            ? $this->lng->txt('no_permission')
+            : $this->lng->txt('msg_no_perm_write');
+
+        $this->tpl->setOnScreenMessage('failure', $message, true);
+        $this->ctrl->redirect($this, self::CMD_VIEW);
     }
 
     protected function checkLPAccess(): bool
@@ -888,14 +980,15 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
         return ilLearningProgressAccess::checkAccess($ref_id, $is_participant);
     }
 
+    /**
+     * Build the link target relative to the current ilCtrl context. An absolute
+     * class path starting with ilObjLearningSequenceGUI would make it the
+     * baseClass and thus drop the repository context (e.g. the member view
+     * mode info is only provided in the repository context).
+     */
     protected function getLinkTarget(string $cmd): string
     {
-        $class = $this->getClassForTabs($cmd);
-        $class_path = [
-            strtolower('ilObjLearningSequenceGUI'),
-            $class
-        ];
-        return $this->ctrl->getLinkTargetByClass($class_path, $cmd);
+        return $this->ctrl->getLinkTargetByClass($this->getClassForTabs($cmd), $cmd);
     }
 
     protected function getClassForTabs(string $cmd): string
@@ -1001,7 +1094,7 @@ class ilObjLearningSequenceGUI extends ilContainerGUI implements ilCtrlBaseClass
                 $this->ref_id
             )
         );
-        $gui->render();
+        $gui->renderToolbarAction();
         $this->ctrl->clearParametersByClass(ilRepositoryGUI::class);
     }
 

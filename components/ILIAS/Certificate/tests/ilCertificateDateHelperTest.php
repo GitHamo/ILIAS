@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Stub;
 
 class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
 {
@@ -36,19 +37,30 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
 
         ilTimeZone::_setDefaultTimeZone(self::DEFAULT_TIME_ZONE);
 
-        $logger = $this->getMockBuilder(ilLogger::class)
-                       ->disableOriginalConstructor()
-                       ->getMock();
+        /** @var ilLogger&Stub $logger */
+        $logger = $this->createStub(ilLogger::class);
 
-        $logger_factory = $this->getMockBuilder(ilLoggerFactory::class)
+        /** @var ilLoggerFactory&Stub $logger_factory */
+        $logger_factory = $this->getStubBuilder(ilLoggerFactory::class)
                                ->disableOriginalConstructor()
                                ->onlyMethods(['getComponentLogger'])
-                               ->getMock();
+                               ->getStub();
         $logger_factory->method('getComponentLogger')->willReturn($logger);
         $this->setGlobalVariable('ilLoggerFactory', $logger_factory);
         $this->setGlobalVariable('lng', $this->getSystemLanguageMock());
         $this->setGlobalVariable('ilUser', $this->getUserMock());
-        $this->setGlobalVariable('ilIliasIniFile', $this->createMock(ilIniFile::class));
+        $this->setGlobalVariable(
+            'logging.factory',
+            $this->createStub(ILIAS\Logging\Logger\LoggerFactoryInterface::class)
+        );
+        $this->setGlobalVariable(
+            'logging.defaultConfigFactory',
+            $this->createStub(ILIAS\Logging\Logger\DefaultConfigLoggerFactoryInterface::class)
+        );
+        $this->setGlobalVariable(
+            'logging.config',
+            $this->createStub(ILIAS\Logging\Config\ConfigInterface::class)
+        );
         $this->current_time = time();
     }
 
@@ -259,12 +271,13 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
         $this->assertEquals('1. Mai 2001, 03:30', $helper->formatDateTime('2001-05-01 01:30:59', $this->getUserMock()));
     }
 
-    private function getUserMock(): ilObjUser
+    private function getUserMock(): ilObjUser&Stub
     {
-        $user = $this->getMockBuilder(ilObjUser::class)
+        /** @var ilObjUser&Stub $user */
+        $user = $this->getStubBuilder(ilObjUser::class)
                      ->disableOriginalConstructor()
                      ->onlyMethods(['getTimeFormat', 'getLanguage', 'getTimeZone'])
-                     ->getMock();
+                     ->getStub();
         $user->method('getTimeFormat')->willReturn((string) ilCalendarSettings::TIME_FORMAT_24);
         $user->method('getLanguage')->willReturn('de');
         $user->method('getTimeZone')->willReturn(self::USER_TIME_ZONE);
@@ -272,12 +285,13 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
         return $user;
     }
 
-    private function getSystemLanguageMock(): ilLanguage
+    private function getSystemLanguageMock(): ilLanguage&Stub
     {
-        $lng = $this->getMockBuilder(ilLanguage::class)
+        /** @var ilLanguage&Stub $lng */
+        $lng = $this->getStubBuilder(ilLanguage::class)
                     ->onlyMethods(['txt', 'loadLanguageModule'])
                     ->disableOriginalConstructor()
-                    ->getMock();
+                    ->getStub();
         $lng->method('txt')->willReturnCallback(function (string $topic): string {
             return match ($topic) {
                 'month_01_short' => 'Jan',
@@ -313,44 +327,20 @@ class ilCertificateDateHelperTest extends ilCertificateBaseTestCase
             define('ILIAS_ABSOLUTE_PATH', dirname(__FILE__, 5));
         }
 
-        $ilClientIniFile = $this->getMockBuilder(ilIniFile::class)
-                                ->disableOriginalConstructor()
-                                ->getMock();
+        /** @var ilIniFile&Stub $ilClientIniFile */
+        $ilClientIniFile = $this->createStub(ilIniFile::class);
         $this->setGlobalVariable('ilClientIniFile', $ilClientIniFile);
 
-        $ilDB = $this->createMock(ilDBInterface::class);
-        $ilDB->method('query')->willReturnCallback(function ($query): ilDBStatement {
-            $statement = $this->createMock(ilDBStatement::class);
-
-            if (str_contains($query, 'SELECT * FROM lng_modules')) {
-                $statement->method('numRows')->willReturn(1);
-                $statement->method('fetchRow')->willReturn([
-                    'lang_array' => serialize([
-                        'month_01_short' => 'Jan',
-                        'month_01_long' => 'Januar',
-                        'month_02_short' => 'Feb',
-                        'month_03_short' => 'Mär',
-                        'month_04_short' => 'Apr',
-                        'month_05_short' => 'Mai',
-                        'month_06_short' => 'Jun',
-                        'month_07_short' => 'Jul',
-                        'month_08_short' => 'Aug',
-                        'month_09_short' => 'Sep',
-                        'month_10_short' => 'Okt',
-                        'month_11_short' => 'Nov',
-                        'month_12_short' => 'Dez',
-                        'no_date' => 'Kein Datum',
-                        'today' => 'Heute',
-                        'yesterday' => 'Gestern',
-                        'tomorrow' => 'Morgen'
-                    ]),
-                ]);
-            } else {
-                $statement->method('numRows')->willReturn(0);
-                $statement->method('fetchRow')->willReturn(false);
-            }
-
-            return $statement;
+        // ilDatePresentation builds its own ilLanguage, which serves the shipped build only for installed languages
+        $installed = [['obj_id' => 1, 'title' => 'de', 'description' => 'installed']];
+        /** @var ilDBInterface&Stub $ilDB */
+        $ilDB = $this->createStub(ilDBInterface::class);
+        $ilDB->method('query')->willReturn($this->createStub(ilDBStatement::class));
+        $ilDB->method('numRows')->willReturnCallback(static function () use (&$installed): int {
+            return count($installed);
+        });
+        $ilDB->method('fetchAssoc')->willReturnCallback(static function () use (&$installed): ?array {
+            return array_shift($installed);
         });
 
         $this->setGlobalVariable('ilDB', $ilDB);

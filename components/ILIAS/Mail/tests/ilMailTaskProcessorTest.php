@@ -21,30 +21,36 @@ declare(strict_types=1);
 use ILIAS\BackgroundTasks\Implementation\TaskManager\BasicTaskManager;
 use ILIAS\BackgroundTasks\Task\TaskFactory;
 use ILIAS\DI\Container;
+use ILIAS\Mail\Attachments\MailAttachments;
+use PHPUnit\Framework\MockObject\Stub;
+use ILIAS\Mail\Object\MailPayloadEncoder;
 
 class ilMailTaskProcessorTest extends ilMailBaseTestCase
 {
     protected const int SOME_USER_ID = 113;
 
-    private ilLanguage $language_mock;
-    private Container $dic_mock;
-    private ilLogger $logger_mock;
+    private ilLanguage&Stub $language_mock;
+    private Container&Stub $dic_mock;
+    private ilLogger&Stub $logger_mock;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->language_mock = $this->getMockBuilder(ilLanguage::class)
-                                    ->disableOriginalConstructor()
-                                    ->getMock();
+        $this->language_mock = $this
+            ->getStubBuilder(ilLanguage::class)
+            ->disableOriginalConstructor()
+            ->getStub();
 
-        $this->dic_mock = $this->getMockBuilder(Container::class)
-                               ->disableOriginalConstructor()
-                               ->getMock();
+        $this->dic_mock = $this
+            ->getStubBuilder(Container::class)
+            ->disableOriginalConstructor()
+            ->getStub();
 
-        $this->logger_mock = $this->getMockBuilder(ilLogger::class)
-                                  ->disableOriginalConstructor()
-                                  ->getMock();
+        $this->logger_mock = $this
+            ->getStubBuilder(ilLogger::class)
+            ->disableOriginalConstructor()
+            ->getStub();
     }
 
     public function testMailValueObjectCannotBeCreatedWithUnsupportedSubjectLength(): void
@@ -58,7 +64,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mollis posuere tincidunt. Phasellus et euismod ligula. Suspendisse dignissim eget dui nec imperdiet. Donec in pretium tellus. Maecenas lacinia eleifend erat ut euismod. Aenean eu malesuada est.',
             'Dear Steve, great!',
-            []
+            MailAttachments::empty()
         );
     }
 
@@ -73,14 +79,15 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             ->expects($this->once())
             ->method('run');
 
-        $task_factory = $this->getMockBuilder(ILIAS\BackgroundTasks\Task\TaskFactory::class)
+        $task_factory = $this->getMockBuilder(TaskFactory::class)
             ->onlyMethods(['createTask'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $background_task = $this->getMockBuilder(ilMailDeliveryJob::class)
+        /** @var ilMailDeliveryJob&Stub $background_task */
+        $background_task = $this->getStubBuilder(ilMailDeliveryJob::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getStub();
 
         $background_task->method('unfoldTask')
             ->willReturn([]);
@@ -98,7 +105,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             $this->language_mock,
             $this->logger_mock,
             $this->dic_mock,
-            $this->createMock(\ILIAS\Mail\Object\MailPayloadEncoder::class)
+            $this->createStub(MailPayloadEncoder::class)
         );
 
         $value_object = new ilMailValueObject(
@@ -108,7 +115,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'That is awesome!',
             'Dear Steve, great!',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects = [
@@ -143,9 +150,10 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $background_task = $this->getMockBuilder(ilMailDeliveryJob::class)
+        /** @var ilMailDeliveryJob&Stub $background_task */
+        $background_task = $this->getStubBuilder(ilMailDeliveryJob::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getStub();
 
         $background_task
             ->method('unfoldTask')
@@ -163,7 +171,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             $this->language_mock,
             $this->logger_mock,
             $this->dic_mock,
-            $this->createMock(\ILIAS\Mail\Object\MailPayloadEncoder::class)
+            $this->createStub(MailPayloadEncoder::class)
         );
 
         $value_objects = [];
@@ -175,7 +183,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'That is awesome!',
             'Dear Steve, great!',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects[] = new ilMailValueObject(
@@ -185,7 +193,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'Greate',
             'Steve, Steve, Steve. Wait that is not Steve',
-            []
+            MailAttachments::empty()
         );
 
         $usr_id = 100;
@@ -216,9 +224,10 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $background_task = $this->getMockBuilder(ilMailDeliveryJob::class)
+        /** @var ilMailDeliveryJob&Stub $background_task */
+        $background_task = $this->getStubBuilder(ilMailDeliveryJob::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getStub();
 
         $background_task
             ->method('unfoldTask')
@@ -236,7 +245,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             $this->language_mock,
             $this->logger_mock,
             $this->dic_mock,
-            $this->createMock(\ILIAS\Mail\Object\MailPayloadEncoder::class)
+            $this->createStub(MailPayloadEncoder::class)
         );
 
         $value_objects = [];
@@ -248,7 +257,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'That is awesome!',
             'Dear Steve, great!',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects[] = new ilMailValueObject(
@@ -258,7 +267,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'Greate',
             'Steve, Steve, Steve. Wait that is not Steve',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects[] = new ilMailValueObject(
@@ -268,7 +277,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'That is awesome!',
             'Hey Alan! Alan! Alan!',
-            []
+            MailAttachments::empty()
         );
 
         $usr_id = 100;
@@ -302,9 +311,10 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $background_task = $this->getMockBuilder(ilMailDeliveryJob::class)
+        /** @var ilMailDeliveryJob&Stub $background_task */
+        $background_task = $this->getStubBuilder(ilMailDeliveryJob::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getStub();
 
         $background_task
             ->method('unfoldTask')
@@ -322,7 +332,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             $this->language_mock,
             $this->logger_mock,
             $this->dic_mock,
-            $this->createMock(\ILIAS\Mail\Object\MailPayloadEncoder::class)
+            $this->createStub(MailPayloadEncoder::class)
         );
 
         $value_objects = [];
@@ -334,7 +344,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'That is awesome!',
             'Dear Steve, great!',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects[] = new ilMailValueObject(
@@ -344,7 +354,7 @@ class ilMailTaskProcessorTest extends ilMailBaseTestCase
             '',
             'Greate',
             'Steve, Steve, Steve. Wait that is not Steve',
-            []
+            MailAttachments::empty()
         );
 
         $value_objects[] = 'This should fail';

@@ -18,6 +18,8 @@
 
 declare(strict_types=1);
 
+use ILIAS\Logging\Logger\LoggerInterface;
+
 /**
  * Base class for nested set path based trees
  * @author  Stefan Meyer <meyer@leifos.com>
@@ -26,18 +28,11 @@ declare(strict_types=1);
  */
 class ilNestedSetTree implements ilTreeImplementation
 {
-    protected ilTree $tree;
-    protected ilDBInterface $db;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ilTree $a_tree)
-    {
-        global $DIC;
-
-        $this->tree = $a_tree;
-        $this->db = $DIC->database();
+    public function __construct(
+        protected ilTree $tree,
+        protected ilDBInterface $db,
+        protected LoggerInterface $logger
+    ) {
     }
 
     protected function getTree(): \ilTree
@@ -490,7 +485,7 @@ class ilNestedSetTree implements ilTreeImplementation
             $res = $this->db->query($query);
             $node = $res->fetchRow(ilDBConstants::FETCHMODE_ASSOC);
 
-            if($node === null) {
+            if ($node === null) {
                 return; //Nothing to delete. $node does not exists
             }
 
@@ -974,7 +969,7 @@ class ilNestedSetTree implements ilTreeImplementation
      */
     public function validateParentRelations(): array
     {
-        $query = 'select ' . $this->getTree()->getTreePk() .', child from ' . $this->getTree()->getTreeTable() . ' child where not exists ' .
+        $query = 'select ' . $this->getTree()->getTreePk() . ', child from ' . $this->getTree()->getTreeTable() . ' child where not exists ' .
             '( ' .
             'select child from ' . $this->getTree()->getTreeTable() . ' parent where child.parent = parent.child and (parent.lft < child.lft) and (parent.rgt > child.rgt) ' .
             ')' .
@@ -1110,7 +1105,7 @@ class ilNestedSetTree implements ilTreeImplementation
             $query = 'SELECT * FROM ' . $this->getTree()->getTreeTable() . ' ' .
                 $this->getTree()->buildJoin() .
                 'WHERE lft < %s ' .
-                'AND ' . $this->getTree()->getObjectDataTable(). '.type = %s ' .
+                'AND ' . $this->getTree()->getObjectDataTable() . '.type = %s ' .
                 'AND ' . $this->getTree()->getTreeTable() . '.' . $this->getTree()->getTreePk() . ' = %s ' .
                 'ORDER BY lft DESC';
             $this->db->setLimit(1, 0);

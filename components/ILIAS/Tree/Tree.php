@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace ILIAS;
 
+use ILIAS\Tree\TreeBuilder;
+
 class Tree implements Component\Component
 {
     public function init(
@@ -32,6 +34,9 @@ class Tree implements Component\Component
         array | \ArrayAccess &$pull,
         array | \ArrayAccess &$internal,
     ): void {
+        $provide[\ILIAS\Tree\TreeBuilder::class] = static fn() =>
+            (new TreeBuilder(0))->forMainTree();
+
         $contribute[\ILIAS\Setup\Agent::class] = static fn() =>
             new \ilTreeSetupAgent(
                 $pull[\ILIAS\Refinery\Factory::class]

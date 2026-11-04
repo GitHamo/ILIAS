@@ -63,6 +63,13 @@ class ilLearningSequenceExporter extends ilXmlExporter
     public function getValidSchemaVersions(string $a_entity): array
     {
         return [
+            "11.0.0" => [
+                "namespace" => "http://www.ilias.de/Modules/LearningSequence/lso/11_0",
+                "xsd_file" => "ilias_lso_11_0.xsd",
+                "uses_dataset" => false,
+                "min" => "12.0",
+                "max" => ""
+            ],
             "9.0.0" => [
                 "namespace" => "http://www.ilias.de/Modules/LearningSequence/lso/9_0",
                 "xsd_file" => "ilias_lso_9_0.xsd",
@@ -124,22 +131,6 @@ class ilLearningSequenceExporter extends ilXmlExporter
                 "entity" => "md",
                 "ids" => $md_ids
             ];
-
-            // taxonomies
-            $tax_ids = [];
-            foreach ($a_ids as $id) {
-                $t_ids = ilObjTaxonomy::getUsageOfObject((int) $id);
-                foreach ($t_ids as $t_id) {
-                    $tax_ids[$t_id] = $t_id;
-                }
-            }
-            if ($tax_ids !== []) {
-                $res[] = [
-                    "component" => "components/ILIAS/Taxonomy",
-                    "entity" => "tax",
-                    "ids" => $tax_ids
-                ];
-            }
         }
 
         // container pages
@@ -160,6 +151,12 @@ class ilLearningSequenceExporter extends ilXmlExporter
                 ];
             }
         }
+
+        $res[] = [
+            "component" => "components/ILIAS/Tracking",
+            "entity" => "lpsettings",
+            "ids" => $a_ids
+        ];
 
         return $res;
     }

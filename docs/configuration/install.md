@@ -102,7 +102,7 @@ Alternatively, they can be obtained directly from the distribution package at [N
 
 ```shell
 apt update
-apt update zip unzip openjdk-21-jdk maven ffmpeg git ghostscript nodejs npm
+apt install zip unzip openjdk-21-jdk maven ffmpeg git ghostscript nodejs npm
 ```
 
 <a name="install-webserver"></a>
@@ -113,8 +113,14 @@ Other web servers capable of processing PHP, such as Nginx or Apache2 with FCGI 
 
 **Required PHP Extensions:**
 ```
-gd, dom, xsl, pdo, pdo_mysql, curl, json, simplexml, libxml, xml, zip, imagick, mbstring
+gd, dom, xsl, pdo, pdo_mysql, curl, json, simplexml, libxml, xml, zip, imagick, mbstring, gettext
 ```
+
+ILIAS serves its translations through native gettext: the PHP extension `gettext` and the C library's
+`C.utf8` locale (glibc) MUST be available to the PHP of the web server as well as to the CLI. Without them
+the user interface shows identifiers (e.g. `-login-`) instead of texts. On macOS and BSD, the system
+locale `en_US.UTF-8` is used instead of `C.utf8`. Run `php cli/setup.php build` on the system that serves ILIAS
+(with Docker in the container), a build on another system (e.g. the Docker host) is not served.
 
 **Optional PHP Extensions:**
 
@@ -250,15 +256,11 @@ On Debian/Ubuntu execute:
 apt install mariadb-server
 ```
 
-> [!NOTE]
-> Please note that installing ILIAS in utf8mb4-collations is currently not supported!
-> ILIAS supports utf8-collations with 3 bytes per character, such as `utf8_general_ci`, only.
-
 We **strongly recommend** using MariaDB with the following settings:
 
 * InnoDB storage engine (default)
-* `character-set-server` = `utf8mb3`
-* `collation-server` = `utf8mb3_general_ci`
+* `character-set-server` = `utf8mb4`
+* `collation-server` = `utf8mb4_unicode_520_ci`
 * `join_buffer_size` > `128K`
 * `table_open_cache` > `400`
 * `innodb_buffer_pool_size` > `2G` (depending on DB size)
@@ -275,7 +277,7 @@ systemctl restart mariadb.service
 We recommend creating a dedicated database user for ILIAS:
 
 ```shell
-mysql -e "CREATE DATABASE ilias CHARACTER SET utf8 COLLATE utf8_general_ci;"
+mysql -e "CREATE DATABASE ilias CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;"
 mysql -e "CREATE USER 'ilias'@'localhost' IDENTIFIED BY '<db-password>';"
 mysql -e "GRANT LOCK TABLES on *.* TO 'ilias'@'localhost';"
 mysql -e "GRANT ALL PRIVILEGES ON ilias.* TO 'ilias'@'localhost';"
@@ -574,6 +576,15 @@ sudo -u www-data composer install --no-dev
 
 Complete the update of the base system by [updating the database](#update-the-database).
 
+**Upgrading to ILIAS 12:** Translations of core components are now shipped as gettext files (`.po`).
+`php cli/setup.php build` compiles them into `artifacts/language/`. `composer install` runs this build, and
+`php cli/setup.php update` runs it if needed. The build fails if the [gettext requirements](#install-webserver)
+are not met. The first `php cli/setup.php update` copies the local changes of the installed languages once from the
+database to the `lang/` directory of the client data directory (e.g. `/var/www/files/<client id>/lang/`).
+No migration is needed for this. The setup MUST run as the web server user (the owner of the client data
+directory), otherwise it prints a warning and the web server cannot replace the written files later.
+Language files of plugins are still installed into the database as before.
+
 As a last step, you should log in with a User using your custom skin. If everything
 works correctly, change back from Delos to your custom system style. If not, you probably
 will need to update your style to match the new release.
@@ -704,17 +715,26 @@ php /var/www/ilias/cli/cron.php run-jobs <user>
 
 The `<user>` is a valid, arbitrary user account within the ILIAS installation.
 
-To configure automated Cron Jobs in your system, you need to create a user in ILIAS, for example named `cron`.
-Then create a new file in the Linux Cron configuration for ILIAS at `/etc/cron.d/ilias`,
-including a line to execute `./cli/cron.php` every 5 minutes.
-Other methods for executing Linux cron tasks, such as using the user crontab, can also be utilized.
+To configure automated Cron Jobs in your system, you need to create a user in
+ILIAS, for example named `cron-user`. Then create a new file in the Linux Cron
+configuration for ILIAS at `/etc/cron.d/ilias`, including a line to execute
+`./cli/cron.php` every 5 minutes. Other methods for executing Linux cron tasks,
+such as using the user crontab, can also be utilized.
 
 ```cron
-*/5 * * * * www-data /usr/bin/php /var/www/ilias/cli/cron.php run-jobs cron > /dev/null 2>&1
+*/5 * * * * www-data /usr/bin/php /var/www/ilias/cli/cron.php run-jobs cron-user > /dev/null 2>&1
 ```
 
-You can verify the proper automatic execution in the ILIAS Administration section by checking the timestamp
-displayed at `Last Automatic Execution of Cron Job Script` after some time.
+You can verify the proper automatic execution in the ILIAS Administration
+section by checking the timestamp displayed at `Last Automatic Execution of Cron
+Job Script` after some time.
+
+**Choosing the executing user**
+
+The user account should be chosen carefully, because some preconditions must be
+fulfilled and it directly affects the security posture of your installation. See
+[Choosing the Executing User](../../components/ILIAS/Cron/README.md#choosing-the-executing-user)
+in the Cron documentation for the full guidance.
 
 
 <a name="webdav-configuration"></a>

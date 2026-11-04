@@ -145,6 +145,11 @@ class Participant
         return $clone;
     }
 
+    public function getInvitationDate(): ?int
+    {
+        return $this->invitation_date;
+    }
+
     public function isInvitedParticipant(): bool
     {
         return $this->invitation_date > 0;
@@ -259,11 +264,14 @@ class Participant
 
         $display_name = '';
 
-        if ($this->firstname !== '') {
-            $display_name .= $this->firstname . ' ';
-        }
         if ($this->lastname !== '') {
             $display_name .= $this->lastname;
+        }
+
+        if ($this->firstname !== '') {
+            $display_name .= $display_name === ''
+                ? $this->firstname
+                : ", {$this->firstname}";
         }
 
         return $display_name;

@@ -168,6 +168,8 @@ class ilObjUser extends ilObject
             $this->profile_data->withSystemInformation($this->buildSystemInformationArrayForDB())
         );
 
+        $this->writePrefs();
+
         // CREATE ENTRIES FOR MAIL BOX
         $mbox = new ilMailbox($this->id);
         $mbox->createDefaultFolder();
@@ -491,7 +493,7 @@ class ilObjUser extends ilObject
             ['usr_id' => $this->getId()]
         );
 
-        ilSession::_destroyByUserId($this->getId());
+        ilSession::destroyByUserId($this->getId());
         ilLDAPRoleGroupMapping::_getInstance()->deleteUser($this->getId());
 
         /**

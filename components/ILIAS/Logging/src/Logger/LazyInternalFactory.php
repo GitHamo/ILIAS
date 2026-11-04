@@ -26,6 +26,8 @@ use Monolog\Logger as MonologLogger;
 use ILIAS\Logging\ILIASLogLevel;
 use ReflectionClass;
 use ILIAS\Logging\Logger\LevelFetcher\LevelFetcherInterface;
+use Monolog\Handler\HandlerInterface as MonologHandlerInterface;
+use ILIAS\Logging\Logger\Monolog\Handler\ProviderInterface as MonologHandlerProviderInterface;
 
 class LazyInternalFactory implements LazyInternalFactoryInterface
 {
@@ -34,9 +36,13 @@ class LazyInternalFactory implements LazyInternalFactoryInterface
      */
     protected array $loggers = [];
 
+    /**
+     * @param MonologHandlerProviderInterface[] $handler_providers
+     */
     public function __construct(
         protected MonologFactoryInterface $monolog_factory,
-        protected BasicConfigInterface $basic_config
+        protected BasicConfigInterface $basic_config,
+        protected array $handler_providers
     ) {
     }
 
@@ -65,10 +71,30 @@ class LazyInternalFactory implements LazyInternalFactoryInterface
         if (!$this->basic_config->isLoggingEnabled()) {
             return $this->monolog_factory->nullLogger($component_id);
         }
+        $level = $level_fetcher->fetchLevel();
+        if ($level === ILIASLogLevel::OFF) { // OFF is not a standard log level, so Monolog rejects it
+            return $this->monolog_factory->nullLogger($component_id);
+        }
         return $this->monolog_factory->logger(
             $component_id,
-            $level_fetcher->fetchLevel(),
-            $this->basic_config->pathToLogFile()
+            ...$this->getApplicableHandlers($component_id, $level)
         );
+    }
+
+    /**
+     * @return MonologHandlerInterface[]
+     */
+    protected function getApplicableHandlers(
+        string $component_id,
+        ILIASLogLevel $level
+    ): array {
+        $applicable = [];
+        foreach ($this->handler_providers as $handler_provider) {
+            if (!$handler_provider->appliesTo($component_id)) {
+                continue;
+            }
+            $applicable[] = $handler_provider->getHandler($component_id, $level);
+        }
+        return $applicable;
     }
 }

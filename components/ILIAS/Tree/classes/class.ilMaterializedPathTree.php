@@ -18,6 +18,8 @@
 
 declare(strict_types=1);
 
+use ILIAS\Logging\Logger\LoggerInterface;
+
 /**
  * Base class for materialize path based trees
  * Based on implementation of Werner Randelshofer
@@ -29,23 +31,11 @@ class ilMaterializedPathTree implements ilTreeImplementation
 {
     private const MAXIMUM_POSSIBLE_DEPTH = 100;
 
-    protected ilTree $tree;
-    protected ilDBInterface $db;
-    protected ilLogger $logger;
-
-    /**
-     * Constructor
-     * @param ilTree $a_tree
-     */
-    public function __construct(ilTree $a_tree)
-    {
-        global $DIC;
-
-        $this->tree = $a_tree;
-        $this->db = $DIC->database();
-        if (ilContext::getType() != "") {
-            $this->logger = $DIC->logger()->tree();
-        }
+    public function __construct(
+        protected ilTree $tree,
+        protected ilDBInterface $db,
+        protected LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -318,7 +308,7 @@ class ilMaterializedPathTree implements ilTreeImplementation
             ));
             $node = $this->db->fetchAssoc($res);
 
-            if($node === null) {
+            if ($node === null) {
                 return; //Nothing to delete. $node does not exists
             }
 
@@ -587,7 +577,7 @@ class ilMaterializedPathTree implements ilTreeImplementation
      */
     public function validateParentRelations(): array
     {
-        $query = 'select ' . $this->getTree()->getTreePk() .', child from ' . $this->getTree()->getTreeTable() . ' child where not exists ' .
+        $query = 'select ' . $this->getTree()->getTreePk() . ', child from ' . $this->getTree()->getTreeTable() . ' child where not exists ' .
             '( ' .
             'select child from ' . $this->getTree()->getTreeTable() . ' parent where child.parent = parent.child and ' .
             '(child.path BETWEEN parent.path AND CONCAT(parent.path,' . $this->db->quote('Z', 'text') . ') )' . ')' .

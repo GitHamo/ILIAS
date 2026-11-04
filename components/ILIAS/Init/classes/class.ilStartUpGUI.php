@@ -32,6 +32,7 @@ use ILIAS\components\Authentication\Logout\ConfigurableLogoutTarget;
 use ILIAS\LegalDocuments\Conductor;
 use ILIAS\components\Authentication\Pages\AuthPageEditorContext;
 use ILIAS\AuthApache\AuthFrontendCredentialsApache;
+use ILIAS\UICore\GlobalTemplate;
 
 /**
  * @ilCtrl_Calls ilStartUpGUI: ilAccountRegistrationGUI, ilPasswordAssistanceGUI, ilLoginPageGUI, ilDashboardGUI
@@ -153,8 +154,6 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
     public function getSafePostCommands(): array
     {
         return [
-            'doStandardAuthentication',
-            'doLTIAuthentication'
         ];
     }
 
@@ -218,8 +217,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
          * To address https://mantis.ilias.de/view.php?id=29991 we assume that we can ignore such requests
          * to prevent "Logout without CSRF / Denial of Service for Users" and redirect the user to the start page instead.
          */
-
-        if ($this->authSession->isValid() && $this->authSession->getUserId() > 0 && !$this->user->isAnonymous()) {
+        if ($this->authSession->isFullyAuthenticated()) {
             ilInitialisation::redirectToStartingPage();
         }
 
@@ -240,33 +238,14 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
         ) === 'force_login';
 
         if ($is_forced_login) {
-            // Only allow this for anonymous user, see: showLoginPageOrStartupPage
-            $this->logger->debug('Force login');
-            $messages = [];
-            if ($this->authSession->isValid()) {
-                $messages = $this->retrieveMessagesFromSession();
-                $this->logger->debug('Valid session -> logout current user');
-                ilSession::setClosingContext(ilSession::SESSION_CLOSE_USER);
-                $this->authSession->logout();
-
-                $this->eventHandler->raise(
-                    'components/ILIAS/Authentication',
-                    'afterLogout',
-                    [
-                        'username' => $this->user->getLogin(),
-                        'is_explicit_logout' => false,
-                    ]
-                );
-
-                $this->dic->user()->setId($this->authSession->getUserId());
-                $this->dic->user()->read();
-            }
-
-            $this->logger->debug('Show login page');
-            foreach ($messages as $type => $content) {
+            $this->logger->debug('Forced login page presentation');
+            foreach ($this->retrieveMessagesFromSession() as $type => $content) {
                 $this->mainTemplate->setOnScreenMessage($type, $content);
             }
 
+            $this->prepareAnonymousContextForLoginPage();
+
+            $this->logger->debug('Show login page');
             $this->showLoginPage();
             return;
         }
@@ -288,6 +267,14 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
         $this->help->setSubScreenId('login');
 
         $this->getLogger()->debug('Showing login page');
+
+        // Rotate expired sessions before form/rtoken generation (same ordering as force_login).
+        $session_expired_for_login_page = $this->authSession->isExpired();
+        if ($session_expired_for_login_page) {
+            ilSession::setClosingContext(ilSession::SESSION_CLOSE_EXPIRE);
+            $this->authSession->onSessionExpired();
+            $this->syncGlobalUserToAuthSession();
+        }
 
         $extUid = $this->http->wrapper()->query()->retrieve(
             'ext_uid',
@@ -327,7 +314,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
         $page_editor_html = $this->purgePlaceholders($page_editor_html);
 
         // check expired session and send message
-        if ($this->authSession->isExpired() || $this->http->wrapper()->query()->has('session_expired')) {
+        if ($session_expired_for_login_page || $this->http->wrapper()->query()->has('session_expired')) {
             $this->mainTemplate->setOnScreenMessage('failure', $this->lng->txt('auth_err_expired'));
         } elseif ($this->http->wrapper()->query()->has('reg_confirmation_msg')) {
             $this->lng->loadLanguageModule('registration');
@@ -336,7 +323,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
                 $this->refinery->kindlyTo()->string()
             );
             $message_type = $message_key === 'reg_account_confirmation_successful' ?
-                ilGlobalTemplateInterface::MESSAGE_TYPE_SUCCESS : ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE;
+                GlobalTemplate::MESSAGE_TYPE_SUCCESS : GlobalTemplate::MESSAGE_TYPE_FAILURE;
             $this->mainTemplate->setOnScreenMessage(
                 $message_type,
                 $this->lng->txt($message_key)
@@ -345,13 +332,6 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
 
         if ($page_editor_html !== '') {
             $tpl->setVariable('LPE', $page_editor_html);
-        }
-
-        if ($this->authSession->isExpired()) {
-            // The usr_id is is still the one of the former logged-in user, so we have to unset it
-            $this->authSession->setAuthenticated(false, ANONYMOUS_USER_ID);
-            $this->dic->user()->setId($this->authSession->getUserId());
-            $this->dic->user()->read();
         }
 
         $this->mainTemplate->setPermanentLink('auth', null, 'login');
@@ -376,10 +356,10 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
     {
         $messages = [];
         $message_types = [
-            ilGlobalTemplateInterface::MESSAGE_TYPE_FAILURE,
-            ilGlobalTemplateInterface::MESSAGE_TYPE_SUCCESS,
-            ilGlobalTemplateInterface::MESSAGE_TYPE_INFO,
-            ilGlobalTemplateInterface::MESSAGE_TYPE_QUESTION
+            GlobalTemplate::MESSAGE_TYPE_FAILURE,
+            GlobalTemplate::MESSAGE_TYPE_SUCCESS,
+            GlobalTemplate::MESSAGE_TYPE_INFO,
+            GlobalTemplate::MESSAGE_TYPE_QUESTION
         ];
 
         foreach ($message_types as $message_type) {
@@ -389,6 +369,41 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
         }
 
         return $messages;
+    }
+
+    /**
+     * Align ilAuthSession and the global user with anonymous before showing the login page (force_login).
+     */
+    private function prepareAnonymousContextForLoginPage(): void
+    {
+        if ($this->authSession->isExpired()) {
+            $former_login = $this->user->getLogin();
+            $this->logger->debug('Expired privileged session -> anonymous with session rotation');
+            ilSession::setClosingContext(ilSession::SESSION_CLOSE_EXPIRE);
+            $this->authSession->onSessionExpired();
+
+            $this->mainTemplate->setOnScreenMessage('failure', $this->lng->txt('auth_err_expired'));
+
+            $this->eventHandler->raise(
+                'components/ILIAS/Authentication',
+                'afterLogout',
+                [
+                    'username' => $former_login,
+                    'is_explicit_logout' => false,
+                ]
+            );
+        } else {
+            $this->logger->debug('Ensure anonymous context (preserve session id)');
+            $this->authSession->ensureAnonymousContext();
+        }
+
+        $this->syncGlobalUserToAuthSession();
+    }
+
+    private function syncGlobalUserToAuthSession(): void
+    {
+        $this->dic->user()->setId($this->authSession->getUserId());
+        $this->dic->user()->read();
     }
 
     private function showCodeForm(
@@ -600,64 +615,6 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
             ->withSubmitLabel($this->lng->txt('log_in'))
             ->withAdditionalTransformation($this->mergeValuesTrafo())
             ->withAdditionalTransformation($this->saniziteArrayElementsTrafo());
-    }
-
-    private function doLTIAuthentication(): void
-    {
-        $this->getLogger()->debug('Trying lti authentication');
-
-        $credentials = new ilAuthFrontendCredentialsLTI();
-        $credentials->initFromRequest();
-
-        $provider_factory = new ilAuthProviderFactory();
-        $provider = $provider_factory->getProviderByAuthMode($credentials, ilAuthUtils::AUTH_PROVIDER_LTI);
-
-        $status = ilAuthStatus::getInstance();
-
-        $frontend_factory = new ilAuthFrontendFactory();
-        $frontend_factory->setContext(ilAuthFrontendFactory::CONTEXT_STANDARD_FORM);
-        $frontend = $frontend_factory->getFrontend(
-            $this->authSession,
-            $status,
-            $credentials,
-            [$provider]
-        );
-        $frontend->authenticate();
-
-        setcookie(session_name(), session_id(), [
-            'expires' => 0,
-            'path' => rtrim(IL_COOKIE_PATH, '/'),
-            'domain' => IL_COOKIE_DOMAIN,
-            'secure' => true,
-            'httponly' => true,
-            'samesite' => 'None'
-        ]);
-
-        $lti_context_ids = ilSession::get("lti_context_ids");
-
-        if (is_array($lti_context_ids) && isset($lti_context_ids[0])) {
-            $ref_id = $lti_context_ids[0];
-            $obj_type = ilObject::_lookupType($ref_id, true);
-            ilSession::set('orig_request_target', "goto.php?target=" . $obj_type . "_" . $ref_id . "&lti_context_id=" . $ref_id);
-        }
-
-        switch ($status->getStatus()) {
-            case ilAuthStatus::STATUS_AUTHENTICATED:
-                ilLoggerFactory::getLogger('auth')->debug('Authentication successful; Redirecting to starting page.');
-                ilInitialisation::redirectToStartingPage();
-
-                // no break
-            case ilAuthStatus::STATUS_ACCOUNT_MIGRATION_REQUIRED:
-                $this->ctrl->redirect($this, 'showAccountMigration');
-
-                // no break
-            case ilAuthStatus::STATUS_AUTHENTICATION_FAILED:
-                $this->mainTemplate->setOnScreenMessage('failure', $this->lng->txt($status->getReason()), true);
-                $this->ctrl->redirect($this, 'showLoginPage');
-        }
-
-        $this->mainTemplate->setOnScreenMessage('failure', $this->lng->txt('err_wrong_login'));
-        $this->showLoginPage();
     }
 
     private function doApacheAuthentication(): void
@@ -945,7 +902,11 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
 
         $page_gui = new ($ipe_context->pageUiClass())(ilLanguage::lookupId($ipe_language));
 
-        $page_gui->setStyleId(0);
+        $page_gui->setStyleId(
+            $this->dic->contentStyle()->domain()->styleForRefId(
+                ilObjAuthSettings::getAuthSettingsRefId()
+            )->getEffectiveStyleId()
+        );
 
         $page_gui->setPresentationTitle('');
         $page_gui->setTemplateOutput(false);
@@ -1242,9 +1203,7 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
 
     private function showLogout(): void
     {
-        if (!$this->authSession->isExpired() &&
-            $this->authSession->isAuthenticated() &&
-            !ilObjUser::_isAnonymous($this->authSession->getUserId())) {
+        if ($this->authSession->isFullyAuthenticated()) {
             $this->ctrl->redirectToURL(ilUserUtil::getStartingPointAsUrl());
         }
 
@@ -1284,7 +1243,8 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
             'components/ILIAS/Authentication',
             'beforeLogout',
             [
-                'user_id' => $this->user->getId()
+                'user_id' => $this->user->getId(),
+                'object' => $this->user
             ]
         );
 
@@ -1388,6 +1348,11 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
 
         if ($type === 'git') {
             $type = 'glo';
+        }
+
+        // Item groups (itgr) were renamed to object groups (obgr).
+        if ($type === 'itgr') {
+            $type = 'obgr';
         }
 
         if ($type === 'pg' | $type === 'st') {
@@ -1690,13 +1655,37 @@ class ilStartUpGUI implements ilCtrlBaseClassInterface, ilCtrlSecurityInterface
 
     private function doOpenIdConnectAuthentication(): void
     {
-        $this->getLogger()->debug('Trying openid connect authentication');
-
         $credentials = new ilAuthFrontendCredentialsOpenIdConnect();
         $credentials->initFromRequest();
 
         $provider_factory = new ilAuthProviderFactory();
+        /** @var ilAuthProviderOpenIdConnect $provider */
         $provider = $provider_factory->getProviderByAuthMode($credentials, ilAuthUtils::AUTH_OPENID_CONNECT);
+
+        if ($provider->isPostLogoutPending()) {
+            $this->getLogger()->debug('Processing OpenID Connect post-logout callback');
+
+            $state = $this->http->wrapper()->query()->retrieve(
+                'state',
+                $this->refinery->byTrying([
+                    $this->refinery->kindlyTo()->string(),
+                    $this->refinery->always('')
+                ])
+            );
+
+            if ($state === '' || !$provider->validatePostLogoutState($state)) {
+                $this->getLogger()->warning(
+                    'OpenID Connect post-logout callback state did not match. Finishing local logout.'
+                );
+            }
+
+            $this->user->setLanguage($provider->consumePostLogoutUserLanguage());
+
+            $this->doLogout();
+            return;
+        }
+
+        $this->getLogger()->debug('Trying openid connect authentication');
 
         $status = ilAuthStatus::getInstance();
 
