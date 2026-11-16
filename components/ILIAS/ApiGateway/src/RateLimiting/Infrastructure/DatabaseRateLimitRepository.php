@@ -22,20 +22,24 @@ namespace ILIAS\ApiGateway\RateLimiting\Infrastructure;
 
 use DateTimeImmutable;
 use ilDBConstants;
-use ILIAS\ApiGateway\GlobalDICAccessTrait;
 use ILIAS\ApiGateway\RateLimiting\Domain\Model\RateLimitEntry;
 use ILIAS\ApiGateway\RateLimiting\Domain\RateLimitRepository;
+use ILIAS\Database\Connection;
 use Override;
 
 /**
- * @codeCoverageIgnore To be tested when database is loaded by DI not global
+ * Unit tested with a stubbed Connection: no integration suite with a real
+ * database exists. Checks row mapping and bound values, not the SQL itself.
  */
 final readonly class DatabaseRateLimitRepository implements RateLimitRepository
 {
-    use GlobalDICAccessTrait;
-
     private const string TABLE_NAME = 'apig_rate_limits';
     private const string TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
+
+    public function __construct(
+        private Connection $database,
+    ) {
+    }
 
     #[Override]
     public function sumUnits(
@@ -43,7 +47,7 @@ final readonly class DatabaseRateLimitRepository implements RateLimitRepository
         string $scope,
         DateTimeImmutable $since,
     ): int {
-        $res = $this->getDatabase()->queryF(
+        $res = $this->database->queryF(
             'SELECT COALESCE(SUM(units), 0) AS total
                FROM ' . self::TABLE_NAME . '
               WHERE fingerprint = %s
@@ -57,7 +61,7 @@ final readonly class DatabaseRateLimitRepository implements RateLimitRepository
             [$fingerprint, $scope, $since->format(self::TIMESTAMP_FORMAT)]
         );
 
-        $row = $this->getDatabase()->fetchAssoc($res);
+        $row = $this->database->fetchAssoc($res);
 
         return (int) ($row['total'] ?? 0);
     }
@@ -65,7 +69,7 @@ final readonly class DatabaseRateLimitRepository implements RateLimitRepository
     #[Override]
     public function store(RateLimitEntry $entry): void
     {
-        $this->getDatabase()->manipulateF(
+        $this->database->manipulateF(
             'INSERT INTO ' . self::TABLE_NAME . '
                 (id, fingerprint, scope, units, created_at)
              VALUES (%s, %s, %s, %s, %s)',
@@ -77,7 +81,7 @@ final readonly class DatabaseRateLimitRepository implements RateLimitRepository
                 ilDBConstants::T_TIMESTAMP,
             ],
             [
-                $this->getDatabase()->nextId(self::TABLE_NAME),
+                $this->database->nextId(self::TABLE_NAME),
                 $entry->fingerprint,
                 $entry->scope,
                 $entry->units,
@@ -89,7 +93,7 @@ final readonly class DatabaseRateLimitRepository implements RateLimitRepository
     #[Override]
     public function deleteExpired(DateTimeImmutable $now): int
     {
-        $count = $this->getDatabase()->manipulateF(
+        $count = $this->database->manipulateF(
             'DELETE FROM ' . self::TABLE_NAME . ' WHERE created_at <= %s',
             [ilDBConstants::T_TIMESTAMP],
             [$now->format(self::TIMESTAMP_FORMAT)],

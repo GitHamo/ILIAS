@@ -24,11 +24,11 @@ use ILIAS\ApiGateway\Routing\RoutesRegistry;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
-use ILIAS\ApiGateway\Webservice\WebserviceLoggerFactory;
 use ILIAS\HTTP\Response\ResponseFactory;
+use ILIAS\Logging\Logger\LoggerFactoryInterface;
+use ILIAS\Logging\Logger\LoggerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Slim\App as SlimApp;
 
 final class WebAppFactoryTest extends TestCase
@@ -40,7 +40,7 @@ final class WebAppFactoryTest extends TestCase
     private RoutesRegistryFactory&MockObject $routesRegistryFactory;
     private MiddlewareRepository&MockObject $middlewareRepository;
     private ResponseFactory&MockObject $responseFactory;
-    private WebserviceLoggerFactory&MockObject $loggerFactory;
+    private LoggerFactoryInterface&MockObject $loggerFactory;
     private RateLimiting&MockObject $rateLimitingService;
 
     #[\Override]
@@ -54,7 +54,7 @@ final class WebAppFactoryTest extends TestCase
         $this->routesRegistryFactory = $this->createMock(RoutesRegistryFactory::class);
         $this->middlewareRepository = $this->createMock(MiddlewareRepository::class);
         $this->responseFactory = $this->createMock(ResponseFactory::class);
-        $this->loggerFactory = $this->createMock(WebserviceLoggerFactory::class);
+        $this->loggerFactory = $this->createMock(LoggerFactoryInterface::class);
         $this->rateLimitingService = $this->createMock(RateLimiting::class);
 
         $this->factory = new WebAppFactory(
@@ -111,7 +111,7 @@ final class WebAppFactoryTest extends TestCase
             ->willReturn($webserviceMock);
 
         $this->loggerFactory->expects(self::once())
-            ->method('create')
+            ->method('getLazy')
             ->with(self::identicalTo('webservices'))
             ->willReturn($loggerMock);
 

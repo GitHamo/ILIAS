@@ -22,8 +22,6 @@ namespace ILIAS\ApiGateway;
 
 use ilDBInterface;
 use ILIAS\DI\Container;
-use RuntimeException;
-use ilLogger;
 
 /**
  * This is a workaround to work with legacy dependency.
@@ -45,25 +43,5 @@ trait GlobalDICAccessTrait
     protected function database(): ?ilDBInterface
     {
         return $this->dic()?->database();
-    }
-
-    protected function getDatabase(): ilDBInterface
-    {
-        return $this->database() ?? throw new RuntimeException('No database connection');
-    }
-
-    protected function logger(?string $name = null): ?ilLogger
-    {
-        $logging = $this->dic()?->logger();
-
-        if ($logging === null) {
-            return null;
-        }
-
-        if ($name === null) {
-            return $logging->root();
-        }
-
-        return $logging->$name();
     }
 }

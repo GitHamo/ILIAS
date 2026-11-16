@@ -32,9 +32,9 @@ use ILIAS\ApiGateway\RateLimiting\Domain\RateLimiting;
 use ILIAS\ApiGateway\Webservice\Domain\Enum\ServiceProtocol;
 use ILIAS\ApiGateway\Webservice\Domain\Webservice;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
-use ILIAS\ApiGateway\Webservice\WebserviceLoggerFactory;
 use ILIAS\HTTP\Response\ResponseFactory;
-use Psr\Log\LoggerInterface;
+use ILIAS\Logging\Logger\LoggerFactoryInterface;
+use ILIAS\Logging\Logger\LoggerInterface;
 
 readonly class WebAppFactory
 {
@@ -47,7 +47,7 @@ readonly class WebAppFactory
         private RoutesRegistryFactory $routesRegistryFactory,
         private MiddlewareRepository $middlewareRepository,
         private ResponseFactory $responseFactory,
-        private WebserviceLoggerFactory $loggerFactory,
+        private LoggerFactoryInterface $loggerFactory,
         private RateLimiting $rateLimitingService,
     ) {
     }
@@ -58,7 +58,7 @@ readonly class WebAppFactory
         $authConfig = $this->httpConfigFactory->createAuthConfig();
         $registry = $this->routesRegistryFactory->create();
         $webservice = $this->webserviceFactory->create($webConfig);
-        $logger = $this->loggerFactory->create(self::COMPONENT_NAME);
+        $logger = $this->loggerFactory->getLazy(self::COMPONENT_NAME);
 
         $middlewareFactory = $this->createMiddlewareFactory($webConfig, $authConfig, $logger);
         $responseHandler = $this->createResponseHandler($webservice);

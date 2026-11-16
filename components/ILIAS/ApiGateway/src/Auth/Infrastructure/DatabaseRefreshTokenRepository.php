@@ -22,38 +22,34 @@ namespace ILIAS\ApiGateway\Auth\Infrastructure;
 
 use DateTimeImmutable;
 use ilDBConstants;
-use ilDBInterface;
 use ILIAS\ApiGateway\Auth\Domain\Model\RefreshToken;
 use ILIAS\ApiGateway\Auth\Domain\Repository\RefreshTokenRepository;
-use ILIAS\ApiGateway\GlobalDICAccessTrait;
+use ILIAS\Database\Connection;
 use Override;
 
 /**
- * @codeCoverageIgnore To be tested when database is loaded by DI not global
+ * Unit tested with a stubbed Connection: no integration suite with a real
+ * database exists. Checks row mapping and bound values, not the SQL itself.
  */
 final readonly class DatabaseRefreshTokenRepository implements RefreshTokenRepository
 {
-    use GlobalDICAccessTrait;
-
     private const string TABLE_NAME = 'apig_refresh_tokens';
     private const string TIMESTAMP_FORMAT = 'Y-m-d H:i:s';
+
+    public function __construct(
+        private Connection $connection,
+    ) {
+    }
 
     #[Override]
     public function save(RefreshToken $token): void
     {
-        $database = $this->database();
-
-        if (!$database instanceof ilDBInterface) {
-            return;
-        }
-
         $tokenId = $token->getId();
-
         $now = new DateTimeImmutable();
 
         if ($tokenId !== null) {
             // Update existing token (e.g., for revocation)
-            $database->update(
+            $this->connection->update(
                 self::TABLE_NAME,
                 [
                     'user_id' => [ilDBConstants::T_INTEGER, $token->getUserId()],
@@ -69,7 +65,7 @@ final readonly class DatabaseRefreshTokenRepository implements RefreshTokenRepos
         } else {
             // Insert new token
             $rowValues = [
-                'id' => [ilDBConstants::T_INTEGER, $database->nextId(self::TABLE_NAME)],
+                'id' => [ilDBConstants::T_INTEGER, $this->connection->nextId(self::TABLE_NAME)],
                 'user_id' => [ilDBConstants::T_INTEGER, $token->getUserId()],
                 'token_hash' => [ilDBConstants::T_TEXT, $token->getTokenHash()],
                 'is_revoked' => [ilDBConstants::T_INTEGER, (int) $token->isRevoked()],
@@ -77,7 +73,7 @@ final readonly class DatabaseRefreshTokenRepository implements RefreshTokenRepos
                 'created_at' => [ilDBConstants::T_TIMESTAMP, $now->format(self::TIMESTAMP_FORMAT)],
                 'updated_at' => [ilDBConstants::T_TIMESTAMP, $now->format(self::TIMESTAMP_FORMAT)],
             ];
-            $database->insert(
+            $this->connection->insert(
                 self::TABLE_NAME,
                 $rowValues,
             );
@@ -87,13 +83,11 @@ final readonly class DatabaseRefreshTokenRepository implements RefreshTokenRepos
     #[Override]
     public function findByHash(string $tokenHash): ?RefreshToken
     {
-        $database = $this->database();
-
-        if (!$database instanceof ilDBInterface || $tokenHash === '') {
+        if ($tokenHash === '') {
             return null;
         }
 
-        $result = $database->queryF(
+        $result = $this->connection->queryF(
             'SELECT * FROM ' . self::TABLE_NAME . ' WHERE token_hash = %s',
             [ilDBConstants::T_TEXT],
             [$tokenHash]

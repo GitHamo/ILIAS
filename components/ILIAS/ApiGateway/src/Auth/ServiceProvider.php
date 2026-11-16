@@ -27,6 +27,7 @@ use ILIAS\ApiGateway\Auth\Domain\Service\Authentication;
 use ILIAS\ApiGateway\Auth\Infrastructure\DatabaseRefreshTokenRepository;
 use ILIAS\ApiGateway\Auth\Infrastructure\DatabaseUserRepository;
 use ILIAS\ApiGateway\Application\Middlewares\AuthenticationMiddleware;
+use ILIAS\Database\Connection;
 use Psr\Http\Server\MiddlewareInterface;
 use ArrayAccess;
 
@@ -52,7 +53,7 @@ final readonly class ServiceProvider implements BaseServiceProvider
         array | ArrayAccess &$pull,
         array | ArrayAccess &$internal,
     ): void {
-        $internal[UserRepository::class] = static fn(): UserRepository => new DatabaseUserRepository();
+        $internal[UserRepository::class] = static fn(): UserRepository => new DatabaseUserRepository($pull[Connection::class]);
 
         $internal[Authentication::class] = static fn(): Authentication =>
         new Infrastructure\AuthService(
@@ -60,7 +61,7 @@ final readonly class ServiceProvider implements BaseServiceProvider
                 $internal[HttpConfigFactory::class],
             ),
             $internal[UserRepository::class],
-            new DatabaseRefreshTokenRepository(),
+            new DatabaseRefreshTokenRepository($pull[Connection::class]),
             $internal[HttpConfigFactory::class],
         );
 

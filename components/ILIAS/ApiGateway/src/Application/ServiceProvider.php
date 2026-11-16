@@ -34,9 +34,10 @@ use ILIAS\ApiGateway\RateLimiting\Infrastructure\RateLimitingService;
 use ILIAS\ApiGateway\RestAppEntryPoint;
 use ILIAS\ApiGateway\Routing\Route;
 use ILIAS\ApiGateway\Webservice\WebserviceFactory;
-use ILIAS\ApiGateway\Webservice\WebserviceLoggerFactory;
 use ILIAS\Component;
+use ILIAS\Database\Connection;
 use ILIAS\HTTP;
+use ILIAS\Logging\Logger\LoggerFactoryInterface;
 use ILIAS\Refinery;
 use Psr\Http\Server\MiddlewareInterface;
 
@@ -80,9 +81,11 @@ final readonly class ServiceProvider implements BaseServiceProvider
                 $seek[MiddlewareInterface::class],
             ),
             new HTTP\Response\ResponseFactoryImpl(),
-            new WebserviceLoggerFactory(),
+            $use[LoggerFactoryInterface::class],
             new RateLimitingService(
-                new DatabaseRateLimitRepository(),
+                new DatabaseRateLimitRepository(
+                    $pull[Connection::class],
+                ),
             ),
         );
 
