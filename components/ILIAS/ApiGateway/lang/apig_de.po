@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Domain: apig\n"
+
+msgid "obj_apig"
+msgstr "Webservices"
+
+msgid "obj_apig_desc"
+msgstr "Konfiguration der API Webservices"
+
+msgid "webservices"
+msgstr "Webservices"
+
+msgid "webservices_description"
+msgstr "Konfiguration der API Webservices"
+
+msgid "settings_general"
+msgstr "Allgemein"
+
+msgid "settings_docs"
+msgstr "Dokumentation"
+
+msgid "general_settings"
+msgstr "Allgemeine Einstellungen"
+
+msgid "rest_settings"
+msgstr "REST Einstellungen"
+
+msgid "auth_secret_key_label"
+msgstr "Geheimschlüssel"
+
+msgid "auth_secret_key_info"
+msgstr "Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Geheimschlüssel generiert"
+
+msgid "auth_algo_encryption_label"
+msgstr "Verschlüsselungs-Algo"
+
+msgid "auth_algo_encryption_info"
+msgstr "Algorithmus zur Erstellung der JWT-Signatur"
+
+msgid "auth_algo_hash_label"
+msgstr "Hashing-Algo"
+
+msgid "auth_algo_hash_info"
+msgstr "Algorithmus zum sicheren Speichern von Refresh Tokens"
+
+msgid "auth_token_expiry_access_label"
+msgstr "Ablaufzeit des Access Tokens"
+
+msgid "auth_token_expiry_access_info"
+msgstr "Lebensdauer eines Access Tokens in Sekunden"
+
+msgid "auth_token_expiry_refresh_label"
+msgstr "Ablaufzeit des Refresh Tokens"
+
+msgid "auth_token_expiry_refresh_info"
+msgstr "Lebensdauer eines Refresh Tokens in Sekunden"
+
+msgid "rest_ws_enabled_label"
+msgstr "Webservice aktivieren"
+
+msgid "rest_ws_enabled_info"
+msgstr "Ob der Webservice aktiviert ist oder nicht"
+
+msgid "rest_docs_enabled_label"
+msgstr "Dokumentation aktivieren"
+
+msgid "rest_docs_enabled_info"
+msgstr "Gästen Zugriff auf die automatisch generierte Dokumentation gewähren"
+
+msgid "webservice_rate_limit_max_quota_label"
+msgstr "Rate Limit (Anfragen pro Minute)"
+
+msgid "webservice_rate_limit_max_quota_info"
+msgstr "Maximale Anzahl an Anfragen, die ein Client pro Minute senden darf. Ein Wert unter 1 verwendet den empfohlenen Standardwert."
+
+msgid "cron_delete_expired_rate_limits_title"
+msgstr "Abgelaufene Rate Limits löschen"
+
+msgid "cron_delete_expired_rate_limits_desc"
+msgstr "Löscht abgelaufene Rate-Limit-Einträge der API-Webservices."

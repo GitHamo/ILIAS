@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ar\n"
+"Language-Team: Arabic\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))));\n"
+"X-Domain: apig\n"
+
+msgid "obj_apig"
+msgstr "خدمات الويب"
+
+msgid "obj_apig_desc"
+msgstr "تهيئة خدمات الويب API"
+
+msgid "webservices"
+msgstr "خدمات الويب"
+
+msgid "webservices_description"
+msgstr "تهيئة خدمات الويب API"
+
+msgid "settings_general"
+msgstr "عام"
+
+msgid "settings_docs"
+msgstr "وثائق المساعدة"
+
+msgid "general_settings"
+msgstr "الإعدادات العامة"
+
+msgid "rest_settings"
+msgstr "إعدادات REST"
+
+msgid "auth_secret_key_label"
+msgstr "المفتاح السري"
+
+msgid "auth_secret_key_info"
+msgstr "اتركه فارغًا وسيتم إنشاء مفتاح سري عشوائي جديد."
+
+msgid "auth_algo_encryption_label"
+msgstr "خوارزمية التشفير"
+
+msgid "auth_algo_encryption_info"
+msgstr "الخوارزمية المستخدمة لإنشاء توقيع JWT"
+
+msgid "auth_algo_hash_label"
+msgstr "خوارزمية التجزئة"
+
+msgid "auth_algo_hash_info"
+msgstr "الخوارزمية المستخدمة لتخزين الرموز المميزة للتحديث بأمان"
+
+msgid "auth_token_expiry_access_label"
+msgstr "انتهاء صلاحية رمز الوصول"
+
+msgid "auth_token_expiry_access_info"
+msgstr "مدة صلاحية رمز الوصول بالثواني"
+
+msgid "auth_token_expiry_refresh_label"
+msgstr "انتهاء صلاحية رمز التحديث"
+
+msgid "auth_token_expiry_refresh_info"
+msgstr "مدة صلاحية رمز التحديث بالثواني"
+
+msgid "rest_ws_enabled_label"
+msgstr "تفعيل خدمة الويب"
+
+msgid "rest_ws_enabled_info"
+msgstr "ما إذا كانت خدمة الويب مفعلة أم لا"
+
+msgid "rest_docs_enabled_label"
+msgstr "تفعيل وثائق المساعدة"
+
+msgid "rest_docs_enabled_info"
+msgstr "السماح بوصول الضيوف إلى وثائق المساعدة التي يتم إنشاؤها تلقائيًا"
+
+msgid "webservice_rate_limit_max_quota_label"
+msgstr "الحد الأقصى للطلبات في الدقيقة"
+
+msgid "webservice_rate_limit_max_quota_info"
+msgstr "الحد الأقصى لعدد الطلبات التي يمكن للعميل إرسالها في الدقيقة. القيمة الأقل من 1 تستخدم القيمة الافتراضية الموصى بها."
+
+msgid "cron_delete_expired_rate_limits_title"
+msgstr "حذف حدود الطلبات المنتهية"
+
+msgid "cron_delete_expired_rate_limits_desc"
+msgstr "يحذف سجلات حدود الطلبات المنتهية الصلاحية لخدمات الويب API."

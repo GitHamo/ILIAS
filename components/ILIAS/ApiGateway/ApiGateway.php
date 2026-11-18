@@ -24,6 +24,8 @@ use ILIAS\ApiGateway\Application;
 use ILIAS\ApiGateway\Auth;
 use ILIAS\ApiGateway\Configuration;
 use ILIAS\ApiGateway\Routing;
+use ILIAS\Language\ComponentTranslation\ComponentLanguageFileDirectory;
+use ILIAS\Language\ComponentTranslation\LanguageFileDirectory;
 use ILIAS\Setup;
 
 /**
@@ -55,6 +57,9 @@ class ApiGateway implements Component\Component
 
         $contribute[Component\Resource\PublicAsset::class] = fn(): Component\Resource\OfComponent =>
         new Component\Resource\OfComponent($this, "rest/.htaccess", "rest");
+
+        $contribute[LanguageFileDirectory::class] = fn(): LanguageFileDirectory =>
+        new ComponentLanguageFileDirectory($this, 'apig');
 
         $providers = [
             new Configuration\ServiceProvider(),

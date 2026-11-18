@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Domain: apig\n"
+
+msgid "obj_apig"
+msgstr "Webservices"
+
+msgid "obj_apig_desc"
+msgstr "Configuration of API Webservices"
+
+msgid "webservices"
+msgstr "Webservices"
+
+msgid "webservices_description"
+msgstr "Configuration of API Webservices"
+
+msgid "settings_general"
+msgstr "General"
+
+msgid "settings_docs"
+msgstr "Documentation"
+
+msgid "general_settings"
+msgstr "General Settings"
+
+msgid "rest_settings"
+msgstr "REST Settings"
+
+msgid "auth_secret_key_label"
+msgstr "Secret Key"
+
+msgid "auth_secret_key_info"
+msgstr "Leave it blank and a new random secret key will be generated."
+
+msgid "auth_algo_encryption_label"
+msgstr "Encryption algo"
+
+msgid "auth_algo_encryption_info"
+msgstr "Algorithm used for JWT signature creation"
+
+msgid "auth_algo_hash_label"
+msgstr "Hashing algo"
+
+msgid "auth_algo_hash_info"
+msgstr "Algorithm used to securely store refresh tokens"
+
+msgid "auth_token_expiry_access_label"
+msgstr "Access Token Expiry"
+
+msgid "auth_token_expiry_access_info"
+msgstr "Lifespan of an access token in seconds"
+
+msgid "auth_token_expiry_refresh_label"
+msgstr "Refresh Token Expiry"
+
+msgid "auth_token_expiry_refresh_info"
+msgstr "Lifespan of a refresh token in seconds"
+
+msgid "rest_ws_enabled_label"
+msgstr "Activate Webservice"
+
+msgid "rest_ws_enabled_info"
+msgstr "Webservice enabled or not"
+
+msgid "rest_docs_enabled_label"
+msgstr "Activate Documentation"
+
+msgid "rest_docs_enabled_info"
+msgstr "Allow guest access to the auto-generated documentation"
+
+msgid "webservice_rate_limit_max_quota_label"
+msgstr "Rate Limit (Requests per Minute)"
+
+msgid "webservice_rate_limit_max_quota_info"
+msgstr "Maximum number of requests a client may send per minute. A value below 1 uses the recommended default."
+
+msgid "cron_delete_expired_rate_limits_title"
+msgstr "Delete Expired Rate Limits"
+
+msgid "cron_delete_expired_rate_limits_desc"
+msgstr "Deletes expired rate limit records of the API webservices."

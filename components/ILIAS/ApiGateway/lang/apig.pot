@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"MIME-Version: 1.0\n"
+"X-Domain: apig\n"
+
+msgid "obj_apig"
+msgstr ""
+
+msgid "obj_apig_desc"
+msgstr ""
+
+msgid "webservices"
+msgstr ""
+
+msgid "webservices_description"
+msgstr ""
+
+msgid "settings_general"
+msgstr ""
+
+msgid "settings_docs"
+msgstr ""
+
+msgid "general_settings"
+msgstr ""
+
+msgid "rest_settings"
+msgstr ""
+
+msgid "auth_secret_key_label"
+msgstr ""
+
+msgid "auth_secret_key_info"
+msgstr ""
+
+msgid "auth_algo_encryption_label"
+msgstr ""
+
+msgid "auth_algo_encryption_info"
+msgstr ""
+
+msgid "auth_algo_hash_label"
+msgstr ""
+
+msgid "auth_algo_hash_info"
+msgstr ""
+
+msgid "auth_token_expiry_access_label"
+msgstr ""
+
+msgid "auth_token_expiry_access_info"
+msgstr ""
+
+msgid "auth_token_expiry_refresh_label"
+msgstr ""
+
+msgid "auth_token_expiry_refresh_info"
+msgstr ""
+
+msgid "rest_ws_enabled_label"
+msgstr ""
+
+msgid "rest_ws_enabled_info"
+msgstr ""
+
+msgid "rest_docs_enabled_label"
+msgstr ""
+
+msgid "rest_docs_enabled_info"
+msgstr ""
+
+msgid "webservice_rate_limit_max_quota_label"
+msgstr ""
+
+msgid "webservice_rate_limit_max_quota_info"
+msgstr ""
+
+msgid "cron_delete_expired_rate_limits_title"
+msgstr ""
+
+msgid "cron_delete_expired_rate_limits_desc"
+msgstr ""
